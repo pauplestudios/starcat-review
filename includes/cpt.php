@@ -136,37 +136,5 @@ if (!class_exists('\HelpieReviews\Includes\Cpt')) {
 
         }
 
-        public function show_woo_columns_filters()
-        {
-            // Add the custom column to the post type -- replace helpie_reviews with your CPT slug
-            add_filter('manage_helpie_reviews_posts_columns', array($this, 'add_custom_column'), 10, 2);
-            // Add the data to the custom column -- replace helpie_reviews with your CPT slug
-            add_action('manage_helpie_reviews_posts_custom_column', array($this, 'add_custom_column_data'), 10, 2);
-        }
-
-        public function add_custom_column($columns)
-        {
-            $addedcolumns = array_slice($columns, 0, 4, true) +
-            array("wooproducts" => __("Woo Products", "helpie-reviews")) +
-            array_slice($columns, 3, count($columns) - 1, true);
-
-            return $addedcolumns;
-        }
-
-        public function add_custom_column_data($column, $post_id)
-        {
-            if ($column == 'wooproducts') {
-                $my_var = get_post_meta($post_id, 'helpie_woo_metabox', true);
-
-                if (!empty($my_var) && isset($my_var)) {
-                    foreach ($my_var as $item) {
-                        echo get_the_title($item) . ", ";
-                    }
-                } else {
-                    echo "__";
-                }
-            }
-        }
-
     } // END CLASS
 }

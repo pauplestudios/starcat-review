@@ -200,20 +200,6 @@ if (!class_exists('\Helpie_Reviews')) {
         public function enqueue_scripts()
         {
 
-            // wp_enqueue_script($this->plugin_domain . '-bundle', HELPIE_REVIEWS_URL . 'assets/main.bundle.js', array('jquery'), $this->version, 'all');
-            // // wp_enqueue_script($this->plugin_domain . '-search', HELPIE_REVIEWS_URL . 'lib/stylus/js/search.js', array('jquery'), $this->version, 'all');
-            // wp_enqueue_style($this->plugin_domain . '-bundle-styles', HELPIE_REVIEWS_URL . 'assets/main.bundle.css', array(), $this->version, 'all');
-
-            // $nonce = wp_create_nonce('helpie_reviews_nonce');
-            // wp_localize_script($this->plugin_domain . '-bundle', 'helpie_reviews_nonce', $nonce);
-            // wp_localize_script($this->plugin_domain . '-bundle', 'my_reviews_ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
-            // wp_localize_script($this->plugin_domain . '-bundle', 'Helpie_REVIEWS_URL', HELPIE_REVIEWS_URL);
-
-            // // You Can Access these object from javascript
-            // $reviews_strings = new \HelpieReviews\Languages\Reviews_Strings();
-            // $loco_strings = $reviews_strings->get_strings();
-
-            // wp_localize_script($this->plugin_domain . '-bundle', 'reviewsStrings', $loco_strings);
         }
     }
 }
