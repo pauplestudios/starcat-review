@@ -1,0 +1,15 @@
+vendor
+node_modules
+dist
+*.bundle.js
+*.bundle.js.map
+*.bundle.css
+*.bundle.css.map
+tmp
+helpie-reviews-build
+helpie-reviews.zip
+.gitmodules
+tests/_data/helpie
+*.lock
+reports
+.scannerwork
