@@ -30,19 +30,8 @@ class CoreTest extends \Codeception\TestCase\WPTestCase
     public function test_cpt()
     {
         // Replace this with some actual testing code.
-
         $this->assertTrue(true);
     }
-
-    // function test_env(){
-    //     // include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-    //
-    //     $as_plugin = 'awesome-support/awesome-support.php';
-    //
-    //     $this->assertTrue(is_plugin_active($as_plugin) );
-    //     $this->assertTrue(class_exists('Awesome_Support') );
-    //     $this->assertEquals("http://127.0.0.1:90/wp-content/themes/avada", get_template_directory_uri() );
-    // }
 
     public function test_create_article()
     {
