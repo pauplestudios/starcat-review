@@ -85,7 +85,7 @@ class Autoloader
      */
     private static function load_class($relative_class_name)
     {
-        error_log('load_class: ' . $relative_class_name);
+
         if (isset(self::$classes_map[$relative_class_name])) {
             $filename = HELPIE_REVIEWS_PATH . '/' . self::$classes_map[$relative_class_name];
         } else {
@@ -98,7 +98,7 @@ class Autoloader
             );
             $filename = HELPIE_REVIEWS_PATH . '/' . $filename . '.php';
         }
-        error_log('filename: ' . $filename);
+
         if (is_readable($filename)) {
             require $filename;
         }

@@ -53,6 +53,8 @@ if (!class_exists('\Helpie_Reviews')) {
 
             /*  Reviews Widget */
             // $this->load_widgets();
+
+            $register_templates = new \HelpieReviews\Includes\Register_Templates();
         }
 
         public function plugins_loaded_action()
@@ -151,7 +153,7 @@ if (!class_exists('\Helpie_Reviews')) {
 
         protected function setup_autoload()
         {
-            error_log('setup_autoload');
+
             require_once HELPIE_REVIEWS_PATH . '/includes/autoloader.php';
             \HelpieReviews\Autoloader::run();
         }

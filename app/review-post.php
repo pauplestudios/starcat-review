@@ -15,14 +15,23 @@ if (!class_exists('\HelpieReviews\App\Review_Post')) {
         {
             $post_meta = get_post_meta($wp_review->ID);
 
+            error_log('$post_meta : ' . print_r($post_meta, true));
+            // TODO: Refactor the need for unserialize. Check if insert method is wrong in test
+            foreach ($post_meta as $key => $value) {
+                $post_meta[$key] = unserialize($value[0]);
+            }
+
             $this->id = $wp_review->ID;
             $this->title = $wp_review->post_title;
             $this->content = $wp_review->post_content;
             $this->overall_rating = 4.5;
-            $this->stats = unserialize($post_meta['stats'][0]);
+            $this->stats = $post_meta['stats'];
+            $this->pros_and_cons = $post_meta['pros_and_cons'];
+            $this->set_user_reviews();
+        }
 
-            $this->pros_and_cons = unserialize($post_meta['pros_and_cons'][0]);
-
+        public function set_user_reviews()
+        {
             $comments_args = array(
                 'post_id' => $this->id,
                 'post_type' => HELPIE_REVIEWS_POST_TYPE,
@@ -35,7 +44,6 @@ if (!class_exists('\HelpieReviews\App\Review_Post')) {
             foreach ($wp_user_reviews as $key => $wp_user_review) {
                 $this->user_reviews[$key] = new User_Review($wp_user_review);
             }
-
         }
 
     } // END CLASS
