@@ -72,7 +72,7 @@ const webpackConfig = {
 };
 
 if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
-  const buildFolder = path.resolve(__dirname, "helpie-reviews-build");
+  const buildFolder = path.resolve(__dirname, "artifacts/build");
   webpackConfig.plugins.push(
     new UglifyJsPlugin({
       cache: true,
@@ -152,7 +152,7 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
       onEnd: {
         archive: [
           {
-            source: "./helpie-reviews-build",
+            source: "./artifacts/build",
             destination: "./helpie-reviews.zip"
           }
         ]
