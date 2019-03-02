@@ -1,0 +1,19 @@
+{
+  "title": "Zendesk",
+  "content": "Help Desk Software including ticketing and knowledge base. Online help desk software with no downloading.",
+  "stats": {
+    "style": 4.5,
+    "speed": 4,
+    "power": 5,
+    "customisation": 4.7
+  },
+  "pros_and_cons": {
+    "pros": [
+      "Awesome display",
+      "A phone that feels like the future",
+      "Stunning camera",
+      "It’s actually innovative"
+    ],
+    "cons": ["Awfully placed fingerprint sensor", "Bixby is a bit of a dud"]
+  }
+}

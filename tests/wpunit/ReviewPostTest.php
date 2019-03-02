@@ -1,4 +1,3 @@
-dd
 <?php
 
 class ReviewPostTest extends \Codeception\TestCase\WPTestCase
@@ -20,27 +19,9 @@ class ReviewPostTest extends \Codeception\TestCase\WPTestCase
 
     public function test_review_setup()
     {
-        $post_data = array();
-        $post_data['title'] = 'Zendesk';
-        $post_data['content'] = 'Help Desk Software including ticketing and knowledge base. Online help desk software with no downloading.';
-        $post_data['stats'] = array(
-            'style' => 4.5,
-            'speed' => 4,
-            'power' => 5,
-            'customisation' => 4.7,
-        );
-        $post_data['pros_and_cons'] = array(
-            'pros' => array(
-                'Awesome display',
-                'A phone that feels like the future',
-                'Stunning camera',
-                'It’s actually innovative',
-            ),
-            'cons' => array(
-                'Awfully placed fingerprint sensor',
-                'Bixby is a bit of a dud',
-            ),
-        );
+        $review_data_json = file_get_contents(HELPIE_REVIEWS_PATH . "/test-artifacts/data/review-data.json");
+        $post_data = json_decode($review_data_json, true);
+
         $post_id = $this->insert_post($post_data);
         $wp_review_post = get_post($post_id);
         $comment_id = $this->insert_comment($post_id, $post_data);
