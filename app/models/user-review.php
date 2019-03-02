@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App;
+namespace HelpieReviews\App\Models;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\User_Review')) {
+if (!class_exists('\HelpieReviews\App\Models\User_Review')) {
     class User_Review
     {
         public function __construct($wp_comment = null)

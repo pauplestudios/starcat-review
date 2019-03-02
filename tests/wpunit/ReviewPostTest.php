@@ -45,7 +45,7 @@ class ReviewPostTest extends \Codeception\TestCase\WPTestCase
         $wp_review_post = get_post($post_id);
         $comment_id = $this->insert_comment($post_id, $post_data);
 
-        $review_post = new \HelpieReviews\App\Review_Post($wp_review_post);
+        $review_post = new \HelpieReviews\App\Models\Review_Post($wp_review_post);
 
         $this->assertEquals($post_id, $review_post->id);
         $this->assertEquals($post_data['content'], $review_post->content);

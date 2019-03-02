@@ -11,7 +11,7 @@ get_header();
 while (have_posts()): the_post();
 
     $wp_post = get_post();
-    $review_post = new \HelpieReviews\App\Review_Post($wp_post);
+    $review_post = new \HelpieReviews\App\Models\Review_Post($wp_post);
 
     $html = "<h1>" . $review_post->title . "</h1>";
 

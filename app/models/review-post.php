@@ -1,14 +1,14 @@
 <?php
 
-namespace HelpieReviews\App;
+namespace HelpieReviews\App\Models;
 
-use \HelpieReviews\App\User_Review as User_Review;
+use \HelpieReviews\App\Models\User_Review as User_Review;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Review_Post')) {
+if (!class_exists('\HelpieReviews\App\Models\Review_Post')) {
     class Review_Post
     {
         public function __construct($wp_review = null)
