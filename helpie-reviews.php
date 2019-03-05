@@ -3,7 +3,7 @@
 /*
 Plugin Name: Helpie Reviews
 Plugin URI: http://helpiewp.com/helpie-reviews/
-Description: Awesome WordPress Reviews plugin
+Description: Adds Author and User Reviews to any post_type
 Author: HelpieWP
 Version: 0.1
 Author URI: http://helpiewp.com

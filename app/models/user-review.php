@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) {
 } // Exit if accessed directly
 
 if (!class_exists('\HelpieReviews\App\Models\User_Review')) {
-    class User_Review
+    class User_Review extends \HelpieReviews\App\Abstracts\Review
     {
         public function __construct($wp_comment = null)
         {

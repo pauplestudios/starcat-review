@@ -7,19 +7,18 @@ if (!defined('ABSPATH')) {
 } // Exit if accessed directly
 
 if (!class_exists('\HelpieReviews\App\Abstracts\Review')) {
-    class Review
+    abstract class Review
     {
-        public function __construct()
+        public function __construct($post)
         {
-            // $this->id = 5;
-            // $this->title = "Review Title";
-            // $this->overall_rating = 4.5;
-            // $this->stats = array(
-            //     'style' => 4.5,
-            //     'speed' => 4,
-            //     'power' => 5,
-            //     'customisation' => 4.7,
-            // );
+            $this->map_post_props();
+            $this->define_computed_props();
+        }
+
+        public function define_computed_props()
+        {
+            $this->set_overall_rating();
+            $this->set_overall_pros_and_cons();
         }
 
     } // END CLASS
