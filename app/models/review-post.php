@@ -15,10 +15,11 @@ if (!class_exists('\HelpieReviews\App\Models\Review_Post')) {
         {
             $this->post_meta = get_post_meta($wp_review->ID);
 
-            error_log('$this->post_meta : ' . print_r($this->post_meta, true));
+            // error_log('$this->post_meta : ' . print_r($this->post_meta, true));
             // TODO: Refactor the need for unserialize. Check if insert method is wrong in test
             foreach ($this->post_meta as $key => $value) {
-                $this->post_meta[$key] = unserialize($value[0]);
+                // $this->post_meta[$key] = unserialize($value[0]);
+                $this->post_meta[$key] = $value;
             }
 
             $this->id = $wp_review->ID;
