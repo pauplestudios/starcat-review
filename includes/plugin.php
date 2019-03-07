@@ -44,7 +44,7 @@ if (!class_exists('\Helpie_Reviews')) {
 
         public function load_components()
         {
-
+            $hooks = new \HelpieReviews\Includes\Hooks();
         }
         public function init_hook()
         {
@@ -201,7 +201,7 @@ if (!class_exists('\Helpie_Reviews')) {
 
         public function enqueue_scripts()
         {
-
+            wp_enqueue_style('style-name', HELPIE_REVIEWS_URL . "app/views/rating-types/star-rating.css");
         }
     }
 }
