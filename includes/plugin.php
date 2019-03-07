@@ -201,7 +201,7 @@ if (!class_exists('\Helpie_Reviews')) {
 
         public function enqueue_scripts()
         {
-            wp_enqueue_style('style-name', HELPIE_REVIEWS_URL . "app/views/rating-types/star-rating.css");
+            wp_enqueue_style('style-name', HELPIE_REVIEWS_URL . "includes/assets/bundle/main.bundle.css");
         }
     }
 }

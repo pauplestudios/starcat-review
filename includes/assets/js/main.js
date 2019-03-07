@@ -1,20 +1,13 @@
-
-
 var HelpieReviews = {
+  init: function() {},
 
-    init: function () {
-
-    },
-
-    eventHandlers: function () {
-        var thisModule = this;
-
-    },
-
-
+  eventHandlers: function() {
+    var thisModule = this;
+  }
 };
 
-jQuery(document).ready(function () {
-    HelpieReviews.init();
+jQuery(document).ready(function() {
+  HelpieReviews.init();
 });
 
+import "./../style.scss";

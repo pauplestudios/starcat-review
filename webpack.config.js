@@ -17,7 +17,7 @@ const webpackConfig = {
   },
   output: {
     filename: "[name].bundle.js",
-    path: path.resolve(__dirname, "app/assets"),
+    path: path.resolve(__dirname, "includes/assets/bundle"),
     publicPath: "./"
   },
 
