@@ -4,7 +4,14 @@ var List = require("list.js");
 var UserReviewsList = {
   init: function() {
     var options = {
-      valueNames: ["title", "content"]
+      valueNames: ["title", "content"],
+      fuzzySearch: {
+        searchClass: "search",
+        location: 0,
+        distance: 100,
+        threshold: 0.4,
+        multiSearch: true
+      }
     };
 
     this.featureList = new List("lovely-things-list", options);
