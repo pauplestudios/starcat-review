@@ -1,5 +1,9 @@
+var UserReviewsList = require("./user-reviews-list.js");
+
 var HelpieReviews = {
-  init: function() {},
+  init: function() {
+    UserReviewsList.init();
+  },
 
   eventHandlers: function() {
     var thisModule = this;

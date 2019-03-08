@@ -20,7 +20,9 @@ const webpackConfig = {
     path: path.resolve(__dirname, "includes/assets/bundle"),
     publicPath: "./"
   },
-
+  externals: {
+    list: "list"
+  },
   module: {
     rules: [
       {
