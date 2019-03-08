@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\Includes\Utils\Utils')) {
+if (!class_exists('\HelpieReviews\Includes\Utils')) {
     class Utils
     {
         public function __construct()
