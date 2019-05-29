@@ -46,6 +46,7 @@ if (!class_exists('\Helpie_Reviews')) {
         {
             $hooks = new \HelpieReviews\Includes\Hooks();
             $shortcodes = new \HelpieReviews\Includes\Shortcodes();
+            $settings = new \HelpieReviews\Includes\Settings();
         }
         public function init_hook()
         {
@@ -77,9 +78,7 @@ if (!class_exists('\Helpie_Reviews')) {
         }
 
         public function load_widgets()
-        {
-
-        }
+        { }
 
         public function register_cpt_and_taxonomy()
         {
