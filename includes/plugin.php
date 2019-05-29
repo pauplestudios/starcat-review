@@ -45,6 +45,7 @@ if (!class_exists('\Helpie_Reviews')) {
         public function load_components()
         {
             $hooks = new \HelpieReviews\Includes\Hooks();
+            $shortcodes = new \HelpieReviews\Includes\Shortcodes();
         }
         public function init_hook()
         {

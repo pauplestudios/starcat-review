@@ -21,7 +21,7 @@ if (!class_exists('\HelpieReviews\App\Views\Reviews_List')) {
             $html = "<h1>User Review List" . $this->model->title . "</h1>";
             $html .= $this->get_list();
             $this->html = $html;
-            echo $this->html;
+            return $this->html;
         }
 
         public function get_list()
