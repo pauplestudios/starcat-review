@@ -11,7 +11,7 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
     {
         public function __construct()
         {
-            error_log('hooks __construct');
+            // error_log('hooks __construct');
             add_filter('the_content', array($this, 'content_filter'));
             add_filter('the_excerpt', array($this, 'content_filter'));
         }
@@ -33,7 +33,6 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
             $reviews_builder = new \HelpieReviews\App\Builders\Review_Builder();
             return $reviews_builder->get_reviews($post_id);
         }
-
     } // END CLASS
 
 }
