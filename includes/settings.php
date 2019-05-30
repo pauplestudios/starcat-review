@@ -347,28 +347,28 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
         {
             \CSF::createSection($prefix, array(
                 // 'parent' => 'user_access',
-                'title' => 'Features',
+                'title' => 'Stats',
                 'icon' => 'fa fa-eye',
                 'fields' => array(
 
                     array(
-                        'id' => 'can_view',
+                        'id' => 'stats',
                         'type' => 'fieldset',
                         'title' => 'Features',
                         'fields' => array(
                             array(
-                                'id'     => 'opt-repeater-1',
+                                'id'     => 'stats-list',
                                 'type'   => 'repeater',
                                 'title'  => 'Repeater',
                                 'fields' => array(
 
                                     array(
-                                        'id'    => 'feature-1',
+                                        'id'    => 'stat_name',
                                         'type'  => 'text',
-                                        'title' => 'Feature'
+                                        'title' => 'Stat Name'
                                     ),
                                     array(
-                                        'id'    => 'rating-1',
+                                        'id'    => 'rating',
                                         'type'  => 'text',
                                         'title' => 'Rating'
                                     ),
