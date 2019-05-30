@@ -56,6 +56,10 @@ if (!class_exists('\Helpie_Reviews')) {
             /*  Reviews Widget */
             // $this->load_widgets();
 
+            /* settings getter */
+            require_once(HELPIE_REVIEWS_PATH . 'includes/settings/getter.php');
+
+
             $register_templates = new \HelpieReviews\Includes\Register_Templates();
         }
 

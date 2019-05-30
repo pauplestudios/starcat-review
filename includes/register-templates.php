@@ -12,18 +12,18 @@ if (!class_exists('\HelpieReviews\Includes\Register_Templates')) {
         public function __construct()
         {
             add_filter('single_template', array($this, 'single_template_callback'));
-
         }
 
         public function single_template_callback($single)
         {
             global $wp_query, $post;
 
-            // $template_source = $this->settings->single_page->get_template_source();
+            $template_source = \HelpieReviews\Includes\Settings\HRP_Getter::get('template_source');
 
-            // if ($template_source == 'elementor') {
-            //     return;
-            // }
+            error_log('$template_source : ' . $template_source);
+            if ($template_source == 'theme') {
+                return;
+            }
 
             /* Checks for single template by post type */
             if ($post->post_type == HELPIE_REVIEWS_POST_TYPE && is_single()) {
@@ -35,6 +35,5 @@ if (!class_exists('\HelpieReviews\Includes\Register_Templates')) {
 
             return $single;
         }
-
     } // END CLASS
 }

@@ -80,7 +80,22 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'type'  => 'text',
                             'title' => 'Affiliate Link'
                         ),
-
+                        // A Heading
+                        array(
+                            'type'    => 'heading',
+                            'content' => 'Review Post Type',
+                        ),
+                        array(
+                            'id'          => 'template_source',
+                            'type'        => 'select',
+                            'title'       => 'Current',
+                            'placeholder' => 'Template Source',
+                            'options'     => array(
+                                'plugin'  => 'Plugin',
+                                'theme'  => 'Theme',
+                            ),
+                            'default'     => 'theme'
+                        ),
 
                     )
 
