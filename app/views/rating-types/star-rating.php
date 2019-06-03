@@ -19,18 +19,63 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
         public function get_html()
         {
             $html = '';
-
+            $count = 1;
             foreach ($this->model as $key => $value) {
+
+                error_log('$value : ' . $value);
+                $star_value = $value / 20;
                 $html .= "<div class='single-rating'><span class='rating-label'>" . $key . "</span>";
-                $html .= $this->get_star_set();
+                $html .= $this->get_star_set($star_value,  $key);
                 $html .= "</div>";
+                $count++;
             }
 
             $this->html = $html;
             return $this->html;
         }
 
-        public function get_star_set()
+        public function get_star_set($star_value,  $key = 'star')
+        {
+            $html = '';
+            $html .= '<fieldset class="rating rating">';
+
+            $star_value = (floor($star_value * 2) / 2);
+
+            error_log('$star_value : ' . $star_value);
+
+            // $star_value = 4;
+            for ($ii = 5; $ii >= 1; $ii--) {
+
+                $previous_ii = $ii - 1;
+
+                $checked = '';
+                $half_checked = '';
+                if ($ii == $star_value) {
+                    // $additional_class .= ' active';
+                    $checked = 'checked';
+                }
+
+                if ($ii - 0.5 == $star_value) {
+                    // $additional_class .= ' active';
+                    $half_checked = 'checked';
+                }
+
+                $id = $key . '-rating' . $ii;
+                $half_id = $key . '-rating';
+
+                if ($previous_ii != 0) {
+                    $half_id = '-rating' . $previous_ii;
+                }
+
+                $html .= '<input type="radio" ' . $checked . ' id="' . $id . '" name="' . $key . '-rating" value="' . $ii . '"  /><label class = "full" for="' . $id . '" title="Sucks big time - 1 star"></label>';
+                $html .= '<input type="radio" ' . $half_checked . ' id="' . $id . 'half" name="' . $key . '-rating" value="half" /><label class="half" for="' . $id . 'half" title="Sucks big time - 0.5 stars"></label>';
+            }
+
+
+            $html .= '</fieldset>';
+            return $html;
+        }
+        public function get_star_set_old($star_value = 5)
         {
             $html = '';
             $html .= '<fieldset class="rating">';
@@ -49,6 +94,5 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
 
             return $html;
         }
-
     } // END CLASS
 }
