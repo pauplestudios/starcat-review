@@ -198,6 +198,34 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
             ));
         }
 
+        public function single_post_pros_fields()
+        {
+            return array(
+
+                array(
+                    'id' => 'pros',
+                    'type' => 'fieldset',
+                    'title' => 'Pros',
+                    'fields' => array(
+                        array(
+                            'id'     => 'pros-list',
+                            'type'   => 'repeater',
+                            'title'  => 'Repeater',
+                            'fields' => array(
+
+                                array(
+                                    'id'    => 'pro_con',
+                                    'type'  => 'text',
+                                    'title' => 'Feature'
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+
+            );
+        }
+
 
         public function single_post_cons($prefix, $parent = null)
         {
@@ -211,7 +239,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                 'fields' => array(
 
                     array(
-                        'id' => 'can_view',
+                        'id' => 'cons',
                         'type' => 'fieldset',
                         'title' => 'Cons',
                         'fields' => $fields
@@ -225,13 +253,13 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
         {
             return array(
                 array(
-                    'id'     => 'opt-repeater-1',
+                    'id'     => 'cons-list',
                     'type'   => 'repeater',
                     'title'  => 'Repeater',
                     'fields' => array(
 
                         array(
-                            'id'    => 'con-1',
+                            'id'    => 'pro_con',
                             'type'  => 'text',
                             'title' => 'Feature'
                         ),
@@ -239,33 +267,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                 ),
             );
         }
-        public function single_post_pros_fields()
-        {
-            return array(
 
-                array(
-                    'id' => 'can_view',
-                    'type' => 'fieldset',
-                    'title' => 'Pros',
-                    'fields' => array(
-                        array(
-                            'id'     => 'opt-repeater-1',
-                            'type'   => 'repeater',
-                            'title'  => 'Repeater',
-                            'fields' => array(
-
-                                array(
-                                    'id'    => 'pro-1',
-                                    'type'  => 'text',
-                                    'title' => 'Feature'
-                                ),
-                            ),
-                        ),
-                    ),
-                ),
-
-            );
-        }
 
 
         public function single_details_fields()

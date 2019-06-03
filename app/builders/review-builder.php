@@ -16,14 +16,42 @@ if (!class_exists('\HelpieReviews\App\Builders\Review_Builder')) {
             $stats = $this->get_stats($post_id);
             $stats_view = new \HelpieReviews\App\Views\Stats($stats);
             $html = $stats_view->get_html();
+
+            $pros_and_cons = $this->get_pros_and_cons($post_id);
+            $pros_and_cons_view = new \HelpieReviews\App\Views\ProsAndCons($pros_and_cons);
+            $html .= $pros_and_cons_view->get_html();
+
             return $html;
         }
 
+
+        private function get_pros_and_cons($post_id)
+        {
+            $review_post_meta =   get_post_meta($post_id, '_helpie_reviews_post_options', true);
+
+            $pros_list = $review_post_meta['pros']['pros-list'];
+            $cons_list = $review_post_meta['cons']['cons-list'];
+
+            $pros_and_cons = [];
+            $pros_and_cons['pros'] = [];
+            $pros_and_cons['cons'] = [];
+
+            foreach ($pros_list as $key => $item) {
+                $pros_and_cons['pros'][] = $item['pro_con'];
+            }
+
+            foreach ($cons_list as $key => $item) {
+                $pros_and_cons['cons'][] = $item['pro_con'];
+            }
+
+            error_log('$pros_and_cons : ' . print_r($pros_and_cons, true));
+            return $pros_and_cons;
+        }
         private function get_stats($post_id)
         {
 
             $review_post_meta =   get_post_meta($post_id, '_helpie_reviews_post_options', true);
-            error_log('$review_post_meta  : ' . print_r($review_post_meta, true));
+            // error_log('$review_post_meta  : ' . print_r($review_post_meta, true));
 
             $stats_list = $review_post_meta['stats']['stats-list'];
             $stats = [];
