@@ -10,6 +10,11 @@ if (!class_exists('\HelpieReviews\App\Builders\Review_Builder')) {
     class Review_Builder
     {
 
+        public function __construct()
+        {
+            $this->pros_cons_model = new \HelpieReviews\App\Models\Pros_And_Cons();
+            $this->stats_model = new \HelpieReviews\App\Models\Stats();
+        }
         public function get_reviews($post_id)
         {
 
@@ -27,45 +32,15 @@ if (!class_exists('\HelpieReviews\App\Builders\Review_Builder')) {
 
         private function get_pros_and_cons($post_id)
         {
-            $review_post_meta =   get_post_meta($post_id, '_helpie_reviews_post_options', true);
-
-            $pros_list = $review_post_meta['pros']['pros-list'];
-            $cons_list = $review_post_meta['cons']['cons-list'];
-
-            $pros_and_cons = [];
-            $pros_and_cons['pros'] = [];
-            $pros_and_cons['cons'] = [];
-
-            foreach ($pros_list as $key => $item) {
-                $pros_and_cons['pros'][] = $item['pro_con'];
-            }
-
-            foreach ($cons_list as $key => $item) {
-                $pros_and_cons['cons'][] = $item['pro_con'];
-            }
-
-            error_log('$pros_and_cons : ' . print_r($pros_and_cons, true));
+            $pros_and_cons = $this->pros_cons_model->get($post_id);
             return $pros_and_cons;
         }
+
         private function get_stats($post_id)
         {
 
-            $review_post_meta =   get_post_meta($post_id, '_helpie_reviews_post_options', true);
-            // error_log('$review_post_meta  : ' . print_r($review_post_meta, true));
-
-            $stats_list = $review_post_meta['stats']['stats-list'];
-            $stats = [];
-
-            foreach ($stats_list as $key => $stat) {
-                $stats[$stat['stat_name']] = $stat['rating'];
-            }
-
+            $stats = $this->stats_model->get($post_id);
             return $stats;
-
-            /* Dummy */
-            $review_data_json = file_get_contents(HELPIE_REVIEWS_PATH . "/tests/_data/review-data.json");
-            $post_data = json_decode($review_data_json, true);
-            $stats = $post_data[0]['stats'];
 
             return $stats;
         }

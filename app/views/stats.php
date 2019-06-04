@@ -15,20 +15,31 @@ if (!class_exists('\HelpieReviews\App\Views\Stats')) {
         {
             $this->model = $stats;
             $this->star_rating = new \HelpieReviews\App\Views\Rating_Types\Star_Rating($this->model);
+            error_log('$stats : ' . print_r($stats, true));
         }
 
         public function get_html()
         {
-            // $html = '';
 
-            // foreach ($this->model as $key => $value) {
-            //     $html .= "<p>" . $key . " - " . $value . "</p>";
-            // }
+            if ($this->is_empty()) {
+                return '';
+            }
 
             $html = $this->star_rating->get_html();
             $this->html = $html;
             return $this->html;
         }
 
+        /* PRIVATE CLASS */
+
+        private function is_empty()
+        {
+
+            if (isset($this->model) && !empty($this->model)) {
+                return false;
+            }
+
+            return true;
+        }
     } // END CLASS
 }

@@ -18,7 +18,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
 
         public function get_html()
         {
-            $html = "<div class='hrp-rating-collection hrp-container '>";
+            $html = "<div class='hrp-rating-collection hrp-container'>";
             $count = 1;
             foreach ($this->model as $key => $value) {
 
