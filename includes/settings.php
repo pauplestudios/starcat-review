@@ -108,9 +108,12 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'placeholder' => 'Select post types',
                             'options'     => 'post_types',
                             'multiple' => true,
-                            // 'query_args'  => array(
-                            //     'post_type' => HELPIE_REVIEWS_POST_TYPE,
-                            // ),
+                        ),
+
+                        array(
+                            'id'    => 'enable-pros-cons',
+                            'type'  => 'switcher',
+                            'title' => 'Enable Pros and Cons',
                         ),
 
                     )
@@ -126,6 +129,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
 
             $options = \get_option('helpie-reviews');
             $locations = $options['review-location'];
+            $enable_pros_cons = $options['enable-pros-cons'];
             $prefix = '_helpie_reviews_post_options';
 
             \CSF::createMetabox($prefix, array(
@@ -137,8 +141,12 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
 
             $this->single_details($prefix);
             $this->single_post_features($prefix);
-            $this->single_post_pros($prefix);
-            $this->single_post_cons($prefix);
+
+            if ($enable_pros_cons) {
+                $this->single_post_pros($prefix);
+                $this->single_post_cons($prefix);
+            }
+
             $this->single_rich_snippets($prefix);
         }
 

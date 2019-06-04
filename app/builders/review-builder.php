@@ -22,9 +22,14 @@ if (!class_exists('\HelpieReviews\App\Builders\Review_Builder')) {
             $stats_view = new \HelpieReviews\App\Views\Stats($stats);
             $html = $stats_view->get_html();
 
-            $pros_and_cons = $this->get_pros_and_cons($post_id);
-            $pros_and_cons_view = new \HelpieReviews\App\Views\ProsAndCons($pros_and_cons);
-            $html .= $pros_and_cons_view->get_html();
+            $options = \get_option('helpie-reviews');
+            $enable_pros_cons = $options['enable-pros-cons'];
+
+            if ($enable_pros_cons) {
+                $pros_and_cons = $this->get_pros_and_cons($post_id);
+                $pros_and_cons_view = new \HelpieReviews\App\Views\ProsAndCons($pros_and_cons);
+                $html .= $pros_and_cons_view->get_html();
+            }
 
             return $html;
         }
