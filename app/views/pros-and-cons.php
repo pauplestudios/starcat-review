@@ -17,15 +17,12 @@ if (!class_exists('\HelpieReviews\App\Views\ProsAndCons')) {
         }
 
 
-
         public function get_html()
         {
-
             // Return '' if pros and cons are empty
             if ($this->is_empty()) {
                 return '';
             }
-
 
             $html = "<div class='hrv-pros-cons hrp-container '>";
             $html .= $this->get_pros_html($this->model['pros']);
