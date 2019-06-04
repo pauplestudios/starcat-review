@@ -65,11 +65,11 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
                 $half_id = $key . '-rating';
 
                 if ($previous_ii != 0) {
-                    $half_id = '-rating' . $previous_ii;
+                    $half_id = $key . '-rating' . $previous_ii;
                 }
 
                 $html .= '<input type="radio" ' . $checked . ' id="' . $id . '" name="' . $key . '-rating" value="' . $ii . '"  /><label class = "full" for="' . $id . '" title="Sucks big time - 1 star"></label>';
-                $html .= '<input type="radio" ' . $half_checked . ' id="' . $id . 'half" name="' . $key . '-rating" value="half" /><label class="half" for="' . $id . 'half" title="Sucks big time - 0.5 stars"></label>';
+                $html .= '<input type="radio" ' . $half_checked . ' id="' . $half_id . 'half" name="' . $key . '-rating" value="half" /><label class="half" for="' . $half_id . 'half" title="Sucks big time - 0.5 stars"></label>';
             }
 
 
