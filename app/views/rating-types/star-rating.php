@@ -18,7 +18,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
 
         public function get_html()
         {
-            $html = '';
+            $html = "<div class='hrp-rating-collection hrp-container '>";
             $count = 1;
             foreach ($this->model as $key => $value) {
 
@@ -29,6 +29,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
                 $html .= "</div>";
                 $count++;
             }
+            $html .= "</div>";
 
             $this->html = $html;
             return $this->html;
@@ -37,7 +38,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
         public function get_star_set($star_value,  $key = 'star')
         {
             $html = '';
-            $html .= '<fieldset class="rating rating">';
+            $html .= '<fieldset class="rating-fieldset">';
 
             $star_value = (floor($star_value * 2) / 2);
 

@@ -1,6 +1,12 @@
 @import "styles/listing.scss";
-@import "../../app/views/rating-types/star-rating.scss";
+@import "../../app/views/styles/star-rating.scss";
+@import "../../app/views/styles/pros-and-cons.scss";
 
 html {
-  background: black;
+    background: black;
+}
+
+.hrp-container {
+    margin: 40px 0;
+    overflow: auto;
 }

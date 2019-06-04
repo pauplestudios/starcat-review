@@ -1,0 +1,75 @@
+// Based on https://codepen.io/jamesbarnett/pen/vlpkh
+
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+fieldset,
+label {
+    margin: 0;
+    padding: 0;
+}
+body {
+    margin: 20px;
+}
+h1 {
+    font-size: 1.5em;
+    margin: 10px;
+}
+
+.hrp-rating-collection {
+    width: 250px;
+
+    .single-rating {
+        float: left;
+        width: 100%;
+    }
+
+    .rating-label {
+        float: left;
+        margin-top: 9px;
+        margin-right: 10px;
+        width: 100px;
+    }
+}
+
+/****** Style Star Rating Widget *****/
+
+.rating-fieldset {
+    border: none;
+    float: right;
+}
+
+.rating-fieldset > input {
+    display: none;
+}
+.rating-fieldset > label:before {
+    margin: 5px;
+    font-size: 1.25em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005";
+}
+
+.rating-fieldset > .half:before {
+    content: "\f089";
+    position: absolute;
+}
+
+.rating-fieldset > label {
+    color: #ddd;
+    float: right;
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.rating-fieldset > input:checked ~ label, /* show gold star when clicked */
+.rating-fieldset:not(:checked) > label:hover, /* hover current star */
+.rating-fieldset:not(:checked) > label:hover ~ label {
+    color: #ffd700;
+} /* hover previous stars in list */
+
+.rating-fieldset > input:checked + label:hover, /* hover current star when changing rating */
+.rating-fieldset > input:checked ~ label:hover,
+.rating-fieldset > label:hover ~ input:checked ~ label, /* lighten current selection */
+.rating-fieldset > input:checked ~ label:hover ~ label {
+    color: #ffed85;
+}
