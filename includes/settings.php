@@ -15,6 +15,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
         {
             add_action('init', [$this, 'setup_options_init']);
             add_action('init', [$this, 'init']);
+            add_action('wp_loaded', [$this, 'wp_loaded']);
             add_filter('csf_helpie-kb_sections', [$this, 'filter_args']);
             // $this->init();
 
@@ -30,6 +31,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
             // require_once HELPIE_REVIEWS_PATH . 'includes/settings/settings-config.php';
         }
 
+        public function wp_loaded()
+        { }
         public function init()
         {
 
@@ -97,6 +100,19 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'default'     => 'theme'
                         ),
 
+                        // Select with CPT (custom post type) pages
+                        array(
+                            'id'          => 'review-location',
+                            'type'        => 'select',
+                            'title'       => 'Where to include reviews?',
+                            'placeholder' => 'Select post types',
+                            'options'     => 'post_types',
+                            'multiple' => true,
+                            // 'query_args'  => array(
+                            //     'post_type' => HELPIE_REVIEWS_POST_TYPE,
+                            // ),
+                        ),
+
                     )
 
                     // 'fields' => $details_fields
@@ -108,11 +124,14 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
         public function post_meta_fields()
         {
 
+            $options = \get_option('helpie-reviews');
+            $locations = $options['review-location'];
             $prefix = '_helpie_reviews_post_options';
 
             \CSF::createMetabox($prefix, array(
                 'title' => 'Helpie Reviews',
-                'post_type' => 'helpie_reviews',
+                // 'post_type' => 'helpie_reviews',
+                'post_type' => $locations,
                 'show_restore' => true,
             ));
 
