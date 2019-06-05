@@ -2,6 +2,8 @@
 
 namespace HelpieReviews\Includes;
 
+use \HelpieReviews\Includes\Settings\HRP_Getter;
+
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -105,6 +107,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'id'          => 'review-location',
                             'type'        => 'select',
                             'title'       => 'Where to include reviews?',
+                            'chosen' => true,
                             'placeholder' => 'Select post types',
                             'options'     => 'post_types',
                             'multiple' => true,
@@ -127,9 +130,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
         public function post_meta_fields()
         {
 
-            $options = \get_option('helpie-reviews');
-            $locations = $options['review-location'];
-            $enable_pros_cons = $options['enable-pros-cons'];
+            $locations = HRP_Getter::get('review-location');
+            $enable_pros_cons =  HRP_Getter::get('enable-pros-cons');
             $prefix = '_helpie_reviews_post_options';
 
             \CSF::createMetabox($prefix, array(
@@ -137,6 +139,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                 // 'post_type' => 'helpie_reviews',
                 'post_type' => $locations,
                 'show_restore' => true,
+                'theme' => 'light',
             ));
 
             $this->single_details($prefix);

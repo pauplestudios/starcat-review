@@ -50,7 +50,9 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
         {
 
             $defaults = array(
-                'template_source' => 'theme'
+                'template_source' => 'theme',
+                'enable-pros-cons' => true,
+                'review-location' => [HELPIE_REVIEWS_POST_TYPE]
             );
 
             return $defaults;
