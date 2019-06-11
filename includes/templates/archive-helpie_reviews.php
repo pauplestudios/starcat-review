@@ -20,24 +20,11 @@ get_header(); ?>
           role="main">
 
         <?php $terms = get_terms('helpie_reviews_category', array('parent' => 0, 'hide_empty' => false));
-
+        $cats_list = new \HelpieReviews\App\Views\Review_Categories();
+        echo $cats_list->get_view($terms);
         ?>
-        <?php foreach ($terms as $key => $term) {
-            error_log('$term : ' . $term->name);
-            ?>
 
 
-        <div class="ast-row">
-            <article itemtype="https://schema.org/CreativeWork"
-                     itemscope="itemscope"
-                     id="post-1"
-                     class="post-1 post hrp-archive-post">
-                <h2 class='hrp-entry-title'> <?php echo $term->name ?></h2>
-                <?php echo $term->description ?>
-            </article>
-        </div>
-
-        <?php  } ?>
 
 
     </main>

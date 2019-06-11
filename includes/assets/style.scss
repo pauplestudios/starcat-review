@@ -1,4 +1,11 @@
+/* Vendors */
+@import "styles/vendors/simple-grid.scss";
+
+/* Main */
 @import "styles/templates.scss";
+
+/* Components */
+@import "styles/categories-list.scss";
 @import "styles/listing.scss";
 @import "../../app/views/styles/star-rating.scss";
 @import "../../app/views/styles/pros-and-cons.scss";
@@ -8,6 +15,7 @@ html {
 }
 
 .hrp-container {
-    margin: 40px 0;
+    margin: 40px 0 !important;
     overflow: auto;
+    width: 100%;
 }
