@@ -33,7 +33,7 @@ if (!class_exists('\HelpieReviews\App\Models\Pros_And_Cons')) {
                 $pros_and_cons['cons'][] = $item['pro_con'];
             }
 
-            error_log('$pros_and_cons : ' . print_r($pros_and_cons, true));
+            // error_log('$pros_and_cons : ' . print_r($pros_and_cons, true));
             return $pros_and_cons;
         }
 

@@ -15,7 +15,7 @@ if (!class_exists('\HelpieReviews\App\Views\Stats')) {
         {
             $this->model = $stats;
             $this->star_rating = new \HelpieReviews\App\Views\Rating_Types\Star_Rating($this->model);
-            error_log('$stats : ' . print_r($stats, true));
+            // error_log('$stats : ' . print_r($stats, true));
         }
 
         public function get_html()

@@ -22,7 +22,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             $count = 1;
             foreach ($this->model as $key => $value) {
 
-                error_log('$value : ' . $value);
+                // error_log('$value : ' . $value);
                 $star_value = $value / 20;
                 $html .= "<div class='single-rating'><span class='rating-label'>" . $key . "</span>";
                 $html .= $this->get_star_set($star_value,  $key);
@@ -42,7 +42,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
 
             $star_value = (floor($star_value * 2) / 2);
 
-            error_log('$star_value : ' . $star_value);
+            // error_log('$star_value : ' . $star_value);
 
             // $star_value = 4;
             for ($ii = 5; $ii >= 1; $ii--) {
