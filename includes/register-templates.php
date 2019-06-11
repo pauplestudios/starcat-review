@@ -11,7 +11,33 @@ if (!class_exists('\HelpieReviews\Includes\Register_Templates')) {
     {
         public function __construct()
         {
+            add_filter('archive_template', array($this, 'get_archive_template'));
+            add_filter('taxonomy_template', array($this, 'get_category_template'));
             add_filter('single_template', array($this, 'single_template_callback'));
+        }
+
+        public function get_archive_template($archive_template)
+        {
+            global $post;
+            if (is_post_type_archive('helpie_reviews')) {
+                if (file_exists(HELPIE_REVIEWS_PATH . '/includes/templates/archive-helpie_reviews.php')) {
+                    $archive_template = HELPIE_REVIEWS_PATH . '/includes/templates/archive-helpie_reviews.php';
+                }
+            }
+
+            return $archive_template;
+        }
+
+        public function get_category_template($archive_template)
+        {
+            global $post;
+            if (is_tax('helpie_reviews_category')) {
+                if (file_exists(HELPIE_REVIEWS_PATH . '/includes/templates/category-helpie_reviews.php')) {
+                    $archive_template = HELPIE_REVIEWS_PATH . '/includes/templates/category-helpie_reviews.php';
+                }
+            }
+
+            return $archive_template;
         }
 
         public function single_template_callback($single)
