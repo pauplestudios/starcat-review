@@ -19,19 +19,20 @@ get_header(); ?>
     <main id="main"
           class="site-main"
           role="main">
-        <?php while (have_posts()) : the_post(); ?>
+        <div class="hrp-categories-list hrp-container container">
+            <?php $card = new \HelpieReviews\App\Views\Blocks\Card();
 
-        <div class="ast-row">
+            while (have_posts()) : the_post();
 
-            <article itemtype="https://schema.org/CreativeWork"
-                     itemscope="itemscope"
-                     id="post-1"
-                     class="post-1 post hrp-archive-post">
-                <h2 class='hrp-entry-title'> <?php the_title() ?></h2>
-                <?php the_content() ?>
-            </article>
+                $itemProps = [
+                    'title' => get_the_title(),
+                    'content' => get_the_content()
+                ];
+
+                echo $card->get_view($itemProps);
+
+            endwhile; ?>
         </div>
-        <?php endwhile; ?>
     </main>
 </div><!-- #primary -->
 
