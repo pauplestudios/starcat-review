@@ -21,6 +21,10 @@ if (!class_exists('\Helpie_Reviews')) {
             $this->register_cpt_and_taxonomy();
             /*  Reviews Init Hook */
             add_action('init', array($this, 'init_hook'));
+
+            /* */
+            add_action('widgets_init', [$this, 'register_sidebar']);
+
             /*  Reviews Activation Hook */
             register_activation_hook(HELPIE_REVIEWS__FILE__, array($this, 'reviews_activate'));
             /*  Reviews Admin Section Initialization Hook */
@@ -56,7 +60,28 @@ if (!class_exists('\Helpie_Reviews')) {
             /*  Reviews Widget */
             // $this->load_widgets();
 
+            /* settings getter */
+            require_once(HELPIE_REVIEWS_PATH . 'includes/settings/getter.php');
+
+
             $register_templates = new \HelpieReviews\Includes\Register_Templates();
+        }
+
+
+        public function register_sidebar()
+        {
+
+            register_sidebar(
+                array(
+                    'id' => 'helpie_reviews_sidebar',
+                    'name' => __('Reviews Sidebar'),
+                    'description' => __('Sidebar of Helpie Reviews plugin'),
+                    'before_widget' => '<div id="%1$s" class="widget %2$s">',
+                    'after_widget' => '</div>',
+                    'before_title' => '<h3 class="widget-title">',
+                    'after_title' => '</h3>',
+                )
+            );
         }
 
         public function plugins_loaded_action()
@@ -203,6 +228,7 @@ if (!class_exists('\Helpie_Reviews')) {
         {
             wp_enqueue_script('helpie-reviews-script', HELPIE_REVIEWS_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'));
             wp_enqueue_style('style-name', HELPIE_REVIEWS_URL . "includes/assets/bundle/main.bundle.css");
+            wp_enqueue_style('flexbox-grid', HELPIE_REVIEWS_URL . "includes/assets/vendors/flexboxgrid.min.css");
         }
     }
 }
