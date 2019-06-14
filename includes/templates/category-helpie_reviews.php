@@ -9,7 +9,11 @@
  */
 
 get_header(); ?>
-<?php get_sidebar(); ?>
+<!-- <?php get_sidebar('helpie_reviews_sidebar'); ?> -->
+
+<div class='sidebar'>
+    <?php dynamic_sidebar('helpie_reviews_sidebar'); ?>
+</div>
 
 <div id="primary">
     <section class='hrp-archive-description'>
