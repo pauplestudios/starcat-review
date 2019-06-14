@@ -17,7 +17,7 @@ if (!class_exists('\HelpieReviews\App\Views\Blocks\Simple_Collection')) {
         public function get_view($itemsProps, $collectionProps)
         {
             $html = '';
-            $html .= '<div class="hrp-categories-list hrp-container container">';
+            $html .= '<div class="hrp-collection row">';
 
             $columns = $collectionProps['no_of_cols'];
             $count = 1;
@@ -25,12 +25,12 @@ if (!class_exists('\HelpieReviews\App\Views\Blocks\Simple_Collection')) {
             foreach ($itemsProps as $key => $item) {
 
                 // start row
-                if ($count % $columns == 1) $html .= '<div class="row">';
+                // if ($count % $columns == 1) $html .= '<div class="row">';
 
                 $html .= $this->get_single_card($item);
 
                 // close row 
-                if ($count  % $columns == 0) $html .= '</div>';
+                // if ($count  % $columns == 0) $html .= '</div>';
 
                 $count++;
             }
@@ -45,7 +45,7 @@ if (!class_exists('\HelpieReviews\App\Views\Blocks\Simple_Collection')) {
         {
             $html = '';
 
-            $html .= '<div class="col-4">'; // can't add additional classes
+            $html .= '<div class="hrp-collection__col col-xs-12 col-lg-4">'; // can't add additional classes
             $html .= '<div class="hrp-review-card">';
             $html .= '<div class="review-card__header">' . $item['title'] . '</div>';
             $html .= '<div class="review-card__body">' . $item['content'] . '</div>';

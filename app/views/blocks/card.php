@@ -18,7 +18,7 @@ if (!class_exists('\HelpieReviews\App\Views\Blocks\Card')) {
         {
             $html = '';
 
-            $html .= '<div class="col-4">'; // can't add additional classes
+            $html .= '<div class="hrp-collection__col col-xs-12 col-lg-4">'; // can't add additional classes
             $html .= '<div class="hrp-review-card">';
             $html .= '<div class="review-card__header">' . $item['title'] . '</div>';
             $html .= '<div class="review-card__body">' . $item['content'] . '</div>';

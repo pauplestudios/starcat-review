@@ -19,21 +19,24 @@ get_header(); ?>
     <main id="main"
           class="site-main"
           role="main">
-        <div class="hrp-categories-list hrp-container container">
-            <?php $card = new \HelpieReviews\App\Views\Blocks\Card();
 
-            while (have_posts()) : the_post();
+        <div class="hrp-collection row">
+            <?php while (have_posts()) : the_post();
+                $count = 150;
 
-                $itemProps = [
-                    'title' => get_the_title(),
-                    'content' => get_the_content()
-                ];
+                $excerpt = get_the_content();
+                $excerpt = strip_tags($excerpt);
+                $excerpt = substr($excerpt, 0, $count);
+                $excerpt .= ' ...';
 
-                echo $card->get_view($itemProps);
+                $item = ['title' => get_the_title(), 'content' => $excerpt, 'url' => ''];
+                $card = new \HelpieReviews\App\Views\Blocks\Card();
+                echo $card->get_view($item);
 
             endwhile; ?>
         </div>
-    </main>
+</div>
+</main>
 </div><!-- #primary -->
 
 <?php get_footer(); ?>

@@ -207,6 +207,7 @@ if (!class_exists('\Helpie_Reviews')) {
         {
             wp_enqueue_script('helpie-reviews-script', HELPIE_REVIEWS_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'));
             wp_enqueue_style('style-name', HELPIE_REVIEWS_URL . "includes/assets/bundle/main.bundle.css");
+            wp_enqueue_style('flexbox-grid', HELPIE_REVIEWS_URL . "includes/assets/vendors/flexboxgrid.min.css");
         }
     }
 }

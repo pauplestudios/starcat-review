@@ -1,10 +1,12 @@
 /* Vendors */
-@import "styles/vendors/simple-grid.scss";
+// @import "styles/vendors/simple-grid.scss";
 
 /* Main */
 @import "styles/templates.scss";
 
 /* Components */
+@import "styles/blocks/collection.scss";
+
 @import "styles/categories-list.scss";
 @import "styles/listing.scss";
 @import "../../app/views/styles/star-rating.scss";
