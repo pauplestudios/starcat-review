@@ -24,20 +24,30 @@ get_header(); ?>
           class="site-main"
           role="main">
 
-        <div class="hrp-collection row">
-            <?php while (have_posts()) : the_post();
-                $count = 150;
+        <div id="hrp-controlled-list">
+            <?php
+            $list_controls = new \HelpieReviews\App\Views\Blocks\List_Controls_Listjs();
+            echo $list_controls->get_view();
+            ?>
 
-                $excerpt = get_the_content();
-                $excerpt = strip_tags($excerpt);
-                $excerpt = substr($excerpt, 0, $count);
-                $excerpt .= ' ...';
+            <div class="hrp-collection list row">
 
-                $item = ['title' => get_the_title(), 'content' => $excerpt, 'url' => ''];
-                $card = new \HelpieReviews\App\Views\Blocks\Card();
-                echo $card->get_view($item);
 
-            endwhile; ?>
+
+                <?php while (have_posts()) : the_post();
+                    $count = 150;
+
+                    $excerpt = get_the_content();
+                    $excerpt = strip_tags($excerpt);
+                    $excerpt = substr($excerpt, 0, $count);
+                    $excerpt .= ' ...';
+
+                    $item = ['title' => get_the_title(), 'content' => $excerpt, 'url' => ''];
+                    $card = new \HelpieReviews\App\Views\Blocks\Card();
+                    echo $card->get_view($item);
+
+                endwhile; ?>
+            </div>
         </div>
 </div>
 </main>
