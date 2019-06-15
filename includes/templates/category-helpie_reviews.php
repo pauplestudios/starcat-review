@@ -28,6 +28,9 @@ get_header(); ?>
             <?php
             $list_controls = new \HelpieReviews\App\Views\Blocks\List_Controls_Listjs();
             echo $list_controls->get_view();
+
+            $semantic_controls = new \HelpieReviews\App\Views\Blocks\List_Controls_Semantic();
+            echo $semantic_controls->get_view();
             ?>
 
             <div class="hrp-collection list row">

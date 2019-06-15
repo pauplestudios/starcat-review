@@ -13,3 +13,4 @@ tests/_data/helpie
 *.lock
 reports
 .scannerwork
+includes/assets/vendors/semantic

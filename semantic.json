@@ -1,0 +1,41 @@
+{
+    "base": "includes/assets/vendors/semantic",
+    "paths": {
+        "source": {
+            "config": "src/theme.config",
+            "definitions": "src/definitions/",
+            "site": "src/site/",
+            "themes": "src/themes/"
+        },
+        "output": {
+            "packaged": "output/packaged",
+            "uncompressed": "output/components/",
+            "compressed": "output/compressed/",
+            "themes": "output/themes/"
+        },
+        "clean": "dist/"
+    },
+    "permission": false,
+    "autoInstall": false,
+    "rtl": false,
+    "components": [
+        "button",
+        "icon",
+        "image",
+        "input",
+        "label",
+        "form",
+        "grid",
+        "table",
+        "card",
+        "accordion",
+        "checkbox",
+        "dropdown",
+        "transition",
+        "progress",
+        "rating",
+        "search",
+        "form"
+    ],
+    "version": "2.4.2"
+}
