@@ -3,9 +3,15 @@ var List = require("list.js");
 
 var UserReviewsList = {
     init: function() {
+        this.dropDownInit();
+
         var options = {
             // item: "hrp-collection__col",
-            valueNames: ["review-card__header", "review-card__body"],
+            valueNames: [
+                "review-card__header",
+                "review-card__body",
+                { name: "reviewCount", attr: "data-reviewcount" }
+            ],
             fuzzySearch: {
                 searchClass: "collection-search",
                 location: 0,
@@ -20,37 +26,45 @@ var UserReviewsList = {
         console.log("ListControl");
     },
 
+    dropDownInit: function() {
+        var thisModule = this;
+
+        jQuery(".ui.dropdown").dropdown({
+            clearable: true
+        });
+    },
+
     eventHandlers: function() {
         console.log("ListControl eventHandlers");
-        // this.filters();
+        this.filters();
+    },
+
+    checkExists: function(selector) {
+        console.log(jQuery(selector).length);
     },
 
     filters: function() {
         var thisModule = this;
-        jQuery("#filter-games").click(function() {
-            thisModule.featureList.filter(function(item) {
-                if (item.values().category == "Game") {
-                    return true;
-                } else {
-                    return false;
-                }
-            });
-            return false;
-        });
 
-        jQuery("#filter-beverages").click(function() {
+        jQuery(".ui.dropdown").dropdown("setting", "onChange", function(
+            value,
+            text,
+            $selectedItem
+        ) {
+            console.log("clicked: " + value);
+
+            if (value == "") {
+                thisModule.featureList.clear();
+            }
+
             thisModule.featureList.filter(function(item) {
-                if (item.values().category == "Beverage") {
+                console.log(item.values());
+                if (item.values().reviewCount == value) {
                     return true;
                 } else {
                     return false;
                 }
             });
-            return false;
-        });
-        jQuery("#filter-none").click(function() {
-            thisModule.featureList.filter();
-            return false;
         });
     },
 

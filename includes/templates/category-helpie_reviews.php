@@ -28,27 +28,39 @@ get_header(); ?>
             <?php
             $list_controls = new \HelpieReviews\App\Views\Blocks\List_Controls_Listjs();
             echo $list_controls->get_view();
-
-            $semantic_controls = new \HelpieReviews\App\Views\Blocks\List_Controls_Semantic();
-            echo $semantic_controls->get_view();
             ?>
 
-            <div class="hrp-collection list row">
+            <ul class="filter">
+                <?php
+
+                $semantic_controls = new \HelpieReviews\App\Views\Blocks\List_Controls_Semantic();
+                echo $semantic_controls->get_view();
+                ?>
+            </ul>
+
+            <div id='hrp-cat-collection'
+                 class="hrp-collection list row">
 
 
-
+                <!-- $reviews = [2, 4, 7, 25, 50, 75, 100];
+                $ii = 0; -->
                 <?php while (have_posts()) : the_post();
-                    $count = 150;
+
+
+                    if (!isset($ii)) $ii = 0;
+                    $reviews = [2, 4, 7, 25, 50, 75, 100];
+                    // error_log('$reviews : ' . print_r($reviews, true));
+                    $word_count = 150;
 
                     $excerpt = get_the_content();
                     $excerpt = strip_tags($excerpt);
-                    $excerpt = substr($excerpt, 0, $count);
+                    $excerpt = substr($excerpt, 0, $word_count);
                     $excerpt .= ' ...';
 
-                    $item = ['title' => get_the_title(), 'content' => $excerpt, 'url' => ''];
+                    $item = ['title' => get_the_title(), 'content' => $excerpt, 'url' => '', 'reviews' => $reviews[$ii]];
                     $card = new \HelpieReviews\App\Views\Blocks\Card();
                     echo $card->get_view($item);
-
+                    $ii++;
                 endwhile; ?>
             </div>
         </div>

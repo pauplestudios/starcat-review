@@ -40,15 +40,28 @@ if (!class_exists('\HelpieReviews\App\Views\Blocks\List_Controls_Semantic')) {
         public function dropdown()
         {
 
-            $html = ' <div class="ui dropdown">
-  <input type="hidden" name="gender">
-  <i class="dropdown icon"></i>
-  <div class="default text">Gender</div>
-  <div class="menu">
-    <div class="item" data-value="male">Male</div>
-    <div class="item" data-value="female">Female</div>
-  </div>
-</div>';
+            $values = [
+                '2' => '2+',
+                '4' => '4+',
+                '25' => '25+',
+                '50' => '50+'
+            ];
+
+            $html = '<div class="ui dropdown">';
+
+            $html .= '<input type="hidden" name="gender">';
+            $html .= '<i class="dropdown icon"></i>';
+            $html .= '<div class="default text">Gender</div>';
+            $html .= '<div class="menu">';
+
+
+            foreach ($values as $key => $value) {
+                $html .= '<div class="item" data-value="' . $key . '">' . $value . '</div>';
+            }
+            // $html .= '<div class="item" data-value="male">Male</div>';
+            // $html .= '<div class="item" data-value="female">Female</div>';
+            $html .= '</div>';
+            $html .= '</div>';
 
             return $html;
         }
