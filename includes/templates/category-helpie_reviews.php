@@ -26,15 +26,18 @@ get_header(); ?>
 
         <div id="hrp-controlled-list">
             <?php
-            $list_controls = new \HelpieReviews\App\Views\Blocks\List_Controls_Listjs();
-            echo $list_controls->get_view();
+
+            $controls_builder = new \HelpieReviews\App\Builders\Controls_Builder();
+            echo $controls_builder->get_controls();
+            // $list_controls = new \HelpieReviews\App\Views\Blocks\List_Controls_Listjs();
+            // echo $list_controls->get_view();
             ?>
 
             <ul class="filter">
                 <?php
 
-                $semantic_controls = new \HelpieReviews\App\Views\Blocks\List_Controls_Semantic();
-                echo $semantic_controls->get_view();
+                // $semantic_controls = new \HelpieReviews\App\Views\Blocks\List_Controls_Semantic();
+                // echo $semantic_controls->get_view();
                 ?>
             </ul>
 

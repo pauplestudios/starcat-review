@@ -37,29 +37,20 @@ if (!class_exists('\HelpieReviews\App\Views\Blocks\List_Controls_Semantic')) {
             return $html;
         }
 
-        public function dropdown()
+        public function dropdown($props)
         {
 
-            $values = [
-                '2' => '2+',
-                '4' => '4+',
-                '25' => '25+',
-                '50' => '50+'
-            ];
-
             $html = '<div class="ui dropdown">';
-
             $html .= '<input type="hidden" name="gender">';
             $html .= '<i class="dropdown icon"></i>';
-            $html .= '<div class="default text">Gender</div>';
+            $html .= '<div class="default text">' . $props['label'] . '</div>';
             $html .= '<div class="menu">';
 
-
-            foreach ($values as $key => $value) {
-                $html .= '<div class="item" data-value="' . $key . '">' . $value . '</div>';
+            $options = $props['options'];
+            foreach ($options as $key => $option_value) {
+                $html .= '<div class="item" data-value="' . $key . '">' . $option_value . '</div>';
             }
-            // $html .= '<div class="item" data-value="male">Male</div>';
-            // $html .= '<div class="item" data-value="female">Female</div>';
+
             $html .= '</div>';
             $html .= '</div>';
 
@@ -79,7 +70,7 @@ if (!class_exists('\HelpieReviews\App\Views\Blocks\List_Controls_Semantic')) {
             return $html;
         }
 
-        public function radio_group()
+        public function radio_group($props)
         {
             $html = '';
 
@@ -87,12 +78,20 @@ if (!class_exists('\HelpieReviews\App\Views\Blocks\List_Controls_Semantic')) {
             $html .= '<div class="grouped fields">';
             $html .= '<label>How often do you use checkboxes?</label>';
 
-            $html .= '<div class="field">';
-            $html .= '<div class="ui radio checkbox">';
-            $html .= '<input type="radio" name="example2" checked="checked">';
-            $html .= '<label>Once a week</label>';
-            $html .= '</div>';
-            $html .= '</div>';
+            $options = $props['options'];
+            foreach ($options as $key => $option_value) {
+
+                $checked = '';
+                if ($key == $props['default']) {
+                    $checked = 'checked="checked"';
+                }
+                $html .= '<div class="field">';
+                $html .= '<div class="ui radio checkbox">';
+                $html .= '<input type="radio" name="' . $props['name'] . '" ' . $checked . '>';
+                $html .= '<label>' . $option_value . '</label>';
+                $html .= '</div>';
+                $html .= '</div>';
+            }
 
             $html .= '</div>';
             $html .= '</div>';
