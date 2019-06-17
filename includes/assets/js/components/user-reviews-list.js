@@ -1,6 +1,5 @@
 // import List from "list.js";
 var List = require("list.js");
-var Dropdown = require("./blocks/dropdown.js");
 
 var UserReviewsList = {
     init: function() {
@@ -21,14 +20,6 @@ var UserReviewsList = {
         this.featureList = new List("lovely-things-list", options);
 
         this.eventHandlers();
-    },
-
-    dropDownInit: function() {
-        var thisModule = this;
-
-        jQuery(".ui.dropdown").dropdown({
-            clearable: true
-        });
     },
 
     eventHandlers: function() {

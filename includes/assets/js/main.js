@@ -1,4 +1,4 @@
-var UserReviewsList = require("./user-reviews-list.js");
+var UserReviewsList = require("./components/user-reviews-list.js");
 var ListControl = require("./blocks/list-control.js");
 
 var HelpieReviews = {

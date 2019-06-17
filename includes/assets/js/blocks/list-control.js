@@ -23,19 +23,19 @@ var UserReviewsList = {
 
         this.featureList = new List("hrp-controlled-list", options);
         this.eventHandlers();
-        console.log("ListControl");
+        // console.log("ListControl");
     },
 
     dropDownInit: function() {
         var thisModule = this;
 
-        jQuery(".ui.dropdown").dropdown({
+        jQuery("#hrp-controlled-list .ui.dropdown").dropdown({
             clearable: true
         });
     },
 
     eventHandlers: function() {
-        console.log("ListControl eventHandlers");
+        // console.log("ListControl eventHandlers");
         this.filters();
     },
 
@@ -46,26 +46,26 @@ var UserReviewsList = {
     filters: function() {
         var thisModule = this;
 
-        jQuery(".ui.dropdown").dropdown("setting", "onChange", function(
-            value,
-            text,
-            $selectedItem
-        ) {
-            console.log("clicked: " + value);
+        jQuery("#hrp-controlled-list .ui.dropdown").dropdown(
+            "setting",
+            "onChange",
+            function(value, text, $selectedItem) {
+                // console.log("clicked: " + value);
 
-            if (value == "") {
-                thisModule.featureList.clear();
-            }
-
-            thisModule.featureList.filter(function(item) {
-                console.log(item.values());
-                if (item.values().reviewCount == value) {
-                    return true;
-                } else {
-                    return false;
+                if (value == "") {
+                    thisModule.featureList.clear();
                 }
-            });
-        });
+
+                thisModule.featureList.filter(function(item) {
+                    // console.log(item.values());
+                    if (item.values().reviewCount == value) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+            }
+        );
     },
 
     sorting: function() {}
