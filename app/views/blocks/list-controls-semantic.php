@@ -41,7 +41,7 @@ if (!class_exists('\HelpieReviews\App\Views\Blocks\List_Controls_Semantic')) {
         {
 
             $html = '<div class="ui dropdown">';
-            $html .= '<input type="hidden" name="gender">';
+            $html .= '<input type="hidden" name="' . $props['name'] . '">';
             $html .= '<i class="dropdown icon"></i>';
             $html .= '<div class="default text">' . $props['label'] . '</div>';
             $html .= '<div class="menu">';
@@ -76,7 +76,7 @@ if (!class_exists('\HelpieReviews\App\Views\Blocks\List_Controls_Semantic')) {
 
             $html .= '<div class="ui form">';
             $html .= '<div class="grouped fields">';
-            $html .= '<label>How often do you use checkboxes?</label>';
+            $html .= '<label>' . $props['label'] . '</label>';
 
             $options = $props['options'];
             foreach ($options as $key => $option_value) {
