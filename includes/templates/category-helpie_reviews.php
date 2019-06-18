@@ -65,7 +65,9 @@ get_header(); ?>
                     echo $card->get_view($item);
                     $ii++;
                 endwhile; ?>
+
             </div>
+            <ul class="ui pagination menu"></ul>
         </div>
 </div>
 </main>

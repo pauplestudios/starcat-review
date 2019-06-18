@@ -12,6 +12,9 @@ var UserReviewsList = {
                 "review-card__body",
                 { name: "reviewCount", attr: "data-reviewcount" }
             ],
+
+            page: 3,
+            pagination: true,
             fuzzySearch: {
                 searchClass: "collection-search",
                 location: 0,
@@ -23,6 +26,8 @@ var UserReviewsList = {
 
         this.featureList = new List("hrp-controlled-list", options);
         this.eventHandlers();
+
+        jQuery(".pagination a").addClass("item");
         // console.log("ListControl");
     },
 
