@@ -15,7 +15,23 @@ if (!class_exists('\HelpieReviews\App\Builders\Controls_Builder')) {
         public function __construct()
         {
             $this->controls = [
+                'search' => [
+                    'type' => 'search',
+                ],
+
+                'sort' => [
+                    'name' => 'sort',
+                    'type' => 'dropdown',
+                    'default' => '',
+                    'label' => 'SortBy',
+                    'options' => [
+                        'alphabet-asc' => 'Alphabetic Asc',
+                        'alphabet-desc' => 'Alphabetic Desc',
+                        'avg-rating' => 'Average Rating'
+                    ]
+                ],
                 'reviews' => [
+                    'name' => 'reviews',
                     'type' => 'dropdown',
                     'default' => '',
                     'label' => 'No. of reviews',
@@ -29,6 +45,7 @@ if (!class_exists('\HelpieReviews\App\Builders\Controls_Builder')) {
                 'verified' => [
                     'name' => 'verified',
                     'type' => 'radio',
+                    'label' => 'Verified',
                     'default' => 'either',
                     'options' => [
                         'true' => 'True',
@@ -58,6 +75,14 @@ if (!class_exists('\HelpieReviews\App\Builders\Controls_Builder')) {
         private function get_map($controlName)
         {
             $map = [
+                'search' => [
+                    'class' => new \HelpieReviews\App\Views\Blocks\List_Controls_Listjs(),
+                    'methodName' => 'search'
+                ],
+                'sort_button' => [
+                    'class' => new \HelpieReviews\App\Views\Blocks\List_Controls_Listjs(),
+                    'methodName' => 'sort_button'
+                ],
                 'dropdown' => [
                     'class' => new \HelpieReviews\App\Views\Blocks\List_Controls_Semantic(),
                     'methodName' => 'dropdown'
