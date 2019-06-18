@@ -45,8 +45,24 @@ get_header(); ?>
                  class="hrp-collection list row">
 
 
-                <!-- $reviews = [2, 4, 7, 25, 50, 75, 100];
-                $ii = 0; -->
+                <?php
+                $term = get_queried_object();
+                // the query to set the posts per page to 3
+                $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+                $args = array(
+                    'posts_per_page' => -1,
+                    'post_type' => HELPIE_REVIEWS_POST_TYPE,
+                    'paged' => $paged,
+                    'tax_query' => array(
+                        array(
+                            'taxonomy' => 'helpie_reviews_category',
+                            'field'    => 'id',
+                            'terms'    => $term->term_id,
+                        ),
+                    )
+                );
+                query_posts($args); ?>
+
                 <?php while (have_posts()) : the_post();
 
 
