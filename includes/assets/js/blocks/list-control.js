@@ -37,6 +37,7 @@ var UserReviewsList = {
     eventHandlers: function() {
         // console.log("ListControl eventHandlers");
         this.filters();
+        this.sorting();
     },
 
     checkExists: function(selector) {
@@ -46,7 +47,7 @@ var UserReviewsList = {
     filters: function() {
         var thisModule = this;
 
-        jQuery("#hrp-controlled-list .ui.dropdown").dropdown(
+        jQuery("#hrp-controlled-list .ui.dropdown.reviews").dropdown(
             "setting",
             "onChange",
             function(value, text, $selectedItem) {
@@ -68,7 +69,31 @@ var UserReviewsList = {
         );
     },
 
-    sorting: function() {}
+    sorting: function() {
+        var thisModule = this;
+
+        jQuery("#hrp-controlled-list .ui.dropdown.sort").dropdown(
+            "setting",
+            "onChange",
+            function(value, text, $selectedItem) {
+                console.log("clicked: " + value);
+
+                if (value == "alphabet-asc") {
+                    thisModule.featureList.sort("review-card__header", {
+                        order: "asc"
+                    });
+                } else if (value == "alphabet-desc") {
+                    thisModule.featureList.sort("review-card__header", {
+                        order: "desc"
+                    });
+                } else if (value == "review-count") {
+                    thisModule.featureList.sort("reviewCount", {
+                        order: "desc"
+                    });
+                }
+            }
+        );
+    }
 };
 
 module.exports = UserReviewsList;
