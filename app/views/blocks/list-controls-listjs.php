@@ -28,5 +28,22 @@ if (!class_exists('\HelpieReviews\App\Views\Blocks\List_Controls_Listjs')) {
 
             return $html;
         }
+
+        public function search()
+        {
+            $html = '';
+            $html .= '<input class="collection-search" placeholder="Search lovely things" />';
+
+            return $html;
+        }
+
+        public function sort_button()
+        {
+            $html = '';
+            $html .= '<ul class="sort-by">';
+            $html .= '<li class="sort btn" data-sort="review-card__header">Sort by name</li>';
+            $html .= '</ul>';
+            return $html;
+        }
     } // END CLASS
 }
