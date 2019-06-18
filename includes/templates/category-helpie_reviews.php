@@ -26,20 +26,9 @@ get_header(); ?>
 
         <div id="hrp-controlled-list">
             <?php
-
             $controls_builder = new \HelpieReviews\App\Builders\Controls_Builder();
             echo $controls_builder->get_controls();
-            // $list_controls = new \HelpieReviews\App\Views\Blocks\List_Controls_Listjs();
-            // echo $list_controls->get_view();
             ?>
-
-            <ul class="filter">
-                <?php
-
-                // $semantic_controls = new \HelpieReviews\App\Views\Blocks\List_Controls_Semantic();
-                // echo $semantic_controls->get_view();
-                ?>
-            </ul>
 
             <div id='hrp-cat-collection'
                  class="hrp-collection list row">
@@ -76,7 +65,9 @@ get_header(); ?>
                     $excerpt = substr($excerpt, 0, $word_count);
                     $excerpt .= ' ...';
 
-                    $item = ['title' => get_the_title(), 'content' => $excerpt, 'url' => '', 'reviews' => $reviews[$ii]];
+                    $single_review = isset($reviews[$ii]) ? $reviews[$ii] : 1;
+
+                    $item = ['title' => get_the_title(), 'content' => $excerpt, 'url' => '', 'reviews' => $single_review];
                     $card = new \HelpieReviews\App\Views\Blocks\Card();
                     echo $card->get_view($item);
                     $ii++;
