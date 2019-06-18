@@ -75,7 +75,7 @@ get_header();
                 endwhile; ?>
 
             </div>
-            <ul class="ui pagination menu"></ul>
+            <ul class="ui pagination hrp-pagination menu"></ul>
         </div>
 </div>
 </main>

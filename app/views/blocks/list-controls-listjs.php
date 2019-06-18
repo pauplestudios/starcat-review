@@ -32,7 +32,7 @@ if (!class_exists('\HelpieReviews\App\Views\Blocks\List_Controls_Listjs')) {
         public function search()
         {
             $html = '';
-            $html .= '<input class="collection-search" placeholder="Search lovely things" />';
+            $html .= '<input class="collection-search hrp-search" placeholder="Search lovely things" />';
 
             return $html;
         }

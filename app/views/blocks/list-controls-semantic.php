@@ -40,7 +40,7 @@ if (!class_exists('\HelpieReviews\App\Views\Blocks\List_Controls_Semantic')) {
         public function dropdown($props)
         {
 
-            $html = '<div class="ui dropdown ' . $props['name'] . '">';
+            $html = '<div class="ui fluid selection dropdown ' . $props['name'] . '">';
             $html .= '<input type="hidden" name="' . $props['name'] . '">';
             $html .= '<i class="dropdown icon"></i>';
             $html .= '<div class="default text">' . $props['label'] . '</div>';

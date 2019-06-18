@@ -64,11 +64,18 @@ if (!class_exists('\HelpieReviews\App\Builders\Controls_Builder')) {
         {
             $html = '';
 
+            $html .= '<div class="row">';
+
             foreach ($this->controls as $key => $control) {
                 $map = $this->get_map($control['type']);
                 $methodName = $map['methodName'];
+
+                $html .= '<div class="item col-xs-12 col-lg-4">';
                 $html .= $map['class']->$methodName($control);
+                $html .= '</div>';
             }
+
+            $html .= '</div>';
 
             return $html;
         }
