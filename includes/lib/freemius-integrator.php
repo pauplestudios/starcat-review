@@ -23,7 +23,6 @@ if (!function_exists('hrp_fs')) {
                 'menu'                => array(
                     'slug'           => 'edit.php?post_type=helpie_reviews',
                     'override_exact' => true,
-                    'first-path'     => 'edit.php?post_type=helpie_reviews&page=helpie-review-settings',
                     'support'        => false,
                 ),
                 // Set the SDK to work in a sandbox mode (for development & testing).
