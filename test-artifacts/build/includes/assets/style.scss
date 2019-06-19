@@ -1,5 +1,25 @@
-@import "../../app/views/rating-types/star-rating.scss";
+/* Vendors */
+// @import "styles/vendors/simple-grid.scss";
+
+/* Main */
+@import "styles/templates.scss";
+
+/* Components */
+@import "styles/blocks/search.scss";
+@import "styles/blocks/pagination.scss";
+@import "styles/blocks/collection.scss";
+
+@import "styles/categories-list.scss";
+@import "styles/listing.scss";
+@import "../../app/views/styles/star-rating.scss";
+@import "../../app/views/styles/pros-and-cons.scss";
 
 html {
-  background: black;
+    background: black;
+}
+
+.hrp-container {
+    margin: 40px 0 !important;
+    overflow: auto;
+    width: 100%;
 }

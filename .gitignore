@@ -14,3 +14,4 @@ tests/_data/helpie
 reports
 .scannerwork
 includes/assets/vendors/semantic
+test-artifacts/build

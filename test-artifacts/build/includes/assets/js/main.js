@@ -1,13 +1,19 @@
-var HelpieReviews = {
-  init: function() {},
+var UserReviewsList = require("./components/user-reviews-list.js");
+var ListControl = require("./blocks/list-control.js");
 
-  eventHandlers: function() {
-    var thisModule = this;
-  }
+var HelpieReviews = {
+    init: function() {
+        UserReviewsList.init();
+        ListControl.init();
+    },
+
+    eventHandlers: function() {
+        var thisModule = this;
+    }
 };
 
 jQuery(document).ready(function() {
-  HelpieReviews.init();
+    HelpieReviews.init();
 });
 
 import "./../style.scss";

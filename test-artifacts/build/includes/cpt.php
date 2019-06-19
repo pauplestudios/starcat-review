@@ -53,7 +53,7 @@ if (!class_exists('\HelpieReviews\Includes\Cpt')) {
                 'public' => true,
                 'menu_position' => 26,
                 'menu_icon' => 'dashicons-feedback',
-                'show_in_nav_menus' => false,
+                'show_in_nav_menus' => true,
                 'show_in_rest' => true,
                 'map_meta_cap' => true,
                 'can_export' => true,
@@ -133,8 +133,6 @@ if (!class_exists('\HelpieReviews\Includes\Cpt')) {
             if (taxonomy_exists('helpdesk_category')) {
                 register_taxonomy_for_object_type('helpdesk_category', $this->post_type_name);
             }
-
         }
-
     } // END CLASS
 }

@@ -13,12 +13,17 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
         {
             // error_log('hooks __construct');
             add_filter('the_content', array($this, 'content_filter'));
-            add_filter('the_excerpt', array($this, 'content_filter'));
+            // add_filter('the_excerpt', array($this, 'content_filter'));
         }
 
         public function content_filter($content)
         {
             $review_content = $this->get_review_content();
+            $this->utils = new \HelpieReviews\Includes\Utils();
+            $user_review_controller = new \HelpieReviews\App\Controllers\User_Reviews_Controller();
+
+            $user_review_content = $user_review_controller->get_view();
+            // $fullcontent = $content . $review_content . $user_review_content;
             $fullcontent = $content . $review_content;
             return $fullcontent;
         }
