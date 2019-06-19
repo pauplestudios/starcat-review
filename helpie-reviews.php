@@ -19,7 +19,7 @@ if (!defined('ABSPATH')) {
 
 require_once plugin_dir_path(__FILE__) . "/includes/lib/freemius-integrator.php";
 
-define('HELPIE_REVIEWS_VERSION', '0.1');
+define('HELPIE_REVIEWS_VERSION', '0.2');
 define('HELPIE_REVIEWS_DOMAIN', 'helpie-reviews');
 define('HELPIE_REVIEWS_POST_TYPE', 'helpie_reviews');
 define('HELPIE_REVIEWS__FILE__', __FILE__);
