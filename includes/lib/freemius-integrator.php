@@ -1,18 +1,17 @@
 <?php
-if (!function_exists('hr_fs')) {
+if (!function_exists('hrp_fs')) {
     // Create a helper function for easy SDK access.
-    function hr_fs()
+    function hrp_fs()
     {
-        global $hr_fs;
+        global $hrp_fs;
 
-        if (!isset($hr_fs)) {
+        if (!isset($hrp_fs)) {
             // Include Freemius SDK.
             require_once dirname(__FILE__) . '/freemius/start.php';
 
-            $hr_fs = fs_dynamic_init(array(
+            $hrp_fs = fs_dynamic_init(array(
                 'id'                  => '3980',
                 'slug'                => 'helpie-review',
-                'premium_slug'        => 'helpie_faq-premium',
                 'type'                => 'plugin',
                 'public_key'          => 'pk_ad2b6650d9ef2e5df3c203ea9046f',
                 'is_premium'          => true,
@@ -22,7 +21,8 @@ if (!function_exists('hr_fs')) {
                 'has_addons'          => false,
                 'has_paid_plans'      => true,
                 'menu'                => array(
-                    'slug'           => 'edit.php?post_type=helpie-review',
+                    'slug'           => 'edit.php?post_type=helpie_reviews',
+                    'override_exact' => true,
                     'first-path'     => 'edit.php?post_type=helpie_reviews&page=helpie-review-settings',
                     'support'        => false,
                 ),
@@ -32,11 +32,21 @@ if (!function_exists('hr_fs')) {
             ));
         }
 
-        return $hr_fs;
+        return $hrp_fs;
     }
 
     // Init Freemius.
-    hr_fs();
+    hrp_fs();
     // Signal that SDK was initiated.
-    do_action('hr_fs_loaded');
+    do_action('hrp_fs_loaded');
+
+    function hrp_fs_settings_url()
+    {
+        return admin_url('edit.php?post_type=helpie_reviews&page=helpie-review-settings');
+    }
+
+    hrp_fs()->add_filter('connect_url', 'hrp_fs_settings_url');
+    hrp_fs()->add_filter('after_skip_url', 'hrp_fs_settings_url');
+    hrp_fs()->add_filter('after_connect_url', 'hrp_fs_settings_url');
+    hrp_fs()->add_filter('after_pending_connect_url', 'hrp_fs_settings_url');
 }
