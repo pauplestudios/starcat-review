@@ -44,8 +44,8 @@ if (!function_exists('hrp_fs')) {
         return admin_url('edit.php?post_type=helpie_reviews&page=helpie-review-settings');
     }
 
-    hrp_fs()->add_filter('connect_url', 'hrp_fs_settings_url');
-    hrp_fs()->add_filter('after_skip_url', 'hrp_fs_settings_url');
-    hrp_fs()->add_filter('after_connect_url', 'hrp_fs_settings_url');
-    hrp_fs()->add_filter('after_pending_connect_url', 'hrp_fs_settings_url');
+    // hrp_fs()->add_filter('connect_url', 'hrp_fs_settings_url');
+    // hrp_fs()->add_filter('after_skip_url', 'hrp_fs_settings_url');
+    // hrp_fs()->add_filter('after_connect_url', 'hrp_fs_settings_url');
+    // hrp_fs()->add_filter('after_pending_connect_url', 'hrp_fs_settings_url');
 }
