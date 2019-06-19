@@ -51,7 +51,7 @@ if (!class_exists('\HelpieReviews\App\Views\Blocks\Blog_Collection')) {
                      id="post-1"
                      class="post-1 post hrp-archive-post">';
             $html .= '<h2 class="hrp-entry-title">' . $item['title'] . '</h2>';
-            $html .= $item['content']
+            $html .= $item['content'];
             $html .= '</article>';
             $html .= '</div>';
 
