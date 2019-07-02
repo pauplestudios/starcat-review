@@ -1,0 +1,9 @@
+[submodule "lib/stylus"]
+	path = includes/lib/stylus
+	url = https://essekia@bitbucket.org/pauple/stylus.git
+[submodule "lib/widgetry"]
+	path = includes/lib/widgetry
+	url = https://essekia@bitbucket.org/pauple/widgetry.git
+[submodule "lib/upgrader"]
+	path = includes/lib/widgetry
+	url = https://essekia@bitbucket.org/essekia/upgrader.git
