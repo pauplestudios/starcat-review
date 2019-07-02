@@ -1,0 +1,3 @@
+[submodule "lib/upgrader"]
+	path = includes/lib/upgrader
+	url = https://essekia@bitbucket.org/essekia/upgrader.git
