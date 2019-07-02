@@ -29,7 +29,7 @@ if (!class_exists('\HelpieReviews\Includes\Upgrades')) {
 
             $upgrades_list = new \HelpieReviews\Includes\Upgrades_List();
 
-            $upgrader = new \HelpieReviews\Includes\Lib\Upgrader($args, $upgrades_list);
+            $upgrader = new \HelpieReviews\Includes\Lib\Upgrader\Upgrader($args, $upgrades_list);
             $upgrader::add_actions();
         }
     } // END CLASS

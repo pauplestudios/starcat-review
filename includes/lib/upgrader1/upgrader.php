@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\Includes\Lib;
+namespace HelpieReviews\Includes\Lib\Upgrader;
 
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
-if (!class_exists('\HelpieReviews\Includes\Lib\Upgrader')) {
+if (!class_exists('\HelpieReviews\Includes\Lib\Upgrader\Upgrader')) {
     class Upgrader
     {
 
