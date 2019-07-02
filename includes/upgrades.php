@@ -28,8 +28,8 @@ if (!class_exists('\HelpieReviews\Includes\Upgrades')) {
             ];
 
             $upgrades_list = new \HelpieReviews\Includes\Upgrades_List();
-
-            $upgrader = new \HelpieReviews\Includes\Lib\Upgrader\Upgrader($args, $upgrades_list);
+            include_once HELPIE_REVIEWS_PATH . 'includes/lib/upgrader/upgrader.php';
+            $upgrader = new \Upgrader\Upgrader($args, $upgrades_list);
             $upgrader::add_actions();
         }
     } // END CLASS
