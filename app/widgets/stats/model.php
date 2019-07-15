@@ -26,13 +26,6 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
             }
 
             return $stats;
-
-            /* Dummy */
-            $review_data_json = file_get_contents(HELPIE_REVIEWS_PATH . "/tests/_data/review-data.json");
-            $post_data = json_decode($review_data_json, true);
-            $stats = $post_data[0]['stats'];
-
-            return $stats;
         }
     } // END CLASS
 

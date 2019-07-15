@@ -9,10 +9,14 @@
 @import "styles/blocks/pagination.scss";
 @import "styles/blocks/collection.scss";
 
+@import "styles/comparison-table.scss";
 @import "styles/categories-list.scss";
 @import "styles/listing.scss";
 @import "../../app/views/styles/star-rating.scss";
 @import "../../app/views/styles/pros-and-cons.scss";
+
+/* Vendors */
+// @import "vendors/comparison-table/scss/style.scss";
 
 html {
     background: black;

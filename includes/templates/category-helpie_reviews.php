@@ -60,6 +60,9 @@ get_header();
             echo $listing_controller->get_view($results);
         }
 
+        $post_ids = [131, 123];
+        $comparison_controller = new \HelpieReviews\App\Widgets\Comparison\Controller();
+        echo $comparison_controller->get_view($post_ids);
         ?>
 
 </div>
