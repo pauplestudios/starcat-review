@@ -1,13 +1,13 @@
 <?php
 
-namespace HelpieReviews\App\Views;
+namespace HelpieReviews\App\Widgets\Stats;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Views\Stats')) {
-    class Stats
+if (!class_exists('\HelpieReviews\App\Widgets\Stats\View')) {
+    class View
     {
         private $html;
 

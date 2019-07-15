@@ -20,9 +20,9 @@ if (!class_exists('\HelpieReviews\App\Builders\Review_Builder')) {
         public function get_reviews($post_id)
         {
 
-            $stats = $this->get_stats($post_id);
-            $stats_view = new \HelpieReviews\App\Views\Stats($stats);
-            $html = $stats_view->get_html();
+            $stats_controller = new \HelpieReviews\App\Widgets\Stats\Controller($post_id);
+            $html = $stats_controller->get_view();
+
 
             $enable_pros_cons = HRP_Getter::get('enable-pros-cons');
 

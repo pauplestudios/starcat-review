@@ -19,7 +19,7 @@ if (!class_exists('\HelpieReviews\Includes\Upgrades')) {
 
         public static function init()
         {
-            error_log('Upgrades->init()');
+            // error_log('Upgrades->init()');
             $args = [
                 'db_version' => get_option('helpie_reviews_version'),
                 'file_version' => HELPIE_REVIEWS_VERSION,
