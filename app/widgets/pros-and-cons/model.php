@@ -1,25 +1,27 @@
 <?php
 
-namespace HelpieReviews\App\Models;
+namespace HelpieReviews\App\Widgets\ProsAndCons;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Models\Pros_And_Cons')) {
-    class Pros_And_Cons
+if (!class_exists('\HelpieReviews\App\Widgets\ProsAndCons\Model')) {
+    class Model
     {
         public function get($post_id)
         {
-            $review_post_meta =   get_post_meta($post_id, '_helpie_reviews_post_options', true);
+            $review_post_meta =  get_post_meta($post_id, '_helpie_reviews_post_options', true);
 
             // Return if empty
             if ($this->is_empty($review_post_meta)) {
                 return [];
             }
 
-            $pros_list = $review_post_meta['pros']['pros-list'];
+            $pros_list = $review_post_meta['pros-list'];
             $cons_list = $review_post_meta['cons']['cons-list'];
+
+            error_log(' $pros_list : ' . print_r($pros_list, true));
 
             $pros_and_cons = [];
             $pros_and_cons['pros'] = [];

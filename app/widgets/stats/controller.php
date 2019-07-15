@@ -11,7 +11,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Controller')) {
     {
         public function __construct($post_id)
         {
-            $this->stats_model = new \HelpieReviews\App\Models\Stats();
+            $this->model = new \HelpieReviews\App\Widgets\Stats\Model();
 
             $stats = $this->get_stats($post_id);
             $this->view = new \HelpieReviews\App\Widgets\Stats\View($stats);
@@ -25,7 +25,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Controller')) {
         private function get_stats($post_id)
         {
 
-            $stats = $this->stats_model->get($post_id);
+            $stats = $this->model->get($post_id);
             return $stats;
 
             return $stats;
