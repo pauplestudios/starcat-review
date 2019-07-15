@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The template for displaying archive pages.
  *
@@ -25,58 +26,42 @@ get_header();
           class="site-main"
           role="main">
 
-        <div id="hrp-controlled-list">
-            <?php
-            $controls_builder = new \HelpieReviews\App\Builders\Controls_Builder();
-            echo $controls_builder->get_controls();
-            ?>
-
-            <div id='hrp-cat-collection'
-                 class="hrp-collection list row">
 
 
-                <?php
-                $term = get_queried_object();
-                // the query to set the posts per page to 3
-                $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-                $args = array(
-                    'posts_per_page' => -1,
-                    'post_type' => HELPIE_REVIEWS_POST_TYPE,
-                    'paged' => $paged,
-                    'tax_query' => array(
-                        array(
-                            'taxonomy' => 'helpie_reviews_category',
-                            'field'    => 'id',
-                            'terms'    => $term->term_id,
-                        ),
-                    )
-                );
-                query_posts($args); ?>
 
-                <?php while (have_posts()) : the_post();
+        <?php
+        $results    = [];
+        $term = get_queried_object();
+        // the query to set the posts per page to 3
+        $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+        $args = array(
+            'posts_per_page' => -1,
+            'post_type' => HELPIE_REVIEWS_POST_TYPE,
+            'paged' => $paged,
+            'tax_query' => array(
+                array(
+                    'taxonomy' => 'helpie_reviews_category',
+                    'field'    => 'id',
+                    'terms'    => $term->term_id,
+                ),
+            )
+        );
+        $query = new \WP_Query($args);
 
+        if ($query->have_posts()) {
+            while ($query->have_posts()) {
+                // Optionally, pick parts of the post and create a custom collection.
+                $query->the_post();
+                $results[] = get_post();
+            }
+            wp_reset_postdata();
 
-                    if (!isset($ii)) $ii = 0;
-                    $reviews = [2, 4, 7, 25, 50, 75, 100];
-                    // error_log('$reviews : ' . print_r($reviews, true));
-                    $word_count = 150;
+            $listing_controller = new \HelpieReviews\App\Widgets\Listing\Controller();
+            echo $listing_controller->get_view($results);
+        }
 
-                    $excerpt = get_the_content();
-                    $excerpt = strip_tags($excerpt);
-                    $excerpt = substr($excerpt, 0, $word_count);
-                    $excerpt .= ' ...';
+        ?>
 
-                    $single_review = isset($reviews[$ii]) ? $reviews[$ii] : 1;
-
-                    $item = ['title' => get_the_title(), 'content' => $excerpt, 'url' => '', 'reviews' => $single_review];
-                    $card = new \HelpieReviews\App\Views\Blocks\Card();
-                    echo $card->get_view($item);
-                    $ii++;
-                endwhile; ?>
-
-            </div>
-            <ul class="ui pagination hrp-pagination menu"></ul>
-        </div>
 </div>
 </main>
 </div><!-- #primary -->
