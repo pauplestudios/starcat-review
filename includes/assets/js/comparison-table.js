@@ -297,14 +297,14 @@ jQuery(document).ready(function($) {
 
     var windowScrolling = false;
     //detect window scroll - fix product top-info on scrolling
-    $(window).on("scroll", function() {
-        if (!windowScrolling) {
-            windowScrolling = true;
-            !window.requestAnimationFrame
-                ? setTimeout(checkScrolling, 250)
-                : window.requestAnimationFrame(checkScrolling);
-        }
-    });
+    // $(window).on("scroll", function() {
+    //     if (!windowScrolling) {
+    //         windowScrolling = true;
+    //         !window.requestAnimationFrame
+    //             ? setTimeout(checkScrolling, 250)
+    //             : window.requestAnimationFrame(checkScrolling);
+    //     }
+    // });
 
     var windowResize = false;
     //detect window resize - reset .cd-products-comparison-table properties
