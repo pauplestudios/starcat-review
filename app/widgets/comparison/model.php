@@ -27,24 +27,37 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\Model')) {
         */
         public function get($posts)
         {
-
+            $stat_columns = [];
             $stats = [];
 
             foreach ($posts as $key => $post) {
                 $stats_list = $this->get_stats_list($post->ID);
 
+                $post_info = [];
+                $post_info['title'] = $post->post_title;
+                $post_info['stats'] = [];
                 foreach ($stats_list as $key => $single_post_stat) {
                     $stat_name = $single_post_stat['stat_name'];
 
-                    if (!isset($stats[$stat_name])) {
-                        $stats[$stat_name] = [];
-                    }
+                    // if (!isset($stats[$stat_name])) {
+                    //     $stats[$stat_name] = [];
+                    // }
 
-                    $stats[$stat_name][$post->ID] = $single_post_stat['rating'];
+                    $post_info['stats'][$stat_name] =  $single_post_stat['rating'];
+
+                    if (!in_array($stat_name, $stat_columns)) {
+                        $stat_columns[] = $stat_name;
+                    }
+                    // $stats[$stat_name][$post->ID] = $single_post_stat['rating'];
                 }
+
+                $stats[$post->ID] = $post_info;
             }
 
-            return $stats;
+            return [
+                'stats' => $stats,
+                'cols' => $stat_columns
+            ];
         }
 
 
