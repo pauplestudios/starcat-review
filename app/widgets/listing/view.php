@@ -16,14 +16,13 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\View')) {
         {
             /* Views */
             $this->card = new \HelpieReviews\App\Views\Blocks\Card();
+            $this->controls_builder = new \HelpieReviews\App\Builders\Controls_Builder();
         }
 
         public function get_html($posts)
         {
             $html = '<div id="hrp-controlled-list">';
-
-            $controls_builder = new \HelpieReviews\App\Builders\Controls_Builder();
-            $html .= $controls_builder->get_controls();
+            $html .= $this->controls_builder->get_controls();
 
             $html .= '<div id="hrp-cat-collection" class="hrp-collection list row">';
 
