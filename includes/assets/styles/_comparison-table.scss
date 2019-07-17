@@ -27,6 +27,14 @@
     }
 }
 
+.cd-products-comparison-table .top-info {
+    & .featured-image {
+        max-height: 60px;
+        float: none;
+        margin: 0 auto;
+    }
+}
+
 /* -------------------------------- 
 Main Components 
 -------------------------------- */

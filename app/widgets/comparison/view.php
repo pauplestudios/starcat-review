@@ -88,7 +88,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
             $html .= '<li class="product">';
             $html .= '<div class="top-info">';
             $html .= '<div class="check"></div>';
-            $html .= '<img src="../img/product.png" alt="product image">';
+            $html .= '<img class="featured-image" src="' . $stats['featured_image_url'] . '" alt="product image">';
             $html .= '<h3>' . $stats['title'] . '</h3>';
             $html .= '</div> <!-- .top-info -->';
 
