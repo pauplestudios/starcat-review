@@ -26,16 +26,13 @@ get_header();
           class="site-main"
           role="main">
 
-
-
-
         <?php
         $category_template_controller = new \HelpieReviews\Includes\Templates\Controllers\Category_Template_Controller();
         echo $category_template_controller->get_view();
         ?>
 
-</div>
-</main>
+
+    </main>
 </div><!-- #primary -->
 
 <?php get_footer(); ?>
