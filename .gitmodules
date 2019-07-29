@@ -1,3 +1,6 @@
 [submodule "lib/upgrader"]
 	path = includes/lib/upgrader
 	url = https://essekia@bitbucket.org/essekia/upgrader.git
+[submodule "lib/widgetry"]
+	path = includes/lib/widgetry
+	url = https://essekia@bitbucket.org/pauple/widgetry.git
