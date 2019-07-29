@@ -4,6 +4,3 @@
 [submodule "lib/widgetry"]
 	path = includes/lib/widgetry
 	url = https://essekia@bitbucket.org/pauple/widgetry.git
-[submodule "includes/lib/widgetry"]
-	path = includes/lib/widgetry
-	url = https://essekia@bitbucket.org/pauple/widgetry.git
