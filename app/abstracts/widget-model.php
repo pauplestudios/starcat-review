@@ -9,8 +9,10 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\HelpieReviews\App\Abstracts\Widget_Model')) {
     abstract class Widget_Model
     {
-        public function __construct()
-        { }
+        public function __construct($fields_model)
+        {
+            $this->fields_model = $fields_model;
+        }
 
         public function get_viewProps($args)
         {
@@ -21,6 +23,8 @@ if (!class_exists('\HelpieReviews\App\Abstracts\Widget_Model')) {
                 'items' => $this->get_items_props($args),
             );
 
+            error_log('$viewProps : ' . print_r($viewProps, true));
+
             return $viewProps;
         }
 
@@ -28,10 +32,9 @@ if (!class_exists('\HelpieReviews\App\Abstracts\Widget_Model')) {
         {
 
             // Get Default Values from GET - FIELDS
-            $fields = $this->get_fields();
-            foreach ($fields as $key => $field) {
-                $args[$key] = !empty($args[$key]) ? $args[$key] : $field['default'];
-            }
+            $args = $this->fields_model->get_default_args();
+
+            return $args;
         }
 
         public function get_fields()
