@@ -14,10 +14,11 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\Model')) {
     class Model extends Widget_Model implements Widget_Model_Interface
     {
 
-        public function __construct($fields_model)
+        public function __construct()
         {
+            $this->fields_model = new \HelpieReviews\App\Widgets\Listing\Fields_Model();
             $this->cat_posts_repo = new \HelpieReviews\App\Repositories\Category_Posts_Repo();
-            parent::__construct($fields_model);
+            parent::__construct($this->fields_model);
             $this->style_config = new \HelpieReviews\App\Widgets\Listing\Style_Config_Model();
             // $this->fields_model = $fields_model;
         }

@@ -25,13 +25,13 @@ if (!class_exists('\HelpieReviews\Includes\Widget_Controller')) {
         public function get_args()
         {
             $args = [
-                'id' => 'helpie-faq-listing',
-                'name' => 'Helpie FAQ',
-                'description' => 'Helpie FAQ Widget',
+                'id' => 'helpie-reviews-listing',
+                'name' => 'Helpie Reviews Listing',
+                'description' => 'Helpie Reviews Listing Widget',
                 'icon' => 'fa fa-th-list', // Used by Elementor only
                 'categories' => ['general-elements'], // Used by Elementor only
-                'model' =>  new \HelpieFaq\Features\Faq\Faq_Model(),
-                'view' => new \HelpieFaq\Features\Faq\Faq(),
+                'model' =>  new \HelpieReviews\App\Widgets\Listing\Model(),
+                'view' => new \HelpieReviews\App\Widgets\Listing\Controller(),
             ];
 
             return $args;
@@ -58,7 +58,7 @@ if (!class_exists('\HelpieReviews\Includes\Widget_Controller')) {
         {
             $faq_widget_args = $this->get_args();
 
-            require_once HELPIE_REVIEWS_PATH . '/lib/widgetry/widget-factory.php';
+            require_once HELPIE_REVIEWS_PATH . '/includes/lib/widgetry/widget-factory.php';
             $faq_widget = new \Widgetry\Widget_Factory($faq_widget_args);
             register_widget($faq_widget);
         }
@@ -70,7 +70,7 @@ if (!class_exists('\HelpieReviews\Includes\Widget_Controller')) {
             $elementor_args = $this->get_elementor_args($args);
 
 
-            require_once HELPIE_REVIEWS_PATH . '/lib/widgetry/elementor-widget-factory.php';
+            require_once HELPIE_REVIEWS_PATH . '/includes/lib/widgetry/elementor-widget-factory.php';
             \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new \Widgetry\Elementor_Widget_Factory([], $elementor_args));
         }
     } // END CLASS

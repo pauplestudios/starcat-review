@@ -11,8 +11,8 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\Controller')) {
     {
         public function __construct()
         {
-            $this->fields_model = new \HelpieReviews\App\Widgets\Listing\Fields_Model();
-            $this->model = new \HelpieReviews\App\Widgets\Listing\Model($this->fields_model);
+
+            $this->model = new \HelpieReviews\App\Widgets\Listing\Model();
             $this->view = new \HelpieReviews\App\Widgets\Listing\View();
         }
 
