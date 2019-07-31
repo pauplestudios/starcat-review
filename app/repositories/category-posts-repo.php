@@ -12,6 +12,9 @@ if (!class_exists('\HelpieReviews\App\Repositories\Category_Posts_Repo')) {
 
         public function get_category_posts($args)
         {
+
+            $args = $this->get_args();
+
             $posts = [];
 
             $query = new \WP_Query($args);
@@ -26,6 +29,27 @@ if (!class_exists('\HelpieReviews\App\Repositories\Category_Posts_Repo')) {
             }
 
             return $posts;
+        }
+
+        public function get_args()
+        {
+            $term = get_queried_object();
+            // the query to set the posts per page to 3
+            $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+            $args = array(
+                'posts_per_page' => -1,
+                'post_type' => HELPIE_REVIEWS_POST_TYPE,
+                'paged' => $paged,
+                'tax_query' => array(
+                    array(
+                        'taxonomy' => 'helpie_reviews_category',
+                        'field'    => 'id',
+                        'terms'    => $term->term_id,
+                    ),
+                )
+            );
+
+            return $args;
         }
     } // END CLASS
 }

@@ -16,9 +16,8 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\Controller')) {
             $this->view = new \HelpieReviews\App\Widgets\Listing\View();
         }
 
-        public function get_view($posts)
+        public function get_view($args)
         {
-            $args = [];
 
             $viewProps = $this->model->get_viewProps($args);
             return $this->view->get_html($viewProps);

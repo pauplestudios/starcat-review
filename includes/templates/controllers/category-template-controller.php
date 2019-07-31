@@ -26,18 +26,32 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Category_Templa
 
         public function get_category_post_listing($posts)
         {
-            $html = '';
+            $html = '<div class="hrp-category-page-content-area">';
 
             if (isset($posts) && !empty($posts)) {
+                $args = $this->get_listing_args();
                 $listing_controller = new \HelpieReviews\App\Widgets\Listing\Controller();
-                $html .= $listing_controller->get_view($posts);
+                $html .= $listing_controller->get_view($args);
             } else {
                 $html .= "No Reviews Found";
             }
 
+            $html .= "</div>";
+
             return $html;
         }
 
+        public function get_listing_args()
+        {
+            $term = get_queried_object();
+
+            $args = [
+                'term_id' => $term->term_id
+            ];
+
+
+            return $args;
+        }
 
         public function get_comparison_table()
         {

@@ -22,73 +22,36 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\Model')) {
             // $this->fields_model = $fields_model;
         }
 
-        protected function get_items_props($args)
-        {
-            $args = $this->get_args();
-            return $this->cat_posts_repo->get_category_posts($args);
-        }
-
-
-
-
-        public function get_args()
-        {
-            $term = get_queried_object();
-            // the query to set the posts per page to 3
-            $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-            $args = array(
-                'posts_per_page' => -1,
-                'post_type' => HELPIE_REVIEWS_POST_TYPE,
-                'paged' => $paged,
-                'tax_query' => array(
-                    array(
-                        'taxonomy' => 'helpie_reviews_category',
-                        'field'    => 'id',
-                        'terms'    => $term->term_id,
-                    ),
-                )
-            );
-
-            return $args;
-        }
-
         protected function get_collection_props($args)
         {
-            $collectionProps = [];
+            $collectionProps = [
+                'title' => 'Reviews of Category: xxx',
+                'posts_per_page' => 6,
+                // 'show_controls' => false,
+                'show_controls' => [
+                    'search' => true,
+                    'sort' => true,
+                    'reviews' => true,
+                    'verified' => false
+                ],
+                'pagination' => true,
+            ];
 
             $collectionProps = array_merge($collectionProps, $args);
 
             return $collectionProps;
         }
 
-
-        // public function get_viewProps($args)
-        // {
-        //     $args = $this->append_fallbacks($args);
-
-        //     $viewProps = array(
-        //         'collection' => $this->get_collection_props($args),
-        //         'items' => $this->get_items_props($args['articles']),
-        //     );
-
-        //     return $viewProps;
-        // }
+        protected function get_items_props($args)
+        {
+            return $this->cat_posts_repo->get_category_posts($args);
+        }
 
         public function get_default_args()
         {
             $default_args = $this->fields_model->get_default_args();
 
             return $default_args;
-        }
-
-        public function get_fields()
-        {
-            return $this->fields_model->get_fields();
-        }
-
-        public function get_style_config()
-        {
-            return $this->style_config->get_config();
         }
     } // END CLASS
 }

@@ -23,7 +23,7 @@ if (!class_exists('\HelpieReviews\App\Abstracts\Widget_Model')) {
                 'items' => $this->get_items_props($args),
             );
 
-            error_log('$viewProps : ' . print_r($viewProps, true));
+            // error_log('$viewProps : ' . print_r($viewProps, true));
 
             return $viewProps;
         }
@@ -40,6 +40,11 @@ if (!class_exists('\HelpieReviews\App\Abstracts\Widget_Model')) {
         public function get_fields()
         {
             return $this->fields_model->get_fields();
+        }
+
+        public function get_style_config()
+        {
+            return $this->style_config->get_config();
         }
     } // END CLASS
 

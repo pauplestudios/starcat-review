@@ -22,7 +22,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\Fields_Model')) {
                 'title' => [
                     'name' => 'title',
                     'label' => __('Title', 'helpie-faq'),
-                    'default' => '',
+                    'default' => 'Title of Listing',
                     'type' => 'text',
                 ],
 
