@@ -42,8 +42,8 @@ if (!class_exists('\Helpie_Reviews')) {
             // These components will handle the hooks internally, no need to call this in a hook
             $this->load_components();
 
-            // $Upgrades = new \HelpieReviews\Includes\Upgrades();
-            // \HelpieReviews\Includes\Upgrades::add_actions();
+            $Upgrades = new \HelpieReviews\Includes\Upgrades();
+            \HelpieReviews\Includes\Upgrades::init();
         }
 
         public function load_components()

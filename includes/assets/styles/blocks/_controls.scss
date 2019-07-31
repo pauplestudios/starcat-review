@@ -1,0 +1,9 @@
+.hrp-controls {
+    margin: 40px 0;
+
+    & input,
+    .ui.dropdown {
+        border-radius: 0.28571429rem;
+        margin-bottom: 15px;
+    }
+}

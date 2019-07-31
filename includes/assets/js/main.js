@@ -1,5 +1,6 @@
 var UserReviewsList = require("./components/user-reviews-list.js");
 var ListControl = require("./blocks/list-control.js");
+var ComparisonTable = require("./comparison-table.js");
 
 var HelpieReviews = {
     init: function() {

@@ -17,6 +17,7 @@ if (!class_exists('\HelpieReviews\App\Builders\Controls_Builder')) {
             $this->controls = [
                 'search' => [
                     'type' => 'search',
+                    'size' => 12
                 ],
 
                 'sort' => [
@@ -29,7 +30,8 @@ if (!class_exists('\HelpieReviews\App\Builders\Controls_Builder')) {
                         'alphabet-desc' => 'Alphabetic Desc',
                         'avg-rating' => 'Average Rating',
                         'review-count' => 'Number of Reviews'
-                    ]
+                    ],
+                    'size' => 4
                 ],
                 'reviews' => [
                     'name' => 'reviews',
@@ -41,7 +43,8 @@ if (!class_exists('\HelpieReviews\App\Builders\Controls_Builder')) {
                         '4' => '4+',
                         '25' => '25+',
                         '50' => '50+'
-                    ]
+                    ],
+                    'size' => 4
                 ],
                 'verified' => [
                     'name' => 'verified',
@@ -52,7 +55,8 @@ if (!class_exists('\HelpieReviews\App\Builders\Controls_Builder')) {
                         'true' => 'True',
                         'false' => 'False',
                         'either' => 'Either'
-                    ]
+                    ],
+                    'size' => 4
                 ]
             ];
 
@@ -60,25 +64,31 @@ if (!class_exists('\HelpieReviews\App\Builders\Controls_Builder')) {
             $this->listjs = new \HelpieReviews\App\Views\Blocks\List_Controls_Listjs();
         }
 
-        public function get_controls()
+        public function get_controls($show_controls)
         {
             $html = '';
 
+            $html .= '<div class="hrp-controls">';
             $html .= '<div class="row">';
 
             foreach ($this->controls as $key => $control) {
+
+                if (!$show_controls[$key]) continue;
+
                 $map = $this->get_map($control['type']);
                 $methodName = $map['methodName'];
 
-                $html .= '<div class="item col-xs-12 col-lg-4">';
+                $html .= '<div class="item col-xs-12 col-lg-' . $control['size'] . '">';
                 $html .= $map['class']->$methodName($control);
                 $html .= '</div>';
             }
 
             $html .= '</div>';
+            $html .= '</div>';
 
             return $html;
         }
+
 
         private function get_map($controlName)
         {

@@ -46,7 +46,7 @@ if (!class_exists('\HelpieReviews\Includes\Register_Templates')) {
 
             $template_source = \HelpieReviews\Includes\Settings\HRP_Getter::get('template_source');
 
-            error_log('$template_source : ' . $template_source);
+            // error_log('$template_source : ' . $template_source);
             if ($template_source == 'theme') {
                 return;
             }
