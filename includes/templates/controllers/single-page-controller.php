@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Templates\Single;
+namespace HelpieReviews\Includes\Templates\Controllers;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Templates\Single\SinglePageController')) {
+if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\SinglePageController')) {
     class SinglePageController
     {
 
