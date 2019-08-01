@@ -34,6 +34,32 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
             // add_filter('the_excerpt', array($this, 'content_filter'));
         }
 
+
+        public function reviews_activate()
+        {
+            /* Register Post Type and its taxonomy only for setup demo content on activation */
+            $cpt = new \HelpieReviews\Includes\Cpt();
+            $cpt->register_helpie_reviews_cpt();
+
+            $this->setup_data();
+        }
+
+        public function setup_data()
+        {
+            $post_data = [
+                'post_type' => "helpie_reviews",
+                'taxonomy' => [
+                    'helpie_reviews_category' => "Getting Started",
+                ],
+                'title' => "Yours First Reviews Question",
+                'content' => "Yours relevent questions answer."
+            ];
+
+            $create_pages = new \HelpieReviews\Includes\Utils\Create_Pages();
+            $create_pages->setup_data($post_data);
+        }
+
+
         public function init_hook()
         {
             /*  Reviews Ajax Hooks */

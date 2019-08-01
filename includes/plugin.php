@@ -27,6 +27,12 @@ if (!class_exists('\Helpie_Reviews')) {
             $this->load_components();
         }
 
+        public function register_cpt_and_taxonomy()
+        {
+            $cpt = new \HelpieReviews\Includes\Cpt();
+            $cpt->register();
+        }
+
         public function load_hooks()
         {
             $hooks = new \HelpieReviews\Includes\Hooks();
@@ -36,9 +42,11 @@ if (!class_exists('\Helpie_Reviews')) {
         {
             $shortcodes = new \HelpieReviews\Includes\Shortcodes();
             $settings = new \HelpieReviews\Includes\Settings();
+
             /* Notifications */
             // new \HelpieReviews\Includes\Notifications();
 
+            /* Upgrades */
             $Upgrades = new \HelpieReviews\Includes\Upgrades();
             \HelpieReviews\Includes\Upgrades::init();
 
@@ -46,14 +54,6 @@ if (!class_exists('\Helpie_Reviews')) {
             $widgets = new \HelpieReviews\Includes\Widget_Controller();
             $widgets->load();
         }
-
-
-        public function register_cpt_and_taxonomy()
-        {
-            $cpt = new \HelpieReviews\Includes\Cpt();
-            $cpt->register();
-        }
-
 
         /**
          * Throw error on object clone
@@ -107,45 +107,6 @@ if (!class_exists('\Helpie_Reviews')) {
             \HelpieReviews\Autoloader::run();
         }
 
-        public function reviews_activate()
-        {
-            /* Register Post Type and its taxonomy only for setup demo content on activation */
-            $cpt = new \HelpieReviews\Includes\Cpt();
-            $cpt->register_helpie_reviews_cpt();
-
-            // $this->setup_data();
-
-        }
-
-        public function setup_data()
-        {
-            $post_data = [
-                'post_type' => "helpie_reviews",
-                'taxonomy' => [
-                    'helpie_reviews_category' => "Getting Started",
-                ],
-                'title' => "Yours First Reviews Question",
-                'content' => "Yours relevent questions answer."
-            ];
-
-            $args = array('post_type' => 'helpie_reviews', 'post_status' => array('publish', 'pending', 'trash'));
-            $the_query = new \WP_Query($args);
-
-            // Create Post only if it does not already exists
-            if ($the_query->post_count < 1) {
-                /* Setup Demo Reviews Question And Answer */
-                $utils_helper = new \HelpieReviews\Utils\Helpers();
-                $utils_helper->insert_term_with_post("helpie_reviews", "Getting Started", "helpie_reviews_category", "Yours First Reviews Question", "Yours relevent questions answer.");
-            }
-            $this->create_page_on_activate();
-            wp_reset_postdata();
-        }
-
-        public function create_page_on_activate()
-        {
-            $create_page = new \HelpieReviews\Utils\Create_Pages();
-            $create_page::create('helpie_reviews_page', 'helpie_reviews_page_id', 'Helpie Reviews', '[helpie_reviews]');
-        }
 
         /* Note: Nice Idea */
         public function load_view($view)
