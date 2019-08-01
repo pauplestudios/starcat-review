@@ -101,16 +101,8 @@ if (!class_exists('\Helpie_Reviews')) {
             return self::$instance;
         }
 
-        protected function setup_constants()
-        {
-            if (!defined('HELPIE_REVIEWS_PATH')) {
-                define('HELPIE_REVIEWS_PATH', __DIR__);
-            }
-        }
-
         protected function setup_autoload()
         {
-
             require_once HELPIE_REVIEWS_PATH . '/includes/autoloader.php';
             \HelpieReviews\Autoloader::run();
         }
