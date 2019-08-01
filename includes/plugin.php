@@ -23,18 +23,8 @@ if (!class_exists('\Helpie_Reviews')) {
             // Load Hooks
             $this->load_hooks();
 
-            /* Notifications */
-            // new \HelpieReviews\Includes\Notifications();
-
             // These components will handle the hooks internally, no need to call this in a hook
             $this->load_components();
-
-            $Upgrades = new \HelpieReviews\Includes\Upgrades();
-            \HelpieReviews\Includes\Upgrades::init();
-
-            /* Load Widgets */
-            $widgets = new \HelpieReviews\Includes\Widget_Controller();
-            $widgets->load();
         }
 
         public function load_hooks()
@@ -46,6 +36,15 @@ if (!class_exists('\Helpie_Reviews')) {
         {
             $shortcodes = new \HelpieReviews\Includes\Shortcodes();
             $settings = new \HelpieReviews\Includes\Settings();
+            /* Notifications */
+            // new \HelpieReviews\Includes\Notifications();
+
+            $Upgrades = new \HelpieReviews\Includes\Upgrades();
+            \HelpieReviews\Includes\Upgrades::init();
+
+            /* Load Widgets */
+            $widgets = new \HelpieReviews\Includes\Widget_Controller();
+            $widgets->load();
         }
 
 
@@ -55,17 +54,6 @@ if (!class_exists('\Helpie_Reviews')) {
             $cpt->register();
         }
 
-        /**
-         * @since 1.0.0
-         * @access public
-         * @deprecated
-         *
-         * @return string
-         */
-        public function get_version()
-        {
-            return helpie_REVIEWS_VERSION;
-        }
 
         /**
          * Throw error on object clone
@@ -107,7 +95,7 @@ if (!class_exists('\Helpie_Reviews')) {
         {
             if (is_null(self::$instance)) {
                 self::$instance = new self();
-                do_action('elementor/loaded');
+                do_action('helpie_reviews/loaded');
             }
 
             return self::$instance;
@@ -139,6 +127,15 @@ if (!class_exists('\Helpie_Reviews')) {
 
         public function setup_data()
         {
+            $post_data = [
+                'post_type' => "helpie_reviews",
+                'taxonomy' => [
+                    'helpie_reviews_category' => "Getting Started",
+                ],
+                'title' => "Yours First Reviews Question",
+                'content' => "Yours relevent questions answer."
+            ];
+
             $args = array('post_type' => 'helpie_reviews', 'post_status' => array('publish', 'pending', 'trash'));
             $the_query = new \WP_Query($args);
 
