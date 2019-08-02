@@ -13,29 +13,76 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
 
         public function __construct($stats)
         {
-            $this->model = $stats;
+            $this->stats = $stats;
+            $this->divisor = 20;
+
+            error_log('$stats : ' . print_r($stats, true));
         }
 
         public function get_html()
         {
             $html = "<div class='hrp-rating-collection hrp-container'>";
-            $count = 1;
-            foreach ($this->model as $key => $value) {
+            $count = 0;
 
-                // error_log('$value : ' . $value);
-                $star_value = $value / 20;
-                $html .= "<div class='single-rating'><span class='rating-label'>" . $key . "</span>";
-                $html .= $this->get_star_set($star_value,  $key);
-                $html .= "</div>";
+            $stats_html = '';
+            $stats_cumulative_score = 0;
+
+            foreach ($this->stats as $key => $value) {
+                $stats_cumulative_score += $value;
+                $star_value = $this->get_star_value($value);
+
+                if ($this->is_stat_included())
+                    $stats_html .= $this->get_single_stat($star_value, $key);
+
                 $count++;
             }
+
+            $overall_stat_html = $this->get_overall_stat_html($stats_cumulative_score, $count);
+
+            $html .= $overall_stat_html . $stats_html;
             $html .= "</div>";
 
             $this->html = $html;
             return $this->html;
         }
 
-        public function get_star_set($star_value,  $key = 'star')
+        protected function get_overall_stat_html($stats_cumulative_score, $count)
+        {
+            $overall_stat = $stats_cumulative_score / $count;
+            $overall_stat_star_value = $this->get_star_value($overall_stat);
+
+            $overall_stat_html = $this->get_single_stat($overall_stat_star_value, __('Overall', 'helpie-reviews'));
+
+            error_log('$stats_cumulative_score : ' . $stats_cumulative_score);
+            error_log('$overall_stat : ' . $overall_stat);
+
+            return $overall_stat_html;
+        }
+
+
+        protected function get_star_value($value)
+        {
+            return $value / $this->divisor;
+        }
+
+
+        protected function get_single_stat($star_value, $key)
+        {
+            $html = '';
+
+            $html .= "<div class='single-rating'><span class='rating-label'>" . $key . "</span>";
+            $html .= $this->get_star_set($star_value,  $key);
+            $html .= "</div>";
+
+            return $html;
+        }
+
+        protected function is_stat_included()
+        {
+            return true;
+        }
+
+        protected function get_star_set($star_value,  $key = 'star')
         {
             $html = '';
             $html .= '<fieldset class="rating-fieldset">';
@@ -76,26 +123,5 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             $html .= '</fieldset>';
             return $html;
         }
-
-        // TODO: Can be removed after June 14th 2019 if not used
-        // public function get_star_set_old($star_value = 5)
-        // {
-        //     $html = '';
-        //     $html .= '<fieldset class="rating">';
-        //     $html .= '<input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>';
-        //     $html .= '<input type="radio" id="star4half" name="rating" value="4 and a half" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>';
-        //     $html .= '<input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>';
-        //     $html .= '<input type="radio" id="star3half" name="rating" value="3 and a half" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>';
-        //     $html .= ' <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>';
-        //     $html .= '<input type="radio" id="star2half" name="rating" value="2 and a half" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>';
-        //     $html .= '<input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>';
-        //     $html .= '<input type="radio" id="star1half" name="rating" value="1 and a half" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>';
-        //     $html .= '<input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>';
-        //     $html .= '<input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>';
-
-        //     $html .= '</fieldset>';
-
-        //     return $html;
-        // }
     } // END CLASS
 }
