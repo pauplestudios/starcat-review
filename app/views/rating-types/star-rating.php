@@ -13,10 +13,12 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
 
         public function __construct($stats)
         {
-            $this->stats = $stats;
-            $this->divisor = 20;
 
-            error_log('$stats : ' . print_r($stats, true));
+            $this->props = [
+                'stats' => $stats,
+                'divisor' => 20,
+                'show_stats' => ['overall', 'price', 'ux']
+            ];
         }
 
         public function get_html()
@@ -27,12 +29,12 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             $stats_html = '';
             $stats_cumulative_score = 0;
 
-            foreach ($this->stats as $key => $value) {
+            foreach ($this->props['stats'] as $key => $value) {
                 $stats_cumulative_score += $value;
-                $star_value = $this->get_star_value($value);
 
-                if ($this->is_stat_included())
-                    $stats_html .= $this->get_single_stat($star_value, $key);
+                if ($this->is_stat_included($key)) {
+                    $stats_html .= $this->get_single_stat($value, $key);
+                }
 
                 $count++;
             }
@@ -46,29 +48,15 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             return $this->html;
         }
 
-        protected function get_overall_stat_html($stats_cumulative_score, $count)
-        {
-            $overall_stat = $stats_cumulative_score / $count;
-            $overall_stat_star_value = $this->get_star_value($overall_stat);
-
-            $overall_stat_html = $this->get_single_stat($overall_stat_star_value, __('Overall', 'helpie-reviews'));
-
-            error_log('$stats_cumulative_score : ' . $stats_cumulative_score);
-            error_log('$overall_stat : ' . $overall_stat);
-
-            return $overall_stat_html;
-        }
-
-
-        protected function get_star_value($value)
-        {
-            return $value / $this->divisor;
-        }
-
-
-        protected function get_single_stat($star_value, $key)
+        protected function get_single_stat($value, $key)
         {
             $html = '';
+
+            $star_value = $this->get_star_value($value);
+
+            if (!$this->is_stat_included($key)) {
+                return $html;
+            }
 
             $html .= "<div class='single-rating'><span class='rating-label'>" . $key . "</span>";
             $html .= $this->get_star_set($star_value,  $key);
@@ -77,10 +65,44 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             return $html;
         }
 
-        protected function is_stat_included()
+
+        protected function get_santized_key($key)
         {
-            return true;
+            $key = strtolower($key);
+            $key = trim($key);
+
+            return $key;
         }
+
+        protected function is_stat_included($key)
+        {
+            error_log('$key : ' . $key);
+            $key = $this->get_santized_key($key);
+            if (in_array($key, $this->props['show_stats'])) {
+                return true;
+            }
+
+            return false;
+        }
+
+
+        protected function get_overall_stat_html($stats_cumulative_score, $count)
+        {
+            $overall_stat_value = $stats_cumulative_score / $count;
+            $overall_stat_html = $this->get_single_stat($overall_stat_value, __('Overall', 'helpie-reviews'));
+
+            // error_log('$stats_cumulative_score : ' . $stats_cumulative_score);
+            // error_log('$overall_stat_value : ' . $overall_stat_value);
+
+            return $overall_stat_html;
+        }
+
+
+        protected function get_star_value($value)
+        {
+            return $value / $this->props['divisor'];
+        }
+
 
         protected function get_star_set($star_value,  $key = 'star')
         {

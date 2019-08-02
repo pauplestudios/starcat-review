@@ -11,7 +11,6 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\Controller')) {
     {
         public function __construct()
         {
-
             $this->model = new \HelpieReviews\App\Widgets\Listing\Model();
             $this->view = new \HelpieReviews\App\Widgets\Listing\View();
         }
