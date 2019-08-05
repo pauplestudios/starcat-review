@@ -1,4 +1,4 @@
-<!-- <?php
+<?php
 
 namespace HelpieReviews\App\Views;
 
@@ -36,4 +36,4 @@ if (!class_exists('\HelpieReviews\App\Views\Single_Review')) {
             return $html;
         }
     } // END CLASS
-} -->
+} 
