@@ -8,7 +8,7 @@ dist
 tmp
 helpie-reviews-build
 helpie-reviews.zip
-# .gitmodules
+.gitmodules
 tests/_data/helpie
 *.lock
 reports
