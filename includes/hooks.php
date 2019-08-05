@@ -34,6 +34,37 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
             // add_filter('the_excerpt', array($this, 'content_filter'));
         }
 
+        public function init_hook()
+        {
+            /*  Reviews Ajax Hooks */
+            // require_once HELPIE_REVIEWS_PATH . 'includes/ajax-handler.php';
+
+            /*  Reviews Widget */
+            // $this->load_widgets();
+
+            /* settings getter */
+            require_once(HELPIE_REVIEWS_PATH . 'includes/settings/getter.php');
+
+
+            $register_templates = new \HelpieReviews\Includes\Register_Templates();
+        }
+
+        public function register_sidebar()
+        {
+
+            register_sidebar(
+                array(
+                    'id' => 'helpie_reviews_sidebar',
+                    'name' => __('Reviews Sidebar'),
+                    'description' => __('Sidebar of Helpie Reviews plugin'),
+                    'before_widget' => '<div id="%1$s" class="widget %2$s">',
+                    'after_widget' => '</div>',
+                    'before_title' => '<h3 class="widget-title">',
+                    'after_title' => '</h3>',
+                )
+            );
+        }
+
 
         public function reviews_activate()
         {
@@ -60,37 +91,10 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
         }
 
 
-        public function init_hook()
-        {
-            /*  Reviews Ajax Hooks */
-            // require_once HELPIE_REVIEWS_PATH . 'includes/ajax-handler.php';
-
-            /*  Reviews Widget */
-            // $this->load_widgets();
-
-            /* settings getter */
-            require_once(HELPIE_REVIEWS_PATH . 'includes/settings/getter.php');
 
 
-            $register_templates = new \HelpieReviews\Includes\Register_Templates();
-        }
 
 
-        public function register_sidebar()
-        {
-
-            register_sidebar(
-                array(
-                    'id' => 'helpie_reviews_sidebar',
-                    'name' => __('Reviews Sidebar'),
-                    'description' => __('Sidebar of Helpie Reviews plugin'),
-                    'before_widget' => '<div id="%1$s" class="widget %2$s">',
-                    'after_widget' => '</div>',
-                    'before_title' => '<h3 class="widget-title">',
-                    'after_title' => '</h3>',
-                )
-            );
-        }
 
         public function plugins_loaded_action()
         {
@@ -127,6 +131,8 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
             $fullcontent = $content . $review_content;
             return $fullcontent;
         }
+
+        /* Non-Hooked */
 
         public function get_review_content()
         {
