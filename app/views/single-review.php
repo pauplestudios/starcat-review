@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 
 namespace HelpieReviews\App\Views;
 
@@ -29,11 +29,11 @@ if (!class_exists('\HelpieReviews\App\Views\Single_Review')) {
             $html .= "<p class='content'>" . $this->model->content . "</p>";
             $stats_view = new \HelpieReviews\App\Views\Stats($this->model->stats);
             $html .= $stats_view->get_html();
-            $pros_and_cons_view = new \HelpieReviews\App\Views\ProsAndCons($this->model->pros_and_cons);
+            $pros_and_cons_view = new \HelpieReviews\App\Widgets\ProsAndCons($this->model->pros_and_cons);
             $html .= $pros_and_cons_view->get_html();
             $html .= "</article>";
 
             return $html;
         }
     } // END CLASS
-}
+} -->
