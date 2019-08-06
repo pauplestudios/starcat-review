@@ -36,6 +36,8 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\Model')) {
                     'verified' => false
                 ],
                 'pagination' => true,
+                'columns' => 2,
+                'items_display' => ['title', 'content', 'link']
             ];
 
             $collectionProps = array_merge($collectionProps, $args);

@@ -12,19 +12,21 @@ if (!class_exists('\HelpieReviews\App\Views\Blocks\Card')) {
 
         public function __construct()
         {
-            $input_props = [
-                'columns' => 2,
-                'display_items' => ['title', 'content', 'link']
-            ];
+            // $input_props = [
+            //     'columns' => 2,
+            //     'items_display' => ['title', 'content', 'link']
+            // ];
 
-            $this->props = [];
-
-            $this->props = $this->interprete_input_props($input_props);
+            // $this->props = [];
         }
 
         /* HTML for Single Card */
         public function get_view($item)
         {
+
+            // error_log('$item : ' . print_r($item, true));
+            $this->props = $this->interprete_input_props($item);
+
             // error_log('$item : ' . print_r($item, true));
             $html = '';
 
@@ -54,7 +56,7 @@ if (!class_exists('\HelpieReviews\App\Views\Blocks\Card')) {
         protected function show_item($itemName)
         {
 
-            if (in_array($itemName, $this->props['display_items'])) {
+            if (in_array($itemName, $this->props['items_display'])) {
                 return true;
             }
 
