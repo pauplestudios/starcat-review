@@ -11,25 +11,62 @@ if (!class_exists('\HelpieReviews\App\Views\Blocks\Card')) {
     {
 
         public function __construct()
-        { }
+        {
+            $input_props = [
+                'columns' => 2,
+                'display_items' => ['title', 'content', 'link']
+            ];
+
+            $this->props = [];
+
+            $this->props = $this->interprete_input_props($input_props);
+        }
 
         /* HTML for Single Card */
         public function get_view($item)
         {
-
             // error_log('$item : ' . print_r($item, true));
             $html = '';
 
-            $html .= '<div class="hrp-collection__col item col-xs-12 col-lg-4">'; // can't add additional classes
+            $col_classes = "col-xs-12 col-lg-" . $this->props['col-lg'];
+            $html .= '<div class="hrp-collection__col item ' . $col_classes . '">'; // can't add additional classes
             $html .= '<div class="hrp-review-card" >';
-            $html .= '<div class="review-card__header">' . $item['title'] . '</div>';
-            $html .= '<div class="review-card__body">' . $item['content'] . '</div>';
-            $html .= '<div class="review-card__footer"><a href="' . $item['url'] . '">See all >> </a></div>';
+
+            if ($this->show_item('title')) {
+                $html .= '<div class="review-card__header">' . $item['title'] . '</div>';
+            }
+
+            if ($this->show_item('content')) {
+                $html .= '<div class="review-card__body">' . $item['content'] . '</div>';
+            }
+
+            if ($this->show_item('link')) {
+                $html .= '<div class="review-card__footer"><a href="' . $item['url'] . '">See all >> </a></div>';
+            }
+
             $html .= '<span class="reviewCount"  data-reviewcount="' . $item['reviews'] . '"></span>';
             $html .= '</div>';
             $html .= '</div>';
 
             return $html;
+        }
+
+        protected function show_item($itemName)
+        {
+
+            if (in_array($itemName, $this->props['display_items'])) {
+                return true;
+            }
+
+            return false;
+        }
+
+        protected function interprete_input_props($input_props)
+        {
+            $props = $input_props;
+            $props['col-lg'] = 12 / $input_props['columns'];
+
+            return $props;
         }
     } // END CLASS
 }
