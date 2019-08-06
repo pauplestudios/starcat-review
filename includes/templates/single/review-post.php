@@ -1,6 +1,6 @@
 <?php
 
-namespace HelpieReviews\App\Models;
+namespace \HelpieReviews\Includes\Templates\Single;
 
 use \HelpieReviews\App\Models\User_Review as User_Review;
 
@@ -8,8 +8,8 @@ if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Models\Review_Post')) {
-    class Review_Post extends \HelpieReviews\App\Abstracts\Review
+if (!class_exists('\HelpieReviews\Includes\Templates\Single\Model')) {
+    class Model extends \HelpieReviews\App\Abstracts\Review
     {
         public function __construct($wp_review = null)
         {

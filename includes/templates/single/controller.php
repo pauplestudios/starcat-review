@@ -1,13 +1,13 @@
 <?php
 
-namespace HelpieReviews\Includes\Templates\Controllers;
+namespace HelpieReviews\Includes\Templates\Single;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\SinglePageController')) {
-    class SinglePageController
+if (!class_exists('\HelpieReviews\Includes\Templates\Single\Controller')) {
+    class Controller
     {
 
         public function __construct()
@@ -20,8 +20,8 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\SinglePageContr
 
         public function get_view($post)
         {
-            $this->model = new \HelpieReviews\App\Models\Review_Post($post);
-            $view = new \HelpieReviews\App\Views\Single_Review($this->model);
+            // $this->model = new \HelpieReviews\App\Models\Review_Post($post);
+            $view = new \HelpieReviews\Includes\Templates\Single\View($post);
             return $view->get_html();
         }
     } // END CLASS
