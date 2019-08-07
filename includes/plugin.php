@@ -23,6 +23,8 @@ if (!class_exists('\Helpie_Reviews')) {
             // Load Hooks
             $this->load_hooks();
 
+            $this->load_ajax_handler();
+
             // These components will handle the hooks internally, no need to call this in a hook
             $this->load_components();
         }
@@ -37,6 +39,14 @@ if (!class_exists('\Helpie_Reviews')) {
         {
             $hooks = new \HelpieReviews\Includes\Hooks();
         }
+
+
+        public function load_ajax_handler()
+        {
+            $ajax_handler = new \HelpieReviews\Includes\Ajax_Handler();
+            $ajax_handler->register_ajax_actions();
+        }
+
 
         public function load_components()
         {
