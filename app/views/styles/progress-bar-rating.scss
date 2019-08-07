@@ -1,0 +1,22 @@
+.hrp-rating-collection {
+    .hrp-progress{
+        
+        background: #eae9e9;                
+        overflow: hidden;
+        box-shadow: 0 0 5px #333;        
+    	
+    	.hrp-progress-bar{
+            width: 7%;
+            text-align: center;
+            background-color: #1a82f7;            
+            transition: width 1.5s ease-in-out;
+            -webkit-transition: width 1.5s ease-in-out;
+        }   
+    }
+    
+    // .hrp-divider{
+    //     clear: both;        
+    //     height: 6px;
+    //     background: url(http://ibrahimjabbari.com/images/hr-11.png) repeat-x 0 0;        
+    // }
+}
