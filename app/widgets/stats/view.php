@@ -12,9 +12,9 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\View')) {
 
 		public function __construct($stats) {
 			$this->model = $stats;
-			$this->star_rating = new \HelpieReviews\App\Views\Rating_Types\Star_Rating($this->model);
+			// $this->star_rating = new \HelpieReviews\App\Views\Rating_Types\Star_Rating($this->model);
 			// $this->progress_bar_rating = new \HelpieReviews\App\Views\Rating_Types\Progress_Bar_Rating($this->model);
-			// $this->image_rating = new \HelpieReviews\App\Views\Rating_Types\Image_Rating($this->model);
+			$this->image_rating = new \HelpieReviews\App\Views\Rating_Types\Image_Rating($this->model);
 			// error_log('$stats : ' . print_r($stats, true));
 		}
 
@@ -24,9 +24,9 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\View')) {
 				return '';
 			}
 
-			$html = $this->star_rating->get_html();
+			// $html = $this->star_rating->get_html();
 			// $html = $this->progress_bar_rating->get_html();
-			// $html = $this->image_rating->get_html();
+			$html = $this->image_rating->get_html();
 
 			$this->html = $html;
 			return $this->html;
