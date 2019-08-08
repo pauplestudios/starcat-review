@@ -135,8 +135,7 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
         /* Non-Hooked */
 
         public function get_review_content()
-        {
-            error_log('get_review_content');
+        {            
             $post_id = get_the_ID();
             $reviews_builder = new \HelpieReviews\App\Builders\Review_Builder();
             return $reviews_builder->get_reviews($post_id);

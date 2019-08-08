@@ -10,13 +10,16 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
 	class Star_Rating {
 		private $html;
 
-		public function __construct($stats) {
+		public function __construct($stats) {		
 			$this->props = [
-				'stats' => $stats,
-				'divisor' => 20, // calculate for out of 5
-				'show_stats' => ['overall', 'price', 'ux'],
-				'show_value_type' => 'number', // or percentage
-				'show_value_limit' => 10, // 20 ,30, 50, 80 and etc..
+				'collection' => [
+					'divisor' => 20,
+					'show_stats' => ['overall', 'price', 'ux', 'feature', 'better', 'cool'],
+					'show_value_type' => 'number', // or percentage
+					'show_value_limit' => 10, // 20 ,30, 50, 80 and etc..					
+					// 'user_review' => true,
+				],
+				'items' => $stats,
 			];
 		}
 
@@ -27,7 +30,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
 			$stats_html = '';
 			$stats_cumulative_score = 0;
 
-			foreach ($this->props['stats'] as $key => $value) {
+			foreach ($this->props['items'] as $key => $value) {
 				$stats_cumulative_score += $value;
 
 				if ($this->is_stat_included($key)) {
@@ -70,9 +73,9 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
 		}
 
 		protected function is_stat_included($key) {
-			error_log('$key : ' . $key);
+			// error_log('$key : ' . $key);
 			$key = $this->get_santized_key($key);
-			if (in_array($key, $this->props['show_stats'])) {
+			if (in_array($key, $this->props['collection']['show_stats'])) {
 				return true;
 			}
 
@@ -83,23 +86,18 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
 			$overall_stat_value = $stats_cumulative_score / $count;
 			$overall_stat_html = $this->get_single_stat($overall_stat_value, __('Overall', 'helpie-reviews'));
 
-			// error_log('$stats_cumulative_score : ' . $stats_cumulative_score);
-			// error_log('$overall_stat_value : ' . $overall_stat_value);
-
 			return $overall_stat_html;
 		}
 
 		protected function get_star_value($value) {
-			return $value / $this->props['divisor'];
+			return $value / $this->props['collection']['divisor'];
 		}
 
 		protected function get_star_set($star_value, $key = 'star') {
 			$html = '';
 			$html .= '<fieldset class="rating-fieldset">';
 
-			$star_value = (floor($star_value * 2) / 2);
-
-			// error_log('$star_value : ' . $star_value);
+			$star_value = (floor($star_value * 2) / 2);		
 
 			// $star_value = 4;
 			for ($ii = 5; $ii >= 1; $ii--) {
