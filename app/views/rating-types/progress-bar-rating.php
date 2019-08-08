@@ -96,8 +96,8 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Progress_Bar_Rating')) 
 		protected function get_progress($value = 0, $min = 0, $max = 100) {
 
 			$html = '<div class="hrp-progress">
-                <div class="hrp-progress-bar" role="progressbar" aria-valuenow="' . $value . '"
-                aria-valuemin="' . $min . '" aria-valuemax="' . $max . '">' . $value . '%</div>
+                <div class="hrp-progress-bar"  role="progressbar" data-valuenow="' . $value . '"
+                data-valuemin="' . $min . '" data-valuemax="' . $max . '" >' . $value . '%</div>
                 </div>';
 
 			return $html;

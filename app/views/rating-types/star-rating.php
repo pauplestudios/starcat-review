@@ -16,13 +16,14 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
 					'divisor' => 20,
 					'show_stats' => ['overall', 'price', 'ux', 'feature', 'better', 'cool'],
 					'show_value_type' => 'number', // or percentage
-					'show_value_limit' => 10, // 20 ,30, 50, 80 and etc..					
+					'show_value_limit' => 10, // 20 ,30, 50, 80 and etc..	
+					'icon' => 'circle'				
 					// 'user_review' => true,
 				],
 				'items' => $stats,
 			];
 		}
-
+		
 		public function get_html() {
 			$html = "<div class='hrp-rating-collection hrp-container'>";
 			$count = 0;
@@ -95,10 +96,10 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
 
 		protected function get_star_set($star_value, $key = 'star') {
 			$html = '';
-			$html .= '<fieldset class="rating-fieldset">';
+			$html .= '<fieldset class="rating-fieldset only-readable">';
 
 			$star_value = (floor($star_value * 2) / 2);		
-
+			error_log('Star Value : ' . $star_value . '<br>');
 			// $star_value = 4;
 			for ($ii = 5; $ii >= 1; $ii--) {
 
@@ -106,13 +107,11 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
 
 				$checked = '';
 				$half_checked = '';
-				if ($ii == $star_value) {
-					// $additional_class .= ' active';
+				if ($ii == $star_value) {				
 					$checked = 'checked';
 				}
 
-				if ($ii - 0.5 == $star_value) {
-					// $additional_class .= ' active';
+				if ($ii - 0.5 == $star_value) {					
 					$half_checked = 'checked';
 				}
 
@@ -123,11 +122,14 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
 					$half_id = $key . '-rating' . $previous_ii;
 				}
 
-				$html .= '<input type="radio" ' . $checked . ' id="' . $id . '" name="' . $key . '-rating" value="' . $ii . '"  /><label class = "full" for="' . $id . '" title="Sucks big time - 1 star"></label>';
-				$html .= '<input type="radio" ' . $half_checked . ' id="' . $half_id . 'half" name="' . $key . '-rating" value="half" /><label class="half" for="' . $half_id . 'half" title="Sucks big time - 0.5 stars"></label>';
+				$html .= '<input type="radio" ' . $checked . ' id="' . $id . '" name="' . $key . '-rating" value="' . $ii . '"  /><label class = "full readonly" for="' . $id . '" title="" data-icon="'.$this->props['collection']['icon'].'"></label>';
+				$html .= '<input type="radio" ' . $half_checked . ' id="' . $half_id . 'half" name="' . $key . '-rating" value="half" /><label class="half readonly" for="' . $half_id . 'half" title=""></label>';
+				// error_log('Half : '.$half_id . 'Value : '.$ii.'Half_Checked :'.$half_checked);
+				// error_log('Full : '.$id . ' Value : '.$ii . ' Checked: ' . $checked.'</br>');
 			}
 
 			$html .= '</fieldset>';
+			$html .= '<div class="ui orange rating" data-icon="circle" data-rating="'.round($star_value).'" data-max-rating="5"></div>';
 			return $html;
 		}
 	} // END CLASS

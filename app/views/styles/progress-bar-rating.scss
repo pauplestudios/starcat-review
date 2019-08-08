@@ -8,9 +8,10 @@
     	.hrp-progress-bar{
             width: 7%;
             text-align: center;
-            background-color: #1a82f7;            
-            transition: width 1.5s ease-in-out;
-            -webkit-transition: width 1.5s ease-in-out;
+            color: #eae9e9;
+            background-color: #254452;            
+            transition: width 2s ease;
+            // -webkit-transition: width 1.5s ease-in-out;
         }   
     }
     
