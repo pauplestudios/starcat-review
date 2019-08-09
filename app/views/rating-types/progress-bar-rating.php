@@ -1,26 +1,27 @@
 <?php
 
-namespace HelpieReviews\App\Views\Rating_Types; 
+namespace HelpieReviews\App\Views\Rating_Types;
 
 if (!defined('ABSPATH')) {
 	exit;
 } // Exit if accessed directly
 
 if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Progress_Bar_Rating')) {
-	class Progress_Bar_Rating{
+	class Progress_Bar_Rating {
 		private $html;
 
-		public function __construct($stats) {		
+		public function __construct($stats) {
+
 			$this->props = [
-				'collection' => [
-					'show_stats' => ['overall', 'price', 'ux', 'feature', 'better', 'cool'],
-					'show_value_type' => 'number', // or percentage
-					'show_value_limit' => 10, // 20 ,30, 50, 80 and etc..					
-					// 'divisor' => 10,
-					// 'user_review' => true,
-				],
-				'items' => $stats,
-			];	
+				'stats' => $stats,
+				// 'divisor' => 10,
+				'show_stats' => ['overall', 'price', 'ux', 'feature'],
+				'show_stats' => ['overall', 'price', 'ux'],
+				'show_value_type' => 'number', // or percentage
+				'show_value_limit' => 10, // 20 ,30, 50, 80 and etc..
+				// 'user_review' => true,
+			];
+			error_log(print_r($stats, true));
 		}
 
 		public function get_html() {
@@ -29,7 +30,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Progress_Bar_Rating')) 
 			$stats_html = '';
 			$get_user_review_html = '';
 
-			foreach ($this->props['items'] as $key => $value) {
+			foreach ($this->props['stats'] as $key => $value) {
 				$stats_cumulative_score += $value;
 
 				if ($this->is_stat_included($key)) {
@@ -41,7 +42,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Progress_Bar_Rating')) 
 
 			$overall_stat_html = $this->get_overall_stat_html($stats_cumulative_score, $count);
 
-			if ($this->props['collection']['user_review']) {
+			if ($this->props['user_review']) {
 				$get_user_review_html = $this->get_user_review();
 			}
 
@@ -55,20 +56,20 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Progress_Bar_Rating')) 
 		public function is_stat_included($key) {
 
 			$key = $this->get_santized_key($key);
-			if (in_array($key, $this->props['collection']['show_stats'])) {
+			if (in_array($key, $this->props['show_stats'])) {
 				return true;
 			}
 
 			return false;
 		}
 
-		public function get_santized_key($key) {			
+		public function get_santized_key($key) {
+			error_log('message');
 			$key = strtolower($key);
 			$key = trim($key);
 
 			return $key;
 		}
-		
 
 		protected function get_overall_stat_html($stats_cumulative_score, $count) {
 
@@ -96,8 +97,8 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Progress_Bar_Rating')) 
 		protected function get_progress($value = 0, $min = 0, $max = 100) {
 
 			$html = '<div class="hrp-progress">
-                <div class="hrp-progress-bar"  role="progressbar" data-valuenow="' . $value . '"
-                data-valuemin="' . $min . '" data-valuemax="' . $max . '" >' . $value . '%</div>
+                <div class="hrp-progress-bar" role="progressbar" aria-valuenow="' . $value . '"
+                aria-valuemin="' . $min . '" aria-valuemax="' . $max . '">' . $value . '%</div>
                 </div>';
 
 			return $html;

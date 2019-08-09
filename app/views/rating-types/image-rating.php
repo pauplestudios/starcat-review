@@ -22,7 +22,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Image_Rating')) {
                     'stats_type' => 'image', // or icon or progress     
                     'image_url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png',
                     'icon' => 'circle'              
-                    // 'show_user_review' => true,
+                    'show_user_review' => false,
                 ],
                 'items' => $stats,
             ];
@@ -33,19 +33,67 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Image_Rating')) {
         {
             $html  = '<div class=".hrp-container">';
             $html .= '<ul class="hrp-review-list">';
-
+            $stat_html = '';
             foreach ($this->props['items'] as $key => $value) {
-                $html .= '<li>';
-                $html .='<div class="single_review">';
-                    $html .= '<div class="review__results__wrapper">';
-                    $html .= $this->get_image_wrapper_html();
-                    $html .= '</div>';
-                    $html .= $this->get_image_results_html(); 
-                $html .='</div>'; 
-                $html .= '<span>'.$key.'</span>'; 
-                $html .= '</li>';
+                $stats_cumulative_score += $value;
+
+                if ($this->is_stat_included($key)) {
+                    $stat_html .= $this->get_single_stat($key, $value);
+                }
+
+                $count++;
             }
+
+            $overall_stat_html = $this->get_overall_stat_html($stats_cumulative_score, $count);
+
+            $html .= $stat_html . $overall_stat_html;
+
+            if ($this->props['show_user_review']) {
+                $get_user_review_html = $this->get_user_review();
+            }
+
             $html .= '</ul></div>';
+
+            return $html;
+        }
+
+        public function is_stat_included($key) {
+
+            $key = $this->get_santized_key($key);
+            if (in_array($key, $this->props['show_stats'])) {
+                return true;
+            }
+
+            return false;
+        }
+
+        public function get_santized_key($key) {
+            error_log('message');
+            $key = strtolower($key);
+            $key = trim($key);
+
+            return $key;
+        }
+
+        protected function get_overall_stat_html($stats_cumulative_score, $count) {
+
+            $overall_stat_value = $stats_cumulative_score / $count;
+            $overall_stat_html = $this->get_single_stat(__('Overall', 'helpie-reviews'), $overall_stat_value);
+
+            return $overall_stat_html;
+        }
+
+        public function get_single_stat($key, $value){
+            $html = '';
+            $html .= '<li>';
+            $html .='<div class="single_review">';
+            $html .= '<div class="review__results__wrapper">';
+            $html .= $this->get_image_wrapper_html();
+            $html .= '</div>';
+            $html .= $this->get_image_results_html(); 
+            $html .='</div>'; 
+            $html .= '<span>'.$key.'</span>'; 
+            $html .= '</li>';
 
             return $html;
         }
@@ -72,8 +120,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Image_Rating')) {
                 $html .= "<img src='".$fallback_image_url."'>";
             }
             $html .= '</div>';
-            // error_log('fallback_image_url : ' .$fallback_image_url);
-            // error_log( 'Image : '. $image_url);
+            
             return $html;
         }
 
