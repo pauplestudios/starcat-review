@@ -4,21 +4,57 @@
 
 
 .hrp-review-list {
-	// width: 250px;
-	margin: 0px;
-	background: #f5f5f5;
-	padding: 2em;
+	
+	margin: 0;
+    list-style: none;
+    padding: 0;
+    clear: both;   
 
-	.single-rating {
-		float: left;
-		width: 100%;
-	}
+	li{
+		background: #eaeaea;
+		margin: 0;
+		box-sizing: border-box;
+	    border-bottom: 1px solid #e7e7e7;
+	    padding: 10px 15px;
+	    position: relative;
+	    list-style: none!important;
+	   
+	   :after{
+			display: block;
+    		clear: both;
+	   }
 
-	.rating-label {
-		float: left;
-		margin-top: 9px;
-		margin-right: 10px;
-		width: 100px;
+	   .single_review{
+	   		float: right;
+	   		position: relative;
+		    margin-top: 5px;
+		    margin: 0 auto;
+		    display: inline-block;
+
+		    img{
+		    	height: 35px;
+		    	max-width: inherit;		    	
+			    padding: 0;			   
+		    }
+
+		    .review__results__wrapper{
+	    	    white-space: nowrap;
+		    	display: inline-block;
+		    	position: absolute;
+		    }
+
+		    .review__results{		    		
+    		    width: 60%;    		    
+    		    overflow: hidden;
+				background-color: transparent;
+				position: relative;
+				white-space: nowrap;
+				transition: width 2s ease;
+	    	}
+	   }
 	}
 
 }
+
+	
+
