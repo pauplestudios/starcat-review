@@ -21,7 +21,8 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Image_Rating')) {
                     'show_value_limit' => 10, // 20 ,30, 50, 80 and etc..   
                     'stats_type' => 'image', // or icon or progress     
                     'image_url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png',
-                    'icon' => 'circle'              
+                    'icon' => 'circle', 
+                    'animate' => true,         
                     'show_user_review' => false,
                 ],
                 'items' => $stats,
@@ -34,10 +35,11 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Image_Rating')) {
             $html  = '<div class=".hrp-container">';
             $html .= '<ul class="hrp-review-list">';
             $stat_html = '';
+
             foreach ($this->props['items'] as $key => $value) {
                 $stats_cumulative_score += $value;
 
-                if ($this->is_stat_included($key)) {
+                if ($this->is_stat_included($key)) {                    
                     $stat_html .= $this->get_single_stat($key, $value);
                 }
 
@@ -46,11 +48,11 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Image_Rating')) {
 
             $overall_stat_html = $this->get_overall_stat_html($stats_cumulative_score, $count);
 
-            $html .= $stat_html . $overall_stat_html;
+            $html .= $overall_stat_html . $stat_html ;
 
-            if ($this->props['show_user_review']) {
-                $get_user_review_html = $this->get_user_review();
-            }
+            // if ($this->props['show_user_review']) {
+            //     $get_user_review_html = $this->get_user_review();
+            // }
 
             $html .= '</ul></div>';
 
@@ -60,15 +62,14 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Image_Rating')) {
         public function is_stat_included($key) {
 
             $key = $this->get_santized_key($key);
-            if (in_array($key, $this->props['show_stats'])) {
+            if (in_array($key, $this->props['collection']['show_stats'])) {
                 return true;
             }
 
             return false;
         }
 
-        public function get_santized_key($key) {
-            error_log('message');
+        public function get_santized_key($key) {            
             $key = strtolower($key);
             $key = trim($key);
 
@@ -90,7 +91,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Image_Rating')) {
             $html .= '<div class="review__results__wrapper">';
             $html .= $this->get_image_wrapper_html();
             $html .= '</div>';
-            $html .= $this->get_image_results_html(); 
+            $html .= $this->get_image_results_html($value); 
             $html .='</div>'; 
             $html .= '<span>'.$key.'</span>'; 
             $html .= '</li>';
@@ -109,10 +110,10 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Image_Rating')) {
             return $html;
         }
 
-        public function get_image_results_html()
+        public function get_image_results_html($value)
         {
             $html = '';     
-            $html .= '<div class="review__results">';       
+            $html .= '<div class="review__results" data-value="'.$value.'" data-animate="'.$this->props['collection']['animate'].'" style="width: '.$value.'%">';       
             $fallback_image_url = HELPIE_REVIEWS_URL . 'includes/assets/img/filled-tomato.png';
             $image_url = $this->props['collection']['image_url'];
 

@@ -1,18 +1,9 @@
 var Ratings = {
     init: function() {
-        console.log('Ratings JS Loaded !!!');
-
-        jQuery('.ui.rating').rating({
-		  initialRating: 1,
-		  maxRating: 5,
-		  clearable: true,
-		  onRate: function(value) {
-		    console.log('value set to:' + value);
-		  },
-		  
-		});
+        console.log('Ratings JS Loaded !!!');       
 
         this.progressBarRating();
+        this.imageRating();
     },
 
     progressBarRating: function(){    	
@@ -35,6 +26,22 @@ var Ratings = {
 		//   rangeValue.html(jQuery(this).val()+" / 100%"); 
 		// }); 		
     },
+
+    imageRating: function(){    	
+    	jQuery(".review__results").each(function(){
+			if(jQuery(this).attr('data-animate') == true){
+				each_image_width = jQuery(this).attr('data-value');		
+				jQuery(this).width(0 + '%');
+				
+				setTimeout(function() {				    		
+		    		jQuery(".review__results").each(function(){
+		    			each_image_width = jQuery(this).attr('data-value');	
+						jQuery(this).width(each_image_width + '%'); 
+		    		});   			    			
+	    		}, 1000);	
+			}			
+  		});
+    }
 
  //    progressBar: function(percent, $element)
  //    {     
