@@ -6,7 +6,7 @@ var ReviewsList = require("./components/reviews-list.js");
 var HelpieReviews = {
     init: function() {
         UserReviewsList.init();
-        ListControl.init();
+        // ListControl.init();
         ReviewsList.init();
     },
 

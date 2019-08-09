@@ -38,7 +38,8 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\View')) {
 
             /* Pagination */
             if ($collectionProps['pagination']) {
-                $html .= '<ul class="ui pagination hrp-pagination menu"></ul>';
+                // $html .= '<ul class="ui pagination hrp-pagination menu"></ul>';
+                $html .= $this->get_pagination_html($viewProps);
             }
 
             $html .= '</div>';
@@ -47,6 +48,20 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\View')) {
         }
 
         /* PRIVATE CLASS */
+
+        private function get_pagination_html($viewProps)
+        {
+            $html = '';
+            $html .= '<ul class="ui pagination hrp-pagination menu">';
+
+            for ($ii = 1; $ii <= $viewProps['collection']['total_pages']; $ii++) {
+                # code...
+                $html .= '<li class="active"><a class="page" href="">' . $ii . '</a></li>';
+            }
+
+            $html .= '</ul>';
+            return $html;
+        }
 
         private function get_card_collection($viewProps)
         {

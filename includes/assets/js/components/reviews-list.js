@@ -28,4 +28,4 @@ var ReviewsList = {
     }
 };
 
-module.exports = Tracker;
+module.exports = ReviewsList;
