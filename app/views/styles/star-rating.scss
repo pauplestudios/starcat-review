@@ -36,14 +36,13 @@
 			    padding: 0;			   
 		    }
 
-		    .review__results__wrapper{
+		    &__wrapper{
 	    	    white-space: nowrap;
 		    	display: inline-block;
 				position: absolute;				
 		    }
 
-		    .review__results{		    		
-    		    // width: 60%;    		    
+		    &__results{		    		    		    
     		    overflow: hidden;
 				background-color: transparent;
 				position: relative;
@@ -54,7 +53,7 @@
 					color: #ffd700;									
 				}
 			}
-			.review__results__wrapper i:not(:last-of-type), .review__results i:not(:last-of-type){
+			.single_review__wrapper i:not(:last-of-type), .single_review__results i:not(:last-of-type){
 				margin-right: 5px;
 			}
 	   }

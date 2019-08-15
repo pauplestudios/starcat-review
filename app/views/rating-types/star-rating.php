@@ -20,7 +20,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
 
         public function get_html()
         {
-            $html  = '<div class=".hrp-container">';
+            $html  = '<div class="hrp-container">';
             $html .= '<ul class="hrp-review-list">';
             $stat_html = '';
 
@@ -29,7 +29,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
                 $star_value = $this->get_star_value($value);
 
                 if ($this->is_stat_included($key)) {                    
-                    $stat_html .= $this->get_single_stat($key, $star_value);
+                    $stat_html .= $this->get_single_stat($key, $value, $star_value);
                 }
 
                 $count++;
@@ -53,22 +53,22 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             $overall_stat_value = $stats_cumulative_score / $count;
             $overall_star_value = $this->get_star_value($overall_stat_value);            
 
-            $overall_stat_html = $this->get_single_stat(__('Overall', 'helpie-reviews'), $overall_star_value);
+            $overall_stat_html = $this->get_single_stat(__('Overall', 'helpie-reviews'), $overall_stat_value, $overall_star_value);
 
             return $overall_stat_html;
         }
 
-        public function get_single_stat($key, $value)
+        public function get_single_stat($key, $value, $star_value)
         {
             $html = '';
             $html .= '<li>';
             $html .='<div class="single_review">';
-            $html .= '<div class="review__results__wrapper">';
+            $html .= '<div class="single_review__wrapper">';
             $html .= $this->get_wrapper_html();
             $html .= '</div>';
             $html .= $this->get_results_html($value); 
             $html .='</div>'; 
-            $html .= '<span>'.$key.' - '.$value.'</span>';
+            $html .= '<span>'.$key.' - '.$star_value.'</span>';
             
             $html .= '</li>';
 
@@ -112,10 +112,8 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
 
         protected function get_icon_results_html($value)
         {
-            $value = $value * $this->props['collection']['divisor']; 
-
             $html = '';     
-            $html .= '<div class="review__results" data-value="'.$value.'" data-animate="'.$this->props['collection']['animate'].'" style="width: '.$value.'%">';       
+            $html .= '<div class="single_review__results" data-valuenow="'.$value.'" data-animate="'.$this->props['collection']['animate'].'" style="width: 0%">';       
             $fallback_icon = 'fa fa-star';
             $icon = $this->props['collection']['icon'];
 
@@ -143,7 +141,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
         public function get_image_results_html($value)
         {                    
             $html = '';                 
-            $html .= '<div class="review__results" data-value="'.$value.'" data-animate="'.$this->props['collection']['animate'].'" style="width: '.$value.'%">';       
+            $html .= '<div class="single_review__results" data-valuenow="'.$value.'" data-animate="'.$this->props['collection']['animate'].'" style="width:0%">';       
             $fallback_image_url = HELPIE_REVIEWS_URL . 'includes/assets/img/filled-tomato.png';
             $image_url = $this->props['collection']['image_url'];
             $image_src = $fallback_image_url;

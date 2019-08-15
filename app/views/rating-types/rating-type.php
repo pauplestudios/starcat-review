@@ -18,11 +18,11 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Rating_Type')) {
             return [
 				'collection' => [
                     'divisor' => 20,
-                    'display_rating_type' => 'star', // progress_bar or circle
+                    'display_rating_type' => 'star', // star, progress_bar or circle
                     'star_scale' => 5, // 0-5 or 0-10
 					'show_stats' => ['overall', 'price', 'ux', 'feature', 'better', 'cool'],
-					'show_value_type' => 'number', // or percentage
-					'show_value_limit' => 10, // 20 ,30, 50, 80 and etc..	
+					'show_value_type' => 'percentage', // or percentage
+					'show_value_limit' => 20, // 20 ,30, 50, 80 and etc..	
                     'source_type' => 'icon', // or image
                     'image_url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png',
                     'animate' => true,

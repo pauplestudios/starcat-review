@@ -1,23 +1,33 @@
-.hrp-rating-collection {
-    .hrp-progress{
+.hrp-container {
+    .single_progress_review{
         
-        background: #eae9e9;                
-        overflow: hidden;
-        box-shadow: 0 0 5px #333;        
-    	
-    	.hrp-progress-bar{
-            width: 7%;
+        &__wrapper{
+            height: 25px;
+            white-space: nowrap;
+            background-color: #95bae0;                         
+            position: relative;
+            width: 100%;     
             text-align: center;
-            color: #eae9e9;
-            background-color: #254452;            
+        }
+        &__results{            
+            height: 25px;
+            position: absolute;            
+            background-color: #1e73be;
             transition: width 2s ease;
-            // -webkit-transition: width 1.5s ease-in-out;
-        }   
+            overflow: hidden;
+            white-space: nowrap;
+            color: #38b7ee!important;
+        }
+        &__text{
+            position: inherit;
+            left: 4px;
+            top: 0;
+            font-size: 16px;
+            line-height: 25px;
+            color: #e7e7e7;
+        }
+              
     }
-    
-    // .hrp-divider{
-    //     clear: both;        
-    //     height: 6px;
-    //     background: url(http://ibrahimjabbari.com/images/hr-11.png) repeat-x 0 0;        
-    // }
+     
+   
 }
