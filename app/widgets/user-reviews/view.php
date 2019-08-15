@@ -15,7 +15,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\User_Reviews\View')) {
         public function __construct()
         {
             /* Views */
-            $this->card = new \HelpieReviews\App\Views\Blocks\Card();
+            $this->card = new \HelpieReviews\App\Views\Blocks\Enhanced_Card();
             $this->controls_builder = new \HelpieReviews\App\Builders\Controls_Builder();
         }
 
@@ -44,7 +44,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\User_Reviews\View')) {
 
             $html .= '</div>';
 
-            error_log('$html : ' . $html);
+            // error_log('$html; : ' . $html );
             return $html;
         }
 
@@ -89,20 +89,27 @@ if (!class_exists('\HelpieReviews\App\Widgets\User_Reviews\View')) {
 
         private function get_single_card($post, $ii, $viewProps)
         {
+            // error_log('$post : ' . print_r($post, true));
             $collectionProps = $viewProps['collection'];
             $reviews = [2, 4, 7, 25, 50, 75, 100];
 
 
-            $excerpt = $this->get_excerpt($post->post_content);
+            // $excerpt = $this->get_excerpt($post->post_content);
             $single_review = isset($reviews[$ii]) ? $reviews[$ii] : 1;
 
+            $stats_html = "<div class='stats'>Stats HTML CONTENT</div>";
             $item = [
-                'title' => $post->post_title,
-                'content' => $excerpt,
+                'title' => $post['title'],
+                'content' => $post['content'],
                 'url' => '',
                 'reviews' => $single_review,
                 'columns' => $collectionProps['columns'],
-                'items_display' => $collectionProps['items_display']
+                // 'items_display' => $collectionProps['items_display'],
+                'html_parts' => [
+                    'title',
+                    'content',
+                    $stats_html
+                ]
             ];
 
             return $this->card->get_view($item);
