@@ -95,7 +95,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'id'          => 'template_source',
                             'type'        => 'select',
                             'title'       => 'Template Source',
-                            'placeholder' => 'Theme',
+                            'placeholder' => 'Select Template Source',
                             'options'     => array(
                                 'plugin'  => 'Plugin',
                                 'theme'  => 'Theme',

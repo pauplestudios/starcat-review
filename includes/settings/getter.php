@@ -18,13 +18,13 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
         public  function __construct()
         {
             error_log('HRP_Getter');
-
-            self::$defaults = self::default_settings();
         }
 
 
         public static function  get($option_name)
         {
+
+            self::$defaults = self::default_settings();
 
             // Only set one time
             if (!isset(self::$options) || empty(self::$options)) {
@@ -33,7 +33,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
 
 
             // self::$options = get_option('helpie-reviews');
-            // error_log(' self::$options : ' . print_r(self::$options, true));
+            error_log(' self::$options : ' . print_r(self::$options, true));
             if (isset(self::$options[$option_name])) {
                 return self::$options[$option_name];
             } else {
