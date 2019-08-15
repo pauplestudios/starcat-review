@@ -128,7 +128,7 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
 
             $user_review_content = $user_review_controller->get_view();
             $fullcontent = $content . $review_content . $user_review_content;
-            $fullcontent = $content . $review_content;
+            // $fullcontent = $content . $review_content;
             return $fullcontent;
         }
 
