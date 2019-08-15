@@ -3,7 +3,7 @@ var Ratings = {
         console.log('Ratings JS Loaded !!!');       
 
         this.progressBarRating();
-        this.imageRating();
+        // this.imageRating();
     },
 
     progressBarRating: function(){    	
