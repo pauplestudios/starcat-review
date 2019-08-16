@@ -1,63 +1,39 @@
-// Based on https://codepen.io/jamesbarnett/pen/vlpkh
-
-@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
-
 
 .hrp-review-list {
-	
-	margin: 0;
-    list-style: none;
-    padding: 0;
-    clear: both;   
 
-	li{
-		background: #eaeaea;
-		margin: 0;
-		box-sizing: border-box;
-	    border-bottom: 1px solid #e7e7e7;
-	    padding: 10px 15px;
-	    position: relative;
-	    list-style: none!important;
-	   
-	   :after{
-			display: block;
-    		clear: both;
-	   }
+	.single-review{
+		float: right;
+		position: relative;			
+		font-size: 20px;
+		margin: 0 auto;			
 
-	   .single_review{
-	   		float: right;
-	   		position: relative;			
-			font-size: 20px;
-		    margin: 0 auto;			
+		img{
+			height: 35px;
+			max-width: inherit;		    	
+			padding: 0;			   
+		}
 
-		    img{
-		    	height: 35px;
-		    	max-width: inherit;		    	
-			    padding: 0;			   
-		    }
+		&__wrapper{
+			white-space: nowrap;
+			display: inline-block;
+			position: absolute;				
+		}
 
-		    &__wrapper{
-	    	    white-space: nowrap;
-		    	display: inline-block;
-				position: absolute;				
-		    }
+		&__results{		    		    		    
+			overflow: hidden;
+			background-color: transparent;
+			position: relative;
+			white-space: nowrap;
+			transition: width 2s ease;
 
-		    &__results{		    		    		    
-    		    overflow: hidden;
-				background-color: transparent;
-				position: relative;
-				white-space: nowrap;
-				transition: width 2s ease;
-
-				i{
-					color: #ffd700;									
-				}
+			i{
+				color: #ffd700;									
 			}
-			.single_review__wrapper i:not(:last-of-type), .single_review__results i:not(:last-of-type){
-				margin-right: 5px;
-			}
-	   }
-	}
+		}
+		&__wrapper i:not(:last-of-type), &__results i:not(:last-of-type){
+			margin-right: 10px;
+		}
+	}	
 
 }
 

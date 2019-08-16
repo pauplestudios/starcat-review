@@ -1,6 +1,7 @@
-.hrp-container {
-    .single_progress_review{
-        
+
+.hrp-review-list {
+
+    .single-progress-review{        
         &__wrapper{
             height: 25px;
             white-space: nowrap;
@@ -25,9 +26,7 @@
             font-size: 16px;
             line-height: 25px;
             color: #e7e7e7;
-        }
-              
-    }
-     
-   
+        }              
+    }    
+        
 }

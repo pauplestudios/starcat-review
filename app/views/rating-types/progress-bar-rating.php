@@ -74,10 +74,11 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Progress_Bar_Rating')) 
 				return $html;
 			}
 
-			$html .= '<li class="single_progress_review"><span class="single_progress_review__label">'.$key.' - '.$number_value.'/'.$this->limit.'</span>';
-			$html .= '<div class="single_progress_review__wrapper">';
-			$html .= '<div class="single_progress_review__results" data-valuenow="'.$value.'" style = "width: 0%"></div>';
-			$html .= '<div class="single_progress_review__text">'.$number_value.' / '.$this->limit.'</div>';
+			$html .= '<li class="single-progress-review">';
+			$html .= '<span class="single-progress-review__label">'.$key.' - '.$number_value.'/'.$this->limit.'</span>';
+			$html .= '<div class="single-progress-review__wrapper">';
+				$html .= '<div class="single-progress-review__results" data-valuenow="'.$value.'" style = "width: 0%"></div>';
+				$html .= '<div class="single-progress-review__text">'.$number_value.' / '.$this->limit.'</div>';
 			$html .= '</div>';
 			$html .= '</li>';
 

@@ -62,8 +62,8 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
         {
             $html = '';
             $html .= '<li>';
-            $html .='<div class="single_review">';
-            $html .= '<div class="single_review__wrapper">';
+            $html .='<div class="single-review">';
+            $html .= '<div class="single-review__wrapper">';
             $html .= $this->get_wrapper_html();
             $html .= '</div>';
             $html .= $this->get_results_html($value); 
@@ -114,7 +114,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
         protected function get_icon_results_html($value)
         {
             $html = '';     
-            $html .= '<div class="single_review__results" data-valuenow="'.$value.'" data-animate="'.$this->props['collection']['animate'].'" style="width: 0%">';       
+            $html .= '<div class="single-review__results" data-valuenow="'.$value.'" data-animate="'.$this->props['collection']['animate'].'" style="width: 0%">';       
             $fallback_icon = 'fa fa-star';
             $icon = $this->props['collection']['icon'];
 
@@ -142,7 +142,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
         public function get_image_results_html($value)
         {                    
             $html = '';                 
-            $html .= '<div class="single_review__results" data-valuenow="'.$value.'" data-animate="'.$this->props['collection']['animate'].'" style="width:0%">';       
+            $html .= '<div class="single-review__results" data-valuenow="'.$value.'" data-animate="'.$this->props['collection']['animate'].'" style="width:0%">';       
             $fallback_image_url = HELPIE_REVIEWS_URL . 'includes/assets/img/filled-tomato.png';
             $image_url = $this->props['collection']['image_url'];
             $image_src = $fallback_image_url;

@@ -5,12 +5,12 @@ var Ratings = {
     },   
 
     animateRating: function(){    	
-    	jQuery(".single_progress_review__results").each(function(){			
+    	jQuery(".single-progress-review__results").each(function(){			
 			each_bar_width = jQuery(this).attr('data-valuenow');			
 			jQuery(this).width(each_bar_width + '%');			
 		  });
 		  
-		jQuery(".single_review__results").each(function(){
+		jQuery(".single-review__results").each(function(){
 			each_bar_width = jQuery(this).attr('data-valuenow');			
 			jQuery(this).width(each_bar_width + '%');
   		});
