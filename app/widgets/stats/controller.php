@@ -45,7 +45,6 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Controller')) {
 
         private function get_stats($post_id)
         {
-
             $stats = $this->model->get($post_id);
             return $stats;       
         }
