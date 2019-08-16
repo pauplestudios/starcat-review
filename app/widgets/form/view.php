@@ -19,17 +19,19 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
             $html = "<div class='hrp-container'>";
             $html .= "<div class='hrp-form ui segment'>";            
             $html .= '<div class="ui attached label"> Stats Review Form </div>';   
-            $html .= '<div class="ui tiny form">';
+            $html .= '<div class="ui form">';
             
             $html .= '</br><div class="field"> <label>Review Title</label>';
             $html .= '<input type="text" name="review_title" placeholder="Title">';
             $html .= '</div>';
-
-            $html .= '<div class="field"> <label>Review Description</label>';
-            $html .= '<textarea rows="3" spellcheck="false" placeholder="Description"></textarea>';
+            
+            $html .= $this->get_user_review();
+            
+            $html .= '<div class="field"> <label>Review Description</label>';            
+            $html .= '<textarea rows="5" spellcheck="false" placeholder="Description"></textarea>';
             $html .= '</div>';
 
-            $html .= $this->get_pros_and_cons();
+            $html .= $this->get_pros_and_cons();            
          
             $html .= '<div class="ui mini submit right button">Submit</div>';
             $html .= '</div>';                       
@@ -41,27 +43,30 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
 
         protected function get_pros_and_cons()
         {
-            $html = '<div class="ui segment"><div class="ui two column relaxed padded grid">
+            $html = '<div class="ui segment">
+            <div class="ui two column divided grid">
                 <div class="column">
-                <div class="ui attached label"> Pros </div>   
-                    <div class="field">
-                        <p>item 1</p>
-                        <p>item 2</p>
-                    </div>
+                <div class="ui attached label"> Pros </div>
+                    </br>
+                    <p> Items </p>
                 </div>
                 <div class="column">
                 <div class="ui attached label"> Cons </div>
-                    <div class="field">
-                        <p>item 1</p>
-                        <p>item 2</p>
-                    </div>
+                    </br>
+                    <p> Items </p>                   
                 </div> 
-            </div>
-            <div class="ui vertical divider">and</div>
+            </div>            
             </div>';
 
             return $html;
         }
 
+        protected function get_user_review()
+        {
+            return 'User Review';
+        }
+
     } // END CLASS
 }
+// <div class="ui top attached label"> Pros </div>
+// <div class="ui top attached label"> Cons </div>
