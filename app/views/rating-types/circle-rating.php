@@ -14,6 +14,11 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Circle_Rating')) {
         public function __construct($var) {
             $this->var = $var;
         }
+
+        public function get_html()
+        {
+            return '';
+        }
         
     } // END CLASS
 }
