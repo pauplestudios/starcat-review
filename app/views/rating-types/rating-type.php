@@ -1,6 +1,6 @@
 <?php
 
-namespace HelpieReviews\App\Views\Rating_Type;
+namespace HelpieReviews\App\Views\Rating_Types;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -8,5 +8,23 @@ if (!defined('ABSPATH')) {
 
 if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Rating_Type')) {
     class Rating_Type
-    { } // END CLASS
+    { 
+        protected function is_stat_included($stat_item, $collection) {			
+			$stat_item = $this->get_santized_key($stat_item);
+			if (in_array($stat_item, $collection['show_stats'])) {
+				return true;
+			}
+
+			return false;
+		}
+
+        protected function get_santized_key($key) { 
+                   
+            $key = strtolower($key);
+            $key = trim($key);
+
+            return $key;
+        }
+        
+    } // END CLASS
 }

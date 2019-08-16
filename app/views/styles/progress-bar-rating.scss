@@ -1,0 +1,32 @@
+
+.hrp-review-list {
+
+    .single-progress-review{        
+        &__wrapper{
+            height: 25px;
+            white-space: nowrap;
+            background-color: #95bae0;                         
+            position: relative;
+            width: 100%;     
+            text-align: center;
+        }
+        &__results{            
+            height: 25px;
+            position: absolute;            
+            background-color: #1e73be;
+            transition: width 2s ease;
+            overflow: hidden;
+            white-space: nowrap;
+            color: #38b7ee!important;
+        }
+        &__text{
+            position: inherit;
+            left: 4px;
+            top: 0;
+            font-size: 16px;
+            line-height: 25px;
+            color: #e7e7e7;
+        }              
+    }    
+        
+}

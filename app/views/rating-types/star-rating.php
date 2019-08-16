@@ -2,38 +2,34 @@
 
 namespace HelpieReviews\App\Views\Rating_Types;
 
+use \HelpieReviews\App\Views\Rating_Types\Rating_Type as Rating_Type;
+
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
 if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
-    class Star_Rating
+    class Star_Rating extends Rating_Type
     {
         private $html;
 
-        public function __construct($stats)
-        {
-
-            $this->props = [
-                'stats' => $stats,
-                'divisor' => 20,
-                'show_stats' => ['overall', 'price', 'ux']
-            ];
-        }
+        public function __construct($viewProps)
+        { 
+           $this->props = $viewProps;
+        }       
 
         public function get_html()
         {
-            $html = "<div class='hrp-rating-collection hrp-container'>";
-            $count = 0;
+            $html  = '<div class="hrp-container">';
+            $html .= '<ul class="hrp-review-list">';
+            $stat_html = '';            
 
-            $stats_html = '';
-            $stats_cumulative_score = 0;
-
-            foreach ($this->props['stats'] as $key => $value) {
+            foreach ($this->props['items'] as $key => $value) {                
                 $stats_cumulative_score += $value;
+                $star_value = $this->get_star_value($value);
 
-                if ($this->is_stat_included($key)) {
-                    $stats_html .= $this->get_single_stat($value, $key);
+                if ($this->is_stat_included($key, $this->props['collection'])) {                    
+                    $stat_html .= $this->get_single_stat($key, $value, $star_value);
                 }
 
                 $count++;
@@ -41,109 +37,124 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
 
             $overall_stat_html = $this->get_overall_stat_html($stats_cumulative_score, $count);
 
-            $html .= $overall_stat_html . $stats_html;
-            $html .= "</div>";
+            $html .= $overall_stat_html . $stat_html ;
 
-            $this->html = $html;
-            return $this->html;
-        }
+            // if ($this->props['show_user_review']) {
+            //     $get_user_review_html = $this->get_user_review();
+            // }
 
-        protected function get_single_stat($value, $key)
-        {
-            $html = '';
-
-            $star_value = $this->get_star_value($value);
-
-            if (!$this->is_stat_included($key)) {
-                return $html;
-            }
-
-            $html .= "<div class='single-rating'><span class='rating-label'>" . $key . "</span>";
-            $html .= $this->get_star_set($star_value,  $key);
-            $html .= "</div>";
+            $html .= '</ul></div>';
 
             return $html;
         }
 
+        protected function get_overall_stat_html($stats_cumulative_score, $count) {
 
-        protected function get_santized_key($key)
-        {
-            $key = strtolower($key);
-            $key = trim($key);
-
-            return $key;
-        }
-
-        protected function is_stat_included($key)
-        {
-            error_log('$key : ' . $key);
-            $key = $this->get_santized_key($key);
-            if (in_array($key, $this->props['show_stats'])) {
-                return true;
-            }
-
-            return false;
-        }
-
-
-        protected function get_overall_stat_html($stats_cumulative_score, $count)
-        {
             $overall_stat_value = $stats_cumulative_score / $count;
-            $overall_stat_html = $this->get_single_stat($overall_stat_value, __('Overall', 'helpie-reviews'));
+            $overall_star_value = $this->get_star_value($overall_stat_value);            
 
-            // error_log('$stats_cumulative_score : ' . $stats_cumulative_score);
-            // error_log('$overall_stat_value : ' . $overall_stat_value);
+            $overall_stat_html = $this->get_single_stat(__('Overall', 'helpie-reviews'), $overall_stat_value, $overall_star_value);
 
             return $overall_stat_html;
         }
 
-
-        protected function get_star_value($value)
-        {
-            return $value / $this->props['divisor'];
-        }
-
-
-        protected function get_star_set($star_value,  $key = 'star')
+        public function get_single_stat($key, $value, $star_value)
         {
             $html = '';
-            $html .= '<fieldset class="rating-fieldset">';
+            $html .= '<li>';
+            $html .='<div class="single-review">';
+            $html .= '<div class="single-review__wrapper">';
+            $html .= $this->get_wrapper_html();
+            $html .= '</div>';
+            $html .= $this->get_results_html($value); 
+            $html .='</div>'; 
+            $html .= '<span>'.$key.' - '.$star_value.'</span>';
+            
+            $html .= '</li>';
 
-            $star_value = (floor($star_value * 2) / 2);
-
-            // error_log('$star_value : ' . $star_value);
-
-            // $star_value = 4;
-            for ($ii = 5; $ii >= 1; $ii--) {
-
-                $previous_ii = $ii - 1;
-
-                $checked = '';
-                $half_checked = '';
-                if ($ii == $star_value) {
-                    // $additional_class .= ' active';
-                    $checked = 'checked';
-                }
-
-                if ($ii - 0.5 == $star_value) {
-                    // $additional_class .= ' active';
-                    $half_checked = 'checked';
-                }
-
-                $id = $key . '-rating' . $ii;
-                $half_id = $key . '-rating';
-
-                if ($previous_ii != 0) {
-                    $half_id = $key . '-rating' . $previous_ii;
-                }
-
-                $html .= '<input type="radio" ' . $checked . ' id="' . $id . '" name="' . $key . '-rating" value="' . $ii . '"  /><label class = "full" for="' . $id . '" title="Sucks big time - 1 star"></label>';
-                $html .= '<input type="radio" ' . $half_checked . ' id="' . $half_id . 'half" name="' . $key . '-rating" value="half" /><label class="half" for="' . $half_id . 'half" title="Sucks big time - 0.5 stars"></label>';
-            }
-
-
-            $html .= '</fieldset>';
             return $html;
         }
-    } // END CLASS
+
+        protected function get_star_value($value) {
+            $star_value =$value / $this->props['collection']['divisor'];
+            // error_log("Star Value : " . round($star_value));
+            return (floor($star_value * 2) / 2);
+		}
+
+        protected function get_wrapper_html()
+        {
+            if($this->props['collection']['source_type'] == 'image'){
+                return $this->get_image_wrapper_html();
+            }
+
+            return $this->get_icon_wrapper_html();
+        }
+
+        protected function get_results_html($value)
+        {
+            
+            if($this->props['collection']['source_type'] == 'image'){
+                return $this->get_image_results_html($value);
+            }
+
+            return $this->get_icon_results_html($value);
+        }
+
+        public function get_icon_wrapper_html()
+        {
+            $html = '';
+            $fallback_icon = 'fa fa-star';
+            for($ii = 0; $ii<$this->props['collection']['star_scale']; $ii++){                
+                $html .= "<i class='".$fallback_icon."'></i>";
+            }
+
+            return $html;
+        }
+
+        protected function get_icon_results_html($value)
+        {
+            $html = '';     
+            $html .= '<div class="single-review__results" data-valuenow="'.$value.'" data-animate="'.$this->props['collection']['animate'].'" style="width: 0%">';       
+            $fallback_icon = 'fa fa-star';
+            $icon = $this->props['collection']['icon'];
+
+            for($ii = 0; $ii<$this->props['collection']['star_scale']; $ii++){                
+                $html .= '<i class="'.$icon.'"></i>';
+            }
+            $html .= '</div>';
+            
+            return $html;
+        }
+
+        public function get_image_wrapper_html()
+        {
+            $html = '';
+            $fallback_image_url = HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png';
+            $image_url = $this->props['collection']['image_url'];
+            $image_src = ($image_url)?$image_url:$fallback_image_url;
+            for($ii = 0; $ii<$this->props['collection']['star_scale']; $ii++){                
+                $html .= "<img src='".$image_src."'>";
+            }
+
+            return $html;
+        }
+
+        public function get_image_results_html($value)
+        {                    
+            $html = '';                 
+            $html .= '<div class="single-review__results" data-valuenow="'.$value.'" data-animate="'.$this->props['collection']['animate'].'" style="width:0%">';       
+            $fallback_image_url = HELPIE_REVIEWS_URL . 'includes/assets/img/filled-tomato.png';
+            $image_url = $this->props['collection']['image_url'];
+            $image_src = $fallback_image_url;
+
+            for($ii = 0; $ii<$this->props['collection']['star_scale']; $ii++){                
+                $html .= "<img src='".$image_src."'>";
+            }
+            $html .= '</div>';
+            
+            return $html;
+        }        
+    }
 }
+
+// Custom Image
