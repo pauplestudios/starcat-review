@@ -13,5 +13,6 @@ tests/_data/helpie
 *.lock
 reports
 .scannerwork
+.vscode
 includes/assets/vendors/semantic
 test-artifacts/build/**

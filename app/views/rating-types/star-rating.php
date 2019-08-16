@@ -22,13 +22,13 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
         {
             $html  = '<div class="hrp-container">';
             $html .= '<ul class="hrp-review-list">';
-            $stat_html = '';
+            $stat_html = '';            
 
             foreach ($this->props['items'] as $key => $value) {                
                 $stats_cumulative_score += $value;
                 $star_value = $this->get_star_value($value);
 
-                if ($this->is_stat_included($key)) {                    
+                if ($this->is_stat_included($key, $this->props['collection'])) {                    
                     $stat_html .= $this->get_single_stat($key, $value, $star_value);
                 }
 
@@ -76,7 +76,8 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
         }
 
         protected function get_star_value($value) {
-			$star_value =$value / $this->props['collection']['divisor'];
+            $star_value =$value / $this->props['collection']['divisor'];
+            // error_log("Star Value : " . round($star_value));
             return (floor($star_value * 2) / 2);
 		}
 

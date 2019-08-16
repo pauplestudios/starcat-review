@@ -19,7 +19,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Progress_Bar_Rating')) 
 
 		public function get_html() 
 		{
-			$this->limit = ($this->props['collection']['show_value_type'] == 'percentage') ? 100 : $this->props['collection']['show_value_limit'];
+			$this->limit = ($this->props['collection']['value_type'] == 'percentage') ? 100 : $this->props['collection']['value_limit'];
 
 			$html = "<div class='hrp-container'>";			
 			$html .= "<ul class='hrp-review-list'>";
@@ -30,7 +30,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Progress_Bar_Rating')) 
 				$stats_cumulative_score += $value;
 				$number_value = $this->get_value_byType($value);
 				
-				if ($this->is_stat_included($key)) {
+				if ($this->is_stat_included($key, $this->props['collection'])) {
 					$stats_html .= $this->get_single_stat($key, $value, $number_value);
 				}
 				
@@ -70,7 +70,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Progress_Bar_Rating')) 
 
 			$html = '';
 
-			if (!$this->is_stat_included($key)) {
+			if (!$this->is_stat_included($key, $this->props['collection'])) {
 				return $html;
 			}
 
