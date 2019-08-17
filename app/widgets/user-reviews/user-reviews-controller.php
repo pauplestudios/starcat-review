@@ -31,6 +31,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\User_Reviews\User_Reviews_Controll
                         'reviews' => true,
                         'verified' => false
                     ],
+                    'pagination' => true
                 ],
                 'items' => [
                     '1' => [
