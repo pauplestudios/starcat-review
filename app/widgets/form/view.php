@@ -62,8 +62,36 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
         }
 
         protected function get_user_review()
-        {
-            return 'User Review';
+        {            
+            $html = '<div class="field">';
+            $html .= '</br><label>User Review</label>';
+            $html .= '<div class="field ui divided grid"><div class="three column row">';
+            $html .= $this->get_star_rating();
+            $html .= $this->get_slider_rating();
+            $html .= $this->get_text_rating();
+            $html .= '</div></div></div>';
+            return $html;
+        }
+
+        protected function get_star_rating(){
+            return '<div class="column"><div class="ui star rating" data-rating="0" data-max-rating="5"></div></div>';
+        }
+        protected function get_slider_rating(){
+            return '<div class="column">
+            <div class="range-slider">
+            <input type="range" class="range-slider__range" min="0" max="100" value="0"/> 
+            <div class="ui label slider__value">0</div>                             
+          </div></div>';
+        }
+        protected function get_text_rating(){
+            return '<div class="column">
+                <div class="ui left labeled input"> 
+                    <div class="ui basic label">
+                        # or %
+                    </div>                  
+                    <input type="number" placeholder="# or %" min="1" max="100" maxlength="2">                    
+                </div>
+            </div>';
         }
 
     } // END CLASS
