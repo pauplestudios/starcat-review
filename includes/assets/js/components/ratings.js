@@ -1,4 +1,4 @@
-// require('repeater');
+// const repeater = require('jquery.repeater');
 var Ratings = {
     init: function() {
         console.log('Ratings JS Loaded !!!');               
@@ -22,6 +22,13 @@ var Ratings = {
 
 		jQuery(".range-slider__range").mousemove(function(){
 			jQuery(".slider__value").text(jQuery(this).val());
+		});
+
+		jQuery("#hrp-form .ui.dropdown.pros").dropdown({
+			allowAdditions: true,						
+		});
+		jQuery("#hrp-form .ui.dropdown.cons").dropdown({
+			allowAdditions: true,						
 		});
 
 	},	

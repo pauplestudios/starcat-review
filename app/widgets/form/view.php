@@ -17,7 +17,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
         public function get_html()
         {   
             $html = "<div class='hrp-container'>";
-            $html .= "<div class='hrp-form ui segment'>";            
+            $html .= "<div class='hrp-form ui segment' id='hrp-form'>";            
             $html .= '<div class="ui attached label"> Stats Review Form </div>';   
             $html .= '<div class="ui form">';
             
@@ -47,18 +47,43 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
             <div class="ui two column divided grid">
                 <div class="column">
                 <div class="ui attached label"> Pros </div>
-                    </br>
-                    <p> Items </p>
-                </div>
+                    </br>';
+            $html .= $this->get_pros_field();    
+            $html .='</div>
                 <div class="column">
                 <div class="ui attached label"> Cons </div>
-                    </br>
-                    <p> Items </p>                   
-                </div> 
-            </div>            
-            </div>';
+                    </br>';
+            $html .= $this->get_cons_field();                        
+            $html .='</div></div></div>';
 
             return $html;
+        }
+
+        protected function get_pros_field()
+        {
+            $html = '<select name="skills" class="ui fluid search dropdown pros">
+            <option value="">Pros</option>            
+          <option value="affordable">Affordable</option>
+          <option value="ui">UI</option>
+          </select>';
+
+          $html .= '<span><input data-repeater-delete type="button" value="Delete"/></span>';
+
+          return $html;
+        }
+
+        protected function get_cons_field()
+        {
+            $html = '<select name="skills" class="ui fluid search dropdown cons"> 
+            <option value="">cons</option>           
+          <option value="price">Price</option>
+          <option value="ui">UI</option>
+          <option value="features">Features</option>
+          </select>';
+
+          $html .= '<input data-repeater-delete type="button" value="Delete"/>';
+
+          return $html;
         }
 
         protected function get_user_review()
