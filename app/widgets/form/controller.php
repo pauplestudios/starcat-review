@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\HelpieReviews\App\Widgets\Form\Controller')) {
     class Controller
     {
-        public function __construct($viewProps)
+        public function __construct($post_id)
         {
             $this->model = new \HelpieReviews\App\Widgets\Form\Model($post_id);
             $viewProps = $this->model->get_viewProps();

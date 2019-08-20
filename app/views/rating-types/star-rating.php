@@ -76,8 +76,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
         }
 
         protected function get_star_value($value) {
-            $star_value =$value / $this->props['collection']['divisor'];
-            // error_log("Star Value : " . round($star_value));
+            $star_value =$value / $this->props['collection']['divisor'];            
             return (floor($star_value * 2) / 2);
 		}
 

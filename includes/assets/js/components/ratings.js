@@ -20,8 +20,8 @@ var Ratings = {
 	userRating: function(){
 		jQuery('.ui.star.rating').rating('enable');				  		
 
-		jQuery(".range-slider__range").mousemove(function(){
-			jQuery(".slider__value").text(jQuery(this).val());
+		jQuery(".range-slider .range").mousemove(function(){
+			jQuery(".range__value").text(jQuery(this).val());
 		});
 
 		jQuery("#hrp-form .ui.dropdown.pros").dropdown({

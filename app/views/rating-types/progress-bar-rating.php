@@ -24,7 +24,6 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Progress_Bar_Rating')) 
 			$html = "<div class='hrp-container'>";			
 			$html .= "<ul class='hrp-review-list'>";
 			$stats_html = '';
-			$get_user_review_html = '';
 			
 			foreach ($this->props['items'] as $key => $value) {
 				$stats_cumulative_score += $value;
@@ -38,10 +37,6 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Progress_Bar_Rating')) 
 			}
 			
 			$overall_stat_html = $this->get_overall_stat_html($stats_cumulative_score, $count);
-
-			// if ($this->props['collection']['show_user_review']) {
-			// 	$get_user_review_html = $this->get_user_review();
-			// }
 
 			$html .= $overall_stat_html . $stats_html;
 			$html .= "</ul></div>";
@@ -84,18 +79,8 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Progress_Bar_Rating')) 
 
 
 			return $html;
-		}		
-		
-		// protected function get_user_review($value = 10, $min = 0, $max = 100) {
-		// 	$html = '<div class="hrp-rating-wrapper"><hr class="hrp-divider">';
-		// 	$html .= '<div class="hrp-user-review__label">User Review</div>';
-		// 	$html .= '<div class="hrp-user-review__rating">';
-		// 	$html .= '<input type="range" min="' . $min . '" max="' . $max . '" value="' . $value . '" class="hrp-user-review__range">';
-		// 	$html .= '</div><span class="hrp-user-review__value">' . $value . " / " . $max . "%" . '</span>';
-		// 	$html .= '</div>';
+		}	
 
-		// 	return $html;
-		// }
 	}
 }
 
