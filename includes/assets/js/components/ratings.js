@@ -1,4 +1,3 @@
-// const repeater = require('jquery.repeater');
 var Ratings = {
     init: function() {
         console.log('Ratings JS Loaded !!!');               
@@ -17,6 +16,7 @@ var Ratings = {
 			jQuery(this).width(each_bar_width + '%');
   		});
 	},
+
 	userRating: function(){
 		jQuery('.ui.star.rating').rating('enable');				  		
 

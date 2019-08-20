@@ -43,47 +43,53 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
 
         protected function get_pros_and_cons()
         {
-            $html = '<div class="ui segment">
-            <div class="ui two column divided grid">
-                <div class="column">
-                <div class="ui attached label"> Pros </div>
-                    </br>';
-            $html .= $this->get_pros_field();    
-            $html .='</div>
-                <div class="column">
-                <div class="ui attached label"> Cons </div>
-                    </br>';
-            $html .= $this->get_cons_field();                        
-            $html .='</div></div></div>';
+            $html = '<div class="ui segment">';
+            $html .= '<div class="ui two column divided grid">';
+
+            $html .= $this->get_pros_field();
+            $html .= $this->get_cons_field();            
+
+            $html .='</div></div>';
 
             return $html;
         }
 
         protected function get_pros_field()
         {
-            $html = '<select name="skills" class="ui fluid search dropdown pros">
-            <option value="">Pros</option>            
-          <option value="affordable">Affordable</option>
-          <option value="ui">UI</option>
-          </select>';
+            $html = '<div class="column pros-semantic-repeater">';
+            $html .= '<div class="ui attached label"> Pros </div><br />';
+            $html .= '<div data-repeater-list="pros" >';
+            $html .= '<div data-repeater-item >
+                <select name="skills" class="ui fluid search dropdown">
+                <option value="">Pros</option>            
+                <option value="affordable">Affordable</option>
+                <option value="ui">UI</option>
+                </select>
+                <div data-repeater-delete class="ui icon button"><i class="minus circle link icon"></i> </div>
+            </div></div>';
+            $html .= '<div  data-repeater-create class="ui icon button"> <i class="plus circle link icon"></i></div>';    
+            $html .='</div>';
 
-          $html .= '<span><input data-repeater-delete type="button" value="Delete"/></span>';
-
-          return $html;
+            return $html;
         }
 
         protected function get_cons_field()
         {
-            $html = '<select name="skills" class="ui fluid search dropdown cons"> 
-            <option value="">cons</option>           
-          <option value="price">Price</option>
-          <option value="ui">UI</option>
-          <option value="features">Features</option>
-          </select>';
+            $html = '<div class="column cons-semantic-repeater">';
+            $html .= '<div class="ui attached label"> Cons </div> <br />';
+            $html .= '<div data-repeater-list="cons" >';
+            $html .= '<div data-repeater-item >
+                <select name="skills" class="ui fluid search dropdown">
+                <option value="">Cons</option>            
+                <option value="affordable">Affordable</option>
+                <option value="ui">UI</option>
+                </select>
+                <div data-repeater-delete class="ui icon button"><i class="minus circle link icon"></i> </div>
+            </div></div>';
+            $html .= '<div data-repeater-create class="ui icon button"> <i class="plus circle link icon"></i></div>';    
+            $html .= '</div>';
 
-          $html .= '<input data-repeater-delete type="button" value="Delete"/>';
-
-          return $html;
+            return $html;
         }
 
         protected function get_user_review()
