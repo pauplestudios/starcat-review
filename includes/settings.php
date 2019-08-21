@@ -86,7 +86,60 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'title' => __('Main Page Slug', 'pauple-helpie'),
                             'default' => 'helpdesk',
                         ),
+                        array(
+                            'id' => 'cp_show_controls',
+                            'type' => 'switcher',
+                            'title' => __('Show Controls', 'pauple-helpie'),
+                            'default' => true,
+                        ),
+                        array(
+                            'id' => 'cp_controls_subheading',
+                            'type' => 'subheading',
+                            'content' => 'Controls',
+                            'dependency' => array('cp_show_controls', '==', 'true'),
+                        ),
+                        array(
+                            'id' => 'cp_show_search',
+                            'type' => 'switcher',
+                            'title' => __('Show Search', 'pauple-helpie'),
+                            'default' => true,
+                            'dependency' => array('cp_show_controls', '==', 'true'),
+                        ),
+                        array(
+                            'id' => 'cp_show_sortBy',
+                            'type' => 'switcher',
+                            'title' => __('Show SortBy', 'pauple-helpie'),
+                            'default' => true,
+                            'dependency' => array('cp_show_controls', '==', 'true'),
+                        ),
+                        array(
+                            'id' => 'cp_show_num_of_reviews_filter',
+                            'type' => 'switcher',
+                            'title' => __('Show Number of Review Filter', 'pauple-helpie'),
+                            'default' => true,
+                            'dependency' => array('cp_show_controls', '==', 'true'),
+                        ),
 
+                        array(
+                            'id' => 'cp_listing_options_subheading',
+                            'type' => 'subheading',
+                            'content' => 'Listing Options',
+
+                        ),
+                        array(
+                            'id' => 'cp_default_sortBy',
+                            'type' => 'select',
+                            'chosen' => true,
+                            'title' => __('Default Sort By', 'pauple-helpie'),
+                            'placeholder' => __('Select an option', 'pauple-helpie'),
+                            'options' => array(
+                                'alphabetical' => 'Alphabetical',
+                                'recent' => 'Recent',
+                                'updated' => 'Recently Updated',
+                                'popular' => 'Popular',
+                            ),
+                            'default' => 'recent',
+                        ),
                     )
                 )
             );
