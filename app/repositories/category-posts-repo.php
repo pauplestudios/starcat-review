@@ -10,10 +10,16 @@ if (!class_exists('\HelpieReviews\App\Repositories\Category_Posts_Repo')) {
     class Category_Posts_Repo
     {
 
+        private $last_query_post_count = 0;
+
         public function get_category_posts($args)
         {
 
-            $args = $this->get_args();
+            error_log('Category_Posts_Repo -> get_category_posts');
+            $input_args = [
+                'posts_per_page' => 10
+            ];
+            $args = $this->get_args($input_args);
 
             $posts = [];
 
@@ -27,17 +33,24 @@ if (!class_exists('\HelpieReviews\App\Repositories\Category_Posts_Repo')) {
                 }
                 wp_reset_postdata();
             }
+            $this->last_query_post_count = $query->found_posts;
 
+            // error_log('$posts : ' . print_r($posts, true));
             return $posts;
         }
 
-        public function get_args()
+        public function get_last_query_post_count()
+        {
+            return $this->last_query_post_count;
+        }
+
+        public function get_args($input_args)
         {
             $term = get_queried_object();
             // the query to set the posts per page to 3
-            $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+            $paged = (get_query_var('paged')) ? get_query_var('paged') : 2;
             $args = array(
-                'posts_per_page' => -1,
+                'posts_per_page' => $input_args['posts_per_page'] ? $input_args['posts_per_page'] : -1,
                 'post_type' => HELPIE_REVIEWS_POST_TYPE,
                 'paged' => $paged,
                 'tax_query' => array(

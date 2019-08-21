@@ -18,6 +18,8 @@ if (!class_exists('\HelpieReviews\App\Abstracts\Widget_Model')) {
         {
             $args = $this->append_fallbacks($args);
 
+            $this->execute_methods_with_queries($args);
+
             $viewProps = array(
                 'collection' => $this->get_collection_props($args),
                 'items' => $this->get_items_props($args),

@@ -46,14 +46,14 @@ if (!class_exists('\HelpieReviews\Includes\Register_Templates')) {
 
             $template_source = \HelpieReviews\Includes\Settings\HRP_Getter::get('template_source');
 
-            // error_log('$template_source : ' . $template_source);
+            error_log('$template_source : ' . $template_source);
             if ($template_source == 'theme') {
                 return;
             }
 
             /* Checks for single template by post type */
             if ($post->post_type == HELPIE_REVIEWS_POST_TYPE && is_single()) {
-                error_log('TRUE TEmplate');
+                error_log('Plugin Template');
                 if (file_exists(HELPIE_REVIEWS_PATH . '/includes/templates/single-helpie_reviews.php')) {
                     return HELPIE_REVIEWS_PATH . '/includes/templates/single-helpie_reviews.php';
                 }

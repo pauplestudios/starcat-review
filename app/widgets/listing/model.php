@@ -23,11 +23,21 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\Model')) {
             // $this->fields_model = $fields_model;
         }
 
+        protected function execute_methods_with_queries($args)
+        {
+            $this->posts = $this->cat_posts_repo->get_category_posts($args);
+        }
+
         protected function get_collection_props($args)
         {
+            error_log('Model -> get_collection_props');
+            $post_count = $this->get_posts_count();
+            $posts_per_page = 6;
+
+            error_log('post_count : ' . $post_count);
             $collectionProps = [
                 'title' => 'Reviews of Category: xxx',
-                'posts_per_page' => 6,
+                'posts_per_page' => $posts_per_page,
                 // 'show_controls' => false,
                 'show_controls' => [
                     'search' => true,
@@ -35,7 +45,11 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\Model')) {
                     'reviews' => true,
                     'verified' => false
                 ],
+                'post_count' => $post_count,
+                'total_pages' => $post_count / $posts_per_page,
                 'pagination' => true,
+                'columns' => 2,
+                'items_display' => ['title', 'content', 'link']
             ];
 
             $collectionProps = array_merge($collectionProps, $args);
@@ -43,9 +57,15 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\Model')) {
             return $collectionProps;
         }
 
+        protected function get_posts_count()
+        {
+            return $this->cat_posts_repo->get_last_query_post_count();
+        }
+
         protected function get_items_props($args)
         {
-            return $this->cat_posts_repo->get_category_posts($args);
+            error_log('Model -> get_items_props');
+            return $this->posts;
         }
 
         public function get_default_args()
