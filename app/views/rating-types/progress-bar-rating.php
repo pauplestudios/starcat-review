@@ -49,7 +49,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Progress_Bar_Rating')) 
 			$html = '<li class="single-progress-review">';
 			$html .= '<span class="single-progress-review__label">'.$key.' - '.$number_value.'/'.$this->limit.'</span>';
 			$html .= '<div class="single-progress-review__wrapper">';
-				$html .= '<div class="single-progress-review__results" name="'.$key.'" value="'.$value.'" style = "width: 0%"></div>';
+				$html .= '<div class="single-progress-review__results" name="'.$key.'" value="'.$value.'"  data-valuenow="'.$value.'"style = "width: 0%"></div>';
 				$html .= '<div class="single-progress-review__text">'.$number_value.' / '.$this->limit.'</div>';
 			$html .= '</div>';
 			$html .= '</li>';

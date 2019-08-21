@@ -9,20 +9,19 @@ var Form = {
     },   
     
     userReview: function(){
-        // jQuery(".hrp-review-list.user-review .single-review__wrapper").mousemove(function(){
+        var review = jQuery('.hrp-review-list.user-review');
 
-        //     console.log(this);
-		// 	// jQuery(".single-review__results").width(jQuery(this).val());
-        // });
+        var limit = review.attr("data-limit"),
+            valueType = review.attr("data-valueType"),
+            type = review.attr("data-type"),
+            scale = review.attr("data-scale"),
+            segment = review.attr("data-segment"),
+            divisor;
         
-        jQuery(".hrp-review-list.user-review .single-progress-review__wrapper").on('mouseenter mousemove mouseleave', function(e) {
+        jQuery(".hrp-review-list.user-review .single-review").on('mousemove', function(e) {
 			var thisModule = jQuery(this);
             var offset = thisModule.offset().left;
-			var width = ( ( ( e.pageX - offset ) / thisModule.width() ) * 100 ).toFixed();
-           
-
-			// snap to nearest 5
-			// width = Math.round(width / 5) * 5;
+			var width = ( ( ( e.pageX - offset ) / thisModule.width() ) * 100 ).toFixed();           
 
 			// No 0 or above 100 ratings allowed
 			if ( width <= 0 ) {
@@ -30,13 +29,47 @@ var Form = {
 			}
 			if ( width > 100 ) {
 				width = 100;
+            }
+            
+            switch(segment) {
+                case 'half':
+                    divisor = (scale === 5)?20:10;
+                    width = Math.round(width / 20) * 20;
+                    break;
+                case 'full':
+                    divisor = (scale == 5)?20:10;
+                    console.log("Divisor : " + divisor);
+                    width = Math.round(width / divisor) * divisor;
+                    break; 
+                case 'point':
+                // width = Math.round(width / 5) * 5;
+                break;                
+              }
+            
+
+            thisModule.find(".single-review__results").width(width + '%').attr("data-valuenow", width);            
+            // thisModule.next('.single-progress-review__text').text(width +' / 100');
+        });
+        
+        jQuery(".hrp-review-list.user-review .single-progress-review__wrapper").on('mouseenter mousemove mouseleave', function(e) {
+			var thisModule = jQuery(this);
+            var offset = thisModule.offset().left;
+			var width = ( ( ( e.pageX - offset ) / thisModule.width() ) * 100 ).toFixed();
+
+			// No 0 or above 100 ratings allowed
+			if ( width <= 0 ) {
+  				width = 1;
 			}
+			if ( width > 100 ) {
+				width = 100;
+            }            
 
             thisModule.find('.single-progress-review__results').width(width + '%').attr("value", width);            
             thisModule.find('.single-progress-review__text').text(width +' / 100');
 		});
         
     },
+   
 
     formSubmit: function(){        
         
@@ -78,7 +111,7 @@ var Form = {
             hide: function (deleteElement) {                
                 jQuery(this).fadeOut(deleteElement);
             }, 
-            isFirstItemUndeletable: true,					
+            // isFirstItemUndeletable: true,					
           });
         
         jQuery('.review-cons-repeater').repeater({             
@@ -92,7 +125,7 @@ var Form = {
             hide: function (deleteElement) {              
                 jQuery(this).fadeOut(deleteElement);
             },               					        
-            isFirstItemUndeletable: true,					
+            // isFirstItemUndeletable: true,					
           }); 
         
         jQuery('.review-pros-repeater .ui.dropdown').dropdown({

@@ -109,7 +109,13 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
             $html = '<div class="field">';
             $html .= '</br><label>User Review</label>';
             // $html .= '<div class="field ui divided grid"><div class="three column row">';
-            $html .= '<ul class="hrp-review-list user-review">'; 
+            $html .= '<ul class="hrp-review-list user-review" 
+                data-limit="'.$this->props['collection']['value_limit'].'" 
+                data-valueType="'.$this->props['collection']['value_type'].'"
+                data-type="'.$this->props['collection']['review_type'].'"
+                data-scale="'.$this->props['collection']['star_scale'].'"
+                data-segment="'.$this->props['collection']['review_segment'].'"
+                >'; 
             foreach($this->props['items'] as $key => $value){
 
                 switch ($this->props['collection']['review_type']) {
