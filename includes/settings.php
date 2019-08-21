@@ -62,6 +62,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                     'show_search' => false, // TODO: Enable once autofill password is fixed
                 ));
 
+                $this->mainpage_settings($prefix);
+                $this->category_page_settings($prefix);
                 $this->general_settings($prefix);
                 $this->single_post_settings($prefix);
 
@@ -69,6 +71,221 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
             }
         }
 
+        public function category_page_settings($prefix)
+        {
+            \CSF::createSection(
+                $prefix,
+                array(
+                    'id' => 'category_page_settings',
+                    'title' => 'Category Page ',
+                    'icon' => 'fa fa-eye',
+                    'fields' => array(
+                        array(
+                            'id' => 'mp_slug',
+                            'type' => 'text',
+                            'title' => __('Main Page Slug', 'pauple-helpie'),
+                            'default' => 'helpdesk',
+                        ),
+
+                    )
+                )
+            );
+        }
+        public function mainpage_settings($prefix)
+        {
+            \CSF::createSection(
+                $prefix,
+                array(
+                    // 'parent' => 'user_access',
+                    'id' => 'mainpage_settings',
+                    'title' => 'Main Page ',
+                    'icon' => 'fa fa-eye',
+                    'fields' => array(
+                        array(
+                            'id' => 'mp_slug',
+                            'type' => 'text',
+                            'title' => __('Main Page Slug', 'pauple-helpie'),
+                            'default' => 'helpdesk',
+                        ),
+                        array(
+                            'id' => 'helpie_mp_meta_title',
+                            'type' => 'text',
+                            'title' => __('Main Page Meta Title', 'pauple-helpie'),
+                            'dependency' => array('helpie_mp_location', '==', 'archive'),
+                            'desc' => '<strong> Note </strong>: Keep your meta title between 60 and 64 characters.',
+                            'default' => 'helpdesk',
+                        ),
+                        array(
+                            'id' => 'helpie_mp_meta_description',
+                            'type' => 'text',
+                            'title' => __('Main Page Meta Description', 'pauple-helpie'),
+                            'dependency' => array('helpie_mp_location', '==', 'archive'),
+                            'desc' => '<strong> Note </strong>: Keep your meta descriptions between 150 and 154 characters.',
+                        ),
+                        array(
+                            'id'        => 'mp_components_order',
+                            'type'      => 'sortable',
+                            'title'     => 'Components Control',
+                            'desc'      => 'Controls order and visibility of these components in Main Page',
+                            'fields'    => array(
+                                array(
+                                    'id' => 'mp_show_search',
+                                    'type' => 'switcher',
+                                    'title' => __('Search', 'pauple-helpie'),
+                                    'default' => false,
+                                ),
+                                array(
+                                    'id' => 'mp_show_categories',
+                                    'type' => 'switcher',
+                                    'title' => __('Categories', 'pauple-helpie'),
+                                    'default' => true,
+                                ),
+                                array(
+                                    'id' => 'mp_show_review_listing',
+                                    'type' => 'switcher',
+                                    'title' => __('Review Listing', 'pauple-helpie'),
+                                    'default' => false,
+                                ),
+                            ),
+                            'default'      => array(
+                                'mp_show_search' => false,
+                                'mp_show_categories' => true,
+                                'mp_show_review_listing' => false,
+                            ),
+                        ),
+
+                        array(
+                            'id' => 'helpie_mp_article_listing',
+                            'type' => 'subheading',
+                            'content' => 'Review Listing',
+                            'dependency' => array('mp_show_review_listing', '==', 'true'),
+                        ),
+
+                        array(
+                            'id' => 'helpie_mp_article_listing_title',
+                            'type' => 'text',
+                            'title' => __('Title', 'pauple-helpie'),
+                            'default' => 'Review Listing',
+                            'dependency' => array('mp_show_review_listing', '==', 'true'),
+                        ),
+                        array(
+                            'id' => 'helpie_mp_article_listing_sortby',
+                            'type' => 'select',
+                            'chosen' => true,
+                            'title' => __('Sort By', 'pauple-helpie'),
+                            'placeholder' => __('Select an option', 'pauple-helpie'),
+                            'options' => array(
+                                'alphabetical' => 'Alphabetical',
+                                'recent' => 'Recent',
+                                'updated' => 'Recently Updated',
+                                'popular' => 'Popular',
+                            ),
+                            'default' => 'recent',
+                            'dependency' => array('mp_show_review_listing', '==', 'true'),
+                        ),
+                        array(
+                            'id' => 'helpie_mp_article_listing_topics',
+                            'type' => 'select',
+                            'chosen' => true,
+                            'multiple' => true,
+                            'title' => __('Topics', 'pauple-helpie'),
+                            'placeholder' => __('Select an option', 'pauple-helpie'),
+                            'options' => 'csf_get_all_helpie_kb_topics',
+                            'default' => 'all',
+                            'dependency' => array('mp_show_review_listing', '==', 'true'),
+                        ),
+
+                        array(
+                            'id' => 'helpie_mp_article_listing_style',
+                            'type' => 'select',
+                            'chosen' => true,
+                            'title' => __('Style', 'pauple-helpie'),
+                            'placeholder' => __('Select an option', 'pauple-helpie'),
+                            'options' => array(
+                                'list' => __('List', 'pauple-helpie'),
+                                'card' => __('Card', 'pauple-helpie'),
+                            ),
+                            'default' => 'list',
+                            'dependency' => array('mp_show_review_listing', '==', 'true'),
+                        ),
+
+                        array(
+                            'id' => 'helpie_mp_article_listing_num_of_cols',
+                            'type' => 'select',
+                            'chosen' => true,
+                            'title' => __('Num Of Columns', 'pauple-helpie'),
+                            'placeholder' => __('Select an option', 'pauple-helpie'),
+                            'options' => array(
+                                'one' => 1,
+                                'two' => 2,
+                                'three' => 3,
+                                'four' => 4,
+                            ),
+                            'default' => 'three',
+                            'dependency' => array('mp_show_review_listing', '==', 'true'),
+                        ),
+
+                        array(
+                            'id' => 'mp_categories_settings',
+                            'type' => 'subheading',
+                            'content' => 'Category Listing',
+                            'dependency' => array('mp_show_categories', '==', 'true'),
+                        ),
+                        array(
+                            'id' => 'helpie_mp_template',
+                            'type' => 'select',
+                            'chosen' => true,
+                            'title' => __('Main Page Categories Listing Style', 'pauple-helpie'),
+                            'placeholder' => 'Select an option',
+                            'options' => array(
+                                'boxed' => __('Boxed', 'pauple-helpie'),
+                                'boxed1' => __('Boxed1', 'pauple-helpie'),
+                                'modern' => __('Modern', 'pauple-helpie'),
+                            ),
+                            'default' => 'boxed',
+                            'dependency' => array('mp_show_categories', '==', 'true'),
+                        ),
+                        array(
+                            'id' => 'helpie_mp_boxed_description',
+                            'type' => 'switcher',
+                            'title' => __('Show Description', 'pauple-helpie'),
+                            'dependency' => array('mp_show_categories', '==', 'true'),
+                            'default' => false,
+                        ),
+                        array(
+                            'id' => 'category_listing_graphic_type',
+                            'type' => 'select',
+                            'chosen' => true,
+                            'title' => __('Image or Icon', 'pauple-helpie'),
+                            'placeholder' => 'Select an option',
+                            'options' => array(
+                                'image' => __('Image', 'pauple-helpie'),
+                                'icon' => __('Icon', 'pauple-helpie'),
+                            ),
+                            'default' => 'image',
+                            'desc' => '<strong>Note </strong>: Default icon color is set from Styles -> Primary Brand Color',
+                            'dependency' => array('mp_show_categories', '==', 'true'),
+                        ),
+                        array(
+                            'id' => 'helpie_mp_cl_cols',
+                            'type' => 'select',
+                            'chosen' => true,
+                            'title' => __('Num Of Columns', 'pauple-helpie'),
+                            'placeholder' => 'Select an option',
+                            'options' => array(
+                                'one' => '1',
+                                'two' => '2',
+                                'three' => '3',
+                                'four' => '4',
+                            ),
+                            'default' => 'three',
+                            'dependency' => array('mp_show_categories', '==', 'true'),
+                        ),
+
+                    )
+                )
+            );
+        }
         public function general_settings($prefix)
         {
 
