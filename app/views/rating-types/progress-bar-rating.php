@@ -14,13 +14,12 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Progress_Bar_Rating')) 
 
 		public function __construct($viewProps) 
 		{
-			$this->props = $viewProps; 			
+			$this->props = $viewProps; 
+			$this->limit = ($this->props['collection']['value_type'] == 'percentage') ? 100 : $this->props['collection']['value_limit'];			
 		}
 
 		public function get_html() 
 		{
-			$this->limit = ($this->props['collection']['value_type'] == 'percentage') ? 100 : $this->props['collection']['value_limit'];
-
 			$html = "<div class='hrp-container'>";			
 			$html .= "<ul class='hrp-review-list'>";
 			$stats_html = '';
@@ -45,34 +44,12 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Progress_Bar_Rating')) 
 			return $this->html;
 		}
 
-		protected function get_value_byType($value) 
-		{			
-			$divisor = 100 / $this->limit;
-			$number = $value / $divisor;
-            return $number;
-		}
-
-		protected function get_overall_stat_html($stats_cumulative_score, $count) {
-
-			$overall_stat_value = round($stats_cumulative_score / $count);	
-			$overall_number_value = $this->get_value_byType($overall_stat_value);		
-			$overall_stat_html = $this->get_single_stat(__('overall', 'helpie-reviews'), $overall_stat_value, $overall_number_value);
-
-			return $overall_stat_html;
-		}
-
-		protected function get_single_stat($key, $value, $number_value) {
-
-			$html = '';
-
-			if (!$this->is_stat_included($key, $this->props['collection'])) {
-				return $html;
-			}
-
-			$html .= '<li class="single-progress-review">';
+		public function get_single_stat($key, $value, $number_value) 
+		{
+			$html = '<li class="single-progress-review">';
 			$html .= '<span class="single-progress-review__label">'.$key.' - '.$number_value.'/'.$this->limit.'</span>';
 			$html .= '<div class="single-progress-review__wrapper">';
-				$html .= '<div class="single-progress-review__results" data-valuenow="'.$value.'" style = "width: 0%"></div>';
+				$html .= '<div class="single-progress-review__results" name="'.$key.'" value="'.$value.'" style = "width: 0%"></div>';
 				$html .= '<div class="single-progress-review__text">'.$number_value.' / '.$this->limit.'</div>';
 			$html .= '</div>';
 			$html .= '</li>';
@@ -80,6 +57,22 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Progress_Bar_Rating')) 
 
 			return $html;
 		}	
+
+		protected function get_value_byType($value) 
+		{			
+			$divisor = 100 / $this->limit;
+			$number = $value / $divisor;
+            return $number;
+		}
+
+		protected function get_overall_stat_html($stats_cumulative_score, $count)
+		{
+			$overall_stat_value = round($stats_cumulative_score / $count);	
+			$overall_number_value = $this->get_value_byType($overall_stat_value);		
+			$overall_stat_html = $this->get_single_stat(__('overall', 'helpie-reviews'), $overall_stat_value, $overall_number_value);
+
+			return $overall_stat_html;
+		}
 
 	}
 }

@@ -30,3 +30,15 @@
     }    
         
 }
+
+// User Review
+.hrp-review-list.user-review{
+    .single-progress-review{        
+        &__wrapper:hover{
+            cursor: pointer;
+        }
+        &__results{   
+            transition: none;
+        }
+    }
+}

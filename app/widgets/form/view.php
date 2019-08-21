@@ -109,21 +109,21 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
             $html = '<div class="field">';
             $html .= '</br><label>User Review</label>';
             // $html .= '<div class="field ui divided grid"><div class="three column row">';
-            $html .= '<ul class="hrp-review-list" data-review="true">'; 
+            $html .= '<ul class="hrp-review-list user-review">'; 
             foreach($this->props['items'] as $key => $value){
 
                 switch ($this->props['collection']['review_type']) {
                     case "star":                      
-                    $html .= $this->get_star_rating($key, $value);                    
+                    $html .= $this->get_star_rating($key);                    
                     break;
                     case "progress_bar":
-                    $html .= $this->get_slider_rating();
+                    $html .= $this->get_progress_bar_rating($key);
                     break;  
                     case "range":
-                    $html .= $this->get_range_review();
+                    $html .= $this->get_range_review($key);
                     break;                
                     default:                    
-                    $html .= $this->get_text_rating();                
+                    $html .= $this->get_text_rating($key);                
                 }
                 
             }
@@ -137,12 +137,14 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
             return $this->star_rating->get_single_stat($key, 0, 0);
             // return '<div class="column"><div class="ui star rating" name="review_star" data-rating="0" data-max-rating="5"></div></div>';
         }
-        protected function get_slider_rating(){
-            return '<div class="column">
-                <div class="range-slider">
-                    <input type="range" name="range" class="range" min="0" max="100" value="0"/> 
-                    <div class="ui label range__value">0</div>                             
-                </div></div>';
+        protected function get_progress_bar_rating($key){
+
+            return $this->progress_bar_rating->get_single_stat($key, 0, 0);
+            // return '<div class="column">
+            //     <div class="range-slider">
+            //         <input type="range" name="range" class="range" min="0" max="100" value="0"/> 
+            //         <div class="ui label range__value">0</div>                             
+            //     </div></div>';
         }
         protected function get_text_rating(){
             return '<div class="column">

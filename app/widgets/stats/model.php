@@ -23,7 +23,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
         public function get_collectionProps(){
             return [
                 'divisor' => 5,
-                'display_rating_type' => 'star', // star, progress_bar or circle
+                'display_rating_type' => 'progress_bar', // star, progress_bar or circle
                 'star_scale' => 10, // 0-5 or 0-10
                 'show_stats' => ['overall', 'price', 'ux', 'feature', 'better', 'cool'],
                 'value_type' => 'percentage', // or percentage

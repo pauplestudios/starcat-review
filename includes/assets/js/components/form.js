@@ -5,7 +5,38 @@ var Form = {
         console.log('Form JS Loaded !!!'); 
         this.prosAndCons();
         this.formSubmit();
-    },    
+        this.userReview();
+    },   
+    
+    userReview: function(){
+        // jQuery(".hrp-review-list.user-review .single-review__wrapper").mousemove(function(){
+
+        //     console.log(this);
+		// 	// jQuery(".single-review__results").width(jQuery(this).val());
+        // });
+        
+        jQuery(".hrp-review-list.user-review .single-progress-review__wrapper").on('mouseenter mousemove mouseleave', function(e) {
+			var thisModule = jQuery(this);
+            var offset = thisModule.offset().left;
+			var width = ( ( ( e.pageX - offset ) / thisModule.width() ) * 100 ).toFixed();
+           
+
+			// snap to nearest 5
+			// width = Math.round(width / 5) * 5;
+
+			// No 0 or above 100 ratings allowed
+			if ( width <= 0 ) {
+  				width = 1;
+			}
+			if ( width > 100 ) {
+				width = 100;
+			}
+
+            thisModule.find('.single-progress-review__results').width(width + '%').attr("value", width);            
+            thisModule.find('.single-progress-review__text').text(width +' / 100');
+		});
+        
+    },
 
     formSubmit: function(){        
         

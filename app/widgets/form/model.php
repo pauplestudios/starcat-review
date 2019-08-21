@@ -28,8 +28,9 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\Model')) {
                 'review_form_title' => 'Review Stats Form',                
                 'display_user_review' => true,  
                 'display_pros_and_cons' => true,
-                'review_type' => 'star',   // Star, circle, progress_bar
+                'review_type' => 'progress_bar',   // Star, circle, progress_bar
                 'review_items' => true,
+                'review_segment' => 'half', // full, half, points
                 'star_scale' => 10, 
                 'value_type' => 'percentage', // number or percentage
                 'value_limit' => 20,
