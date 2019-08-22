@@ -112,7 +112,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
             $html .= '<ul class="hrp-review-list user-review" 
                 data-limit="'.$this->props['collection']['value_limit'].'" 
                 data-valueType="'.$this->props['collection']['value_type'].'"
-                data-type="'.$this->props['collection']['review_type'].'"
+                data-reviewType="'.$this->props['collection']['review_type'].'"
                 data-scale="'.$this->props['collection']['star_scale'].'"
                 data-segment="'.$this->props['collection']['review_segment'].'"
                 >'; 

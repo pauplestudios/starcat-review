@@ -1,73 +1,89 @@
 require('jquery.repeater');
 
 var Form = {
-    init: function() {
-        console.log('Form JS Loaded !!!'); 
+    init: function() {    
+        this.userReview();      
         this.prosAndCons();
-        this.formSubmit();
-        this.userReview();
+        this.formSubmit();       
+
+        console.log('Form JS Loaded !!!'); 
     },   
     
-    userReview: function(){
+    userReview: function(){        
+
         var review = jQuery('.hrp-review-list.user-review');
-
-        var limit = review.attr("data-limit"),
-            valueType = review.attr("data-valueType"),
-            type = review.attr("data-type"),
-            scale = review.attr("data-scale"),
-            segment = review.attr("data-segment"),
-            divisor;
         
-        jQuery(".hrp-review-list.user-review .single-review").on('mousemove', function(e) {
-			var thisModule = jQuery(this);
-            var offset = thisModule.offset().left;
-			var width = ( ( ( e.pageX - offset ) / thisModule.width() ) * 100 ).toFixed();           
+        var wrapper, result, label;
 
-			// No 0 or above 100 ratings allowed
+        var props = {
+            review : review,
+            limit : review.attr("data-limit"),
+            valueType : review.attr("data-valueType"),
+            reviewType : review.attr("data-reviewType"),
+            scale: review.attr("data-scale"),
+            segment: review.attr("data-segment"),          
+        };        
+
+        if(props.reviewType == 'star'){
+
+            wrapper ='.hrp-review-list.user-review .single-review';
+            result = '.single-review__results';
+            label = 'single-progress-review__text';
+
+            this.getRatingEventlistener(wrapper, result, label, props);
+        }
+
+        if(props.reviewType == 'progress_bar'){
+
+            wrapper = ".hrp-review-list.user-review .single-progress-review__wrapper";
+            result = ".single-progress-review__results";
+            label = ".single-progress-review__text";
+
+        this.getRatingEventlistener(wrapper, result, label, props);        
+        }
+
+        
+    },
+
+    getRatingEventlistener: function(wrapper, result, label, props){   
+     
+        jQuery(wrapper).on('mousemove', function(e) {
+			var thisElement = jQuery(this);
+            var offset = thisElement.offset().left;
+			var width = ( ( ( e.pageX - offset ) / thisElement.width() ) * 100 ).toFixed();           
+			
 			if ( width <= 0 ) {
-  				width = 1;
+  				width = 0;
 			}
 			if ( width > 100 ) {
 				width = 100;
             }
-            
-            switch(segment) {
-                case 'half':
-                    divisor = (scale === 5)?20:10;
-                    width = Math.round(width / 20) * 20;
-                    break;
-                case 'full':
-                    divisor = (scale == 5)?20:10;
-                    console.log("Divisor : " + divisor);
-                    width = Math.round(width / divisor) * divisor;
-                    break; 
-                case 'point':
-                // width = Math.round(width / 5) * 5;
-                break;                
-              }
-            
 
-            thisModule.find(".single-review__results").width(width + '%').attr("data-valuenow", width);            
-            // thisModule.next('.single-progress-review__text').text(width +' / 100');
-        });
-        
-        jQuery(".hrp-review-list.user-review .single-progress-review__wrapper").on('mouseenter mousemove mouseleave', function(e) {
-			var thisModule = jQuery(this);
-            var offset = thisModule.offset().left;
-			var width = ( ( ( e.pageX - offset ) / thisModule.width() ) * 100 ).toFixed();
-
-			// No 0 or above 100 ratings allowed
-			if ( width <= 0 ) {
-  				width = 1;
-			}
-			if ( width > 100 ) {
-				width = 100;
+            if(props.reviewType == 'star'){
+                width = Form.getStarSegment(width, props);
             }            
 
-            thisModule.find('.single-progress-review__results').width(width + '%').attr("value", width);            
-            thisModule.find('.single-progress-review__text').text(width +' / 100');
-		});
-        
+            thisElement.find(result).width(width + '%').attr("data-valuenow", width);            
+            thisElement.find(label).text(width +' / 100');
+        });
+    },
+
+    getStarSegment: function(width, props){
+        var divisor;
+        switch(props.segment) {
+            case 'half':
+                console.log("Segment switch")
+                divisor = (props.scale === 5)?20:10;
+                return width = Math.round(width / divisor) * divisor;
+            case 'full':
+                divisor = (props.scale == 5)?20:10;                    
+                return width = Math.round(width / divisor) * divisor;
+                
+            case 'point':                
+                return width;
+            default:
+                return width;
+          }
     },
    
 
@@ -99,26 +115,20 @@ var Form = {
         console.log("Validation");
     },
 	
-	prosAndCons: function(){	
+	prosAndCons: function(){
+
+        this.getRepeater('.review-pros-repeater');
+        this.getRepeater('.review-cons-repeater');
+
+    },
+    
+    getRepeater: function(selector){
         
-        jQuery('.review-pros-repeater').repeater({             
-            show: function () {                
-                jQuery(this).fadeIn();
-                jQuery('.review-pros-repeater .ui.dropdown').dropdown({
-                    allowAdditions: true
-                });
-            },
-            hide: function (deleteElement) {                
-                jQuery(this).fadeOut(deleteElement);
-            }, 
-            // isFirstItemUndeletable: true,					
-          });
-        
-        jQuery('.review-cons-repeater').repeater({             
+        jQuery(selector).repeater({             
             show: function () {
                 jQuery(this).fadeIn();
 
-                jQuery('.review-cons-repeater .ui.dropdown').dropdown({
+                jQuery(selector+' .ui.dropdown').dropdown({
                     allowAdditions: true
                 });
             },  
@@ -126,16 +136,12 @@ var Form = {
                 jQuery(this).fadeOut(deleteElement);
             },               					        
             // isFirstItemUndeletable: true,					
-          }); 
-        
-        jQuery('.review-pros-repeater .ui.dropdown').dropdown({
+          });
+          
+          jQuery(selector+' .ui.dropdown').dropdown({
             allowAdditions: true
         });
-        
-        jQuery('.review-cons-repeater .ui.dropdown').dropdown({
-            allowAdditions: true
-        });
-	},	
+    },
 
 };
 
