@@ -39,7 +39,8 @@ var UserReview = {
         jQuery(wrapper).on('mousemove', function(e) {
 			var thisElement = jQuery(this);
             var offset = thisElement.offset().left;
-			var width = ( ( ( e.pageX - offset ) / thisElement.width() ) * 100 ).toFixed();           
+            var width = ( ( ( e.pageX - offset ) / thisElement.width() ) * 100 ).toFixed();
+            var starValue;           
 			
 			if ( width <= 0 ) {
   				width = 0;
@@ -49,29 +50,26 @@ var UserReview = {
             }
 
             if(props.reviewType == 'star'){
-                width = UserReview.getStarSegment(width, props);
+                width = UserReview.getStarSegment(width, props);                
+                starValue = (props.scale == 10)?width / 10 : width / 20;
+                thisElement.next("span").find(".single-review__label").text(starValue);
             }            
 
-            thisElement.find(result).width(width + '%').attr("data-valuenow", width);            
-            thisElement.find(label).text(width +' / 100');
+            thisElement.find(result).width(width + '%').attr("value", width);
+            thisElement.find(label).text(width +' / 100');                        
         });
     },
 
-    getStarSegment: function(width, props){
-        var divisor;
+    getStarSegment: function(width, props){        
         switch(props.segment) {
             case 'half':
-                console.log("Segment switch")
-                divisor = (props.scale === 5)?20:10;
-                return width = Math.round(width / divisor) * divisor;
-            case 'full':
-                divisor = (props.scale == 5)?20:10;                    
-                return width = Math.round(width / divisor) * divisor;
-                
+                var divisor = (props.scale == 5)?10:5;                
+                return Math.round(width / divisor) * divisor;            
             case 'point':                
                 return width;
+
             default:
-                return width;
+                return Math.round(width / 20) * 20;
           }
     },
 };

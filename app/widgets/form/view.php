@@ -70,7 +70,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
         {
             $html = '<div class="column review-pros-repeater">';
             $html .= '<div class="ui attached label"> Pros </div><br />';
-            $html .= '<div data-repeater-list=review_pros" >';
+            $html .= '<div data-repeater-list="review_pros" >';
             $html .= '<div data-repeater-item >
                 <select name="pros" class="ui fluid search dropdown">
                 <option value="">Pros</option>            
@@ -115,15 +115,17 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
                 data-reviewType="'.$this->props['collection']['review_type'].'"
                 data-scale="'.$this->props['collection']['star_scale'].'"
                 data-segment="'.$this->props['collection']['review_segment'].'"
+                data-list="items"
                 >'; 
+            $iteration =0;
             foreach($this->props['items'] as $key => $value){
 
                 switch ($this->props['collection']['review_type']) {
                     case "star":                      
-                    $html .= $this->get_star_rating($key);                    
+                    $html .= $this->get_star_rating($key, $iteration);                    
                     break;
                     case "progress_bar":
-                    $html .= $this->get_progress_bar_rating($key);
+                    $html .= $this->get_progress_bar_rating($key, $i);
                     break;  
                     case "range":
                     $html .= $this->get_range_review($key);
@@ -131,21 +133,21 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
                     default:                    
                     $html .= $this->get_text_rating($key);                
                 }
-                
+               $iteration++; 
             }
             $html .='</ul>';
             $html .= '</div>';
             return $html;
         }
 
-        protected function get_star_rating($key){
+        protected function get_star_rating($key, $iteration){
             
-            return $this->star_rating->get_single_stat($key, 0, 0);
+            return $this->star_rating->get_single_stat($key, 0, 0, $iteration);
             // return '<div class="column"><div class="ui star rating" name="review_star" data-rating="0" data-max-rating="5"></div></div>';
         }
-        protected function get_progress_bar_rating($key){
+        protected function get_progress_bar_rating($key, $iteration){
 
-            return $this->progress_bar_rating->get_single_stat($key, 0, 0);
+            return $this->progress_bar_rating->get_single_stat($key, 0, 0, $iteration);
             // return '<div class="column">
             //     <div class="range-slider">
             //         <input type="range" name="range" class="range" min="0" max="100" value="0"/> 

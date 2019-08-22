@@ -30,8 +30,8 @@
 				color: #ffd700;									
 			}
 		}
-		&__wrapper i:not(:last-of-type), &__results i:not(:last-of-type){
-			margin-right: 10px;
+		&__wrapper i:not(:first-of-type), &__results i:not(:first-of-type){
+			margin-left: 10px;
 		}
 	}	
 
