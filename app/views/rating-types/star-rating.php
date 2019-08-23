@@ -113,7 +113,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
         protected function get_icon_results_html($key, $value)
         {
             $html = '';     
-            $html .= '<div class="single-review__results" name="'.$key.'" data-item-name = "'.$key.'" value="'.$value.'" data-animate="'.$this->props['collection']['animate'].'" style="width: 0%">';       
+            $html .= '<div class="single-review__results" name="'.$key.'" title="0" value="'.$value.'" data-rating="0" data-animate="'.$this->props['collection']['animate'].'" style="width: 0%">';       
             $fallback_icon = 'fa fa-star';
             $icon = $this->props['collection']['icon'];
 

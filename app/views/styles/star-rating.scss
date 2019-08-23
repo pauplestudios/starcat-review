@@ -16,7 +16,9 @@
 		&__wrapper{
 			white-space: nowrap;
 			display: inline-block;
-			position: absolute;				
+			position: absolute;					
+			color: #bcbdbd;		
+			font-size: 1.2em;
 		}
 
 		&__results{		    		    		    
@@ -24,14 +26,15 @@
 			background-color: transparent;
 			position: relative;
 			white-space: nowrap;
-			transition: width 2s ease;
+			transition: width 2s ease;			
+			font-size: 1.2em;
 
 			i{
-				color: #ffd700;									
+				color: #ffd700; // dark gray #504740, yellow #ffd700;									
 			}
 		}
-		&__wrapper i:not(:first-of-type), &__results i:not(:first-of-type){
-			margin-left: 10px;
+		&__wrapper i, &__results i{
+			margin: 0 5px;
 		}
 	}	
 

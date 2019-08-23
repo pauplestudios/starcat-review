@@ -52,11 +52,29 @@ var UserReview = {
             if(props.reviewType == 'star'){
                 width = UserReview.getStarDivison(width, props);                
                 starValue = (props.scale == 10)?width / 10 : width / 20;
-                thisElement.next("span").find(".single-review__label").text(starValue);
+                thisElement.next("span").find(".single-review__label").text(starValue +' / ' + props.scale).attr("data-rating", starValue);
+                thisElement.find(result).attr("title", starValue +' / ' + props.scale);
             }            
 
             thisElement.find(result).width(width + '%').attr("value", width);
             thisElement.find(label).text(width +' / 100');                        
+
+        }).on('mouseleave', function(){
+
+            var thisElement = jQuery(this);
+            var starValue = thisElement.find(result).attr("data-rating") || 0;
+            var width = starValue/props.scale * 100;
+
+            thisElement.find(result).width(width + '%').attr("value", width).attr("data-rating", starValue);
+            thisElement.next("span").find(".single-review__label").text(starValue +' / ' + props.scale).attr("data-rating", starValue);
+
+        }).on("click", function(){
+
+            var thisElement = jQuery(this);
+            var starValue = thisElement.next("span").find(".single-review__label").attr("data-rating");            
+            var width = starValue/props.scale * 100;            
+            
+            thisElement.find(result).width(width + '%').attr("value", width).attr("data-rating", starValue);
         });
     },
 
