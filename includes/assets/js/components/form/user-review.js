@@ -21,14 +21,14 @@ var UserReview = {
             this.getRatingEventlistener(
                 ".hrp-review-list.user-review .single-review", 
                 ".single-review__results",
-                "span",
+                ".single-review__label",
                 props
             );
         }else if(props.reviewType == 'progress_bar'){            
             this.getRatingEventlistener(
                 ".hrp-review-list.user-review .single-progress-review__wrapper",
                 ".single-progress-review__results", 
-                ".single-progress-review__text", 
+                ".single-progress-review__label", 
                 props
             ); 
         }       
@@ -52,12 +52,18 @@ var UserReview = {
             if(props.reviewType == 'star'){
                 width = UserReview.getStarDivison(width, props);                
                 starValue = (props.scale == 10)?width / 10 : width / 20;
-                thisElement.next("span").find(".single-review__label").text(starValue +' / ' + props.scale).attr("data-rating", starValue);
+                thisElement.next(label).find("span").text(starValue +' / ' + props.scale).attr("data-rating", starValue);
                 thisElement.find(result).attr("title", starValue +' / ' + props.scale);
             }            
-
+            
+            if(props.reviewType == 'progress_bar'){                            
+                // thisElement.find(label).attr("class")
+                console.log("Text : " + thisElement.next(label).find('span').text());
+            }
+            
             thisElement.find(result).width(width + '%').attr("value", width);
-            thisElement.find(label).text(width +' / 100');                        
+            thisElement.find(label).text(width +' / 100');        
+            
 
         }).on('mouseleave', function(){
 
@@ -90,6 +96,18 @@ var UserReview = {
                 return Math.round(width / 20) * 20;
           }
     },
+
+    getProgressNumber: function(width, props){
+        var progressNumber;
+
+        if(props.valueType == 'number'){
+            divisor = 100 / props.limit;
+			limit = width / divisor;            
+            return number;
+        }
+
+        return progressNumber;
+    }
 };
 
 module.exports = UserReview;

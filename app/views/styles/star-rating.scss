@@ -13,6 +13,10 @@
 			padding: 0;			   
 		}
 
+		&__label{
+            text-transform: capitalize;
+        } 
+
 		&__wrapper{
 			white-space: nowrap;
 			display: inline-block;
@@ -42,11 +46,14 @@
 
 // User Review
 .hrp-review-list.user-review{
+
     .single-review{        
-        &__wrapper:hover{
+	
+		&__wrapper:hover{
             cursor: pointer;
         }
-        &__results{   
+	
+		&__results{   
             transition: none;
         }
     }

@@ -45,16 +45,6 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             return $html;
         }
 
-        protected function get_overall_stat_html($stats_cumulative_score, $count) {
-
-            $overall_stat_value = $stats_cumulative_score / $count;
-            $overall_star_value = $this->get_star_value($overall_stat_value);            
-
-            $overall_stat_html = $this->get_single_stat(__('Overall', 'helpie-reviews'), $overall_stat_value, $overall_star_value);
-
-            return $overall_stat_html;
-        }
-
         public function get_single_stat($key, $value, $star_value)
         {
             $html = '';
@@ -65,12 +55,22 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             $html .= '</div>';
             $html .= $this->get_results_html($key, $value, $star_value); 
             $html .='</div>'; 
-            $html .= '<span>'.$key.' - <span class="single-review__label">'.$star_value.'</span></span>';
+            $html .= '<span class="single-review__label">'.$key.' - <span>'.$star_value.'</span></span>';
             
             $html .= '</li>';
 
             return $html;
         }
+
+        protected function get_overall_stat_html($stats_cumulative_score, $count) {
+
+            $overall_stat_value = $stats_cumulative_score / $count;
+            $overall_star_value = $this->get_star_value($overall_stat_value);            
+
+            $overall_stat_html = $this->get_single_stat(__('Overall', 'helpie-reviews'), $overall_stat_value, $overall_star_value);
+
+            return $overall_stat_html;
+        }        
 
         protected function get_star_value($value) {
             $star_value =$value / $this->props['collection']['star_scale'];            
@@ -96,7 +96,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             return $this->get_icon_results_html($key, $value, $star_value);
         }
 
-        public function get_icon_wrapper_html()
+        protected function get_icon_wrapper_html()
         {
             $html = '';
             $icon = $this->props['collection']['icon'];
@@ -132,7 +132,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             return $html;
         }
 
-        public function get_image_wrapper_html()
+        protected function get_image_wrapper_html()
         {
             $html = '';
             
@@ -147,7 +147,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             return $html;
         }
 
-        public function get_image_results_html($key, $value, $star_value)
+        protected function get_image_results_html($key, $value, $star_value)
         {                    
             $html = '';                 
             $html .= '<div 
