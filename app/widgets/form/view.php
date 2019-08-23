@@ -107,53 +107,55 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
         protected function get_user_review()
         {            
             $html = '<div class="field">';
-            $html .= '</br><label>User Review</label>';
-            // $html .= '<div class="field ui divided grid"><div class="three column row">';
+            $html .= '</br><label>User Review</label>';            
             $html .= '<ul class="hrp-review-list user-review" 
                 data-limit="'.$this->props['collection']['value_limit'].'" 
                 data-valueType="'.$this->props['collection']['value_type'].'"
                 data-reviewType="'.$this->props['collection']['review_type'].'"
                 data-scale="'.$this->props['collection']['star_scale'].'"
-                data-segment="'.$this->props['collection']['review_segment'].'"
+                data-division="'.$this->props['collection']['review_division'].'"
                 data-list="items"
                 >'; 
-            $iteration =0;
-            foreach($this->props['items'] as $key => $value){
-
+            
+            foreach($this->props['items'] as $key => $value)
+            {
                 switch ($this->props['collection']['review_type']) {
                     case "star":                      
-                    $html .= $this->get_star_rating($key, $iteration);                    
+                    $html .= $this->get_star_rating($key);                    
                     break;
                     case "progress_bar":
-                    $html .= $this->get_progress_bar_rating($key, $i);
+                    $html .= $this->get_progress_bar_rating($key);
                     break;  
                     case "range":
                     $html .= $this->get_range_review($key);
                     break;                
                     default:                    
                     $html .= $this->get_text_rating($key);                
-                }
-               $iteration++; 
+                }               
             }
+
             $html .='</ul>';
             $html .= '</div>';
+
             return $html;
         }
 
-        protected function get_star_rating($key, $iteration){
+        protected function get_star_rating($key){
             
-            return $this->star_rating->get_single_stat($key, 0, 0, $iteration);
+            return $this->star_rating->get_single_stat($key, 0, 0);
             // return '<div class="column"><div class="ui star rating" name="review_star" data-rating="0" data-max-rating="5"></div></div>';
         }
-        protected function get_progress_bar_rating($key, $iteration){
 
-            return $this->progress_bar_rating->get_single_stat($key, 0, 0, $iteration);
+        protected function get_progress_bar_rating($key){
+
+            return $this->progress_bar_rating->get_single_stat($key, 0, 0);
             // return '<div class="column">
             //     <div class="range-slider">
             //         <input type="range" name="range" class="range" min="0" max="100" value="0"/> 
             //         <div class="ui label range__value">0</div>                             
             //     </div></div>';
         }
+        
         protected function get_text_rating(){
             return '<div class="column">
                 <div> Feature </div>

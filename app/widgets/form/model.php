@@ -30,12 +30,12 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\Model')) {
                 'display_pros_and_cons' => true,
                 'review_type' => 'star',   // Star, circle, progress_bar
                 'review_items' => true,
-                'review_segment' => 'full', // full, half, points
+                'review_division' => 'half', // full, half, points
                 'star_scale' => 5, 
                 'value_type' => 'percentage', // number or percentage
                 'value_limit' => 20,
                 'value_roundable_to' => 1,
-                'source_type' => 'image', // icon or image,
+                'source_type' => 'icon', // icon or image,
                 'image_url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png',
                 'icon' => 'fa fa-star',                
                 'animate' => true,

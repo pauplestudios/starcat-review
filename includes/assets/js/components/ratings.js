@@ -17,20 +17,11 @@ var Ratings = {
   		});
 	},
 
-	userRating: function(){
-		jQuery('.ui.star.rating').rating('enable');				  		
+	userRating: function(){				  		
 
 		jQuery(".range-slider .range").mousemove(function(){
 			jQuery(".range__value").text(jQuery(this).val());
 		});
-
-		jQuery("#hrp-form .ui.dropdown.pros").dropdown({
-			allowAdditions: true,						
-		});
-		jQuery("#hrp-form .ui.dropdown.cons").dropdown({
-			allowAdditions: true,						
-		});
-
 	},	
 
 };

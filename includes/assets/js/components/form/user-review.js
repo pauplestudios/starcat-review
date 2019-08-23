@@ -14,7 +14,7 @@ var UserReview = {
             valueType : review.attr("data-valueType"),
             reviewType : review.attr("data-reviewType"),
             scale: review.attr("data-scale"),
-            segment: review.attr("data-segment"),          
+            division: review.attr("data-division"),          
         };        
 
         if(props.reviewType == 'star'){
@@ -50,7 +50,7 @@ var UserReview = {
             }
 
             if(props.reviewType == 'star'){
-                width = UserReview.getStarSegment(width, props);                
+                width = UserReview.getStarDivison(width, props);                
                 starValue = (props.scale == 10)?width / 10 : width / 20;
                 thisElement.next("span").find(".single-review__label").text(starValue);
             }            
@@ -60,8 +60,8 @@ var UserReview = {
         });
     },
 
-    getStarSegment: function(width, props){        
-        switch(props.segment) {
+    getStarDivison: function(width, props){        
+        switch(props.division) {
             case 'half':
                 var divisor = (props.scale == 5)?10:5;                
                 return Math.round(width / divisor) * divisor;            
