@@ -7,12 +7,12 @@ var Ratings = {
 
     animateRating: function(){    	
     	jQuery(".single-progress-review__results").each(function(){			
-			each_bar_width = jQuery(this).attr('data-valuenow');			
+			each_bar_width = jQuery(this).attr('value');			
 			jQuery(this).width(each_bar_width + '%');			
 		  });
 		  
 		jQuery(".single-review__results").each(function(){
-			each_bar_width = jQuery(this).attr('data-valuenow');			
+			each_bar_width = jQuery(this).attr('value');			
 			jQuery(this).width(each_bar_width + '%');
   		});
 	},

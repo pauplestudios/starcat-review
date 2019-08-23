@@ -39,9 +39,6 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
 
             $html .= $overall_stat_html . $stat_html ;
 
-            // if ($this->props['show_user_review']) {
-            //     $get_user_review_html = $this->get_user_review();
-            // }
 
             $html .= '</ul></div>';
 
@@ -66,7 +63,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             $html .= '<div class="single-review__wrapper">';
             $html .= $this->get_wrapper_html();
             $html .= '</div>';
-            $html .= $this->get_results_html($key, $value); 
+            $html .= $this->get_results_html($key, $value, $star_value); 
             $html .='</div>'; 
             $html .= '<span>'.$key.' - <span class="single-review__label">'.$star_value.'</span></span>';
             
@@ -76,7 +73,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
         }
 
         protected function get_star_value($value) {
-            $star_value =$value / $this->props['collection']['divisor'];            
+            $star_value =$value / $this->props['collection']['star_scale'];            
             return (floor($star_value * 2) / 2);
 		}
 
@@ -89,14 +86,14 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             return $this->get_icon_wrapper_html();
         }
 
-        protected function get_results_html($key, $value)
+        protected function get_results_html($key, $value, $star_value)
         {
             
             if($this->props['collection']['source_type'] == 'image'){
-                return $this->get_image_results_html($key, $value);
+                return $this->get_image_results_html($key, $value, $star_value);
             }
 
-            return $this->get_icon_results_html($key, $value);
+            return $this->get_icon_results_html($key, $value, $star_value);
         }
 
         public function get_icon_wrapper_html()
@@ -110,16 +107,26 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             return $html;
         }
 
-        protected function get_icon_results_html($key, $value)
+        protected function get_icon_results_html($key, $value, $star_value)
         {
             $html = '';     
-            $html .= '<div class="single-review__results" name="'.$key.'" title="0" value="'.$value.'" data-rating="0" data-animate="'.$this->props['collection']['animate'].'" style="width: 0%">';       
+            $html .= '<div 
+                class="single-review__results"
+                name="'.$key.'" 
+                title="'.$star_value.' / '.$this['collection']['star_scale'].'"
+                value="'.$value.'" 
+                data-rating="0" 
+                data-animate="'.$this->props['collection']['animate'].'" 
+                style="width: 0%"
+                >';       
+
             $fallback_icon = 'fa fa-star';
-            $icon = $this->props['collection']['icon'];
+            $icon = $this->props['collection']['icon'] || $fallback_icon;
 
             for($ii = 0; $ii<$this->props['collection']['star_scale']; $ii++){                
                 $html .= '<i class="'.$icon.'"></i>';
             }
+
             $html .= '</div>';
             
             return $html;
@@ -128,9 +135,11 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
         public function get_image_wrapper_html()
         {
             $html = '';
-            $fallback_image_url = HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png';
-            $image_url = $this->props['collection']['image_url'];
-            $image_src = ($image_url)?$image_url:$fallback_image_url;
+            
+            $fallback_image = HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png';
+            $image_src = $this->props['collection']['image'];
+            
+            
             for($ii = 0; $ii<$this->props['collection']['star_scale']; $ii++){                
                 $html .= "<img src='".$image_src."'>";
             }
@@ -138,13 +147,21 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             return $html;
         }
 
-        public function get_image_results_html($key, $value)
+        public function get_image_results_html($key, $value, $star_value)
         {                    
             $html = '';                 
-            $html .= '<div class="single-review__results" name="'.$key.'" data-item-name = "'.$key.'" value="'.$value.'" data-animate="'.$this->props['collection']['animate'].'" style="width:0%">';       
-            $fallback_image_url = HELPIE_REVIEWS_URL . 'includes/assets/img/filled-tomato.png';
-            $image_url = $this->props['collection']['image_url'];
-            $image_src = $fallback_image_url;
+            $html .= '<div 
+                class="single-review__results" 
+                name="'.$key.'" 
+                title= "'.$star_value.' / '.$this->props['collection']['star_scale'].'"
+                data-item-name = "'.$key.'" 
+                value="'.$value.'" 
+                data-animate="'.$this->props['collection']['animate'].'" 
+                style="width:0%"
+                >';       
+
+            $fallback_image = HELPIE_REVIEWS_URL . 'includes/assets/img/filled-tomato.png';
+            $image_src = $this->props['collection']['image_overlay'];            
 
             for($ii = 0; $ii<$this->props['collection']['star_scale']; $ii++){                
                 $html .= "<img src='".$image_src."'>";

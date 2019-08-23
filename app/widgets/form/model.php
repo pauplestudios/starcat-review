@@ -28,7 +28,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\Model')) {
                 'review_form_title' => 'Review Stats Form',                
                 'display_user_review' => true,  
                 'display_pros_and_cons' => true,
-                'review_type' => 'star',   // Star, circle, progress_bar
+                'review_type' => 'progress_bar',   // Star, circle, progress_bar
                 'review_items' => true,
                 'review_division' => 'half', // full, half, points
                 'star_scale' => 5, 
@@ -36,7 +36,8 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\Model')) {
                 'value_limit' => 20,
                 'value_roundable_to' => 1,
                 'source_type' => 'icon', // icon or image,
-                'image_url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png',
+                'image' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png',
+                'image_overlay' => HELPIE_REVIEWS_URL . 'includes/assets/img/filled-tomato.png',
                 'icon' => 'fa fa-star',                
                 'animate' => true,
                 'divisor' => 5,                

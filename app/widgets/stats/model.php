@@ -21,15 +21,15 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
         }
 
         public function get_collectionProps(){
-            return [
-                'divisor' => 5,
-                'display_rating_type' => 'progress_bar', // star, progress_bar or circle
+            return [                
+                'display_rating_type' => 'star', // star, progress_bar or circle
                 'star_scale' => 10, // 0-5 or 0-10
                 'show_stats' => ['overall', 'price', 'ux', 'feature', 'better', 'cool'],
                 'value_type' => 'percentage', // or percentage
                 'value_limit' => 20, // 20 ,30, 50, 80 and etc..	
-                'source_type' => 'image', // or image
-                'image_url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png',
+                'source_type' => 'image', // or image                
+                'image' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png',
+                'image_overlay' => HELPIE_REVIEWS_URL . 'includes/assets/img/filled-tomato.png',
                 'animate' => true,
                 'icon' => 'fa fa-star',                
             ];
