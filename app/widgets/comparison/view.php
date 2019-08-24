@@ -20,6 +20,11 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
 
         public function get_html($stats = [])
         {
+
+            echo "<pre>";
+            var_dump($stats['stats']);
+            echo "</pre>";
+
             $html = '';
 
             $html .= '<section class="cd-products-comparison-table">';
@@ -66,14 +71,23 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
 
         public function get_columns($stats, $stat_cols)
         {
+            echo "total_count" . count($stats);
+            echo "<pre>";
+            var_dump($stats);
+            echo "</pre>";
             $html = '';
             $html .= '<div class="cd-products-wrapper">';
             $html .= '<ul class="cd-products-columns">';
 
             foreach ($stats as $key => $single_product_stats) {
-                $html .= $this->single_product($single_product_stats, $stat_cols);
+                $html .= $this->single_product($single_product_stats, $stat_cols, $key);
             }
 
+            if (count($stats) > 0) {
+                $html .= $this->search_filter_product();
+            } else if (count($stats) == 0) {
+                $html .= $this->search_filter_product();
+            }
             $html .= '</ul> <!-- .cd-products-columns -->';
             $html .= '</div> <!-- .cd-products-wrapper -->';
 
@@ -81,7 +95,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
             return $html;
         }
 
-        public function single_product($stats, $stat_cols)
+        public function single_product($stats, $stat_cols, $post_id)
         {
             $html = '';
 
@@ -94,9 +108,8 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
 
             $html .= $this->single_product_features($stats['stats'], $stat_cols);
             $html .= '</li> <!-- .product -->';
-            $html .= '<li class="product">';
-            $html .= '</li> ';
-
+            //$html .= '<li class="product">';
+            //$html .= '</li> ';
 
             return $html;
         }
@@ -134,6 +147,25 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
             return $html;
         }
 
+        public function search_filter_product()
+        {
+
+            $html = '';
+            $html .= '<li class="product search-filter">';
+            $html .= '<div class="top-info">';
+            //$html .= '<div class="check"></div>';
+            //$html .= '<img class="featured-image" src="" alt="product image">';
+            $html .= '<h3>Add Product</h3>';
+            $html .= '<div class="ui input hrp-search-filter-wrapper">';
+            $html .= '<input class="search hrp-search-filter" placeholder="Search lovely things" />';
+            $html .= '</div>';
+            //$html .= '<select class="ui search dropdown"><option value="1">One</option><option value="2">Two</option><option value="2">Two</option><option value="2">Two</option><option value="2">Two</option><option value="2">Two</option><option value="2">Two</option></select>';
+            $html .= '</div> <!-- .top-info -->';
+
+            $html .= '</li> <!-- .product -->';
+
+            return $html;
+        }
 
 
 

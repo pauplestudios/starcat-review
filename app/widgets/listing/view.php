@@ -60,7 +60,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\View')) {
                 if (!isset($ii)) $ii = 0;
 
                 // Assign card to html
-                $html .= $this->get_single_card($post, $ii);
+                $html .= $this->get_single_card($post, $ii, $key);
 
                 // increment $ii
                 $ii++;
@@ -71,7 +71,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\View')) {
             return $html;
         }
 
-        private function get_single_card($post, $ii)
+        private function get_single_card($post, $ii, $post_id)
         {
             $reviews = [2, 4, 7, 25, 50, 75, 100];
 

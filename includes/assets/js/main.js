@@ -4,19 +4,19 @@ var ListControl = require("./blocks/list-control.js");
 var ComparisonTable = require("./comparison-table.js");
 
 var HelpieReviews = {
-    init: function() {
-        UserReviewsList.init();
-        Ratings.init();
-        ListControl.init();
-    },
+  init: function() {
+    UserReviewsList.init();
+    Ratings.init();
+    ListControl.init();
+  },
 
-    eventHandlers: function() {
-        var thisModule = this;
-    }
+  eventHandlers: function() {
+    var thisModule = this;
+  }
 };
 
 jQuery(document).ready(function() {
-    HelpieReviews.init();
+  HelpieReviews.init();
 });
 
 import "./../style.scss";

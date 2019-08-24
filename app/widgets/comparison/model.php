@@ -36,10 +36,33 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\Model')) {
                 $post_info = [];
                 $post_info['title'] = $post->post_title;
                 $post_info['featured_image_url'] = get_the_post_thumbnail_url($post->ID);
-                $post_info['stats'] = [];
+
+                $stats = [
+                    'stat_name_1' => [
+                        '40' => '10',
+                        '42' => '132',
+                        '47' => '12',
+                        '49' => '43'
+                    ],
+                    'stat_name_2' => [
+                        '40' => '56',
+                        '42' => '34',
+                        '47' => '21',
+                        '49' => '12'
+                    ]
+                ];
+                
+                echo "<pre>";
+                var_dump($stats_list);
+                echo "</pre>";
+                $post_info['stats'] = $stats;
+
+
+
                 foreach ($stats_list as $key => $single_post_stat) {
                     $stat_name = $single_post_stat['stat_name'];
 
+                    echo "<li>" . $stat_name . "</li>";
                     // if (!isset($stats[$stat_name])) {
                     //     $stats[$stat_name] = [];
                     // }
