@@ -51,18 +51,13 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\Model')) {
                         '49' => '12'
                     ]
                 ];
-                
-                echo "<pre>";
-                var_dump($stats_list);
-                echo "</pre>";
+
+
                 $post_info['stats'] = $stats;
-
-
 
                 foreach ($stats_list as $key => $single_post_stat) {
                     $stat_name = $single_post_stat['stat_name'];
 
-                    echo "<li>" . $stat_name . "</li>";
                     // if (!isset($stats[$stat_name])) {
                     //     $stats[$stat_name] = [];
                     // }

@@ -71,10 +71,6 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
 
         public function get_columns($stats, $stat_cols)
         {
-            echo "total_count" . count($stats);
-            echo "<pre>";
-            var_dump($stats);
-            echo "</pre>";
             $html = '';
             $html .= '<div class="cd-products-wrapper">';
             $html .= '<ul class="cd-products-columns">';
@@ -159,7 +155,6 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
             $html .= '<div class="ui input hrp-search-filter-wrapper">';
             $html .= '<input class="search hrp-search-filter" placeholder="Search lovely things" />';
             $html .= '</div>';
-            //$html .= '<select class="ui search dropdown"><option value="1">One</option><option value="2">Two</option><option value="2">Two</option><option value="2">Two</option><option value="2">Two</option><option value="2">Two</option><option value="2">Two</option></select>';
             $html .= '</div> <!-- .top-info -->';
 
             $html .= '</li> <!-- .product -->';
