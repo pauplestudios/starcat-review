@@ -21,9 +21,6 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
         public function get_html($stats = [])
         {
 
-            echo "<pre>";
-            var_dump($stats['stats']);
-            echo "</pre>";
 
             $html = '';
 
@@ -71,12 +68,13 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
 
         public function get_columns($stats, $stat_cols)
         {
+
             $html = '';
             $html .= '<div class="cd-products-wrapper">';
             $html .= '<ul class="cd-products-columns">';
 
             foreach ($stats as $key => $single_product_stats) {
-                $html .= $this->single_product($single_product_stats, $stat_cols, $key);
+                $html .= $this->single_product($single_product_stats, $stat_cols);
             }
 
             if (count($stats) > 0) {
@@ -91,7 +89,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
             return $html;
         }
 
-        public function single_product($stats, $stat_cols, $post_id)
+        public function single_product($stats, $stat_cols)
         {
             $html = '';
 
@@ -147,13 +145,16 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
         {
 
             $html = '';
-            $html .= '<li class="product search-filter">';
+            $html .= '<li class="product hrp-search-filter-wrapper">';
             $html .= '<div class="top-info">';
             //$html .= '<div class="check"></div>';
             //$html .= '<img class="featured-image" src="" alt="product image">';
-            $html .= '<h3>Add Product</h3>';
-            $html .= '<div class="ui input hrp-search-filter-wrapper">';
-            $html .= '<input class="search hrp-search-filter" placeholder="Search lovely things" />';
+            $html .= '<h4>Add Product</h4>';
+            $html .= '<div class="ui search">';
+            $html .= '<div class="ui input">';
+            $html .= '<input type="text" class="prompt hrp-search-filter" placeholder="Search lovely things" />';
+            $html .= '</div>';
+            $html .= '<div class="results"></div>';
             $html .= '</div>';
             $html .= '</div> <!-- .top-info -->';
 

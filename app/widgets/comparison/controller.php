@@ -33,8 +33,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\Controller')) {
 
             $stats = $this->model->get($posts);
 
-            echo "stats::" . $stats;
-
+            
             return $this->view->get_html($stats);
         }
     } // END CLASS

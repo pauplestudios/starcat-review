@@ -1,4 +1,22 @@
 jQuery(document).ready(function($) {
+  var tempLoadContent = [
+    { title: "Andorra" },
+    { title: "United Arab Emirates" },
+    { title: "Anguilla" },
+    { title: "Netherlands Antilles" },
+    { title: "Angola" },
+    { title: "Austria" },
+    { title: "Azerbaijan" },
+    { title: "Bosnia" },
+    { title: "Burkina Faso" },
+    { title: "Bulgaria" },
+    { title: "Bahrain" }
+  ];
+
+  $(".ui.search").search({
+    source: tempLoadContent
+  });
+
   console.log("comparison table");
   function productsTable(element) {
     this.element = element;
@@ -15,21 +33,6 @@ jQuery(document).ready(function($) {
       .children(".top-info");
     this.topInfoHeight = this.featuresTopInfo.innerHeight() + 30;
     this.leftScrolling = false;
-    this.findSearchItemInd = this.products.hasClass("search-filter");
-    this.searchField = "";
-
-    if (this.findSearchItemInd) {
-      this.searchFilterWrapper = this.products.find(
-        ".hrp-search-filter-wrapper"
-      );
-      //input search field
-      this.searchField = this.products.find(
-        ".hrp-search-filter-wrapper .hrp-search-filter"
-      );
-
-      this.searchListItems = $(".hrp-search-list-container");
-    }
-
     this.filterBtn = this.element.find(".filter");
     this.resetBtn = this.element.find(".reset");
     (this.filtering = false), (this.selectedproductsNumber = 0);
@@ -95,97 +98,6 @@ jQuery(document).ready(function($) {
       event.preventDefault();
       self.updateSlider($(event.target).hasClass("next"));
     });
-
-    self.searchField.on("click", function() {
-      // e.preventDefault();
-      self.searchFilterWrapper.addClass("dropdown");
-      var checkFoundElement =
-        $(this)
-          .parent()
-          .find(".hrp-search-list-container").length > 0;
-
-      if (!checkFoundElement) {
-        var createDivElement =
-          '<div class="menu hrp-search-list-container"></div>';
-        self.searchFilterWrapper.append(createDivElement);
-      }
-      var searchListContainer = self.searchFilterWrapper.find(
-        ".hrp-search-list-container"
-      );
-      searchListContainer.addClass("show");
-      var listItems = self.getSearchListItems();
-      var appendContent = "";
-
-      if (listItems.length > 0) {
-        for (let i = 0; i < listItems.length; i++) {
-          appendContent += '<div class="item">' + listItems[i] + "</div>";
-        }
-      } else {
-        appendContent = '<div class="item">Not Found Items</div>';
-      }
-      searchListContainer.empty().append(appendContent);
-    });
-
-    self.searchField.on("keyup", function(e) {
-      e.stopPropagation();
-      console.log($(this).val());
-      let search_key = $(this)
-        .val()
-        .toUpperCase();
-
-      var searchListContainer = self.searchFilterWrapper.find(
-        ".hrp-search-list-container"
-      );
-
-      if (searchListContainer.hasClass("show")) {
-        searchListContainer.find(".item").each(function() {
-          if (
-            $(this)
-              .text()
-              .toUpperCase()
-              .indexOf(search_key) > -1
-          ) {
-            $(this).css("display", "");
-          } else {
-            $(this).css("display", "none");
-          }
-        });
-      }
-      console.log(self.searchListItems);
-    });
-
-    self.searchFilterWrapper.on(
-      "click",
-      ".hrp-search-list-container .item",
-      function() {
-        console.log($(this).text());
-        self.searchField.val(
-          $(this)
-            .text()
-            .trim()
-        );
-        $(this)
-          .parent()
-          .removeClass("show");
-      }
-    );
-  };
-
-  productsTable.prototype.getSearchListItems = function() {
-    //hrp-collection
-    //hrp-collection__col
-    //hrp-review-card
-    //review-card__header
-    var _collection = $("#hrp-cat-collection").find(".hrp-collection__col");
-    var header_content = [];
-    _collection.each(function() {
-      var _thisHeadingvalue = $(this)
-        .find(".hrp-review-card .review-card__header")
-        .text();
-      header_content.push(_thisHeadingvalue.trim());
-    });
-
-    return header_content;
   };
 
   productsTable.prototype.upadteFilterBtn = function() {

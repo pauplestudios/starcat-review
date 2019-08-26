@@ -37,23 +37,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\Model')) {
                 $post_info['title'] = $post->post_title;
                 $post_info['featured_image_url'] = get_the_post_thumbnail_url($post->ID);
 
-                $stats = [
-                    'stat_name_1' => [
-                        '40' => '10',
-                        '42' => '132',
-                        '47' => '12',
-                        '49' => '43'
-                    ],
-                    'stat_name_2' => [
-                        '40' => '56',
-                        '42' => '34',
-                        '47' => '21',
-                        '49' => '12'
-                    ]
-                ];
-
-
-                $post_info['stats'] = $stats;
+                $post_info['stats'] = [];
 
                 foreach ($stats_list as $key => $single_post_stat) {
                     $stat_name = $single_post_stat['stat_name'];
