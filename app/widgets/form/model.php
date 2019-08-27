@@ -32,8 +32,8 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\Model')) {
                 'review_items' => true,
                 'review_division' => 'half', // full, half, points
                 'star_scale' => 5, 
-                'value_type' => 'percentage', // number or percentage
-                'value_limit' => 20,
+                'value_type' => 'number', // number or percentage
+                'value_limit' => 50,
                 'value_roundable_to' => 1,
                 'source_type' => 'icon', // icon or image,
                 'image' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png',

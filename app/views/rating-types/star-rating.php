@@ -55,7 +55,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             $html .= '</div>';
             $html .= $this->get_results_html($key, $value, $star_value); 
             $html .='</div>'; 
-            $html .= '<span class="single-review__label">'.$key.' - <span>'.$star_value.'</span></span>';
+            $html .= '<div class="single-review__label">'.$key.' - <span>'.$star_value.'</span></div>';
             
             $html .= '</li>';
 
@@ -113,21 +113,21 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             $html .= '<div 
                 class="single-review__results"
                 name="'.$key.'" 
-                title="'.$star_value.' / '.$this['collection']['star_scale'].'"
+                title="'.$star_value.' / '.$this->props['collection']['star_scale'].'"
                 value="'.$value.'" 
                 data-rating="0" 
                 data-animate="'.$this->props['collection']['animate'].'" 
                 style="width: 0%"
                 >';       
-
+            
             $fallback_icon = 'fa fa-star';
-            $icon = $this->props['collection']['icon'] || $fallback_icon;
-
+            $icon = $this->props['collection']['icon'];
+            
             for($ii = 0; $ii<$this->props['collection']['star_scale']; $ii++){                
                 $html .= '<i class="'.$icon.'"></i>';
             }
-
-            $html .= '</div>';
+            
+            $html .= '</div>';            
             
             return $html;
         }

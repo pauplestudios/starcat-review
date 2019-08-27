@@ -25,9 +25,9 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
                 'display_rating_type' => 'star', // star, progress_bar or circle
                 'star_scale' => 10, // 0-5 or 0-10
                 'show_stats' => ['overall', 'price', 'ux', 'feature', 'better', 'cool'],
-                'value_type' => 'percentage', // or percentage
-                'value_limit' => 20, // 20 ,30, 50, 80 and etc..	
-                'source_type' => 'image', // or image                
+                'value_type' => 'percentage', // percentage or number
+                'value_limit' => 20, // 10, 20 ,30, 40, 50 and etc..	
+                'source_type' => 'icon', // image or icon
                 'image' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png',
                 'image_overlay' => HELPIE_REVIEWS_URL . 'includes/assets/img/filled-tomato.png',
                 'animate' => true,

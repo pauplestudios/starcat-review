@@ -6,11 +6,13 @@ var UserReview = {
     },   
 
     eventListener: function(){
-        var review = jQuery('.hrp-review-list.user-review');   
+        var review = jQuery('.hrp-review-list.user-review');           
+        
+        var limit = (review.attr("data-valueType") == 'percentage') ? 100 : review.attr("data-limit");
 
         var props = {
             review : review,
-            limit : review.attr("data-limit"),
+            limit : limit,
             valueType : review.attr("data-valueType"),
             reviewType : review.attr("data-reviewType"),
             scale: review.attr("data-scale"),
@@ -22,25 +24,27 @@ var UserReview = {
                 ".hrp-review-list.user-review .single-review", 
                 ".single-review__results",
                 ".single-review__label",
+                "",
                 props
             );
         }else if(props.reviewType == 'progress_bar'){            
             this.getRatingEventlistener(
                 ".hrp-review-list.user-review .single-progress-review__wrapper",
                 ".single-progress-review__results", 
-                ".single-progress-review__label", 
+                ".single-progress-review__label",
+                ".single-progress-review__text", 
                 props
             ); 
         }       
     },  
 
-    getRatingEventlistener: function(wrapper, result, label, props){   
+    getRatingEventlistener: function(wrapper, result, label, text, props){   
      
         jQuery(wrapper).on('mousemove', function(e) {
 			var thisElement = jQuery(this);
             var offset = thisElement.offset().left;
             var width = ( ( ( e.pageX - offset ) / thisElement.width() ) * 100 ).toFixed();
-            var starValue;           
+            var starValue, numberValue;           
 			
 			if ( width <= 0 ) {
   				width = 0;
@@ -57,30 +61,35 @@ var UserReview = {
             }            
             
             if(props.reviewType == 'progress_bar'){                            
-                // thisElement.find(label).attr("class")
-                console.log("Text : " + thisElement.next(label).find('span').text());
+
+                width = UserReview.getNumberDivision(width, props); 
+                numberValue = (props.valueType == 'number')? width /(100 / props.limit): width;
+
+                thisElement.next(label).find("span").text(numberValue +' / ' + props.limit).attr("data-rating", numberValue);                
+                thisElement.attr("title", numberValue +' / ' + props.limit);
+                thisElement.find(text).text(numberValue);
+                
             }
             
             thisElement.find(result).width(width + '%').attr("value", width);
-            thisElement.find(label).text(width +' / 100');        
-            
 
         }).on('mouseleave', function(){
 
-            var thisElement = jQuery(this);
-            var starValue = thisElement.find(result).attr("data-rating") || 0;
-            var width = starValue/props.scale * 100;
-
-            thisElement.find(result).width(width + '%').attr("value", width).attr("data-rating", starValue);
-            thisElement.next("span").find(".single-review__label").text(starValue +' / ' + props.scale).attr("data-rating", starValue);
+            var thisElement = jQuery(this);            
+            var ratingValue = thisElement.find(result).attr("data-rating");
+            var width = UserReview.getWidthByReviewType(ratingValue, props);            
+            
+            thisElement.find(result).width(width + '%').attr("value", width).attr("data-rating", ratingValue);
+            thisElement.next(label).find("span").text(ratingValue +' / ' + ((props.reviewType == 'star')?props.scale:props.limit)).attr("data-rating", ratingValue);            
+            thisElement.find(text).text(ratingValue);
 
         }).on("click", function(){
 
             var thisElement = jQuery(this);
-            var starValue = thisElement.next("span").find(".single-review__label").attr("data-rating");            
-            var width = starValue/props.scale * 100;            
+            var ratingValue = thisElement.next(label).find("span").attr("data-rating");            
+            var width = UserReview.getWidthByReviewType(ratingValue, props);     
             
-            thisElement.find(result).width(width + '%').attr("value", width).attr("data-rating", starValue);
+            thisElement.find(result).width(width + '%').attr("value", width).attr("data-rating", ratingValue);            
         });
     },
 
@@ -97,16 +106,22 @@ var UserReview = {
           }
     },
 
-    getProgressNumber: function(width, props){
-        var progressNumber;
-
+    getNumberDivision: function(width, props){
+        
         if(props.valueType == 'number'){
             divisor = 100 / props.limit;
-			limit = width / divisor;            
-            return number;
+			return Math.round(width / divisor) * divisor;            
         }
 
-        return progressNumber;
+        return width;
+    },
+
+    getWidthByReviewType: function(ratingValue, props){
+        var width = ratingValue/props.scale * 100;    
+        if(props.reviewType == 'progress_bar'){  
+            width = ratingValue /props.limit * 100;
+        }
+        return width;
     }
 };
 
