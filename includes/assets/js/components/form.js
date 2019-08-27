@@ -11,27 +11,53 @@ var Form = {
         console.log('Form JS Loaded !!!'); 
     },   
 
-    formSubmit: function(){        
-        
+    formSubmit: function(){   
+
         jQuery('.hrp-form').submit(function(e) {    
-           
-            var form = jQuery( this ), // this will resolve to the form submitted
+            
+            e.preventDefault();   
+
+            var form = jQuery( this ), 
             action = form.attr( 'action' ),
               type = form.attr( 'method' ),
-              data = {};
-     
-            // Make sure you use the 'name' field on the inputs you want to grab. 
-            form.find( '[name]' ).each( function( i , v ){
-            var input = jQuery( this ), // resolves to current input element.
-                name = input.attr( 'name' ),
-                value = input.val();
-            data[name] = value;
+              data = {}, items = {}, pros = {}, cons = {};                               
+            
+            form.find( '[name]' ).each( function( i , v ){                
+                var input = jQuery( this ),
+                    name = input.attr( 'name' ),
+                    value = input.val();
+                data[name] = value;                
             });
+            
+            // User Stat
+            form.find('[data-group]').each( function(){                
+                var input = jQuery( this ), 
+                    name = input.attr( 'data-item-name' ),
+                    value = input.val();         
+                    
+                    items[name] = value;                    
+            }); 
+            data['items'] = items;               
+            
+            // Pros 
+            form.find('[data-pros]').each(function(i){
+                var input = jQuery( this ),                     
+                    value = input.val();                             
+                    pros[i] = value; 
+            });
+            data['pros'] = pros;
 
-            e.preventDefault();   
+            // Cons
+            form.find('[data-cons]').each(function(i){
+                var input = jQuery( this ),                     
+                    value = input.val();                             
+                    cons[i] = value; 
+            });          
+            data['cons'] = cons;
+           
            console.log(data);
-        });
-    },
+        });     
+    },  
 
     formValidation: function(){
         // var form_data =jQuery('.hrp-form').form().get();             

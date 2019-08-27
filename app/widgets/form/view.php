@@ -35,7 +35,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
             {  
                 $html .= '<div class="field">';
                 $html .= '<label>Review Title</label>';
-                $html .= '<input type="text" name="review_title" placeholder="Title" />';
+                $html .= '<input type="text" name="title" placeholder="Title" />';
                 $html .= '</div><br / ><br />';
             }
             
@@ -49,7 +49,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
             {
                 $html .= '<div class="field">';
                 $html .= '<label>Review Description</label>';            
-                $html .= '<textarea rows="5" spellcheck="false" name="review_description" placeholder="Description"></textarea>';
+                $html .= '<textarea rows="5" spellcheck="false" name="description" placeholder="Description"></textarea>';
                 $html .= '</div>';
             }
 
@@ -81,9 +81,9 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
         {
             $html = '<div class="column review-pros-repeater">';
             $html .= '<div class="ui attached label"> Pros </div><br />';
-            $html .= '<div data-repeater-list="review_pros" >';
+            $html .= '<div data-repeater-list="pros" >';
             $html .= '<div data-repeater-item >
-                <select name="pros" class="ui fluid search dropdown">
+                <select class="ui fluid search dropdown" data-pros="pros" >
                 <option value="">Pros</option>            
                 <option value="affordable">Affordable</option>
                 <option value="ui">UI</option>
@@ -100,9 +100,9 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
         {
             $html = '<div class="column review-cons-repeater">';
             $html .= '<div class="ui attached label"> Cons </div> <br />';
-            $html .= '<div data-repeater-list="review_cons" >';
+            $html .= '<div data-repeater-list="cons" >';
             $html .= '<div data-repeater-item >
-                <select name="cons" class="ui fluid search dropdown">
+                <select  class="ui fluid search dropdown"  data-cons="cons" >
                 <option value="">Cons</option>            
                 <option value="affordable">Affordable</option>
                 <option value="ui">UI</option>
@@ -119,12 +119,12 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
         { 
             $html  = '';
             $html .= '<label>User Review</label>';            
-            $html .= '<ul class="hrp-review-list user-review" 
+            $html .= '<ul class="hrp-review-list user-review"
                 data-limit="'.$this->props['collection']['value_limit'].'" 
                 data-valueType="'.$this->props['collection']['value_type'].'"
                 data-reviewType="'.$this->props['collection']['review_type'].'"
                 data-scale="'.$this->props['collection']['star_scale'].'"
-                data-division="'.$this->props['collection']['review_division'].'"
+                data-division="'.$this->props['collection']['star_division'].'"
                 data-list="items"
                 >'; 
             
@@ -138,10 +138,10 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
                     $html .= $this->get_progress_bar_rating($key);
                     break;  
                     case "range":
-                    $html .= $this->get_range_review($key);
+                    $html .= $this->get_range_rating_fallback($key);
                     break;                
                     default:                    
-                    $html .= $this->get_text_rating($key);                
+                    $html .= $this->get_text_rating_fallback($key);                
                 }               
             }
 
@@ -160,7 +160,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
             return $this->progress_bar_rating->get_single_stat($key, 0, 0);        
         }
         
-        //  Todo: text Rating
+        //  Todo: Text Rating
         protected function get_text_rating_fallback()
         {
             return '<div class="column">

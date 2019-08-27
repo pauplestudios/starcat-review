@@ -50,7 +50,8 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Progress_Bar_Rating')) 
 			$html .= '<div class="single-progress-review__wrapper" title="'.$number_value .' / '.$this->limit.'" >';			
 			
 			$html .= '<div class="single-progress-review__results" 
-				name="'.$key.'" 				
+				data-item-name="'.$key.'" 
+				data-group="items"				
 				value="'.$value.'" 
 				data-rating="0" 
 				data-animate="'.$this->props['collection']['animate'].'" 
