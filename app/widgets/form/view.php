@@ -22,25 +22,36 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
             $html = "<div class='hrp-container'>";
             $html .= "<div class='ui segment'>";    
             
-            // Review Form Title
-            $html .= '<div class="ui attached label">';
-            $html .= ($this->props['collection']['review_form_title'])? $this->props['collection']['review_form_title'] : __("Helpie Review Form", "helpie-reviews");
-            $html .= '</div>';   
+            if($this->props['collection']['display_form_title'])
+            {
+                $html .= '<div class="ui attached label">';
+                $html .= ($this->props['collection']['form_title'])? $this->props['collection']['form_title'] : __("Helpie Review Form", "helpie-reviews");
+                $html .= '</div></br>';   
+            }
 
-            // Review Form
             $html .= '<form class="ui form hrp-form" name="hrp-form-submission" method="post">';
             
-            $html .= '</br><div class="field"> <label>Review Title</label>';
-            $html .= '<input type="text" name="review_title" placeholder="Title">';
-            $html .= '</div>';
-            
-            if($this->props['collection']['display_user_review']){
-                $html .= $this->get_user_review();
+            if($this->props['collection']['display_title'])
+            {  
+                $html .= '<div class="field">';
+                $html .= '<label>Review Title</label>';
+                $html .= '<input type="text" name="review_title" placeholder="Title" />';
+                $html .= '</div><br / ><br />';
             }
             
-            $html .= '<div class="field"> <label>Review Description</label>';            
-            $html .= '<textarea rows="5" spellcheck="false" name="review_description" placeholder="Description"></textarea>';
-            $html .= '</div>';
+            if($this->props['collection']['display_user_stat']){
+                $html .= '<div class="field">';
+                $html .= $this->get_user_review();
+                $html .= '</div>';
+            }
+            
+            if($this->props['collection']['display_description'])
+            {
+                $html .= '<div class="field">';
+                $html .= '<label>Review Description</label>';            
+                $html .= '<textarea rows="5" spellcheck="false" name="review_description" placeholder="Description"></textarea>';
+                $html .= '</div>';
+            }
 
             if($this->props['collection']['display_pros_and_cons']){
                 $html .= $this->get_pros_and_cons(); 
@@ -105,9 +116,9 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
         }
 
         protected function get_user_review()
-        {            
-            $html = '<div class="field">';
-            $html .= '</br><label>User Review</label>';            
+        { 
+            $html  = '';
+            $html .= '<label>User Review</label>';            
             $html .= '<ul class="hrp-review-list user-review" 
                 data-limit="'.$this->props['collection']['value_limit'].'" 
                 data-valueType="'.$this->props['collection']['value_type'].'"
@@ -134,29 +145,24 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
                 }               
             }
 
-            $html .='</ul>';
-            $html .= '</div>';
+            $html .='</ul>';            
 
             return $html;
         }
 
-        protected function get_star_rating($key){
-            
-            return $this->star_rating->get_single_stat($key, 0, 0);
-            // return '<div class="column"><div class="ui star rating" name="review_star" data-rating="0" data-max-rating="5"></div></div>';
+        protected function get_star_rating($key)
+        {            
+            return $this->star_rating->get_single_stat($key, 0, 0);            
         }
 
-        protected function get_progress_bar_rating($key){
-
-            return $this->progress_bar_rating->get_single_stat($key, 0, 0);
-            // return '<div class="column">
-            //     <div class="range-slider">
-            //         <input type="range" name="range" class="range" min="0" max="100" value="0"/> 
-            //         <div class="ui label range__value">0</div>                             
-            //     </div></div>';
+        protected function get_progress_bar_rating($key)
+        {
+            return $this->progress_bar_rating->get_single_stat($key, 0, 0);        
         }
         
-        protected function get_text_rating(){
+        //  Todo: text Rating
+        protected function get_text_rating_fallback()
+        {
             return '<div class="column">
                 <div> Feature </div>
                 <div class="ui left labeled input"> 
@@ -166,7 +172,9 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
             </div>';
         }
 
-        protected function get_range_review($value = 10, $min = 0, $max = 100) {
+        //  Todo: Range Rating
+        protected function get_range_rating_fallback($value = 10, $min = 0, $max = 100) 
+        {
 			$html = '<div class="hrp-rating-wrapper"><hr class="hrp-divider">';
 			
 			$html .= '<div class="hrp-user-review__rating">';

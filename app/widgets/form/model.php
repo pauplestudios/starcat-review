@@ -25,14 +25,17 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\Model')) {
         protected function get_collectionProps()
         {
             return  [
-                'review_form_title' => 'Review Stats Form',                
-                'display_user_review' => true,  
+                'display_form_title'=> true,
+                'display_title'=> true,
+                'display_user_stat' => true,  
                 'display_pros_and_cons' => true,
+                'display_description' => true,
+                'form_title' => 'Review Stats Form', 
                 'review_type' => 'progress_bar',   // Star, circle, progress_bar
                 'review_items' => true,
                 'review_division' => 'half', // full, half, points
                 'star_scale' => 5, 
-                'value_type' => 'number', // number or percentage
+                'value_type' => 'percentage', // number or percentage
                 'value_limit' => 50,
                 'value_roundable_to' => 1,
                 'source_type' => 'icon', // icon or image,
