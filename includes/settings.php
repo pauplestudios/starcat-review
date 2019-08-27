@@ -64,12 +64,167 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
 
                 $this->mainpage_settings($prefix);
                 $this->category_page_settings($prefix);
+                $this->single_page_settings($prefix);
+                $this->user_review_settings($prefix);
+                $this->comparison_table_settings($prefix);
+
                 $this->general_settings($prefix);
                 $this->single_post_settings($prefix);
 
                 $this->post_meta_fields();
             }
         }
+
+        public function comparison_table_settings($prefix)
+        {
+            \CSF::createSection(
+                $prefix,
+                array(
+                    'id' => 'comparison_table_settings',
+                    'title' => 'Comparison Table',
+                    'icon' => 'fa fa-eye',
+                    'fields' => array(
+
+                        array(
+                            'id'          => 'Primary Page for Comparison Table',
+                            'type'        => 'select',
+                            'title'       => 'Select with pages',
+                            'placeholder' => 'Select a page',
+                            'options'     => 'pages',
+                            'desc' => '<strong>  [advanced_review_comparison_table] -> Add this shortcode to the selected page.</strong>',
+                        ),
+
+
+
+
+                    )
+                )
+            );
+        }
+
+        public function user_review_settings($prefix)
+        {
+            \CSF::createSection(
+                $prefix,
+                array(
+                    'id' => 'user_review_settings',
+                    'title' => 'User Review',
+                    'icon' => 'fa fa-eye',
+                    'fields' => array(
+
+                        array(
+                            'id'          => 'user-review-post-types',
+                            'type'        => 'select',
+                            'title'       => 'Enable Reviews for custom post types',
+                            'placeholder' => 'Select a Post Type',
+                            'multiple'    => true,
+                            'chosen'      => true,
+                            'options'     => 'post_types',
+                            'query_args'  => array(
+                                'post_type' => 'HELPIE_REVIEWS_POST_TYPE',
+                            ),
+                        ),
+
+                        array(
+                            'id' => 'ur_show_controls',
+                            'type' => 'switcher',
+                            'title' => __('Show Controls', 'pauple-helpie'),
+                            'default' => true,
+                        ),
+                        array(
+                            'id' => 'ur_controls_subheading',
+                            'type' => 'subheading',
+                            'content' => 'Controls',
+                            'dependency' => array('ur_show_controls', '==', 'true'),
+                        ),
+                        array(
+                            'id' => 'ur_show_search',
+                            'type' => 'switcher',
+                            'title' => __('Show Search', 'pauple-helpie'),
+                            'default' => true,
+                            'dependency' => array('ur_show_controls', '==', 'true'),
+                        ),
+                        array(
+                            'id' => 'ur_show_sortBy',
+                            'type' => 'switcher',
+                            'title' => __('Show SortBy', 'pauple-helpie'),
+                            'default' => true,
+                            'dependency' => array('ur_show_controls', '==', 'true'),
+                        ),
+
+                        array(
+                            'id' => 'ur_features_subheading',
+                            'type' => 'subheading',
+                            'content' => 'Features',
+                        ),
+                        array(
+                            'id' => 'ur_enable_replies',
+                            'type' => 'switcher',
+                            'title' => __('Enable Replies to Reviews', 'pauple-helpie'),
+                            'default' => true,
+                        ),
+
+                    )
+                )
+            );
+        }
+
+        public function single_page_settings($prefix)
+        {
+            \CSF::createSection(
+                $prefix,
+                array(
+                    'id' => 'single_page_settings',
+                    'title' => 'Single Page ',
+                    'icon' => 'fa fa-eye',
+                    'fields' => array(
+
+                        array(
+                            'id' => 'cp_show_controls',
+                            'type' => 'switcher',
+                            'title' => __('Show Controls', 'pauple-helpie'),
+                            'default' => true,
+                        ),
+
+                        array(
+                            'id' => 'cp_rating_combination',
+                            'type' => 'select',
+                            'chosen' => true,
+                            'title' => __('Default Sort By', 'pauple-helpie'),
+                            'placeholder' => __('Select an option', 'pauple-helpie'),
+                            'options' => array(
+                                'author' => 'Author Only',
+                                'user' => 'User Only',
+                                'both' => 'Author and User both',
+                                'combined' => 'Combined Rating',
+                            ),
+                            'default' => 'combined',
+                        ),
+
+
+                        array(
+                            'id' => 'sp_stats_order',
+                            'type' => 'sorter',
+                            'title' => 'Stats Order',
+                            'default' => [
+                                'enabled' => [
+                                    'feature1' => 'Feature1',
+                                    'feature2' => 'Feature2',
+                                    'feature3' => 'Feature3',
+                                    'feature4' => 'Feature4',
+                                ],
+                                'disabled' => [
+                                    'feature5' => 'Feature5',
+                                    'feature6' => 'Feature6',
+                                ]
+                            ],
+                        ),
+
+                    )
+                )
+            );
+        }
+
 
         public function category_page_settings($prefix)
         {
@@ -80,12 +235,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                     'title' => 'Category Page ',
                     'icon' => 'fa fa-eye',
                     'fields' => array(
-                        array(
-                            'id' => 'mp_slug',
-                            'type' => 'text',
-                            'title' => __('Main Page Slug', 'pauple-helpie'),
-                            'default' => 'helpdesk',
-                        ),
+
                         array(
                             'id' => 'cp_show_controls',
                             'type' => 'switcher',
@@ -139,6 +289,20 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                                 'popular' => 'Popular',
                             ),
                             'default' => 'recent',
+                        ),
+                        array(
+                            'id' => 'cp_listing_num_of_cols',
+                            'type' => 'select',
+                            'chosen' => true,
+                            'title' => __('Num Of Columns', 'pauple-helpie'),
+                            'placeholder' => __('Select an option', 'pauple-helpie'),
+                            'options' => array(
+                                'one' => 1,
+                                'two' => 2,
+                                'three' => 3,
+                                'four' => 4,
+                            ),
+                            'default' => 'three',
                         ),
                     )
                 )
@@ -388,6 +552,27 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'id'    => 'enable-pros-cons',
                             'type'  => 'switcher',
                             'title' => 'Enable Pros and Cons',
+                        ),
+
+                        array(
+                            'id' => 'stats-subheading',
+                            'type' => 'subheading',
+                            'content' => 'Stats',
+                        ),
+
+                        array(
+                            'id'     => 'opt-repeater-1',
+                            'type'   => 'repeater',
+                            'title'  => 'Repeater',
+                            'fields' => array(
+
+                                array(
+                                    'id'    => 'opt-text',
+                                    'type'  => 'text',
+                                    'title' => 'Stat1'
+                                ),
+
+                            ),
                         ),
 
                     )
