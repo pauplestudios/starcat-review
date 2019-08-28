@@ -62,14 +62,16 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                     'show_search' => false, // TODO: Enable once autofill password is fixed
                 ));
 
+                $this->general_settings($prefix);
+
                 $this->mainpage_settings($prefix);
                 $this->category_page_settings($prefix);
                 $this->single_page_settings($prefix);
                 $this->user_review_settings($prefix);
                 $this->comparison_table_settings($prefix);
 
-                $this->general_settings($prefix);
-                $this->single_post_settings($prefix);
+
+                // $this->single_post_settings($prefix);
 
                 $this->post_meta_fields();
             }
@@ -162,6 +164,28 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'type' => 'switcher',
                             'title' => __('Enable Replies to Reviews', 'pauple-helpie'),
                             'default' => true,
+                        ),
+
+                        array(
+                            'id' => 'ur_enable_approval',
+                            'type' => 'switcher',
+                            'title' => __('Require Admin Approval to publish reviews', 'pauple-helpie'),
+                            'default' => true,
+                        ),
+
+                        array(
+                            'id'     => 'ur_form',
+                            'type'   => 'repeater',
+                            'title'  => 'Form Fields',
+                            'fields' => array(
+
+                                array(
+                                    'id'    => 'form-field',
+                                    'type'  => 'text',
+                                    'title' => 'Stat1'
+                                ),
+
+                            ),
                         ),
 
                     )
@@ -515,16 +539,16 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                     'icon' => 'fa fa-eye',
                     'fields' => array(
 
-                        array(
-                            'id'    => 'settings-pro-1',
-                            'type'  => 'text',
-                            'title' => 'Affiliate Link'
-                        ),
+                        // array(
+                        //     'id'    => 'settings-pro-1',
+                        //     'type'  => 'text',
+                        //     'title' => 'Affiliate Link'
+                        // ),
                         // A Heading
-                        array(
-                            'type'    => 'heading',
-                            'content' => 'Review Post Type',
-                        ),
+                        // array(
+                        //     'type'    => 'heading',
+                        //     'content' => 'Review Post Type',
+                        // ),
                         array(
                             'id'          => 'template_source',
                             'type'        => 'select',
@@ -561,9 +585,48 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         ),
 
                         array(
+                            'id'        => 'stats-type',
+                            'type'      => 'image_select',
+                            'title'     => 'Stats Type',
+                            'options'   => array(
+                                'star' => 'http://codestarframework.com/assets/images/placeholder/80x80-2c3e50.gif',
+                                'progress' => 'http://codestarframework.com/assets/images/placeholder/80x80-2c3e50.gif',
+                            ),
+                            'default'   => 'star'
+                        ),
+
+                        array(
+                            'id'      => 'stats-limit',
+                            'type'    => 'text',
+                            'title'   => 'Limit',
+                            'default' => '5'
+                        ),
+
+                        array(
+                            'id'          => 'stat_type',
+                            'type'        => 'select',
+                            'title'       => 'Single or Multiple Stat',
+                            'placeholder' => 'Select Stat Type',
+                            'options'     => array(
+                                'single'  => 'Single',
+                                'multiple'  => 'Multiple',
+                            ),
+                            'default'     => 'single'
+                        ),
+
+                        array(
+                            'id'      => 'field-name',
+                            'type'    => 'text',
+                            'title'   => 'Field Name',
+                            'default' => 'Overall',
+                            'dependency' => array('stat_type', '==', 'single'),
+                        ),
+
+                        array(
                             'id'     => 'opt-repeater-1',
                             'type'   => 'repeater',
                             'title'  => 'Repeater',
+                            'dependency' => array('stat_type', '==', 'multiple'),
                             'fields' => array(
 
                                 array(
