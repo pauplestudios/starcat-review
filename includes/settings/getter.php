@@ -33,7 +33,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
 
 
             // self::$options = get_option('helpie-reviews');
-            // error_log(' self::$options : ' . print_r(self::$options, true));
+            error_log(' self::$options : ' . print_r(self::$options, true));
             if (isset(self::$options[$option_name])) {
                 return self::$options[$option_name];
             } else {
@@ -50,9 +50,29 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
         {
 
             $defaults = array(
-                'template_source' => 'theme',
+                'template_source' => 'theme', // General Settings Start
                 'enable-pros-cons' => true,
-                'review-location' => [HELPIE_REVIEWS_POST_TYPE]
+                'review-location' => [HELPIE_REVIEWS_POST_TYPE],
+                'stats-type' => 'star',
+                'stats-limit' => 5,
+                'stat-singularity' => 'single',
+                'single-stat-field-name' => 'Overall',
+                'multiple-stat-fields' => [
+                    ['stat' => 'Pricing']
+                ],
+                'mp_slug' => 'reviews', // Mainpage Settings Start
+                'mp_meta_title' => 'Reviews',
+                'mp_meta_description' => 'These are your reviews',
+                'mp_components_order' => [
+                    'mp_show_search' => true,
+                    'mp_show_categories' => true,
+                    'mp_show_review_listing' => true
+                ],
+                'mp_template' => 'boxed',
+                'mp_boxed_description' => false,
+                'mp_cl_cols' => 'three',
+                ''
+
             );
 
             return $defaults;

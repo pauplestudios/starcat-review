@@ -346,22 +346,23 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'id' => 'mp_slug',
                             'type' => 'text',
                             'title' => __('Main Page Slug', 'pauple-helpie'),
-                            'default' => 'helpdesk',
+                            'default' => 'reviews',
                         ),
                         array(
-                            'id' => 'helpie_mp_meta_title',
+                            'id' => 'mp_meta_title',
                             'type' => 'text',
                             'title' => __('Main Page Meta Title', 'pauple-helpie'),
-                            'dependency' => array('helpie_mp_location', '==', 'archive'),
+                            // 'dependency' => array('helpie_mp_location', '==', 'archive'),
                             'desc' => '<strong> Note </strong>: Keep your meta title between 60 and 64 characters.',
-                            'default' => 'helpdesk',
+                            'default' => 'Reviews',
                         ),
                         array(
-                            'id' => 'helpie_mp_meta_description',
+                            'id' => 'mp_meta_description',
                             'type' => 'text',
                             'title' => __('Main Page Meta Description', 'pauple-helpie'),
-                            'dependency' => array('helpie_mp_location', '==', 'archive'),
+                            // 'dependency' => array('helpie_mp_location', '==', 'archive'),
                             'desc' => '<strong> Note </strong>: Keep your meta descriptions between 150 and 154 characters.',
+                            'default' => 'These are your reviews',
                         ),
                         array(
                             'id'        => 'mp_components_order',
@@ -473,7 +474,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'dependency' => array('mp_show_categories', '==', 'true'),
                         ),
                         array(
-                            'id' => 'helpie_mp_template',
+                            'id' => 'mp_template',
                             'type' => 'select',
                             'chosen' => true,
                             'title' => __('Main Page Categories Listing Style', 'pauple-helpie'),
@@ -487,28 +488,28 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'dependency' => array('mp_show_categories', '==', 'true'),
                         ),
                         array(
-                            'id' => 'helpie_mp_boxed_description',
+                            'id' => 'mp_boxed_description',
                             'type' => 'switcher',
                             'title' => __('Show Description', 'pauple-helpie'),
                             'dependency' => array('mp_show_categories', '==', 'true'),
                             'default' => false,
                         ),
+                        // array(
+                        //     'id' => 'category_listing_graphic_type',
+                        //     'type' => 'select',
+                        //     'chosen' => true,
+                        //     'title' => __('Image or Icon', 'pauple-helpie'),
+                        //     'placeholder' => 'Select an option',
+                        //     'options' => array(
+                        //         'image' => __('Image', 'pauple-helpie'),
+                        //         'icon' => __('Icon', 'pauple-helpie'),
+                        //     ),
+                        //     'default' => 'image',
+                        //     'desc' => '<strong>Note </strong>: Default icon color is set from Styles -> Primary Brand Color',
+                        //     'dependency' => array('mp_show_categories', '==', 'true'),
+                        // ),
                         array(
-                            'id' => 'category_listing_graphic_type',
-                            'type' => 'select',
-                            'chosen' => true,
-                            'title' => __('Image or Icon', 'pauple-helpie'),
-                            'placeholder' => 'Select an option',
-                            'options' => array(
-                                'image' => __('Image', 'pauple-helpie'),
-                                'icon' => __('Icon', 'pauple-helpie'),
-                            ),
-                            'default' => 'image',
-                            'desc' => '<strong>Note </strong>: Default icon color is set from Styles -> Primary Brand Color',
-                            'dependency' => array('mp_show_categories', '==', 'true'),
-                        ),
-                        array(
-                            'id' => 'helpie_mp_cl_cols',
+                            'id' => 'mp_cl_cols',
                             'type' => 'select',
                             'chosen' => true,
                             'title' => __('Num Of Columns', 'pauple-helpie'),
@@ -603,7 +604,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         ),
 
                         array(
-                            'id'          => 'stat_type',
+                            'id'          => 'stat-singularity',
                             'type'        => 'select',
                             'title'       => 'Single or Multiple Stat',
                             'placeholder' => 'Select Stat Type',
@@ -615,7 +616,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         ),
 
                         array(
-                            'id'      => 'field-name',
+                            'id'      => 'single-stat-field-name',
                             'type'    => 'text',
                             'title'   => 'Field Name',
                             'default' => 'Overall',
@@ -623,14 +624,14 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         ),
 
                         array(
-                            'id'     => 'opt-repeater-1',
+                            'id'     => 'multiple-stat-fields',
                             'type'   => 'repeater',
-                            'title'  => 'Repeater',
+                            'title'  => 'Stat Fields',
                             'dependency' => array('stat_type', '==', 'multiple'),
                             'fields' => array(
 
                                 array(
-                                    'id'    => 'opt-text',
+                                    'id'    => 'stat',
                                     'type'  => 'text',
                                     'title' => 'Stat1'
                                 ),
