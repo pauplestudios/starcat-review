@@ -3,8 +3,7 @@
 
 	.single-review{
 		float: right;
-		position: relative;			
-		font-size: 20px;
+		position: relative;					
 		margin: 0 auto;			
 
 		img{
@@ -13,10 +12,16 @@
 			padding: 0;			   
 		}
 
+		&__label{
+            text-transform: capitalize;
+        } 
+
 		&__wrapper{
 			white-space: nowrap;
 			display: inline-block;
-			position: absolute;				
+			position: absolute;					
+			color: #bcbdbd;		
+			font-size: 1.2em;
 		}
 
 		&__results{		    		    		    
@@ -24,17 +29,33 @@
 			background-color: transparent;
 			position: relative;
 			white-space: nowrap;
-			transition: width 2s ease;
+			transition: width 2s ease;			
+			font-size: 1.2em;
 
 			i{
-				color: #ffd700;									
+				color: #ffd700; // dark gray #504740, yellow #ffd700;									
 			}
 		}
-		&__wrapper i:not(:last-of-type), &__results i:not(:last-of-type){
-			margin-right: 10px;
+		&__wrapper i, &__results i{
+			margin: 0 5px;
 		}
 	}	
 
+}
+
+// User Review
+.hrp-review-list.user-review{
+
+    .single-review{        
+	
+		&__wrapper:hover{
+            cursor: pointer;
+        }
+	
+		&__results{   
+            transition: none;
+        }
+    }
 }
 
 	
