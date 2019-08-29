@@ -88,7 +88,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                     'fields' => array(
 
                         array(
-                            'id'          => 'Primary Page for Comparison Table',
+                            'id'          => 'ct_page', // ct: comparison_table
                             'type'        => 'select',
                             'title'       => 'Select with pages',
                             'placeholder' => 'Select a page',
@@ -204,14 +204,14 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                     'fields' => array(
 
                         array(
-                            'id' => 'cp_show_controls',
+                            'id' => 'sp_show_controls',
                             'type' => 'switcher',
                             'title' => __('Show Controls', 'pauple-helpie'),
                             'default' => true,
                         ),
 
                         array(
-                            'id' => 'cp_rating_combination',
+                            'id' => 'sp_rating_combination',
                             'type' => 'select',
                             'chosen' => true,
                             'title' => __('Default Sort By', 'pauple-helpie'),
