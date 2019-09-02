@@ -115,7 +115,13 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
         }
 
         public function load_widgets()
-        { }
+        {
+            $widgets = new \HelpieReviews\Includes\Widgets\Register_Widgets();
+            $widgets->load();
+
+            $elementor_widgets = new \HelpieReviews\Includes\Widgets\Register_Elementor_Widgets();
+            $elementor_widgets->load();
+        }
 
 
         public function content_filter($content)
@@ -135,7 +141,7 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
         /* Non-Hooked */
 
         public function get_review_content()
-        {            
+        {
             $post_id = get_the_ID();
             $reviews_builder = new \HelpieReviews\App\Builders\Review_Builder();
             return $reviews_builder->get_reviews($post_id);
