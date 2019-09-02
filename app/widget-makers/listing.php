@@ -29,9 +29,6 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Listing')) {
                 'show_num_of_reviews_filter' => [
                     'settings' => 'cp_show_num_of_reviews_filter'
                 ],
-                'show_sortBy' => [
-                    'settings' => 'show_sortBy'
-                ],
 
                 'default_sortBy' => [
                     'settings' => 'cp_default_sortBy'

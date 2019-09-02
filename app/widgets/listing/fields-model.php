@@ -25,6 +25,68 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\Fields_Model')) {
                     'default' => 'Title of Listing',
                     'type' => 'text',
                 ],
+                'show_controls' => [
+                    'name' => 'show_controls',
+                    'label' => __('Show Controls', 'helpie-faq'),
+                    'default' => 'on',
+                    'options' => array(
+                        'on' => __('On', 'helpie-faq'),
+                        'off' => __('Off', 'helpie-faq'),
+                    ),
+                    'type' => 'select',
+                ],
+                'show_search' => [
+                    'name' => 'show_search',
+                    'label' => __('Show Search', 'helpie-faq'),
+                    'default' => 'off',
+                    'options' => array(
+                        'on' => __('On', 'helpie-faq'),
+                        'off' => __('Off', 'helpie-faq'),
+                    ),
+                    'type' => 'select',
+                ],
+                'show_sortBy' => [
+                    'name' => 'show_sortBy',
+                    'label' => __('Show SortBy', 'helpie-faq'),
+                    'default' => 'off',
+                    'options' => array(
+                        'on' => __('On', 'helpie-faq'),
+                        'off' => __('Off', 'helpie-faq'),
+                    ),
+                    'type' => 'select',
+                ],
+                'show_num_of_reviews_filter' => [
+                    'name' => 'show_num_of_reviews_filter',
+                    'label' => __('Show Number of Reviews Filter', 'helpie-faq'),
+                    'default' => 'off',
+                    'options' => array(
+                        'on' => __('On', 'helpie-faq'),
+                        'off' => __('Off', 'helpie-faq'),
+                    ),
+                    'type' => 'select',
+                ],
+
+                'default_sortBy' => [
+                    'name' => 'default_sortBy',
+                    'label' => __('Default SortBy', 'helpie-faq'),
+                    'default' => 'off',
+                    'options' => array(
+                        'on' => __('On', 'helpie-faq'),
+                        'off' => __('Off', 'helpie-faq'),
+                    ),
+                    'type' => 'select',
+                ],
+
+                'num_of_cols' => [
+                    'name' => 'num_of_cols',
+                    'label' => __('Number of Columns', 'helpie-faq'),
+                    'default' => 'off',
+                    'options' => array(
+                        'on' => __('On', 'helpie-faq'),
+                        'off' => __('Off', 'helpie-faq'),
+                    ),
+                    'type' => 'select',
+                ],
 
                 // 'categories' => [
                 //     'name' => 'categories',

@@ -16,8 +16,11 @@ if (!class_exists('\HelpieReviews\App\Abstracts\Widget_Model')) {
 
         public function get_viewProps($args)
         {
-            $args = $this->append_fallbacks($args);
+            // error_log('get_viewProps $args : ' . print_r($args, true));
+            // $args = $this->append_fallbacks($args);
 
+            $default_args = $this->fields_model->get_default_args();
+            $args = array_merge($default_args, $args);
             $this->execute_methods_with_queries($args);
 
             $viewProps = array(

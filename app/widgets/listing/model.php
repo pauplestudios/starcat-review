@@ -30,11 +30,12 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\Model')) {
 
         protected function get_collection_props($args)
         {
-            error_log('Model -> get_collection_props');
+            error_log('$args : ' . print_r($args, true));
+            // error_log('Model -> get_collection_props');
             $post_count = $this->get_posts_count();
             $posts_per_page = 6;
 
-            error_log('post_count : ' . $post_count);
+            // error_log('post_count : ' . $post_count);
             $collectionProps = [
                 'title' => 'Reviews of Category: xxx',
                 'posts_per_page' => $posts_per_page,
@@ -64,7 +65,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\Model')) {
 
         protected function get_items_props($args)
         {
-            error_log('Model -> get_items_props');
+            // error_log('Model -> get_items_props');
             return $this->posts;
         }
 
