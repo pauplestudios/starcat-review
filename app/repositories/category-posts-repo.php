@@ -36,7 +36,7 @@ if (!class_exists('\HelpieReviews\App\Repositories\Category_Posts_Repo')) {
             }
             $this->last_query_post_count = $query->found_posts;
 
-            // error_log('$posts : ' . print_r($posts, true));
+            error_log('$posts : ' . print_r($posts, true));
             return $posts;
         }
 
@@ -50,7 +50,7 @@ if (!class_exists('\HelpieReviews\App\Repositories\Category_Posts_Repo')) {
             error_log('$input_args : ' . print_r($input_args, true));
             // $term = get_queried_object();
             // the query to set the posts per page to 3
-            $paged = (get_query_var('paged')) ? get_query_var('paged') : 2;
+            $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
             $args = array(
                 'posts_per_page' => $input_args['posts_per_page'] ? $input_args['posts_per_page'] : -1,
                 'post_type' => HELPIE_REVIEWS_POST_TYPE,
