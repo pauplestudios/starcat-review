@@ -103,10 +103,11 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\Fields_Model')) {
                 'num_of_cols' => [
                     'name' => 'num_of_cols',
                     'label' => __('Number of Columns', 'helpie-faq'),
-                    'default' => 'off',
+                    'default' => 'two',
                     'options' => array(
-                        'on' => __('On', 'helpie-faq'),
-                        'off' => __('Off', 'helpie-faq'),
+                        '1' => __('1', 'helpie-faq'),
+                        '2' => __('2', 'helpie-faq'),
+                        '3' => __('3', 'helpie-faq'),
                     ),
                     'type' => 'select',
                 ],
