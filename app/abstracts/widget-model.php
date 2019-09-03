@@ -21,6 +21,7 @@ if (!class_exists('\HelpieReviews\App\Abstracts\Widget_Model')) {
 
             $default_args = $this->fields_model->get_default_args();
             $args = array_merge($default_args, $args);
+            $args = $this->boolean_conversion($args);
             $this->execute_methods_with_queries($args);
 
             $viewProps = array(
@@ -32,6 +33,21 @@ if (!class_exists('\HelpieReviews\App\Abstracts\Widget_Model')) {
 
             return $viewProps;
         }
+
+        protected function boolean_conversion($args)
+        {
+            foreach ($args as $key => $arg) {
+
+                if ($arg == 'on') {
+                    $args[$key] = true;
+                } else if ($arg == 'off') {
+                    $args[$key] = false;
+                }
+            }
+
+            return $args;
+        }
+
 
         protected function append_fallbacks($args)
         {
