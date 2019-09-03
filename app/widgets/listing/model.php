@@ -25,6 +25,8 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\Model')) {
 
         protected function execute_methods_with_queries($args)
         {
+            $args['term_id'] = $args['categories'][0];
+            $args['term_id'] = 42;
             $this->posts = $this->cat_posts_repo->get_category_posts($args);
         }
 

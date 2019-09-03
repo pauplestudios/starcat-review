@@ -15,9 +15,10 @@ if (!class_exists('\HelpieReviews\App\Repositories\Category_Posts_Repo')) {
         public function get_category_posts($args)
         {
 
-            error_log('Category_Posts_Repo -> get_category_posts');
+            // error_log('Category_Posts_Repo -> get_category_posts');
             $input_args = [
-                'posts_per_page' => 10
+                'posts_per_page' => 10,
+                'term_id' => $args['term_id']
             ];
             $args = $this->get_args($input_args);
 
@@ -46,7 +47,8 @@ if (!class_exists('\HelpieReviews\App\Repositories\Category_Posts_Repo')) {
 
         public function get_args($input_args)
         {
-            $term = get_queried_object();
+            error_log('$input_args : ' . print_r($input_args, true));
+            // $term = get_queried_object();
             // the query to set the posts per page to 3
             $paged = (get_query_var('paged')) ? get_query_var('paged') : 2;
             $args = array(
@@ -57,7 +59,7 @@ if (!class_exists('\HelpieReviews\App\Repositories\Category_Posts_Repo')) {
                     array(
                         'taxonomy' => 'helpie_reviews_category',
                         'field'    => 'id',
-                        'terms'    => $term->term_id,
+                        'terms'    => $input_args['term_id'],
                     ),
                 )
             );
