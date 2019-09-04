@@ -135,7 +135,7 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
         /* Non-Hooked */
 
         public function get_review_content()
-        {            
+        {
             $post_id = get_the_ID();
             $reviews_builder = new \HelpieReviews\App\Builders\Review_Builder();
             return $reviews_builder->get_reviews($post_id);
@@ -151,6 +151,10 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
 
 
             /* Application */
+            wp_register_script('helpie-reviews-script', HELPIE_REVIEWS_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'));
+            wp_localize_script('helpie-reviews-script', 'hrp_ajax', array(
+                'ajax_url'  => admin_url('admin-ajax.php')
+            ));
             wp_enqueue_script('helpie-reviews-script', HELPIE_REVIEWS_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'));
             wp_enqueue_style('style-name', HELPIE_REVIEWS_URL . "includes/assets/bundle/main.bundle.css");
         }
