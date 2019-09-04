@@ -34,7 +34,7 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
             // add_filter('the_excerpt', array($this, 'content_filter'));
 
             // Ajax Hooks In compare table
-            add_action('wp_ajax_hrp_ajax', array($this, 'get_hrp_results'));
+            add_action('wp_ajax_get_hrp_results', array($this, 'get_hrp_results'));
         }
 
         public function init_hook()
@@ -160,6 +160,17 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
             ));
             wp_enqueue_script('helpie-reviews-script', HELPIE_REVIEWS_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'));
             wp_enqueue_style('style-name', HELPIE_REVIEWS_URL . "includes/assets/bundle/main.bundle.css");
+        }
+
+        public function get_hrp_results()
+        {
+            //get hrp resultSets 
+            //echo "get hrp resultSets";
+            //print_r($_REQUEST);
+            $search_key = $_REQUEST['key'];
+            $comparison_controller = new \HelpieReviews\App\Widgets\Comparison\Controller();
+            $hrp_search_result_sets = $comparison_controller->get_hrp_details($search_key);
+            wp_die();
         }
     } // END CLASS
 
