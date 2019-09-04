@@ -25,34 +25,43 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\Model')) {
 
         protected function execute_methods_with_queries($args)
         {
+            $args['term_id'] = $args['categories'][0];
+            error_log('$args[term_id] : ' . $args['term_id']);
+            // $args['term_id'] = 42;
             $this->posts = $this->cat_posts_repo->get_category_posts($args);
         }
 
         protected function get_collection_props($args)
         {
-            error_log('Model -> get_collection_props');
+            // error_log('$args : ' . print_r($args, true));
+            // error_log('Model -> get_collection_props');
             $post_count = $this->get_posts_count();
             $posts_per_page = 6;
 
-            error_log('post_count : ' . $post_count);
+            // error_log('post_count : ' . $post_count);
             $collectionProps = [
                 'title' => 'Reviews of Category: xxx',
                 'posts_per_page' => $posts_per_page,
                 // 'show_controls' => false,
                 'show_controls' => [
-                    'search' => true,
-                    'sort' => true,
-                    'reviews' => true,
-                    'verified' => false
+                    'search' => $args['show_search'],
+                    'sort' => $args['show_sortBy'],
+                    'reviews' => $args['show_num_of_reviews_filter'],
+                    // 'verified' => $args['show_sortBy'],
                 ],
                 'post_count' => $post_count,
                 'total_pages' => $post_count / $posts_per_page,
                 'pagination' => true,
-                'columns' => 2,
+                'columns' => $args['num_of_cols'],
                 'items_display' => ['title', 'content', 'link']
             ];
 
-            $collectionProps = array_merge($collectionProps, $args);
+            // if ($args['show_controls'] == 'off') {
+            //     $collectionProps['show_controls'] = false;
+            // }
+
+            // $collectionProps = array_merge($collectionProps, $args);
+            error_log('$collectionProps : ' . print_r($collectionProps, true));
 
             return $collectionProps;
         }
@@ -64,7 +73,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\Model')) {
 
         protected function get_items_props($args)
         {
-            error_log('Model -> get_items_props');
+            // error_log('Model -> get_items_props');
             return $this->posts;
         }
 
