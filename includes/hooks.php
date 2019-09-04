@@ -32,6 +32,9 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
 
             add_filter('the_content', array($this, 'content_filter'));
             // add_filter('the_excerpt', array($this, 'content_filter'));
+
+            // Ajax Hooks In compare table
+            add_action('wp_ajax_hrp_ajax', array($this, 'get_hrp_results'));
         }
 
         public function init_hook()
