@@ -166,8 +166,7 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
         {
             //get hrp resultSets 
             //echo "get hrp resultSets";
-            //print_r($_REQUEST);
-            $search_key = $_REQUEST['key'];
+            $search_key = $_REQUEST['search_key'];
             $comparison_controller = new \HelpieReviews\App\Widgets\Comparison\Controller();
             $hrp_search_result_sets = $comparison_controller->get_hrp_details($search_key);
             wp_die();

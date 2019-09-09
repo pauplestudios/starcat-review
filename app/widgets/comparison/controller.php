@@ -33,8 +33,18 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\Controller')) {
 
             $stats = $this->model->get($posts);
 
-            
+
             return $this->view->get_html($stats);
+        }
+
+        public function get_hrp_details($search_key)
+        {
+            // echo $search_key;
+            $search_post_data = [];
+            $search_post_data = array('Item1', 'Item2', 'Item3', 'Item4', 'Item5', 'Item6', 'Item7');
+            $data = array('status' => '1', 'data' => $search_post_data);
+            echo json_encode($data, true);
+            wp_die();
         }
     } // END CLASS
 

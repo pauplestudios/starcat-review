@@ -1,22 +1,4 @@
 jQuery(document).ready(function($) {
-  var tempLoadContent = [
-    { title: "Andorra" },
-    { title: "United Arab Emirates" },
-    { title: "Anguilla" },
-    { title: "Netherlands Antilles" },
-    { title: "Angola" },
-    { title: "Austria" },
-    { title: "Azerbaijan" },
-    { title: "Bosnia" },
-    { title: "Burkina Faso" },
-    { title: "Bulgaria" },
-    { title: "Bahrain" }
-  ];
-
-  $(".ui.search").search({
-    source: tempLoadContent
-  });
-
   console.log("comparison table");
   function productsTable(element) {
     this.element = element;
@@ -28,6 +10,7 @@ jQuery(document).ready(function($) {
     this.productsNumber = this.products.length;
     this.productWidth = this.products.eq(0).width();
     this.productsTopInfo = this.table.find(".top-info");
+    this.searchContainer = this.productsTopInfo.find(".hrp-search-container");
     this.featuresTopInfo = this.table
       .children(".features")
       .children(".top-info");
@@ -93,6 +76,62 @@ jQuery(document).ready(function($) {
       self.selectedproductsNumber = 0;
       self.upadteFilterBtn();
     });
+
+    //search Container
+    self.searchContainer.on("keyup", ".ui .hrp-search-filter", function() {
+      if ($(this).val() != "") {
+        var searchData = {
+          action: "get_hrp_results",
+          search_key: $(this).val()
+        };
+        $.ajax({
+          url: hrp_ajax.ajax_url,
+          type: "POST",
+          dataType: "json",
+          data: searchData,
+          success: function(response) {
+            var responseData = {
+              results: {}
+            };
+
+            if (response.status == 1) {
+              var result_data_length = response.data.length;
+              if (result_data_length > 0) {
+                for (let i = 0; i < result_data_length; i++) {
+                  let title = response.data[i];
+                  maxResults = 8;
+                  if (i >= maxResults) {
+                    return false;
+                  }
+                  if (responseData.results.options === undefined) {
+                    responseData.results.options = {
+                      results: []
+                    };
+                  }
+
+                  responseData.results.options.results.push({
+                    title: title,
+                    description: title
+                  });
+                }
+                console.log(responseData);
+              }
+            }
+            return responseData;
+          }
+        });
+        // $.ajax({
+        //   url: hrp_ajax.ajax_url,
+        //   type: "POST",
+        //   data: searchData,
+        //   success: function(response) {
+        //     console.log.log(response);
+        //   },
+        //   error: function(err) {}
+        // });
+      }
+    });
+
     //scroll inside products table
     this.navigation.on("click", "a", function(event) {
       event.preventDefault();
