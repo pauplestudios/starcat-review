@@ -14,22 +14,22 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
 
             if (isset($_GET['search'])) {
                 $search_query = $_GET['search'];
-                
+
                 // Check the query variable is available
                 // If not, global it so it can be read from
-                if(!$wp_query) global $wp_query; 
-                
-                $query = array (
-                    'the_title' => $search_query,
+                if (!$wp_query) global $wp_query;
+
+                $query = array(
+                    'the_title' => $search_query
                     // 'the_content' => $search_query
                 );
-                
+
                 $search_results = new WP_Query($query);
 
                 // error_log("Results : " .print_r($search_results, true));
-                echo json_encode( $search_results );
+                echo json_encode($search_results);
             }
-            return 
+            return 1;
         }
     }
 }
@@ -38,4 +38,4 @@ $ajax_hanlder = new \HelpieReviews\Includes\Ajax_Handler();
 
 add_action('wp_ajax_helpiereview_search_posts', [$ajax_hanlder, 'search_posts']);
 // add 'ajax' action when not logged in
-add_action('wp_ajax_nopriv_helpiereview_search_posts', [$ajax_hanlder, 'search_posts']); 
+add_action('wp_ajax_nopriv_helpiereview_search_posts', [$ajax_hanlder, 'search_posts']);

@@ -78,59 +78,100 @@ jQuery(document).ready(function($) {
     });
 
     //search Container
-    self.searchContainer.on("keyup", ".ui .hrp-search-filter", function() {
-      if ($(this).val() != "") {
-        var searchData = {
-          action: "get_hrp_results",
-          search_key: $(this).val()
-        };
-        $.ajax({
-          url: hrp_ajax.ajax_url,
-          type: "POST",
-          dataType: "json",
-          data: searchData,
-          success: function(response) {
-            var responseData = {
-              results: {}
-            };
+    self.searchContainer.search({
+      type: "category",
+      minCharacters: 3,
+      searchFields: ["description", "title"],
+      apiSettings: {
+        method: "post",
+        dataType: "json",
+        data: {
+          action: "get_hrp_results"
+        },
+        onResponse: function(response) {
+          var responseData = {
+            results: {}
+          };
 
-            if (response.status == 1) {
-              var result_data_length = response.data.length;
-              if (result_data_length > 0) {
-                for (let i = 0; i < result_data_length; i++) {
-                  let title = response.data[i];
-                  maxResults = 8;
-                  if (i >= maxResults) {
-                    return false;
-                  }
-                  if (responseData.results.options === undefined) {
-                    responseData.results.options = {
-                      results: []
-                    };
-                  }
-
-                  responseData.results.options.results.push({
-                    title: title,
-                    description: title
-                  });
-                }
-                console.log(responseData);
-              }
+          $.each(response.data, function(index, item) {
+            var title = item;
+            maxResults = 8;
+            if (index >= maxResults) {
+              return false;
             }
-            return responseData;
-          }
-        });
-        // $.ajax({
-        //   url: hrp_ajax.ajax_url,
-        //   type: "POST",
-        //   data: searchData,
-        //   success: function(response) {
-        //     console.log.log(response);
-        //   },
-        //   error: function(err) {}
-        // });
+
+            if (responseData.results.options === undefined) {
+              responseData.results.options = {
+                results: []
+              };
+            }
+
+            responseData.results.options.results.push({
+              title: item,
+              description: item
+            });
+          });
+          return responseData;
+        },
+        url: hrp_ajax.ajax_url
+      },
+      onSelect: function(result, response) {
+        console.log(result, response);
       }
     });
+    //self.searchContainer.on("keyup", ".ui .hrp-search-filter", function() {
+    //  if ($(this).val() != "") {
+    //    var searchData = {
+    //      action: "get_hrp_results",
+    //      search_key: $(this).val()
+    //    };
+    //    $.ajax({
+    //      url: hrp_ajax.ajax_url,
+    //      type: "POST",
+    //     dataType: "json",
+    //      data: searchData,
+    //      success: function(response) {
+    //        var responseData = {
+    //          results: {}
+    //        };
+
+    //        if (response.status == 1) {
+    //          var result_data_length = response.data.length;
+    //          if (result_data_length > 0) {
+    //            for (let i = 0; i < result_data_length; i++) {
+    //              let title = response.data[i];
+    //             maxResults = 8;
+    //              if (i >= maxResults) {
+    //                return false;
+    //              }
+    //              if (responseData.results.options === undefined) {
+    //                responseData.results.options = {
+    //                  results: []
+    //                };
+    //             }
+
+    //              responseData.results.options.results.push({
+    //                title: title,
+    //                description: title
+    //              });
+    //            }
+    //            console.log(responseData);
+    //          }
+    //        }
+    //        return responseData;
+    //      }
+    //    });
+    // $.ajax({
+    //   url: hrp_ajax.ajax_url,
+    //   type: "POST",
+    //   data: searchData,
+    //   success: function(response) {
+    //     console.log.log(response);
+    //   },
+    //   error: function(err) {}
+    // });
+    //  }
+    //});
 
     //scroll inside products table
     this.navigation.on("click", "a", function(event) {
