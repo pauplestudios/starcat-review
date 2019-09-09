@@ -40,7 +40,7 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
         public function init_hook()
         {
             /*  Reviews Ajax Hooks */
-            // require_once HELPIE_REVIEWS_PATH . 'includes/ajax-handler.php';
+            include_once HELPIE_REVIEWS_PATH . 'includes/ajax-handler.php';
 
             /*  Reviews Widget */
             // $this->load_widgets();
