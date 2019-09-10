@@ -52,7 +52,7 @@ if (!class_exists('\HelpieReviews\Includes\Cpt')) {
                 'labels' => $labels,
                 'public' => true,
                 'menu_position' => 26,
-                'menu_icon' => 'dashicons-feedback',
+                'menu_icon' => 'dashicons-star-filled',
                 'show_in_nav_menus' => true,
                 'show_in_rest' => true,
                 'map_meta_cap' => true,
