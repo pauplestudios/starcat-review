@@ -1,7 +1,7 @@
 
 .hrp-review-list {
 
-    .single-progress-review{
+    .single-bar-review{
         
         &__label{
             text-transform: capitalize;
@@ -44,7 +44,7 @@
 // User Review
 .hrp-review-list.user-review{
     
-    .single-progress-review{        
+    .single-bar-review{        
         
         &__wrapper:hover{
             cursor: pointer;

@@ -29,10 +29,10 @@ var UserReview = {
             );
         }else if(props.reviewType == 'bar'){            
             this.getRatingEventlistener(
-                ".hrp-review-list.user-review .single-progress-review__wrapper",
-                ".single-progress-review__results", 
-                ".single-progress-review__label",
-                ".single-progress-review__text", 
+                ".hrp-review-list.user-review .single-bar-review__wrapper",
+                ".single-bar-review__results", 
+                ".single-bar-review__label",
+                ".single-bar-review__text", 
                 props
             ); 
         }       

@@ -46,10 +46,10 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Bar_Rating')) {
 
 		public function get_single_stat($key, $value, $number_value) 
 		{
-			$html = '<li class="single-progress-review">';			
-			$html .= '<div class="single-progress-review__wrapper" title="'.$number_value .' / '.$this->limit.'" >';			
+			$html = '<li class="single-bar-review">';			
+			$html .= '<div class="single-bar-review__wrapper" title="'.$number_value .' / '.$this->limit.'" >';			
 			
-			$html .= '<div class="single-progress-review__results" 
+			$html .= '<div class="single-bar-review__results" 
 				data-item-name="'.$key.'" 
 				data-group="items"				
 				value="'.$value.'" 
@@ -58,9 +58,9 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Bar_Rating')) {
 				style = "width: 0%"
 				></div>';
 
-			$html .= '<div class="single-progress-review__text">'.$number_value.'</div>';
+			$html .= '<div class="single-bar-review__text">'.$number_value.'</div>';
 			$html .= '</div>';
-			$html .= '<div class="single-progress-review__label">';
+			$html .= '<div class="single-bar-review__label">';
 			$html .= $key .' - '.'<span>' .$number_value .' / ' .$this->limit .' </span>';
 			$html .= '</div>';
 			$html .= '</li>';
