@@ -143,8 +143,8 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
         public function enqueue_scripts()
         {
             /* Vendors */
-            wp_enqueue_style('semantic-css', HELPIE_REVIEWS_URL . "includes/assets/vendors/semantic/output/semantic.min.css");
-            wp_enqueue_script('semantic-js', HELPIE_REVIEWS_URL . 'includes/assets/vendors/semantic/output/semantic.min.js', array('jquery'));
+            wp_enqueue_style('semantic-css', HELPIE_REVIEWS_URL . "includes/assets/vendors/semantic/dist/semantic.min.css");
+            wp_enqueue_script('semantic-js', HELPIE_REVIEWS_URL . 'includes/assets/vendors/semantic/dist/semantic.min.js', array('jquery'));
 
             wp_enqueue_style('flexbox-grid', HELPIE_REVIEWS_URL . "includes/assets/vendors/flexboxgrid.min.css");
 

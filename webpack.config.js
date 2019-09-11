@@ -105,10 +105,10 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
                     ignore: [
                         "assets/vendors/semantic/src/**/*",
                         "assets/vendors/semantic/tasks/**/*",
-                        "assets/vendors/semantic/output/components/**/*",
-                        "assets/vendors/semantic/output/themes/basic/**/*",
-                        "assets/vendors/semantic/output/themes/github/**/*",
-                        "assets/vendors/semantic/output/themes/material/**/*",
+                        "assets/vendors/semantic/dist/components/**/*",
+                        "assets/vendors/semantic/dist/themes/basic/**/*",
+                        "assets/vendors/semantic/dist/themes/github/**/*",
+                        "assets/vendors/semantic/dist/themes/material/**/*",
                         "assets/vendors/semantic/gulpfile.js"
                     ]
                 },

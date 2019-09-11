@@ -20,6 +20,9 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
 
         public function get_html()
         {
+            $stats_cumulative_score = 0; 
+            $count = 0;
+
             $html  = '<div class="hrp-container">';
             $html .= '<ul class="hrp-review-list">';
             $stat_html = '';            
