@@ -100,8 +100,17 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
                     to: buildFolder
                 },
                 {
-                    from: path.resolve(__dirname, "includes") + "/**",
-                    to: buildFolder
+                    from: path.resolve(__dirname, "includes") + "/",
+                    to: buildFolder + "/includes",
+                    ignore: [
+                        "assets/vendors/semantic/src/**/*",
+                        "assets/vendors/semantic/tasks/**/*",
+                        "assets/vendors/semantic/output/components/**/*",
+                        "assets/vendors/semantic/output/themes/basic/**/*",
+                        "assets/vendors/semantic/output/themes/github/**/*",
+                        "assets/vendors/semantic/output/themes/material/**/*",
+                        "assets/vendors/semantic/gulpfile.js"
+                    ]
                 },
 
                 {
