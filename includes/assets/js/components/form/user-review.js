@@ -27,7 +27,7 @@ var UserReview = {
                 "",
                 props
             );
-        }else if(props.reviewType == 'progress_bar'){            
+        }else if(props.reviewType == 'bar'){            
             this.getRatingEventlistener(
                 ".hrp-review-list.user-review .single-progress-review__wrapper",
                 ".single-progress-review__results", 
@@ -60,7 +60,7 @@ var UserReview = {
                 thisElement.find(result).attr("title", starValue +' / ' + props.scale);
             }            
             
-            if(props.reviewType == 'progress_bar'){                            
+            if(props.reviewType == 'bar'){                            
 
                 width = UserReview.getNumberDivision(width, props); 
                 numberValue = (props.valueType == 'number')? width /(100 / props.limit): width;
@@ -118,7 +118,7 @@ var UserReview = {
 
     getWidthByReviewType: function(ratingValue, props){
         var width = ratingValue/props.scale * 100;    
-        if(props.reviewType == 'progress_bar'){  
+        if(props.reviewType == 'bar'){  
             width = ratingValue /props.limit * 100;
         }
         return width;

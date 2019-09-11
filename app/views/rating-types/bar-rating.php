@@ -8,8 +8,8 @@ if (!defined('ABSPATH')) {
 	exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Progress_Bar_Rating')) {
-	class Progress_Bar_Rating extends Rating_Type{
+if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Bar_Rating')) {
+	class Bar_Rating extends Rating_Type{
 		private $html;
 
 		public function __construct($viewProps) 

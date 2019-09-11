@@ -27,27 +27,19 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Controller')) {
             switch ($display_rating_type) {
                 case "star":                    
                     $this->star_rating = new \HelpieReviews\App\Views\Rating_Types\Star_Rating($viewProps);
-                    return $this->star_rating->get_html();
-                    break;
-                case "progress_bar":
-                    $this->progress_bar_rating = new \HelpieReviews\App\Views\Rating_Types\Progress_Bar_Rating($viewProps);
-                    return $this->progress_bar_rating->get_html();
-                    break;
+                    return $this->star_rating->get_html();                   
+                case "bar":
+                    $this->bar_rating = new \HelpieReviews\App\Views\Rating_Types\Bar_Rating($viewProps);
+                    return $this->bar_rating->get_html();                   
                 case "circle":
                     $this->circle_rating = new \HelpieReviews\App\Views\Rating_Types\Circle_Rating($viewProps);
-                    return $this->circle_rating->get_html();
-                    break;
+                    return $this->circle_rating->get_html();                    
                 default:
                     $this->star_rating = new \HelpieReviews\App\Views\Rating_Types\Star_Rating($viewProps);
                     return $this->star_rating->get_html();                
             }
         }
-
-        private function get_stats($post_id)
-        {
-            $stats = $this->model->get($post_id);
-            return $stats;       
-        }
+        
     } // END CLASS
 
 }

@@ -119,8 +119,7 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
 
 
         public function content_filter($content)
-        {
-            error_log('content_filter : ');
+        {            
             // return "Helllo";
             $review_content = $this->get_review_content();
             $this->utils = new \HelpieReviews\Includes\Utils();

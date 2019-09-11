@@ -14,7 +14,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
             $this->props = $viewProps;            
             
             $this->star_rating = new \HelpieReviews\App\Views\Rating_Types\Star_Rating($viewProps);
-            $this->progress_bar_rating = new \HelpieReviews\App\Views\Rating_Types\Progress_Bar_Rating($viewProps);
+            $this->bar_rating = new \HelpieReviews\App\Views\Rating_Types\Bar_Rating($viewProps);
         }
 
         public function get_html()
@@ -134,8 +134,8 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
                     case "star":                      
                     $html .= $this->get_star_rating($key);                    
                     break;
-                    case "progress_bar":
-                    $html .= $this->get_progress_bar_rating($key);
+                    case "bar":
+                    $html .= $this->get_bar_rating($key);
                     break;  
                     case "range":
                     $html .= $this->get_range_rating_fallback($key);
@@ -155,9 +155,9 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
             return $this->star_rating->get_single_stat($key, 0, 0);            
         }
 
-        protected function get_progress_bar_rating($key)
+        protected function get_bar_rating($key)
         {
-            return $this->progress_bar_rating->get_single_stat($key, 0, 0);        
+            return $this->bar_rating->get_single_stat($key, 0, 0);        
         }
         
         //  Todo: Text Rating
