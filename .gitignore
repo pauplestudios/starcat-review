@@ -16,3 +16,4 @@ reports
 .vscode
 includes/assets/vendors/semantic
 test-artifacts/build/**
+package-lock.json
