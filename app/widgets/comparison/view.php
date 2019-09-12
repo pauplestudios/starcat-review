@@ -20,6 +20,8 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
 
         public function get_html($stats = [])
         {
+
+
             $html = '';
 
             $html .= '<section class="cd-products-comparison-table">';
@@ -66,6 +68,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
 
         public function get_columns($stats, $stat_cols)
         {
+
             $html = '';
             $html .= '<div class="cd-products-wrapper">';
             $html .= '<ul class="cd-products-columns">';
@@ -74,6 +77,11 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
                 $html .= $this->single_product($single_product_stats, $stat_cols);
             }
 
+            if (count($stats) > 0) {
+                $html .= $this->search_filter_product();
+            } else if (count($stats) == 0) {
+                $html .= $this->search_filter_product();
+            }
             $html .= '</ul> <!-- .cd-products-columns -->';
             $html .= '</div> <!-- .cd-products-wrapper -->';
 
@@ -94,9 +102,8 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
 
             $html .= $this->single_product_features($stats['stats'], $stat_cols);
             $html .= '</li> <!-- .product -->';
-            $html .= '<li class="product">';
-            $html .= '</li> ';
-
+            //$html .= '<li class="product">';
+            //$html .= '</li> ';
 
             return $html;
         }
@@ -134,6 +141,27 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
             return $html;
         }
 
+        public function search_filter_product()
+        {
+
+            $html = '';
+            $html .= '<li class="product hrp-search-filter-wrapper">';
+            $html .= '<div class="top-info">';
+            //$html .= '<div class="check"></div>';
+            //$html .= '<img class="featured-image" src="" alt="product image">';
+            $html .= '<h4>Add Product</h4>';
+            $html .= '<div class="ui search">';
+            $html .= '<div class="ui input">';
+            $html .= '<input type="text" class="prompt hrp-search-filter" placeholder="Search lovely things" />';
+            $html .= '</div>';
+            $html .= '<div class="results"></div>';
+            $html .= '</div>';
+            $html .= '</div> <!-- .top-info -->';
+
+            $html .= '</li> <!-- .product -->';
+
+            return $html;
+        }
 
 
 

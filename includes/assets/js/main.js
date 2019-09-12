@@ -3,14 +3,14 @@ var Ratings = require("./components/ratings.js");
 var Form = require("./components/form.js");
 var ListControl = require("./blocks/list-control.js");
 var ComparisonTable = require("./comparison-table.js");
-var ReviewsList = require("./components/reviews-list.js");
+var Comparison = require("./components/comparison-table/comparison.js");
 
 var HelpieReviews = {
     init: function() {
+        UserReviewsList.init();
         Ratings.init();
-        Form.init();
         ListControl.init();
-        ReviewsList.init();
+        Comparison.init();
     },
 
     eventHandlers: function() {

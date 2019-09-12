@@ -32,9 +32,7 @@ if (!class_exists('\HelpieReviews\App\ReviewsList')) {
                 'most_positive',
                 'critical',
             );
-
         }
-
     } // END CLASS
 
 }
