@@ -150,19 +150,29 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
             //$html .= '<div class="check"></div>';
             //$html .= '<img class="featured-image" src="" alt="product image">';
             $html .= '<h4>Add Product</h4>';
-            $html .= '<div class="ui search">';
+            $html .= '<div class="ui search hrp-search-container">';
             $html .= '<div class="ui input">';
             $html .= '<input type="text" class="prompt hrp-search-filter" placeholder="Search lovely things" />';
             $html .= '</div>';
             $html .= '<div class="results"></div>';
             $html .= '</div>';
+            $html .= $this->add_product_btn();
             $html .= '</div> <!-- .top-info -->';
-
             $html .= '</li> <!-- .product -->';
 
             return $html;
         }
 
+        public function add_product_btn()
+        {
+            $html = '';
+            $html .= '<div class="ui single column grid hrp-compare-add-button" style="padding:5px;">';
+            $html .= '<div class="row"><div class="column">';
+            $html .= '<button class="ui button" style="width:40%;">Add</button>';
+            $html .= '</div></div>';
+            $html .= '</div>';
+            return $html;
+        }
 
 
         /* PRIVATE CLASS */
