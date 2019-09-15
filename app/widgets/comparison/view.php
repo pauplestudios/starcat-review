@@ -71,7 +71,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
 
             $html = '';
             $html .= '<div class="cd-products-wrapper">';
-            $html .= '<ul class="cd-products-columns">';
+            $html .= '<ul class="cd-products-columns" style="display:flex;">';
 
             foreach ($stats as $key => $single_product_stats) {
                 $html .= $this->single_product($single_product_stats, $stat_cols);
@@ -158,6 +158,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
             $html .= '</div>';
             $html .= $this->add_product_btn();
             $html .= '</div> <!-- .top-info -->';
+            $html .= '<ul class="cd-features-list"></ul>';
             $html .= '</li> <!-- .product -->';
 
             return $html;
@@ -168,7 +169,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
             $html = '';
             $html .= '<div class="ui single column grid hrp-compare-add-button" style="padding:5px;">';
             $html .= '<div class="row"><div class="column">';
-            $html .= '<button class="ui button" style="width:40%;">Add</button>';
+            $html .= '<button class="ui button hrp-add-product" style="width:40%;">Add</button>';
             $html .= '</div></div>';
             $html .= '</div>';
             return $html;
