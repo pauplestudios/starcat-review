@@ -1,5 +1,6 @@
 jQuery(document).ready(function($) {
   console.log("comparison table");
+
   function productsTable(element) {
     this.element = element;
     this.table = this.element.children(".cd-products-table");
@@ -10,7 +11,7 @@ jQuery(document).ready(function($) {
     this.productsNumber = this.products.length;
     this.productWidth = this.products.eq(0).width();
     this.productsTopInfo = this.table.find(".top-info");
-    this.searchContainer = this.productsTopInfo.find(".hrp-search-container");
+    //this.searchContainer = this.productsTopInfo.find(".hrp-search-container");
     this.featuresTopInfo = this.table
       .children(".features")
       .children(".top-info");
@@ -21,6 +22,7 @@ jQuery(document).ready(function($) {
     (this.filtering = false), (this.selectedproductsNumber = 0);
     this.filterActive = false;
     this.navigation = this.table.children(".cd-table-navigation");
+
     // bind table events
     this.bindEvents();
   }
@@ -78,100 +80,60 @@ jQuery(document).ready(function($) {
     });
 
     //search Container
-    self.searchContainer.search({
-      type: "category",
-      minCharacters: 3,
-      searchFields: ["description", "title"],
-      apiSettings: {
-        method: "post",
-        dataType: "json",
-        data: {
-          action: "get_hrp_results"
-        },
-        onResponse: function(response) {
-          var responseData = {
-            results: {}
-          };
+    //categoryContent
 
-          $.each(response.data, function(index, item) {
-            var title = item;
-            maxResults = 8;
-            if (index >= maxResults) {
-              return false;
-            }
+    // self.searchContainer.on("keyup", ".ui .hrp-search-filter", function() {
+    //   if ($(this).val() != "") {
+    //     var searchData = {
+    //       action: "get_hrp_results",
+    //       search_key: $(this).val()
+    //     };
+    //     $.ajax({
+    //       url: hrp_ajax.ajax_url,
+    //       type: "POST",
+    //       dataType: "json",
+    //       data: searchData,
+    //       success: function(response) {
+    //         console.log(response);
+    //         // var responseData = {
+    //         //   results: {}
+    //         // };
+    //         var resultContent = [];
 
-            if (responseData.results.options === undefined) {
-              responseData.results.options = {
-                results: []
-              };
-            }
-
-            responseData.results.options.results.push({
-              title: item,
-              description: item
-            });
-          });
-          return responseData;
-        },
-        url: hrp_ajax.ajax_url
-      },
-      onSelect: function(result, response) {
-        console.log(result, response);
-      }
-    });
-    //self.searchContainer.on("keyup", ".ui .hrp-search-filter", function() {
-    //  if ($(this).val() != "") {
-    //    var searchData = {
-    //      action: "get_hrp_results",
-    //      search_key: $(this).val()
-    //    };
-    //    $.ajax({
-    //      url: hrp_ajax.ajax_url,
-    //      type: "POST",
-    //     dataType: "json",
-    //      data: searchData,
-    //      success: function(response) {
-    //        var responseData = {
-    //          results: {}
-    //        };
-
-    //        if (response.status == 1) {
-    //          var result_data_length = response.data.length;
-    //          if (result_data_length > 0) {
-    //            for (let i = 0; i < result_data_length; i++) {
-    //              let title = response.data[i];
-    //             maxResults = 8;
-    //              if (i >= maxResults) {
-    //                return false;
-    //              }
-    //              if (responseData.results.options === undefined) {
-    //                responseData.results.options = {
-    //                  results: []
-    //                };
+    //         if (response.status == 1) {
+    //           var result_data_length = response.data.length;
+    //           if (result_data_length > 0) {
+    //             for (let i = 0; i < result_data_length; i++) {
+    //               let title = response.data[i];
+    //               // maxResults = 8;
+    //               // if (i >= maxResults) {
+    //               //   return false;
+    //               // }
+    //               // if (responseData.results.options === undefined) {
+    //               //   responseData.results.options = {
+    //               //     results: []
+    //               //   };
+    //               // }
+    //               resultContent.push({
+    //                 title: title,
+    //                 description: title
+    //               });
+    //               // responseData.results.options.results.push({
+    //               //   title: title,
+    //               //   description: title
+    //               // });
     //             }
-
-    //              responseData.results.options.results.push({
-    //                title: title,
-    //                description: title
-    //              });
-    //            }
-    //            console.log(responseData);
-    //          }
-    //        }
-    //        return responseData;
-    //      }
-    //    });
-    // $.ajax({
-    //   url: hrp_ajax.ajax_url,
-    //   type: "POST",
-    //   data: searchData,
-    //   success: function(response) {
-    //     console.log.log(response);
-    //   },
-    //   error: function(err) {}
+    //           }
+    //         }
+    //         self.searchContainer.search({
+    //           type: "category",
+    //           source: resultContent
+    //         });
+    //         // return responseData;
+    //       }
+    //     });
+    //   }
     // });
-    //  }
-    //});
 
     //scroll inside products table
     this.navigation.on("click", "a", function(event) {
