@@ -38,8 +38,9 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
         public function get_header()
         {
             $html = '';
-            $html .= '<header>';
+            $html .= '<header class="col-12">';
             $html .= '<h2>Compare Models</h2>';
+            $html .= '<div class="count-items" style="cursor:pointer;s"><span id="hrp-compare-totals" style="color:#ff0000;">Click</span></div>';
             $html .= '<div class="actions">';
             $html .= '<a href="#0" class="reset">Reset</a>';
             $html .= ' <a href="#0" class="filter">Filter</a>';
