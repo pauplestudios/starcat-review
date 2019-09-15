@@ -28,9 +28,6 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\Controller')) {
             $posts = get_posts($args);
 
 
-
-            // error_log('$posts : ' . print_r($posts, true));
-
             $stats = $this->model->get($posts);
 
 

@@ -36,7 +36,7 @@ if (!class_exists('\HelpieReviews\App\Repositories\Category_Posts_Repo')) {
             }
             $this->last_query_post_count = $query->found_posts;
 
-            error_log('$posts : ' . print_r($posts, true));
+
             return $posts;
         }
 
