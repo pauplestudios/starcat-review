@@ -14,6 +14,8 @@ var ProductComparison = {
   },
   eventHandlers: function() {
     this.addProduct();
+    this.addItemToCompare();
+    this.compareFloatIcons();
   },
   addProduct: function() {
     var hrpCompareTable = jQuery(".cd-products-comparison-table");
@@ -35,7 +37,37 @@ var ProductComparison = {
       product += "</li>";
       jQuery(".cd-products-columns").append(product);
     });
+  },
+  addItemToCompare: function() {
+    jQuery("#hrp-cat-collection").on(
+      "click",
+      ".hrp-collection__col",
+      function() {
+        var $post_item = jQuery(this);
+        var headerText = $post_item
+          .find(".review-card__header")
+          .text()
+          .trim();
+        var bodyContent = $post_item
+          .find(".review-card__body")
+          .text()
+          .trim();
+          console.log();
+      }
+    );
+  },
+  compareFloatIcons: function() {
+    console.log("float icon generate side bar");
+    let content = "";
+    content += '<div class="hrp-compare-sidebar right">';
+    content += '<div class="hrp-sidebar-wrapper">';
+    content += "</div>";
+    content += "</div>";
+
+    jQuery("body")
+      .find(".site")
+      .append(content);
   }
-};
+}; //End module
 
 module.exports = ProductComparison;
