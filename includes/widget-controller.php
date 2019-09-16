@@ -15,7 +15,7 @@ if (!class_exists('\HelpieReviews\Includes\Widget_Controller')) {
 
         public function load()
         {
-            $listing_widget = new \HelpieReviews\App\Widget_Makers\Comparison_Widget();
+            $listing_widget = new \HelpieReviews\App\Widget_Makers\Listing();
             $listing_widget->load();
 
             $comparisonTable_widget = new \HelpieReviews\App\Widget_Makers\Comparison_Widget();

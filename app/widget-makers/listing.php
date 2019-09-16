@@ -25,7 +25,7 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Listing')) {
         public function register_widget()
         {
 
-            error_log(' register_widget: ');
+            // error_log(' register_widget: ');
             $faq_widget_args = $this->get_widget_args();
 
             require_once HELPIE_REVIEWS_PATH . '/includes/lib/widgetry/widget-factory.php';
