@@ -1,20 +1,20 @@
 <?php
 
-namespace HelpieReviews\App\Widget_Makers;
+namespace HelpieReviews\App\Widget_Makers\Comparison;
 
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Widget_Makers\Comparison_Widget')) {
-    class Comparison_Widget
+if (!class_exists('\HelpieReviews\App\Widget_Makers\Comparison\Loader')) {
+    class Loader
     {
 
         public function load()
         {
             // Shortcode
-            // add_shortcode('helpie_reviews_list', array($this, 'reviews_list'));
+            add_shortcode('helpie_reviews_list', array($this, 'reviews_list'));
 
             // WordPress Widget
             add_action('widgets_init', [$this, 'register_widget']);
@@ -26,7 +26,7 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Comparison_Widget')) {
         public function register_widget()
         {
 
-            error_log(' Comparison Table register_widget: ');
+            // error_log(' Comparison Table register_widget: ');
             $widget_args = $this->get_widget_args();
 
             require_once HELPIE_REVIEWS_PATH . '/includes/lib/widgetry/widget-factory.php';
@@ -52,8 +52,8 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Comparison_Widget')) {
                 'description' => 'Comparison Table Widget',
                 'icon' => 'fa fa-th-list', // Used by Elementor only
                 'categories' => ['general-elements'], // Used by Elementor only
-                'model' =>  new \HelpieReviews\App\Widgets\Comparison\Model(),
-                'view' => new \HelpieReviews\App\Widgets\Comparison\Controller(),
+                'model' =>  new \HelpieReviews\App\Widget_Makers\Comparison\Widget(),
+                'view' => new \HelpieReviews\App\Widget_Makers\Comparison\Widget(),
             ];
 
             return $args;

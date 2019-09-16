@@ -15,11 +15,11 @@ if (!class_exists('\HelpieReviews\Includes\Widget_Controller')) {
 
         public function load()
         {
-            $listing_widget = new \HelpieReviews\App\Widget_Makers\Listing();
-            $listing_widget->load();
+            $listing_widget_loader = new \HelpieReviews\App\Widget_Makers\Listing\Loader();
+            $listing_widget_loader->load();
 
-            $comparisonTable_widget = new \HelpieReviews\App\Widget_Makers\Comparison_Widget();
-            $comparisonTable_widget->load();
+            $comparisonTable_widget_loader = new \HelpieReviews\App\Widget_Makers\Comparison\Loader();
+            $comparisonTable_widget_loader->load();
         }
     } // END CLASS
 
