@@ -119,7 +119,7 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
 
 
         public function content_filter($content)
-        {            
+        {
             // return "Helllo";
             $review_content = $this->get_review_content();
             $this->utils = new \HelpieReviews\Includes\Utils();
@@ -134,7 +134,7 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
         /* Non-Hooked */
 
         public function get_review_content()
-        {            
+        {
             $post_id = get_the_ID();
             $reviews_builder = new \HelpieReviews\App\Builders\Review_Builder();
             return $reviews_builder->get_reviews($post_id);
@@ -143,8 +143,8 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
         public function enqueue_scripts()
         {
             /* Vendors */
-            wp_enqueue_style('semantic-css', HELPIE_REVIEWS_URL . "includes/assets/vendors/semantic/dist/semantic.min.css");
-            wp_enqueue_script('semantic-js', HELPIE_REVIEWS_URL . 'includes/assets/vendors/semantic/dist/semantic.min.js', array('jquery'));
+            wp_enqueue_style('semantic-css', HELPIE_REVIEWS_URL . "includes/assets/vendors/semantic/bundle/semantic.min.css");
+            wp_enqueue_script('semantic-js', HELPIE_REVIEWS_URL . 'includes/assets/vendors/semantic/bundle/semantic.min.js', array('jquery'));
 
             wp_enqueue_style('flexbox-grid', HELPIE_REVIEWS_URL . "includes/assets/vendors/flexboxgrid.min.css");
 
@@ -153,7 +153,7 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
             wp_enqueue_script('helpie-reviews-script', HELPIE_REVIEWS_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'));
             wp_enqueue_style('style-name', HELPIE_REVIEWS_URL . "includes/assets/bundle/main.bundle.css");
 
-            if (!wp_style_is( 'fontawesome', 'enqueued' )) {
+            if (!wp_style_is('fontawesome', 'enqueued')) {
                 wp_enqueue_style('fontawesome', HELPIE_REVIEWS_URL . "includes/assets/vendors/fontawesome/css/fontawesome.min.css");
             }
         }

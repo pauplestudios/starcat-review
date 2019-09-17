@@ -8,39 +8,39 @@
             "themes": "src/themes/"
         },
         "output": {
-            "packaged": "dist\\",
-            "uncompressed": "dist\\components\\",
-            "compressed": "dist\\components\\",
-            "themes": "dist\\themes\\"
+            "packaged": "bundle\\",
+            "uncompressed": "bundle\\components\\",
+            "compressed": "bundle\\components\\",
+            "themes": "bundle\\themes\\"
         },
-        "clean": "dist/"
+        "clean": "bundle/"
     },
     "permission": false,
     "autoInstall": false,
     "rtl": false,
-    "components": [     
-        "button",        
+    "components": [
+        "button",
         "icon",
         "image",
         "input",
-        "label",       
-        "segment",       
+        "label",
+        "segment",
         "form",
-        "grid",        
+        "grid",
         "message",
-        "table",        
+        "table",
         "card",
         "accordion",
         "checkbox",
         "dimmer",
-        "dropdown",        
-        "modal",   
+        "dropdown",
+        "modal",
         "progress",
         "rating",
-        "search",       
+        "search",
         "transition",
         "api",
-        "form"       
+        "form"
     ],
     "version": "2.4.2"
 }
