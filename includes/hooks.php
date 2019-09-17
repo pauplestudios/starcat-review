@@ -148,14 +148,9 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
 
             wp_enqueue_style('flexbox-grid', HELPIE_REVIEWS_URL . "includes/assets/vendors/flexboxgrid.min.css");
 
-
             /* Application */
             wp_enqueue_script('helpie-reviews-script', HELPIE_REVIEWS_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'));
             wp_enqueue_style('style-name', HELPIE_REVIEWS_URL . "includes/assets/bundle/main.bundle.css");
-
-            if (!wp_style_is('fontawesome', 'enqueued')) {
-                wp_enqueue_style('fontawesome', HELPIE_REVIEWS_URL . "includes/assets/vendors/fontawesome/css/fontawesome.min.css");
-            }
         }
     } // END CLASS
 
