@@ -1,62 +1,59 @@
-
 .hrp-review-list {
+    .single-review {
+        float: right;
+        position: relative;
+        margin: 0 auto;
 
-	.single-review{
-		float: right;
-		position: relative;					
-		margin: 0 auto;			
-
-		img{
-			height: 35px;
-			max-width: inherit;		    	
-			padding: 0;			   
-		}
-
-		&__label{
-            text-transform: capitalize;
-        } 
-
-		&__wrapper{
-			white-space: nowrap;
-			display: inline-block;
-			position: absolute;					
-			color: #bcbdbd;		
-			font-size: 1.2em;
-		}
-
-		&__results{		    		    		    
-			overflow: hidden;
-			background-color: transparent;
-			position: relative;
-			white-space: nowrap;
-			transition: width 2s ease;			
-			font-size: 1.2em;
-
-			i{
-				color: #ffd700; // dark gray #504740, yellow #ffd700;									
-			}
-		}
-		&__wrapper i, &__results i{
-			margin: 0 5px;
-		}
-	}	
-
-}
-
-// User Review
-.hrp-review-list.user-review{
-
-    .single-review{        
-	
-		&__wrapper:hover{
-            cursor: pointer;
+        img {
+            height: 35px;
+            max-width: inherit;
+            padding: 0;
         }
-	
-		&__results{   
-            transition: none;
+
+        &__label {
+            text-transform: capitalize;
+        }
+
+        &__wrapper {
+            white-space: nowrap;
+            display: inline-block;
+            position: absolute;
+            color: #bcbdbd;
+            font-size: 1.2em;
+
+            i {
+                color: #e7711b;
+            }
+        }
+
+        &__results {
+            overflow: hidden;
+            background-color: transparent;
+            position: relative;
+            white-space: nowrap;
+            transition: width 2s ease;
+            font-size: 1.2em;
+
+            i {
+                color: #e7711b; // orange #e7711b, dark gray #504740, yellow #ffd700;
+            }
+        }
+        &__wrapper i,
+        &__results i {
+            margin: 0 5px;
         }
     }
 }
 
-	
+// User Review
+.hrp-review-list.user-review {
+    .single-review {
+        &__wrapper:hover {
+            cursor: pointer;
+        }
 
+        &__results {
+            transition: none;
+        }
+    }
+}
