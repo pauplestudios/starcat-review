@@ -54,12 +54,12 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
                 title="' . $score . ' / ' . $this->props['collection']['star_scale'] . '"
             >';
             $html .= $this->get_wrapper_html();
-            $html .= $this->get_result_html();
+            $html .= $this->get_result_html($value);
             $html .= '<input type="hidden" name="score" value="' . $value . '">';
             $html .= '</div>';
 
             $html .= '<div class="review-item-label">';
-            $html .= '<span class="reviewitem-label__text">' . $key . '</span>';
+            $html .= '<span class="review-item-label__text">' . $key . '</span>';
             $html .= '<span class="review-item-label__divider"> - </span>';
             $html .= '<span class="review-item-label__score">' . $score . '</span>';
             $html .= '</div>';
@@ -78,7 +78,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
                 title="' . $score . ' / ' . $this->props['collection']['star_scale'] . '"
             >';
             $html .= $this->get_wrapper_html();
-            $html .= $this->get_result_html();
+            $html .= $this->get_result_html($value);
             $html .= '<input type="hidden" name="score" value="' . $value . '">';
             $html .= '</div>';
 
@@ -121,7 +121,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             return $html;
         }
 
-        protected function get_result_html()
+        protected function get_result_html($value)
         {
             $icon = $this->props['collection']['icon'];
             $filled_icon_html = "<i class='" . $icon . "'></i>";
@@ -129,7 +129,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
 
             $icon_html = ($this->props['collection']['source_type'] == 'icon') ? $filled_icon_html : $filled_image_html;
 
-            $html = '<div class="stars-result" style="width: 0%">';
+            $html = '<div class="stars-result" style="width: ' . $value . '%">';
             for ($ii = 0; $ii < $this->props['collection']['star_scale']; $ii++) {
                 $html .= $icon_html;
             }
