@@ -51,6 +51,7 @@ $graylight: #e7e7e7;
         .stars-wrapper {
             display: inline-block;
             position: absolute;
+            white-space: nowrap;
         }
         .stars-result {
             overflow: hidden;
@@ -60,6 +61,7 @@ $graylight: #e7e7e7;
         }
         img {
             height: 35px;
+            max-width: inherit;
         }
         i {
             color: #e7711b; // orange #e7711b, dark gray #504740, yellow #ffd700;
