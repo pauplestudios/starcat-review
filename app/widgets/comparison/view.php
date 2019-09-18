@@ -20,10 +20,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
 
         public function get_html($stats = [])
         {
-
-
             $html = '';
-
             $html .= '<section class="cd-products-comparison-table">';
             $html .= $this->get_header();
             $html .= '<div class="cd-products-table">';
@@ -39,11 +36,15 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
         {
             $html = '';
             $html .= '<header class="col-12">';
-            $html .= '<h2>Compare Models</h2>';
-            $html .= '<div class="count-items" style="cursor:pointer;s"><span id="hrp-compare-totals" style="color:#ff0000;">Click</span></div>';
+            $html .= '<h4>Compare Models</h4>';
+            $html .= '<div class="pusher" style="cursor:pointer;">';
+            $html .= '<button id="left-sidebar-toggle" class="ui black big launch right attached fixed toggle button">';
+            $html .= '<span class="text">Menu</span></button>';
+            $html .= '<div class="count-items" style="cursor:pointer;">';
+            $html .= '<span id="hrp-compare-totals" style="color:#ff0000;">Click</span></div>';
             $html .= '<div class="actions">';
             $html .= '<a href="#0" class="reset">Reset</a>';
-            $html .= ' <a href="#0" class="filter">Filter</a>';
+            $html .= '<a href="#0" class="filter">Filter</a>';
             $html .= '</div>';
             $html .= '</header>';
             return $html;

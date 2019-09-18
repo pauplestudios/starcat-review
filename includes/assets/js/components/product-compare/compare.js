@@ -5,6 +5,17 @@ var CompareTable = require("../../comparison-table.js");
 var ProductComparison = {
   init: function() {
     console.log("compare product");
+    var content = "";
+    content +=
+      '<div class="ui right vertical menu sidebar" id="hrp-compare-sidebar">';
+    content +=
+      '<a class="item">Home</a><a class="item">Topics</a><a class="item">Friends</a><a class="item">History</a>';
+    content += "</div>";
+    // content +=
+    //   '<div class="ui sidebar test vertical left menu overlay visible"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div>';
+
+    jQuery("body").append(content);
+
     // var hrpCompareTable = new ProductCompareTable(
     //   $(".cd-products-comparison-table")
     // );
@@ -52,21 +63,20 @@ var ProductComparison = {
           .find(".review-card__body")
           .text()
           .trim();
-          console.log();
+        console.log(headerText, bodyContent);
       }
     );
   },
   compareFloatIcons: function() {
     console.log("float icon generate side bar");
-    let content = "";
-    content += '<div class="hrp-compare-sidebar right">';
-    content += '<div class="hrp-sidebar-wrapper">';
-    content += "</div>";
-    content += "</div>";
-
-    jQuery("body")
-      .find(".site")
-      .append(content);
+    jQuery("#left-sidebar-toggle").click(function() {
+      jQuery("body")
+        .find("#id")
+        .addClass("pusher");
+      jQuery("body")
+        // .find("#hrp-compare-sidebar")
+        .toggle("sidebar");
+    });
   }
 }; //End module
 
