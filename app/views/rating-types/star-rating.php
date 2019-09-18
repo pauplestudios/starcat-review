@@ -51,7 +51,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             $html = '<li class="review-item">';
 
             $html .= '<div class="review-item-stars"
-                title="' . $score . ' / ' . $this->props['collection']['star_scale'] . '"
+                title="' . $score . ' / ' . $this->props['collection']['limit'] . '"
             >';
             $html .= $this->get_wrapper_html();
             $html .= $this->get_result_html($value);
@@ -60,7 +60,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
 
             $html .= '<div class="review-item-label">';
             $html .= '<span class="review-item-label__text">' . $key . '</span>';
-            $html .= '<span class="review-item-label__divider"> - </span>';
+            $html .= '<span class="review-item-label__divider"></span>';
             $html .= '<span class="review-item-label__score">' . $score . '</span>';
             $html .= '</div>';
 
@@ -75,7 +75,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             $html = '<li class="reviewed-item">';
 
             $html .= '<div class="review-item-stars"
-                title="' . $score . ' / ' . $this->props['collection']['star_scale'] . '"
+                title="' . $score . ' / ' . $this->props['collection']['limit'] . '"
             >';
             $html .= $this->get_wrapper_html();
             $html .= $this->get_result_html($value);
@@ -84,7 +84,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
 
             $html .= '<div class="reviewed-item-label">';
             $html .= '<span class="reviewed-item-label__text">' . $key . '</span>';
-            $html .= '<span class="reviewed-item-label__divider"> - </span>';
+            $html .= '<span class="reviewed-item-label__divider"></span>';
             $html .= '<span class="reviewed-item-label__score">' . $score . '</span>';
             $html .= '</div>';
 
@@ -113,7 +113,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             $outline_icon_html = ($this->props['collection']['source_type'] == 'icon') ? $icon_html : $image_html;
 
             $html = "<div class='stars-wrapper'>";
-            for ($ii = 0; $ii < $this->props['collection']['star_scale']; $ii++) {
+            for ($ii = 0; $ii < $this->props['collection']['limit']; $ii++) {
                 $html .= $outline_icon_html;
             }
             $html .= "</div>";
@@ -130,7 +130,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             $icon_html = ($this->props['collection']['source_type'] == 'icon') ? $filled_icon_html : $filled_image_html;
 
             $html = '<div class="stars-result" style="width: ' . $value . '%">';
-            for ($ii = 0; $ii < $this->props['collection']['star_scale']; $ii++) {
+            for ($ii = 0; $ii < $this->props['collection']['limit']; $ii++) {
                 $html .= $icon_html;
             }
             $html .= '</div>';
@@ -140,7 +140,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
 
         private function get_score($value)
         {
-            $divisor = ($this->props['collection']['star_scale'] == 10) ? 10 : 20;
+            $divisor = ($this->props['collection']['limit'] == 10) ? 10 : 20;
             $score = $value / $divisor;
 
             return (floor($score * 2) / 2);

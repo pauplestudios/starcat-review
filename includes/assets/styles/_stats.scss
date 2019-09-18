@@ -26,10 +26,15 @@
             &__text {
                 text-transform: uppercase;
             }
+            &__divider {
+                margin: 0px 5px;
+            }
             &__score {
-                background: #d4d4d566;
-                padding: 0px 6px;
-                margin-left: 6px;
+                background: #eaeaea;
+                border-radius: 5px;
+                padding: 0px 7px;
+                font-weight: 600;
+                font-size: 10px;
             }
         }
     }
