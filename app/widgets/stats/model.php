@@ -27,7 +27,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
             $collection = [
                 'type' => 'star', // star, bar or circle                
                 'show_stats' => ['overall', 'price', 'ux', 'feature', 'better', 'cool'],
-                'source_type' => 'imgage', // image or icon 
+                'source_type' => 'image', // image or icon 
                 'animate' => false,
                 /*
                     Value Type Differ for each types 

@@ -117,11 +117,9 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
             $html  = '';
             $html .= '<label>User Review</label>';
             $html .= '<ul class="review-list"
-                data-limit="' . $this->props['collection']['value_limit'] . '" 
-                data-valueType="' . $this->props['collection']['value_type'] . '"
-                data-reviewType="' . $this->props['collection']['review_type'] . '"
-                data-scale="' . $this->props['collection']['star_scale'] . '"
-                data-division="' . $this->props['collection']['star_division'] . '"
+                data-type="' . $this->props['collection']['review_type'] . '"
+                data-limit="' . $this->props['collection']['limit'] . '" 
+                data-valuetype="' . $this->props['collection']['value_type'] . '"
                 data-list="items"
                 >';
 

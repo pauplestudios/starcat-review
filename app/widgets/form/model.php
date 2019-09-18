@@ -64,12 +64,13 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\Model')) {
 
         protected function get_interpreted_collection($collection)
         {
-            // 'value_type' can be points or percentage for bar rating
+            // 'value_type' can be point or percentage for bar rating
+            $collection['value_type'] = 'point';
             $collection['limit'] = ($collection['value_type'] == 'percentage') ? 100 : 50;
 
             if ($collection['review_type'] == 'star') {
-                $collection['limit'] = 5; // 5 or 10
-                $collection['value_type'] = 'half'; // full or half or points
+                $collection['limit'] = 10; // 5 or 10
+                $collection['value_type'] = 'point'; // full or half or point
             }
 
             return $collection;
