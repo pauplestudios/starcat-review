@@ -603,3 +603,18 @@ No JS
 .no-js .cd-products-columns .check {
   display: none;
 }
+
+#hrp-compare-sidebar {
+  & .hrp-list-items {
+    margin: 4px 0px;
+    border: 1px solid #ccc;
+    padding: 5px;
+  }
+  & p {
+    margin-bottom: px;
+  }
+  & span {
+    font-size: 13px;
+    line-height: 12px;
+  }
+}

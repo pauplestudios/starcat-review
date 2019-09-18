@@ -63,6 +63,15 @@ var ProductComparison = {
           .find(".review-card__body")
           .text()
           .trim();
+        get_body_text = bodyContent.slice(0, 120);
+        body_content = get_body_text.concat("..");
+
+        let item_content = "";
+        item_content += '<div class="items hrp-list-items">';
+        item_content += "<h5>" + headerText + "</h5>";
+        item_content += "<span>" + body_content + "</span>";
+        item_content += "</div>";
+        jQuery("#hrp-compare-sidebar").append(item_content);
         console.log(headerText, bodyContent);
       }
     );
