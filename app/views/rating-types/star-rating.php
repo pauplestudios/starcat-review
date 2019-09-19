@@ -29,8 +29,8 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             foreach ($this->props['items'] as $key => $value) {
 
                 $stats_cumulative_score += $value;
-                $value = $this->get_width($value);
-                $score = $this->get_score($value);
+                $value = $this->get_width($value, $this->props['collection']);
+                $score = $this->get_score($value, $this->props['collection']);
 
                 if ($this->is_stat_included($key, $this->props['collection'])) {
                     $stat_html .= $this->get_reviewed_stat($key, $value, $score);
@@ -98,9 +98,9 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
         protected function get_overall_stat_html($stats_cumulative_score, $count)
         {
             $overall_value = $stats_cumulative_score / $count;
-            $overall_value = $this->get_width($overall_value);
+            $overall_value = $this->get_width($overall_value, $this->props['collection']);
             $overall_value = is_nan($overall_value) ? 0 : $overall_value;
-            $overall_score = $this->get_score($overall_value);
+            $overall_score = $this->get_score($overall_value, $this->props['collection']);
 
             $overall_stat_html = $this->get_reviewed_stat(__('Overall', 'helpie-reviews'), $overall_value, $overall_score);
 
@@ -139,50 +139,6 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             $html .= '</div>';
 
             return $html;
-        }
-
-        private function get_score($value)
-        {
-            // $divisor = ($this->props['collection']['limit'] == 10) ? 10 : 20;
-            // $score = $value / $divisor;
-
-            // return (floor($score * 2) / 2);
-            $limit = $this->props['collection']['limit'];
-            $value_type = $this->props['collection']['value_type'];
-
-            $score = $limit == 10 ? $value / 10 : $value / 20;
-            $score = $value_type == "point" ? number_format($score, 1) : $score;
-
-            return $score;
-        }
-
-        private function get_width($value)
-        {
-            $limit = $this->props['collection']['limit'];
-            $value_type = $this->props['collection']['value_type'];
-            $type = $this->props['collection']['type'];
-
-            switch ($value_type) {
-                case "full":
-                    $divisor = $limit == 5 ? 20 : 10;
-                    $width = round($value / $divisor) * $divisor;
-                    break;
-
-                case "half":
-                    $divisor = $limit == 5 ? 10 : 5;
-                    $width = round($value / $divisor) * $divisor;
-                    break;
-
-                case "point":
-                    $divisor = 100 / $limit;
-                    $width = $type == "star" ? $value : round($value / $divisor) * $divisor;
-                    break;
-
-                default:
-                    $width = round($width / 20) * 20;
-            }
-
-            return $width;
         }
     }
 }
