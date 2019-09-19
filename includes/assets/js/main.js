@@ -4,6 +4,7 @@ var ListControl = require("./blocks/list-control.js");
 var ComparisonTable = require("./comparison-table.js");
 var Comparison = require("./components/comparison-table/comparison.js");
 var ProductComparison = require("./components/product-compare/compare.js");
+var compareSidebarList = require("./components/product-compare/sidebar.js");
 
 var HelpieReviews = {
   init: function() {
