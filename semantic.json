@@ -1,5 +1,5 @@
 {
-    "base": "includes\\assets\\vendors\\semantic\\",
+    "base": "includes/assets/vendors/semantic/",
     "paths": {
         "source": {
             "config": "src/theme.config",
@@ -8,10 +8,10 @@
             "themes": "src/themes/"
         },
         "output": {
-            "packaged": "bundle\\",
-            "uncompressed": "bundle\\components\\",
-            "compressed": "bundle\\components\\",
-            "themes": "bundle\\themes\\"
+            "packaged": "bundle",
+            "uncompressed": "bundle/components/",
+            "compressed": "bundle/components/",
+            "themes": "bundle/themes/"
         },
         "clean": "bundle/"
     },
