@@ -25,17 +25,17 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
         public function get_collectionProps()
         {
             $collection = [
-                'type' => 'star', // star, bar or circle                
-                'show_stats' => ['overall', 'price', 'ux', 'feature', 'better', 'cool'],
-                'source_type' => 'image', // image or icon 
+                'type' => 'bar', // star, bar or circle                
+                'show_stats' => ['overall', 'price', 'ux', 'feature', 'better', 'cool', 'speed', 'support', 'ui'],
+                'source_type' => 'icon', // image or icon 
                 'animate' => false,
                 /*
                     Value Type Differ for each types 
                     eg: 
-                        bar -> percentage or points 
-                        star -> full or half or points
+                        bar -> percentage or point
+                        star -> full or half or point
                 */
-                'value_type' => 'half',
+                'value_type' => 'point',
             ];
 
             $collection = $this->get_interpreted_collection($collection);

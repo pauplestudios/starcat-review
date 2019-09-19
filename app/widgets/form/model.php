@@ -32,7 +32,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\Model')) {
                 'display_description' => true,
                 'form_title' => 'Review Stats Form',
                 'review_items' => true,
-                'review_type' => 'star',   // Star, circle, bar                                
+                'review_type' => 'bar',   // Star, circle, bar                                
                 'source_type' => 'image', // icon or image                
                 'divisor' => 5,
             ];
