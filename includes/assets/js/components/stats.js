@@ -13,10 +13,15 @@ var Stats = {
             valueType: review.attr("data-valuetype")
         };
 
-        this.getRating(".review-item-stars", props);
+        this.getRating(".review-item-stars", ".stars-result", props);
+        this.getRating(
+            ".review-item-bars .bars-wrapper",
+            ".bars-result",
+            props
+        );
     },
 
-    getRating: function(ratingElement, props) {
+    getRating: function(ratingElement, resultElement, props) {
         jQuery(ratingElement)
             .on("mousemove", function(e) {
                 let element = jQuery(this);
@@ -36,6 +41,8 @@ var Stats = {
                 let width = Stats.getWidth(fixedWidth, props);
                 let score = Stats.getScore(width, props);
 
+                element = props.type == "bar" ? element.parent() : element;
+
                 // Update Score
                 element
                     .siblings(".review-item-label")
@@ -43,16 +50,20 @@ var Stats = {
                     .text(score);
 
                 // Update Width
-                element.find(".stars-result").width(width + "%");
+                element.find(resultElement).width(width + "%");
 
-                // Update Title
-                element.attr("title", score + " / " + props.limit);
+                // Update Title and score
+                element
+                    .attr("title", score + " / " + props.limit)
+                    .find(".bars-score")
+                    .text(score + " / " + props.limit);
 
                 // Update Result
                 element.attr("result", width);
             })
             .on("mouseleave", function() {
                 let element = jQuery(this);
+                element = props.type == "bar" ? element.parent() : element;
                 let value = element.find("input").val();
                 let score = Stats.getScore(value, props);
 
@@ -63,16 +74,20 @@ var Stats = {
                     .text(score);
 
                 // Update Width
-                element.find(".stars-result").width(value + "%");
+                element.find(resultElement).width(value + "%");
 
-                // Update Title
-                element.attr("title", score + " / " + props.limit);
+                // Update Title and score
+                element
+                    .attr("title", score + " / " + props.limit)
+                    .find(".bars-score")
+                    .text(score + " / " + props.limit);
 
                 // Update Result
                 element.attr("result", value);
             })
             .on("click", function() {
                 let element = jQuery(this);
+                element = props.type == "bar" ? element.parent() : element;
                 let value = element.attr("result");
 
                 // Update Hidden Input Value
@@ -100,6 +115,9 @@ var Stats = {
                     props.type == "star"
                         ? fixedWidth
                         : Math.round(fixedWidth / divisor) * divisor;
+                break;
+            case "percentage":
+                width = fixedWidth;
                 break;
 
             default:

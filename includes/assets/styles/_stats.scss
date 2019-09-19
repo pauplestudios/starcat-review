@@ -75,25 +75,24 @@ $graylight: #e7e7e7;
 
     .review-item-bars,
     .reviewed-item-bars {
-        .bars-box {
+        .bars-wrapper {
             width: 75%;
             float: right;
             height: 25px;
             margin-top: 5px;
             position: relative;
             text-align: center;
-            box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.08),
-                0 0 1px 0 rgba(0, 0, 0, 0.02), 0 0 1px 1px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.1),
+                0 0 1px 0 rgba(0, 0, 0, 0.1), 0 0 1px 1px rgba(0, 0, 0, 0.04);
             // background-color: #95bae0;
-            &__inner {
+            .bars-result {
                 height: 25px;
                 overflow: hidden;
                 position: absolute;
                 white-space: nowrap;
-                background-color: #eaeaea;
+                background-color: #d8d8d8;
             }
-
-            &__text {
+            .bars-score {
                 line-height: 25px;
                 position: relative;
                 font-size: 12px;

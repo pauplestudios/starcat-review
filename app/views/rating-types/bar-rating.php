@@ -94,9 +94,9 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Bar_Rating')) {
 
         protected function get_bars_box_html($score = 0, $width = 0)
         {
-            $html = '<div class="bars-box">';
-            $html .= '<div class="bars-box__inner" style="width: ' . $width . '%;"></div>';
-            $html .= '<div class="bars-box__text"> ' . $score . ' / ' . $this->props['collection']['limit'] . '</div>';
+            $html = '<div class="bars-wrapper">';
+            $html .= '<div class="bars-result" style="width: ' . $width . '%;"></div>';
+            $html .= '<div class="bars-score"> ' . $score . ' / ' . $this->props['collection']['limit'] . '</div>';
             $html .= '</div>';
             return $html;
         }
