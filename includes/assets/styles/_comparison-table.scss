@@ -663,6 +663,31 @@ No JS
   }
 }
 
+// Search Field
+.hrp-search-container {
+  widows: 100%;
+  position: relative;
+}
+.hrp-search-lists {
+  display: none;
+  position: absolute;
+  background: #fff;
+  top: 46px;
+  border: 0.3px solid #ccc;
+  width: 100%;
+  min-height: 100px;
+  z-index: 9;
+  height: 150px;
+  overflow-y: auto;
+  right: 0px;
+
+  & .items {
+    padding: 5px 15px;
+    margin: 5px 3px;
+    cursor: pointer;
+  }
+}
+
 // .hrp-compare-sidebar-wrapper {
 //   position: fixed;
 //   top: 0;

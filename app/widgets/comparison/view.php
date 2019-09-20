@@ -34,20 +34,22 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
 
         public function get_header()
         {
+
+
             $html = '';
             $html .= '<header class="col-12">';
-            $html .= '<h4>Compare Models</h4>';
-            $html .= '<div class="pusher" style="cursor:pointer;">';
-            $html .= '<button id="left-sidebar-toggle" class="ui black big launch right attached fixed toggle button">';
-            $html .= '<span class="text">Menu</span></button>';
-            $html .= '<div class="count-items" style="cursor:pointer;">';
-            $html .= '<span id="hrp-compare-totals" style="color:#ff0000;">Click</span></div>';
-            $html .= '<div class="actions">';
+            $html .= '<div class="col-lg-6"><div class="col-xs-12">';
+            $html .= '<div class="ui input focus hrp-search-container" style="width:100%;">';
+            $html .= '<input type="text" class="hrp-search" placeholder="Search...">';
+            $html .= '<div class="hrp-search-lists"></div></div>';
+            $html .= '</div></div>';
+            $html .= '<div class="col-xs-6 actions">';
             $html .= '<a href="#0" class="reset">Reset</a>';
             $html .= '<a href="#0" class="filter">Filter</a>';
             $html .= '</div>';
             $html .= '</header>';
             return $html;
+
         }
 
         public function features($stat_cols)
@@ -79,11 +81,11 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
                 $html .= $this->single_product($single_product_stats, $stat_cols);
             }
 
-            if (count($stats) > 0) {
-                $html .= $this->search_filter_product();
-            } else if (count($stats) == 0) {
-                $html .= $this->search_filter_product();
-            }
+            // if (count($stats) > 0) {
+            //     $html .= $this->search_filter_product();
+            // } else if (count($stats) == 0) {
+            //     $html .= $this->search_filter_product();
+            // }
             $html .= '</ul> <!-- .cd-products-columns -->';
             $html .= '</div> <!-- .cd-products-wrapper -->';
 

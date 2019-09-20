@@ -1,27 +1,12 @@
 var compareTableAction = require("./table-actions.js");
 var searchProduct = require("./search.js");
 var CompareTable = require("../../comparison-table.js");
-var Sidebar = require("./search.js");
+var Search = require("./search.js");
 
 var ProductComparison = {
   init: function() {
     console.log("compare product");
-    var content = "";
-    content +=
-      '<div class="ui right vertical menu sidebar" id="hrp-compare-sidebar">';
-    content +=
-      '<a class="item">Home</a><a class="item">Topics</a><a class="item">Friends</a><a class="item">History</a>';
-    content += "</div>";
-    // content +=
-    //   '<div class="ui sidebar test vertical left menu overlay visible"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div>';
-
-    jQuery("body").append(content);
-
-    // var hrpCompareTable = new ProductCompareTable(
-    //   $(".cd-products-comparison-table")
-    // );
-    // console.log(hrpCompareTable);
-
+    Search.init();
     this.eventHandlers();
   },
   eventHandlers: function() {
