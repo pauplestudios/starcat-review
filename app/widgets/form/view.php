@@ -151,7 +151,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
 
         protected function get_bar_rating($key)
         {
-            return $this->bar_rating->get_single_stat($key, 0, 0);
+            return $this->bar_rating->get_review_stat($key, 0, 0);
         }
 
         //  Todo: Text Rating

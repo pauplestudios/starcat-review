@@ -5,6 +5,33 @@ var Stats = {
     },
 
     eventListener: function() {
+        this.getReviewStat();
+        this.getReviewedStat();
+    },
+
+    getReviewedStat: function() {
+        // Animating Reviewed Stat
+        const reviewed = jQuery(".reviewed-list");
+        const animate = reviewed.attr("data-animate");
+
+        if (animate == true) {
+            reviewed.find(".reviewed-item").each(function(i) {
+                let reviewedItem = jQuery(this);
+                let value = reviewedItem
+                    .find("input[name='score']")
+                    .attr("value");
+
+                reviewedItem
+                    .find(".stars-result")
+                    .css({ transition: "width 2s", width: value + "%" });
+                reviewedItem
+                    .find(".bars-result")
+                    .css({ transition: "width 2s", width: value + "%" });
+            });
+        }
+    },
+
+    getReviewStat: function() {
         const review = jQuery(".review-list");
 
         const props = {
@@ -13,48 +40,59 @@ var Stats = {
             valueType: review.attr("data-valuetype")
         };
 
-        this.getRating(".review-item-stars", props);
+        this.getRatingStat(".review-item-stars", ".stars-result", props);
+        this.getRatingStat(
+            ".review-item-bars .bars-wrapper",
+            ".bars-result",
+            props
+        );
     },
 
-    getRating: function(ratingElement, props) {
+    getRatingStat: function(ratingElement, resultElement, props) {
         jQuery(ratingElement)
             .on("mousemove", function(e) {
                 let element = jQuery(this);
-                let offset = element.offset().left;
-                let fixedWidth = (
-                    ((e.pageX - offset) / element.width()) *
+                let elmentOffsetLeft = element.offset().left;
+                let elementWidth = (
+                    ((e.pageX - elmentOffsetLeft) / element.width()) *
                     100
                 ).toFixed();
 
-                if (fixedWidth <= 0) {
-                    offsetWidth = 0;
+                if (elementWidth <= 0) {
+                    elementWidth = 0;
                 }
-                if (fixedWidth > 100) {
-                    fixedWidth = 100;
+                if (elementWidth > 100) {
+                    elementWidth = 100;
                 }
 
-                let width = Stats.getWidth(fixedWidth, props);
-                let score = Stats.getScore(width, props);
+                let statWidth = Stats.getStatWidth(elementWidth, props);
+                let score = Stats.getStatScore(statWidth, props);
 
-                // Update Score
+                element = props.type == "bar" ? element.parent() : element;
+
+                // Update Label Score
                 element
                     .siblings(".review-item-label")
                     .find(".review-item-label__score")
                     .text(score);
 
                 // Update Width
-                element.find(".stars-result").width(width + "%");
+                element.find(resultElement).width(statWidth + "%");
 
-                // Update Title
-                element.attr("title", score + " / " + props.limit);
+                // Update Titlescore if it rendered
+                element
+                    .attr("title", score + " / " + props.limit)
+                    .find(".bars-score")
+                    .text(score + " / " + props.limit);
 
                 // Update Result
-                element.attr("result", width);
+                element.attr("result", statWidth);
             })
             .on("mouseleave", function() {
                 let element = jQuery(this);
+                element = props.type == "bar" ? element.parent() : element;
                 let value = element.find("input").val();
-                let score = Stats.getScore(value, props);
+                let score = Stats.getStatScore(value, props);
 
                 // Update Score
                 element
@@ -63,16 +101,20 @@ var Stats = {
                     .text(score);
 
                 // Update Width
-                element.find(".stars-result").width(value + "%");
+                element.find(resultElement).width(value + "%");
 
-                // Update Title
-                element.attr("title", score + " / " + props.limit);
+                // Update Title and score
+                element
+                    .attr("title", score + " / " + props.limit)
+                    .find(".bars-score")
+                    .text(score + " / " + props.limit);
 
                 // Update Result
                 element.attr("result", value);
             })
             .on("click", function() {
                 let element = jQuery(this);
+                element = props.type == "bar" ? element.parent() : element;
                 let value = element.attr("result");
 
                 // Update Hidden Input Value
@@ -80,46 +122,50 @@ var Stats = {
             });
     },
 
-    getWidth: function(fixedWidth, props) {
-        let divisor, width;
+    getStatWidth: function(elementWidth, props) {
+        let divisor, statWidth;
 
         switch (props.valueType) {
             case "full":
                 divisor = props.limit == 5 ? 20 : 10;
-                width = Math.round(fixedWidth / divisor) * divisor;
+                statWidth = Math.round(elementWidth / divisor) * divisor;
                 break;
 
             case "half":
                 divisor = props.limit == 5 ? 10 : 5;
-                width = Math.round(fixedWidth / divisor) * divisor;
+                statWidth = Math.round(elementWidth / divisor) * divisor;
                 break;
 
             case "point":
                 divisor = 100 / props.limit;
-                width =
+                statWidth =
                     props.type == "star"
-                        ? fixedWidth
-                        : Math.round(fixedWidth / divisor) * divisor;
+                        ? elementWidth
+                        : Math.round(elementWidth / divisor) * divisor;
+                break;
+            case "percentage":
+                statWidth = elementWidth;
                 break;
 
             default:
-                width = Math.round(width / 20) * 20;
+                divisor = props.limit == 5 ? 20 : 10;
+                statWidth = Math.round(elementWidth / divisor) * divisor;
         }
 
-        return width;
+        return statWidth;
     },
 
-    getScore: function(width, props) {
+    getStatScore: function(statValue, props) {
         let score;
 
-        score = props.limit == 10 ? width / 10 : width / 20;
+        score = props.limit == 10 ? statValue / 10 : statValue / 20;
         score = props.valueType == "point" ? score.toFixed(1) : score;
 
         if (props.type == "bar") {
             score =
                 props.valueType == "point"
-                    ? width / (100 / props.limit)
-                    : width;
+                    ? statValue / (100 / props.limit)
+                    : statValue;
         }
 
         return score;

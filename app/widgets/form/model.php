@@ -32,9 +32,16 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\Model')) {
                 'display_description' => true,
                 'form_title' => 'Review Stats Form',
                 'review_items' => true,
-                'review_type' => 'star',   // Star, circle, bar                                
+                'review_type' => 'bar',   // Star, circle, bar                                
                 'source_type' => 'image', // icon or image                
-                'divisor' => 5,
+
+                /*
+                    Value Type Differ for each types 
+                    eg: 
+                        bar -> percentage or point
+                        star -> full or half or point
+                */
+                'value_type' => 'point'
             ];
 
             $collection = $this->get_interpreted_collection($collection);
@@ -64,13 +71,10 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\Model')) {
 
         protected function get_interpreted_collection($collection)
         {
-            // 'value_type' can be point or percentage for bar rating
-            $collection['value_type'] = 'point';
             $collection['limit'] = ($collection['value_type'] == 'percentage') ? 100 : 50;
 
             if ($collection['review_type'] == 'star') {
-                $collection['limit'] = 10; // 5 or 10
-                $collection['value_type'] = 'point'; // full or half or point
+                $collection['limit'] = 10; // 5 or 10                
             }
 
             return $collection;

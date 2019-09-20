@@ -32,7 +32,7 @@ $graylight: #e7e7e7;
                 margin: 0px 5px;
             }
             &__score {
-                background: $graylight;
+                background: #eee;
                 border-radius: 5px;
                 padding: 0px 5px;
                 font-weight: 400;
@@ -41,27 +41,23 @@ $graylight: #e7e7e7;
         }
     }
 
-    .review-item-bars,
     .review-item-stars,
-    .reviewed-item-bars,
     .reviewed-item-stars {
         float: right;
-        height: 25px;
+        height: 35px;
         box-sizing: border-box;
 
         .stars-wrapper {
-            display: inline-block;
             position: absolute;
-            white-space: nowrap;
-            box-sizing: border-box;
+            display: inline-block;
         }
         .stars-result {
+            height: 35px;
             overflow: hidden;
             position: relative;
             white-space: nowrap;
-            box-sizing: border-box;
-            // transition: width 2s ease;
         }
+
         img {
             height: 35px;
             max-width: inherit;
@@ -77,9 +73,29 @@ $graylight: #e7e7e7;
 
     .review-item-bars,
     .reviewed-item-bars {
-        width: 75%;
-        border-radius: 2px;
-        background-color: #95bae0;
+        .bars-wrapper {
+            width: 75%;
+            float: right;
+            height: 25px;
+            margin-top: 5px;
+            position: relative;
+            text-align: center;
+            box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.1),
+                0 0 1px 0 rgba(0, 0, 0, 0.1), 0 0 1px 1px rgba(0, 0, 0, 0.04);
+            // background-color: #95bae0;
+            .bars-result {
+                height: 25px;
+                overflow: hidden;
+                position: absolute;
+                white-space: nowrap;
+                background-color: #d8d8d8;
+            }
+            .bars-score {
+                line-height: 25px;
+                position: relative;
+                font-size: 12px;
+            }
+        }
     }
 
     .review-item-stars,

@@ -22,7 +22,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Controller')) {
 
         protected function get_stat_set($viewProps)
         {
-            $display_rating_type = $viewProps['collection']['display_rating_type'];
+            $display_rating_type = $viewProps['collection']['type'];
 
             switch ($display_rating_type) {
                 case "star":
@@ -30,7 +30,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Controller')) {
                     return $this->star_rating->get_view();
                 case "bar":
                     $this->bar_rating = new \HelpieReviews\App\Views\Rating_Types\Bar_Rating($viewProps);
-                    return $this->bar_rating->get_html();
+                    return $this->bar_rating->get_view();
                 case "circle":
                     $this->circle_rating = new \HelpieReviews\App\Views\Rating_Types\Circle_Rating($viewProps);
                     return $this->circle_rating->get_html();
