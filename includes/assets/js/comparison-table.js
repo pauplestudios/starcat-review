@@ -79,62 +79,7 @@ jQuery(document).ready(function($) {
       self.upadteFilterBtn();
     });
 
-    //search Container
-    //categoryContent
-
-    // self.searchContainer.on("keyup", ".ui .hrp-search-filter", function() {
-    //   if ($(this).val() != "") {
-    //     var searchData = {
-    //       action: "get_hrp_results",
-    //       search_key: $(this).val()
-    //     };
-    //     $.ajax({
-    //       url: hrp_ajax.ajax_url,
-    //       type: "POST",
-    //       dataType: "json",
-    //       data: searchData,
-    //       success: function(response) {
-    //         console.log(response);
-    //         // var responseData = {
-    //         //   results: {}
-    //         // };
-    //         var resultContent = [];
-
-    //         if (response.status == 1) {
-    //           var result_data_length = response.data.length;
-    //           if (result_data_length > 0) {
-    //             for (let i = 0; i < result_data_length; i++) {
-    //               let title = response.data[i];
-    //               // maxResults = 8;
-    //               // if (i >= maxResults) {
-    //               //   return false;
-    //               // }
-    //               // if (responseData.results.options === undefined) {
-    //               //   responseData.results.options = {
-    //               //     results: []
-    //               //   };
-    //               // }
-    //               resultContent.push({
-    //                 title: title,
-    //                 description: title
-    //               });
-    //               // responseData.results.options.results.push({
-    //               //   title: title,
-    //               //   description: title
-    //               // });
-    //             }
-    //           }
-    //         }
-    //         self.searchContainer.search({
-    //           type: "category",
-    //           source: resultContent
-    //         });
-    //         // return responseData;
-    //       }
-    //     });
-    //   }
-    // });
-
+    
     //scroll inside products table
     this.navigation.on("click", "a", function(event) {
       event.preventDefault();
