@@ -1,10 +1,11 @@
 <?php
+
 /**
  * The template for displaying archive pages.
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
- * @package Astra
+ * @package Helpie
  * @since 1.0.0
  */
 
