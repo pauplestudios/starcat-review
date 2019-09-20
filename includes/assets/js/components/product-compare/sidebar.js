@@ -4,7 +4,7 @@ var Sidebar = {
 
     // this.createSidebarBtnDiv();
     // this.createSidebarListDiv();
-    this.loadSidebarBtnAndContainer();
+    // this.loadSidebarBtnAndContainer();
     this.events();
   },
   events: function() {
@@ -65,7 +65,7 @@ var Sidebar = {
   },
   addItemToCompareList: function(props) {
     //Add Item to sidebar compare list
-    alert(props);
+
     let content = "";
     content += '<div class="item" data-id="' + props.id + '">';
     content +=
