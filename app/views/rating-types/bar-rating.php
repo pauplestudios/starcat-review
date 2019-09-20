@@ -30,7 +30,8 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Bar_Rating')) {
             foreach ($this->props['items'] as $key => $value) {
 
                 $stats_cumulative_score += $value;
-                $score = $this->get_value_byType($value);
+                $value = $this->get_stat_width($value, $this->props['collection']);
+                $score = $this->get_stat_score($value, $this->props['collection']);
 
                 if ($this->is_stat_included($key, $this->props['collection'])) {
                     $stats_html .= $this->get_reviewed_stat($key, $value, $score);
@@ -104,18 +105,15 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Bar_Rating')) {
 
         protected function get_overall_stat_html($stats_cumulative_score, $count)
         {
-            $overall_stat_value = round($stats_cumulative_score / $count);
-            $overall_number_value = $this->get_value_byType($overall_stat_value);
-            $overall_stat_html = $this->get_reviewed_stat(__('overall', 'helpie-reviews'), $overall_stat_value, $overall_number_value);
+            $overall_value = round($stats_cumulative_score / $count);
+            $overall_value = $this->get_stat_width($overall_value, $this->props['collection']);
+            $overall_value = is_nan($overall_value) ? 0 : $overall_value;
 
-            return $overall_stat_html;
-        }
+            $overall_score = $this->get_stat_score($overall_value, $this->props['collection']);
 
-        private function get_value_byType($value)
-        {
-            $divisor = 100 / $this->limit;
-            $number = $value / $divisor;
-            return $number;
+            $html = $this->get_reviewed_stat(__('overall', 'helpie-reviews'), $overall_value, $overall_score);
+
+            return $html;
         }
     }
 }

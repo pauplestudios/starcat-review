@@ -28,47 +28,49 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Rating_Type')) {
             return $key;
         }
 
-        protected function get_score($value, $collection)
+        protected function get_stat_score($stat_value, $collection)
         {
-            // $divisor = ($this->props['collection']['limit'] == 10) ? 10 : 20;
-            // $score = $value / $divisor;
-            // return (floor($score * 2) / 2);
+            $stat_score = $collection['limit'] == 10 ? $stat_value / 10 : $stat_value / 20;
 
-            $score = $collection['limit'] == 10 ? $value / 10 : $value / 20;
-            $score = $collection['value_type'] == "point" ? number_format($score, 1) : $score;
+            $stat_score = $collection['value_type'] == "point" ? number_format($stat_score, 1) : $stat_score;
 
-            return $score;
+            if ($collection['type'] == 'bar') {
+                $stat_score = $collection['value_type'] == "point" ? $stat_value / (100 / $collection['limit']) : $stat_value;
+            }
+
+            return $stat_score;
         }
 
-        protected function get_width($value, $collection)
+        protected function get_stat_width($width, $collection)
         {
             switch ($collection['value_type']) {
                 case "full":
                     $divisor = $collection['limit'] == 5 ? 20 : 10;
-                    $width = round($value / $divisor) * $divisor;
+                    $stat_width = round($width / $divisor) * $divisor;
                     break;
 
                 case "half":
                     $divisor = $collection['limit'] == 5 ? 10 : 5;
-                    $width = round($value / $divisor) * $divisor;
+                    $stat_width = round($width / $divisor) * $divisor;
                     break;
 
                 case "point":
                     $divisor = 100 / $collection['limit'];
-                    $width = $collection['type'] == "star" ? $value : round($value / $divisor) * $divisor;
+                    $stat_width = $collection['type'] == "star" ? $width : round($width / $divisor) * $divisor;
                     break;
 
                 case "percentage":
-                    $divisor = 100;
-                    $width = round($value / $divisor) * $divisor;
+                    $stat_width = $width;
                     break;
 
                 default:
-                    // 5 Star 
-                    $width = round($width / 20) * 20;
+                    // Default is Star
+                    $divisor = $collection['limit'] == 5 ? 20 : 10;
+                    $stat_width = round($width / $divisor) * $divisor;
             }
 
-            return $width;
+            $stat_width = number_format($stat_width, 0);
+            return $stat_width;
         }
     } // END CLASS
 }

@@ -29,8 +29,8 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             foreach ($this->props['items'] as $key => $value) {
 
                 $stats_cumulative_score += $value;
-                $value = $this->get_width($value, $this->props['collection']);
-                $score = $this->get_score($value, $this->props['collection']);
+                $value = $this->get_stat_width($value, $this->props['collection']);
+                $score = $this->get_stat_score($value, $this->props['collection']);
 
                 if ($this->is_stat_included($key, $this->props['collection'])) {
                     $stat_html .= $this->get_reviewed_stat($key, $value, $score);
@@ -98,9 +98,9 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
         protected function get_overall_stat_html($stats_cumulative_score, $count)
         {
             $overall_value = $stats_cumulative_score / $count;
-            $overall_value = $this->get_width($overall_value, $this->props['collection']);
+            $overall_value = $this->get_stat_width($overall_value, $this->props['collection']);
             $overall_value = is_nan($overall_value) ? 0 : $overall_value;
-            $overall_score = $this->get_score($overall_value, $this->props['collection']);
+            $overall_score = $this->get_stat_score($overall_value, $this->props['collection']);
 
             $overall_stat_html = $this->get_reviewed_stat(__('Overall', 'helpie-reviews'), $overall_value, $overall_score);
 
@@ -131,9 +131,9 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             $filled_image_html = "<img src='" . $icon . "' />";
 
             $icon_html = ($this->props['collection']['source_type'] == 'icon') ? $filled_icon_html : $filled_image_html;
-            
+
             $value = $this->props['collection']['animate'] == true ? 0 : $value;
-            
+
             $html = '<div class="stars-result" style="width: ' . $value . '%">';
             for ($ii = 0; $ii < $this->props['collection']['limit']; $ii++) {
                 $html .= $icon_html;
