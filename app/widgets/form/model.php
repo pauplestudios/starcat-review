@@ -31,18 +31,20 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\Model')) {
                 'display_pros_and_cons' => true,
                 'display_description' => true,
                 'form_title' => 'Review Stats Form',
-                'review_type' => 'star',   // Star, circle, bar
                 'review_items' => true,
-                'star_division' => 'half', // full, half, points
-                'star_scale' => 5,
-                'value_type' => 'percentage', // number or percentage
-                'value_limit' => 50,
-                'value_roundable_to' => 1,
-                'source_type' => 'icon', // icon or image,
-                'animate' => true,
-                'divisor' => 5,
+                'review_type' => 'bar',   // Star, circle, bar                                
+                'source_type' => 'image', // icon or image                
+
+                /*
+                    Value Type Differ for each types 
+                    eg: 
+                        bar -> percentage or point
+                        star -> full or half or point
+                */
+                'value_type' => 'point'
             ];
 
+            $collection = $this->get_interpreted_collection($collection);
             $collection = $this->get_icons($collection);
 
             return $collection;
@@ -65,6 +67,17 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\Model')) {
             }
 
             return $stats;
+        }
+
+        protected function get_interpreted_collection($collection)
+        {
+            $collection['limit'] = ($collection['value_type'] == 'percentage') ? 100 : 50;
+
+            if ($collection['review_type'] == 'star') {
+                $collection['limit'] = 10; // 5 or 10                
+            }
+
+            return $collection;
         }
 
         protected function get_icons($collection)

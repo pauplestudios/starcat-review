@@ -25,15 +25,20 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
         public function get_collectionProps()
         {
             $collection = [
-                'display_rating_type' => 'star', // star, bar or circle
-                'star_scale' => 5, // 0-5 or 0-10
-                'show_stats' => ['overall', 'price', 'ux', 'feature', 'better', 'cool'],
-                'value_type' => 'percentage', // percentage or number
-                'value_limit' => 20, // 10, 20 ,30, 40, 50 and etc..	
-                'source_type' => 'icon', // img ( image ) or i ( icon )                             
-                'animate' => true,
+                'type' => 'bar', // star, bar or circle                
+                'show_stats' => ['overall', 'price', 'ux', 'feature', 'better', 'cool', 'speed', 'support', 'ui'],
+                'source_type' => 'icon', // image or icon 
+                'animate' => false,
+                /*
+                    Value Type Differ for each types 
+                    eg: 
+                        bar -> percentage or point
+                        star -> full or half or point
+                */
+                'value_type' => 'point',
             ];
 
+            $collection = $this->get_interpreted_collection($collection);
             $collection = $this->get_icons($collection);
 
             return $collection;
@@ -56,6 +61,17 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
             }
 
             return $stats;
+        }
+
+        protected function get_interpreted_collection($collection)
+        {
+            $collection['limit'] = ($collection['value_type'] == 'percentage') ? 100 : 50;
+
+            if ($collection['type'] == 'star') {
+                $collection['limit'] = 5;
+            }
+
+            return $collection;
         }
 
         protected function get_icons($collection)
