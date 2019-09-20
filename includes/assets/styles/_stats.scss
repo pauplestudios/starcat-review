@@ -50,14 +50,12 @@ $graylight: #e7e7e7;
         .stars-wrapper {
             display: inline-block;
             position: absolute;
-            // white-space: nowrap;
-            box-sizing: border-box;
         }
         .stars-result {
+            height: 25px;
             overflow: hidden;
             position: relative;
-            white-space: nowrap;
-            // transition: width 2s ease;
+            white-space: nowrap;            
         }
 
         img {

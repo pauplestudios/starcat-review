@@ -11,8 +11,6 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Bar_Rating')) {
     class Bar_Rating extends Rating_Type
     {
-        private $html;
-
         public function __construct($viewProps)
         {
             $this->props = $viewProps;
@@ -24,7 +22,9 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Bar_Rating')) {
             $stats_cumulative_score = 0;
             $count = 0;
 
-            $html = "<ul class='reviewed-list'>";
+            $html = '<ul class="reviewed-list"
+                data-animate="' . $this->props['collection']['animate'] . '"
+            >';
             $stats_html = '';
 
             foreach ($this->props['items'] as $key => $value) {
@@ -94,6 +94,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Bar_Rating')) {
 
         protected function get_bars_box_html($score = 0, $width = 0)
         {
+            $width = $this->props['collection']['animate'] == true ? 0 : $width;
             $html = '<div class="bars-wrapper">';
             $html .= '<div class="bars-result" style="width: ' . $width . '%;"></div>';
             $html .= '<div class="bars-score"> ' . $score . ' / ' . $this->props['collection']['limit'] . '</div>';

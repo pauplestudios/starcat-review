@@ -131,7 +131,9 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             $filled_image_html = "<img src='" . $icon . "' />";
 
             $icon_html = ($this->props['collection']['source_type'] == 'icon') ? $filled_icon_html : $filled_image_html;
-
+            
+            $value = $this->props['collection']['animate'] == true ? 0 : $value;
+            
             $html = '<div class="stars-result" style="width: ' . $value . '%">';
             for ($ii = 0; $ii < $this->props['collection']['limit']; $ii++) {
                 $html .= $icon_html;

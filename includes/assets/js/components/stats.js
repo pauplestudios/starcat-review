@@ -5,6 +5,28 @@ var Stats = {
     },
 
     eventListener: function() {
+        this.getReviewStat();
+        this.getReviewedStat();
+    },
+
+    getReviewedStat: function() {
+
+        // Animating Reviewed Stat
+        const reviewed = jQuery(".reviewed-list");
+        const animate = reviewed.attr("data-animate");
+        
+        if( animate == true){
+            reviewed.find(".reviewed-item").each(function(i){
+                let reviewedItem = jQuery(this);
+                let value = reviewedItem.find("input[name='score']").attr("value");
+                
+                reviewedItem.find(".stars-result").css({transition: "width 2s", width: value + "%"});
+                reviewedItem.find(".bars-result").css({transition: "width 2s", width: value + "%"});            
+            });
+        }
+    },
+
+    getReviewStat: function() {
         const review = jQuery(".review-list");
 
         const props = {
