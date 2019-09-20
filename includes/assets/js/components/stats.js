@@ -51,11 +51,12 @@ var Stats = {
 
     getRatingStat: function(ratingElement, resultElement, props) {
         jQuery(ratingElement)
-            .on("mousemove", function(e) {
+            .on("mousemove touchmove", function(e) {
                 let element = jQuery(this);
                 let elmentOffsetLeft = element.offset().left;
+                let pageX = e.pageX || e.originalEvent.touches[0].pageX;
                 let elementWidth = (
-                    ((e.pageX - elmentOffsetLeft) / element.width()) *
+                    ((pageX - elmentOffsetLeft) / element.width()) *
                     100
                 ).toFixed();
 
@@ -117,7 +118,7 @@ var Stats = {
                 // Update Result
                 element.attr("result", value);
             })
-            .on("click", function() {
+            .on("click touchmove", function() {
                 let element = jQuery(this);
                 element = props.type == "bar" ? element.parent() : element;
                 let value = element.attr("result");
