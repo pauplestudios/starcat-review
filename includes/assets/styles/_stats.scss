@@ -44,18 +44,18 @@ $graylight: #e7e7e7;
     .review-item-stars,
     .reviewed-item-stars {
         float: right;
-        height: 25px;
+        height: 35px;
         box-sizing: border-box;
 
         .stars-wrapper {
-            display: inline-block;
             position: absolute;
+            display: inline-block;
         }
         .stars-result {
-            height: 25px;
+            height: 35px;
             overflow: hidden;
             position: relative;
-            white-space: nowrap;            
+            white-space: nowrap;
         }
 
         img {
