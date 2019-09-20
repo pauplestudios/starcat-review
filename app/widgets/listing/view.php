@@ -28,7 +28,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\View')) {
             $html = '<div id="hrp-controlled-list">';
             $html .= '<h2>' . $collectionProps['title'] . '</h2>';
 
-
+            error_log('collectionPropsshow_controls : ' . $collectionProps['show_controls']);
             if ($collectionProps['show_controls']) {
                 $html .= $this->controls_builder->get_controls($collectionProps['show_controls']);
             }

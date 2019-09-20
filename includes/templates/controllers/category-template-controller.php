@@ -65,6 +65,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Category_Templa
             $posts    = [];
 
             $query = new \WP_Query($args);
+            // error_log('get_category_posts $args : ' . print_r($args, true));
 
             if ($query->have_posts()) {
                 while ($query->have_posts()) {
