@@ -13,6 +13,9 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
         {
             // error_log('hooks __construct');
 
+            /* settings getter */
+            require_once(HELPIE_REVIEWS_PATH . 'includes/settings/getter.php');
+
             /*  Reviews Init Hook */
             add_action('init', array($this, 'init_hook'));
 
@@ -42,8 +45,7 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
             /*  Reviews Widget */
             // $this->load_widgets();
 
-            /* settings getter */
-            require_once(HELPIE_REVIEWS_PATH . 'includes/settings/getter.php');
+
 
 
             $register_templates = new \HelpieReviews\Includes\Register_Templates();

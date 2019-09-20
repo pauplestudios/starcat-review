@@ -334,6 +334,10 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
         }
         public function mainpage_settings($prefix)
         {
+            $extras = new \HelpieReviews\Includes\Settings\Extras();
+            $main_page_button = $extras->get_main_page_url();
+            // $main_page_button = '';
+
             \CSF::createSection(
                 $prefix,
                 array(
@@ -342,12 +346,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                     'title' => 'Main Page ',
                     'icon' => 'fa fa-eye',
                     'fields' => array(
-                        array(
-                            'id' => 'mp_slug',
-                            'type' => 'text',
-                            'title' => __('Main Page Slug', 'pauple-helpie'),
-                            'default' => 'reviews',
-                        ),
+
                         array(
                             'id' => 'mp_meta_title',
                             'type' => 'text',
@@ -363,6 +362,19 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             // 'dependency' => array('helpie_mp_location', '==', 'archive'),
                             'desc' => '<strong> Note </strong>: Keep your meta descriptions between 150 and 154 characters.',
                             'default' => 'These are your reviews',
+                        ),
+                        array(
+                            'id' => 'mp_slug',
+                            'type' => 'text',
+                            'title' => __('Main Page Slug', 'pauple-helpie'),
+                            'default' => 'reviews',
+                        ),
+                        array(
+                            'type'    => 'content',
+                            'content' => '<div class="button-container">'
+                                . '<span><b>Where is my main page?</b></span>'
+                                . '<br>'
+                                . $main_page_button . '<span>Save and Refresh Page if you changed it.</span></div>',
                         ),
                         array(
                             'id'        => 'mp_components_order',
