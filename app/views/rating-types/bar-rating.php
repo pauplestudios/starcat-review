@@ -53,7 +53,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Bar_Rating')) {
             $html = '<li class="review-item">';
 
             $html .= '<div class="review-item-bars"
-                title="' . $score . ' / ' . $this->props['collection']['limit'] . '"
+                title="' . $this->props['collection']['no_rated_message'] . '"
                 result                
             >';
             $html .= $this->get_bars_box_html();
@@ -96,9 +96,11 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Bar_Rating')) {
         protected function get_bars_box_html($score = 0, $width = 0)
         {
             $width = $this->props['collection']['animate'] == true ? 0 : $width;
+            $score = ($score == 0) ? $this->props['collection']['no_rated_message'] : $score . ' / ' . $this->props['collection']['limit'];
+
             $html = '<div class="bars-wrapper">';
             $html .= '<div class="bars-result" style="width: ' . $width . '%;"></div>';
-            $html .= '<div class="bars-score"> ' . $score . ' / ' . $this->props['collection']['limit'] . '</div>';
+            $html .= '<div class="bars-score"> ' . $score . '</div>';
             $html .= '</div>';
             return $html;
         }

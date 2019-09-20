@@ -52,7 +52,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             $html = '<li class="review-item">';
 
             $html .= '<div class="review-item-stars"
-                title="' . $score . ' / ' . $this->props['collection']['limit'] . '"
+                title="' . $this->props['collection']['no_rated_message'] . '"
                 result                
             >';
             $html .= $this->get_wrapper_html();

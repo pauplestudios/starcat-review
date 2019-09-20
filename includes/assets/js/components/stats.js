@@ -37,7 +37,8 @@ var Stats = {
         const props = {
             type: review.attr("data-type"),
             limit: review.attr("data-limit"),
-            valueType: review.attr("data-valuetype")
+            valueType: review.attr("data-valuetype"),
+            noRatedMessage: review.attr("data-no-rated-message")
         };
 
         this.getRatingStat(".review-item-stars", ".stars-result", props);
@@ -81,7 +82,7 @@ var Stats = {
 
                 // Update Titlescore if it rendered
                 element
-                    .attr("title", score + " / " + props.limit)
+                    // .attr("title", score + " / " + props.limit)
                     .find(".bars-score")
                     .text(score + " / " + props.limit);
 
@@ -104,10 +105,14 @@ var Stats = {
                 element.find(resultElement).width(value + "%");
 
                 // Update Title and score
+                score =
+                    score != 0
+                        ? score + " / " + props.limit
+                        : props.noRatedMessage;
                 element
-                    .attr("title", score + " / " + props.limit)
+                    .attr("title", score)
                     .find(".bars-score")
-                    .text(score + " / " + props.limit);
+                    .text(score);
 
                 // Update Result
                 element.attr("result", value);

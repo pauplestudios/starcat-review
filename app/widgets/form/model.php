@@ -41,7 +41,8 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\Model')) {
                         bar -> percentage or point
                         star -> full or half or point
                 */
-                'value_type' => 'point'
+                'value_type' => 'point',
+                'no_rated_message' =>  'Not Rated Yet !!!'
             ];
 
             $collection = $this->get_interpreted_collection($collection);
