@@ -1,6 +1,7 @@
 var compareTableAction = require("./table-actions.js");
 var searchProduct = require("./search.js");
 var CompareTable = require("../../comparison-table.js");
+var Sidebar = require("./search.js");
 
 var ProductComparison = {
   init: function() {
@@ -63,16 +64,23 @@ var ProductComparison = {
           .find(".review-card__body")
           .text()
           .trim();
-        get_body_text = bodyContent.slice(0, 120);
+        get_body_text = bodyContent.slice(0, 130);
         body_content = get_body_text.concat("..");
+        let options = {};
+        options = {
+          id: 42,
+          heading: headerText,
+          desc: body_content
+        };
 
-        let item_content = "";
-        item_content += '<div class="items hrp-list-items">';
-        item_content += "<h5>" + headerText + "</h5>";
-        item_content += "<span>" + body_content + "</span>";
-        item_content += "</div>";
-        jQuery("#hrp-compare-sidebar").append(item_content);
-        console.log(headerText, bodyContent);
+        this.addItemToCompare(options);
+        // let item_content = "";
+        // item_content += '<div class="items hrp-list-items">';
+        // item_content += "<h5>" + headerText + "</h5>";
+        // item_content += "<span>" + body_content + "</span>";
+        // item_content += "</div>";
+        // jQuery("#hrp-compare-sidebar").append(item_content);
+        // console.log(headerText, bodyContent);
       }
     );
   },
@@ -82,10 +90,20 @@ var ProductComparison = {
       jQuery("body")
         .find("#id")
         .addClass("pusher");
-      jQuery("body")
-        // .find("#hrp-compare-sidebar")
-        .toggle("sidebar");
+
+      jQuery(".ui.sidebar").toggleClass("very thin icon");
+      // jQuery("body")
+      // // .find("#hrp-compare-sidebar")
+      // .toggle("sidebar");
     });
+  },
+  addItemToCompareList: function(props) {
+    //Add Item to sidebar compare list
+    let content = "";
+    content += '<div class="item" data-id="' + props.id + '">';
+    content +=
+      "<p>" + props.heading + "</p><span>" + props.desc + "</span></div>";
+    jQuery(".hrp-list-items").append(content);
   }
 }; //End module
 

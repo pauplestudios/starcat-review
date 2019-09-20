@@ -7,6 +7,10 @@ var Sidebar = {
     this.loadSidebarBtnAndContainer();
     this.events();
   },
+  events: function() {
+    //this.sidebarCompareListBtn(".hrp-compare-pusher");
+    this.addItemToCompareList((props = {}));
+  },
   loadSidebarBtnAndContainer: function() {
     var element = "";
     element += '<div class="pusher hrp-compare-pusher">';
@@ -48,9 +52,7 @@ var Sidebar = {
     sidebarListContent += "</div>";
     jQuery("body").append(sidebarListContent);
   },
-  events: function() {
-    //this.sidebarCompareListBtn(".hrp-compare-pusher");
-  },
+
   sidebarCompareListBtn: function(sidebarBtn) {
     jQuery(sidebarBtn).on(
       "click",
@@ -60,7 +62,24 @@ var Sidebar = {
         jQuery(".menu.sidebar.hrp-compare-sidebar").sidebar("toggle");
       }
     );
+  },
+  addItemToCompareList: function(props) {
+    //Add Item to sidebar compare list
+    alert(props);
+    let content = "";
+    content += '<div class="item" data-id="' + props.id + '">';
+    content +=
+      "<p>" + props.heading + "</p><span>" + props.desc + "</span></div>";
+    jQuery(".hrp-list-items").append(content);
   }
 };
+
+// Sidebar.prototype.addItemToCompareList = function(props = {}) {
+//   let content = "";
+//   content += '<div class="item" data-id="' + props.id + '">';
+//   content +=
+//     "<p>" + props.heading + "</p><span>" + props.desc + "</span></div>";
+//   jQuery(".hrp-list-items").append(content);
+// };
 
 module.exports = Sidebar;
