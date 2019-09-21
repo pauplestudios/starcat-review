@@ -11,7 +11,7 @@ var HelpieReviews = {
     UserReviewsList.init();
     Ratings.init();
     ListControl.init();
-    //Comparison.init();
+    Comparison.init();
     ProductComparison.init();
     Sidebar.init();
   },
