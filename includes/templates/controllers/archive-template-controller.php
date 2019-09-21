@@ -14,18 +14,24 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
 
         public function get_view()
         {
-            $args = $this->get_args();
-            $posts = $this->get_category_posts($args);
+
 
             $html = '';
-            $html .= $this->get_category_post_listing($posts);
-            $html .= $this->get_comparison_table();
+            $html .= $this->get_post_listing();
+
+
+            $terms = get_terms('helpie_reviews_category', array('parent' => 0, 'hide_empty' => false));
+            $cats_list = new \HelpieReviews\App\Views\Review_Categories();
+            $html .= $cats_list->get_view($terms);
 
             return $html;
         }
 
-        public function get_category_post_listing($posts)
+        public function get_post_listing()
         {
+            $args = $this->get_args();
+            $posts = $this->get_posts($args);
+
             $html = '<div class="hrp-category-page-content-area">';
 
             if (isset($posts) && !empty($posts)) {
@@ -53,14 +59,8 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
             return $args;
         }
 
-        public function get_comparison_table()
-        {
-            $post_ids = [131, 123, 119];
-            $comparison_controller = new \HelpieReviews\App\Widgets\Comparison\Controller();
-            return $comparison_controller->get_view($post_ids);
-        }
 
-        public function get_category_posts($args)
+        public function get_posts($args)
         {
             $posts    = [];
 
@@ -89,13 +89,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
                 'posts_per_page' => -1,
                 'post_type' => HELPIE_REVIEWS_POST_TYPE,
                 'paged' => $paged,
-                'tax_query' => array(
-                    array(
-                        'taxonomy' => 'helpie_reviews_category',
-                        'field'    => 'id',
-                        'terms'    => $term->term_id,
-                    ),
-                )
+
             );
 
             return $args;

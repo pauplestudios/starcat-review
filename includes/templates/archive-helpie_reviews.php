@@ -20,11 +20,15 @@ get_header(); ?>
           class="site-main"
           role="main">
 
-        <?php $terms = get_terms('helpie_reviews_category', array('parent' => 0, 'hide_empty' => false));
-        $cats_list = new \HelpieReviews\App\Views\Review_Categories();
-        echo $cats_list->get_view($terms);
+        <?php
+        //  $terms = get_terms('helpie_reviews_category', array('parent' => 0, 'hide_empty' => false));
+        // $cats_list = new \HelpieReviews\App\Views\Review_Categories();
+        // echo $cats_list->get_view($terms);
         ?>
-
+        <?php
+        $archive_template_controller = new \HelpieReviews\Includes\Templates\Controllers\Archive_Template_Controller();
+        echo $archive_template_controller->get_view();
+        ?>
 
 
 
