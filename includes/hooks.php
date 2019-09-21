@@ -40,7 +40,7 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
         public function init_hook()
         {
             /*  Reviews Ajax Hooks */
-            include_once HELPIE_REVIEWS_PATH . 'includes/ajax-handler.php';
+            $this->load_ajax_handler();
 
             /*  Reviews Widget */
             // $this->load_widgets();
@@ -117,6 +117,12 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
 
         }
 
+        public function load_ajax_handler()
+        {
+            $ajax_handler = new \HelpieReviews\Includes\Ajax_Handler();
+            $ajax_handler->register_ajax_actions();
+        }
+
         public function load_widgets()
         { }
 
@@ -156,7 +162,8 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
             /* Application */
             wp_register_script('helpie-reviews-script', HELPIE_REVIEWS_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'));
             wp_localize_script('helpie-reviews-script', 'hrp_ajax', array(
-                'ajax_url'  => admin_url('admin-ajax.php')
+                'ajax_url'  => admin_url('admin-ajax.php'),
+                'ajax_nonce' => wp_create_nonce('helpie-reviews-ajax-nonce')
             ));
             wp_enqueue_script('helpie-reviews-script', HELPIE_REVIEWS_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'));
             wp_enqueue_style('style-name', HELPIE_REVIEWS_URL . "includes/assets/bundle/main.bundle.css");
