@@ -14,17 +14,15 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Progress_Bar_Rating')) 
 
 		public function __construct($viewProps) 
 		{
-			$this->props = $viewProps; 			
+			$this->props = $viewProps; 
+			$this->limit = ($this->props['collection']['value_type'] == 'percentage') ? 100 : $this->props['collection']['value_limit'];			
 		}
 
 		public function get_html() 
 		{
-			$this->limit = ($this->props['collection']['value_type'] == 'percentage') ? 100 : $this->props['collection']['value_limit'];
-
 			$html = "<div class='hrp-container'>";			
 			$html .= "<ul class='hrp-review-list'>";
 			$stats_html = '';
-			$get_user_review_html = '';
 			
 			foreach ($this->props['items'] as $key => $value) {
 				$stats_cumulative_score += $value;
@@ -39,16 +37,37 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Progress_Bar_Rating')) 
 			
 			$overall_stat_html = $this->get_overall_stat_html($stats_cumulative_score, $count);
 
-			// if ($this->props['collection']['show_user_review']) {
-			// 	$get_user_review_html = $this->get_user_review();
-			// }
-
 			$html .= $overall_stat_html . $stats_html;
 			$html .= "</ul></div>";
 
 			$this->html = $html;
 			return $this->html;
 		}
+
+		public function get_single_stat($key, $value, $number_value) 
+		{
+			$html = '<li class="single-progress-review">';			
+			$html .= '<div class="single-progress-review__wrapper" title="'.$number_value .' / '.$this->limit.'" >';			
+			
+			$html .= '<div class="single-progress-review__results" 
+				data-item-name="'.$key.'" 
+				data-group="items"				
+				value="'.$value.'" 
+				data-rating="0" 
+				data-animate="'.$this->props['collection']['animate'].'" 
+				style = "width: 0%"
+				></div>';
+
+			$html .= '<div class="single-progress-review__text">'.$number_value.'</div>';
+			$html .= '</div>';
+			$html .= '<div class="single-progress-review__label">';
+			$html .= $key .' - '.'<span>' .$number_value .' / ' .$this->limit .' </span>';
+			$html .= '</div>';
+			$html .= '</li>';
+
+
+			return $html;
+		}	
 
 		protected function get_value_byType($value) 
 		{			
@@ -57,8 +76,8 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Progress_Bar_Rating')) 
             return $number;
 		}
 
-		protected function get_overall_stat_html($stats_cumulative_score, $count) {
-
+		protected function get_overall_stat_html($stats_cumulative_score, $count)
+		{
 			$overall_stat_value = round($stats_cumulative_score / $count);	
 			$overall_number_value = $this->get_value_byType($overall_stat_value);		
 			$overall_stat_html = $this->get_single_stat(__('overall', 'helpie-reviews'), $overall_stat_value, $overall_number_value);
@@ -66,36 +85,6 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Progress_Bar_Rating')) 
 			return $overall_stat_html;
 		}
 
-		protected function get_single_stat($key, $value, $number_value) {
-
-			$html = '';
-
-			if (!$this->is_stat_included($key, $this->props['collection'])) {
-				return $html;
-			}
-
-			$html .= '<li class="single-progress-review">';
-			$html .= '<span class="single-progress-review__label">'.$key.' - '.$number_value.'/'.$this->limit.'</span>';
-			$html .= '<div class="single-progress-review__wrapper">';
-				$html .= '<div class="single-progress-review__results" data-valuenow="'.$value.'" style = "width: 0%"></div>';
-				$html .= '<div class="single-progress-review__text">'.$number_value.' / '.$this->limit.'</div>';
-			$html .= '</div>';
-			$html .= '</li>';
-
-
-			return $html;
-		}		
-		
-		// protected function get_user_review($value = 10, $min = 0, $max = 100) {
-		// 	$html = '<div class="hrp-rating-wrapper"><hr class="hrp-divider">';
-		// 	$html .= '<div class="hrp-user-review__label">User Review</div>';
-		// 	$html .= '<div class="hrp-user-review__rating">';
-		// 	$html .= '<input type="range" min="' . $min . '" max="' . $max . '" value="' . $value . '" class="hrp-user-review__range">';
-		// 	$html .= '</div><span class="hrp-user-review__value">' . $value . " / " . $max . "%" . '</span>';
-		// 	$html .= '</div>';
-
-		// 	return $html;
-		// }
 	}
 }
 

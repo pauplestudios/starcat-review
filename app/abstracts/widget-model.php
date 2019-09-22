@@ -16,7 +16,13 @@ if (!class_exists('\HelpieReviews\App\Abstracts\Widget_Model')) {
 
         public function get_viewProps($args)
         {
-            $args = $this->append_fallbacks($args);
+            // error_log('get_viewProps $args : ' . print_r($args, true));
+            // $args = $this->append_fallbacks($args);
+
+            $default_args = $this->fields_model->get_default_args();
+            $args = array_merge($default_args, $args);
+            $args = $this->boolean_conversion($args);
+            $this->execute_methods_with_queries($args);
 
             $viewProps = array(
                 'collection' => $this->get_collection_props($args),
@@ -27,6 +33,21 @@ if (!class_exists('\HelpieReviews\App\Abstracts\Widget_Model')) {
 
             return $viewProps;
         }
+
+        protected function boolean_conversion($args)
+        {
+            foreach ($args as $key => $arg) {
+
+                if ($arg == 'on') {
+                    $args[$key] = true;
+                } else if ($arg == 'off') {
+                    $args[$key] = false;
+                }
+            }
+
+            return $args;
+        }
+
 
         protected function append_fallbacks($args)
         {

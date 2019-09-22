@@ -9,33 +9,49 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
     class Ajax_Handler
     {
+        public function register_ajax_actions()
+        {
+            // add 'ajax' action when not logged in
+            add_action('wp_ajax_nopriv_hrp_listing_action', array($this, 'hrp_listing_action'));
+            add_action('wp_ajax_hrp_listing_action', array($this, 'hrp_listing_action'));
+
+            // add 'ajax' action when not logged in
+            add_action('wp_ajax_nopriv_helpiereview_search_posts', [$this, 'search_posts']);
+            add_action('wp_ajax_helpiereview_search_posts', [$this, 'search_posts']);
+        }
+
+        public function hrp_listing_action()
+        {
+            error_log('wp_ajax_hrp_listing_action');
+        }
+
         public function search_posts()
         {
+            $args = array(
+                'post_type' => array('helpie_reviews'),
+                'post_status' => array('publish'),
+                'nopaging' => true,
+                'order' => 'ASC',
+                'orderby' => 'menu_order',
+            );
 
-            if (isset($_GET['search'])) {
-                $search_query = $_GET['search'];
+            $results = new \WP_Query($args);
 
-                // Check the query variable is available
-                // If not, global it so it can be read from
-                if (!$wp_query) global $wp_query;
-
-                $query = array(
-                    'the_title' => $search_query
-                    // 'the_content' => $search_query
-                );
-
-                $search_results = new WP_Query($query);
-
-                // error_log("Results : " .print_r($search_results, true));
-                echo json_encode($search_results);
+            if ($results->have_posts()) {
+                foreach ($results->posts as $post) {
+                    $posts[] = array(
+                        'id' => $post->ID,
+                        'title' => $post->post_title,
+                        'description' => $post->post_content,
+                        'url' => $post->guid,
+                    );
+                }
+            } else {
+                $posts = [];
             }
-            return 1;
+
+            echo json_encode($posts);
+            wp_die();
         }
     }
 }
-
-$ajax_hanlder = new \HelpieReviews\Includes\Ajax_Handler();
-
-add_action('wp_ajax_helpiereview_search_posts', [$ajax_hanlder, 'search_posts']);
-// add 'ajax' action when not logged in
-add_action('wp_ajax_nopriv_helpiereview_search_posts', [$ajax_hanlder, 'search_posts']);

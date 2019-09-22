@@ -46,18 +46,18 @@ if (!class_exists('\HelpieReviews\App\Builders\Controls_Builder')) {
                     ],
                     'size' => 4
                 ],
-                'verified' => [
-                    'name' => 'verified',
-                    'type' => 'radio',
-                    'label' => 'Verified',
-                    'default' => 'either',
-                    'options' => [
-                        'true' => 'True',
-                        'false' => 'False',
-                        'either' => 'Either'
-                    ],
-                    'size' => 4
-                ]
+                // 'verified' => [
+                //     'name' => 'verified',
+                //     'type' => 'radio',
+                //     'label' => 'Verified',
+                //     'default' => 'either',
+                //     'options' => [
+                //         'true' => 'True',
+                //         'false' => 'False',
+                //         'either' => 'Either'
+                //     ],
+                //     'size' => 4
+                // ]
             ];
 
             $this->semantic = new \HelpieReviews\App\Views\Blocks\List_Controls_Semantic();
@@ -73,7 +73,7 @@ if (!class_exists('\HelpieReviews\App\Builders\Controls_Builder')) {
 
             foreach ($this->controls as $key => $control) {
 
-                if (!$show_controls[$key]) continue;
+                if (!$show_controls[$key]) continue; // skip iteration if false
 
                 $map = $this->get_map($control['type']);
                 $methodName = $map['methodName'];

@@ -24,6 +24,19 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\Model')) {
                     'post_id_3' => 'post_id_3_value',
                 ],
             ];
+
+                    $stats = [
+                'stat_name_1' => [
+                    'post_id_1' => 'post_id_1_value',
+                    'post_id_2' => 'post_id_2_value',
+                    'post_id_3' => 'post_id_3_value',
+                ],
+                'stat_name_2 => [
+                    'post_id_1' => 'post_id_1_value',
+                    'post_id_2' => 'post_id_2_value',
+                    'post_id_3' => 'post_id_3_value',
+                ],
+            ];
         */
         public function get($posts)
         {

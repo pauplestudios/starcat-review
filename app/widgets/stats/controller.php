@@ -11,23 +11,25 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Controller')) {
     {
         public function __construct($post_id)
         {
-            $this->model = new \HelpieReviews\App\Widgets\Stats\Model($post_id);                        
+            $this->model = new \HelpieReviews\App\Widgets\Stats\Model($post_id);
         }
 
         public function get_view()
-        {            
+        {
             $viewProps = $this->model->get_viewProps();
             return $this->get_stat_set($viewProps);
-        }        
+        }
 
         protected function get_stat_set($viewProps)
-        {   
+        {
             $display_rating_type = $viewProps['collection']['display_rating_type'];
 
             switch ($display_rating_type) {
-                case "star":                    
+                case "star":
                     $this->star_rating = new \HelpieReviews\App\Views\Rating_Types\Star_Rating($viewProps);
-                    return $this->star_rating->get_html();
+                    $html = $this->star_rating->get_view();
+                    $html .= $this->star_rating->get_html();
+                    return $html;
                     break;
                 case "progress_bar":
                     $this->progress_bar_rating = new \HelpieReviews\App\Views\Rating_Types\Progress_Bar_Rating($viewProps);
@@ -39,14 +41,14 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Controller')) {
                     break;
                 default:
                     $this->star_rating = new \HelpieReviews\App\Views\Rating_Types\Star_Rating($viewProps);
-                    return $this->star_rating->get_html();                
+                    return $this->star_rating->get_html();
             }
         }
 
         private function get_stats($post_id)
         {
             $stats = $this->model->get($post_id);
-            return $stats;       
+            return $stats;
         }
     } // END CLASS
 

@@ -28,7 +28,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\View')) {
             $html = '<div id="hrp-controlled-list">';
             $html .= '<h2>' . $collectionProps['title'] . '</h2>';
 
-
+            error_log('collectionPropsshow_controls : ' . $collectionProps['show_controls']);
             if ($collectionProps['show_controls']) {
                 $html .= $this->controls_builder->get_controls($collectionProps['show_controls']);
             }
@@ -38,7 +38,8 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\View')) {
 
             /* Pagination */
             if ($collectionProps['pagination']) {
-                $html .= '<ul class="ui pagination hrp-pagination menu"></ul>';
+                // $html .= '<ul class="ui pagination hrp-pagination menu"></ul>';
+                $html .= $this->get_pagination_html($viewProps);
             }
 
             $html .= '</div>';
@@ -47,6 +48,20 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\View')) {
         }
 
         /* PRIVATE CLASS */
+
+        private function get_pagination_html($viewProps)
+        {
+            $html = '';
+            $html .= '<ul class="ui pagination hrp-pagination menu">';
+
+            for ($ii = 1; $ii <= $viewProps['collection']['total_pages']; $ii++) {
+                # code...
+                $html .= '<li class="active"><a class="page" href="">' . $ii . '</a></li>';
+            }
+
+            $html .= '</ul>';
+            return $html;
+        }
 
         private function get_card_collection($viewProps)
         {
@@ -60,7 +75,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\View')) {
                 if (!isset($ii)) $ii = 0;
 
                 // Assign card to html
-                $html .= $this->get_single_card($post, $ii, $key);
+                $html .= $this->get_single_card($post, $ii, $viewProps);
 
                 // increment $ii
                 $ii++;
@@ -71,15 +86,23 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\View')) {
             return $html;
         }
 
-        private function get_single_card($post, $ii, $post_id)
+        private function get_single_card($post, $ii, $viewProps)
         {
+            $collectionProps = $viewProps['collection'];
             $reviews = [2, 4, 7, 25, 50, 75, 100];
 
 
             $excerpt = $this->get_excerpt($post->post_content);
             $single_review = isset($reviews[$ii]) ? $reviews[$ii] : 1;
 
-            $item = ['title' => $post->post_title, 'content' => $excerpt, 'url' => '', 'reviews' => $single_review];
+            $item = [
+                'title' => $post->post_title,
+                'content' => $excerpt,
+                'url' => '',
+                'reviews' => $single_review,
+                'columns' => $collectionProps['columns'],
+                'items_display' => $collectionProps['items_display']
+            ];
 
             return $this->card->get_view($item);
         }

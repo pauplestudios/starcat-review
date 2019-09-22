@@ -20,6 +20,8 @@ if (!class_exists('\HelpieReviews\App\Builders\Review_Builder')) {
             $stats_controller = new \HelpieReviews\App\Widgets\Stats\Controller($post_id);
             $html = $stats_controller->get_view();
 
+            $form_controller = new \HelpieReviews\App\Widgets\Form\Controller($post_id);
+            $html .= $form_controller->get_view();
 
             $enable_pros_cons = HRP_Getter::get('enable-pros-cons');
 

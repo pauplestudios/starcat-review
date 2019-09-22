@@ -12,6 +12,7 @@
 
 @import "styles/comparison-table.scss";
 @import "styles/categories-list.scss";
+@import "styles/form.scss";
 @import "styles/listing.scss";
 @import "../../app/views/styles/star-rating.scss";
 @import "../../app/views/styles/progress-bar-rating.scss";
@@ -35,10 +36,11 @@ html {
     margin: 0;
     list-style: none;
     padding: 0;
-    clear: both;   
+	clear: both;
+	border: 1px solid #e7e7e7; // Error color #e0b4b4;
+    border-radius: 5px;   
 
-	li{
-		background: #eaeaea;
+	li{		
 		margin: 0;
 		box-sizing: border-box;
 	    border-bottom: 1px solid #e7e7e7;
