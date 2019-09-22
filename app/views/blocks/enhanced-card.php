@@ -1,0 +1,91 @@
+<?php
+
+namespace HelpieReviews\App\Views\Blocks;
+
+if (!defined('ABSPATH')) {
+    exit;
+} // Exit if accessed directly
+
+if (!class_exists('\HelpieReviews\App\Views\Blocks\Enhanced_Card')) {
+    class Enhanced_Card
+    {
+
+        public function __construct()
+        { }
+
+        /* HTML for Single Card */
+        public function get_view($item)
+        {
+
+            // error_log('$item : ' . print_r($item, true));
+            $this->props = $this->interprete_input_props($item);
+
+            // error_log('$item : ' . print_r($item, true));
+            $html = '';
+
+            $col_classes = "col-xs-12 col-lg-" . $this->props['col-lg'];
+            $html .= '<div class="hrp-collection__col item ' . $col_classes . '">'; // can't add additional classes
+            $html .= '<div class="hrp-review-card" >';
+
+            // if ($this->show_item('title')) {
+            //     $html .= '<div class="review-card__header">' . $item['title'] . '</div>';
+            // }
+
+            // if ($this->show_item('content')) {
+            //     $html .= '<div class="review-card__body">' . $item['content'] . '</div>';
+            // }
+
+            // if ($this->show_item('link')) {
+            //     $html .= '<div class="review-card__footer"><a href="' . $item['url'] . '">See all >> </a></div>';
+            // }
+
+            $parts = $this->get_parts($item);
+            foreach ($this->props['html_parts'] as $key => $html_part) {
+
+                // If $html_content is a key of html_part
+                if (array_key_exists($html_part, $parts)) {
+                    $html .= $parts[$html_part];
+                } else {
+                    // If $html_content is a html
+                    $html .= $html_part;
+                }
+            }
+
+            $html .= '<span class="reviewCount"  data-reviewcount="' . $item['reviews'] . '"></span>';
+            $html .= '</div>';
+            $html .= '</div>';
+
+            return $html;
+        }
+
+        public function get_parts($item)
+        {
+            $parts = [
+                'title' => '<div class="review-card__header">' . $item['title'] . '</div>',
+                'content' => '<div class="review-card__body">' . $item['content'] . '</div>',
+                'footer' => '<div class="review-card__footer"><a href="' . $item['url'] . '">See all >> </a></div>',
+                'reviewCount' => '<span class="reviewCount"  data-reviewcount="' . $item['reviews'] . '"></span>'
+            ];
+
+            return $parts;
+        }
+
+        protected function show_item($itemName)
+        {
+
+            if (in_array($itemName, $this->props['items_display'])) {
+                return true;
+            }
+
+            return false;
+        }
+
+        protected function interprete_input_props($input_props)
+        {
+            $props = $input_props;
+            $props['col-lg'] = 12 / $input_props['columns'];
+
+            return $props;
+        }
+    } // END CLASS
+}

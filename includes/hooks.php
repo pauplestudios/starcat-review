@@ -13,6 +13,9 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
         {
             // error_log('hooks __construct');
 
+            /* settings getter */
+            require_once(HELPIE_REVIEWS_PATH . 'includes/settings/getter.php');
+
             /*  Reviews Init Hook */
             add_action('init', array($this, 'init_hook'));
 
@@ -45,8 +48,7 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
             /*  Reviews Widget */
             // $this->load_widgets();
 
-            /* settings getter */
-            require_once(HELPIE_REVIEWS_PATH . 'includes/settings/getter.php');
+
 
 
             $register_templates = new \HelpieReviews\Includes\Register_Templates();
@@ -124,20 +126,26 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
         }
 
         public function load_widgets()
-        { }
+        {
+            $widgets = new \HelpieReviews\Includes\Widgets\Register_Widgets();
+            $widgets->load();
+
+            $elementor_widgets = new \HelpieReviews\Includes\Widgets\Register_Elementor_Widgets();
+            $elementor_widgets->load();
+        }
 
 
         public function content_filter($content)
         {
-
+            error_log('content_filter : ');
             // return "Helllo";
             $review_content = $this->get_review_content();
             $this->utils = new \HelpieReviews\Includes\Utils();
-            // $user_review_controller = new \HelpieReviews\App\Controllers\User_Reviews_Controller();
+            $user_review_controller = new \HelpieReviews\App\Widgets\User_Reviews\User_Reviews_Controller();
 
-            // $user_review_content = $user_review_controller->get_view();
-            // $fullcontent = $content . $review_content . $user_review_content;
-            $fullcontent = $content . $review_content;
+            $user_review_content = $user_review_controller->get_view();
+            $fullcontent = $content . $review_content . $user_review_content;
+            // $fullcontent = $content . $review_content;
             return $fullcontent;
         }
 
@@ -167,6 +175,7 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
             ));
             wp_enqueue_script('helpie-reviews-script', HELPIE_REVIEWS_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'));
             wp_enqueue_style('style-name', HELPIE_REVIEWS_URL . "includes/assets/bundle/main.bundle.css");
+            wp_enqueue_style('FontAwesome', HELPIE_REVIEWS_URL . "includes/assets/vendors/fontawesome/css/fontawesome.min.css");
         }
 
         public function get_hrp_results()
