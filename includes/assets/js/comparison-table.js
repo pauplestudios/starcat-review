@@ -79,7 +79,6 @@ jQuery(document).ready(function($) {
       self.upadteFilterBtn();
     });
 
-    
     //scroll inside products table
     this.navigation.on("click", "a", function(event) {
       event.preventDefault();
@@ -292,6 +291,41 @@ jQuery(document).ready(function($) {
     //create a productsTable object for each .cd-products-comparison-table
     comparisonTables.push(new productsTable($(this)));
   });
+  $(".hrp-search-lists").on("click", ".item", function(e) {
+    e.preventDefault();
+
+    var heading = $(this)
+      .text()
+      .trim();
+    //set value in search field
+    $(".hrp-search-container")
+      .find(".hrp-search-container")
+      .val(heading);
+    $(".hrp-search-lists").hide();
+    let content = "";
+    content = '<li class="product"><div class="top-info">';
+    content += '<div class="check"></div>';
+    content += '<img src="" alt="" class="featured-image">';
+    content += "<h3>" + heading + "</h3></div>";
+    content +=
+      '<ul class="cd-features-list"><li>5</li><li>4.5</li><li>4.5</li></ul>';
+    content += "</div></li>";
+    $(".cd-products-wrapper")
+      .find(".cd-products-columns")
+      .append(content);
+    console.clear();
+    var comparisonTables = [];
+    console.log(comparisonTables);
+    // new productsTable.products(content);
+    $(".cd-products-comparison-table").each(function() {
+      //create a productsTable object for each .cd-products-comparison-table
+      console.log($(this));
+      comparisonTables.push(new productsTable($(this)));
+    });
+    console.log(comparisonTables);
+    checkResize();
+    checkScrolling();
+  });
 
   if (comparisonTables.length > 0) {
     checkResize();
@@ -320,6 +354,7 @@ jQuery(document).ready(function($) {
   });
 
   function checkScrolling() {
+    
     var scrollTop = $(window).scrollTop();
     comparisonTables.forEach(function(element) {
       element.updateTopScrolling(scrollTop);

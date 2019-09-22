@@ -49,7 +49,6 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
             $html .= '</div>';
             $html .= '</header>';
             return $html;
-
         }
 
         public function features($stat_cols)

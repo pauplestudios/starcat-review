@@ -1,4 +1,5 @@
 var productsTable = require("../../comparison-table.js");
+// var CompareTable = require("../../comparison-table.js");
 
 var Search = {
   init: function() {
@@ -66,7 +67,8 @@ var Search = {
         contents = {
           headingText: heading
         };
-        new Search.addItemInCompareTable(contents);
+        //
+        //new Search.addItemInCompareTable(contents);
       }
     );
   },
@@ -78,7 +80,17 @@ var Search = {
       }
     });
   },
+  loadCompareTable: function() {
+    console.log("loadComparetable");
+    var comparisonTables = [];
+    jQuery(".cd-products-comparison-table").each(function() {
+      //create a productsTable object for each .cd-products-comparison-table
+      console.log(jQuery(this));
+      comparisonTables.push(new productsTable(jQuery(this)));
+    });
+  },
   addItemInCompareTable: function(options) {
+    var that = this;
     if (Object.keys(options).length === 0) {
       return 1;
     } else {
@@ -94,7 +106,14 @@ var Search = {
       jQuery(".cd-products-wrapper")
         .find(".cd-products-columns")
         .append(content);
-
+      // that.loadCompareTable();
+      var comparisonTables = [];
+      jQuery(".cd-products-comparison-table").each(function() {
+        //create a productsTable object for each .cd-products-comparison-table
+        console.log(jQuery(this));
+        comparisonTables.push(new productsTable(jQuery(this)));
+      });
+      console.log("load-compare table");
       // jQuery(".cd-products-comparison-table").each(function() {
       //   //create a productsTable object for each .cd-products-comparison-table
       //   new productsTable.productsTable(jQuery(this));

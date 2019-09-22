@@ -14,15 +14,18 @@ var ProductComparison = {
     this.addItemToCompare();
     this.compareFloatIcons();
   },
+  sample: function() {},
   addProduct: function() {
+    var that = this;
     var hrpCompareTable = jQuery(".cd-products-comparison-table");
     var hrpProductWrapper = hrpCompareTable.find(".cd-products-wrapper");
     var searchContainer = hrpProductWrapper.find(".hrp-search-filter-wrapper");
     var productHeader = searchContainer.find(".top-info");
     var addProductBtn = jQuery(".hrp-add-product");
-
+    console.log("check..");
     addProductBtn.on("click", function(e) {
       e.stopPropagation();
+
       var product = "";
       product += '<li class="product">';
       product += '<div class="top-info"><div class="check"></div>';
@@ -32,7 +35,20 @@ var ProductComparison = {
       product +=
         '<ul class="cd-features-list"><li>3</li><li>3</li><li>3</li></ul>';
       product += "</li>";
+      console.log("append content before");
       jQuery(".cd-products-columns").append(product);
+
+      that.loadComparetable();
+      console.log("append content after");
+    });
+  },
+  loadComparetable: function() {
+    console.log("loadComparetable");
+    var comparisonTables = [];
+    jQuery(".cd-products-comparison-table").each(function() {
+      //create a productsTable object for each .cd-products-comparison-table
+      console.log(jQuery(this));
+      comparisonTables.push(new productsTable(jQuery(this)));
     });
   },
   addItemToCompare: function() {
