@@ -22,7 +22,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
         {
             $html = '';
             $html .= '<section class="cd-products-comparison-table">';
-            $html .= $this->get_header();
+            // $html .= $this->get_header();
             $html .= '<div class="cd-products-table">';
             $html .= $this->features($stats['cols']);
             $html .= $this->get_columns($stats['stats'], $stats['cols']);
@@ -98,6 +98,9 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
 
             $html .= '<li class="product">';
             $html .= '<div class="top-info">';
+            $html .= '<div class="close-product">';
+            $html .= '<i class="window close outline icon" style="font-size:25px;"></i>';
+            $html .= '</div>';
             $html .= '<div class="check"></div>';
             $html .= '<img class="featured-image" src="' . $stats['featured_image_url'] . '" alt="product image">';
             $html .= '<h3>' . $stats['title'] . '</h3>';

@@ -197,6 +197,16 @@ Main Components
   -webkit-transition: opacity 0.3s, visibility 0.3s, -webkit-transform 0.3s;
   -moz-transition: opacity 0.3s, visibility 0.3s, -moz-transform 0.3s;
   transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+  // Add Close Btn in Product
+  & .top-info {
+    position: relative;
+
+    & .close-product {
+      position: absolute;
+      right: 11px;
+      top: 7px;
+    }
+  }
 }
 .filtering .cd-products-columns .product:not(.selected) {
   opacity: 0;

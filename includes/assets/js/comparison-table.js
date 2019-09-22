@@ -11,6 +11,8 @@ jQuery(document).ready(function($) {
     this.productsNumber = this.products.length;
     this.productWidth = this.products.eq(0).width();
     this.productsTopInfo = this.table.find(".top-info");
+    this.singleProductTopInfo = this.products.find(".top-info");
+    this.productCloseBtn = this.singleProductTopInfo.find(".close-product");
     //this.searchContainer = this.productsTopInfo.find(".hrp-search-container");
     this.featuresTopInfo = this.table
       .children(".features")
@@ -22,7 +24,6 @@ jQuery(document).ready(function($) {
     (this.filtering = false), (this.selectedproductsNumber = 0);
     this.filterActive = false;
     this.navigation = this.table.children(".cd-table-navigation");
-
     // bind table events
     this.bindEvents();
   }
@@ -83,6 +84,13 @@ jQuery(document).ready(function($) {
     this.navigation.on("click", "a", function(event) {
       event.preventDefault();
       self.updateSlider($(event.target).hasClass("next"));
+    });
+
+    //Product Close Event
+    self.productCloseBtn.on("click", function(e) {
+      e.stopPropagation();
+      var product = $(this).closest(".product");
+      product.empty();
     });
   };
 
@@ -354,7 +362,6 @@ jQuery(document).ready(function($) {
   });
 
   function checkScrolling() {
-    
     var scrollTop = $(window).scrollTop();
     comparisonTables.forEach(function(element) {
       element.updateTopScrolling(scrollTop);
