@@ -90,7 +90,11 @@ jQuery(document).ready(function($) {
     self.productCloseBtn.on("click", function(e) {
       e.stopPropagation();
       var product = $(this).closest(".product");
-      product.empty();
+      product.remove();
+      console.clear();
+
+      self.updateProductTable();
+      
     });
   };
 
@@ -200,6 +204,60 @@ jQuery(document).ready(function($) {
     this.resetProductsVisibility();
   };
 
+  productsTable.prototype.updateProductTable = function() {
+    var self = this,
+      containerOffsetLeft = self.tableColumns.offset().left,
+      scrollLeft = self.productsWrapper.scrollLeft(),
+      selectedProducts = $(".cd-products-columns").find(".product"),
+      numberProducts = selectedProducts.length;
+
+    selectedProducts.each(function(index) {
+      var product = $(this),
+        leftTranslate =
+          containerOffsetLeft +
+          index * self.productWidth +
+          scrollLeft -
+          product.offset().left;
+      // setTranformX(product, leftTranslate);
+
+      if (index == numberProducts - 1) {
+        product.one(
+          "webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend",
+          function() {
+            setTimeout(function() {
+              self.element.addClass("no-product-transition");
+            }, 50);
+            setTimeout(function() {
+              // self.element.addClass("filtered");
+              self.productsWrapper.scrollLeft();
+              self.tableColumns.css(
+                "width",
+                self.productWidth * numberProducts + "px"
+              );
+              selectedProducts.attr("style", "");
+              product.off(
+                "webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend"
+              );
+              self.updateNavigationVisibility(0);
+            }, 100);
+          }
+        );
+      }
+
+      checkResize();
+    });
+
+    if ($(".no-csstransitions").length > 0) {
+      //browser not supporting css transitions
+      // self.element.addClass("filtered");
+      self.productsWrapper.scrollLeft(0);
+      self.tableColumns.css("width", self.productWidth * numberProducts + "px");
+      // selectedProducts.attr("style", "");
+      self.updateNavigationVisibility(0);
+    }
+    // checkResize();
+    //End
+  };
   productsTable.prototype.filterProducts = function() {
     var self = this,
       containerOffsetLeft = self.tableColumns.offset().left,
