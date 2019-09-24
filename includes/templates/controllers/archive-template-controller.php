@@ -60,6 +60,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
             $term = get_queried_object();
             $args = [
                 'title' => HRP_Getter::get('mp_review_listing_title'),
+                'num_of_cols' => 2,
                 'term_id' => $term->term_id
             ];
 
