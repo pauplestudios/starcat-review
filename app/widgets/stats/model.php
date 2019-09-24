@@ -30,11 +30,11 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
         {
             $collection = [
                 'singularity' => 'multiple', // single or multiple
-                'type' => 'bar', // star, bar or circle                
+                'type' => 'star', // star, bar or circle                
                 'show_stats' => ['all'],
                 'source_type' => 'icon', // image or icon 
                 'animate' => false,
-                'limit' => 50,
+                'limit' => 5,
                 /*
                     Value Type Differ for each types 
                     eg: 
@@ -91,7 +91,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
                 if ($stat_overall_count) {
                     error_log("cumulative : " . $stat_overall_cumulative);
                     $overall_stat = $this->get_overall_stat($stat_overall_cumulative, $stat_overall_count);
-                    $stats = array_merge($stats, $overall_stat);
+                    $stats = array_merge($overall_stat, $stats);
                 }
             }
 
