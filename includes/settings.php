@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-
+include HELPIE_REVIEWS_PATH . 'includes/settings/helper.php';
 
 if (!class_exists('\HelpieReviews\Includes\Settings')) {
     class Settings
@@ -603,16 +603,29 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'title'     => 'Stats Type',
                             'options'   => array(
                                 'star' => 'http://codestarframework.com/assets/images/placeholder/80x80-2c3e50.gif',
-                                'progress' => 'http://codestarframework.com/assets/images/placeholder/80x80-2c3e50.gif',
+                                'bar' => 'http://codestarframework.com/assets/images/placeholder/80x80-2c3e50.gif',
                             ),
                             'default'   => 'star'
+                        ),
+
+                        array(
+                            'id'      => 'stats-step',
+                            'type'    => 'select',
+                            'title'   => 'Steps',
+                            'options'   => array(
+                                'full' => 'Full Star',
+                                'half' => 'Half Star',
+                            ),
+                            'dependency' => array('stats-type', '==', 'star'),
+                            'default' => 'half'
                         ),
 
                         array(
                             'id'      => 'stats-limit',
                             'type'    => 'text',
                             'title'   => 'Limit',
-                            'default' => '5'
+                            'default' => '5',
+                            'validate' => 'csf_validate_stat_limit'
                         ),
 
                         array(
