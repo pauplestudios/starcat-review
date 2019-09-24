@@ -89,6 +89,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
                 }
 
                 if ($stat_overall_count) {
+                    error_log("cumulative : " . $stat_overall_cumulative);
                     $overall_stat = $this->get_overall_stat($stat_overall_cumulative, $stat_overall_count);
                     $stats = array_merge($stats, $overall_stat);
                 }
@@ -99,8 +100,8 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
 
         protected function get_overall_stat($cumulative, $count)
         {
-            $rating = $cumulative / $count;
-            $stat_value = $this->get_stat_value($cumulative);
+            $rating = round($cumulative / $count);
+            $stat_value = $this->get_stat_value($rating);
             $stat_score = $this->get_stat_score($stat_value);
 
             $overall_stat = [
