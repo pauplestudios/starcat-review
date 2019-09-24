@@ -26,17 +26,17 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\Model')) {
         protected function execute_methods_with_queries($args)
         {
             $args['term_id'] = $args['categories'][0];
-            error_log('$args[term_id] : ' . $args['term_id']);
+            // error_log('$args[term_id] : ' . $args['term_id']);
             // $args['term_id'] = 42;
             $this->posts = $this->cat_posts_repo->get_category_posts($args);
         }
 
         protected function get_collection_props($args)
         {
-            error_log('$args : ' . print_r($args, true));
+            // error_log('$args : ' . print_r($args, true));
             // error_log('Model -> get_collection_props');
             $post_count = $this->get_posts_count();
-            error_log('$post_count : ' . $post_count);
+            // error_log('$post_count : ' . $post_count);
             $posts_per_page = 6;
 
             // error_log('post_count : ' . $post_count);

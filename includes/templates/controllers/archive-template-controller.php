@@ -93,7 +93,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
         protected function get_query_args()
         {
             $sortBy = HRP_Getter::get('mp_review_listing_sortby');
-            error_log(' $sortBy : ' .  $sortBy);
+            // error_log(' $sortBy : ' .  $sortBy);
 
             $term = get_queried_object();
             // the query to set the posts per page to 3
@@ -118,7 +118,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
                 // $args['order'] = "DESC";
             }
 
-            error_log('$args : ' . print_r($args, true));
+            // error_log('$args : ' . print_r($args, true));
 
             return $args;
         }
