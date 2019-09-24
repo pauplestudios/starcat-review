@@ -808,59 +808,50 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
             ));
         }
 
-
-
-
-
-
-
-
-
-
-
         // Features - Meta Data Options
         public function single_post_features($prefix)
         {
+            $mulitple_stat_fields = $this->get_stat_fields('multiple-stat', 'repeater', 'Multiple Stat');
+            $single_stat_fields = $this->get_stat_fields('single-stat', 'fieldset', 'Single Stat');
+            $fields = (HRP_Getter::get('stat-singularity') == 'single') ? $single_stat_fields : $mulitple_stat_fields;
+
             \CSF::createSection($prefix, array(
-                // 'parent' => 'user_access',
+                'id' => 'stat',
                 'title' => 'Stats',
                 'icon' => 'fa fa-eye',
-                'fields' => array(
+                'fields' => $fields
+            ));
+        }
 
-                    array(
-                        'id' => 'stats',
-                        'type' => 'fieldset',
-                        'title' => 'Features',
-                        'fields' => array(
-                            array(
-                                'id'     => 'stats-list',
-                                'type'   => 'repeater',
-                                'title'  => 'Repeater',
-                                'fields' => array(
+        protected function get_stat_fields($id, $type, $title)
+        {
+            return array(
 
-                                    array(
-                                        'id'    => 'stat_name',
-                                        'type'  => 'text',
-                                        'title' => 'Stat Name'
-                                    ),
-                                    array(
-                                        'id'    => 'rating',
-                                        'type'  => 'text',
-                                        'title' => 'Rating'
-                                    ),
-                                    array(
-                                        'type'    => 'submessage',
-                                        'style'   => 'success',
-                                        'content' => 'Rating 0 - 100 ',
-                                    ),
-                                ),
-                            ),
+                array(
+                    'id'     => $id,
+                    'type'   => $type,
+                    'title'  => $title,
+                    'fields' => array(
+
+                        array(
+                            'id'    => 'stat_name',
+                            'type'  => 'text',
+                            'title' => 'Stat Name'
+                        ),
+                        array(
+                            'id'    => 'rating',
+                            'type'  => 'text',
+                            'title' => 'Rating'
+                        ),
+                        array(
+                            'type'    => 'submessage',
+                            'style'   => 'success',
+                            'content' => 'Rating 0 - 100 ',
                         ),
                     ),
-
-
                 ),
-            ));
+
+            );
         }
     } // END CLASS
 }
