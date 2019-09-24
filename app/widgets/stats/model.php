@@ -16,19 +16,25 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
 
         public function get_viewProps()
         {
-            return [
-                'collection' => $this->get_collectionProps(),
-                'items' => $this->get_itemsProps(),
+            $this->collection = $this->get_collectionProps();
+            $this->items = $this->get_itemsProps();
+            $view_props = [
+                'collection' => $this->collection,
+                'items' => $this->items
             ];
+            // error_log("Props : " . print_r($view_props, true));
+            return $view_props;
         }
 
         public function get_collectionProps()
         {
             $collection = [
+                'singularity' => 'multiple', // single or multiple
                 'type' => 'bar', // star, bar or circle                
-                'show_stats' => ['overall', 'price', 'ux', 'feature', 'better', 'cool', 'speed', 'support', 'ui'],
+                'show_stats' => ['all'],
                 'source_type' => 'icon', // image or icon 
                 'animate' => false,
+                'limit' => 50,
                 /*
                     Value Type Differ for each types 
                     eg: 
@@ -38,7 +44,6 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
                 'value_type' => 'point',
             ];
 
-            $collection = $this->get_interpreted_collection($collection);
             $collection = $this->get_icons($collection);
 
             return $collection;
@@ -56,22 +61,57 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
             $stats_list = $review_post_meta['stats']['stats-list'];
             $stats = [];
 
-            foreach ($stats_list as $key => $stat) {
-                $stats[$stat['stat_name']] = $stat['rating'];
+            if ($this->collection['singularity'] == 'multiple') {
+                $stat_overall_cumulative = 0;
+                $stat_overall_count = 0;
+
+                foreach ($stats_list as $key => $stat) {
+                    $stat_overall_cumulative +=  $stat['rating'];
+
+                    $stat_value = $this->get_stat_value($stat['rating']);
+                    $stat_score = $this->get_stat_score($stat_value);
+
+                    if ($this->is_stat_included('all', $this->collection)) {
+                        $stats[$stat['stat_name']] = [
+                            'rating' => $stat['rating'],
+                            'value' => $stat_value,
+                            'score' => $stat_score
+                        ];
+                    } elseif ($this->is_stat_included($stat['stat_name'], $this->collection)) {
+                        $stats[$stat['stat_name']] = [
+                            'rating' => $stat['rating'],
+                            'value' => $stat_value,
+                            'score' => $stat_score
+                        ];
+                    }
+
+                    $stat_overall_count++;
+                }
+
+                if ($stat_overall_count) {
+                    $overall_stat = $this->get_overall_stat($stat_overall_cumulative, $stat_overall_count);
+                    $stats = array_merge($stats, $overall_stat);
+                }
             }
 
             return $stats;
         }
 
-        protected function get_interpreted_collection($collection)
+        protected function get_overall_stat($cumulative, $count)
         {
-            $collection['limit'] = ($collection['value_type'] == 'percentage') ? 100 : 50;
+            $rating = $cumulative / $count;
+            $stat_value = $this->get_stat_value($cumulative);
+            $stat_score = $this->get_stat_score($stat_value);
 
-            if ($collection['type'] == 'star') {
-                $collection['limit'] = 5;
-            }
+            $overall_stat = [
+                'overall' => [
+                    'rating' => $rating,
+                    'value' => $stat_value,
+                    'score' => $stat_score
+                ]
+            ];
 
-            return $collection;
+            return $overall_stat;
         }
 
         protected function get_icons($collection)
@@ -85,6 +125,75 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
             }
 
             return $collection;
+        }
+
+        protected function get_stat_value($rating)
+        {
+            $collection = $this->collection;
+
+            switch ($collection['value_type']) {
+                case "full":
+                    $divisor = $collection['limit'] == 5 ? 20 : 10;
+                    $stat_value = round($rating / $divisor) * $divisor;
+                    break;
+
+                case "half":
+                    $divisor = $collection['limit'] == 5 ? 10 : 5;
+                    $stat_value = round($rating / $divisor) * $divisor;
+                    break;
+
+                case "point":
+                    $divisor = 100 / $collection['limit'];
+                    $stat_value = $collection['type'] == "star" ? $rating : round($rating / $divisor) * $divisor;
+                    break;
+
+                case "percentage":
+                    $stat_value = $rating;
+                    break;
+
+                default:
+                    // Default is Star
+                    $divisor = $collection['limit'] == 5 ? 20 : 10;
+                    $stat_value = round($rating / $divisor) * $divisor;
+            }
+
+            $stat_value = number_format($stat_value, 0);
+            return $stat_value;
+        }
+
+        protected function get_stat_score($stat_value)
+        {
+            $collection = $this->collection;
+
+            $stat_score = $collection['limit'] == 10 ? $stat_value / 10 : $stat_value / 20;
+
+            $stat_score = $collection['value_type'] == "point" ? number_format($stat_score, 1) : $stat_score;
+
+            if ($collection['type'] == 'bar') {
+                $stat_score = $collection['value_type'] == "point" ? $stat_value / (100 / $collection['limit']) : $stat_value;
+            }
+
+            return $stat_score;
+        }
+
+        protected function is_stat_included($stat_item, $collection)
+        {
+
+            $stat_item = $this->get_santized_key($stat_item);
+
+            if (in_array($stat_item, $collection['show_stats'])) {
+                return true;
+            }
+
+            return false;
+        }
+
+        protected function get_santized_key($key)
+        {
+            $key = strtolower($key);
+            $key = trim($key);
+
+            return $key;
         }
     } // END CLASS
 
