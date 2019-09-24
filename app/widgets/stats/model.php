@@ -8,35 +8,44 @@ if (!defined('ABSPATH')) {
 
 if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
     class Model
-    {   
-        public function __construct($post_id) {
+    {
+        public function __construct($post_id)
+        {
             $this->post_id = $post_id;
-        }       
-
-        public function get_viewProps(){
-            return [
-				'collection' => $this->get_collectionProps(),
-				'items' => $this->get_itemsProps(),
-			];
         }
 
-        public function get_collectionProps(){
-            return [                
-                'display_rating_type' => 'star', // star, progress_bar or circle
-                'star_scale' => 10, // 0-5 or 0-10
-                'show_stats' => ['overall', 'price', 'ux', 'feature', 'better', 'cool'],
-                'value_type' => 'percentage', // percentage or number
-                'value_limit' => 20, // 10, 20 ,30, 40, 50 and etc..	
-                'source_type' => 'icon', // image or icon
-                'image' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png',
-                'image_overlay' => HELPIE_REVIEWS_URL . 'includes/assets/img/filled-tomato.png',
-                'animate' => true,
-                'icon' => 'fa fa-star',                
+        public function get_viewProps()
+        {
+            return [
+                'collection' => $this->get_collectionProps(),
+                'items' => $this->get_itemsProps(),
             ];
         }
 
+        public function get_collectionProps()
+        {
+            $collection = [
+                'type' => 'bar', // star, bar or circle                
+                'show_stats' => ['overall', 'price', 'ux', 'feature', 'better', 'cool', 'speed', 'support', 'ui'],
+                'source_type' => 'icon', // image or icon 
+                'animate' => false,
+                /*
+                    Value Type Differ for each types 
+                    eg: 
+                        bar -> percentage or point
+                        star -> full or half or point
+                */
+                'value_type' => 'point',
+            ];
+
+            $collection = $this->get_interpreted_collection($collection);
+            $collection = $this->get_icons($collection);
+
+            return $collection;
+        }
+
         public function get_itemsProps()
-        {            
+        {
             $review_post_meta =   get_post_meta($this->post_id, '_helpie_reviews_post_options', true);
 
             // Return if empty
@@ -52,6 +61,30 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
             }
 
             return $stats;
+        }
+
+        protected function get_interpreted_collection($collection)
+        {
+            $collection['limit'] = ($collection['value_type'] == 'percentage') ? 100 : 50;
+
+            if ($collection['type'] == 'star') {
+                $collection['limit'] = 5;
+            }
+
+            return $collection;
+        }
+
+        protected function get_icons($collection)
+        {
+            $collection['icon'] = HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png';
+            $collection['outline_icon'] = HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png';
+
+            if ($collection['source_type'] == 'icon') {
+                $collection['icon'] = 'star icon';
+                $collection['outline_icon'] = 'star outline icon';
+            }
+
+            return $collection;
         }
     } // END CLASS
 

@@ -1,9 +1,7 @@
 var ProsAndCons = require("./form/pros-and-cons.js");
-var UserReview = require("./form/user-review.js");
 
 var Form = {
-    init: function() {    
-        UserReview.init();
+    init: function() {            
         ProsAndCons.init();
               
         this.formSubmit();       
