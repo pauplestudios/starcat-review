@@ -128,7 +128,6 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
 
         public function content_filter($content)
         {
-            error_log('content_filter : ');
             // return "Helllo";
             $review_content = $this->get_review_content();
             $this->utils = new \HelpieReviews\Includes\Utils();
@@ -152,11 +151,10 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
         public function enqueue_scripts()
         {
             /* Vendors */
-            wp_enqueue_style('semantic-css', HELPIE_REVIEWS_URL . "includes/assets/bundle/semantic.min.css");
-            wp_enqueue_script('semantic-js', HELPIE_REVIEWS_URL . 'includes/assets/bundle/semantic.min.js', array('jquery'));
+            wp_enqueue_style('semantic-css', HELPIE_REVIEWS_URL . "includes/assets/vendors/semantic/bundle/semantic.min.css");
+            wp_enqueue_script('semantic-js', HELPIE_REVIEWS_URL . 'includes/assets/vendors/semantic/bundle/semantic.min.js', array('jquery'));
 
             wp_enqueue_style('flexbox-grid', HELPIE_REVIEWS_URL . "includes/assets/vendors/flexboxgrid.min.css");
-
 
             /* Application */
             wp_enqueue_script('helpie-reviews-script', HELPIE_REVIEWS_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'));

@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Widgets\Stats;
+namespace HelpieReviews\App\Widgets\Form;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
+if (!class_exists('\HelpieReviews\App\Widgets\Form\Model')) {
     class Model
     {
         public function __construct($post_id)
@@ -18,24 +18,30 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
         {
             return [
                 'collection' => $this->get_collectionProps(),
-                'items' => $this->get_itemsProps(),
+                'items' => $this->get_itemsProps()
             ];
         }
 
-        public function get_collectionProps()
+        protected function get_collectionProps()
         {
-            $collection = [
-                'type' => 'bar', // star, bar or circle                
-                'show_stats' => ['overall', 'price', 'ux', 'feature', 'better', 'cool', 'speed', 'support', 'ui'],
-                'source_type' => 'icon', // image or icon 
-                'animate' => false,
+            $collection =  [
+                'display_form_title' => true,
+                'display_title' => true,
+                'display_user_stat' => true,
+                'display_pros_and_cons' => true,
+                'display_description' => true,
+                'form_title' => 'Review Stats Form',
+                'review_items' => true,
+                'review_type' => 'bar',   // Star, circle, bar                                
+                'source_type' => 'image', // icon or image                
+
                 /*
                     Value Type Differ for each types 
                     eg: 
                         bar -> percentage or point
                         star -> full or half or point
                 */
-                'value_type' => 'point',
+                'value_type' => 'point'
             ];
 
             $collection = $this->get_interpreted_collection($collection);
@@ -67,8 +73,8 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
         {
             $collection['limit'] = ($collection['value_type'] == 'percentage') ? 100 : 50;
 
-            if ($collection['type'] == 'star') {
-                $collection['limit'] = 5;
+            if ($collection['review_type'] == 'star') {
+                $collection['limit'] = 10; // 5 or 10                
             }
 
             return $collection;
@@ -87,5 +93,4 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
             return $collection;
         }
     } // END CLASS
-
 }
