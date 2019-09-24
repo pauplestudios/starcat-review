@@ -72,6 +72,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
                 'mp_boxed_description' => false,
                 'mp_cl_cols' => 'three',
                 'mp_review_listing_title' => 'Reviews',
+                'mp_review_listing_sortby' => 'recent',
                 'cp_show_controls' => true, // Category Page Start 
                 'cp_show_search' => true,
                 'cp_show_sortBy' => true,

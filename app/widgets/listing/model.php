@@ -36,6 +36,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\Model')) {
             error_log('$args : ' . print_r($args, true));
             // error_log('Model -> get_collection_props');
             $post_count = $this->get_posts_count();
+            error_log('$post_count : ' . $post_count);
             $posts_per_page = 6;
 
             // error_log('post_count : ' . $post_count);
@@ -74,7 +75,8 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\Model')) {
         protected function get_items_props($args)
         {
             // error_log('Model -> get_items_props');
-            return $this->posts;
+            // return $this->posts;
+            return $args['posts'];
         }
 
         public function get_default_args()

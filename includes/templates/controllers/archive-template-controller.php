@@ -28,6 +28,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
             $query_args = $this->get_query_args();
             $posts = $this->get_posts($query_args);
 
+            // error_log('$posts : ' . print_r($posts, true));
             // $args = $this->get_args($query_args);
             // error_log('get_post_listing() $args : ' . print_r($args, true));
 
@@ -35,6 +36,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
 
             if (isset($posts) && !empty($posts)) {
                 $args = $this->get_listing_args();
+                $args['posts'] = $posts;
                 $listing_controller = new \HelpieReviews\App\Widgets\Listing\Controller();
                 $html .= $listing_controller->get_view($args);
             } else {
@@ -57,11 +59,13 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
 
         protected function get_listing_args()
         {
-            $term = get_queried_object();
+
             $args = [
                 'title' => HRP_Getter::get('mp_review_listing_title'),
                 'num_of_cols' => 2,
-                'term_id' => $term->term_id
+                // 'orderby' => "title",
+                // 'order' => "DESC"
+
             ];
 
             return $args;
@@ -70,21 +74,8 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
 
         protected function get_posts($args)
         {
-            $posts    = [];
 
-            $query = new \WP_Query($args);
-            // error_log('get_category_posts $args : ' . print_r($args, true));
-
-            if ($query->have_posts()) {
-                while ($query->have_posts()) {
-                    // Optionally, pick parts of the post and create a custom collection.
-                    $query->the_post();
-                    $posts[] = get_post();
-                }
-                wp_reset_postdata();
-            }
-
-            return $posts;
+            return get_posts($args);
         }
 
         // protected function get_args($query_args)
@@ -101,7 +92,9 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
 
         protected function get_query_args()
         {
-            // $title = HRP_Getter::get('mp_review_listing_title');
+            $sortBy = HRP_Getter::get('mp_review_listing_sortby');
+            error_log(' $sortBy : ' .  $sortBy);
+
             $term = get_queried_object();
             // the query to set the posts per page to 3
             $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
@@ -109,8 +102,23 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
                 'posts_per_page' => -1,
                 'post_type' => HELPIE_REVIEWS_POST_TYPE,
                 'paged' => $paged,
-
             );
+
+            if ($sortBy == 'alphabetical') {
+                $args['orderby'] = "title";
+                $args['order'] = "ASC";
+            } else if ($sortBy == 'recent') {
+                $args['orderby'] = "date";
+                $args['order'] = "DESC";
+            } else if ($sortBy == 'updated') {
+                $args['orderby'] = "modified";
+                $args['order'] = "DESC";
+            } else if ($sortBy == 'popular') {
+                // $args['orderby'] = "modified";
+                // $args['order'] = "DESC";
+            }
+
+            error_log('$args : ' . print_r($args, true));
 
             return $args;
         }

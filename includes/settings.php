@@ -423,7 +423,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'dependency' => array('mp_show_review_listing', '==', 'true'),
                         ),
                         array(
-                            'id' => 'helpie_mp_article_listing_sortby',
+                            'id' => 'mp_review_listing_sortby',
                             'type' => 'select',
                             'chosen' => true,
                             'title' => __('Sort By', 'pauple-helpie'),

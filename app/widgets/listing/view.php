@@ -67,6 +67,8 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\View')) {
         {
             $posts = $viewProps['items'];
 
+            error_log('count : ' . count($posts));
+
             $html = '';
             $html .= '<div id="hrp-cat-collection" class="hrp-collection list row">';
 

@@ -13,7 +13,7 @@ var UserReviewsList = {
                 { name: "reviewCount", attr: "data-reviewcount" }
             ],
 
-            page: 9,
+            page: 10,
             pagination: true,
             fuzzySearch: {
                 searchClass: "collection-search",
