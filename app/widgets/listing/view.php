@@ -95,13 +95,17 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\View')) {
             $excerpt = $this->get_excerpt($post->post_content);
             $single_review = isset($reviews[$ii]) ? $reviews[$ii] : 1;
 
+            $stats_controller = new \HelpieReviews\App\Widgets\Stats\Controller($post->ID);
+            $stats_html = $stats_controller->get_view();
+
             $item = [
                 'title' => $post->post_title,
                 'content' => $excerpt,
                 'url' => '',
                 'reviews' => $single_review,
                 'columns' => $collectionProps['columns'],
-                'items_display' => $collectionProps['items_display']
+                'items_display' => $collectionProps['items_display'],
+                'stats_html' => $stats_html
             ];
 
             return $this->card->get_view($item);

@@ -40,7 +40,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\Model')) {
 
             // error_log('post_count : ' . $post_count);
             $collectionProps = [
-                'title' => 'Reviews of Category: xxx',
+                'title' => $args['title'],
                 'posts_per_page' => $posts_per_page,
                 // 'show_controls' => false,
                 'show_controls' => [
@@ -61,7 +61,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\Model')) {
             // }
 
             // $collectionProps = array_merge($collectionProps, $args);
-            error_log('$collectionProps : ' . print_r($collectionProps, true));
+            // error_log('$collectionProps : ' . print_r($collectionProps, true));
 
             return $collectionProps;
         }

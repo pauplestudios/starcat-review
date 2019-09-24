@@ -409,14 +409,14 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         ),
 
                         array(
-                            'id' => 'helpie_mp_article_listing',
+                            'id' => 'mp_review_listing',
                             'type' => 'subheading',
                             'content' => 'Review Listing',
                             'dependency' => array('mp_show_review_listing', '==', 'true'),
                         ),
 
                         array(
-                            'id' => 'helpie_mp_article_listing_title',
+                            'id' => 'mp_review_listing_title',
                             'type' => 'text',
                             'title' => __('Title', 'pauple-helpie'),
                             'default' => 'Review Listing',
