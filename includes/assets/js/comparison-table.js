@@ -13,7 +13,8 @@ jQuery(document).ready(function($) {
     this.productsTopInfo = this.table.find(".top-info");
     this.singleProductTopInfo = this.products.find(".top-info");
     this.productCloseBtn = this.singleProductTopInfo.find(".close-product");
-    //this.searchContainer = this.productsTopInfo.find(".hrp-search-container");
+    // this.searchContainer = this.productsTopInfo.find(".ui.search");
+    // this.searchContainer = this.productSearchContainer();
     this.featuresTopInfo = this.table
       .children(".features")
       .children(".top-info");
@@ -46,14 +47,18 @@ jQuery(document).ready(function($) {
     //select single product to filter
     self.products.on("click", ".top-info", function() {
       var product = $(this).parents(".product");
-      if (!self.filtering && product.hasClass("selected")) {
-        product.removeClass("selected");
-        self.selectedproductsNumber = self.selectedproductsNumber - 1;
-        self.upadteFilterBtn();
-      } else if (!self.filtering && !product.hasClass("selected")) {
-        product.addClass("selected");
-        self.selectedproductsNumber = self.selectedproductsNumber + 1;
-        self.upadteFilterBtn();
+      if (product.hasClass(".hrp-search-filter-wrapper")) {
+        return 1;
+      } else {
+        if (!self.filtering && product.hasClass("selected")) {
+          product.removeClass("selected");
+          self.selectedproductsNumber = self.selectedproductsNumber - 1;
+          self.upadteFilterBtn();
+        } else if (!self.filtering && !product.hasClass("selected")) {
+          product.addClass("selected");
+          self.selectedproductsNumber = self.selectedproductsNumber + 1;
+          self.upadteFilterBtn();
+        }
       }
     });
     //filter products
@@ -91,10 +96,39 @@ jQuery(document).ready(function($) {
       e.stopPropagation();
       var product = $(this).closest(".product");
       product.remove();
-      console.clear();
 
       self.updateProductTable();
-      
+    });
+
+    //Add Search Product
+    var search_data = {
+      action: "helpiereview_search_posts",
+      nonce: hrp_ajax.ajax_nonce
+    };
+
+    $.post(hrp_ajax.ajax_url, search_data, function(results) {
+      results = JSON.parse(results);
+      $(".ui.search.custom-search").search({
+        source: results,
+        onSelect: function(result) {
+          var content = "";
+
+          content = '<li class="product">';
+          content += '<div class="top-info"><div class="close-product">';
+          content +=
+            '<i class="window close outline icon" style="font-size:25px;"></i></div>';
+          content +=
+            '<div class="check"></div><img class="featured-image" src="http://localhost/wp-dev/wordpress/wp-content/uploads/2019/08/redmi-notw7.jpg" alt="product image">';
+          content += "<h3>" + result.title + "</h3></div>";
+          content +=
+            '<ul class="cd-features-list"><li>2</li><li>4.3</li><li>4.2</li></ul>';
+          content += "</li>";
+          console.clear();
+
+          $(".hrp-search-filter-wrapper").before(content);
+          self.updateProductTable();
+        }
+      });
     });
   };
 
@@ -357,6 +391,9 @@ jQuery(document).ready(function($) {
     //create a productsTable object for each .cd-products-comparison-table
     comparisonTables.push(new productsTable($(this)));
   });
+
+  $(".ui.search.custom-search").search("get result", "cat");
+
   $(".hrp-search-lists").on("click", ".item", function(e) {
     e.preventDefault();
 

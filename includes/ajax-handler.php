@@ -42,8 +42,8 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
                     $posts[] = array(
                         'id' => $post->ID,
                         'title' => $post->post_title,
-                        'description' => $post->post_content,
-                        'url' => $post->guid,
+                        'description' => $post->post_content
+                        // 'url' => $post->guid,
                     );
                 }
             } else {

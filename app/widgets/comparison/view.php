@@ -80,11 +80,11 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
                 $html .= $this->single_product($single_product_stats, $stat_cols);
             }
 
-            // if (count($stats) > 0) {
-            //     $html .= $this->search_filter_product();
-            // } else if (count($stats) == 0) {
-            //     $html .= $this->search_filter_product();
-            // }
+            if (count($stats) > 0) {
+                $html .= $this->search_filter_product();
+            } else if (count($stats) == 0) {
+                $html .= $this->search_filter_product();
+            }
             $html .= '</ul> <!-- .cd-products-columns -->';
             $html .= '</div> <!-- .cd-products-wrapper -->';
 
@@ -156,13 +156,13 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
             //$html .= '<div class="check"></div>';
             //$html .= '<img class="featured-image" src="" alt="product image">';
             $html .= '<h4>Add Product</h4>';
-            $html .= '<div class="ui search hrp-search-container">';
+            $html .= '<div class="ui search custom-search">';
             $html .= '<div class="ui input">';
-            $html .= '<input type="text" class="prompt hrp-search-filter" placeholder="Search lovely things" />';
+            $html .= '<input type="text" class="prompt " placeholder="Search lovely things" />';
             $html .= '</div>';
             $html .= '<div class="results"></div>';
             $html .= '</div>';
-            $html .= $this->add_product_btn();
+            //$html .= $this->add_product_btn();
             $html .= '</div> <!-- .top-info -->';
             $html .= '<ul class="cd-features-list"></ul>';
             $html .= '</li> <!-- .product -->';

@@ -614,6 +614,7 @@ No JS
   display: none;
 }
 
+
 // #hrp-compare-sidebar {
 //   & .hrp-list-items {
 //     margin: 4px 0px;
@@ -674,6 +675,9 @@ No JS
 }
 
 // Search Field
+.hrp-search-filter {
+  width: 90% !important;
+}
 .hrp-search-container {
   widows: 100%;
   position: relative;
