@@ -629,6 +629,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                                 'icon' => 'Icon',
                                 'image' => 'Image',
                             ),
+                            'dependency' => array('stats-type', '==', 'star'),
                             'default' => 'icon'
                         ),
 
@@ -636,8 +637,27 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'id'      => 'stats-icons',
                             'type'    => 'icon_dropdown',
                             'title'   => 'Icon',
-                            'dependency' => array('stats-source-type', '==', 'icon'),
+                            'dependency' => array('stats-source-type|stats-type', '==|==', 'icon|star'),
                             'default' => 'star'
+                        ),
+
+                        array(
+                            'id'      => 'stats-limit',
+                            'type'    => 'select',
+                            'title'   => 'Limit',
+                            'options' => array(5, 10),
+                            'default' => 5,
+                            'dependency' => array('stats-type', '==', 'star'),
+                            'desc' => '<strong> Note </strong>: limit is consider as count of stars scale.',
+                        ),
+
+                        array(
+                            'id'      => 'stats-limit',
+                            'type'    => 'select',
+                            'title'   => 'Limit',
+                            'options' => array(5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100),
+                            'default' => 100,
+                            'dependency' => array('stats-type', '==', 'bar'),
                         ),
 
                         array(
@@ -648,27 +668,20 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                                 'half' => 'Half Star',
                                 'full' => 'Full Star',
                             ),
-                            'dependency' => array('stats-type', '==', 'star'),
                             'default' => 'half'
                         ),
 
                         array(
                             'id'      => 'stats-step',
-                            'type'    => 'text',
+                            'type'    => 'select',
                             'title'   => 'Steps',
                             'dependency' => array('stats-type', '==', 'bar'),
-                            'default' => '5',
-                            'validate' => 'csf_validate_stat_numeric',
-                            'desc' => '<strong> Note </strong>: Steps between 1 to 10 is recomended',
-                        ),
-
-                        array(
-                            'id'      => 'stats-limit',
-                            'type'    => 'text',
-                            'title'   => 'Limit',
-                            'default' => '5',
-                            'validate' => 'csf_validate_stat_numeric',
-                            'desc' => '<strong> Note </strong>: Keep your limit between 1 to 20 recomended for star stat',
+                            'options'   => array(
+                                'progress' => 'Progress',
+                                'half' => 'Half',
+                                'full' => 'Full',
+                            ),
+                            'default' => 'progress'
                         ),
 
                         array(
