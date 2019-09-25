@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-include HELPIE_REVIEWS_PATH . 'includes/settings/helper.php';
+
 
 if (!class_exists('\HelpieReviews\Includes\Settings')) {
     class Settings
@@ -44,6 +44,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                 require_once HELPIE_REVIEWS_PATH . 'includes/lib/codestar-framework/codestar-framework.php';
             }
 
+            include_once HELPIE_REVIEWS_PATH . 'includes/settings/helper.php';
             // require_once 'settings-config.php';
 
             if (class_exists('\CSF')) {
@@ -609,12 +610,31 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         ),
 
                         array(
+                            'id'      => 'stats-source-type',
+                            'type'    => 'select',
+                            'title'   => 'Display Source Type',
+                            'options'   => array(
+                                'icon' => 'Icon Stat',
+                                'image' => 'Image Stat',
+                            ),
+                            'default' => 'icon'
+                        ),
+
+                        array(
+                            'id'      => 'stats-icons',
+                            'type'    => 'icon_dropdown',
+                            'title'   => 'Icon Source',
+                            'dependency' => array('stats-source-type', '==', 'icon'),
+                            'default' => 'star'
+                        ),
+
+                        array(
                             'id'      => 'stats-step',
                             'type'    => 'select',
                             'title'   => 'Steps',
                             'options'   => array(
-                                'full' => 'Full Star',
                                 'half' => 'Half Star',
+                                'full' => 'Full Star',
                             ),
                             'dependency' => array('stats-type', '==', 'star'),
                             'default' => 'half'
@@ -623,10 +643,11 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         array(
                             'id'      => 'stats-step',
                             'type'    => 'text',
-                            'title'   => 'Steps',                            
+                            'title'   => 'Steps',
                             'dependency' => array('stats-type', '==', 'bar'),
                             'default' => '5',
-                            'validate' => 'csf_validate_stat_numeric'
+                            'validate' => 'csf_validate_stat_numeric',
+                            'desc' => '<strong> Note </strong>: Steps between 1 to 10 is recomended',
                         ),
 
                         array(
@@ -634,7 +655,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'type'    => 'text',
                             'title'   => 'Limit',
                             'default' => '5',
-                            'validate' => 'csf_validate_stat_numeric'
+                            'validate' => 'csf_validate_stat_numeric',
+                            'desc' => '<strong> Note </strong>: Keep your limit between 1 to 20 recomended for star stat',
                         ),
 
                         array(
@@ -648,7 +670,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             ),
                             'default'     => 'single'
                         ),
-                    )                   
+                    )
                 )
             );
         }
