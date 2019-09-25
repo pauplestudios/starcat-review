@@ -599,6 +599,18 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         ),
 
                         array(
+                            'id'          => 'stat-singularity',
+                            'type'        => 'select',
+                            'title'       => 'Single or Multiple Stat',
+                            'placeholder' => 'Select Stat Type',
+                            'options'     => array(
+                                'single'  => 'Single',
+                                'multiple'  => 'Multiple',
+                            ),
+                            'default'     => 'single'
+                        ),
+
+                        array(
                             'id'        => 'stats-type',
                             'type'      => 'image_select',
                             'title'     => 'Stats Type',
@@ -612,10 +624,10 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         array(
                             'id'      => 'stats-source-type',
                             'type'    => 'select',
-                            'title'   => 'Display Source Type',
+                            'title'   => 'Source Type',
                             'options'   => array(
-                                'icon' => 'Icon Stat',
-                                'image' => 'Image Stat',
+                                'icon' => 'Icon',
+                                'image' => 'Image',
                             ),
                             'default' => 'icon'
                         ),
@@ -623,7 +635,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         array(
                             'id'      => 'stats-icons',
                             'type'    => 'icon_dropdown',
-                            'title'   => 'Icon Source',
+                            'title'   => 'Icon',
                             'dependency' => array('stats-source-type', '==', 'icon'),
                             'default' => 'star'
                         ),
@@ -660,15 +672,10 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         ),
 
                         array(
-                            'id'          => 'stat-singularity',
-                            'type'        => 'select',
-                            'title'       => 'Single or Multiple Stat',
-                            'placeholder' => 'Select Stat Type',
-                            'options'     => array(
-                                'single'  => 'Single',
-                                'multiple'  => 'Multiple',
-                            ),
-                            'default'     => 'single'
+                            'id' => 'stats-animate',
+                            'type' => 'switcher',
+                            'title' => __('Stat Animate', 'pauple-helpie'),
+                            'default' => false,
                         ),
                     )
                 )

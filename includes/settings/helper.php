@@ -24,7 +24,7 @@ if (!class_exists('CSF_Field_icon_dropdown')) {
 
         protected function get_icon_dropdown_html()
         {
-            $html = '<div class="ui selection dropdown hrp-dropdown">';
+            $html = '<div class="ui search selection dropdown hrp-dropdown">';
             $html .= '<input type="hidden" name="' . $this->field_name() . '" value="' . $this->value . '" ' . $this->field_attributes() . '>';
             $html .= '<i class="dropdown icon"></i>';
             $html .= '<div class="default text">Select Icon</div>';
@@ -49,6 +49,136 @@ if (!class_exists('CSF_Field_icon_dropdown')) {
             $html .= '<div class="item" data-value="circle">';
             $html .= '<i class="ui teal circle icon" > </i>';
             $html .= 'Circle';
+            $html .= '</div>';
+
+            $html .= '<div class="item" data-value="user">';
+            $html .= '<i class="ui user icon" > </i>';
+            $html .= 'User';
+            $html .= '</div>';
+
+            $html .= '<div class="item" data-value="bookmark">';
+            $html .= '<i class="ui bookmark icon" > </i>';
+            $html .= 'Bookmark';
+            $html .= '</div>';
+
+            $html .= '<div class="item" data-value="compass">';
+            $html .= '<i class="ui compass icon" > </i>';
+            $html .= 'Compass';
+            $html .= '</div>';
+
+            $html .= '<div class="item" data-value="trash alternate">';
+            $html .= '<i class="ui trash alternate icon" > </i>';
+            $html .= 'Trash Alternate';
+            $html .= '</div>';
+
+            $html .= '<div class="item" data-value="bell">';
+            $html .= '<i class="ui bell icon" > </i>';
+            $html .= 'Bell';
+            $html .= '</div>';
+
+            $html .= '<div class="item" data-value="lightbulb">';
+            $html .= '<i class="ui lightbulb icon" > </i>';
+            $html .= 'lightbulb';
+            $html .= '</div>';
+
+            $html .= '<div class="item" data-value="clock">';
+            $html .= '<i class="ui clock icon" > </i>';
+            $html .= 'Clock';
+            $html .= '</div>';
+
+            $html .= '<div class="item" data-value="hourglass">';
+            $html .= '<i class="ui hourglass icon" > </i>';
+            $html .= 'Hourglass';
+            $html .= '</div>';
+
+            $html .= '<div class="item" data-value="gem">';
+            $html .= '<i class="ui gem icon" > </i>';
+            $html .= 'Gem';
+            $html .= '</div>';
+
+            $html .= '<div class="item" data-value="map">';
+            $html .= '<i class="ui map icon" > </i>';
+            $html .= 'Map';
+            $html .= '</div>';
+
+            $html .= '<div class="item" data-value="sticky note">';
+            $html .= '<i class="ui sticky note icon" > </i>';
+            $html .= 'Sticky note';
+            $html .= '</div>';
+
+            $html .= '<div class="item" data-value="sun">';
+            $html .= '<i class="ui sun icon" > </i>';
+            $html .= 'Sun';
+            $html .= '</div>';
+
+            $html .= '<div class="item" data-value="lemon">';
+            $html .= '<i class="ui lemon icon" > </i>';
+            $html .= 'Lemon';
+            $html .= '</div>';
+
+            $html .= '<div class="item" data-value="comment">';
+            $html .= '<i class="ui comment icon" > </i>';
+            $html .= 'Comment';
+            $html .= '</div>';
+
+            $html .= '<div class="item" data-value="comments">';
+            $html .= '<i class="ui comments icon" > </i>';
+            $html .= 'Comments';
+            $html .= '</div>';
+
+            $html .= '<div class="item" data-value="file">';
+            $html .= '<i class="ui file icon" > </i>';
+            $html .= 'File';
+            $html .= '</div>';
+
+            $html .= '<div class="item" data-value="folder">';
+            $html .= '<i class="ui folder icon" > </i>';
+            $html .= 'Folder';
+            $html .= '</div>';
+
+            $html .= '<div class="item" data-value="envelope">';
+            $html .= '<i class="ui envelope icon" > </i>';
+            $html .= 'Envelope';
+            $html .= '</div>';
+
+            $html .= '<div class="item" data-value="hdd">';
+            $html .= '<i class="ui hdd icon" > </i>';
+            $html .= 'Hdd';
+            $html .= '</div>';
+
+            $html .= '<div class="item" data-value="paper plane">';
+            $html .= '<i class="ui paper plane icon" > </i>';
+            $html .= 'Paper Plane';
+            $html .= '</div>';
+
+            $html .= '<div class="item" data-value="handshake">';
+            $html .= '<i class="ui handshake icon" > </i>';
+            $html .= 'Handshake';
+            $html .= '</div>';
+
+            $html .= '<div class="item" data-value="thumbs up">';
+            $html .= '<i class="ui thumbs up icon" > </i>';
+            $html .= 'Thumbs Up';
+            $html .= '</div>';
+
+            $html .= '<div class="item" data-value="thumbs down">';
+            $html .= '<i class="ui thumbs down icon" > </i>';
+            $html .= 'Thumbs Down';
+            $html .= '</div>';
+
+            $html .= '<div class="item" data-value="meh">';
+            $html .= '<i class="ui meh icon" > </i>';
+            $html .= 'Meh';
+            $html .= '</div>';
+
+            $html .= '<div class="item" data-value="smile">';
+            $html .= '<i class="ui smile icon" > </i>';
+            $html .= 'Smile';
+            $html .= '</div>';
+
+            $html .= '<div class="item" data-value="frown">';
+            $html .= '<i class="ui frown icon" > </i>';
+            $html .= 'Frown';
             $html .= '</div>';
 
             $html .= '</div>';
