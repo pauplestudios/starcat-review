@@ -54,12 +54,10 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
                 'enable-pros-cons' => true,
                 'review-location' => [HELPIE_REVIEWS_POST_TYPE],
                 'stats-type' => 'star',
+                'stats-step' => 'half',
                 'stats-limit' => 5,
                 'stat-singularity' => 'single',
-                'single-stat-field-name' => 'Overall',
-                'multiple-stat-fields' => [
-                    ['stat' => 'Pricing']
-                ],
+                
                 'mp_slug' => 'reviews', // Mainpage Settings Start
                 'mp_meta_title' => 'Reviews',
                 'mp_meta_description' => 'These are your reviews',

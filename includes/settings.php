@@ -621,11 +621,20 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         ),
 
                         array(
+                            'id'      => 'stats-step',
+                            'type'    => 'text',
+                            'title'   => 'Steps',                            
+                            'dependency' => array('stats-type', '==', 'bar'),
+                            'default' => '5',
+                            'validate' => 'csf_validate_stat_numeric'
+                        ),
+
+                        array(
                             'id'      => 'stats-limit',
                             'type'    => 'text',
                             'title'   => 'Limit',
                             'default' => '5',
-                            'validate' => 'csf_validate_stat_limit'
+                            'validate' => 'csf_validate_stat_numeric'
                         ),
 
                         array(
@@ -639,34 +648,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             ),
                             'default'     => 'single'
                         ),
-
-                        array(
-                            'id'      => 'single-stat-field-name',
-                            'type'    => 'text',
-                            'title'   => 'Field Name',
-                            'default' => 'Overall',
-                            'dependency' => array('stat_type', '==', 'single'),
-                        ),
-
-                        array(
-                            'id'     => 'multiple-stat-fields',
-                            'type'   => 'repeater',
-                            'title'  => 'Stat Fields',
-                            'dependency' => array('stat_type', '==', 'multiple'),
-                            'fields' => array(
-
-                                array(
-                                    'id'    => 'stat',
-                                    'type'  => 'text',
-                                    'title' => 'Stat1'
-                                ),
-
-                            ),
-                        ),
-
-                    )
-
-                    // 'fields' => $details_fields
+                    )                   
                 )
             );
         }
@@ -821,7 +803,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
             ));
         }
 
-        // Features - Meta Data Options
+        // Features - Stat Fields Meta Data Options
         public function single_post_features($prefix)
         {
             $mulitple_stat_fields = $this->get_stat_fields('multiple-stat', 'repeater', 'Multiple Stat');

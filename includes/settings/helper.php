@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) {
 
 if (!function_exists('csf_validate_stat_limit')) {
 
-    function csf_validate_stat_limit($value)
+    function csf_validate_stat_numeric($value)
     {
         if (!is_numeric($value)) {
             return esc_html__('Please giva a numeric limit !', 'csf');
