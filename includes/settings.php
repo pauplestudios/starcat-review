@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-
+include HELPIE_REVIEWS_PATH . 'includes/settings/helper.php';
 
 if (!class_exists('\HelpieReviews\Includes\Settings')) {
     class Settings
@@ -603,16 +603,29 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'title'     => 'Stats Type',
                             'options'   => array(
                                 'star' => 'http://codestarframework.com/assets/images/placeholder/80x80-2c3e50.gif',
-                                'progress' => 'http://codestarframework.com/assets/images/placeholder/80x80-2c3e50.gif',
+                                'bar' => 'http://codestarframework.com/assets/images/placeholder/80x80-2c3e50.gif',
                             ),
                             'default'   => 'star'
+                        ),
+
+                        array(
+                            'id'      => 'stats-step',
+                            'type'    => 'select',
+                            'title'   => 'Steps',
+                            'options'   => array(
+                                'full' => 'Full Star',
+                                'half' => 'Half Star',
+                            ),
+                            'dependency' => array('stats-type', '==', 'star'),
+                            'default' => 'half'
                         ),
 
                         array(
                             'id'      => 'stats-limit',
                             'type'    => 'text',
                             'title'   => 'Limit',
-                            'default' => '5'
+                            'default' => '5',
+                            'validate' => 'csf_validate_stat_limit'
                         ),
 
                         array(
@@ -808,59 +821,50 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
             ));
         }
 
-
-
-
-
-
-
-
-
-
-
         // Features - Meta Data Options
         public function single_post_features($prefix)
         {
+            $mulitple_stat_fields = $this->get_stat_fields('multiple-stat', 'repeater', 'Multiple Stat');
+            $single_stat_fields = $this->get_stat_fields('single-stat', 'fieldset', 'Single Stat');
+            $fields = (HRP_Getter::get('stat-singularity') == 'single') ? $single_stat_fields : $mulitple_stat_fields;
+
             \CSF::createSection($prefix, array(
-                // 'parent' => 'user_access',
+                'id' => 'stat',
                 'title' => 'Stats',
                 'icon' => 'fa fa-eye',
-                'fields' => array(
+                'fields' => $fields
+            ));
+        }
 
-                    array(
-                        'id' => 'stats',
-                        'type' => 'fieldset',
-                        'title' => 'Features',
-                        'fields' => array(
-                            array(
-                                'id'     => 'stats-list',
-                                'type'   => 'repeater',
-                                'title'  => 'Repeater',
-                                'fields' => array(
+        protected function get_stat_fields($id, $type, $title)
+        {
+            return array(
 
-                                    array(
-                                        'id'    => 'stat_name',
-                                        'type'  => 'text',
-                                        'title' => 'Stat Name'
-                                    ),
-                                    array(
-                                        'id'    => 'rating',
-                                        'type'  => 'text',
-                                        'title' => 'Rating'
-                                    ),
-                                    array(
-                                        'type'    => 'submessage',
-                                        'style'   => 'success',
-                                        'content' => 'Rating 0 - 100 ',
-                                    ),
-                                ),
-                            ),
+                array(
+                    'id'     => $id,
+                    'type'   => $type,
+                    'title'  => $title,
+                    'fields' => array(
+
+                        array(
+                            'id'    => 'stat_name',
+                            'type'  => 'text',
+                            'title' => 'Stat Name'
+                        ),
+                        array(
+                            'id'    => 'rating',
+                            'type'  => 'text',
+                            'title' => 'Rating'
+                        ),
+                        array(
+                            'type'    => 'submessage',
+                            'style'   => 'success',
+                            'content' => 'Rating 0 - 100 ',
                         ),
                     ),
-
-
                 ),
-            ));
+
+            );
         }
     } // END CLASS
 }
