@@ -602,7 +602,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'id'          => 'stat-singularity',
                             'type'        => 'select',
                             'title'       => 'Single or Multiple Stat',
-                            'placeholder' => 'Select Stat Type',
+                            // 'placeholder' => 'Select Stat Type',
                             'options'     => array(
                                 'single'  => 'Single',
                                 'multiple'  => 'Multiple',
@@ -636,9 +636,32 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         array(
                             'id'      => 'stats-icons',
                             'type'    => 'icon_dropdown',
-                            'title'   => 'Icon',
+                            'title'   => 'Icons',
                             'dependency' => array('stats-source-type|stats-type', '==|==', 'icon|star'),
                             'default' => 'star'
+                        ),
+
+                        array(
+                            'id'      => 'stats-images',
+                            'type'    => 'fieldset',
+                            'title'   => 'Images',
+                            'dependency' => array('stats-source-type|stats-type', '==|==', 'image|star'),
+                            'fields' => array(
+                                array(
+                                    'id'    => 'stats-image',
+                                    'type'    => 'media',
+                                    'title'   => 'Image',
+                                    'library' => 'image',
+                                    'url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png'
+                                ),
+                                array(
+                                    'id'    => 'stats-image-outline',
+                                    'type'    => 'media',
+                                    'title'   => 'Image Outline',
+                                    'library' => 'image',
+                                    'url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png'
+                                ),
+                            ),
                         ),
 
                         array(
@@ -648,7 +671,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'options' => array(5, 10),
                             'default' => 5,
                             'dependency' => array('stats-type', '==', 'star'),
-                            'desc' => '<strong> Note </strong>: limit is consider as count of stars scale.',
+                            // 'desc' => '<strong> Note </strong>: limit is consider as count of stars scale.',
                         ),
 
                         array(
@@ -668,6 +691,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                                 'half' => 'Half Star',
                                 'full' => 'Full Star',
                             ),
+                            'dependency' => array('stats-type', '==', 'star'),
                             'default' => 'half'
                         ),
 
