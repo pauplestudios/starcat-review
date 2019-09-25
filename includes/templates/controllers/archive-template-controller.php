@@ -23,8 +23,19 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
             return $html;
         }
 
+        public function get_found_posts()
+        {
+            $query = new WP_Query(array('meta_key' => 'color', 'meta_value' => 'blue'));
+
+            return $query->found_posts;
+        }
+
+
         public function get_post_listing()
         {
+
+
+
             $query_args = $this->get_query_args();
             $posts = $this->get_posts($query_args);
 
