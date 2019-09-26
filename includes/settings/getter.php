@@ -53,11 +53,14 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
                 'template_source' => 'theme', // General Settings Start
                 'enable-pros-cons' => true,
                 'review-location' => [HELPIE_REVIEWS_POST_TYPE],
+                'stat-singularity' => 'single',
                 'stats-type' => 'star',
+                'stats-source-type' => 'icon',
+                'stats-icons' => 'star',
                 'stats-step' => 'half',
                 'stats-limit' => 5,
-                'stat-singularity' => 'single',
-                
+                'stats-animate' => false,
+
                 'mp_slug' => 'reviews', // Mainpage Settings Start
                 'mp_meta_title' => 'Reviews',
                 'mp_meta_description' => 'These are your reviews',

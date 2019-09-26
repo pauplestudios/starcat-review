@@ -661,20 +661,13 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                                     'library' => 'image',
                                     'url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png'
                                 ),
-                            ),
-                        ),
 
-                        array(
-                            'id'      => 'stats-limit',
-                            'title'   => 'Limit',
-                            'type'    => 'slider',
-                            'min'     => 5,
-                            'max'     => 20,
-                            'step'    => 5,
-                            'unit'    => '%',
-                            'default' => 5,
-                            'desc' => 'Star stat scale b/w limit <b> 5 to 20 </b>',
-                            'dependency' => array('stats-type', '==', 'star'),
+                                array(
+                                    'type'    => 'submessage',
+                                    'style'   => 'info',
+                                    'content' => 'Image size below 50 * 50 is enough',
+                                ),
+                            ),
                         ),
 
                         array(
@@ -688,6 +681,19 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'default' => 5,
                             'desc' => 'Bar stat Limit b/w <b> 5 to 100 </b>',
                             'dependency' => array('stats-type', '==', 'bar'),
+                        ),
+
+                        array(
+                            'id'      => 'stats-limit',
+                            'title'   => 'Limit',
+                            'type'    => 'slider',
+                            'min'     => 5,
+                            'max'     => 20,
+                            'step'    => 5,
+                            'unit'    => '%',
+                            'default' => 5,
+                            'desc' => 'Star stat scale b/w limit <b> 5 to 20 </b>',
+                            'dependency' => array('stats-type', '==', 'star'),
                         ),
 
                         array(
