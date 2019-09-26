@@ -666,20 +666,27 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
 
                         array(
                             'id'      => 'stats-limit',
-                            'type'    => 'select',
                             'title'   => 'Limit',
-                            'options' => array(5, 10),
+                            'type'    => 'slider',
+                            'min'     => 5,
+                            'max'     => 20,
+                            'step'    => 5,
+                            'unit'    => '%',
                             'default' => 5,
+                            'desc' => 'Star stat scale b/w limit <b> 5 to 20 </b>',
                             'dependency' => array('stats-type', '==', 'star'),
-                            // 'desc' => '<strong> Note </strong>: limit is consider as count of stars scale.',
                         ),
 
                         array(
                             'id'      => 'stats-limit',
-                            'type'    => 'select',
                             'title'   => 'Limit',
-                            'options' => array(5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100),
-                            'default' => 100,
+                            'type'    => 'slider',
+                            'min'     => 5,
+                            'max'     => 100,
+                            'step'    => 5,
+                            'unit'    => '%',
+                            'default' => 5,
+                            'desc' => 'Bar stat Limit b/w <b> 5 to 100 </b>',
                             'dependency' => array('stats-type', '==', 'bar'),
                         ),
 
@@ -728,7 +735,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
             $con_fields = $this->fields->single_post_cons_fields();
             $rich_snippets_fields = $this->fields->rich_snippets_fields();
 
-            $fields = array_merge($details_field, $stats_fields, $pro_fields, $con_fields, $rich_snippets_fields);
+            $fields = array_merge($details_field, $pro_fields, $con_fields, $rich_snippets_fields);
             \CSF::createSection(
                 $prefix,
                 array(
@@ -901,8 +908,13 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         ),
                         array(
                             'id'    => 'rating',
-                            'type'  => 'text',
-                            'title' => 'Rating'
+                            'type'  => 'slider',
+                            'title' => 'Rating',
+                            'min'     => 0,
+                            'max'     => 100,
+                            'step'    => 1,
+                            'unit'    => '%',
+                            'default' => 0
                         ),
                         array(
                             'type'    => 'submessage',

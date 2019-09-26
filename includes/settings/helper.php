@@ -31,22 +31,22 @@ if (!class_exists('CSF_Field_icon_dropdown')) {
             $html .= '<div class="menu">';
 
             $html .= '<div class="item" data-value="star">';
-            $html .= '<i class="ui orange star icon"></i>';
+            $html .= '<i class="ui star icon"></i>';
             $html .= 'Star';
             $html .= '</div>';
 
             $html .= '<div class="item" data-value="heart">';
-            $html .= '<i class="ui red heart icon" > </i>';
+            $html .= '<i class="ui heart icon" > </i>';
             $html .= 'Heart';
             $html .= '</div>';
 
             $html .= '<div class="item" data-value="square">';
-            $html .= '<i class="ui grey square icon" > </i>';
+            $html .= '<i class="ui square icon" > </i>';
             $html .= 'Square';
             $html .= '</div>';
 
             $html .= '<div class="item" data-value="circle">';
-            $html .= '<i class="ui teal circle icon" > </i>';
+            $html .= '<i class="ui circle icon" > </i>';
             $html .= 'Circle';
             $html .= '</div>';
 
