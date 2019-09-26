@@ -158,6 +158,10 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
 
             /* Application */
             wp_enqueue_script('helpie-reviews-script', HELPIE_REVIEWS_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'));
+            wp_localize_script('helpie-reviews-script', 'hrp_ajax', array(
+                'ajax_url'  => admin_url('admin-ajax.php'),
+                'ajax_nonce' => wp_create_nonce('helpie-reviews-ajax-nonce')
+            ));
             wp_enqueue_style('style-name', HELPIE_REVIEWS_URL . "includes/assets/bundle/main.bundle.css");
         }
     } // END CLASS
