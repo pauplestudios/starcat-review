@@ -58,7 +58,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
                 'stats-source-type' => 'icon',
                 'stats-icons' => 'star',
                 'stats-step' => 'half',
-                'stats-limit' => 5,
+                'stats-bars-limit' => 100,
+                'stats-stars-limit' => 5,
                 'stats-animate' => false,
 
                 'mp_slug' => 'reviews', // Mainpage Settings Start
