@@ -28,7 +28,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
                 $html .= '</div></br>';
             }
 
-            $html .= '<form class="ui form hrp-form" name="hrp-form-submission" method="post">';
+            $html .= '<form class="ui form hrp-user-review-submission" action="hrp_user_review_submission" method="post">';
 
             if ($this->props['collection']['display_title']) {
                 $html .= '<div class="field">';
