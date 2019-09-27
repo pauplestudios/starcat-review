@@ -114,6 +114,12 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
             /* remove 'helpdesk_cateory' taxonomy submenu from Helpie Reviews Menu */
             // $admin->remove_kb_category_submenu();
 
+            /* Vendors */
+            wp_enqueue_style('semantic-css', HELPIE_REVIEWS_URL . "includes/assets/vendors/semantic/bundle/semantic.min.css");
+            wp_enqueue_script('semantic-js', HELPIE_REVIEWS_URL . 'includes/assets/vendors/semantic/bundle/semantic.min.js', array('jquery'));
+
+            wp_enqueue_script('helpie-reviews-script', HELPIE_REVIEWS_URL . 'includes/assets/bundle/admin.bundle.js', array('jquery'));
+            wp_enqueue_style('style-name', HELPIE_REVIEWS_URL . "includes/assets/bundle/admin.bundle.css");
         }
 
         public function load_widgets()
