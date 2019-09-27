@@ -40,7 +40,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Bar_Rating')) {
                 result                
             >';
             $html .= $this->get_bars_box_html();
-            $html .= '<input type="hidden" name="score" value="' . $value . '">';
+            $html .= '<input type="hidden" name="scores[' . strtolower($key) . ']"  value="' . $value . '">';
             $html .= '</div>';
 
             $html .= '<div class="review-item-label">';
@@ -62,7 +62,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Bar_Rating')) {
                 title="' . $score . ' / ' . $this->props['collection']['limit'] . '"
             >';
             $html .= $this->get_bars_box_html($score, $value);
-            $html .= '<input type="hidden" name="score" value="' . $value . '">';
+            $html .= '<input type="hidden" name="scores[' . strtolower($key) . ']" value="' . $value . '">';
             $html .= '</div>';
 
             $html .= '<div class="reviewed-item-label">';

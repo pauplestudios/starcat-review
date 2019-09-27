@@ -10,13 +10,10 @@ var Submission = {
 
             const props = Submission.getProps(this);
             console.log("##### Props ######");
-            console.log(props);
 
             jQuery.post(hrp_ajax.ajax_url, props, function(results) {
                 results = JSON.parse(results);
-                jQuery(".ui.search").search({
-                    source: results
-                });
+                console.log(results);
             });
         });
     },
@@ -29,6 +26,7 @@ var Submission = {
 
         props.action = form.attr("action");
         props.type = form.attr("method");
+        props.post_id = form.attr("post_id");
 
         form.find("[name]").each(function(i, v) {
             var input = jQuery(this),
