@@ -37,7 +37,8 @@ var Stats = {
         const props = {
             type: review.attr("data-type"),
             limit: review.attr("data-limit"),
-            valueType: review.attr("data-valuetype")
+            valueType: review.attr("data-valuetype"),
+            noRatedMessage: review.attr("data-no-rated-message")
         };
 
         this.getRatingStat(".review-item-stars", ".stars-result", props);
@@ -50,11 +51,12 @@ var Stats = {
 
     getRatingStat: function(ratingElement, resultElement, props) {
         jQuery(ratingElement)
-            .on("mousemove", function(e) {
+            .on("mousemove touchmove", function(e) {
                 let element = jQuery(this);
                 let elmentOffsetLeft = element.offset().left;
+                let pageX = e.pageX || e.originalEvent.touches[0].pageX;
                 let elementWidth = (
-                    ((e.pageX - elmentOffsetLeft) / element.width()) *
+                    ((pageX - elmentOffsetLeft) / element.width()) *
                     100
                 ).toFixed();
 
@@ -81,7 +83,7 @@ var Stats = {
 
                 // Update Titlescore if it rendered
                 element
-                    .attr("title", score + " / " + props.limit)
+                    // .attr("title", score + " / " + props.limit)
                     .find(".bars-score")
                     .text(score + " / " + props.limit);
 
@@ -104,15 +106,19 @@ var Stats = {
                 element.find(resultElement).width(value + "%");
 
                 // Update Title and score
+                score =
+                    score != 0
+                        ? score + " / " + props.limit
+                        : props.noRatedMessage;
                 element
-                    .attr("title", score + " / " + props.limit)
+                    .attr("title", score)
                     .find(".bars-score")
-                    .text(score + " / " + props.limit);
+                    .text(score);
 
                 // Update Result
                 element.attr("result", value);
             })
-            .on("click", function() {
+            .on("click touchmove", function() {
                 let element = jQuery(this);
                 element = props.type == "bar" ? element.parent() : element;
                 let value = element.attr("result");

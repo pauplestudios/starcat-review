@@ -2,14 +2,12 @@
 
 namespace HelpieReviews\App\Views\Rating_Types;
 
-use \HelpieReviews\App\Views\Rating_Types\Rating_Type as Rating_Type;
-
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
 if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
-    class Star_Rating extends Rating_Type
+    class Star_Rating
     {
         public function __construct($viewProps)
         {
@@ -18,30 +16,15 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
 
         public function get_view()
         {
-            $stats_cumulative_score = 0;
-            $count = 0;
 
             $html = '<ul class="reviewed-list"
                 data-animate="' . $this->props['collection']['animate'] . '"
             >';
-            $stat_html = '';
 
-            foreach ($this->props['items'] as $key => $value) {
-
-                $stats_cumulative_score += $value;
-                $value = $this->get_stat_width($value, $this->props['collection']);
-                $score = $this->get_stat_score($value, $this->props['collection']);
-
-                if ($this->is_stat_included($key, $this->props['collection'])) {
-                    $stat_html .= $this->get_reviewed_stat($key, $value, $score);
-                }
-
-                $count++;
+            foreach ($this->props['items'] as $key => $stat) {
+                $html .= $this->get_reviewed_stat($key, $stat['value'], $stat['score']);
             }
 
-            $overall_stat_html = $this->get_overall_stat_html($stats_cumulative_score, $count);
-
-            $html .= $overall_stat_html . $stat_html;
             $html .= '</ul>';
 
             return $html;
@@ -52,7 +35,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             $html = '<li class="review-item">';
 
             $html .= '<div class="review-item-stars"
-                title="' . $score . ' / ' . $this->props['collection']['limit'] . '"
+                title="' . $this->props['collection']['no_rated_message'] . '"
                 result                
             >';
             $html .= $this->get_wrapper_html();
@@ -93,18 +76,6 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             $html .= '</li>';
 
             return $html;
-        }
-
-        protected function get_overall_stat_html($stats_cumulative_score, $count)
-        {
-            $overall_value = $stats_cumulative_score / $count;
-            $overall_value = $this->get_stat_width($overall_value, $this->props['collection']);
-            $overall_value = is_nan($overall_value) ? 0 : $overall_value;
-            $overall_score = $this->get_stat_score($overall_value, $this->props['collection']);
-
-            $overall_stat_html = $this->get_reviewed_stat(__('Overall', 'helpie-reviews'), $overall_value, $overall_score);
-
-            return $overall_stat_html;
         }
 
         protected function get_wrapper_html()
