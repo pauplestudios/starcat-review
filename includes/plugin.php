@@ -27,6 +27,9 @@ if (!class_exists('\Helpie_Reviews')) {
 
             // These components will handle the hooks internally, no need to call this in a hook
             $this->load_components();
+
+            $user_reviews_repo = new \HelpieReviews\App\Repositories\User_Reviews_Repo();
+            $user_reviews_repo->insert();
         }
 
         public function register_cpt_and_taxonomy()
