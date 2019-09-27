@@ -85,7 +85,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                 array(
                     'id' => 'comparison_table_settings',
                     'title' => 'Comparison Table',
-                    'icon' => 'fa fa-eye',
+                    'icon' => 'fa fa-table',
                     'fields' => array(
 
                         array(
@@ -112,7 +112,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                 array(
                     'id' => 'user_review_settings',
                     'title' => 'User Review',
-                    'icon' => 'fa fa-eye',
+                    'icon' => 'fa fa-commenting',
                     'fields' => array(
 
                         array(
@@ -201,7 +201,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                 array(
                     'id' => 'single_page_settings',
                     'title' => 'Single Page ',
-                    'icon' => 'fa fa-eye',
+                    'icon' => 'fa fa-file',
                     'fields' => array(
 
                         array(
@@ -258,7 +258,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                 array(
                     'id' => 'category_page_settings',
                     'title' => 'Category Page ',
-                    'icon' => 'fa fa-eye',
+                    'icon' => 'fa fa-folder-open',
                     'fields' => array(
 
                         array(
@@ -345,7 +345,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                     // 'parent' => 'user_access',
                     'id' => 'mainpage_settings',
                     'title' => 'Main Page ',
-                    'icon' => 'fa fa-eye',
+                    'icon' => 'fa fa-home',
                     'fields' => array(
 
                         array(
@@ -550,7 +550,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                     // 'parent' => 'user_access',
                     'id' => 'general_settings',
                     'title' => 'General Settings',
-                    'icon' => 'fa fa-eye',
+                    'icon' => 'fa fa-cogs',
                     'fields' => array(
 
                         // array(
@@ -601,8 +601,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         array(
                             'id'          => 'stat-singularity',
                             'type'        => 'select',
-                            'title'       => 'Single or Multiple Stat',
-                            // 'placeholder' => 'Select Stat Type',
+                            'title'       => 'Single or Multiple Stat',                            
                             'options'     => array(
                                 'single'  => 'Single',
                                 'multiple'  => 'Multiple',
