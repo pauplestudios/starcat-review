@@ -120,6 +120,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
                 data-type="' . $this->props['collection']['review_type'] . '"
                 data-limit="' . $this->props['collection']['limit'] . '" 
                 data-valuetype="' . $this->props['collection']['value_type'] . '"
+                data-no-rated-message ="' . $this->props['collection']['no_rated_message'] . '"
                 data-list="items"
                 >';
 
