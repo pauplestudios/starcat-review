@@ -18,6 +18,8 @@ jQuery(document).ready(function($) {
     this.featuresTopInfo = this.table
       .children(".features")
       .children(".top-info");
+    this.features = this.table.find(".features");
+    this.featuresColumn = this.features.find(".cd-features-list");
     this.topInfoHeight = this.featuresTopInfo.innerHeight() + 30;
     this.leftScrolling = false;
     this.filterBtn = this.element.find(".filter");
@@ -45,10 +47,12 @@ jQuery(document).ready(function($) {
       }
     });
     //select single product to filter
-    self.products.on("click", ".top-info", function() {
+    self.products.on("click", ".top-info", function(e) {
+      e.stopPropagation();
       var product = $(this).parents(".product");
-      if (product.hasClass(".hrp-search-filter-wrapper")) {
-        return 1;
+
+      if (product.hasClass("hrp-search-filter-wrapper")) {
+        return true;
       } else {
         if (!self.filtering && product.hasClass("selected")) {
           product.removeClass("selected");
@@ -111,6 +115,7 @@ jQuery(document).ready(function($) {
       $(".ui.search.custom-search").search({
         source: results,
         onSelect: function(result) {
+          console.log(result);
           var content = "";
 
           content = '<li class="product">';
@@ -123,11 +128,21 @@ jQuery(document).ready(function($) {
           content +=
             '<ul class="cd-features-list"><li>2</li><li>4.3</li><li>4.2</li></ul>';
           content += "</li>";
-          console.clear();
-
+          console.log(this.featuresColumn);
           $(".hrp-search-filter-wrapper").before(content);
+
+          var comparisonTables = [];
+          $(".cd-products-comparison-table").each(function() {
+            //create a productsTable object for each .cd-products-comparison-table
+            comparisonTables.push(new productsTable($(this)));
+          });
+          var scrollTop = $(window).scrollTop();
+          comparisonTables.forEach(function(element) {
+            element.updateTopScrolling(scrollTop);
+          });
           self.updateProductTable();
-        }
+        },
+        onResultsAdd: function(html) {}
       });
     });
   };
@@ -244,7 +259,6 @@ jQuery(document).ready(function($) {
       scrollLeft = self.productsWrapper.scrollLeft(),
       selectedProducts = $(".cd-products-columns").find(".product"),
       numberProducts = selectedProducts.length;
-
     selectedProducts.each(function(index) {
       var product = $(this),
         leftTranslate =
@@ -252,7 +266,7 @@ jQuery(document).ready(function($) {
           index * self.productWidth +
           scrollLeft -
           product.offset().left;
-      // setTranformX(product, leftTranslate);
+      setTranformX(product, 0);
 
       if (index == numberProducts - 1) {
         product.one(
@@ -390,44 +404,6 @@ jQuery(document).ready(function($) {
   $(".cd-products-comparison-table").each(function() {
     //create a productsTable object for each .cd-products-comparison-table
     comparisonTables.push(new productsTable($(this)));
-  });
-
-  $(".ui.search.custom-search").search("get result", "cat");
-
-  $(".hrp-search-lists").on("click", ".item", function(e) {
-    e.preventDefault();
-
-    var heading = $(this)
-      .text()
-      .trim();
-    //set value in search field
-    $(".hrp-search-container")
-      .find(".hrp-search-container")
-      .val(heading);
-    $(".hrp-search-lists").hide();
-    let content = "";
-    content = '<li class="product"><div class="top-info">';
-    content += '<div class="check"></div>';
-    content += '<img src="" alt="" class="featured-image">';
-    content += "<h3>" + heading + "</h3></div>";
-    content +=
-      '<ul class="cd-features-list"><li>5</li><li>4.5</li><li>4.5</li></ul>';
-    content += "</div></li>";
-    $(".cd-products-wrapper")
-      .find(".cd-products-columns")
-      .append(content);
-    console.clear();
-    var comparisonTables = [];
-    console.log(comparisonTables);
-    // new productsTable.products(content);
-    $(".cd-products-comparison-table").each(function() {
-      //create a productsTable object for each .cd-products-comparison-table
-      console.log($(this));
-      comparisonTables.push(new productsTable($(this)));
-    });
-    console.log(comparisonTables);
-    checkResize();
-    checkScrolling();
   });
 
   if (comparisonTables.length > 0) {

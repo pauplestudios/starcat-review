@@ -614,7 +614,6 @@ No JS
   display: none;
 }
 
-
 // #hrp-compare-sidebar {
 //   & .hrp-list-items {
 //     margin: 4px 0px;
@@ -681,6 +680,11 @@ No JS
 .hrp-search-container {
   widows: 100%;
   position: relative;
+}
+.hrp-search-filter-wrapper {
+  & .top-info {
+    padding: 15px 5px !important;
+  }
 }
 .hrp-search-lists {
   display: none;
