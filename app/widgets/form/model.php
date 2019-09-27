@@ -42,7 +42,8 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\Model')) {
                         star -> full or half or point
                 */
                 'value_type' => 'point',
-                'no_rated_message' =>  'Not Rated Yet !!!'
+                'no_rated_message' =>  'Not Rated Yet !!!',
+                'animate' => false
             ];
 
             $collection = $this->get_interpreted_collection($collection);
@@ -53,21 +54,30 @@ if (!class_exists('\HelpieReviews\App\Widgets\Form\Model')) {
 
         public function get_itemsProps()
         {
-            $review_post_meta =   get_post_meta($this->post_id, '_helpie_reviews_post_options', true);
-
-            // Return if empty
-            if (!isset($review_post_meta['stats']) || empty($review_post_meta['stats'])) {
-                return [];
-            }
-
-            $stats_list = $review_post_meta['stats']['stats-list'];
+            $stat_items = $this->get_stat_items();
             $stats = [];
 
-            foreach ($stats_list as $key => $stat) {
+            foreach ($stat_items as $key => $stat) {
                 $stats[$stat['stat_name']] = $stat['rating'];
             }
 
             return $stats;
+        }
+
+        protected function get_stat_items()
+        {
+            $post_meta = get_post_meta($this->post_id, '_helpie_reviews_post_options', true);
+            $items = [];
+
+            if (isset($post_meta['multiple-stat']) || !empty($post_meta['multiple-stat'])) {
+                $items = $post_meta['multiple-stat'];
+            }
+
+            if (isset($post_meta['single-stat']) || !empty($post_meta['single-stat'])) {
+                $items[] = $post_meta['single-stat'];
+            }
+
+            return $items;
         }
 
         protected function get_interpreted_collection($collection)

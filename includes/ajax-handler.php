@@ -16,7 +16,8 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
 
         public function register_ajax_actions()
         {
-            add_action('wp_ajax_hrp_listing_action', array($this, 'hrp_listing_action'));
+            // add 'ajax' action when not logged in
+            add_action('wp_ajax_nopriv_hrp_listing_action', array($this, 'hrp_listing_action'));
             add_action('wp_ajax_hrp_listing_action', array($this, 'hrp_listing_action'));
 
             // add 'ajax' action when not logged in
