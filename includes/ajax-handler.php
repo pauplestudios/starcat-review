@@ -31,6 +31,9 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
 
         public function user_review()
         {
+            $user_reviews_repo = new \HelpieReviews\App\Repositories\User_Reviews_Repo();
+            $user_reviews_repo->insert();
+
             error_log(print_r($_POST, true));
             echo json_encode($_POST);
             // error_log('User Review');
