@@ -601,7 +601,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         array(
                             'id'          => 'stat-singularity',
                             'type'        => 'select',
-                            'title'       => 'Single or Multiple Stat',                            
+                            'title'       => 'Single or Multiple Stat',
                             'options'     => array(
                                 'single'  => 'Single',
                                 'multiple'  => 'Multiple',
@@ -847,12 +847,12 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
         public function single_post_pros($prefix, $parent = null)
         {
 
-            $fields = $this->fields->single_post_pros_fields();
+            $fields = $this->fields->single_post_prosandcons_fields('pros-list', 'Pros');
 
             \CSF::createSection($prefix, array(
                 'parent' => $parent,
                 'title' => 'Pros',
-                'icon' => 'fa fa-eye',
+                'icon' => 'fa fa-thumbs-up',
                 'fields' => $fields
             ));
         }
@@ -862,22 +862,13 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
         public function single_post_cons($prefix, $parent = null)
         {
 
-            $fields = $this->fields->single_post_cons_fields();
+            $fields = $this->fields->single_post_prosandcons_fields('cons-list', 'Cons');
 
             \CSF::createSection($prefix, array(
                 'parent' => $parent,
                 'title' => 'Cons',
-                'icon' => 'fa fa-eye',
-                'fields' => array(
-
-                    array(
-                        'id' => 'cons',
-                        'type' => 'fieldset',
-                        'title' => 'Cons',
-                        'fields' => $fields
-                    ),
-
-                ),
+                'icon' => 'fa fa-thumbs-down',
+                'fields' => $fields
             ));
         }
 
