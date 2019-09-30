@@ -50,9 +50,51 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
         {
 
             $defaults = array(
-                'template_source' => 'theme',
+                'template_source' => 'theme', // General Settings Start
                 'enable-pros-cons' => true,
-                'review-location' => [HELPIE_REVIEWS_POST_TYPE]
+                'review-location' => [HELPIE_REVIEWS_POST_TYPE],
+                'stats-type' => 'star',
+                'stats-limit' => 5,
+                'stat-singularity' => 'single',
+                'single-stat-field-name' => 'Overall',
+                'multiple-stat-fields' => [
+                    ['stat' => 'Pricing']
+                ],
+                'mp_slug' => 'reviews', // Mainpage Settings Start
+                'mp_meta_title' => 'Reviews',
+                'mp_meta_description' => 'These are your reviews',
+                'mp_components_order' => [
+                    'mp_show_search' => true,
+                    'mp_show_categories' => true,
+                    'mp_show_review_listing' => true
+                ],
+                'mp_template' => 'boxed',
+                'mp_boxed_description' => false,
+                'mp_cl_cols' => 'three',
+                'cp_show_controls' => true, // Category Page Start 
+                'cp_show_search' => true,
+                'cp_show_sortBy' => true,
+                'cp_show_num_of_reviews_filter' => true,
+                'cp_default_sortBy' => 'recent',
+                'cp_listing_num_of_cols' => 'three',
+                'sp_show_controls' => true, // Single Page Start
+                'sp_rating_combination' => 'combined',
+                'sp_stats_order' => [
+                    'enabled' => [],
+                    'disabled' => []
+                ],
+                'user-review-post-types' => [HELPIE_REVIEWS_POST_TYPE], // User Review Start
+                'ur_show_controls' => true,
+                'ur_controls_subheading' => true,
+                'ur_show_search' => true,
+                'ur_show_sortBy' => true,
+                'ur_enable_replies' => true,
+                'ur_enable_approval' => true,
+                'ur_form' => [
+                    ['Stat' => 'Price']
+                ],
+                'ct_page' => '' // Comparison Table Start
+
             );
 
             return $defaults;
