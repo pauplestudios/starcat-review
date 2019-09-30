@@ -5,6 +5,8 @@ jQuery(document).ready(function($) {
   function productsTable(element) {
     this.element = element;
     this.table = this.element.children(".cd-products-table");
+    this.features = this.table.find(".features");
+    this.featureItems = this.features.find("#hrp-stats-list");
     this.tableHeight = this.table.height();
     this.productsWrapper = this.table.children(".cd-products-wrapper");
     this.tableColumns = this.productsWrapper.children(".cd-products-columns");
@@ -144,22 +146,13 @@ jQuery(document).ready(function($) {
         source: results,
         onSelect: function(result) {
           var that = self;
-          var content = "";
+          console.log("add element");
+          console.log(result);
+          var productContent = self.productElement(result);
 
-          content = '<li class="product">';
-          content += '<div class="top-info"><div class="close-product">';
-          content +=
-            '<i class="window close outline icon" style="font-size:25px;"></i></div>';
-          content +=
-            '<div class="check"></div><img class="featured-image" src="http://localhost/wp-dev/wordpress/wp-content/uploads/2019/08/redmi-notw7.jpg" alt="product image">';
-          content += "<h3>" + result.title + "</h3></div>";
-          content +=
-            '<ul class="cd-features-list"><li>2</li><li>4.3</li><li>4.2</li></ul>';
-          content += "</li>";
-          $(".hrp-search-filter-wrapper").before(content);
+          $(".hrp-search-filter-wrapper").before(productContent);
 
           var products = self.tableColumns.children(".product");
-
           self.products = [];
           self.products = products;
           noOfProducts = self.products.length;
@@ -177,6 +170,46 @@ jQuery(document).ready(function($) {
         onResultsAdd: function(html) {}
       });
     });
+  };
+  //create Product Items
+  productsTable.prototype.productElement = function(result) {
+    var self = this;
+    console.log(result);
+    var featureProductData = [];
+    if (self.featureItems.find("li").length > 0) {
+      self.featureItems.find("li").each(function() {
+        featureProductData.push(
+          $(this)
+            .text()
+            .trim()
+        );
+      });
+    }
+    console.log(featureProductData);
+
+    var content = "";
+    content = '<li class="product">';
+    content += '<div class="top-info"><div class="close-product">';
+    content +=
+      '<i class="window close outline icon" style="font-size:25px;"></i></div>';
+    content +=
+      '<div class="check"></div><img class="featured-image" src="http://localhost/wp-dev/wordpress/wp-content/uploads/2019/08/redmi-notw7.jpg" alt="product image">';
+    content += "<h3>" + result.title + "</h3></div>";
+    content += '<ul class="cd-features-list">';
+    if (result.stats.length > 0) {
+      for (var incr = 0; incr < result.stats.length; incr++) {
+        if ($.inArray(result.stats[incr].stat_name, featureProductData) != -1) {
+          //found that feature
+          content += "<li>" + result.stats[incr].rating + "</li>";
+        } else {
+          //not-found that feature
+          content += "<li>X</li>";
+        }
+      }
+    }
+    content += "</ul>";
+    content += "</li>";
+    return content;
   };
 
   productsTable.prototype.upadteFilterBtn = function() {

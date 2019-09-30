@@ -50,14 +50,14 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
             $html .= '</header>';
             return $html;
         }
-
+        
         public function features($stat_cols)
         {
             $html = '';
             $html .= '<div class="features">';
             $html .= '<div class="top-info">Models</div>';
-            $html .= '<ul class="cd-features-list">';
-            
+            $html .= '<ul class="cd-features-list" id="hrp-stats-list">';
+
             // error_log('$stat_cols : ' . print_r($stat_cols, true));
             for ($ii = 0; $ii < sizeof($stat_cols); $ii++) {
                 $html .= '<li>' . $stat_cols[$ii] . '</li>';
