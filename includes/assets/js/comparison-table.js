@@ -200,8 +200,9 @@ jQuery(document).ready(function($) {
       '<i class="window close outline icon" style="font-size:25px;"></i></div>';
     content += '<div class="check"></div>';
     if (result.image_url === "undefined" || result.image_url == null) {
-      content +=
-        // '<i class="address card outline icon" style="font-size:36px;"></i>';
+      content += '';
+      // content +=
+      // '<i class="address card outline icon" style="font-size:36px;"></i>';
     } else {
       content += '<img class="featured-image" src="' + result.image_url + '">';
     }
