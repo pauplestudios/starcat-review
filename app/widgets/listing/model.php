@@ -61,7 +61,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\Model')) {
             // }
 
             // $collectionProps = array_merge($collectionProps, $args);
-            error_log('$collectionProps : ' . print_r($collectionProps, true));
+            // error_log('$collectionProps : ' . print_r($collectionProps, true));
 
             return $collectionProps;
         }

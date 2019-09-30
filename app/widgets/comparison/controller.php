@@ -18,6 +18,8 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\Controller')) {
         public function get_view($post_ids = [])
         {
             // error_log('$post_ids : ' . print_r($post_ids, true));
+            $post_ids = [40, 42, 47, 49];
+
             $args = array(
                 'post__in' => $post_ids,
                 'post_type' => HELPIE_REVIEWS_POST_TYPE
@@ -25,10 +27,21 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\Controller')) {
 
             $posts = get_posts($args);
 
-            // error_log('$posts : ' . print_r($posts, true));
 
             $stats = $this->model->get($posts);
+
+
             return $this->view->get_html($stats);
+        }
+
+        public function get_hrp_details($search_key)
+        {
+            // echo $search_key;
+            $search_post_data = [];
+            $search_post_data = array('Item1', 'Item2', 'Item3', 'Item4', 'Item5', 'Item6', 'Item7');
+            $data = array('status' => '1', 'data' => $search_post_data);
+            echo json_encode($data, true);
+            wp_die();
         }
     } // END CLASS
 

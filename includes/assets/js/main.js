@@ -8,7 +8,7 @@ var HelpieReviews = {
     init: function() {
         UserReview.init();
         ListControl.init();
-        ReviewsList.init();
+        Comparison.init();
     },
 
     eventHandlers: function() {

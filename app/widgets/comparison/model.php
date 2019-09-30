@@ -49,7 +49,9 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\Model')) {
                 $post_info = [];
                 $post_info['title'] = $post->post_title;
                 $post_info['featured_image_url'] = get_the_post_thumbnail_url($post->ID);
+
                 $post_info['stats'] = [];
+
                 foreach ($stats_list as $key => $single_post_stat) {
                     $stat_name = $single_post_stat['stat_name'];
 
