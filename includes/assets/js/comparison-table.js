@@ -115,25 +115,6 @@ jQuery(document).ready(function($) {
       self.updateProductTable();
     });
 
-    //Product Close Event
-    // self.productCloseBtn.off().on("click", function(event) {
-    //   event.stopPropagation();
-    // var that = self;
-    // var product = $(this).closest(".product");
-    // product.remove();
-    // var products = self.tableColumns.children(".product");
-    // self.products = [];
-    // self.products = products;
-    // noOfProducts = self.products.length;
-    // self.productsNumber = noOfProducts;
-    // self.productWidth = self.products.eq(0).width();
-    // self.productsTopInfo = self.table.find(".top-info");
-    // that.bindEvents();
-    // self.updateProductTable();
-
-    //   self.updateProductTable();
-    // });
-
     //Add Search Product
     var search_data = {
       action: "helpiereview_search_posts",
@@ -147,7 +128,6 @@ jQuery(document).ready(function($) {
         onSelect: function(result) {
           var that = self;
           console.log("add element");
-          console.log(result);
           var productContent = self.productElement(result);
 
           $(".hrp-search-filter-wrapper").before(productContent);
@@ -171,10 +151,11 @@ jQuery(document).ready(function($) {
       });
     });
   };
+
   //create Product Items
   productsTable.prototype.productElement = function(result) {
     var self = this;
-    console.log(result);
+    //console.log(result);
     var featureProductData = [];
     if (self.featureItems.find("li").length > 0) {
       self.featureItems.find("li").each(function() {
@@ -185,6 +166,31 @@ jQuery(document).ready(function($) {
         );
       });
     }
+    var extraFeatures = [];
+    if (result.stats.length > featureProductData.length) {
+      for (var incr = 0; incr < result.stats.length; incr++) {
+        if ($.inArray(result.stats[incr].stat_name, featureProductData) != -1) {
+          //found that feature
+        } else {
+          //not-found that feature
+          extraFeatures.push(result.stats[incr].stat_name);
+        }
+      }
+    }
+
+    //Add Extra Feature in compare table header
+    if (extraFeatures.length > 0) {
+      for (var i = 0; i < extraFeatures.length; i++) {
+        if ($.inArray(result.stats[i].stat_name, featureProductData) != -1) {
+          //found that feature
+        } else {
+          //not-found that feature
+          featureProductData.push(result.stats[i].stat_name);
+        }
+        self.featureItems.append("<li>" + extraFeatures[i] + "</li>");
+      }
+    }
+
     console.log(featureProductData);
 
     var content = "";
