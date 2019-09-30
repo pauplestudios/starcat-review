@@ -75,6 +75,36 @@ if (!class_exists('\HelpieReviews\App\Repositories\User_Reviews_Repo')) {
             }
             return $comment_id;
         }
+
+        public function get_processed_data()
+        {
+            $props['post_id']  = $_POST['post_id'];
+            $props['title'] = $_POST['title'];
+            $props['description'] = $_POST['description'];
+            $props['pros'] = $_POST['pros'];
+            $props['cons'] = $_POST['cons'];
+            $props['stats'] = $_POST['scores'];
+            $props['rating'] = $this->get_rating($props);
+
+            return $props;
+        }
+
+        protected function get_rating($props)
+        {
+            $count = 0;
+            $rating = 0;
+            $cumulative = 0;
+
+            if (isset($props['stats'])) {
+                foreach ($props['stats'] as $key => $value) {
+                    $cumulative += $value;
+                    $count++;
+                }
+
+                return $rating = round($cumulative / $count);
+            }
+            return $rating;
+        }
     }
     // END CLASS
 }

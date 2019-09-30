@@ -33,38 +33,14 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
         public function user_review_submission()
         {
             $user_review_repo = new \HelpieReviews\App\Repositories\User_Reviews_Repo();
-
-            $props['post_id']  = $_POST['post_id'];
-            $props['title'] = $_POST['title'];
-            $props['description'] = $_POST['description'];
-            $props['pros'] = $_POST['pros'];
-            $props['cons'] = $_POST['cons'];
-            $props['stats'] = $_POST['scores'];
-            $props['rating'] = $this->get_rating($props);
+            $props = $user_review_repo->get_processed_data();
 
             $comment_id = $user_review_repo->insert($props);
-            $comments = $user_review_repo->get($comment_id);
+            $review = $user_review_repo->get($comment_id);
 
-            echo json_encode($comments);
+            echo json_encode($review);
 
             wp_die();
-        }
-
-        protected function get_rating($props)
-        {
-            $count = 0;
-            $rating = 0;
-            $cumulative = 0;
-
-            if (isset($props['stats'])) {
-                foreach ($props['stats'] as $key => $value) {
-                    $cumulative += $value;
-                    $count++;
-                }
-
-                return $rating = round($cumulative / $count);
-            }
-            return $rating;
         }
     } // END CLASS
 }
