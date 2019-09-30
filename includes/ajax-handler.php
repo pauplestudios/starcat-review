@@ -42,8 +42,8 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
             $props['stats'] = $_POST['scores'];
             $props['rating'] = $this->get_rating($props);
 
-            $comment_id = $user_review_repo->add_review_to_comment($props);
-            $comments = get_comment($comment_id);
+            $comment_id = $user_review_repo->insert($props);
+            $comments = $user_review_repo->get($comment_id);
 
             echo json_encode($comments);
 
