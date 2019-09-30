@@ -900,7 +900,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         array(
                             'id'    => 'stat_name',
                             'type'  => 'text',
-                            'title' => 'Stat Name'
+                            'title' => 'Stat Name',
+                            'default' => ($id == 'single-stat') ? 'Overall' : ''
                         ),
                         array(
                             'id'    => 'rating',
