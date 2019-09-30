@@ -6,12 +6,13 @@ if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
-    class Star_Rating
+if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Bar_Rating')) {
+    class Bar_Rating
     {
         public function __construct($viewProps)
         {
             $this->props = $viewProps;
+            $this->limit = $viewProps['collection']['limit'];
         }
 
         public function get_view()
@@ -34,12 +35,11 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
         {
             $html = '<li class="review-item">';
 
-            $html .= '<div class="review-item-stars"
+            $html .= '<div class="review-item-bars"
                 title="' . $this->props['collection']['no_rated_message'] . '"
                 result                
             >';
-            $html .= $this->get_wrapper_html();
-            $html .= $this->get_result_html($value);
+            $html .= $this->get_bars_box_html();
             $html .= '<input type="hidden" name="scores[' . strtolower($key) . ']"  value="' . $value . '">';
             $html .= '</div>';
 
@@ -49,22 +49,20 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             $html .= '<span class="review-item-label__score">' . $score . '</span>';
             $html .= '</div>';
 
-
             $html .= '</li>';
 
             return $html;
         }
 
-        protected function get_reviewed_stat($key, $value, $score)
+        public function get_reviewed_stat($key, $value, $score)
         {
             $html = '<li class="reviewed-item">';
 
-            $html .= '<div class="reviewed-item-stars"
+            $html .= '<div class="reviewed-item-bars"
                 title="' . $score . ' / ' . $this->props['collection']['limit'] . '"
             >';
-            $html .= $this->get_wrapper_html();
-            $html .= $this->get_result_html($value);
-            $html .= '<input type="hidden" name="scores[' . strtolower($key) . ']"  value="' . $value . '">';
+            $html .= $this->get_bars_box_html($score, $value);
+            $html .= '<input type="hidden" name="scores[' . strtolower($key) . ']" value="' . $value . '">';
             $html .= '</div>';
 
             $html .= '<div class="reviewed-item-label">';
@@ -78,40 +76,18 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             return $html;
         }
 
-        protected function get_wrapper_html()
+        protected function get_bars_box_html($score = 0, $width = 0)
         {
-            $outline_icon = $this->props['collection']['outline_icon'];
-            $icon_html = "<i class='" . $outline_icon . "'></i>";
-            $image_html = "<img src='" . $outline_icon . "' />";
+            $width = $this->props['collection']['animate'] == true ? 0 : $width;
+            $score = ($score == 0) ? $this->props['collection']['no_rated_message'] : $score . ' / ' . $this->props['collection']['limit'];
 
-            $outline_icon_html = ($this->props['collection']['source_type'] == 'icon') ? $icon_html : $image_html;
-
-            $html = "<div class='stars-wrapper'>";
-            for ($ii = 0; $ii < $this->props['collection']['limit']; $ii++) {
-                $html .= $outline_icon_html;
-            }
-            $html .= "</div>";
-
-            return $html;
-        }
-
-        protected function get_result_html($value)
-        {
-            $icon = $this->props['collection']['icon'];
-            $filled_icon_html = "<i class='" . $icon . "'></i>";
-            $filled_image_html = "<img src='" . $icon . "' />";
-
-            $icon_html = ($this->props['collection']['source_type'] == 'icon') ? $filled_icon_html : $filled_image_html;
-
-            $value = $this->props['collection']['animate'] == true ? 0 : $value;
-
-            $html = '<div class="stars-result" style="width: ' . $value . '%">';
-            for ($ii = 0; $ii < $this->props['collection']['limit']; $ii++) {
-                $html .= $icon_html;
-            }
+            $html = '<div class="bars-wrapper">';
+            $html .= '<div class="bars-result" style="width: ' . $width . '%;"></div>';
+            $html .= '<div class="bars-score"> ' . $score . '</div>';
             $html .= '</div>';
-
             return $html;
         }
     }
 }
+
+// 1 to 10

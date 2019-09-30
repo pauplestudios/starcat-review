@@ -1,5 +1,5 @@
 {
-    "base": "includes/assets/vendors/semantic",
+    "base": "includes/assets/vendors/semantic/",
     "paths": {
         "source": {
             "config": "src/theme.config",
@@ -8,12 +8,12 @@
             "themes": "src/themes/"
         },
         "output": {
-            "packaged": "output/packaged",
-            "uncompressed": "output/components/",
-            "compressed": "output/compressed/",
-            "themes": "output/themes/"
+            "packaged": "bundle",
+            "uncompressed": "bundle/components/",
+            "compressed": "bundle/components/",
+            "themes": "bundle/themes/"
         },
-        "clean": "dist/"
+        "clean": "bundle/"
     },
     "permission": false,
     "autoInstall": false,
@@ -24,17 +24,22 @@
         "image",
         "input",
         "label",
+        "segment",
         "form",
         "grid",
+        "message",
         "table",
         "card",
         "accordion",
         "checkbox",
+        "dimmer",
         "dropdown",
-        "transition",
+        "modal",
         "progress",
         "rating",
         "search",
+        "transition",
+        "api",
         "form"
     ],
     "version": "2.4.2"
