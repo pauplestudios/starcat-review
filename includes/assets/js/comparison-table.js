@@ -155,7 +155,7 @@ jQuery(document).ready(function($) {
   //create Product Items
   productsTable.prototype.productElement = function(result) {
     var self = this;
-    //console.log(result);
+    console.log(result);
     var featureProductData = [];
     if (self.featureItems.find("li").length > 0) {
       self.featureItems.find("li").each(function() {
@@ -191,15 +191,20 @@ jQuery(document).ready(function($) {
       }
     }
 
-    console.log(featureProductData);
+    // console.log(featureProductData);
 
     var content = "";
     content = '<li class="product">';
     content += '<div class="top-info"><div class="close-product">';
     content +=
       '<i class="window close outline icon" style="font-size:25px;"></i></div>';
-    content +=
-      '<div class="check"></div><img class="featured-image" src="http://localhost/wp-dev/wordpress/wp-content/uploads/2019/08/redmi-notw7.jpg" alt="product image">';
+    content += '<div class="check"></div>';
+    if (result.image_url === "undefined" || result.image_url == null) {
+      content +=
+        // '<i class="address card outline icon" style="font-size:36px;"></i>';
+    } else {
+      content += '<img class="featured-image" src="' + result.image_url + '">';
+    }
     content += "<h3>" + result.title + "</h3></div>";
     content += '<ul class="cd-features-list">';
     if (result.stats.length > 0) {
