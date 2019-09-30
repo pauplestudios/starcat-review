@@ -57,7 +57,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
             $html .= '<div class="features">';
             $html .= '<div class="top-info">Models</div>';
             $html .= '<ul class="cd-features-list">';
-
+            
             // error_log('$stat_cols : ' . print_r($stat_cols, true));
             for ($ii = 0; $ii < sizeof($stat_cols); $ii++) {
                 $html .= '<li>' . $stat_cols[$ii] . '</li>';
@@ -156,7 +156,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
             //$html .= '<div class="check"></div>';
             //$html .= '<img class="featured-image" src="" alt="product image">';
             $html .= '<h4>Add Product</h4>';
-            $html .= '<div class="ui search custom-search">';
+            $html .= '<div class="ui search hrp-product-search">';
             $html .= '<div class="ui input">';
             $html .= '<input type="text" class="prompt " placeholder="Search lovely things" />';
             $html .= '</div>';

@@ -1,4 +1,5 @@
 jQuery(document).ready(function($) {
+  console.clear();
   console.log("comparison table");
 
   function productsTable(element) {
@@ -47,8 +48,8 @@ jQuery(document).ready(function($) {
       }
     });
     //select single product to filter
-    self.products.on("click", ".top-info", function(e) {
-      e.stopPropagation();
+    self.products.off().on("click", ".top-info", function(e) {
+      // e.stopPropagation();
       var product = $(this).parents(".product");
 
       if (product.hasClass("hrp-search-filter-wrapper")) {
@@ -95,14 +96,41 @@ jQuery(document).ready(function($) {
       self.updateSlider($(event.target).hasClass("next"));
     });
 
-    //Product Close Event
-    self.productCloseBtn.on("click", function(e) {
-      e.stopPropagation();
+    //New Product Close Event
+    self.products.on("click", ".top-info .close-product", function(event) {
+      event.stopPropagation();
+      var that = self;
       var product = $(this).closest(".product");
       product.remove();
-
+      var products = self.tableColumns.children(".product");
+      self.products = [];
+      self.products = products;
+      noOfProducts = self.products.length;
+      self.productsNumber = noOfProducts;
+      self.productWidth = self.products.eq(0).width();
+      self.productsTopInfo = self.table.find(".top-info");
+      that.bindEvents();
       self.updateProductTable();
     });
+
+    //Product Close Event
+    // self.productCloseBtn.off().on("click", function(event) {
+    //   event.stopPropagation();
+    // var that = self;
+    // var product = $(this).closest(".product");
+    // product.remove();
+    // var products = self.tableColumns.children(".product");
+    // self.products = [];
+    // self.products = products;
+    // noOfProducts = self.products.length;
+    // self.productsNumber = noOfProducts;
+    // self.productWidth = self.products.eq(0).width();
+    // self.productsTopInfo = self.table.find(".top-info");
+    // that.bindEvents();
+    // self.updateProductTable();
+
+    //   self.updateProductTable();
+    // });
 
     //Add Search Product
     var search_data = {
@@ -112,10 +140,10 @@ jQuery(document).ready(function($) {
 
     $.post(hrp_ajax.ajax_url, search_data, function(results) {
       results = JSON.parse(results);
-      $(".ui.search.custom-search").search({
+      $(".ui.search.hrp-product-search").search({
         source: results,
         onSelect: function(result) {
-          console.log(result);
+          var that = self;
           var content = "";
 
           content = '<li class="product">';
@@ -128,19 +156,23 @@ jQuery(document).ready(function($) {
           content +=
             '<ul class="cd-features-list"><li>2</li><li>4.3</li><li>4.2</li></ul>';
           content += "</li>";
-          console.log(this.featuresColumn);
           $(".hrp-search-filter-wrapper").before(content);
 
-          var comparisonTables = [];
-          $(".cd-products-comparison-table").each(function() {
-            //create a productsTable object for each .cd-products-comparison-table
-            comparisonTables.push(new productsTable($(this)));
-          });
-          var scrollTop = $(window).scrollTop();
-          comparisonTables.forEach(function(element) {
-            element.updateTopScrolling(scrollTop);
-          });
+          var products = self.tableColumns.children(".product");
+
+          self.products = [];
+          self.products = products;
+          noOfProducts = self.products.length;
+          self.productsNumber = noOfProducts;
+          self.productWidth = self.products.eq(0).width();
+          self.productsTopInfo = self.table.find(".top-info");
+          that.bindEvents();
           self.updateProductTable();
+        },
+        onResultsClose: function() {
+          //Select After callback function
+          //Clear search query
+          console.log("closed");
         },
         onResultsAdd: function(html) {}
       });
