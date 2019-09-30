@@ -16,20 +16,12 @@ if (!class_exists('\HelpieReviews\App\Builders\Review_Builder')) {
         { }
         public function get_reviews($post_id)
         {
-
-            $stats_controller = new \HelpieReviews\App\Widgets\Stats\Controller($post_id);
-            $html = $stats_controller->get_view();
+            $html = '';
+            $summary = new \HelpieReviews\App\Widgets\Summary\Controller($post_id);
+            $html .= $summary->get_view();
 
             $form_controller = new \HelpieReviews\App\Widgets\Form\Controller($post_id);
             $html .= $form_controller->get_view();
-
-            $enable_pros_cons = HRP_Getter::get('enable-pros-cons');
-
-            if ($enable_pros_cons) {
-
-                $pros_and_cons_controller = new \HelpieReviews\App\Widgets\ProsAndCons\Controller($post_id);
-                $html .= $pros_and_cons_controller->get_view();
-            }
 
             return $html;
         }
