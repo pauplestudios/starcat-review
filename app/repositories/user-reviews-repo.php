@@ -11,7 +11,8 @@ if (!class_exists('\HelpieReviews\App\Repositories\User_Reviews_Repo')) {
     {
         public function get($comment_id)
         {
-            $comments = get_comment($comment_id);
+            // $comments = get_comment($comment_id);
+            $comments = get_comment_meta($comment_id, 'hrp_user_review_props');
             return $comments;
         }
 
@@ -65,6 +66,13 @@ if (!class_exists('\HelpieReviews\App\Repositories\User_Reviews_Repo')) {
 
         public function update($comment_id, $props)
         {
+            $comment = array();
+            $comment['comment_ID'] = $comment_id;
+            $comment['comment_approved'] = 1;
+            $is_updated = wp_update_comment($comment);
+            if ($is_updated) {
+                update_comment_meta($comment_id, 'hrp_user_review_props', $props);
+            }
             return $comment_id;
         }
     }
