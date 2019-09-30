@@ -106,6 +106,8 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
             /*  Helpie Reviews Plugin Translation  */
             // load_plugin_textdomain('helpie-reviews', false, basename(dirname(__FILE__)) . '/languages/');
 
+            // Plugins Actions 
+            new \HelpieReviews\Includes\Actions();
         }
         public function load_admin_hooks()
         {
