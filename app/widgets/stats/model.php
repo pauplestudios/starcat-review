@@ -29,7 +29,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
         public function get_collectionProps()
         {
             $collection = [
-                'singularity' => 'multiple', // single or multiple
+                'singularity' => 'single', // single or multiple
                 'type' => 'star', // star, bar or circle                
                 'show_stats' => ['all'],
                 'source_type' => 'icon', // image or icon 
@@ -51,21 +51,14 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
 
         public function get_itemsProps()
         {
-            $review_post_meta =   get_post_meta($this->post_id, '_helpie_reviews_post_options', true);
-
-            // Return if empty
-            if (!isset($review_post_meta['stats']) || empty($review_post_meta['stats'])) {
-                return [];
-            }
-
-            $stats_list = $review_post_meta['stats']['stats-list'];
+            $stat_items = $this->get_stat_items();
             $stats = [];
 
             if ($this->collection['singularity'] == 'multiple') {
                 $stat_overall_cumulative = 0;
                 $stat_overall_count = 0;
 
-                foreach ($stats_list as $key => $stat) {
+                foreach ($stat_items as $key => $stat) {
                     $stat_overall_cumulative +=  $stat['rating'];
 
                     $stat_value = $this->get_stat_value($stat['rating']);
@@ -89,13 +82,40 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
                 }
 
                 if ($stat_overall_count) {
-                    error_log("cumulative : " . $stat_overall_cumulative);
                     $overall_stat = $this->get_overall_stat($stat_overall_cumulative, $stat_overall_count);
                     $stats = array_merge($overall_stat, $stats);
                 }
             }
 
+            if (($this->collection['singularity'] == 'single') && !empty($stat_items)) {
+
+                $stat_value = $this->get_stat_value($stat_items[0]['rating']);
+                $stat_score = $this->get_stat_score($stat_value);
+
+                $stats[$stat_items[0]['stat_name']] = [
+                    'rating' => $stat_items[0]['rating'],
+                    'value' => $stat_value,
+                    'score' => $stat_score
+                ];
+            }
+
             return $stats;
+        }
+
+        protected function get_stat_items()
+        {
+            $post_meta = get_post_meta($this->post_id, '_helpie_reviews_post_options', true);
+            $items = [];
+
+            if (isset($post_meta['multiple-stat']) || !empty($post_meta['multiple-stat'])) {
+                $items = $post_meta['multiple-stat'];
+            }
+
+            if (isset($post_meta['single-stat']) || !empty($post_meta['single-stat'])) {
+                $items[] = $post_meta['single-stat'];
+            }
+
+            return $items;
         }
 
         protected function get_overall_stat($cumulative, $count)

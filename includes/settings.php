@@ -601,7 +601,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         array(
                             'id'          => 'stat-singularity',
                             'type'        => 'select',
-                            'title'       => 'Single or Multiple Stat',                            
+                            'title'       => 'Single or Multiple Stat',
                             'options'     => array(
                                 'single'  => 'Single',
                                 'multiple'  => 'Multiple',
@@ -909,7 +909,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         array(
                             'id'    => 'stat_name',
                             'type'  => 'text',
-                            'title' => 'Stat Name'
+                            'title' => 'Stat Name',
+                            'default' => ($id == 'single-stat') ? 'Overall' : ''
                         ),
                         array(
                             'id'    => 'rating',

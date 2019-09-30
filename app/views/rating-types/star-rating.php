@@ -40,7 +40,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             >';
             $html .= $this->get_wrapper_html();
             $html .= $this->get_result_html($value);
-            $html .= '<input type="hidden" name="score" value="' . $value . '">';
+            $html .= '<input type="hidden" name="scores[' . strtolower($key) . ']"  value="' . $value . '">';
             $html .= '</div>';
 
             $html .= '<div class="review-item-label">';
@@ -64,7 +64,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             >';
             $html .= $this->get_wrapper_html();
             $html .= $this->get_result_html($value);
-            $html .= '<input type="hidden" name="score" value="' . $value . '">';
+            $html .= '<input type="hidden" name="scores[' . strtolower($key) . ']"  value="' . $value . '">';
             $html .= '</div>';
 
             $html .= '<div class="reviewed-item-label">';
