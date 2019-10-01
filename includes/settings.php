@@ -696,28 +696,15 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         ),
 
                         array(
-                            'id'      => 'stats-step',
+                            'id'      => 'stats-steps',
                             'type'    => 'select',
                             'title'   => 'Steps',
                             'options'   => array(
-                                'half' => 'Half Star',
-                                'full' => 'Full Star',
-                            ),
-                            'dependency' => array('stats-type', '==', 'star'),
-                            'default' => 'half'
-                        ),
-
-                        array(
-                            'id'      => 'stats-step',
-                            'type'    => 'select',
-                            'title'   => 'Steps',
-                            'dependency' => array('stats-type', '==', 'bar'),
-                            'options'   => array(
-                                'progress' => 'Progress',
+                                'precise' => 'Precise',
                                 'half' => 'Half',
                                 'full' => 'Full',
                             ),
-                            'default' => 'progress'
+                            'default' => 'precise'
                         ),
 
                         array(
