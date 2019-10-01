@@ -9,14 +9,14 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\HelpieReviews\App\Widgets\Summary\View')) {
     class View
     {
-        public function __construct($post_id)
+        public function __construct()
+        { }
+
+        public function get($post_id)
         {
             $this->stat = new \HelpieReviews\App\Widgets\Stats\Controller($post_id);
             $this->prosandcons = new \HelpieReviews\App\Widgets\ProsAndCons\Controller($post_id);
-        }
 
-        public function get()
-        {
             $html = '<div class="ui stackable two column grid">';
             $html .= '<div class="column">';
             // Author Summary

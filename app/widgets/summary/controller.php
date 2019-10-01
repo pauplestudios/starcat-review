@@ -9,14 +9,14 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\HelpieReviews\App\Widgets\Summary\Controller')) {
     class Controller
     {
-        public function __construct($post_id)
+        public function __construct()
         {
-            $this->view = new \HelpieReviews\App\Widgets\Summary\View($post_id);
+            $this->view = new \HelpieReviews\App\Widgets\Summary\View();
         }
 
-        public function get_view()
+        public function get_view($post_id)
         {
-            return $this->view->get();
+            return $this->view->get($post_id);
         }
     }
 }
