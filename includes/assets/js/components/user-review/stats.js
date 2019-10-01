@@ -37,7 +37,7 @@ var Stats = {
         const props = {
             type: review.attr("data-type"),
             limit: review.attr("data-limit"),
-            valueType: review.attr("data-valuetype"),
+            steps: review.attr("data-steps"),
             noRatedMessage: review.attr("data-no-rated-message")
         };
 
@@ -131,7 +131,7 @@ var Stats = {
     getStatWidth: function(elementWidth, props) {
         let divisor, statWidth;
 
-        switch (props.valueType) {
+        switch (props.steps) {
             case "full":
                 divisor = props.limit == 5 ? 20 : 10;
                 statWidth = Math.round(elementWidth / divisor) * divisor;
@@ -142,18 +142,12 @@ var Stats = {
                 statWidth = Math.round(elementWidth / divisor) * divisor;
                 break;
 
-            case "point":
-                divisor = 100 / props.limit;
-                statWidth =
-                    props.type == "star"
-                        ? elementWidth
-                        : Math.round(elementWidth / divisor) * divisor;
-                break;
-            case "percentage":
+            case "progress":
                 statWidth = elementWidth;
                 break;
 
             default:
+                // Default is Star 5
                 divisor = props.limit == 5 ? 20 : 10;
                 statWidth = Math.round(elementWidth / divisor) * divisor;
         }
@@ -164,15 +158,8 @@ var Stats = {
     getStatScore: function(statValue, props) {
         let score;
 
-        score = props.limit == 10 ? statValue / 10 : statValue / 20;
-        score = props.valueType == "point" ? score.toFixed(1) : score;
-
-        if (props.type == "bar") {
-            score =
-                props.valueType == "point"
-                    ? statValue / (100 / props.limit)
-                    : statValue;
-        }
+        score = statValue / (100 / props.limit);
+        score = props.steps == "progress" ? score.toFixed(1) : score;
 
         return score;
     }
