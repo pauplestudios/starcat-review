@@ -2,6 +2,8 @@
 
 namespace HelpieReviews\App\Widgets\Stats;
 
+use HelpieReviews\Includes\Settings\HRP_Getter;
+
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -16,33 +18,60 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
 
         public function get_viewProps()
         {
-            $this->collection = $this->get_collectionProps();
+            $args = $this->get_default_args();
+            $this->collection = $this->get_collectionProps($args);
             $this->items = $this->get_itemsProps();
             $view_props = [
                 'collection' => $this->collection,
                 'items' => $this->items
             ];
-            // error_log("Props : " . print_r($view_props['items'], true));
+            error_log("Props : " . print_r($args, true));
             return $view_props;
         }
 
-        public function get_collectionProps()
+        public function get_collectionProps($args)
         {
             $collection = [
-                'singularity' => 'multiple', // single or multiple
-                'type' => 'star', // star, bar or circle                
+                'singularity' => $args['singularity'], // single or multiple
+                'type' =>  $args['type'], // star, bar or circle                
                 'show_stats' => ['all'],
-                'source_type' => 'icon', // image or icon 
-                'animate' => false,
-                'limit' => 5,
+                'source_type' =>  $args['source_type'], // image or icon 
+                'icons' => $args['icons'],
+                'animate' => $args['animate'],
+                'limit' => $args['limit'],
                 'display_rating' => true,
                 'no_rated_message' =>  'Not Rated Yet !!!',
-                'steps' => 'half', // full or half or progress
+                'steps' => $args['steps'], // full or half or progress
             ];
 
             $collection = $this->get_icons($collection);
 
             return $collection;
+        }
+
+        public function get_default_args()
+        {
+            $singularity = HRP_Getter::get('stat-singularity');
+            $type = HRP_Getter::get('stats-type');
+            $stars_limit =  HRP_Getter::get('stats-stars-limit');
+            $bars_limit = HRP_Getter::get('stats-bars-limit');
+            $limit = ($type == 'star') ? $stars_limit : $bars_limit;
+            $source_type = HRP_Getter::get('stats-source-type');
+            $icons = HRP_Getter::get('stats-icons');
+            $steps = HRP_Getter::get('stats-steps');
+            $animate = HRP_Getter::get('stats-animate');
+
+            $args = [
+                'singularity' => $singularity,
+                'type' => $type,
+                'source_type' => $source_type,
+                'icons' => $icons,
+                'steps' => $steps,
+                'limit' => $limit,
+                'animate' => $animate,
+            ];
+
+            return $args;
         }
 
         public function get_itemsProps()
@@ -137,8 +166,8 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
             $collection['outline_icon'] = HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png';
 
             if ($collection['source_type'] == 'icon') {
-                $collection['icon'] = 'star icon';
-                $collection['outline_icon'] = 'star outline icon';
+                $collection['icon'] = $collection['icons'] . ' icon';
+                $collection['outline_icon'] = $collection['icons'] . ' outline icon';
             }
 
             return $collection;
@@ -159,7 +188,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
                     $stat_value = round($rating / $divisor) * $divisor;
                     break;
 
-                case "progress":
+                case "precise":
                     $stat_value = $rating;
                     break;
 
@@ -179,7 +208,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
 
             $stat_score = $stat_value / (100 / $collection['limit']);
 
-            $stat_score = $collection['steps'] == "progress" ? number_format($stat_score, 1) : $stat_score;
+            $stat_score = $collection['steps'] == "precise" ? number_format($stat_score, 1) : $stat_score;
 
             return $stat_score;
         }
