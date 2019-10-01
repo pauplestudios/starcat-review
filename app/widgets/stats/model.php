@@ -22,7 +22,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
                 'collection' => $this->collection,
                 'items' => $this->items
             ];
-            // error_log("Props : " . print_r($view_props, true));
+            // error_log("Props : " . print_r($view_props['items'], true));
             return $view_props;
         }
 
@@ -35,6 +35,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
                 'source_type' => 'icon', // image or icon 
                 'animate' => false,
                 'limit' => 5,
+                'display_rating' => false,
                 /*
                     Value Type Differ for each types 
                     eg: 
