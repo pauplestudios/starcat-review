@@ -29,20 +29,15 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
         public function get_collectionProps()
         {
             $collection = [
-                'singularity' => 'single', // single or multiple
+                'singularity' => 'multiple', // single or multiple
                 'type' => 'star', // star, bar or circle                
                 'show_stats' => ['all'],
                 'source_type' => 'icon', // image or icon 
                 'animate' => false,
                 'limit' => 5,
-                'display_rating' => false,
-                /*
-                    Value Type Differ for each types 
-                    eg: 
-                        bar -> percentage or point
-                        star -> full or half or point
-                */
-                'value_type' => 'point',
+                'display_rating' => true,
+                'no_rated_message' =>  'Not Rated Yet !!!',
+                'steps' => 'half', // full or half or progress
             ];
 
             $collection = $this->get_icons($collection);
@@ -153,7 +148,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
         {
             $collection = $this->collection;
 
-            switch ($collection['value_type']) {
+            switch ($collection['steps']) {
                 case "full":
                     $divisor = $collection['limit'] == 5 ? 20 : 10;
                     $stat_value = round($rating / $divisor) * $divisor;
@@ -164,17 +159,12 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
                     $stat_value = round($rating / $divisor) * $divisor;
                     break;
 
-                case "point":
-                    $divisor = 100 / $collection['limit'];
-                    $stat_value = $collection['type'] == "star" ? $rating : round($rating / $divisor) * $divisor;
-                    break;
-
-                case "percentage":
+                case "progress":
                     $stat_value = $rating;
                     break;
 
                 default:
-                    // Default is Star
+                    // Default is Star 5
                     $divisor = $collection['limit'] == 5 ? 20 : 10;
                     $stat_value = round($rating / $divisor) * $divisor;
             }
@@ -187,13 +177,9 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
         {
             $collection = $this->collection;
 
-            $stat_score = $collection['limit'] == 10 ? $stat_value / 10 : $stat_value / 20;
+            $stat_score = $stat_value / (100 / $collection['limit']);
 
-            $stat_score = $collection['value_type'] == "point" ? number_format($stat_score, 1) : $stat_score;
-
-            if ($collection['type'] == 'bar') {
-                $stat_score = $collection['value_type'] == "point" ? $stat_value / (100 / $collection['limit']) : $stat_value;
-            }
+            $stat_score = $collection['steps'] == "progress" ? number_format($stat_score, 1) : $stat_score;
 
             return $stat_score;
         }
