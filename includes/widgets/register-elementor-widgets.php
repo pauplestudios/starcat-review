@@ -21,8 +21,8 @@ if (!class_exists('\HelpieReviews\Includes\Widgets\Register_Elementor_Widgets'))
                 'title' => 'Review Listing',
                 'icon' => 'fa fa-th-list',
                 'categories' => ['general-elements'],
-                'model' =>  new \HelpieReviews\App\Widgets\Listing\Model(),
-                'view' => new \HelpieReviews\App\Widgets\Listing\Controller(),
+                'model' =>  new \HelpieReviews\App\Components\Listing\Model(),
+                'view' => new \HelpieReviews\App\Components\Listing\Controller(),
             );
 
 

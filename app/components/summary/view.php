@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Widgets\Summary;
+namespace HelpieReviews\App\Components\Summary;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Widgets\Summary\View')) {
+if (!class_exists('\HelpieReviews\App\Components\Summary\View')) {
     class View
     {
         public function __construct()
@@ -14,8 +14,8 @@ if (!class_exists('\HelpieReviews\App\Widgets\Summary\View')) {
 
         public function get($post_id)
         {
-            $this->stat = new \HelpieReviews\App\Widgets\Stats\Controller($post_id);
-            $this->prosandcons = new \HelpieReviews\App\Widgets\ProsAndCons\Controller($post_id);
+            $this->stat = new \HelpieReviews\App\Components\Stats\Controller($post_id);
+            $this->prosandcons = new \HelpieReviews\App\Components\ProsAndCons\Controller($post_id);
 
             $html = '<div class="ui stackable two column grid">';
             $html .= '<div class="column">';

@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Widgets\Form;
+namespace HelpieReviews\App\Components\Form;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Widgets\Form\View')) {
+if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
     class View
     {
         public function __construct($viewProps)

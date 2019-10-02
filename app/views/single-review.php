@@ -28,9 +28,9 @@ if (!class_exists('\HelpieReviews\App\Views\Single_Review')) {
             $html .= "<article>";
             $html .= "<h1 class='title'>" . $this->model->title . "</h1>";
             $html .= "<p class='content'>" . $this->model->content . "</p>";
-            $stats_view = new \HelpieReviews\App\Widgets\Stats\Controller($this->ID);
+            $stats_view = new \HelpieReviews\App\Components\Stats\Controller($this->ID);
             $html .= $stats_view->get_view();
-            $pros_and_cons_view = new \HelpieReviews\App\Widgets\ProsAndCons\Controller($this->ID);
+            $pros_and_cons_view = new \HelpieReviews\App\Components\ProsAndCons\Controller($this->ID);
             $html .= $pros_and_cons_view->get_view();
             $html .= "</article>";
 

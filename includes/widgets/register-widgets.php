@@ -16,8 +16,8 @@ if (!class_exists('\HelpieReviews\Includes\Widgets\Register_Widgets')) {
                     'id' => 'hrp-listing',
                     'name' => 'Review Listing',
                     'description' => 'Review Listing Widget',
-                    'model' =>  new \HelpieReviews\App\Widgets\Listing\Model(),
-                    'view' => new \HelpieReviews\App\Widgets\Listing\Controller(),
+                    'model' =>  new \HelpieReviews\App\Components\Listing\Model(),
+                    'view' => new \HelpieReviews\App\Components\Listing\Controller(),
                 );
 
                 require_once HELPIE_REVIEWS_PATH . '/lib/widgetry/widget-factory.php';

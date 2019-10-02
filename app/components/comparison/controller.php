@@ -1,18 +1,18 @@
 <?php
 
-namespace HelpieReviews\App\Widgets\Comparison;
+namespace HelpieReviews\App\Components\Comparison;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Widgets\Comparison\Controller')) {
+if (!class_exists('\HelpieReviews\App\Components\Comparison\Controller')) {
     class Controller
     {
         public function __construct()
         {
-            $this->model = new \HelpieReviews\App\Widgets\Comparison\Model();
-            $this->view = new \HelpieReviews\App\Widgets\Comparison\View();
+            $this->model = new \HelpieReviews\App\Components\Comparison\Model();
+            $this->view = new \HelpieReviews\App\Components\Comparison\View();
         }
 
         public function get_view($post_ids = [])

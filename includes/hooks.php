@@ -142,7 +142,7 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
             // return "Helllo";
             $review_content = $this->get_review_content();
             $this->utils = new \HelpieReviews\Includes\Utils();
-            $user_review_controller = new \HelpieReviews\App\Widgets\User_Reviews\User_Reviews_Controller();
+            $user_review_controller = new \HelpieReviews\App\Components\User_Reviews\User_Reviews_Controller();
 
             $user_review_content = $user_review_controller->get_view();
             $fullcontent = $content . $review_content . $user_review_content;
@@ -185,7 +185,7 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
             //get hrp resultSets 
             //echo "get hrp resultSets";
             $search_key = $_REQUEST['search_key'];
-            $comparison_controller = new \HelpieReviews\App\Widgets\Comparison\Controller();
+            $comparison_controller = new \HelpieReviews\App\Components\Comparison\Controller();
             $hrp_search_result_sets = $comparison_controller->get_hrp_details($search_key);
             wp_die();
         }
