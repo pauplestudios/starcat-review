@@ -24,7 +24,7 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Loader')) {
 
         public function get_view()
         {
-            $comparison_controller = new \HelpieReviews\App\Widgets\Listing\Controller();
+            $comparison_controller = new \HelpieReviews\App\Components\Listing\Controller();
             $args = [];
             return $comparison_controller->get_view($args);
         }

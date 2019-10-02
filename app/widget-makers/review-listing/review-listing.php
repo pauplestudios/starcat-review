@@ -24,7 +24,7 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
 
         public function get_view($args)
         {
-            $listing_controller = new \HelpieReviews\App\Widgets\Listing\Controller();
+            $listing_controller = new \HelpieReviews\App\Components\Listing\Controller();
             // $args = [];
             return $listing_controller->get_view($args);
         }
