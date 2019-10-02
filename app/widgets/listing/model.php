@@ -40,7 +40,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Listing\Model')) {
 
             // error_log('post_count : ' . $post_count);
             $collectionProps = [
-                'title' => 'Reviews of Category: xxx',
+                'title' => '',
                 'posts_per_page' => $posts_per_page,
                 // 'show_controls' => false,
                 'show_controls' => [

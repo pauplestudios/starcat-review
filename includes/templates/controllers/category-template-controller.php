@@ -14,18 +14,20 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Category_Templa
 
         public function get_view()
         {
-            $args = $this->get_args();
-            $posts = $this->get_category_posts($args);
+
 
             $html = '';
-            $html .= $this->get_category_post_listing($posts);
+            $html .= $this->get_category_post_listing();
             $html .= $this->get_comparison_table();
 
             return $html;
         }
 
-        public function get_category_post_listing($posts)
+        public function get_category_post_listing()
         {
+            $args = $this->get_args();
+            $posts = $this->get_category_posts($args);
+
             $html = '<div class="hrp-category-page-content-area">';
 
             if (isset($posts) && !empty($posts)) {
