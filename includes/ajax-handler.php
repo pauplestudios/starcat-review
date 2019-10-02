@@ -2,6 +2,8 @@
 
 namespace HelpieReviews\Includes;
 
+use HelpieReviews\Includes\Utils\Post;
+
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -14,11 +16,19 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
 
         public function register_ajax_actions()
         {
-            add_action('wp_ajax_hrp_listing_action', array($this, 'hrp_listing_action'));
+            // add 'ajax' action when not logged in
+            add_action('wp_ajax_nopriv_hrp_listing_action', array($this, 'hrp_listing_action'));
             add_action('wp_ajax_hrp_listing_action', array($this, 'hrp_listing_action'));
         }
 
         public function search_posts()
+        {
+            // add 'ajax' action when not logged in
+            add_action('wp_ajax_nopriv_hrp_user_review_submission', [$this, 'user_review_submission']);
+            add_action('wp_ajax_hrp_user_review_submission', [$this, 'user_review_submission']);
+        }
+
+        public function hrp_listing_action()
         {
 
             if (isset($_GET['search'])) {
@@ -40,8 +50,22 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
             }
             return 1;
         }
-    }
+
+        public function user_review_submission()
+        {
+            $user_review_repo = new \HelpieReviews\App\Repositories\User_Reviews_Repo();
+            $props = $user_review_repo->get_processed_data();
+
+            $comment_id = $user_review_repo->insert($props);
+            $review = $user_review_repo->get($comment_id);
+
+            echo json_encode($review);
+
+            wp_die();
+        }
+    } // END CLASS
 }
+
 
 $ajax_hanlder = new \HelpieReviews\Includes\Ajax_Handler();
 

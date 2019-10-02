@@ -1,14 +1,12 @@
-var UserReviewsList = require("./components/user-reviews-list.js");
-var Ratings = require("./components/ratings.js");
-var Form = require("./components/form.js");
+var UserReview = require("./components/user-review.js");
 var ListControl = require("./blocks/list-control.js");
+var ReviewsList = require("./components/reviews-list.js");
 var ComparisonTable = require("./comparison-table.js");
-var Comparison = require("./components/comparison-table/comparison.js");
+var UserReviewsList = require("./components/user-reviews-list.js");
 
 var HelpieReviews = {
     init: function() {
-        UserReviewsList.init();
-        Ratings.init();
+        UserReview.init();
         ListControl.init();
         Comparison.init();
     },

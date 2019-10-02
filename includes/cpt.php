@@ -2,6 +2,8 @@
 
 namespace HelpieReviews\Includes;
 
+use \HelpieReviews\Includes\Settings\HRP_Getter;
+
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -48,11 +50,13 @@ if (!class_exists('\HelpieReviews\Includes\Cpt')) {
                 'filter_items_list' => __('Filter Review Items list', 'helpie-reviews'),
             );
 
+            $cpt_slug = $this->get_cpt_slug();
+
             $args = array(
                 'labels' => $labels,
                 'public' => true,
                 'menu_position' => 26,
-                'menu_icon' => 'dashicons-feedback',
+                'menu_icon' => 'dashicons-star-filled',
                 'show_in_nav_menus' => true,
                 'show_in_rest' => true,
                 'map_meta_cap' => true,
@@ -60,7 +64,7 @@ if (!class_exists('\HelpieReviews\Includes\Cpt')) {
                 'has_archive' => true,
                 'exclude_from_search' => false,
                 'supports' => array('title', 'editor', 'excerpt', 'custom-fields', 'comments', 'revisions', 'page-attributes', 'post-formats', 'thumbnail', 'author'),
-                'rewrite' => array('slug' => $this->post_type_name, 'with_front' => false),
+                'rewrite' => array('slug' => $cpt_slug, 'with_front' => false),
             );
 
             register_post_type($this->post_type_name, $args);
@@ -133,6 +137,29 @@ if (!class_exists('\HelpieReviews\Includes\Cpt')) {
             if (taxonomy_exists('helpdesk_category')) {
                 register_taxonomy_for_object_type('helpdesk_category', $this->post_type_name);
             }
+        }
+
+        /* Protected Methods */
+
+        public function get_cpt_slug()
+        {
+
+
+
+
+
+            // if ($settings_getter->get('mp_slug') == 'archive') {
+            //     $cpt_slug = $this->mp_settings->get_mp_slug();
+            // } else {
+            //     $post_id = $this->get_mp_selected_page();
+            //     $post = get_post($post_id);
+            //     $cpt_slug = $post->post_name;
+            // }
+
+            $cpt_slug = HRP_Getter::get('mp_slug');
+            // $cpt_slug = HRP_Getter::get('review-location');
+
+            return $cpt_slug;
         }
     } // END CLASS
 }

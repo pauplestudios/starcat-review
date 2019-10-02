@@ -13,6 +13,9 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
         {
             // error_log('hooks __construct');
 
+            /* settings getter */
+            require_once(HELPIE_REVIEWS_PATH . 'includes/settings/getter.php');
+
             /*  Reviews Init Hook */
             add_action('init', array($this, 'init_hook'));
 
@@ -45,8 +48,7 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
             /*  Reviews Widget */
             // $this->load_widgets();
 
-            /* settings getter */
-            require_once(HELPIE_REVIEWS_PATH . 'includes/settings/getter.php');
+
 
 
             $register_templates = new \HelpieReviews\Includes\Register_Templates();
@@ -107,6 +109,8 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
             /*  Helpie Reviews Plugin Translation  */
             // load_plugin_textdomain('helpie-reviews', false, basename(dirname(__FILE__)) . '/languages/');
 
+            // Plugins Actions 
+            new \HelpieReviews\Includes\Actions();
         }
         public function load_admin_hooks()
         {
@@ -115,6 +119,12 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
             /* remove 'helpdesk_cateory' taxonomy submenu from Helpie Reviews Menu */
             // $admin->remove_kb_category_submenu();
 
+            /* Vendors */
+            wp_enqueue_style('semantic-css', HELPIE_REVIEWS_URL . "includes/assets/vendors/semantic/bundle/semantic.min.css");
+            wp_enqueue_script('semantic-js', HELPIE_REVIEWS_URL . 'includes/assets/vendors/semantic/bundle/semantic.min.js', array('jquery'));
+
+            wp_enqueue_script('helpie-reviews-script', HELPIE_REVIEWS_URL . 'includes/assets/bundle/admin.bundle.js', array('jquery'));
+            wp_enqueue_style('style-name', HELPIE_REVIEWS_URL . "includes/assets/bundle/admin.bundle.css");
         }
 
         public function load_widgets()
@@ -129,11 +139,10 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
 
         public function content_filter($content)
         {
-            error_log('content_filter : ');
             // return "Helllo";
             $review_content = $this->get_review_content();
             $this->utils = new \HelpieReviews\Includes\Utils();
-            $user_review_controller = new \HelpieReviews\App\Widgets\User_Reviews\User_Reviews_Controller();
+            $user_review_controller = new \HelpieReviews\App\Components\User_Reviews\User_Reviews_Controller();
 
             $user_review_content = $user_review_controller->get_view();
             $fullcontent = $content . $review_content . $user_review_content;
@@ -153,11 +162,10 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
         public function enqueue_scripts()
         {
             /* Vendors */
-            wp_enqueue_style('semantic-css', HELPIE_REVIEWS_URL . "includes/assets/bundle/semantic.min.css");
-            wp_enqueue_script('semantic-js', HELPIE_REVIEWS_URL . 'includes/assets/bundle/semantic.min.js', array('jquery'));
+            wp_enqueue_style('semantic-css', HELPIE_REVIEWS_URL . "includes/assets/vendors/semantic/bundle/semantic.min.css");
+            wp_enqueue_script('semantic-js', HELPIE_REVIEWS_URL . 'includes/assets/vendors/semantic/bundle/semantic.min.js', array('jquery'));
 
             wp_enqueue_style('flexbox-grid', HELPIE_REVIEWS_URL . "includes/assets/vendors/flexboxgrid.min.css");
-
 
             /* Application */
             wp_register_script('helpie-reviews-script', HELPIE_REVIEWS_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'));
@@ -165,8 +173,11 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
                 'ajax_url'  => admin_url('admin-ajax.php')
             ));
             wp_enqueue_script('helpie-reviews-script', HELPIE_REVIEWS_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'));
+            wp_localize_script('helpie-reviews-script', 'hrp_ajax', array(
+                'ajax_url'  => admin_url('admin-ajax.php'),
+                'ajax_nonce' => wp_create_nonce('helpie-reviews-ajax-nonce')
+            ));
             wp_enqueue_style('style-name', HELPIE_REVIEWS_URL . "includes/assets/bundle/main.bundle.css");
-            wp_enqueue_style('FontAwesome', HELPIE_REVIEWS_URL . "includes/assets/vendors/fontawesome/css/fontawesome.min.css");
         }
 
         public function get_hrp_results()
@@ -174,7 +185,7 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
             //get hrp resultSets 
             //echo "get hrp resultSets";
             $search_key = $_REQUEST['search_key'];
-            $comparison_controller = new \HelpieReviews\App\Widgets\Comparison\Controller();
+            $comparison_controller = new \HelpieReviews\App\Components\Comparison\Controller();
             $hrp_search_result_sets = $comparison_controller->get_hrp_details($search_key);
             wp_die();
         }

@@ -44,6 +44,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                 require_once HELPIE_REVIEWS_PATH . 'includes/lib/codestar-framework/codestar-framework.php';
             }
 
+            include_once HELPIE_REVIEWS_PATH . 'includes/settings/helper.php';
             // require_once 'settings-config.php';
 
             if (class_exists('\CSF')) {
@@ -84,7 +85,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                 array(
                     'id' => 'comparison_table_settings',
                     'title' => 'Comparison Table',
-                    'icon' => 'fa fa-eye',
+                    'icon' => 'fa fa-table',
                     'fields' => array(
 
                         array(
@@ -111,7 +112,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                 array(
                     'id' => 'user_review_settings',
                     'title' => 'User Review',
-                    'icon' => 'fa fa-eye',
+                    'icon' => 'fa fa-commenting',
                     'fields' => array(
 
                         array(
@@ -200,7 +201,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                 array(
                     'id' => 'single_page_settings',
                     'title' => 'Single Page ',
-                    'icon' => 'fa fa-eye',
+                    'icon' => 'fa fa-file',
                     'fields' => array(
 
                         array(
@@ -257,7 +258,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                 array(
                     'id' => 'category_page_settings',
                     'title' => 'Category Page ',
-                    'icon' => 'fa fa-eye',
+                    'icon' => 'fa fa-folder-open',
                     'fields' => array(
 
                         array(
@@ -334,20 +335,19 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
         }
         public function mainpage_settings($prefix)
         {
+            $extras = new \HelpieReviews\Includes\Settings\Extras();
+            $main_page_button = $extras->get_main_page_url();
+            // $main_page_button = '';
+
             \CSF::createSection(
                 $prefix,
                 array(
                     // 'parent' => 'user_access',
                     'id' => 'mainpage_settings',
                     'title' => 'Main Page ',
-                    'icon' => 'fa fa-eye',
+                    'icon' => 'fa fa-home',
                     'fields' => array(
-                        array(
-                            'id' => 'mp_slug',
-                            'type' => 'text',
-                            'title' => __('Main Page Slug', 'pauple-helpie'),
-                            'default' => 'reviews',
-                        ),
+
                         array(
                             'id' => 'mp_meta_title',
                             'type' => 'text',
@@ -363,6 +363,19 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             // 'dependency' => array('helpie_mp_location', '==', 'archive'),
                             'desc' => '<strong> Note </strong>: Keep your meta descriptions between 150 and 154 characters.',
                             'default' => 'These are your reviews',
+                        ),
+                        array(
+                            'id' => 'mp_slug',
+                            'type' => 'text',
+                            'title' => __('Main Page Slug', 'pauple-helpie'),
+                            'default' => 'reviews',
+                        ),
+                        array(
+                            'type'    => 'content',
+                            'content' => '<div class="button-container">'
+                                . '<span><b>Where is my main page?</b></span>'
+                                . '<br>'
+                                . $main_page_button . '<span>Save and Refresh Page if you changed it.</span></div>',
                         ),
                         array(
                             'id'        => 'mp_components_order',
@@ -537,7 +550,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                     // 'parent' => 'user_access',
                     'id' => 'general_settings',
                     'title' => 'General Settings',
-                    'icon' => 'fa fa-eye',
+                    'icon' => 'fa fa-cogs',
                     'fields' => array(
 
                         // array(
@@ -586,28 +599,9 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         ),
 
                         array(
-                            'id'        => 'stats-type',
-                            'type'      => 'image_select',
-                            'title'     => 'Stats Type',
-                            'options'   => array(
-                                'star' => 'http://codestarframework.com/assets/images/placeholder/80x80-2c3e50.gif',
-                                'progress' => 'http://codestarframework.com/assets/images/placeholder/80x80-2c3e50.gif',
-                            ),
-                            'default'   => 'star'
-                        ),
-
-                        array(
-                            'id'      => 'stats-limit',
-                            'type'    => 'text',
-                            'title'   => 'Limit',
-                            'default' => '5'
-                        ),
-
-                        array(
                             'id'          => 'stat-singularity',
                             'type'        => 'select',
                             'title'       => 'Single or Multiple Stat',
-                            'placeholder' => 'Select Stat Type',
                             'options'     => array(
                                 'single'  => 'Single',
                                 'multiple'  => 'Multiple',
@@ -616,32 +610,123 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         ),
 
                         array(
-                            'id'      => 'single-stat-field-name',
-                            'type'    => 'text',
-                            'title'   => 'Field Name',
-                            'default' => 'Overall',
-                            'dependency' => array('stat_type', '==', 'single'),
+                            'id'        => 'stats-type',
+                            'type'      => 'image_select',
+                            'title'     => 'Stats Type',
+                            'options'   => array(
+                                'star' => 'http://codestarframework.com/assets/images/placeholder/80x80-2c3e50.gif',
+                                'bar' => 'http://codestarframework.com/assets/images/placeholder/80x80-2c3e50.gif',
+                            ),
+                            'default'   => 'star'
                         ),
 
                         array(
-                            'id'     => 'multiple-stat-fields',
-                            'type'   => 'repeater',
-                            'title'  => 'Stat Fields',
-                            'dependency' => array('stat_type', '==', 'multiple'),
-                            'fields' => array(
+                            'id'      => 'stats-source-type',
+                            'type'    => 'select',
+                            'title'   => 'Source Type',
+                            'options'   => array(
+                                'icon' => 'Icon',
+                                'image' => 'Image',
+                            ),
+                            'dependency' => array('stats-type', '==', 'star'),
+                            'default' => 'icon'
+                        ),
 
+                        array(
+                            'id'      => 'stats-icons',
+                            'type'    => 'icon_dropdown',
+                            'title'   => 'Icons',
+                            'dependency' => array('stats-source-type|stats-type', '==|==', 'icon|star'),
+                            'default' => 'star'
+                        ),
+
+                        array(
+                            'id'      => 'stats-images',
+                            'type'    => 'fieldset',
+                            'title'   => 'Images',
+                            'dependency' => array('stats-source-type|stats-type', '==|==', 'image|star'),
+                            'fields' => array(
                                 array(
-                                    'id'    => 'stat',
-                                    'type'  => 'text',
-                                    'title' => 'Stat1'
+                                    'id'    => 'stats-image',
+                                    'type'    => 'media',
+                                    'title'   => 'Image',
+                                    'library' => 'image',
+                                    'url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png'
+                                ),
+                                array(
+                                    'id'    => 'stats-image-outline',
+                                    'type'    => 'media',
+                                    'title'   => 'Image Outline',
+                                    'library' => 'image',
+                                    'url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png'
                                 ),
 
+                                array(
+                                    'type'    => 'submessage',
+                                    'style'   => 'info',
+                                    'content' => 'Image size below 50 * 50 is enough',
+                                ),
                             ),
                         ),
 
-                    )
+                        array(
+                            'id'      => 'stats-bars-limit',
+                            'title'   => 'Limit',
+                            'type'    => 'slider',
+                            'min'     => 5,
+                            'max'     => 100,
+                            'step'    => 5,
+                            'unit'    => '%',
+                            'default' => 100,
+                            'desc' => 'Bar stat Limit b/w <b> 5 to 100 </b>',
+                            'dependency' => array('stats-type', '==', 'bar'),
+                        ),
 
-                    // 'fields' => $details_fields
+                        array(
+                            'id'      => 'stats-stars-limit',
+                            'title'   => 'Limit',
+                            'type'    => 'slider',
+                            'min'     => 5,
+                            'max'     => 20,
+                            'step'    => 5,
+                            'unit'    => '#',
+                            'default' => 5,
+                            'desc' => 'Star stat scale b/w limit <b> 5 to 20 </b>',
+                            'dependency' => array('stats-type', '==', 'star'),
+                        ),
+
+                        array(
+                            'id'      => 'stats-step',
+                            'type'    => 'select',
+                            'title'   => 'Steps',
+                            'options'   => array(
+                                'half' => 'Half Star',
+                                'full' => 'Full Star',
+                            ),
+                            'dependency' => array('stats-type', '==', 'star'),
+                            'default' => 'half'
+                        ),
+
+                        array(
+                            'id'      => 'stats-step',
+                            'type'    => 'select',
+                            'title'   => 'Steps',
+                            'dependency' => array('stats-type', '==', 'bar'),
+                            'options'   => array(
+                                'progress' => 'Progress',
+                                'half' => 'Half',
+                                'full' => 'Full',
+                            ),
+                            'default' => 'progress'
+                        ),
+
+                        array(
+                            'id' => 'stats-animate',
+                            'type' => 'switcher',
+                            'title' => __('Stat Animate', 'pauple-helpie'),
+                            'default' => false,
+                        ),
+                    )
                 )
             );
         }
@@ -655,7 +740,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
             $con_fields = $this->fields->single_post_cons_fields();
             $rich_snippets_fields = $this->fields->rich_snippets_fields();
 
-            $fields = array_merge($details_field, $stats_fields, $pro_fields, $con_fields, $rich_snippets_fields);
+            $fields = array_merge($details_field, $pro_fields, $con_fields, $rich_snippets_fields);
             \CSF::createSection(
                 $prefix,
                 array(
@@ -796,59 +881,56 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
             ));
         }
 
-
-
-
-
-
-
-
-
-
-
-        // Features - Meta Data Options
+        // Features - Stat Fields Meta Data Options
         public function single_post_features($prefix)
         {
+            $mulitple_stat_fields = $this->get_stat_fields('multiple-stat', 'repeater', 'Multiple Stat');
+            $single_stat_fields = $this->get_stat_fields('single-stat', 'fieldset', 'Single Stat');
+            $fields = (HRP_Getter::get('stat-singularity') == 'single') ? $single_stat_fields : $mulitple_stat_fields;
+
             \CSF::createSection($prefix, array(
-                // 'parent' => 'user_access',
+                'id' => 'stat',
                 'title' => 'Stats',
                 'icon' => 'fa fa-eye',
-                'fields' => array(
+                'fields' => $fields
+            ));
+        }
 
-                    array(
-                        'id' => 'stats',
-                        'type' => 'fieldset',
-                        'title' => 'Features',
-                        'fields' => array(
-                            array(
-                                'id'     => 'stats-list',
-                                'type'   => 'repeater',
-                                'title'  => 'Repeater',
-                                'fields' => array(
+        protected function get_stat_fields($id, $type, $title)
+        {
+            return array(
 
-                                    array(
-                                        'id'    => 'stat_name',
-                                        'type'  => 'text',
-                                        'title' => 'Stat Name'
-                                    ),
-                                    array(
-                                        'id'    => 'rating',
-                                        'type'  => 'text',
-                                        'title' => 'Rating'
-                                    ),
-                                    array(
-                                        'type'    => 'submessage',
-                                        'style'   => 'success',
-                                        'content' => 'Rating 0 - 100 ',
-                                    ),
-                                ),
-                            ),
+                array(
+                    'id'     => $id,
+                    'type'   => $type,
+                    'title'  => $title,
+                    'fields' => array(
+
+                        array(
+                            'id'    => 'stat_name',
+                            'type'  => 'text',
+                            'title' => 'Stat Name',
+                            'default' => ($id == 'single-stat') ? 'Overall' : ''
+                        ),
+                        array(
+                            'id'    => 'rating',
+                            'type'  => 'slider',
+                            'title' => 'Rating',
+                            'min'     => 0,
+                            'max'     => 100,
+                            'step'    => 1,
+                            'unit'    => '%',
+                            'default' => 0
+                        ),
+                        array(
+                            'type'    => 'submessage',
+                            'style'   => 'success',
+                            'content' => 'Rating 0 - 100 ',
                         ),
                     ),
-
-
                 ),
-            ));
+
+            );
         }
     } // END CLASS
 }
