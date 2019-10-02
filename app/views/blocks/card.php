@@ -50,7 +50,9 @@ if (!class_exists('\HelpieReviews\App\Views\Blocks\Card')) {
                 $html .= '<div class="review-card__footer"><a href="' . $item['url'] . '">See all >> </a></div>';
             }
 
-            $html .= '<span class="reviewCount"  data-reviewcount="' . $item['reviews'] . '"></span>';
+            $html .= '<span class="reviewCount"  data-reviewCount="' . $item['reviews'] . '"></span>';
+            $html .= '<span class="postDate"   data-postDate="' . $item['post_date'] .  '"></span>';
+            $html .= '<span class="postModified"   data-postModified="' . $item['post_modified'] .  '"></span>';
             $html .= '</div>';
             $html .= '</div>';
 

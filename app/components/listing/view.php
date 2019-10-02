@@ -101,6 +101,8 @@ if (!class_exists('\HelpieReviews\App\Components\Listing\View')) {
                 'stat_html' => $post->stat_html,
                 'url' => '',
                 'reviews' => $single_review,
+                'post_date' => get_post_time('U', 'false', $post->ID),
+                'post_modified' => get_post_modified_time('U', 'false', $post->ID),
                 'columns' => $collectionProps['columns'],
                 'items_display' => $collectionProps['items_display']
             ];
