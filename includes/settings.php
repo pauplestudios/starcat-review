@@ -587,6 +587,13 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         ),
 
                         array(
+                            'type'    => 'submessage',
+                            'style'   => 'info',
+                            'content' => 'The post edit page of these posts will have the option to add ratings and reviews.',
+                        ),
+
+
+                        array(
                             'id'    => 'enable-pros-cons',
                             'type'  => 'switcher',
                             'title' => 'Enable Pros and Cons',
@@ -597,6 +604,27 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'type' => 'subheading',
                             'content' => 'Stats',
                         ),
+
+                        array(
+                            'id'     => 'stats',
+                            'type'   => 'repeater',
+                            'title'  => 'Stats',
+                            'fields' => array(
+
+                                array(
+                                    'id'    => 'stat_name',
+                                    'type'  => 'text',
+                                    // 'title' => 'Stat Name',
+                                    'placeholder' => 'Your Features Stat Name'
+                                ),
+                            ),
+                        ),
+                        array(
+                            'type'    => 'submessage',
+                            'style'   => 'info',
+                            'content' => 'You can rate each of these stats in the edit post page(author rating). And if you have enabled "user_reviews", your users can rate them from the frontend',
+                        ),
+
 
                         array(
                             'id'          => 'stat-singularity',
@@ -871,7 +899,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
         // Features - Stat Fields Meta Data Options
         public function single_post_features($prefix)
         {
-            $list_of_stat_fields = $this->get_stat_fields('stats-list', 'repeater', 'Stats List');
+            $list_of_stat_fields = $this->get_stat_fields();
 
             \CSF::createSection($prefix, array(
                 'id' => 'stat',
@@ -881,41 +909,59 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
             ));
         }
 
-        protected function get_stat_fields($id, $type, $title)
+        protected function get_stat_fields()
         {
             return array(
 
                 array(
-                    'id'     => $id,
-                    'type'   => $type,
-                    'title'  => $title,
-                    'fields' => array(
-
-                        array(
-                            'id'    => 'stat_name',
-                            'type'  => 'text',
-                            'title' => 'Stat Name',
-                            'default' => ($id == 'single-stat') ? 'Overall' : ''
-                        ),
-                        array(
-                            'id'    => 'rating',
-                            'type'  => 'slider',
-                            'title' => 'Rating',
-                            'min'     => 0,
-                            'max'     => 100,
-                            'step'    => 1,
-                            'unit'    => '%',
-                            'default' => 0
-                        ),
-                        array(
-                            'type'    => 'submessage',
-                            'style'   => 'success',
-                            'content' => 'Rating 0 - 100 ',
-                        ),
-                    ),
+                    'id'     => 'stats-list',
+                    'type'   => 'fieldset',
+                    'title'  => 'Stats List',
+                    'fields'   => $this->get_global_stat(),
                 ),
 
             );
+        }
+
+        protected function get_global_stat()
+        {
+            $stats_list = [];
+
+            $stats = HRP_Getter::get('stats');
+            if (isset($stats) && !empty($stats)) {
+                $i = 0;
+                foreach ($stats as $stat) {
+                    $stats_list[] = [
+                        'id'    => 'stat_name_' . $i,
+                        'type'  => 'text',
+                        'title' => 'Stat Name',
+                        'attributes' => array(
+                            'readonly' => 'readonly',
+                        ),
+                        'default' => $stat['stat_name']
+                    ];
+                    $stats_list[] = array(
+                        'id'    => 'rating_' . $i,
+                        'type'  => 'slider',
+                        'title' => 'Rating',
+                        'min'     => 0,
+                        'max'     => 100,
+                        'step'    => 1,
+                        'unit'    => '%',
+                        'default' => 0
+                    );
+
+                    $stats_list[] = array(
+                        'type'    => 'submessage',
+                        'style'   => 'success',
+                        'content' => 'Rating 0 - 100 ',
+                    );
+
+                    $i++;
+                }
+            }
+            // error_log("Stats : " . print_r($stats_list, true));
+            return $stats_list;
         }
     } // END CLASS
 }

@@ -31,7 +31,6 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
                 self::$options = get_option('helpie-reviews'); // unique id of the framework
             }
 
-
             // self::$options = get_option('helpie-reviews');
             // error_log(' self::$options : ' . print_r(self::$options, true));
             if (isset(self::$options[$option_name])) {

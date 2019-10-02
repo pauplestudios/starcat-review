@@ -51,7 +51,7 @@ if (!class_exists('\HelpieReviews\App\Summary')) {
         protected function get_items()
         {
             $post_meta = get_post_meta(get_the_ID(), '_helpie_reviews_post_options', true);
-
+            // error_log("Options : " . print_r($post_meta, true));
             $items = [];
 
             if (isset($post_meta['stats-list']) || !empty($post_meta['stats-list'])) {
