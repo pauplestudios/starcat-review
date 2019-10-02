@@ -1,25 +1,32 @@
 <?php
 
-namespace HelpieReviews\App\Widget_Makers;
+namespace HelpieReviews\App\Widget_Makers\Review_Listing;
 
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Widget_Makers\Listing')) {
-    class Listing
+if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Loader')) {
+    class Loader
     {
         public function load()
         {
             // Shortcode
-            add_shortcode('helpie_reviews_list', array($this, 'reviews_list'));
+            add_shortcode('helpie_reviews_list', array($this, 'get_view'));
 
             // WordPress Widget
             add_action('widgets_init', [$this, 'register_widget']);
 
             // Elementor Widget
             add_action('elementor/widgets/widgets_registered', [$this, 'register_elementor_widget']);
+        }
+
+        public function get_view()
+        {
+            $comparison_controller = new \HelpieReviews\App\Widgets\Listing\Controller();
+            $args = [];
+            return $comparison_controller->get_view($args);
         }
 
         public function register_widget()
@@ -74,36 +81,6 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Listing')) {
             $elementor_args['view'] = $args['view'];
 
             return $elementor_args;
-        }
-
-        public function propsRegister()
-        {
-
-            $register = [
-                'title' => [
-                    'settings' => ''
-                ],
-                'show_controls' => [
-                    'settings' => 'cp_show_controls'
-                ],
-                'show_search' => [
-                    'settings' => 'cp_show_search'
-                ],
-                'show_sortBy' => [
-                    'settings' => 'show_sortBy'
-                ],
-                'show_num_of_reviews_filter' => [
-                    'settings' => 'cp_show_num_of_reviews_filter'
-                ],
-
-                'default_sortBy' => [
-                    'settings' => 'cp_default_sortBy'
-                ],
-                'listing_num_of_cols' => [
-                    'settings' => 'cp_listing_num_of_cols'
-                ],
-
-            ];
         }
     } // END CLASS
 }
