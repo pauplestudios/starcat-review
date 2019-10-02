@@ -22,10 +22,10 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
             add_action('elementor/widgets/widgets_registered', [$this, 'register_elementor_widget']);
         }
 
-        public function get_view()
+        public function get_view($args)
         {
             $listing_controller = new \HelpieReviews\App\Widgets\Listing\Controller();
-            $args = [];
+            // $args = [];
             return $listing_controller->get_view($args);
         }
 
