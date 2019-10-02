@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Widgets\Stats;
+namespace HelpieReviews\App\Components\Stats;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
+if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
     class Model
     {
         public function __construct($post_id)

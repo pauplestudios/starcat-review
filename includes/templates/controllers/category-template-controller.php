@@ -30,7 +30,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Category_Templa
 
             if (isset($posts) && !empty($posts)) {
                 $args = $this->get_listing_args();
-                $listing_controller = new \HelpieReviews\App\Widgets\Listing\Controller();
+                $listing_controller = new \HelpieReviews\App\Components\Listing\Controller();
                 $html .= $listing_controller->get_view($args);
             } else {
                 $html .= "No Reviews Found";
@@ -56,7 +56,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Category_Templa
         public function get_comparison_table()
         {
             $post_ids = [131, 123, 119];
-            $comparison_controller = new \HelpieReviews\App\Widgets\Comparison\Controller();
+            $comparison_controller = new \HelpieReviews\App\Components\Comparison\Controller();
             return $comparison_controller->get_view($post_ids);
         }
 

@@ -1,18 +1,18 @@
 <?php
 
-namespace HelpieReviews\App\Widgets\Listing;
+namespace HelpieReviews\App\Components\Listing;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Widgets\Listing\Controller')) {
+if (!class_exists('\HelpieReviews\App\Components\Listing\Controller')) {
     class Controller
     {
         public function __construct()
         {
-            $this->model = new \HelpieReviews\App\Widgets\Listing\Model();
-            $this->view = new \HelpieReviews\App\Widgets\Listing\View();
+            $this->model = new \HelpieReviews\App\Components\Listing\Model();
+            $this->view = new \HelpieReviews\App\Components\Listing\View();
         }
 
         public function get_view($args)

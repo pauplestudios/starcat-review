@@ -51,8 +51,8 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Listing\Loader')) {
                 'description' => 'Helpie Reviews Listing Widget',
                 'icon' => 'fa fa-th-list', // Used by Elementor only
                 'categories' => ['general-elements'], // Used by Elementor only
-                'model' =>  new \HelpieReviews\App\Widgets\Listing\Model(),
-                'view' => new \HelpieReviews\App\Widgets\Listing\Controller(),
+                'model' =>  new \HelpieReviews\App\Components\Listing\Model(),
+                'view' => new \HelpieReviews\App\Components\Listing\Controller(),
             ];
 
             return $args;

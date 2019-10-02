@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Widgets\Listing;
+namespace HelpieReviews\App\Components\Listing;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Widgets\Listing\Fields_Model')) {
+if (!class_exists('\HelpieReviews\App\Components\Listing\Fields_Model')) {
     class Fields_Model
     {
         public function __construct()

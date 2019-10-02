@@ -1,13 +1,13 @@
 <?php
 
-namespace HelpieReviews\App\Widgets\Listing;
+namespace HelpieReviews\App\Components\Listing;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
 
-if (!class_exists('\HelpieReviews\App\Widgets\Listing\Style_Config_Model')) {
+if (!class_exists('\HelpieReviews\App\Components\Listing\Style_Config_Model')) {
     class Style_Config_Model
     {
         public function get_config()

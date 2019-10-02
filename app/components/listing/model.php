@@ -1,6 +1,6 @@
 <?php
 
-namespace HelpieReviews\App\Widgets\Listing;
+namespace HelpieReviews\App\Components\Listing;
 
 use \HelpieReviews\App\Abstracts\Widget_Model_Interface as Widget_Model_Interface;
 use \HelpieReviews\App\Abstracts\Widget_Model as Widget_Model;
@@ -10,16 +10,16 @@ if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Widgets\Listing\Model')) {
+if (!class_exists('\HelpieReviews\App\Components\Listing\Model')) {
     class Model extends Widget_Model implements Widget_Model_Interface
     {
 
         public function __construct()
         {
-            $this->fields_model = new \HelpieReviews\App\Widgets\Listing\Fields_Model();
+            $this->fields_model = new \HelpieReviews\App\Components\Listing\Fields_Model();
             $this->cat_posts_repo = new \HelpieReviews\App\Repositories\Category_Posts_Repo();
             parent::__construct($this->fields_model);
-            $this->style_config = new \HelpieReviews\App\Widgets\Listing\Style_Config_Model();
+            $this->style_config = new \HelpieReviews\App\Components\Listing\Style_Config_Model();
             // $this->fields_model = $fields_model;
         }
 

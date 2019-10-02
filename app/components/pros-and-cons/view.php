@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Widgets\ProsAndCons;
+namespace HelpieReviews\App\Components\ProsAndCons;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Widgets\ProsAndCons\View')) {
+if (!class_exists('\HelpieReviews\App\Components\ProsAndCons\View')) {
     class View
     {
         private $html;
