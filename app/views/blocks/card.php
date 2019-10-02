@@ -39,8 +39,12 @@ if (!class_exists('\HelpieReviews\App\Views\Blocks\Card')) {
             }
 
             if ($this->show_item('content')) {
-                $html .= '<div class="review-card__body">' . $item['content'] . '</div>';
+                $html .= '<div class="review-card__body">' . $item['content'] . $item['stat_html'] . '</div>';
             }
+
+
+
+
 
             if ($this->show_item('link')) {
                 $html .= '<div class="review-card__footer"><a href="' . $item['url'] . '">See all >> </a></div>';

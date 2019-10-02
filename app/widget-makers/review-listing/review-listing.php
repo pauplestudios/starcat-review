@@ -2,6 +2,7 @@
 
 namespace HelpieReviews\App\Widget_Makers\Review_Listing;
 
+use \HelpieReviews\Includes\Settings\HRP_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -24,9 +25,25 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
 
         public function get_view($args)
         {
+            $cat_posts_repo = new \HelpieReviews\App\Repositories\Category_Posts_Repo();
+            $posts = $cat_posts_repo->get_category_posts($args);
+
+            /* Stat HTML */
+            foreach ($posts as $key => $post) {
+                $stats_controller = new \HelpieReviews\App\Components\Stats\Controller($post->ID);
+                $post->stat_html = $stats_controller->get_view();
+            }
+
+            $component_args = [
+                'posts' => $posts,
+                'show_controls' => HRP_Getter::get('cp_show_controls'),
+                'show_search' => HRP_Getter::get('cp_show_search'),
+                'show_sortBy' => HRP_Getter::get('cp_show_sortBy'),
+                'show_num_of_reviews_filter' => HRP_Getter::get('cp_show_num_of_reviews_filter'),
+            ];
+
             $listing_controller = new \HelpieReviews\App\Components\Listing\Controller();
-            // $args = [];
-            return $listing_controller->get_view($args);
+            return $listing_controller->get_view($component_args);
         }
 
         public function register_widget()
@@ -83,34 +100,34 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
             return $elementor_args;
         }
 
-        public function propsRegister()
-        {
+        // public function propsRegister()
+        // {
 
-            $register = [
-                'title' => [
-                    'settings' => ''
-                ],
-                'show_controls' => [
-                    'settings' => 'cp_show_controls'
-                ],
-                'show_search' => [
-                    'settings' => 'cp_show_search'
-                ],
-                'show_sortBy' => [
-                    'settings' => 'show_sortBy'
-                ],
-                'show_num_of_reviews_filter' => [
-                    'settings' => 'cp_show_num_of_reviews_filter'
-                ],
+        //     $register = [
+        //         'title' => [
+        //             'settings' => ''
+        //         ],
+        //         'show_controls' => [
+        //             'settings' => 'cp_show_controls'
+        //         ],
+        //         'show_search' => [
+        //             'settings' => 'cp_show_search'
+        //         ],
+        //         'show_sortBy' => [
+        //             'settings' => 'cp_show_sortBy'
+        //         ],
+        //         'show_num_of_reviews_filter' => [
+        //             'settings' => 'cp_show_num_of_reviews_filter'
+        //         ],
 
-                'default_sortBy' => [
-                    'settings' => 'cp_default_sortBy'
-                ],
-                'listing_num_of_cols' => [
-                    'settings' => 'cp_listing_num_of_cols'
-                ],
+        //         'default_sortBy' => [
+        //             'settings' => 'cp_default_sortBy'
+        //         ],
+        //         'listing_num_of_cols' => [
+        //             'settings' => 'cp_listing_num_of_cols'
+        //         ],
 
-            ];
-        }
+        //     ];
+        // }
     } // END CLASS
 }

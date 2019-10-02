@@ -98,6 +98,7 @@ if (!class_exists('\HelpieReviews\App\Components\Listing\View')) {
             $item = [
                 'title' => $post->post_title,
                 'content' => $excerpt,
+                'stat_html' => $post->stat_html,
                 'url' => '',
                 'reviews' => $single_review,
                 'columns' => $collectionProps['columns'],
