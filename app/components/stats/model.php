@@ -2,8 +2,6 @@
 
 namespace HelpieReviews\App\Components\Stats;
 
-use HelpieReviews\Includes\Settings\HRP_Getter;
-
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -11,21 +9,16 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
     class Model
     {
-        public function __construct($post_id)
+        public function get_viewProps($args)
         {
-            $this->post_id = $post_id;
-        }
-
-        public function get_viewProps()
-        {
-            $args = $this->get_default_args();
             $this->collection = $this->get_collectionProps($args);
-            $this->items = $this->get_itemsProps();
+            $this->items = $this->get_itemsProps($args);
+
             $view_props = [
                 'collection' => $this->collection,
                 'items' => $this->items
             ];
-            // error_log("Props : " . print_r($args, true));
+
             return $view_props;
         }
 
@@ -50,37 +43,14 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
             return $collection;
         }
 
-        public function get_default_args()
+        public function get_itemsProps($args)
         {
-            $singularity = HRP_Getter::get('stat-singularity');
-            $type = HRP_Getter::get('stats-type');
-            $stars_limit =  HRP_Getter::get('stats-stars-limit');
-            $bars_limit = HRP_Getter::get('stats-bars-limit');
-            $limit = ($type == 'star') ? $stars_limit : $bars_limit;
-            $source_type = HRP_Getter::get('stats-source-type');
-            $icons = HRP_Getter::get('stats-icons');
-            $images = HRP_Getter::get('stats-images');
-            $steps = HRP_Getter::get('stats-steps');
-            $animate = HRP_Getter::get('stats-animate');
-
-            $args = [
-                'singularity' => $singularity,
-                'type' => $type,
-                'source_type' => $source_type,
-                'icons' => $icons,
-                'images' => $images,
-                'steps' => $steps,
-                'limit' => $limit,
-                'animate' => $animate,
-            ];
-
-            return $args;
-        }
-
-        public function get_itemsProps()
-        {
-            $stat_items = $this->get_stat_items();
             $stats = [];
+            if (!isset($args['items']['stats-list']) && empty($args['items']['stats-list'])) {
+                return $stats;
+            }
+
+            $stat_items = $args['items']['stats-list'];
 
             if ($this->collection['singularity'] == 'multiple') {
                 $stat_overall_cumulative = 0;
@@ -128,18 +98,6 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
             }
 
             return $stats;
-        }
-
-        protected function get_stat_items()
-        {
-            $post_meta = get_post_meta($this->post_id, '_helpie_reviews_post_options', true);
-            $items = [];
-
-            if (isset($post_meta['stats-list']) || !empty($post_meta['stats-list'])) {
-                $items = $post_meta['stats-list'];
-            }
-
-            return $items;
         }
 
         protected function get_overall_stat($cumulative, $count)

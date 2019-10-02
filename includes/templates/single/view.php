@@ -16,13 +16,13 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Single\View')) {
 
         public function get_html()
         {
-            $summary = new \HelpieReviews\App\Components\Summary\Controller();
+            $summary = new \HelpieReviews\App\Summary();
             $form_controller = new \HelpieReviews\App\Components\Form\Controller($this->post->ID);
 
             $html = "<article>";
             $html .= "<h1 class='title'>" . $this->post->post_title . "</h1>";
             $html .= "<p class='content'>" . $this->post->post_content . "</p>";
-            $html .= $summary->get_view($this->post->ID);
+            $html .= $summary->get_view();
             $html .= $form_controller->get_view();
             $html .= "</article>";
 

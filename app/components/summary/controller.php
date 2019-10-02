@@ -14,9 +14,9 @@ if (!class_exists('\HelpieReviews\App\Components\Summary\Controller')) {
             $this->view = new \HelpieReviews\App\Components\Summary\View();
         }
 
-        public function get_view($post_id)
+        public function get_view($args)
         {
-            return $this->view->get($post_id);
+            return $this->view->get($args);
         }
     }
 }

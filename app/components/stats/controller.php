@@ -9,10 +9,10 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\HelpieReviews\App\Components\Stats\Controller')) {
     class Controller
     {
-        public function __construct($post_id)
+        public function __construct($args)
         {
-            $this->model = new \HelpieReviews\App\Components\Stats\Model($post_id);
-            $viewProps = $this->model->get_viewProps();
+            $this->model = new \HelpieReviews\App\Components\Stats\Model();
+            $viewProps = $this->model->get_viewProps($args);
             $this->view = new \HelpieReviews\App\Components\Stats\View($viewProps);
         }
 

@@ -17,8 +17,8 @@ if (!class_exists('\HelpieReviews\App\Builders\Review_Builder')) {
         public function get_reviews($post_id)
         {
             $html = '';
-            $summary = new \HelpieReviews\App\Components\Summary\Controller();
-            $html .= $summary->get_view($post_id);
+            $summary = new \HelpieReviews\App\Summary();
+            $html .= $summary->get_view();
 
             $form_controller = new \HelpieReviews\App\Components\Form\Controller($post_id);
             $html .= $form_controller->get_view();
