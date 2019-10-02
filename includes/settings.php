@@ -614,9 +614,10 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'type'      => 'image_select',
                             'title'     => 'Stats Type',
                             'options'   => array(
-                                'star' => 'http://codestarframework.com/assets/images/placeholder/80x80-2c3e50.gif',
-                                'bar' => 'http://codestarframework.com/assets/images/placeholder/80x80-2c3e50.gif',
+                                'star' => HELPIE_REVIEWS_URL . 'includes/assets/img/stars-stat.png',
+                                'bar' => HELPIE_REVIEWS_URL . 'includes/assets/img/bars-stat.png',
                             ),
+                            'desc' => 'choose between star and bars stats types',
                             'default'   => 'star'
                         ),
 

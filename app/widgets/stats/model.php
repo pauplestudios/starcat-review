@@ -58,6 +58,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Stats\Model')) {
             $limit = ($type == 'star') ? $stars_limit : $bars_limit;
             $source_type = HRP_Getter::get('stats-source-type');
             $icons = HRP_Getter::get('stats-icons');
+            $icons = HRP_Getter::get('stats-images');
             $steps = HRP_Getter::get('stats-steps');
             $animate = HRP_Getter::get('stats-animate');
 
