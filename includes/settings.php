@@ -648,18 +648,26 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'dependency' => array('stats-source-type|stats-type', '==|==', 'image|star'),
                             'fields' => array(
                                 array(
-                                    'id'    => 'stats-image',
+                                    'id'    => 'image',
                                     'type'    => 'media',
                                     'title'   => 'Image',
                                     'library' => 'image',
-                                    'url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png'
+                                    'placeholder'  => 'http://',
+                                    'default' => [
+                                        'url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png',
+                                        'thumbnail' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png'
+                                    ]
                                 ),
                                 array(
-                                    'id'    => 'stats-image-outline',
+                                    'id'    => 'image-outline',
                                     'type'    => 'media',
-                                    'title'   => 'Image Outline',
+                                    'title'   => 'Outline Image',
                                     'library' => 'image',
-                                    'url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png'
+                                    'placeholder'  => 'http://',
+                                    'default' => [
+                                        'url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png',
+                                        'thumbnail' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png'
+                                    ],
                                 ),
 
                                 array(
@@ -863,15 +871,13 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
         // Features - Stat Fields Meta Data Options
         public function single_post_features($prefix)
         {
-            $mulitple_stat_fields = $this->get_stat_fields('multiple-stat', 'repeater', 'Multiple Stat');
-            $single_stat_fields = $this->get_stat_fields('single-stat', 'fieldset', 'Single Stat');
-            $fields = (HRP_Getter::get('stat-singularity') == 'single') ? $single_stat_fields : $mulitple_stat_fields;
+            $list_of_stat_fields = $this->get_stat_fields('stats-list', 'repeater', 'Stats List');
 
             \CSF::createSection($prefix, array(
                 'id' => 'stat',
                 'title' => 'Stats',
                 'icon' => 'fa fa-eye',
-                'fields' => $fields
+                'fields' => $list_of_stat_fields
             ));
         }
 

@@ -57,6 +57,17 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
                 'stats-type' => 'star',
                 'stats-source-type' => 'icon',
                 'stats-icons' => 'star',
+                'stats-images' => [
+                    'image' => [
+                        'url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png',
+                        'thumbnail' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png'
+                    ],
+
+                    'image-outline' => [
+                        'url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png',
+                        'thumbnail' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png'
+                    ]
+                ],
                 'stats-steps' => 'precise',
                 'stats-bars-limit' => 100,
                 'stats-stars-limit' => 5,
