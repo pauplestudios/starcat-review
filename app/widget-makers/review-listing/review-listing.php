@@ -43,7 +43,7 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
                 'num_of_cols' => HRP_Getter::get('cp_listing_num_of_cols'),
             ];
 
-            error_log('$component_args : ' . print_r($component_args, true));
+            // error_log('$component_args : ' . print_r($component_args, true));
 
             $listing_controller = new \HelpieReviews\App\Components\Listing\Controller();
             return $listing_controller->get_view($component_args);

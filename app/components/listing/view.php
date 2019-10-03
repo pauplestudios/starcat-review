@@ -66,8 +66,7 @@ if (!class_exists('\HelpieReviews\App\Components\Listing\View')) {
         private function get_card_collection($viewProps)
         {
             $posts = $viewProps['items'];
-
-            error_log('count : ' . count($posts));
+            // error_log('count : ' . count($posts));
 
             $html = '';
             $html .= '<div id="hrp-cat-collection" class="hrp-collection list row">';
@@ -78,7 +77,6 @@ if (!class_exists('\HelpieReviews\App\Components\Listing\View')) {
 
                 // Assign card to html
                 $html .= $this->get_single_card($post, $ii, $viewProps);
-
                 // increment $ii
                 $ii++;
             }
@@ -93,12 +91,9 @@ if (!class_exists('\HelpieReviews\App\Components\Listing\View')) {
             $collectionProps = $viewProps['collection'];
             $reviews = [2, 4, 7, 25, 50, 75, 100];
 
-
             $excerpt = $this->get_excerpt($post->post_content);
             $single_review = isset($reviews[$ii]) ? $reviews[$ii] : 1;
 
-            $stats_controller = new \HelpieReviews\App\Widgets\Stats\Controller($post->ID);
-            $stats_html = $stats_controller->get_view();
 
             $item = [
                 'title' => $post->post_title,
@@ -110,11 +105,11 @@ if (!class_exists('\HelpieReviews\App\Components\Listing\View')) {
                 'post_modified' => get_post_modified_time('U', 'false', $post->ID),
                 'columns' => $collectionProps['columns'],
                 'items_display' => $collectionProps['items_display'],
-                'stats_html' => $stats_html
             ];
 
             return $this->card->get_view($item);
         }
+
         private function get_excerpt($content)
         {
             $word_count = 150;
