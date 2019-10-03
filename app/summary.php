@@ -22,6 +22,7 @@ if (!class_exists('\HelpieReviews\App\Summary')) {
 
         public function get_default_args()
         {
+            $global_stats = HRP_Getter::get('global_stats');
             $singularity = HRP_Getter::get('stat-singularity');
             $type = HRP_Getter::get('stats-type');
             $stars_limit =  HRP_Getter::get('stats-stars-limit');
@@ -34,6 +35,7 @@ if (!class_exists('\HelpieReviews\App\Summary')) {
             $animate = HRP_Getter::get('stats-animate');
 
             $args = [
+                'global_stats' => $global_stats,
                 'items' => $this->get_items(),
                 'singularity' => $singularity,
                 'type' => $type,

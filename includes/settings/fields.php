@@ -124,6 +124,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings\Fields')) {
                         array(
                             'id' => 'item',
                             'type'  => 'text',
+                            'placeholder' => strtolower($title)
                         ),
                     ),
                 ),

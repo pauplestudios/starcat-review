@@ -63,9 +63,9 @@ if (!class_exists('\HelpieReviews\App\Components\ProsAndCons\Model')) {
                 return $is_empty;
             }
 
-            if (!is_array($items) || !is_object($items)) {
-                return $is_empty;
-            }
+            // if (!is_array($items) || !is_object($items)) {
+            //     return $is_empty;
+            // }
 
             $is_pros_empty = (!isset($items['pros-list']) || empty($items['pros-list']));
             $is_cons_empty = (!isset($items['cons-list']) || empty($items['cons-list']));

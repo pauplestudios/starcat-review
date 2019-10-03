@@ -52,6 +52,10 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
 
         private function get_pagination_html($viewProps)
         {
+            if (!isset($viewProps['collection']['total_pages']) || empty($viewProps['collection']['total_pages'])) {
+                return '';
+            }
+
             $html = '';
             $html .= '<ul class="ui pagination hrp-pagination menu">';
 

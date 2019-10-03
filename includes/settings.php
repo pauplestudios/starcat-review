@@ -606,16 +606,14 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         ),
 
                         array(
-                            'id'     => 'stats',
+                            'id'     => 'global_stats',
                             'type'   => 'repeater',
                             'title'  => 'Stats',
                             'fields' => array(
-
                                 array(
                                     'id'    => 'stat_name',
                                     'type'  => 'text',
-                                    // 'title' => 'Stat Name',
-                                    'placeholder' => 'Your Features Stat Name'
+                                    'placeholder' => 'Feature'
                                 ),
                             ),
                         ),
@@ -920,7 +918,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
         {
             $stats_list = [];
 
-            $stats = HRP_Getter::get('stats');
+            $stats = HRP_Getter::get('global_stats');
             if (isset($stats) && !empty($stats)) {
                 $stats_list[] = array(
                     'type'    => 'submessage',
@@ -930,7 +928,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                 foreach ($stats as $stat) {
 
                     $stats_list[] = array(
-                        'id'     => $iteration,
+                        'id'     => strtolower($stat['stat_name']),
                         'type'   => 'fieldset',
                         'fields' => array(
                             array(

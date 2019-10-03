@@ -50,11 +50,7 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
                 return $stats;
             }
 
-            if (!is_array($args['items']['stats-list']) || !is_object($args['items']['stats-list'])) {
-                return $stats;
-            }
-
-            $stat_items = $args['items']['stats-list'];
+            $stat_items = $this->get_filter_stats($args);
 
             if ($this->collection['singularity'] == 'multiple') {
                 $stat_overall_cumulative = 0;
@@ -99,6 +95,17 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
                     'value' => $stat_value,
                     'score' => $stat_score
                 ];
+            }
+
+            return $stats;
+        }
+
+        protected function get_filter_stats($args)
+        {
+            $stats = [];
+            foreach ($args['global_stats'] as $allowed_stat) {
+                $allowed_stat_name = strtolower($allowed_stat['stat_name']);
+                $stats[$allowed_stat_name] = $args['items']['stats-list'][$allowed_stat_name];
             }
 
             return $stats;
