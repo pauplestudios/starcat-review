@@ -35,6 +35,7 @@ if (!class_exists('\HelpieReviews\App\Components\ProsAndCons\Model')) {
                 return [];
             }
 
+
             $pros_list = $args['items']['pros-list'];
             $cons_list = $args['items']['cons-list'];
 
@@ -59,6 +60,10 @@ if (!class_exists('\HelpieReviews\App\Components\ProsAndCons\Model')) {
             $is_empty = true;
 
             if (!isset($items) || empty($items)) {
+                return $is_empty;
+            }
+
+            if (!is_array($items) || !is_object($items)) {
                 return $is_empty;
             }
 

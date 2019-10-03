@@ -932,11 +932,11 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                     'type'    => 'submessage',
                     'content' => 'Stats List',
                 );
-
-                for ($i = 0; $i < count($stats); $i++) {
+                $iteration = 0;
+                foreach ($stats as $stat) {
 
                     $stats_list[] = array(
-                        'id'     => $stats[$i]['stat_name'] . $i,
+                        'id'     => $iteration,
                         'type'   => 'fieldset',
                         'fields' => array(
                             array(
@@ -946,7 +946,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                                 'attributes' => array(
                                     'readonly' => 'readonly',
                                 ),
-                                'default' => $stats[$i]['stat_name']
+                                'default' => $stat['stat_name']
                             ),
 
                             array(
@@ -967,6 +967,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             ),
                         ),
                     );
+
+                    $iteration++;
                 }
             }
 

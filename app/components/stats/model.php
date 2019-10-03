@@ -50,13 +50,17 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
                 return $stats;
             }
 
+            if (!is_array($args['items']['stats-list']) || !is_object($args['items']['stats-list'])) {
+                return $stats;
+            }
+
             $stat_items = $args['items']['stats-list'];
 
             if ($this->collection['singularity'] == 'multiple') {
                 $stat_overall_cumulative = 0;
                 $stat_overall_count = 0;
 
-                foreach ($stat_items as $key => $stat) {
+                foreach ($stat_items as $stat) {
                     $stat_overall_cumulative +=  $stat['rating'];
 
                     $stat_value = $this->get_stat_value($stat['rating']);
