@@ -59,7 +59,7 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
                 foreach ($stat_items as $stat) {
                     $stat_overall_cumulative +=  $stat['rating'];
 
-                    $stat_value = $this->get_stat_value($stat['rating']);
+                    $stat_value = $stat['rating'];
                     $stat_score = $this->get_stat_score($stat_value);
 
                     if ($this->is_stat_included('all', $this->collection)) {
@@ -114,7 +114,7 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
         protected function get_overall_stat($cumulative, $count)
         {
             $rating = round($cumulative / $count);
-            $stat_value = $this->get_stat_value($rating);
+            $stat_value = $rating;
             $stat_score = $this->get_stat_score($stat_value);
 
             $overall_stat = [
@@ -143,34 +143,34 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
             return $collection;
         }
 
-        protected function get_stat_value($rating)
-        {
-            $collection = $this->collection;
+        // protected function get_stat_value($rating)
+        // {
+        //     $collection = $this->collection;
 
-            switch ($collection['steps']) {
-                case "full":
-                    $divisor = $collection['limit'] == 5 ? 20 : 10;
-                    $stat_value = round($rating / $divisor) * $divisor;
-                    break;
+        //     switch ($collection['steps']) {
+        //         case "full":
+        //             $divisor = $collection['limit'] == 5 ? 20 : 10;
+        //             $stat_value = round($rating / $divisor) * $divisor;
+        //             break;
 
-                case "half":
-                    $divisor = $collection['limit'] == 5 ? 10 : 5;
-                    $stat_value = round($rating / $divisor) * $divisor;
-                    break;
+        //         case "half":
+        //             $divisor = $collection['limit'] == 5 ? 10 : 5;
+        //             $stat_value = round($rating / $divisor) * $divisor;
+        //             break;
 
-                case "precise":
-                    $stat_value = $rating;
-                    break;
+        //         case "precise":
+        //             $stat_value = $rating;
+        //             break;
 
-                default:
-                    // Default is Star 5
-                    $divisor = $collection['limit'] == 5 ? 20 : 10;
-                    $stat_value = round($rating / $divisor) * $divisor;
-            }
+        //         default:
+        //             // Default is Star 5
+        //             $divisor = $collection['limit'] == 5 ? 20 : 10;
+        //             $stat_value = round($rating / $divisor) * $divisor;
+        //     }
 
-            $stat_value = number_format($stat_value, 0);
-            return $stat_value;
-        }
+        //     $stat_value = number_format($stat_value, 0);
+        //     return $stat_value;
+        // }
 
         protected function get_stat_score($stat_value)
         {
