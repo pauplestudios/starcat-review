@@ -439,7 +439,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'dependency' => array('mp_show_review_listing', '==', 'true'),
                         ),
                         array(
-                            'id' => 'helpie_mp_article_listing_topics',
+                            'id' => 'mp_article_listing_topics',
                             'type' => 'select',
                             'chosen' => true,
                             'multiple' => true,
@@ -451,7 +451,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         ),
 
                         array(
-                            'id' => 'helpie_mp_article_listing_style',
+                            'id' => 'mp_article_listing_style',
                             'type' => 'select',
                             'chosen' => true,
                             'title' => __('Style', 'pauple-helpie'),
@@ -465,7 +465,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         ),
 
                         array(
-                            'id' => 'helpie_mp_article_listing_num_of_cols',
+                            'id' => 'mp_article_listing_num_of_cols',
                             'type' => 'select',
                             'chosen' => true,
                             'title' => __('Num Of Columns', 'pauple-helpie'),
@@ -484,6 +484,13 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'id' => 'mp_categories_settings',
                             'type' => 'subheading',
                             'content' => 'Category Listing',
+                            'dependency' => array('mp_show_categories', '==', 'true'),
+                        ),
+                        array(
+                            'id' => 'mp_category_section_title',
+                            'type' => 'text',
+                            'title' => __('Category Section Title', 'pauple-helpie'),
+                            'default' => 'Review Categories',
                             'dependency' => array('mp_show_categories', '==', 'true'),
                         ),
                         array(
@@ -507,20 +514,6 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'dependency' => array('mp_show_categories', '==', 'true'),
                             'default' => false,
                         ),
-                        // array(
-                        //     'id' => 'category_listing_graphic_type',
-                        //     'type' => 'select',
-                        //     'chosen' => true,
-                        //     'title' => __('Image or Icon', 'pauple-helpie'),
-                        //     'placeholder' => 'Select an option',
-                        //     'options' => array(
-                        //         'image' => __('Image', 'pauple-helpie'),
-                        //         'icon' => __('Icon', 'pauple-helpie'),
-                        //     ),
-                        //     'default' => 'image',
-                        //     'desc' => '<strong>Note </strong>: Default icon color is set from Styles -> Primary Brand Color',
-                        //     'dependency' => array('mp_show_categories', '==', 'true'),
-                        // ),
                         array(
                             'id' => 'mp_cl_cols',
                             'type' => 'select',
