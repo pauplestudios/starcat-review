@@ -17,9 +17,8 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
         public function get_view()
         {
             $html = '';
+            $html .= $this->get_category_listing();
             $html .= $this->get_post_listing();
-            // $html .= $this->get_category_listing();
-
             return $html;
         }
 
@@ -51,6 +50,8 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
                 // $listing_controller = new \HelpieReviews\App\Widgets\Listing\Controller();
                 // $html .= $listing_controller->get_view($args);
                 $listing_controller = new \HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listing();
+
+                $html .= '<h2 class="hrp-section-title">' . HRP_Getter::get('mp_review_listing_title') . '</h2>';
                 $html .= $listing_controller->get_view($args);
             } else {
                 $html .= "No Reviews Found";
@@ -65,7 +66,10 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
         {
             $terms = get_terms('helpie_reviews_category', array('parent' => 0, 'hide_empty' => false));
             $cats_list = new \HelpieReviews\App\Views\Review_Categories();
-            return $cats_list->get_view($terms);
+
+            $html = '<h2 class="hrp-section-title">' . HRP_Getter::get('mp_category_section_title') . '</h2>';
+            $html .= $cats_list->get_view($terms);
+            return $html;
         }
 
         /* Protected */
