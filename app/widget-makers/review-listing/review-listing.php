@@ -25,8 +25,9 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
 
         public function get_view($args)
         {
-            $cat_posts_repo = new \HelpieReviews\App\Repositories\Category_Posts_Repo();
-            $posts = $cat_posts_repo->get_category_posts($args);
+            // $cat_posts_repo = new \HelpieReviews\App\Repositories\Category_Posts_Repo();
+            // $posts = $cat_posts_repo->get_category_posts($args);
+            $posts = $args['posts'];
 
             /* Stat HTML */
             foreach ($posts as $key => $post) {

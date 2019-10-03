@@ -48,7 +48,9 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
             if (isset($posts) && !empty($posts)) {
                 $args = $this->get_listing_args();
                 $args['posts'] = $posts;
-                $listing_controller = new \HelpieReviews\App\Widgets\Listing\Controller();
+                // $listing_controller = new \HelpieReviews\App\Widgets\Listing\Controller();
+                // $html .= $listing_controller->get_view($args);
+                $listing_controller = new \HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listing();
                 $html .= $listing_controller->get_view($args);
             } else {
                 $html .= "No Reviews Found";
