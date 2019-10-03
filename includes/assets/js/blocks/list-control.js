@@ -10,7 +10,9 @@ var UserReviewsList = {
             valueNames: [
                 "review-card__header",
                 "review-card__body",
-                { name: "reviewCount", attr: "data-reviewcount" }
+                { name: "reviewCount", attr: "data-reviewCount" },
+                { name: "postDate", attr: "data-postDate" },
+                { name: "postModified", attr: "data-postModified" }
             ],
 
             page: 10,
@@ -93,6 +95,14 @@ var UserReviewsList = {
                     });
                 } else if (value == "review-count") {
                     thisModule.featureList.sort("reviewCount", {
+                        order: "desc"
+                    });
+                } else if (value == "post-date") {
+                    thisModule.featureList.sort("postDate", {
+                        order: "desc"
+                    });
+                } else if (value == "post-modified") {
+                    thisModule.featureList.sort("postModified", {
                         order: "desc"
                     });
                 }

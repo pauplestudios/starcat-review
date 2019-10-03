@@ -14,23 +14,28 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Category_Templa
 
         public function get_view()
         {
-            $args = $this->get_args();
-            $posts = $this->get_category_posts($args);
+
 
             $html = '';
-            $html .= $this->get_category_post_listing($posts);
+            $html .= $this->get_category_post_listing();
             $html .= $this->get_comparison_table();
 
             return $html;
         }
 
-        public function get_category_post_listing($posts)
+        public function get_category_post_listing()
         {
+            $args = $this->get_args();
+            $posts = $this->get_category_posts($args);
+
             $html = '<div class="hrp-category-page-content-area">';
 
             if (isset($posts) && !empty($posts)) {
                 $args = $this->get_listing_args();
-                $listing_controller = new \HelpieReviews\App\Widgets\Listing\Controller();
+                // $listing_controller = new \HelpieReviews\App\Components\Listing\Controller();
+                // $html .= $listing_controller->get_view($args);
+
+                $listing_controller = new \HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listing();
                 $html .= $listing_controller->get_view($args);
             } else {
                 $html .= "No Reviews Found";
@@ -56,7 +61,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Category_Templa
         public function get_comparison_table()
         {
             $post_ids = [131, 123, 119];
-            $comparison_controller = new \HelpieReviews\App\Widgets\Comparison\Controller();
+            $comparison_controller = new \HelpieReviews\App\Components\Comparison\Controller();
             return $comparison_controller->get_view($post_ids);
         }
 

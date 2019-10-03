@@ -39,15 +39,21 @@ if (!class_exists('\HelpieReviews\App\Views\Blocks\Card')) {
             }
 
             if ($this->show_item('content')) {
-                $html .= '<div class="review-card__body">' . $item['content'] . '</div>';
+                $html .= '<div class="review-card__body">' . $item['content'] . $item['stat_html'] . '</div>';
             }
             $html .= '<div class="review-card__body">' . $item['stats_html'] . '</div>';
+
+
+
+
 
             if ($this->show_item('link')) {
                 $html .= '<div class="review-card__footer"><a href="' . $item['url'] . '">See all >> </a></div>';
             }
 
-            $html .= '<span class="reviewCount"  data-reviewcount="' . $item['reviews'] . '"></span>';
+            $html .= '<span class="reviewCount"  data-reviewCount="' . $item['reviews'] . '"></span>';
+            $html .= '<span class="postDate"   data-postDate="' . $item['post_date'] .  '"></span>';
+            $html .= '<span class="postModified"   data-postModified="' . $item['post_modified'] .  '"></span>';
             $html .= '</div>';
             $html .= '</div>';
 

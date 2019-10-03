@@ -12,11 +12,11 @@ if (!class_exists('\HelpieReviews\Includes\Shortcodes')) {
 
         public function __construct()
         {
-            add_shortcode('helpie_reviews_list', array($this, 'reviews_list'));
+            // add_shortcode('helpie_reviews_list', array($this, 'reviews_list'));
         }
         public function reviews_list()
         {
-            $user_review_controller = new \HelpieReviews\App\Widgets\User_Reviews\User_Reviews_Controller();
+            $user_review_controller = new \HelpieReviews\App\Components\User_Reviews\User_Reviews_Controller();
             return $user_review_controller->get_view();
         }
     } // END CLASS

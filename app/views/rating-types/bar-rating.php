@@ -2,14 +2,12 @@
 
 namespace HelpieReviews\App\Views\Rating_Types;
 
-use \HelpieReviews\App\Views\Rating_Types\Rating_Type as Rating_Type;
-
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
 if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Bar_Rating')) {
-    class Bar_Rating extends Rating_Type
+    class Bar_Rating
     {
         public function __construct($viewProps)
         {
@@ -19,31 +17,16 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Bar_Rating')) {
 
         public function get_view()
         {
-            $stats_cumulative_score = 0;
-            $count = 0;
 
             $html = '<ul class="reviewed-list"
                 data-animate="' . $this->props['collection']['animate'] . '"
             >';
-            $stats_html = '';
 
-            foreach ($this->props['items'] as $key => $value) {
-
-                $stats_cumulative_score += $value;
-                $value = $this->get_stat_width($value, $this->props['collection']);
-                $score = $this->get_stat_score($value, $this->props['collection']);
-
-                if ($this->is_stat_included($key, $this->props['collection'])) {
-                    $stats_html .= $this->get_reviewed_stat($key, $value, $score);
-                }
-
-                $count++;
+            foreach ($this->props['items'] as $key => $stat) {
+                $html .= $this->get_reviewed_stat($key, $stat['value'], $stat['score']);
             }
 
-            $overall_stat_html = $this->get_overall_stat_html($stats_cumulative_score, $count);
-
-            $html .= $overall_stat_html . $stats_html;
-            $html .= "</ul>";
+            $html .= '</ul>';
 
             return $html;
         }
@@ -53,11 +36,11 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Bar_Rating')) {
             $html = '<li class="review-item">';
 
             $html .= '<div class="review-item-bars"
-                title="' . $score . ' / ' . $this->props['collection']['limit'] . '"
+                title="' . $this->props['collection']['no_rated_message'] . '"
                 result                
             >';
             $html .= $this->get_bars_box_html();
-            $html .= '<input type="hidden" name="score" value="' . $value . '">';
+            $html .= '<input type="hidden" name="scores[' . strtolower($key) . ']"  value="' . $value . '">';
             $html .= '</div>';
 
             $html .= '<div class="review-item-label">';
@@ -79,7 +62,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Bar_Rating')) {
                 title="' . $score . ' / ' . $this->props['collection']['limit'] . '"
             >';
             $html .= $this->get_bars_box_html($score, $value);
-            $html .= '<input type="hidden" name="score" value="' . $value . '">';
+            $html .= '<input type="hidden" name="scores[' . strtolower($key) . ']" value="' . $value . '">';
             $html .= '</div>';
 
             $html .= '<div class="reviewed-item-label">';
@@ -96,23 +79,12 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Bar_Rating')) {
         protected function get_bars_box_html($score = 0, $width = 0)
         {
             $width = $this->props['collection']['animate'] == true ? 0 : $width;
+            $score = ($score == 0) ? $this->props['collection']['no_rated_message'] : $score . ' / ' . $this->props['collection']['limit'];
+
             $html = '<div class="bars-wrapper">';
             $html .= '<div class="bars-result" style="width: ' . $width . '%;"></div>';
-            $html .= '<div class="bars-score"> ' . $score . ' / ' . $this->props['collection']['limit'] . '</div>';
+            $html .= '<div class="bars-score"> ' . $score . '</div>';
             $html .= '</div>';
-            return $html;
-        }
-
-        protected function get_overall_stat_html($stats_cumulative_score, $count)
-        {
-            $overall_value = round($stats_cumulative_score / $count);
-            $overall_value = $this->get_stat_width($overall_value, $this->props['collection']);
-            $overall_value = is_nan($overall_value) ? 0 : $overall_value;
-
-            $overall_score = $this->get_stat_score($overall_value, $this->props['collection']);
-
-            $html = $this->get_reviewed_stat(__('overall', 'helpie-reviews'), $overall_value, $overall_score);
-
             return $html;
         }
     }
