@@ -660,6 +660,13 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         ),
 
                         array(
+                            'id'      => 'stats-display-rating',
+                            'type'    => 'switcher',
+                            'title'   => 'Display Rating Label',
+                            'default' => true
+                        ),
+
+                        array(
                             'id'      => 'stats-icons',
                             'type'    => 'icon_dropdown',
                             'title'   => 'Icons',
