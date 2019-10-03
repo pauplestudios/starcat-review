@@ -22,7 +22,7 @@ if (!class_exists('\HelpieReviews\App\Abstracts\Widget_Model')) {
             $default_args = $this->fields_model->get_default_args();
             $args = array_merge($default_args, $args);
             $args = $this->boolean_conversion($args);
-            $this->execute_methods_with_queries($args);
+            // $this->execute_methods_with_queries($args);
 
             $viewProps = array(
                 'collection' => $this->get_collection_props($args),

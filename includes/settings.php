@@ -322,12 +322,12 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'title' => __('Num Of Columns', 'pauple-helpie'),
                             'placeholder' => __('Select an option', 'pauple-helpie'),
                             'options' => array(
-                                'one' => 1,
-                                'two' => 2,
-                                'three' => 3,
-                                'four' => 4,
+                                '1' => 1,
+                                '2' => 2,
+                                '3' => 3,
+                                '4' => 4,
                             ),
-                            'default' => 'three',
+                            'default' => '3',
                         ),
                     )
                 )
