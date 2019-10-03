@@ -780,30 +780,23 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
         /* Single Post - Meta Data Options */
         public function post_meta_fields()
         {
-
             $locations = HRP_Getter::get('review-location');
-            $enable_pros_cons =  HRP_Getter::get('enable-pros-cons');
             $prefix = '_helpie_reviews_post_options';
 
             \CSF::createMetabox($prefix, array(
                 'title' => 'Helpie Reviews',
-                // 'post_type' => 'helpie_reviews',
                 'post_type' => $locations,
                 'show_restore' => true,
                 'theme' => 'light',
             ));
 
-            $this->single_details($prefix);
             $this->single_post_features($prefix);
+            $this->single_post_pros($prefix);
+            $this->single_post_cons($prefix);
 
-            if ($enable_pros_cons) {
-                $this->single_post_pros($prefix);
-                $this->single_post_cons($prefix);
-            }
-
-            $this->single_rich_snippets($prefix);
+            // $this->single_details($prefix);
+            // $this->single_rich_snippets($prefix);
         }
-
 
         // Features - Main Settings Options
         public function single_post_settings_features($prefix,  $parent = null)
@@ -877,6 +870,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                 'parent' => $parent,
                 'title' => 'Pros',
                 'icon' => 'fa fa-thumbs-up',
+                'dependency' => array('enable-pros-cons', '==', 'true', 'true'),
                 'fields' => $fields
             ));
         }
@@ -904,7 +898,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
             \CSF::createSection($prefix, array(
                 'id' => 'stat',
                 'title' => 'Stats',
-                'icon' => 'fa fa-eye',
+                'icon' => 'fa fa-th-list',
                 'fields' => $list_of_stat_fields
             ));
         }

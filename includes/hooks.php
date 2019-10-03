@@ -2,6 +2,8 @@
 
 namespace HelpieReviews\Includes;
 
+use \HelpieReviews\Includes\Settings\HRP_Getter;
+
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -125,6 +127,9 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
 
             wp_enqueue_script('helpie-reviews-script', HELPIE_REVIEWS_URL . 'includes/assets/bundle/admin.bundle.js', array('jquery'));
             wp_enqueue_style('style-name', HELPIE_REVIEWS_URL . "includes/assets/bundle/admin.bundle.css");
+
+            // You Can Access these object from javascript
+            wp_localize_script('helpie-reviews-script', 'HRPOptins', ['enable_prosandcons' => HRP_Getter::get('enable-pros-cons')]);
         }
 
         public function load_widgets()
