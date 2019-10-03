@@ -46,55 +46,41 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
         public function get_itemsProps($args)
         {
             $stats = [];
+
             if (!isset($args['items']['stats-list']) && empty($args['items']['stats-list'])) {
                 return $stats;
             }
 
             $stat_items = $this->get_filter_stats($args);
 
-            if ($this->collection['singularity'] == 'multiple') {
-                $stat_overall_cumulative = 0;
-                $stat_overall_count = 0;
+            $stat_overall_cumulative = 0;
+            $stat_overall_count = 0;
 
-                foreach ($stat_items as $stat) {
-                    $stat_overall_cumulative +=  $stat['rating'];
+            foreach ($stat_items as $stat) {
 
-                    $stat_value = $stat['rating'];
-                    $stat_score = $this->get_stat_score($stat_value);
-
-                    if ($this->is_stat_included('all', $this->collection)) {
-                        $stats[$stat['stat_name']] = [
-                            'rating' => $stat['rating'],
-                            'value' => $stat_value,
-                            'score' => $stat_score
-                        ];
-                    } elseif ($this->is_stat_included($stat['stat_name'], $this->collection)) {
-                        $stats[$stat['stat_name']] = [
-                            'rating' => $stat['rating'],
-                            'value' => $stat_value,
-                            'score' => $stat_score
-                        ];
-                    }
-
-                    $stat_overall_count++;
+                if ($this->collection['singularity'] == 'single' && $stat_overall_count >= 1) {
+                    break;
                 }
 
-                if ($stat_overall_count) {
-                    $overall_stat = $this->get_overall_stat($stat_overall_cumulative, $stat_overall_count);
-                    $stats = array_merge($overall_stat, $stats);
-                }
-            }
-
-            if (($this->collection['singularity'] == 'single') && !empty($stat_items)) {
-
-                $stat_value = $this->get_stat_value($stat_items[0]['rating']);
+                $stat_overall_cumulative +=  $stat['rating'];
+                $stat_value = $stat['rating'];
                 $stat_score = $this->get_stat_score($stat_value);
 
-                $stats[$stat_items[0]['stat_name']] = [
-                    'rating' => $stat_items[0]['rating'],
-                    'value' => $stat_value,
-                    'score' => $stat_score
-                ];
+
+                if ($this->is_stat_included('all', $this->collection)) {
+                    $stats[$stat['stat_name']] = [
+                        'rating' => $stat['rating'],
+                        'value' => $stat_value,
+                        'score' => $stat_score
+                    ];
+                }
+
+                $stat_overall_count++;
+            }
+
+            if ($stat_overall_count && $this->collection['singularity'] !== 'single') {
+                $overall_stat = $this->get_overall_stat($stat_overall_cumulative, $stat_overall_count);
+                $stats = array_merge($overall_stat, $stats);
             }
 
             return $stats;
@@ -143,35 +129,6 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
             return $collection;
         }
 
-        // protected function get_stat_value($rating)
-        // {
-        //     $collection = $this->collection;
-
-        //     switch ($collection['steps']) {
-        //         case "full":
-        //             $divisor = $collection['limit'] == 5 ? 20 : 10;
-        //             $stat_value = round($rating / $divisor) * $divisor;
-        //             break;
-
-        //         case "half":
-        //             $divisor = $collection['limit'] == 5 ? 10 : 5;
-        //             $stat_value = round($rating / $divisor) * $divisor;
-        //             break;
-
-        //         case "precise":
-        //             $stat_value = $rating;
-        //             break;
-
-        //         default:
-        //             // Default is Star 5
-        //             $divisor = $collection['limit'] == 5 ? 20 : 10;
-        //             $stat_value = round($rating / $divisor) * $divisor;
-        //     }
-
-        //     $stat_value = number_format($stat_value, 0);
-        //     return $stat_value;
-        // }
-
         protected function get_stat_score($stat_value)
         {
             $collection = $this->collection;
@@ -202,6 +159,35 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
 
             return $key;
         }
+
+        // protected function get_stat_value($rating)
+        // {
+        //     $collection = $this->collection;
+
+        //     switch ($collection['steps']) {
+        //         case "full":
+        //             $divisor = $collection['limit'] == 5 ? 20 : 10;
+        //             $stat_value = round($rating / $divisor) * $divisor;
+        //             break;
+
+        //         case "half":
+        //             $divisor = $collection['limit'] == 5 ? 10 : 5;
+        //             $stat_value = round($rating / $divisor) * $divisor;
+        //             break;
+
+        //         case "precise":
+        //             $stat_value = $rating;
+        //             break;
+
+        //         default:
+        //             // Default is Star 5
+        //             $divisor = $collection['limit'] == 5 ? 20 : 10;
+        //             $stat_value = round($rating / $divisor) * $divisor;
+        //     }
+
+        //     $stat_value = number_format($stat_value, 0);
+        //     return $stat_value;
+        // }
     } // END CLASS
 
 }
