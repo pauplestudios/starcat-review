@@ -119,8 +119,10 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
 
         protected function get_icons($collection)
         {
-            $collection['icon'] = (isset($collection['images']['image']['thumbnail'])) ? $collection['images']['image']['thumbnail'] : HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png';
-            $collection['outline_icon'] = (isset($collection['images']['image-outline']['thumbnail'])) ? $collection['images']['image-outline']['thumbnail'] : HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png';
+            $image = HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png';
+            $image_outline =  HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png';
+            $collection['icon'] = (isset($collection['images']['image']['thumbnail'])) ? $collection['images']['image']['thumbnail'] : $image;
+            $collection['outline_icon'] = (isset($collection['images']['image-outline']['thumbnail'])) ? $collection['images']['image-outline']['thumbnail'] : $image_outline;
 
             if ($collection['source_type'] == 'icon') {
                 $collection['icon'] = $collection['icons'] . ' icon';

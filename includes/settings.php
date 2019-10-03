@@ -916,51 +916,60 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                 array(
                     'id'     => 'stats-list',
                     'type'   => 'fieldset',
-                    'title'  => 'Stats List',
-                    'fields'   => $this->get_global_stat(),
+                    'fields'   => $this->get_statlist_from_global()
                 ),
 
             );
         }
 
-        protected function get_global_stat()
+        protected function get_statlist_from_global()
         {
             $stats_list = [];
 
             $stats = HRP_Getter::get('stats');
             if (isset($stats) && !empty($stats)) {
-                $i = 0;
-                foreach ($stats as $stat) {
-                    $stats_list[] = [
-                        'id'    => 'stat_name_' . $i,
-                        'type'  => 'text',
-                        'title' => 'Stat Name',
-                        'attributes' => array(
-                            'readonly' => 'readonly',
+                $stats_list[] = array(
+                    'type'    => 'submessage',
+                    'content' => 'Stats List',
+                );
+
+                for ($i = 0; $i < count($stats); $i++) {
+
+                    $stats_list[] = array(
+                        'id'     => $stats[$i]['stat_name'] . $i,
+                        'type'   => 'fieldset',
+                        'fields' => array(
+                            array(
+                                'id'    => 'stat_name',
+                                'type'  => 'text',
+                                'title' => 'Stat Name',
+                                'attributes' => array(
+                                    'readonly' => 'readonly',
+                                ),
+                                'default' => $stats[$i]['stat_name']
+                            ),
+
+                            array(
+                                'id'    => 'rating',
+                                'type'  => 'slider',
+                                'title' => 'Rating',
+                                'min'     => 0,
+                                'max'     => 100,
+                                'step'    => 1,
+                                'unit'    => '%',
+                                'default' => 0
+                            ),
+
+                            array(
+                                'type'    => 'submessage',
+                                'style'   => 'success',
+                                'content' => 'Rating 0 - 100 ',
+                            ),
                         ),
-                        'default' => $stat['stat_name']
-                    ];
-                    $stats_list[] = array(
-                        'id'    => 'rating_' . $i,
-                        'type'  => 'slider',
-                        'title' => 'Rating',
-                        'min'     => 0,
-                        'max'     => 100,
-                        'step'    => 1,
-                        'unit'    => '%',
-                        'default' => 0
                     );
-
-                    $stats_list[] = array(
-                        'type'    => 'submessage',
-                        'style'   => 'success',
-                        'content' => 'Rating 0 - 100 ',
-                    );
-
-                    $i++;
                 }
             }
-            // error_log("Stats : " . print_r($stats_list, true));
+
             return $stats_list;
         }
     } // END CLASS
