@@ -2,8 +2,6 @@
 
 namespace HelpieReviews\App\Builders;
 
-use \HelpieReviews\Includes\Settings\HRP_Getter;
-
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly

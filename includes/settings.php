@@ -116,7 +116,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                     'fields' => array(
 
                         array(
-                            'id'          => 'user-review-post-types',
+                            'id'          => 'ur_enable_post-types',
                             'type'        => 'select',
                             'title'       => 'Enable Reviews for custom post types',
                             'placeholder' => 'Select a Post Type',
@@ -131,35 +131,32 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         array(
                             'id' => 'ur_show_controls',
                             'type' => 'switcher',
-                            'title' => __('Show Controls', 'pauple-helpie'),
+                            'title' => __('Show Reviews Controls', 'pauple-helpie'),
                             'default' => true,
-                        ),
-                        array(
-                            'id' => 'ur_controls_subheading',
-                            'type' => 'subheading',
-                            'content' => 'Controls',
-                            'dependency' => array('ur_show_controls', '==', 'true'),
-                        ),
-                        array(
-                            'id' => 'ur_show_search',
-                            'type' => 'switcher',
-                            'title' => __('Show Search', 'pauple-helpie'),
-                            'default' => true,
-                            'dependency' => array('ur_show_controls', '==', 'true'),
-                        ),
-                        array(
-                            'id' => 'ur_show_sortBy',
-                            'type' => 'switcher',
-                            'title' => __('Show SortBy', 'pauple-helpie'),
-                            'default' => true,
-                            'dependency' => array('ur_show_controls', '==', 'true'),
                         ),
 
                         array(
-                            'id' => 'ur_features_subheading',
-                            'type' => 'subheading',
-                            'content' => 'Features',
+                            'id'      => 'ur_list_controls',
+                            'type'    => 'fieldset',
+                            'title'   => 'Reviews Controls',
+                            'dependency' => array('ur_show_controls', '==', 'true'),
+                            'fields' => array(
+
+                                array(
+                                    'id' => 'ur_show_search',
+                                    'type' => 'switcher',
+                                    'title' => __('Show Search', 'pauple-helpie'),
+                                    'default' => true,
+                                ),
+                                array(
+                                    'id' => 'ur_show_sortBy',
+                                    'type' => 'switcher',
+                                    'title' => __('Show SortBy', 'pauple-helpie'),
+                                    'default' => true,
+                                )
+                            )
                         ),
+
                         array(
                             'id' => 'ur_enable_replies',
                             'type' => 'switcher',
@@ -175,15 +172,76 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         ),
 
                         array(
-                            'id'     => 'ur_form',
+                            'type'    => 'subheading',
+                            'content' => 'User Review Form',
+                        ),
+
+                        array(
+                            'id' => 'ur_show_form_title',
+                            'type' => 'switcher',
+                            'title' => __('Show Form Title', 'helpie-reviews'),
+                            'default' => true,
+                        ),
+
+                        array(
+                            'id'    => 'ur_form_title',
+                            'type'  => 'text',
+                            'title' => 'Form Title',
+                            'default' => 'User Review',
+                            'dependency' => array('ur_show_form_title', '==', 'true'),
+                        ),
+
+                        array(
+                            'id' => 'ur_show_title',
+                            'type' => 'switcher',
+                            'title' => __('Show Title', 'helpie-reviews'),
+                            'default' => true,
+                        ),
+
+                        array(
+                            'id' => 'ur_show_stat',
+                            'type' => 'switcher',
+                            'title' => __('Show Stat', 'helpie-reviews'),
+                            'default' => true,
+                            'desc' => '<b>User Review Rating</b> options are based on stats option from general settings section'
+                        ),
+
+                        array(
+                            'id' => 'ur_show_description',
+                            'type' => 'switcher',
+                            'title' => __('Show Description', 'helpie-reviews'),
+                            'default' => true,
+                        ),
+
+                        array(
+                            'id' => 'ur_show_prosandcons',
+                            'type' => 'switcher',
+                            'title' => __('Show Pros and Cons', 'helpie-reviews'),
+                            'default' => true,
+                        ),
+
+                        array(
+                            'id'     => 'ur_form_custom_fields',
                             'type'   => 'repeater',
-                            'title'  => 'Form Fields',
+                            'title'  => 'Custom Form Fields',
                             'fields' => array(
 
                                 array(
-                                    'id'    => 'form-field',
+                                    'id'    => 'custom_field_name',
                                     'type'  => 'text',
-                                    'title' => 'Stat1'
+                                    'placeholder' => 'Custom Field Name',
+                                    'title' => 'Name'
+                                ),
+
+                                array(
+                                    'id'    => 'custom_field_type',
+                                    'type'  => 'select',
+                                    'desc' => 'Custom Field Type',
+                                    'title' => 'Type',
+                                    'options' => array(
+                                        'text' => 'Text',
+                                        'textarea' => 'Text Area'
+                                    )
                                 ),
 
                             ),
