@@ -33,7 +33,7 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
                 'images' => $args['images'],
                 'animate' => $args['animate'],
                 'limit' => $args['limit'],
-                'display_rating' => $args['display_rating'],
+                'show_rating_label' => $args['show_rating_label'],
                 'no_rated_message' =>  'Not Rated Yet !!!',
                 'steps' => $args['steps'], // full or half or progress
             ];

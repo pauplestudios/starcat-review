@@ -8,8 +8,8 @@ if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\User_Reviews')) {
-    class User_Reviews
+if (!class_exists('\HelpieReviews\App\User_Review')) {
+    class User_Review
     {
         public function __construct()
         {
@@ -35,7 +35,7 @@ if (!class_exists('\HelpieReviews\App\User_Reviews')) {
             $singularity = HRP_Getter::get('stat-singularity');
             $type = HRP_Getter::get('stats-type');
             $stars_limit =  HRP_Getter::get('stats-stars-limit');
-            $rating_label =  HRP_Getter::get('stats-display-rating');
+            $rating_label =  HRP_Getter::get('stats-show-rating-label');
             $bars_limit = HRP_Getter::get('stats-bars-limit');
             $limit = ($type == 'star') ? $stars_limit : $bars_limit;
             $source_type = HRP_Getter::get('stats-source-type');
@@ -50,7 +50,7 @@ if (!class_exists('\HelpieReviews\App\User_Reviews')) {
                 'singularity' => $singularity,
                 'type' => $type,
                 'source_type' => $source_type,
-                'display_rating' => $rating_label,
+                'show_rating_label' => $rating_label,
                 'icons' => $icons,
                 'images' => $images,
                 'steps' => $steps,

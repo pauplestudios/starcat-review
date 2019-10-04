@@ -12,13 +12,13 @@ if (!class_exists('\HelpieReviews\App\Builders\Review_Builder')) {
         public function __construct()
         {
             $this->summary = new \HelpieReviews\App\Summary();
-            $this->user_reviews = new \HelpieReviews\App\User_Reviews();
+            $this->user_review = new \HelpieReviews\App\User_Review();
         }
 
         public function get_reviews()
         {
             $html = $this->summary->get_view();
-            $html .= $this->user_reviews->get_view();
+            $html .= $this->user_review->get_view();
 
             return $html;
         }

@@ -187,8 +187,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'id'    => 'ur_form_title',
                             'type'  => 'text',
                             'title' => 'Form Title',
-                            'default' => 'User Review',
                             'dependency' => array('ur_show_form_title', '==', 'true'),
+                            'default' => 'User Review',
                         ),
 
                         array(
@@ -199,7 +199,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         ),
 
                         array(
-                            'id' => 'ur_show_stat',
+                            'id' => 'ur_show_stats',
                             'type' => 'switcher',
                             'title' => __('Show Stat', 'helpie-reviews'),
                             'default' => true,
@@ -207,9 +207,9 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         ),
 
                         array(
-                            'id' => 'ur_show_description',
+                            'id' => 'ur_show_content',
                             'type' => 'switcher',
-                            'title' => __('Show Description', 'helpie-reviews'),
+                            'title' => __('Show Content', 'helpie-reviews'),
                             'default' => true,
                         ),
 
@@ -227,16 +227,16 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'fields' => array(
 
                                 array(
-                                    'id'    => 'custom_field_name',
+                                    'id'    => 'field_name',
                                     'type'  => 'text',
-                                    'placeholder' => 'Custom Field Name',
+                                    'placeholder' => 'Field Name',
                                     'title' => 'Name'
                                 ),
 
                                 array(
-                                    'id'    => 'custom_field_type',
+                                    'id'    => 'field_type',
                                     'type'  => 'select',
-                                    'desc' => 'Custom Field Type',
+                                    'desc' => 'Field Type',
                                     'title' => 'Type',
                                     'options' => array(
                                         'text' => 'Text',
@@ -718,9 +718,9 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         ),
 
                         array(
-                            'id'      => 'stats-display-rating',
+                            'id'      => 'stats-show-rating-label',
                             'type'    => 'switcher',
-                            'title'   => 'Display Rating Label',
+                            'title'   => 'Show Rating Label',
                             'default' => true
                         ),
 
