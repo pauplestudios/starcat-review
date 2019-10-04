@@ -19,25 +19,24 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
 
         public function get()
         {
-            $html = "<div class='hrp-container'>";
-            $html .= "<div class='ui segment'>";
-            error_log("Collection : " . print_r($this->props['collection'], true));
+            $html = '';
+
             if ($this->props['collection']['show_form_title']) {
-                $html .= '<div class="ui attached label">';
+                $html .= '<h2 class="ui header">';
                 $html .= $this->props['collection']['form_title'];
-                $html .= '</div></br>';
+                $html .= '</h2>';
             }
 
-            $html .= '<form class="ui form hrp-user-review-submission" action="hrp_user_review_submission" method="post" post_id ="' . get_the_ID() . '">';
+            $html .= '<form class="ui form hrp-user-review" action="hrp_user_review_submission" method="post" post_id ="' . get_the_ID() . '">';
 
             if ($this->props['collection']['show_title']) {
                 $html .= '<div class="field">';
-                $html .= '<label>Review Title</label>';
+                // $html .= '<label>Review Title</label>';
                 $html .= '<input type="text" name="title" placeholder="Title" />';
                 $html .= '</div><br / ><br />';
             }
 
-            if ($this->props['collection']['show_stat']) {
+            if ($this->props['collection']['show_stats']) {
                 $html .= '<div class="field">';
                 $html .= $this->get_user_review();
                 $html .= '</div>';
@@ -45,49 +44,55 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
 
             if ($this->props['collection']['show_description']) {
                 $html .= '<div class="field">';
-                $html .= '<label>Review Description</label>';
+                // $html .= '<label>Review Description</label>';
                 $html .= '<textarea rows="5" spellcheck="false" name="description" placeholder="Description"></textarea>';
                 $html .= '</div>';
             }
 
-            if ($this->props['collection']['show_pros_and_cons']) {
+            if ($this->props['collection']['show_prosandcons']) {
                 $html .= $this->get_pros_and_cons();
             }
 
-            $html .= '<button class="ui mini submit right button">Submit</button>';
+            $html .= '<div class="field">';
+            $html .= '<button class="ui submit button"> Submit </button>';
+            $html .= '</div>';
             $html .= '</form>';
-            $html .= "</div></div>";
 
             return $html;
         }
 
         protected function get_pros_and_cons()
         {
-            $html = '<div class="ui segment">';
-            $html .= '<div class="ui two column divided grid">';
+            $html = '<div class="two fields">';
 
             $html .= $this->get_pros_field();
             $html .= $this->get_cons_field();
 
-            $html .= '</div></div>';
+            $html .= '</div>';
 
             return $html;
         }
 
         protected function get_pros_field()
         {
-            $html = '<div class="column review-pros-repeater">';
-            $html .= '<div class="ui attached label"> Pros </div><br />';
+            $html = '<div class="field review-pros-repeater">';
+            $html .= '<div class="ui segment">';
+            $html .= '<h5> Pros </h5>';
             $html .= '<div data-repeater-list="pros" >';
-            $html .= '<div data-repeater-item >
+            $html .= '<div class="fields" data-repeater-item >
+                <div class="fourteen wide field">
                 <select class="ui fluid search dropdown" data-pros="pros" >
                 <option value="">Pros</option>            
                 <option value="affordable">Affordable</option>
                 <option value="ui">UI</option>
                 </select>
-                <div data-repeater-delete class="mini ui red basic button">&#8722;</div>
+                </div>
+                <div class="two wide field">
+                    <div class="ui icon basic button" data-repeater-delete><i class="minus icon"></i></div>                
+                </div>
             </div></div>';
-            $html .= '<div data-repeater-create class="mini ui green basic button">&#65291;</div>';
+            $html .= '<div data-repeater-create class="ui icon basic button"><i class="plus icon"></i></div>';
+            $html .= '</div>';
             $html .= '</div>';
 
             return $html;
@@ -95,18 +100,24 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
 
         protected function get_cons_field()
         {
-            $html = '<div class="column review-cons-repeater">';
-            $html .= '<div class="ui attached label"> Cons </div> <br />';
+            $html = '<div class="field review-cons-repeater">';
+            $html .= '<div class="ui segment">';
+            $html .= '<h5> Cons </h5>';
             $html .= '<div data-repeater-list="cons" >';
-            $html .= '<div data-repeater-item >
+            $html .= '<div class="fields" data-repeater-item >
+                <div class="fourteen wide field">
                 <select  class="ui fluid search dropdown"  data-cons="cons" >
                 <option value="">Cons</option>            
                 <option value="affordable">Affordable</option>
                 <option value="ui">UI</option>
                 </select>
-                <div data-repeater-delete class="mini ui red basic button">&#8722;</div>
+                </div>
+                <div class="two wide field">
+                    <div data-repeater-delete class="ui icon basic button"><i class="minus icon"></i></div>
+                </div>
             </div></div>';
-            $html .= '<div data-repeater-create class="mini ui green basic button">&#65291;</div>';
+            $html .= '<div data-repeater-create class="ui icon basic button"><i class="plus icon"></i></div>';
+            $html .= '</div>';
             $html .= '</div>';
 
             return $html;
@@ -115,7 +126,7 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
         protected function get_user_review()
         {
             $html  = '';
-            $html .= '<label>User Review</label>';
+            // $html .= '<label>User Review</label>';
             $html .= '<ul class="review-list"
                 data-type="' . $this->props['collection']['review_type'] . '"
                 data-limit="' . $this->props['collection']['limit'] . '" 
