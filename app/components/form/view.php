@@ -17,7 +17,7 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
             $this->bar_rating = new \HelpieReviews\App\Views\Rating_Types\Bar_Rating($viewProps);
         }
 
-        public function get_html()
+        public function get()
         {
             $html = "<div class='hrp-container'>";
             $html .= "<div class='ui segment'>";

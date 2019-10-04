@@ -9,20 +9,20 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\HelpieReviews\App\Components\Form\Model')) {
     class Model
     {
-        public function __construct($post_id)
+        public function get_viewProps($args)
         {
-            $this->post_id = $post_id;
-        }
+            $this->collection = $this->get_collectionProps($args);
+            $this->items = $this->get_itemsProps($args);
 
-        public function get_viewProps()
-        {
-            return [
-                'collection' => $this->get_collectionProps(),
-                'items' => $this->get_itemsProps()
+            $view_props = [
+                'collection' => $this->collection,
+                'items' => $this->items
             ];
+
+            return $view_props;
         }
 
-        protected function get_collectionProps()
+        protected function get_collectionProps($args)
         {
             $collection =  [
                 'display_form_title' => true,
@@ -30,13 +30,16 @@ if (!class_exists('\HelpieReviews\App\Components\Form\Model')) {
                 'display_user_stat' => true,
                 'display_pros_and_cons' => true,
                 'display_description' => true,
-                'display_rating' => true,
+                'display_rating' => $args['display_rating'],
                 'form_title' => 'Review Stats Form',
                 'review_items' => true,
-                'review_type' => 'star',   // Star, circle, bar                                
-                'source_type' => 'image', // icon or image 
-                'limit' => 5,
-                'steps' => 'half', // full or half or progress
+                'singularity' => $args['singularity'],
+                'review_type' => $args['type'],   // Star, Bar, Circle
+                'source_type' => $args['source_type'], // icon or image
+                'icons' => $args['icons'],
+                'images' => $args['images'],
+                'limit' => $args['limit'],
+                'steps' => $args['steps'], // full or half or progress
                 'no_rated_message' =>  'Not Rated Yet !!!',
                 'animate' => false
             ];
@@ -46,42 +49,43 @@ if (!class_exists('\HelpieReviews\App\Components\Form\Model')) {
             return $collection;
         }
 
-        public function get_itemsProps()
+        public function get_itemsProps($args)
         {
-            $stat_items = $this->get_stat_items();
+            $stat_items = $this->get_filtered_stats($args);
             $stats = [];
-
-            foreach ($stat_items as $key => $stat) {
+            $stat_count = 0;
+            foreach ($stat_items as $stat) {
+                if ($this->collection['singularity'] == 'single' && $stat_count >= 1) {
+                    break;
+                }
                 $stats[$stat['stat_name']] = $stat['rating'];
+                $stat_count++;
             }
 
             return $stats;
         }
 
-        protected function get_stat_items()
+        protected function get_filtered_stats($args)
         {
-            $post_meta = get_post_meta($this->post_id, '_helpie_reviews_post_options', true);
-            $items = [];
-
-            if (isset($post_meta['multiple-stat']) || !empty($post_meta['multiple-stat'])) {
-                $items = $post_meta['multiple-stat'];
+            $stats = [];
+            foreach ($args['global_stats'] as $allowed_stat) {
+                $allowed_stat_name = strtolower($allowed_stat['stat_name']);
+                $stats[$allowed_stat_name] = $args['items']['stats-list'][$allowed_stat_name];
             }
 
-            if (isset($post_meta['single-stat']) || !empty($post_meta['single-stat'])) {
-                $items[] = $post_meta['single-stat'];
-            }
-
-            return $items;
+            return $stats;
         }
 
         protected function get_icons($collection)
         {
-            $collection['icon'] = HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png';
-            $collection['outline_icon'] = HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png';
+            $image = HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png';
+            $image_outline =  HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png';
+            $collection['icon'] = (isset($collection['images']['image']['thumbnail'])) ? $collection['images']['image']['thumbnail'] : $image;
+            $collection['outline_icon'] = (isset($collection['images']['image-outline']['thumbnail'])) ? $collection['images']['image-outline']['thumbnail'] : $image_outline;
 
             if ($collection['source_type'] == 'icon') {
-                $collection['icon'] = 'star icon';
-                $collection['outline_icon'] = 'star outline icon';
+                $collection['icon'] = $collection['icons'] . ' icon';
+                $collection['outline_icon'] = $collection['icons'] . ' outline icon';
             }
 
             return $collection;
