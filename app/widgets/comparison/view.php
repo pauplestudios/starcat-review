@@ -50,7 +50,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
             $html .= '</header>';
             return $html;
         }
-        
+
         public function features($stat_cols)
         {
             $html = '';
@@ -123,7 +123,7 @@ if (!class_exists('\HelpieReviews\App\Widgets\Comparison\View')) {
             for ($ii = 0; $ii < sizeof($stat_cols); $ii++) {
                 $stat_name = $stat_cols[$ii];
                 $stat_value = isset($stats[$stat_name]) ? $stats[$stat_name] : 'X';
-                $html .= '<li>' . $stat_value . '</li>';
+                $html .= '<li data-stat="' . $stat_name . '">' . $stat_value . '</li>';
             }
             // foreach ($stats as $key => $stat) {
             //     $html .= '<li>' . $stat . '</li>';

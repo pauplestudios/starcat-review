@@ -131,7 +131,7 @@ jQuery(document).ready(function($) {
           var productContent = self.productElement(result);
 
           $(".hrp-search-filter-wrapper").before(productContent);
-
+          self.refreshProductTable();
           var products = self.tableColumns.children(".product");
           self.products = [];
           self.products = products;
@@ -191,8 +191,6 @@ jQuery(document).ready(function($) {
       }
     }
 
-    // console.log(featureProductData);
-
     var content = "";
     content = '<li class="product">';
     content += '<div class="top-info"><div class="close-product">';
@@ -200,7 +198,7 @@ jQuery(document).ready(function($) {
       '<i class="window close outline icon" style="font-size:25px;"></i></div>';
     content += '<div class="check"></div>';
     if (result.image_url === "undefined" || result.image_url == null) {
-      content += '';
+      content += "";
       // content +=
       // '<i class="address card outline icon" style="font-size:36px;"></i>';
     } else {
@@ -210,18 +208,66 @@ jQuery(document).ready(function($) {
     content += '<ul class="cd-features-list">';
     if (result.stats.length > 0) {
       for (var incr = 0; incr < result.stats.length; incr++) {
-        if ($.inArray(result.stats[incr].stat_name, featureProductData) != -1) {
+        stat_name = result.stats[incr].stat_name;
+        stat_rating = result.stats[incr].rating;
+        if ($.inArray(stat_name, featureProductData) != -1) {
           //found that feature
-          content += "<li>" + result.stats[incr].rating + "</li>";
+          content +=
+            "<li data-stat='" + stat_name + "'>" + stat_rating + "</li>";
         } else {
           //not-found that feature
-          content += "<li>X</li>";
+          content += "<li data-stat='" + stat_name + "'>X</li>";
         }
       }
     }
     content += "</ul>";
     content += "</li>";
+
     return content;
+  };
+
+  productsTable.prototype.refreshProductTable = function() {
+    console.log("reloading product table");
+    var self = this;
+    var featureProductData = [];
+    if (self.featureItems.find("li").length > 0) {
+      self.featureItems.find("li").each(function() {
+        featureProductData.push(
+          $(this)
+            .text()
+            .trim()
+        );
+      });
+    }
+    var productInfos = this.productsTopInfo;
+
+    productInfos.each(function(index) {
+      if (index != 0) {
+        var $single_product_features = $(this)
+          .next()
+          .find("li");
+        // console.log($single_product_features);
+        $single_product_features.each(function() {
+          data_stat = $(this)
+            .attr("data-stat")
+            .trim();
+          if ($.inArray(data_stat, featureProductData) != -1) {
+            //found
+            console.log("found item");
+          } else {
+            //not found
+            console.log("not found item");
+          }
+        });
+        // if (featureProductData.length > $single_product_features.length) {
+        //   for (var i = 0; i < featureProductData.length; i++) {
+
+        //   }
+        // } else {
+        // }
+      }
+    });
+    console.log(productInfos);
   };
 
   productsTable.prototype.upadteFilterBtn = function() {
