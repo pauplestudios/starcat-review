@@ -207,18 +207,18 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         ),
 
                         array(
-                            'id' => 'ur_show_content',
+                            'id' => 'ur_show_description',
                             'type' => 'switcher',
-                            'title' => __('Show Content', 'helpie-reviews'),
+                            'title' => __('Show Description', 'helpie-reviews'),
                             'default' => true,
                         ),
 
-                        array(
-                            'id' => 'ur_show_prosandcons',
-                            'type' => 'switcher',
-                            'title' => __('Show Pros and Cons', 'helpie-reviews'),
-                            'default' => true,
-                        ),
+                        // array(
+                        //     'id' => 'ur_show_prosandcons',
+                        //     'type' => 'switcher',
+                        //     'title' => __('Show Pros and Cons', 'helpie-reviews'),
+                        //     'default' => true,
+                        // ),
 
                         array(
                             'id'     => 'ur_form_custom_fields',
@@ -812,6 +812,13 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'type' => 'switcher',
                             'title' => __('Stat Animate', 'pauple-helpie'),
                             'default' => false,
+                        ),
+
+                        array(
+                            'id'    => 'stats-no-rated-message',
+                            'type'  => 'text',
+                            'title' => 'No rated message',
+                            'default' => 'Not Rated Yet !!!'
                         ),
                     )
                 )

@@ -25,14 +25,13 @@ if (!class_exists('\HelpieReviews\App\Components\Form\Model')) {
         protected function get_collectionProps($args)
         {
             $collection =  [
-                'display_form_title' => true,
-                'display_title' => true,
-                'display_user_stat' => true,
-                'display_pros_and_cons' => true,
-                'display_description' => true,
-                'display_rating' => $args['display_rating'],
-                'form_title' => 'Review Stats Form',
-                'review_items' => true,
+                'show_form_title' => $args['show_form_title'],
+                'form_title' => $args['form_title'],
+                'show_title' => $args['show_title'],
+                'show_stats' => $args['show_stats'],
+                'show_prosandcons' => $args['enable_pros_cons'],
+                'show_description' => $args['show_description'],
+                'show_rating_label' => $args['show_rating_label'],
                 'singularity' => $args['singularity'],
                 'review_type' => $args['type'],   // Star, Bar, Circle
                 'source_type' => $args['source_type'], // icon or image
@@ -40,7 +39,7 @@ if (!class_exists('\HelpieReviews\App\Components\Form\Model')) {
                 'images' => $args['images'],
                 'limit' => $args['limit'],
                 'steps' => $args['steps'], // full or half or progress
-                'no_rated_message' =>  'Not Rated Yet !!!',
+                'no_rated_message' => $args['no_rated_message'],
                 'animate' => false
             ];
 

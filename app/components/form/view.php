@@ -21,36 +21,36 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
         {
             $html = "<div class='hrp-container'>";
             $html .= "<div class='ui segment'>";
-
-            if ($this->props['collection']['display_form_title']) {
+            error_log("Collection : " . print_r($this->props['collection'], true));
+            if ($this->props['collection']['show_form_title']) {
                 $html .= '<div class="ui attached label">';
-                $html .= ($this->props['collection']['form_title']) ? $this->props['collection']['form_title'] : __("Helpie Review Form", "helpie-reviews");
+                $html .= $this->props['collection']['form_title'];
                 $html .= '</div></br>';
             }
 
             $html .= '<form class="ui form hrp-user-review-submission" action="hrp_user_review_submission" method="post" post_id ="' . get_the_ID() . '">';
 
-            if ($this->props['collection']['display_title']) {
+            if ($this->props['collection']['show_title']) {
                 $html .= '<div class="field">';
                 $html .= '<label>Review Title</label>';
                 $html .= '<input type="text" name="title" placeholder="Title" />';
                 $html .= '</div><br / ><br />';
             }
 
-            if ($this->props['collection']['display_user_stat']) {
+            if ($this->props['collection']['show_stat']) {
                 $html .= '<div class="field">';
                 $html .= $this->get_user_review();
                 $html .= '</div>';
             }
 
-            if ($this->props['collection']['display_description']) {
+            if ($this->props['collection']['show_description']) {
                 $html .= '<div class="field">';
                 $html .= '<label>Review Description</label>';
                 $html .= '<textarea rows="5" spellcheck="false" name="description" placeholder="Description"></textarea>';
                 $html .= '</div>';
             }
 
-            if ($this->props['collection']['display_pros_and_cons']) {
+            if ($this->props['collection']['show_pros_and_cons']) {
                 $html .= $this->get_pros_and_cons();
             }
 

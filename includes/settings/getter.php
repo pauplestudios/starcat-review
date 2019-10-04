@@ -73,6 +73,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
                 'stats-bars-limit' => 100,
                 'stats-stars-limit' => 5,
                 'stats-animate' => false,
+                'stats-no-rated-message' => 'Not Rated Yet !!!',
 
                 // Mainpage Settings Start
                 'mp_slug' => 'reviews',
@@ -115,8 +116,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
                 'ur_form_title' => 'User Review',
                 'ur_show_title' => true,
                 'ur_show_stats' => true,
-                'ur_show_content' => true,
-                'ur_show_prosandcons' => true,
+                'ur_show_description' => true,
+                // 'ur_show_prosandcons' => true,
                 'ur_form_custom_fields' => [], // [[ 'field_name' => '', 'field_type' => 'text']]                
 
                 // Comparison Table Start
