@@ -119,7 +119,7 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
             $html .= '<ul class="review-list"
                 data-type="' . $this->props['collection']['review_type'] . '"
                 data-limit="' . $this->props['collection']['limit'] . '" 
-                data-valuetype="' . $this->props['collection']['value_type'] . '"
+                data-steps="' . $this->props['collection']['steps'] . '"
                 data-no-rated-message ="' . $this->props['collection']['no_rated_message'] . '"
                 data-list="items"
                 >';

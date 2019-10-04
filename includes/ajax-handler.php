@@ -19,10 +19,7 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
             // add 'ajax' action when not logged in
             add_action('wp_ajax_nopriv_hrp_listing_action', array($this, 'hrp_listing_action'));
             add_action('wp_ajax_hrp_listing_action', array($this, 'hrp_listing_action'));
-        }
 
-        public function search_posts()
-        {
             // add 'ajax' action when not logged in
             add_action('wp_ajax_nopriv_hrp_user_review_submission', [$this, 'user_review_submission']);
             add_action('wp_ajax_hrp_user_review_submission', [$this, 'user_review_submission']);
@@ -65,10 +62,3 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
         }
     } // END CLASS
 }
-
-
-$ajax_hanlder = new \HelpieReviews\Includes\Ajax_Handler();
-
-add_action('wp_ajax_helpiereview_search_posts', [$ajax_hanlder, 'search_posts']);
-// add 'ajax' action when not logged in
-add_action('wp_ajax_nopriv_helpiereview_search_posts', [$ajax_hanlder, 'search_posts']);

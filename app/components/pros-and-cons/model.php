@@ -9,47 +9,66 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\HelpieReviews\App\Components\ProsAndCons\Model')) {
     class Model
     {
-        public function get($post_id)
+        public function get_viewProps($args)
         {
-            $review_post_meta =  get_post_meta($post_id, '_helpie_reviews_post_options', true);
+            $view_props = [
+                // 'collection' => $this->get_collection_props($args),
+                'items' => $this->get_itemsProps($args)
+            ];
 
+            return $view_props;
+        }
+
+        protected function get_collection_props($args)
+        {
+            // $collectionProps = [
+            //     'display_pros_and_cons' => $args['']
+            // ];
+
+            return $args;
+        }
+
+        protected function get_itemsProps($args)
+        {
             // Return if empty
-            if ($this->is_empty($review_post_meta)) {
+            if ($this->is_empty($args['items'])) {
                 return [];
             }
 
-            $pros_list = $review_post_meta['pros-list'];
-            $cons_list = $review_post_meta['cons']['cons-list'];
 
-            error_log(' $pros_list : ' . print_r($pros_list, true));
+            $pros_list = $args['items']['pros-list'];
+            $cons_list = $args['items']['cons-list'];
 
-            $pros_and_cons = [];
-            $pros_and_cons['pros'] = [];
-            $pros_and_cons['cons'] = [];
+            $itemsProps = [];
+            $itemsProps['pros'] = [];
+            $itemsProps['cons'] = [];
 
             foreach ($pros_list as $key => $item) {
-                $pros_and_cons['pros'][] = $item['pro_con'];
+                $itemsProps['pros'][] = $item['item'];
             }
 
             foreach ($cons_list as $key => $item) {
-                $pros_and_cons['cons'][] = $item['pro_con'];
+                $itemsProps['cons'][] = $item['item'];
             }
 
-            // error_log('$pros_and_cons : ' . print_r($pros_and_cons, true));
-            return $pros_and_cons;
+            return $itemsProps;
         }
 
         /* PRIVATE METHODS */
-        private function is_empty($dataModel)
+        private function is_empty($items)
         {
             $is_empty = true;
 
-            if (!isset($dataModel) || empty($dataModel)) {
+            if (!isset($items) || empty($items)) {
                 return $is_empty;
             }
 
-            $is_pros_empty = (!isset($dataModel['pros']) || empty($dataModel['pros']));
-            $is_cons_empty = (!isset($dataModel['cons']) || empty($dataModel['cons']));
+            // if (!is_array($items) || !is_object($items)) {
+            //     return $is_empty;
+            // }
+
+            $is_pros_empty = (!isset($items['pros-list']) || empty($items['pros-list']));
+            $is_cons_empty = (!isset($items['cons-list']) || empty($items['cons-list']));
 
             // Either should be NOT EMPTY 
             if (!$is_pros_empty  || !$is_cons_empty) {

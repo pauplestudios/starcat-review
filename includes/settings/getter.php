@@ -31,7 +31,6 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
                 self::$options = get_option('helpie-reviews'); // unique id of the framework
             }
 
-
             // self::$options = get_option('helpie-reviews');
             // error_log(' self::$options : ' . print_r(self::$options, true));
             if (isset(self::$options[$option_name])) {
@@ -57,7 +56,18 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
                 'stats-type' => 'star',
                 'stats-source-type' => 'icon',
                 'stats-icons' => 'star',
-                'stats-step' => 'half',
+                'stats-images' => [
+                    'image' => [
+                        'url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png',
+                        'thumbnail' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png'
+                    ],
+
+                    'image-outline' => [
+                        'url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png',
+                        'thumbnail' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png'
+                    ]
+                ],
+                'stats-steps' => 'precise',
                 'stats-bars-limit' => 100,
                 'stats-stars-limit' => 5,
                 'stats-animate' => false,

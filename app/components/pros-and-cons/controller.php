@@ -9,23 +9,17 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\HelpieReviews\App\Components\ProsAndCons\Controller')) {
     class Controller
     {
-        public function __construct($post_id)
+        public function __construct($args)
         {
-            $this->model = new \HelpieReviews\App\Components\ProsAndCons\Model();
+            $model = new \HelpieReviews\App\Components\ProsAndCons\Model();
+            $view_props = $model->get_viewProps($args);
 
-            $pros_and_cons = $this->get_pros_and_cons($post_id);
-            $this->view = new \HelpieReviews\App\Components\ProsAndCons\View($pros_and_cons);
+            $this->view = new \HelpieReviews\App\Components\ProsAndCons\View($view_props);
         }
 
         public function get_view()
         {
             return $this->view->get_html();
-        }
-
-        private function get_pros_and_cons($post_id)
-        {
-            $pros_and_cons = $this->model->get($post_id);
-            return $pros_and_cons;
         }
     } // END CLASS
 
