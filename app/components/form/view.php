@@ -79,7 +79,7 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
             $html .= '<div class="ui segment">';
             $html .= '<h5> Pros </h5>';
             $html .= '<div data-repeater-list="pros" >';
-            $html .= '<div class="fields" data-repeater-item >
+            $html .= '<div class="unstackable fields" data-repeater-item >
                 <div class="fourteen wide field">
                 <select class="ui fluid search dropdown" data-pros="pros" >
                 <option value="">Pros</option>            
@@ -104,7 +104,7 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
             $html .= '<div class="ui segment">';
             $html .= '<h5> Cons </h5>';
             $html .= '<div data-repeater-list="cons" >';
-            $html .= '<div class="fields" data-repeater-item >
+            $html .= '<div class="unstackable fields" data-repeater-item >
                 <div class="fourteen wide field">
                 <select  class="ui fluid search dropdown"  data-cons="cons" >
                 <option value="">Cons</option>            
