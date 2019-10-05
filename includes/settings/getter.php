@@ -115,7 +115,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
                 'ur_enable_replies' => true,
                 'ur_enable_approval' => true,
                 'ur_show_form_title' => true,
-                'ur_form_title' => 'User Review',
+                'ur_form_title' => 'Leave a Review',
                 'ur_show_title' => true,
                 'ur_show_stats' => true,
                 'ur_show_description' => true,

@@ -188,7 +188,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'type'  => 'text',
                             'title' => 'Form Title',
                             'dependency' => array('ur_show_form_title', '==', 'true'),
-                            'default' => 'User Review',
+                            'default' => 'Leave a Review',
                         ),
 
                         array(

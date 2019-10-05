@@ -14,7 +14,7 @@ if (!class_exists('\HelpieReviews\App\User_Review')) {
         public function __construct()
         {
             $this->form_controller = new \HelpieReviews\App\Components\Form\Controller();
-            $this->reviews_controller = new \HelpieReviews\App\Components\User_Reviews\User_Reviews_Controller();
+            $this->reviews_controller = new \HelpieReviews\App\Components\User_Reviews\Controller();
         }
 
         public function get_view()
@@ -22,7 +22,7 @@ if (!class_exists('\HelpieReviews\App\User_Review')) {
 
             $args = $this->get_default_args();
             $form_view = $this->form_controller->get_view($args);
-            $reviews_list_view = $this->reviews_controller->get_view();
+            $reviews_list_view = $this->reviews_controller->get_view($args);
 
             $view = $form_view . $reviews_list_view;
 

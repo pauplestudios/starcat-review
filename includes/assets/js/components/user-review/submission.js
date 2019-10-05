@@ -5,7 +5,7 @@ var Submission = {
     },
 
     eventListener: function() {
-        jQuery(".hrp-user-review-submission").submit(function(e) {
+        jQuery(".hrp-user-review").submit(function(e) {
             e.preventDefault();
 
             const props = Submission.getProps(this);

@@ -19,7 +19,7 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
             $this->controls_builder = new \HelpieReviews\App\Builders\Controls_Builder();
         }
 
-        public function get_html($viewProps)
+        public function get($viewProps)
         {
             $collectionProps = $viewProps['collection'];
 

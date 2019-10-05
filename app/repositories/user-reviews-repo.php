@@ -20,7 +20,7 @@ if (!class_exists('\HelpieReviews\App\Repositories\User_Reviews_Repo')) {
         {
             if (is_user_logged_in()) {
                 if (!empty($_SERVER['REMOTE_ADDR']) && rest_is_ip_address(wp_unslash($_SERVER['REMOTE_ADDR']))) { // WPCS: input var ok, sanitization ok.
-                    $comment_author_IP = wc_clean(wp_unslash($_SERVER['REMOTE_ADDR'])); // WPCS: input var ok.
+                    $comment_author_IP = wp_unslash($_SERVER['REMOTE_ADDR']); // WPCS: input var ok.
                 } else {
                     $comment_author_IP = '127.0.0.1';
                 }
