@@ -155,21 +155,23 @@ jQuery(document).ready(function($) {
   //create Product Items
   productsTable.prototype.productElement = function(result) {
     var self = this;
-    console.log(result);
-    var featureProductData = [];
+    //Compate stat column list
+    var featureStatColumns = [];
     if (self.featureItems.find("li").length > 0) {
       self.featureItems.find("li").each(function() {
-        featureProductData.push(
+        featureStatColumns.push(
           $(this)
             .text()
             .trim()
         );
       });
     }
+    console.log(featureStatColumns);
+    //response data comes with extra stat data's
     var extraFeatures = [];
-    if (result.stats.length > featureProductData.length) {
+    if (result.stats.length > featureStatColumns.length) {
       for (var incr = 0; incr < result.stats.length; incr++) {
-        if ($.inArray(result.stats[incr].stat_name, featureProductData) != -1) {
+        if ($.inArray(result.stats[incr].stat_name, featureStatColumns) != -1) {
           //found that feature
         } else {
           //not-found that feature
@@ -181,15 +183,22 @@ jQuery(document).ready(function($) {
     //Add Extra Feature in compare table header
     if (extraFeatures.length > 0) {
       for (var i = 0; i < extraFeatures.length; i++) {
-        if ($.inArray(result.stats[i].stat_name, featureProductData) != -1) {
-          //found that feature
-        } else {
-          //not-found that feature
-          featureProductData.push(result.stats[i].stat_name);
-        }
         self.featureItems.append("<li>" + extraFeatures[i] + "</li>");
       }
     }
+
+    var featureProductData = [];
+    if (self.featureItems.find("li").length > 0) {
+      self.featureItems.find("li").each(function() {
+        featureProductData.push(
+          $(this)
+            .text()
+            .trim()
+        );
+      });
+    }
+
+    console.log(featureProductData);
 
     var content = "";
     content = '<li class="product">';
@@ -216,6 +225,7 @@ jQuery(document).ready(function($) {
             "<li data-stat='" + stat_name + "'>" + stat_rating + "</li>";
         } else {
           //not-found that feature
+          console.log("not-found data");
           content += "<li data-stat='" + stat_name + "'>X</li>";
         }
       }
@@ -229,45 +239,44 @@ jQuery(document).ready(function($) {
   productsTable.prototype.refreshProductTable = function() {
     console.log("reloading product table");
     var self = this;
-    var featureProductData = [];
+    var featureProductColumns = [];
     if (self.featureItems.find("li").length > 0) {
       self.featureItems.find("li").each(function() {
-        featureProductData.push(
+        featureProductColumns.push(
           $(this)
             .text()
             .trim()
         );
       });
     }
-    var productInfos = this.productsTopInfo;
+    var productInfos = self.table.find(".top-info");
+    lastIndex = productInfos.length - 1;
 
     productInfos.each(function(index) {
-      if (index != 0) {
-        var $single_product_features = $(this)
-          .next()
-          .find("li");
-        // console.log($single_product_features);
-        $single_product_features.each(function() {
-          data_stat = $(this)
+      if (index != 0 && index != lastIndex) {
+        //Parent ul.cd-features-list
+        var $parentElement = $(this).next();
+        var $parentProduct = $(this).closest(".product");
+        var singleProductStats = [];
+
+        $parentProduct.find("ul.cd-features-list li").each(function() {
+          dataStat = $(this)
             .attr("data-stat")
             .trim();
-          if ($.inArray(data_stat, featureProductData) != -1) {
-            //found
-            console.log("found item");
-          } else {
-            //not found
-            console.log("not found item");
-          }
+          singleProductStats.push(dataStat);
         });
-        // if (featureProductData.length > $single_product_features.length) {
-        //   for (var i = 0; i < featureProductData.length; i++) {
 
-        //   }
-        // } else {
-        // }
+        for (var i = 0; i < featureProductColumns.length; i++) {
+          thisFeatureItem = featureProductColumns[i];
+          if ($.inArray(thisFeatureItem, singleProductStats) != -1) {
+          } else {
+            content = "";
+            content = '<li data-stat="' + thisFeatureItem + '">X</li>';
+            $parentElement.append(content);
+          }
+        }
       }
     });
-    console.log(productInfos);
   };
 
   productsTable.prototype.upadteFilterBtn = function() {

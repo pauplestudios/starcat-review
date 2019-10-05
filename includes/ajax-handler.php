@@ -78,6 +78,11 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
             $results = new \WP_Query($args);
 
             if ($results->have_posts()) {
+
+                // echo "<pre>";
+                // print_r($results->posts);
+                // echo "</pre>";
+
                 foreach ($results->posts as $post) {
                     $temp_stats = [
                         '0' => [
@@ -91,7 +96,20 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
                         '2' => [
                             'stat_name' => 'camera quality',
                             'rating'    => '4.2'
-                        ]
+                        ],
+                        '3' => [
+                            'stat_name' => 'extras_1',
+                            'rating'    => '4.2'
+                        ],
+                        '4' => [
+                            'stat_name' => 'extras_2',
+                            'rating'    => '4.2'
+                        ],
+                        '5' => [
+                            'stat_name' => 'extras_3',
+                            'rating'    => '4.2'
+                        ],
+
                     ];
                     $posts[] = array(
                         'id' => $post->ID,
