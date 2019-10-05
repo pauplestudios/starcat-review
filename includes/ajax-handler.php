@@ -23,6 +23,10 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
             // add 'ajax' action when not logged in
             add_action('wp_ajax_nopriv_hrp_user_review_submission', [$this, 'user_review_submission']);
             add_action('wp_ajax_hrp_user_review_submission', [$this, 'user_review_submission']);
+
+            // add 'ajax' action when not logged in
+            add_action('wp_ajax_nopriv_helpiereview_search_posts', [$this, 'search_posts']);
+            add_action('wp_ajax_helpiereview_search_posts', [$this, 'search_posts']);
         }
 
         public function hrp_listing_action()
@@ -60,5 +64,49 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
 
             wp_die();
         }
-    } // END CLASS
+
+        public function search_posts()
+        {
+            $args = array(
+                'post_type' => array('helpie_reviews'),
+                'post_status' => array('publish'),
+                'nopaging' => true,
+                'order' => 'ASC',
+                'orderby' => 'menu_order',
+            );
+
+            $results = new \WP_Query($args);
+
+            if ($results->have_posts()) {
+                foreach ($results->posts as $post) {
+                    $temp_stats = [
+                        '0' => [
+                            'stat_name' => 'quality',
+                            'rating' => '2',
+                        ],
+                        '1' => [
+                            'stat_name' => 'battery performance',
+                            'rating'    => '4.3'
+                        ],
+                        '2' => [
+                            'stat_name' => 'camera quality',
+                            'rating'    => '4.2'
+                        ]
+                    ];
+                    $posts[] = array(
+                        'id' => $post->ID,
+                        'title' => $post->post_title,
+                        'description' => $post->post_content,
+                        // 'url' => $post->guid,
+                        'stats' => $temp_stats
+                    );
+                }
+            } else {
+                $posts = [];
+            }
+
+            echo json_encode($posts);
+            wp_die();
+        }
+    }
 }

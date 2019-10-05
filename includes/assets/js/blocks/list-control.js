@@ -15,7 +15,7 @@ var UserReviewsList = {
                 { name: "postModified", attr: "data-postModified" }
             ],
 
-            page: 9,
+            page: 10,
             pagination: true,
             fuzzySearch: {
                 searchClass: "collection-search",

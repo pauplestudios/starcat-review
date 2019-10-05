@@ -41,6 +41,7 @@ if (!class_exists('\HelpieReviews\App\Views\Blocks\Card')) {
             if ($this->show_item('content')) {
                 $html .= '<div class="review-card__body">' . $item['content'] . $item['stat_html'] . '</div>';
             }
+            $html .= '<div class="review-card__body">' . $item['stats_html'] . '</div>';
 
 
 
