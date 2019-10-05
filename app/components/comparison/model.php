@@ -51,6 +51,68 @@ if (!class_exists('\HelpieReviews\App\Components\Comparison\Model')) {
                 $post_info['featured_image_url'] = get_the_post_thumbnail_url($post->ID);
 
                 $post_info['stats'] = [];
+                if ($post->ID == 40) {
+                    $stats_list = [
+                        '0' => [
+                            'stat_name' => 'quality',
+                            'rating' => '2',
+                        ],
+                        '1' => [
+                            'stat_name' => 'battery performance',
+                            'rating'    => '4.3'
+                        ],
+                        '2' => [
+                            'stat_name' => 'camera quality',
+                            'rating'    => '4.2'
+                        ]
+                    ];
+                } else if ($post->ID == 47) {
+                    $stats_list = [
+                        '0' => [
+                            'stat_name' => 'quality',
+                            'rating' => '4',
+                        ],
+                        '1' => [
+                            'stat_name' => 'battery performance',
+                            'rating'    => '4'
+                        ],
+                        '2' => [
+                            'stat_name' => 'camera quality',
+                            'rating'    => '4.4'
+                        ]
+                    ];
+                } else if ($post->ID == 49) {
+                    $stats_list = [
+                        '0' => [
+                            'stat_name' => 'quality',
+                            'rating' => '5',
+                        ],
+                        '1' => [
+                            'stat_name' => 'battery performance',
+                            'rating'    => '4.5'
+                        ],
+                        '2' => [
+                            'stat_name' => 'camera quality',
+                            'rating'    => '4.5'
+                        ]
+                    ];
+                } else if ($post->ID == 42) {
+                    $stats_list = [
+                        '0' => [
+                            'stat_name' => 'quality',
+                            'rating' => '5',
+                        ],
+                        '1' => [
+                            'stat_name' => 'battery performance',
+                            'rating'    => '4.5'
+                        ],
+                        '2' => [
+                            'stat_name' => 'camera quality',
+                            'rating'    => '4.5'
+                        ]
+                    ];
+                }
+
 
                 foreach ($stats_list as $key => $single_post_stat) {
                     $stat_name = $single_post_stat['stat_name'];

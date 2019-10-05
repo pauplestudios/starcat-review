@@ -48,6 +48,9 @@ Main Components
 }
 .cd-products-comparison-table header {
   padding: 0 5% 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 .cd-products-comparison-table header::after {
   clear: both;
@@ -194,6 +197,16 @@ Main Components
   -webkit-transition: opacity 0.3s, visibility 0.3s, -webkit-transform 0.3s;
   -moz-transition: opacity 0.3s, visibility 0.3s, -moz-transform 0.3s;
   transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+  // Add Close Btn in Product
+  & .top-info {
+    position: relative;
+
+    & .close-product {
+      position: absolute;
+      right: 11px;
+      top: 7px;
+    }
+  }
 }
 .filtering .cd-products-columns .product:not(.selected) {
   opacity: 0;
@@ -600,3 +613,113 @@ No JS
 .no-js .cd-products-columns .check {
   display: none;
 }
+
+// #hrp-compare-sidebar {
+//   & .hrp-list-items {
+//     margin: 4px 0px;
+//     border: 1px solid #ccc;
+//     padding: 5px;
+//   }
+//   & p {
+//     margin-bottom: px;
+//   }
+//   & span {
+//     font-size: 13px;
+//     line-height: 12px;
+//   }
+// }
+.hrp-compare-pusher {
+  position: fixed;
+  top: 0;
+  height: 100%;
+  z-index: 99999;
+  background: #fff;
+  width: 23%;
+  right: 0;
+
+  & .hrp-compare-sidebar-wrapper {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    & .hrp-sidebar-btn {
+      background: #000;
+      color: #fff;
+      padding: 15px;
+      border-bottom-left-radius: 10px;
+      border-top-left-radius: 10px;
+      position: absolute;
+      left: -94px;
+    }
+    & .hrp-compare-sidebar {
+      width: 100%;
+      height: 100%;
+    }
+    & .hrp-compare-sidebar .hrp-list-items .item {
+      display: flex;
+      flex-direction: column;
+      border: 0.5px solid #ccc;
+      margin: 4px 3px;
+      padding: 5px 10px;
+      width: 98%;
+      min-height: 30px;
+      height: auto;
+    }
+    & .hrp-compare-sidebar .hrp-list-items .item p {
+      margin: 0 0 0.15em;
+    }
+  }
+}
+
+// Search Field
+.hrp-search-filter {
+  width: 90% !important;
+}
+.hrp-search-container {
+  widows: 100%;
+  position: relative;
+}
+.hrp-search-filter-wrapper {
+  & .top-info {
+    padding: 15px 5px !important;
+  }
+}
+.hrp-search-lists {
+  display: none;
+  position: absolute;
+  background: #fff;
+  top: 46px;
+  border: 0.3px solid #ccc;
+  width: 100%;
+  min-height: 100px;
+  z-index: 9;
+  height: 150px;
+  overflow-y: auto;
+  right: 0px;
+
+  & .item {
+    padding: 5px 15px;
+    margin: 5px 3px;
+    cursor: pointer;
+  }
+}
+
+// .hrp-compare-sidebar-wrapper {
+//   position: fixed;
+//   top: 0;
+//   height: 100%;
+//   right: 0;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   cursor: pointer;
+// }
+// .hrp-compare-sidebar-wrapper .hrp-sidebar-btn-container {
+//   background: #000;
+//   color: #fff;
+//   padding: 15px;
+//   border-bottom-left-radius: 10px;
+//   border-top-left-radius: 10px;
+// }

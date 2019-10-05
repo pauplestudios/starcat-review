@@ -20,12 +20,9 @@ if (!class_exists('\HelpieReviews\App\Components\Comparison\View')) {
 
         public function get_html($stats = [])
         {
-
-
             $html = '';
-
             $html .= '<section class="cd-products-comparison-table">';
-            $html .= $this->get_header();
+            // $html .= $this->get_header();
             $html .= '<div class="cd-products-table">';
             $html .= $this->features($stats['cols']);
             $html .= $this->get_columns($stats['stats'], $stats['cols']);
@@ -37,12 +34,18 @@ if (!class_exists('\HelpieReviews\App\Components\Comparison\View')) {
 
         public function get_header()
         {
+
+
             $html = '';
-            $html .= '<header>';
-            $html .= '<h2>Compare Models</h2>';
-            $html .= '<div class="actions">';
+            $html .= '<header class="col-12">';
+            $html .= '<div class="col-lg-6"><div class="col-xs-12">';
+            $html .= '<div class="ui input focus hrp-search-container" style="width:100%;">';
+            $html .= '<input type="text" class="hrp-search" placeholder="Search...">';
+            $html .= '<div class="hrp-search-lists"></div></div>';
+            $html .= '</div></div>';
+            $html .= '<div class="col-xs-6 actions">';
             $html .= '<a href="#0" class="reset">Reset</a>';
-            $html .= ' <a href="#0" class="filter">Filter</a>';
+            $html .= '<a href="#0" class="filter">Filter</a>';
             $html .= '</div>';
             $html .= '</header>';
             return $html;
@@ -53,7 +56,7 @@ if (!class_exists('\HelpieReviews\App\Components\Comparison\View')) {
             $html = '';
             $html .= '<div class="features">';
             $html .= '<div class="top-info">Models</div>';
-            $html .= '<ul class="cd-features-list">';
+            $html .= '<ul class="cd-features-list" id="hrp-stats-list">';
 
             // error_log('$stat_cols : ' . print_r($stat_cols, true));
             for ($ii = 0; $ii < sizeof($stat_cols); $ii++) {
@@ -71,7 +74,7 @@ if (!class_exists('\HelpieReviews\App\Components\Comparison\View')) {
 
             $html = '';
             $html .= '<div class="cd-products-wrapper">';
-            $html .= '<ul class="cd-products-columns">';
+            $html .= '<ul class="cd-products-columns" style="display:flex;">';
 
             foreach ($stats as $key => $single_product_stats) {
                 $html .= $this->single_product($single_product_stats, $stat_cols);
@@ -95,6 +98,9 @@ if (!class_exists('\HelpieReviews\App\Components\Comparison\View')) {
 
             $html .= '<li class="product">';
             $html .= '<div class="top-info">';
+            $html .= '<div class="close-product">';
+            $html .= '<i class="window close outline icon" style="font-size:25px;"></i>';
+            $html .= '</div>';
             $html .= '<div class="check"></div>';
             $html .= '<img class="featured-image" src="' . $stats['featured_image_url'] . '" alt="product image">';
             $html .= '<h3>' . $stats['title'] . '</h3>';
@@ -117,7 +123,7 @@ if (!class_exists('\HelpieReviews\App\Components\Comparison\View')) {
             for ($ii = 0; $ii < sizeof($stat_cols); $ii++) {
                 $stat_name = $stat_cols[$ii];
                 $stat_value = isset($stats[$stat_name]) ? $stats[$stat_name] : 'X';
-                $html .= '<li>' . $stat_value . '</li>';
+                $html .= '<li data-stat="' . $stat_name . '">' . $stat_value . '</li>';
             }
             // foreach ($stats as $key => $stat) {
             //     $html .= '<li>' . $stat . '</li>';
@@ -150,19 +156,30 @@ if (!class_exists('\HelpieReviews\App\Components\Comparison\View')) {
             //$html .= '<div class="check"></div>';
             //$html .= '<img class="featured-image" src="" alt="product image">';
             $html .= '<h4>Add Product</h4>';
-            $html .= '<div class="ui search">';
+            $html .= '<div class="ui search hrp-product-search">';
             $html .= '<div class="ui input">';
-            $html .= '<input type="text" class="prompt hrp-search-filter" placeholder="Search lovely things" />';
+            $html .= '<input type="text" class="prompt " placeholder="Search lovely things" />';
             $html .= '</div>';
             $html .= '<div class="results"></div>';
             $html .= '</div>';
+            //$html .= $this->add_product_btn();
             $html .= '</div> <!-- .top-info -->';
-
+            $html .= '<ul class="cd-features-list"></ul>';
             $html .= '</li> <!-- .product -->';
 
             return $html;
         }
 
+        public function add_product_btn()
+        {
+            $html = '';
+            $html .= '<div class="ui single column grid hrp-compare-add-button" style="padding:5px;">';
+            $html .= '<div class="row"><div class="column">';
+            $html .= '<button class="ui button hrp-add-product" style="width:40%;">Add</button>';
+            $html .= '</div></div>';
+            $html .= '</div>';
+            return $html;
+        }
 
 
         /* PRIVATE CLASS */
