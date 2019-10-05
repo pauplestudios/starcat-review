@@ -10,45 +10,63 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\HelpieReviews\App\Components\User_Reviews\Model')) {
     class Model
     {
-        public function __construct()
-        { }
-
-        public function get_viewProps($args = [])
+        public function get_viewProps($args)
         {
+            // error_log("Comments List : " . print_r($args['items']['comments-list'], true));
             $viewProps = [
-                'collection' => [
-                    'title' => 'User Review For ...',
-                    'columns' => 4,
-                    'items_display' => ['title', 'content'],
-                    'show_controls' => [
-                        'search' => true,
-                        'sort' => true,
-                        'reviews' => true,
-                        'verified' => false
-                    ],
-                    'pagination' => true
-                ],
-                'items' => [
-                    '1' => [
-                        'title' => 'The WP FrontEnd User Pro support was excellent',
-                        'content' => "The WP FrontEnd User Pro support was fantastic. I had a issue with the registration form and spent 3 days on google trying to find a solution. The support team figured it out in a logical and systematic way by looking at the Themes and plugins that may cause conflict. Excellent work and now my website is on it's way to be amazing. glutenfreestyler.com"
-                    ],
-                    '2' => [
-                        'title' => 'Great support team',
-                        'content' => "Great support team. Responded quickly."
-                    ],
-                    '3' => [
-                        'title' => 'Very efficient and helpful support team',
-                        'content' => "Very efficient and helpful support team"
-                    ],
-                    '4' => [
-                        'title' => 'Awesome products with solid support!',
-                        'content' => "To start with, I am using both DOKAN and WPUF and I have to say they are some of the best and most well documented plugins ever! Not only that after purchasing, I contacted their support and their support was out of this world. They responded to every question I had and they solved my issues in no time. Not only they answered my questions but they've given me detailed explanation and information on what and how! I definitely recommend them to anyone that is looking for solid products with solid support. Thank you very much once again!"
-                    ],
-                ]
+                'collection' => $this->get_collectionProps($args),
+                'items' => $this->get_itemPorps($args)
             ];
 
             return $viewProps;
+        }
+
+        public function get_collectionProps($args)
+        {
+            return [
+                'title' => 'User Review For ...',
+                'columns' => 1,
+                'items_display' => ['title', 'content'],
+                'show_controls' => [
+                    'search' => true,
+                    'sort' => true,
+                    'reviews' => true,
+                    'verified' => false
+                ],
+                'pagination' => true,
+
+            ];
+        }
+
+        protected function get_itemPorps($args)
+        {
+            $items = [];
+            if (!isset($args['items']['comments-list']) && empty($args['items']['comments-list'])) {
+                return $items;
+            }
+
+            foreach ($args['items']['comments-list'] as $comment) {
+                $items[] = [
+                    'comment_id' => $comment->comment_ID,
+                    'title' => $comment->review_props['title'],
+                    'content' => $comment->comment_content,
+                    'comment_author' => $comment->comment_author,
+                    'comment_author_email' => $comment->comment_author_email,
+                    'comment_date' => get_comment_date('d', $comment->comment_ID),
+                    'rating' => $comment->review_props['rating'],
+                    'stats_args' => $this->get_stat_args($args, $comment)
+                ];
+            }
+
+            return $items;
+        }
+
+        public function get_stat_args($args, $comment)
+        {
+            $stat_args = $args;
+            unset($stat_args['items']);
+            $stat_args['items']['stats-list'] = $comment->review_props['stats'];
+            return $stat_args;
         }
     }
 }

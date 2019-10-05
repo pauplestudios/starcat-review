@@ -76,6 +76,7 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
             $html .= '<div id="hrp-cat-collection" class="hrp-collection list row">';
 
             foreach ($posts as $key => $post) {
+
                 // Set initial $ii
                 if (!isset($ii)) $ii = 0;
 
@@ -101,7 +102,7 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
             // $excerpt = $this->get_excerpt($post->post_content);
             $single_review = isset($reviews[$ii]) ? $reviews[$ii] : 1;
 
-            $stats_html = "<div class='stats'>Stats HTML CONTENT</div>";
+            $stats_html = $this->get_stats_view($post) . '</br>';
             $item = [
                 'title' => $post['title'],
                 'content' => $post['content'],
@@ -111,13 +112,22 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
                 // 'items_display' => $collectionProps['items_display'],
                 'html_parts' => [
                     'title',
-                    'content',
-                    $stats_html
+                    $stats_html,
+                    'content'
                 ]
             ];
 
             return $this->card->get_view($item);
         }
+
+        protected function get_stats_view($props)
+        {
+            $stats = new \HelpieReviews\App\Components\Stats\Controller($props['stats_args']);
+            $view = $stats->get_view();
+
+            return $view;
+        }
+
         private function get_excerpt($content)
         {
             $word_count = 150;
