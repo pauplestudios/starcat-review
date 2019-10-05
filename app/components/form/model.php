@@ -50,29 +50,58 @@ if (!class_exists('\HelpieReviews\App\Components\Form\Model')) {
 
         public function get_itemsProps($args)
         {
-            $stat_items = $this->get_filtered_stats($args);
+            $items = [];
+            $items['pros'] = $this->get_filtered_prosorcons($args, 'pros-list');
+            $items['cons'] = $this->get_filtered_prosorcons($args, 'cons-list');
+            $items['stats'] = $this->get_filtered_stats($args);
+
+            return $items;
+        }
+
+        protected function get_filtered_stats($args)
+        {
             $stats = [];
             $stat_count = 0;
-            foreach ($stat_items as $stat) {
+
+            if (!isset($args['items']['stats-list']) && empty($args['items']['stats-list'])) {
+                return $stats;
+            }
+
+            foreach ($args['global_stats'] as $allowed_stat) {
+
                 if ($this->collection['singularity'] == 'single' && $stat_count >= 1) {
                     break;
                 }
-                $stats[$stat['stat_name']] = $stat['rating'];
+
+                $allowed_stat_name = strtolower($allowed_stat['stat_name']);
+                $stat = $args['items']['stats-list'][$allowed_stat_name]['stat_name'];
+                $rating = $args['items']['stats-list'][$allowed_stat_name]['rating'];
+
+                $stats[$stat] = $rating;
+
                 $stat_count++;
             }
 
             return $stats;
         }
 
-        protected function get_filtered_stats($args)
+        protected function get_filtered_prosorcons($args, $prosorcons)
         {
-            $stats = [];
-            foreach ($args['global_stats'] as $allowed_stat) {
-                $allowed_stat_name = strtolower($allowed_stat['stat_name']);
-                $stats[$allowed_stat_name] = $args['items']['stats-list'][$allowed_stat_name];
+            $items = [];
+
+            if (!isset($args['items'][$prosorcons]) && empty($args['items'][$prosorcons])) {
+                return $items;
             }
 
-            return $stats;
+            foreach ($args['items'][$prosorcons] as $key => $item) {
+                $proorcon = strtolower(preg_replace('/\s+/', '_', $item['item']));
+                $items[] = [
+                    'item' => $item['item'],
+                    'unique' => $proorcon
+                ];
+            }
+
+            return $items;
         }
 
         protected function get_icons($collection)

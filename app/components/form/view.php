@@ -79,18 +79,16 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
             $html .= '<div class="ui segment">';
             $html .= '<h5> Pros </h5>';
             $html .= '<div data-repeater-list="pros" >';
-            $html .= '<div class="unstackable fields" data-repeater-item >
-                <div class="fourteen wide field">
-                <select class="ui fluid search dropdown" data-pros="pros" >
-                <option value="">Pros</option>            
-                <option value="affordable">Affordable</option>
-                <option value="ui">UI</option>
-                </select>
-                </div>
-                <div class="two wide field">
-                    <div class="ui icon basic button" data-repeater-delete><i class="minus icon"></i></div>                
-                </div>
-            </div></div>';
+            $html .= '<div class="unstackable fields" data-repeater-item >';
+            $html .= '<div class="fourteen wide field">';
+            $html .= '<select class="ui fluid search dropdown" data-pros="pros" >';
+            $html .= $this->get_prosandcons_option('pros');
+            $html .= '</select>';
+            $html .= '</div>';
+            $html .= '<div class="two wide field">';
+            $html .= '<div class="ui icon basic button" data-repeater-delete><i class="minus icon"></i></div>';
+            $html .= '</div>';
+            $html .= '</div></div>';;
             $html .= '<div data-repeater-create class="ui icon basic button"><i class="plus icon"></i></div>';
             $html .= '</div>';
             $html .= '</div>';
@@ -104,21 +102,29 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
             $html .= '<div class="ui segment">';
             $html .= '<h5> Cons </h5>';
             $html .= '<div data-repeater-list="cons" >';
-            $html .= '<div class="unstackable fields" data-repeater-item >
-                <div class="fourteen wide field">
-                <select  class="ui fluid search dropdown"  data-cons="cons" >
-                <option value="">Cons</option>            
-                <option value="affordable">Affordable</option>
-                <option value="ui">UI</option>
-                </select>
-                </div>
-                <div class="two wide field">
-                    <div data-repeater-delete class="ui icon basic button"><i class="minus icon"></i></div>
-                </div>
-            </div></div>';
+            $html .= '<div class="unstackable fields" data-repeater-item >';
+            $html .= '<div class="fourteen wide field">';
+            $html .= '<select  class="ui fluid search dropdown"  data-cons="cons" >';
+            $html .= $this->get_prosandcons_option('cons');
+            $html .= '</select>';
+            $html .= '</div>';
+            $html .= '<div class="two wide field">';
+            $html .= '<div data-repeater-delete class="ui icon basic button"><i class="minus icon"></i></div>';
+            $html .= '</div>';
+            $html .= '</div></div>';
             $html .= '<div data-repeater-create class="ui icon basic button"><i class="plus icon"></i></div>';
             $html .= '</div>';
             $html .= '</div>';
+
+            return $html;
+        }
+
+        protected function get_prosandcons_option($option)
+        {
+            $html = '<option value=""> ' . $option . '</option>';
+            foreach ($this->props['items'][$option] as $value) {
+                $html .= '<option value="' . $value['unique'] . '"> ' . $value['item'] . '</option>';
+            }
 
             return $html;
         }
@@ -135,7 +141,7 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
                 data-list="items"
                 >';
 
-            foreach ($this->props['items'] as $key => $value) {
+            foreach ($this->props['items']['stats'] as $key => $value) {
                 switch ($this->props['collection']['review_type']) {
                     case "star":
                         $html .= $this->get_star_rating($key);
