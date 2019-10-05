@@ -33,9 +33,10 @@ if (!class_exists('\HelpieReviews\App\Components\Listing\Model')) {
 
         protected function get_collection_props($args)
         {
-            error_log('$args : ' . print_r($args, true));
+            // error_log('$args : ' . print_r($args, true));
             // error_log('Model -> get_collection_props');
             $post_count = $this->get_posts_count();
+            // error_log('$post_count : ' . $post_count);
             $posts_per_page = 6;
 
             // error_log('post_count : ' . $post_count);
