@@ -587,6 +587,13 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         ),
 
                         array(
+                            'type'    => 'submessage',
+                            'style'   => 'info',
+                            'content' => 'The post edit page of these posts will have the option to add ratings and reviews.',
+                        ),
+
+
+                        array(
                             'id'    => 'enable-pros-cons',
                             'type'  => 'switcher',
                             'title' => 'Enable Pros and Cons',
@@ -597,6 +604,25 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'type' => 'subheading',
                             'content' => 'Stats',
                         ),
+
+                        array(
+                            'id'     => 'global_stats',
+                            'type'   => 'repeater',
+                            'title'  => 'Stats',
+                            'fields' => array(
+                                array(
+                                    'id'    => 'stat_name',
+                                    'type'  => 'text',
+                                    'placeholder' => 'Feature'
+                                ),
+                            ),
+                        ),
+                        array(
+                            'type'    => 'submessage',
+                            'style'   => 'info',
+                            'content' => 'You can rate each of these stats in the edit post page(author rating). And if you have enabled "user_reviews", your users can rate them from the frontend',
+                        ),
+
 
                         array(
                             'id'          => 'stat-singularity',
@@ -614,9 +640,10 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'type'      => 'image_select',
                             'title'     => 'Stats Type',
                             'options'   => array(
-                                'star' => 'http://codestarframework.com/assets/images/placeholder/80x80-2c3e50.gif',
-                                'bar' => 'http://codestarframework.com/assets/images/placeholder/80x80-2c3e50.gif',
+                                'star' => HELPIE_REVIEWS_URL . 'includes/assets/img/stars-stat.png',
+                                'bar' => HELPIE_REVIEWS_URL . 'includes/assets/img/bars-stat.png',
                             ),
+                            'desc' => 'choose between star and bars stats types',
                             'default'   => 'star'
                         ),
 
@@ -630,6 +657,13 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             ),
                             'dependency' => array('stats-type', '==', 'star'),
                             'default' => 'icon'
+                        ),
+
+                        array(
+                            'id'      => 'stats-display-rating',
+                            'type'    => 'switcher',
+                            'title'   => 'Display Rating Label',
+                            'default' => true
                         ),
 
                         array(
@@ -647,18 +681,26 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'dependency' => array('stats-source-type|stats-type', '==|==', 'image|star'),
                             'fields' => array(
                                 array(
-                                    'id'    => 'stats-image',
+                                    'id'    => 'image',
                                     'type'    => 'media',
                                     'title'   => 'Image',
                                     'library' => 'image',
-                                    'url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png'
+                                    'placeholder'  => 'http://',
+                                    'default' => [
+                                        'url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png',
+                                        'thumbnail' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png'
+                                    ]
                                 ),
                                 array(
-                                    'id'    => 'stats-image-outline',
+                                    'id'    => 'image-outline',
                                     'type'    => 'media',
-                                    'title'   => 'Image Outline',
+                                    'title'   => 'Outline Image',
                                     'library' => 'image',
-                                    'url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png'
+                                    'placeholder'  => 'http://',
+                                    'default' => [
+                                        'url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png',
+                                        'thumbnail' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png'
+                                    ],
                                 ),
 
                                 array(
@@ -696,28 +738,15 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         ),
 
                         array(
-                            'id'      => 'stats-step',
+                            'id'      => 'stats-steps',
                             'type'    => 'select',
                             'title'   => 'Steps',
                             'options'   => array(
-                                'half' => 'Half Star',
-                                'full' => 'Full Star',
-                            ),
-                            'dependency' => array('stats-type', '==', 'star'),
-                            'default' => 'half'
-                        ),
-
-                        array(
-                            'id'      => 'stats-step',
-                            'type'    => 'select',
-                            'title'   => 'Steps',
-                            'dependency' => array('stats-type', '==', 'bar'),
-                            'options'   => array(
-                                'progress' => 'Progress',
+                                'precise' => 'Precise',
                                 'half' => 'Half',
                                 'full' => 'Full',
                             ),
-                            'default' => 'progress'
+                            'default' => 'precise'
                         ),
 
                         array(
@@ -756,30 +785,23 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
         /* Single Post - Meta Data Options */
         public function post_meta_fields()
         {
-
             $locations = HRP_Getter::get('review-location');
-            $enable_pros_cons =  HRP_Getter::get('enable-pros-cons');
             $prefix = '_helpie_reviews_post_options';
 
             \CSF::createMetabox($prefix, array(
                 'title' => 'Helpie Reviews',
-                // 'post_type' => 'helpie_reviews',
                 'post_type' => $locations,
                 'show_restore' => true,
                 'theme' => 'light',
             ));
 
-            $this->single_details($prefix);
             $this->single_post_features($prefix);
+            $this->single_post_pros($prefix);
+            $this->single_post_cons($prefix);
 
-            if ($enable_pros_cons) {
-                $this->single_post_pros($prefix);
-                $this->single_post_cons($prefix);
-            }
-
-            $this->single_rich_snippets($prefix);
+            // $this->single_details($prefix);
+            // $this->single_rich_snippets($prefix);
         }
-
 
         // Features - Main Settings Options
         public function single_post_settings_features($prefix,  $parent = null)
@@ -847,12 +869,13 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
         public function single_post_pros($prefix, $parent = null)
         {
 
-            $fields = $this->fields->single_post_pros_fields();
+            $fields = $this->fields->single_post_prosandcons_fields('pros-list', 'Pros');
 
             \CSF::createSection($prefix, array(
                 'parent' => $parent,
                 'title' => 'Pros',
-                'icon' => 'fa fa-eye',
+                'icon' => 'fa fa-thumbs-up',
+                'dependency' => array('enable-pros-cons', '==', 'true', 'true'),
                 'fields' => $fields
             ));
         }
@@ -862,75 +885,93 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
         public function single_post_cons($prefix, $parent = null)
         {
 
-            $fields = $this->fields->single_post_cons_fields();
+            $fields = $this->fields->single_post_prosandcons_fields('cons-list', 'Cons');
 
             \CSF::createSection($prefix, array(
                 'parent' => $parent,
                 'title' => 'Cons',
-                'icon' => 'fa fa-eye',
-                'fields' => array(
-
-                    array(
-                        'id' => 'cons',
-                        'type' => 'fieldset',
-                        'title' => 'Cons',
-                        'fields' => $fields
-                    ),
-
-                ),
+                'icon' => 'fa fa-thumbs-down',
+                'fields' => $fields
             ));
         }
 
         // Features - Stat Fields Meta Data Options
         public function single_post_features($prefix)
         {
-            $mulitple_stat_fields = $this->get_stat_fields('multiple-stat', 'repeater', 'Multiple Stat');
-            $single_stat_fields = $this->get_stat_fields('single-stat', 'fieldset', 'Single Stat');
-            $fields = (HRP_Getter::get('stat-singularity') == 'single') ? $single_stat_fields : $mulitple_stat_fields;
+            $list_of_stat_fields = $this->get_stat_fields();
 
             \CSF::createSection($prefix, array(
                 'id' => 'stat',
                 'title' => 'Stats',
-                'icon' => 'fa fa-eye',
-                'fields' => $fields
+                'icon' => 'fa fa-th-list',
+                'fields' => $list_of_stat_fields
             ));
         }
 
-        protected function get_stat_fields($id, $type, $title)
+        protected function get_stat_fields()
         {
             return array(
 
                 array(
-                    'id'     => $id,
-                    'type'   => $type,
-                    'title'  => $title,
-                    'fields' => array(
-
-                        array(
-                            'id'    => 'stat_name',
-                            'type'  => 'text',
-                            'title' => 'Stat Name',
-                            'default' => ($id == 'single-stat') ? 'Overall' : ''
-                        ),
-                        array(
-                            'id'    => 'rating',
-                            'type'  => 'slider',
-                            'title' => 'Rating',
-                            'min'     => 0,
-                            'max'     => 100,
-                            'step'    => 1,
-                            'unit'    => '%',
-                            'default' => 0
-                        ),
-                        array(
-                            'type'    => 'submessage',
-                            'style'   => 'success',
-                            'content' => 'Rating 0 - 100 ',
-                        ),
-                    ),
+                    'id'     => 'stats-list',
+                    'type'   => 'fieldset',
+                    'fields'   => $this->get_statlist_from_global()
                 ),
 
             );
+        }
+
+        protected function get_statlist_from_global()
+        {
+            $stats_list = [];
+
+            $stats = HRP_Getter::get('global_stats');
+            if (isset($stats) && !empty($stats)) {
+                $stats_list[] = array(
+                    'type'    => 'submessage',
+                    'content' => 'Stats List',
+                );
+                $iteration = 0;
+                foreach ($stats as $stat) {
+
+                    $stats_list[] = array(
+                        'id'     => strtolower($stat['stat_name']),
+                        'type'   => 'fieldset',
+                        'fields' => array(
+                            array(
+                                'id'    => 'stat_name',
+                                'type'  => 'text',
+                                'title' => 'Stat Name',
+                                'attributes' => array(
+                                    'readonly' => 'readonly',
+                                ),
+                                'default' => $stat['stat_name']
+                            ),
+
+                            array(
+                                'id'    => 'rating',
+                                'type'  => 'slider',
+                                'title' => 'Rating',
+                                'min'     => 0,
+                                'max'     => 100,
+                                'step'    => 1,
+                                'unit'    => '%',
+                                'default' => 0
+                            ),
+
+                            array(
+                                'type'    => 'submessage',
+                                'style'   => 'success',
+                                'content' => 'Rating 0 - 100 ',
+                            ),
+                        ),
+                    );
+
+                    $iteration++;
+                }
+            }
+
+            return $stats_list;
         }
     } // END CLASS
 }

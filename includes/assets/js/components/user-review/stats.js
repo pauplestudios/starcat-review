@@ -14,19 +14,17 @@ var Stats = {
         const reviewed = jQuery(".reviewed-list");
         const animate = reviewed.attr("data-animate");
 
-        if (animate == true) {
+        if (animate == "1") {
             reviewed.find(".reviewed-item").each(function(i) {
                 let reviewedItem = jQuery(this);
-                let value = reviewedItem
-                    .find("input[name='score']")
-                    .attr("value");
+                let value = reviewedItem.find("input[name]").attr("value");
 
                 reviewedItem
                     .find(".stars-result")
-                    .css({ transition: "width 2s", width: value + "%" });
+                    .css({ transition: "width 1s", width: value + "%" });
                 reviewedItem
                     .find(".bars-result")
-                    .css({ transition: "width 2s", width: value + "%" });
+                    .css({ transition: "width 1s", width: value + "%" });
             });
         }
     },
@@ -37,7 +35,7 @@ var Stats = {
         const props = {
             type: review.attr("data-type"),
             limit: review.attr("data-limit"),
-            valueType: review.attr("data-valuetype"),
+            steps: review.attr("data-steps"),
             noRatedMessage: review.attr("data-no-rated-message")
         };
 
@@ -131,7 +129,7 @@ var Stats = {
     getStatWidth: function(elementWidth, props) {
         let divisor, statWidth;
 
-        switch (props.valueType) {
+        switch (props.steps) {
             case "full":
                 divisor = props.limit == 5 ? 20 : 10;
                 statWidth = Math.round(elementWidth / divisor) * divisor;
@@ -142,18 +140,12 @@ var Stats = {
                 statWidth = Math.round(elementWidth / divisor) * divisor;
                 break;
 
-            case "point":
-                divisor = 100 / props.limit;
-                statWidth =
-                    props.type == "star"
-                        ? elementWidth
-                        : Math.round(elementWidth / divisor) * divisor;
-                break;
-            case "percentage":
+            case "precise":
                 statWidth = elementWidth;
                 break;
 
             default:
+                // Default is Star 5
                 divisor = props.limit == 5 ? 20 : 10;
                 statWidth = Math.round(elementWidth / divisor) * divisor;
         }
@@ -164,15 +156,8 @@ var Stats = {
     getStatScore: function(statValue, props) {
         let score;
 
-        score = props.limit == 10 ? statValue / 10 : statValue / 20;
-        score = props.valueType == "point" ? score.toFixed(1) : score;
-
-        if (props.type == "bar") {
-            score =
-                props.valueType == "point"
-                    ? statValue / (100 / props.limit)
-                    : statValue;
-        }
+        score = statValue / (100 / props.limit);
+        score = props.steps == "precise" ? score.toFixed(1) : score;
 
         return score;
     }
