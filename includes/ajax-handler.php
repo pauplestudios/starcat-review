@@ -79,10 +79,6 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
 
             if ($results->have_posts()) {
 
-                // echo "<pre>";
-                // print_r($results->posts);
-                // echo "</pre>";
-
                 foreach ($results->posts as $post) {
                     $temp_stats = [
                         '0' => [
@@ -111,12 +107,17 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
                         ],
 
                     ];
+                    if (has_post_thumbnail($post->ID)) {
+                        $image = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID));
+                    }
+
                     $posts[] = array(
                         'id' => $post->ID,
                         'title' => $post->post_title,
                         'description' => $post->post_content,
                         // 'url' => $post->guid,
-                        'stats' => $temp_stats
+                        'stats' => $temp_stats,
+                        'image_url' => isset($image) ? $image[0] : ""
                     );
                 }
             } else {
