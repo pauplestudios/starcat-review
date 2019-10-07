@@ -12,26 +12,34 @@ if (!class_exists('\HelpieReviews\App\Components\Summary\View')) {
         public function __construct()
         { }
 
-        public function get($args)
+        public function get($props)
         {
-            if ($this->is_empty($args['items'])) {
-                return '';
-            }
-            $this->stat = new \HelpieReviews\App\Components\Stats\Controller($args);
-            $this->prosandcons = new \HelpieReviews\App\Components\ProsAndCons\Controller($args);
+            // if ($this->is_empty($props['items'])) {
+            //     return '';
+            // }
+            $args = $props;
+            // error_log("props : " . print_r($props, true));
 
             $html = '<div class="ui stackable two column grid">';
-            $html .= '<div class="column">';
+
             // Author Summary
-            $html .= $this->stat->get_view();
-            $html .= $this->prosandcons->get_view();
+            $html .= '<div class="column">';
+            $args['items'] = $props['items']['author'];
+            $author_stat = new \HelpieReviews\App\Components\Stats\Controller($args);
+            $author_prosandcons = new \HelpieReviews\App\Components\ProsAndCons\Controller($args);
+            $html .= $author_stat->get_view();
+            $html .= $author_prosandcons->get_view();
             $html .= '</div>';
 
-            $html .= '<div class="column">';
             // User Summary         
-            $html .= $this->stat->get_view();
-            $html .= $this->prosandcons->get_view();
+            $html .= '<div class="column">';
+            $args['items'] = $props['items']['user'];
+            $user_stat = new \HelpieReviews\App\Components\Stats\Controller($args);
+            // $user_prosandcons = new \HelpieReviews\App\Components\ProsAndCons\Controller($props);
+            $html .= $user_stat->get_view();
+            // $html .= $user_prosandcons->get_view();
             $html .= '</div>';
+
             $html .= '</div>';
 
             return $html;

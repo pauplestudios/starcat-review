@@ -26,6 +26,7 @@ if (!class_exists('\HelpieReviews\App\Summary')) {
             $limit = ($type == 'star') ? HRP_Getter::get('stats-stars-limit') : HRP_Getter::get('stats-bars-limit');
 
             $args = [
+                'post_id' => get_the_ID(),
                 'global_stats' => HRP_Getter::get('global_stats'),
                 'items' => $this->get_items(),
                 'singularity' => HRP_Getter::get('stat-singularity'),
@@ -46,6 +47,7 @@ if (!class_exists('\HelpieReviews\App\Summary')) {
         protected function get_items()
         {
             $post_meta = get_post_meta(get_the_ID(), '_helpie_reviews_post_options', true);
+            // $comments = $this->get_comments_list();
             // error_log("Options : " . print_r($post_meta, true));
             $items = [];
 

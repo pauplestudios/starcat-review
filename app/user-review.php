@@ -89,8 +89,10 @@ if (!class_exists('\HelpieReviews\App\User_Review')) {
         protected function get_comments_list()
         {
             $args = [
+                'post_id' => get_the_ID(),
                 'type' => 'helpie_reviews'
             ];
+
             $comments = get_comments($args);
 
             foreach ($comments as $comment) {
