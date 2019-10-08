@@ -5,16 +5,55 @@ var Submission = {
     },
 
     eventListener: function() {
-        jQuery(".hrp-user-review").submit(function(e) {
-            e.preventDefault();
-
-            const props = Submission.getProps(this);
-            console.log("##### Props ######");
-
-            jQuery.post(hrp_ajax.ajax_url, props, function(results) {
-                results = JSON.parse(results);
-                console.log(results);
-            });
+        // jQuery(".hrp-user-review").submit(function(e) {
+        //     e.preventDefault();
+        //     const props = Submission.getProps(this);
+        //     console.log("##### Props ######");
+        //     console.log(props);
+        // jQuery.post(hrp_ajax.ajax_url, props, function(results) {
+        //     results = JSON.parse(results);
+        //     console.log(results);
+        // });
+        // });
+        jQuery(".hrp-user-review").form({
+            fields: {
+                title: {
+                    identifier: "title",
+                    rules: [
+                        {
+                            type: "empty",
+                            prompt: "Please enter your title"
+                        }
+                    ]
+                },
+                description: {
+                    identifier: "description",
+                    rules: [
+                        {
+                            type: "empty",
+                            prompt: "Please enter your description"
+                        }
+                    ]
+                },
+                pros: {
+                    identifier: "pros[]",
+                    rules: [
+                        {
+                            type: "empty",
+                            prompt: "Please select or type a pro"
+                        }
+                    ]
+                },
+                cons: {
+                    identifier: "cons[]",
+                    rules: [
+                        {
+                            type: "empty",
+                            prompt: "Please select or type a con"
+                        }
+                    ]
+                }
+            }
         });
     },
 
