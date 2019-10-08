@@ -14,13 +14,13 @@ if (!class_exists('\HelpieReviews\App\Components\Summary\View')) {
 
         public function get($props)
         {
-            // if ($this->is_empty($props['items'])) {
-            //     return '';
-            // }
             $args = $props;
-            // error_log("props : " . print_r($props, true));
 
-            $html = '<div class="ui stackable two column grid">';
+            $show_user = $this->is_empty($props['items']['user']);
+            $no_of_column = ($show_user == true) ? 'one' : 'two';
+
+
+            $html = '<div class="ui stackable ' . $no_of_column . ' column grid">';
 
             // Author Summary
             $html .= '<div class="column">';
@@ -31,14 +31,16 @@ if (!class_exists('\HelpieReviews\App\Components\Summary\View')) {
             $html .= $author_prosandcons->get_view();
             $html .= '</div>';
 
-            // User Summary         
-            $html .= '<div class="column">';
-            $args['items'] = $props['items']['user'];
-            $user_stat = new \HelpieReviews\App\Components\Stats\Controller($args);
-            // $user_prosandcons = new \HelpieReviews\App\Components\ProsAndCons\Controller($props);
-            $html .= $user_stat->get_view();
-            // $html .= $user_prosandcons->get_view();
-            $html .= '</div>';
+            // User Summary 
+            if ($show_user !== true) {
+                $html .= '<div class="column">';
+                $args['items'] = $props['items']['user'];
+                $user_stat = new \HelpieReviews\App\Components\Stats\Controller($args);
+                // $user_prosandcons = new \HelpieReviews\App\Components\ProsAndCons\Controller($props);
+                $html .= $user_stat->get_view();
+                // $html .= $user_prosandcons->get_view();
+                $html .= '</div>';
+            }
 
             $html .= '</div>';
 
