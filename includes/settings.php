@@ -927,7 +927,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
         public function single_post_pros($prefix, $parent = null)
         {
 
-            $fields = $this->fields->single_post_prosandcons_fields('pros-list', 'Pros');
+            $fields = $this->fields->single_post_prosandcons_fields('pros-list', 'Pros', 'pro');
 
             \CSF::createSection($prefix, array(
                 'parent' => $parent,
@@ -943,7 +943,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
         public function single_post_cons($prefix, $parent = null)
         {
 
-            $fields = $this->fields->single_post_prosandcons_fields('cons-list', 'Cons');
+            $fields = $this->fields->single_post_prosandcons_fields('cons-list', 'Cons', 'con');
 
             \CSF::createSection($prefix, array(
                 'parent' => $parent,

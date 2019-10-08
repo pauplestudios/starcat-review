@@ -113,7 +113,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings\Fields')) {
             );
         }
 
-        public function single_post_prosandcons_fields($id = 'pros-list', $title = 'Pros')
+        public function single_post_prosandcons_fields($id = 'pros-list', $title = 'Pros', $single_id = 'pro')
         {
             return array(
                 array(
@@ -122,7 +122,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings\Fields')) {
                     'title'  => $title,
                     'fields' => array(
                         array(
-                            'id' => 'item',
+                            'id' => $single_id,
                             'type'  => 'text',
                             'placeholder' => strtolower($title)
                         ),
