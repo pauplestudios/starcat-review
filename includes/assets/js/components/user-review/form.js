@@ -1,4 +1,4 @@
-var Submission = {
+var Form = {
     init: function() {
         this.eventListener();
         console.log("Submission JS Loaded !!!");
@@ -17,7 +17,12 @@ var Submission = {
         // });
 
         jQuery(".hrp-user-review").form({
-            fields: Submission.get_fields()
+            fields: Form.get_fields(),
+            onSuccess: function(event, fields) {
+                event.preventDefault();
+                console.log("!!!!! Form Master !!!!!");
+                console.log(fields);
+            }
         });
     },
 
@@ -119,4 +124,4 @@ var Submission = {
     }
 };
 
-module.exports = Submission;
+module.exports = Form;

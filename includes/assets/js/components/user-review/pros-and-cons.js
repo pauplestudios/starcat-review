@@ -1,5 +1,6 @@
 require("jquery.repeater");
 var formFields = require("./form.js").get_fields();
+var Submitted = false;
 
 var ProsAndCons = {
     init: function() {
@@ -55,7 +56,16 @@ var ProsAndCons = {
 
     reiniateEvents: function(selector) {
         jQuery(".hrp-user-review").form({
-            fields: formFields
+            fields: formFields,
+            onSuccess: function(event, fields) {
+                event.preventDefault();
+                if (Submitted) {
+                    return;
+                }
+                Submitted = true;
+                console.log("!!!!! Pros and Cons Master !!!!!");
+                console.log(fields);
+            }
         });
 
         jQuery(selector + " .ui.dropdown").dropdown({
