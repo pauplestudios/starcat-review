@@ -1,6 +1,7 @@
 require("jquery.repeater");
-var formFields = require("./form.js").get_fields();
-var Submitted = false;
+var Form = require("./form.js");
+var formFields = Form.get_fields();
+var formSubmitted = false;
 
 var ProsAndCons = {
     init: function() {
@@ -55,16 +56,19 @@ var ProsAndCons = {
     },
 
     reiniateEvents: function(selector) {
-        jQuery(".hrp-user-review").form({
+        const hrpForm = jQuery(".hrp-user-review");
+
+        hrpForm.form({
             fields: formFields,
             onSuccess: function(event, fields) {
                 event.preventDefault();
-                if (Submitted) {
+                if (formSubmitted) {
                     return;
                 }
-                Submitted = true;
+                formSubmitted = true;
                 console.log("!!!!! Pros and Cons Master !!!!!");
                 console.log(fields);
+                hrpForm.html(Form.getSuccessMessage());
             }
         });
 

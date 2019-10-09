@@ -26,6 +26,17 @@ var Form = {
         });
     },
 
+    getSuccessMessage: function() {
+        const message = `<div class="ui positive message transition">        
+        <div class="header">
+          Thanks for your Review.
+        </div>
+        <p>You can see your review below. Also look at the user summary. </p>
+      </div>`;
+
+        return message;
+    },
+
     get_fields: function() {
         return {
             title: {

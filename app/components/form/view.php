@@ -21,13 +21,13 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
         {
             $html = '';
 
+            $html .= '<form class="ui form hrp-user-review" action="hrp_user_review_submission" method="post" post_id ="' . get_the_ID() . '">';
+
             if ($this->props['collection']['show_form_title']) {
                 $html .= '<h2 class="ui header">';
                 $html .= $this->props['collection']['form_title'];
                 $html .= '</h2>';
             }
-
-            $html .= '<form class="ui form hrp-user-review" action="hrp_user_review_submission" method="post" post_id ="' . get_the_ID() . '">';
 
             if ($this->props['collection']['show_title']) {
                 $html .= '<div class="field">';
@@ -123,7 +123,7 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
 
         protected function get_prosandcons_option($option, $item)
         {
-            $html = '<option value=""> ' . $option . '</option>';
+            $html = '<option value=""> Type a new one or select existing ' . $option . '</option>';
             foreach ($this->props['items'][$option] as $value) {
                 $html .= '<option value="' . $value['unique'] . '"> ' . $value[$item] . '</option>';
             }
