@@ -81,7 +81,7 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
             $html .= '<div data-repeater-list="pros" >';
             $html .= '<div class="unstackable fields" data-repeater-item >';
             $html .= '<div class="fourteen wide field">';
-            $html .= '<select class="ui fluid search dropdown" name data-cons="pros">';
+            $html .= '<select class="ui fluid search dropdown" name="pros[0]" data-pros="pros">';
             $html .= $this->get_prosandcons_option('pros');
             $html .= '</select>';
             $html .= '</div>';
@@ -105,7 +105,7 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
             $html .= '<div data-repeater-list="cons" >';
             $html .= '<div class="unstackable fields" data-repeater-item >';
             $html .= '<div class="fourteen wide field">';
-            $html .= '<select  class="ui fluid search dropdown" name data-cons="cons" >';
+            $html .= '<select  class="ui fluid search dropdown" name="cons[0]" data-cons="cons" >';
             $html .= $this->get_prosandcons_option('cons');
             $html .= '</select>';
             $html .= '</div>';

@@ -59,16 +59,7 @@ var Form = {
             },
 
             pros0: {
-                identifier: "pros[0][]",
-                rules: [
-                    {
-                        type: "empty",
-                        prompt: "Please select or type a pro"
-                    }
-                ]
-            },
-            pros00: {
-                identifier: "pros[0][0]",
+                identifier: "pros[0]",
                 rules: [
                     {
                         type: "empty",
@@ -78,16 +69,7 @@ var Form = {
             },
 
             cons0: {
-                identifier: "cons[0][]",
-                rules: [
-                    {
-                        type: "empty",
-                        prompt: "Please select or type a con"
-                    }
-                ]
-            },
-            cons00: {
-                identifier: "cons[0][0]",
+                identifier: "cons[0]",
                 rules: [
                     {
                         type: "empty",

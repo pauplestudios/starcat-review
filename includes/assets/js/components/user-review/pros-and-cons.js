@@ -1,4 +1,3 @@
-require("jquery.repeater");
 var Form = require("./form.js");
 var formFields = Form.get_fields();
 var formSubmitted = false;
@@ -14,33 +13,113 @@ var ProsAndCons = {
     },
 
     getRepeater: function(selector, group) {
-        jQuery(selector).repeater({
-            show: function() {
-                const item = jQuery(this);
-                item.fadeIn();
+        var list = jQuery(selector).find("[data-repeater-list=" + group + "]");
 
-                let field = item.find("[data-cons]").attr("name");
-                ProsAndCons.addFieldToValidate(field, group);
-                ProsAndCons.reiniateEvents(selector);
-            },
-            hide: function(deleteElement) {
-                jQuery(this).fadeOut(deleteElement);
-            }
-            // isFirstItemUndeletable: true,
+        const duplicateItem = list
+            .find("[data-repeater-item]")
+            .first()
+            .parent()
+            .html();
+
+        jQuery(selector + " [data-repeater-create]").on("click", function() {
+            let indexedItem = ProsAndCons.setIndexToField(
+                list,
+                duplicateItem,
+                group
+            );
+
+            list.append(indexedItem);
+            ProsAndCons.reiniateEvents(selector, list, group);
         });
-        ProsAndCons.reiniateEvents(selector);
+
+        ProsAndCons.reiniateEvents(selector, list, group);
     },
 
-    addFieldToValidate: function(field, group) {
-        var key = field.match(/\[(\d+)\]/)[1];
-        let set1 = group + key;
-        let identifier1 = group + "[" + key + "][]";
+    setIndexToField: function(list, item, dataAttr) {
+        let key = list.children().length;
 
-        let set11 = group + key + key;
-        let identifier11 = group + "[" + key + "][" + key + "]";
+        let field = jQuery(item);
 
-        formFields[set1] = ProsAndCons.generateField(identifier1, group);
-        formFields[set11] = ProsAndCons.generateField(identifier11, group);
+        let indexedField = field
+            .find("[data-" + dataAttr + "]")
+            .attr("name", dataAttr + "[" + key + "]")
+            .parent()
+            .parent()
+            .html();
+
+        let fieldHtml = field.html(indexedField);
+        let indexedHtml = fieldHtml
+            .wrapAll("<div>")
+            .parent()
+            .html();
+
+        return indexedHtml;
+    },
+
+    reiniateEvents: function(selector, list, group) {
+        var hrpForm = jQuery(".hrp-user-review");
+
+        ProsAndCons.getItemDelete(
+            selector + " [data-repeater-item] [data-repeater-delete]",
+            list,
+            group
+        );
+
+        ProsAndCons.updateValidateRules(list, group);
+
+        hrpForm.form({
+            fields: formFields,
+            onSuccess: function(event, fields) {
+                event.preventDefault();
+                if (formSubmitted) {
+                    return;
+                }
+                formSubmitted = true;
+                console.log(fields);
+                hrpForm.html(Form.getSuccessMessage());
+            }
+        });
+
+        jQuery(selector + " .ui.dropdown").dropdown({
+            allowAdditions: true
+        });
+    },
+
+    getItemDelete: function(selector, list, group) {
+        jQuery(selector).on("click", function() {
+            jQuery(this)
+                .parent()
+                .parent()
+                .remove();
+            ProsAndCons.updateFieldsIndex(list, group);
+            ProsAndCons.updateValidateRules(list, group);
+            ProsAndCons.reiniateEvents(selector, list, group);
+        });
+    },
+
+    updateValidateRules: function(list, group) {
+        let items = list.find("[data-repeater-item]");
+        let count = 0;
+        items.each(function(index, item) {
+            let field = jQuery(item)
+                .find("[data-" + group + "]")
+                .attr("name");
+
+            formFields[field] = ProsAndCons.generateField(field, group);
+            count++;
+        });
+    },
+
+    updateFieldsIndex: function(list, group) {
+        let items = list.find("[data-repeater-item]");
+
+        let count = 0;
+        items.each(function(index, item) {
+            jQuery(item)
+                .find("[data-" + group + "]")
+                .attr("name", group + "[" + count + "]");
+            count++;
+        });
     },
 
     generateField: function(identifier, group) {
@@ -53,28 +132,6 @@ var ProsAndCons = {
                 }
             ]
         };
-    },
-
-    reiniateEvents: function(selector) {
-        const hrpForm = jQuery(".hrp-user-review");
-
-        hrpForm.form({
-            fields: formFields,
-            onSuccess: function(event, fields) {
-                event.preventDefault();
-                if (formSubmitted) {
-                    return;
-                }
-                formSubmitted = true;
-                console.log("!!!!! Pros and Cons Master !!!!!");
-                console.log(fields);
-                hrpForm.html(Form.getSuccessMessage());
-            }
-        });
-
-        jQuery(selector + " .ui.dropdown").dropdown({
-            allowAdditions: true
-        });
     }
 };
 
