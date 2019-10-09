@@ -127,7 +127,7 @@ jQuery(document).ready(function($) {
         source: results,
         onSelect: function(result) {
           var that = self;
-          console.log("add element");
+          console.log("get product element");
           var productContent = self.productElement(result);
 
           $(".hrp-search-filter-wrapper").before(productContent);
@@ -155,50 +155,30 @@ jQuery(document).ready(function($) {
   //create Product Items
   productsTable.prototype.productElement = function(result) {
     var self = this;
-    //Compate stat column list
-    var featureStatColumns = [];
-    if (self.featureItems.find("li").length > 0) {
-      self.featureItems.find("li").each(function() {
-        featureStatColumns.push(
-          $(this)
-            .text()
-            .trim()
-        );
-      });
-    }
-    console.log(featureStatColumns);
+    var hrp_stat_table_column = self.getHRPTableColumns();
     //response data comes with extra stat data's
-    var extraFeatures = [];
-    if (result.stats.length > featureStatColumns.length) {
-      for (var incr = 0; incr < result.stats.length; incr++) {
-        if ($.inArray(result.stats[incr].stat_name, featureStatColumns) != -1) {
-          //found that feature
+    var product_extra_stat = [];
+    if (result.author_stats.length > 0) {
+      for (var incr = 0; incr < result.author_stats.length; incr++) {
+        if (
+          $.inArray(
+            result.author_stats[incr].stat_name,
+            hrp_stat_table_column
+          ) != -1
+        ) {
+          //found stat result
         } else {
-          //not-found that feature
-          extraFeatures.push(result.stats[incr].stat_name);
+          product_extra_stat.push(result.author_stats[incr].stat_name);
         }
       }
     }
 
-    //Add Extra Feature in compare table header
-    if (extraFeatures.length > 0) {
-      for (var i = 0; i < extraFeatures.length; i++) {
-        self.featureItems.append("<li>" + extraFeatures[i] + "</li>");
+    //Add Extra Product Feature in compare table Column list
+    if (product_extra_stat.length > 0) {
+      for (var i = 0; i < product_extra_stat.length; i++) {
+        self.featureItems.append("<li>" + product_extra_stat[i] + "</li>");
       }
     }
-
-    var featureProductData = [];
-    if (self.featureItems.find("li").length > 0) {
-      self.featureItems.find("li").each(function() {
-        featureProductData.push(
-          $(this)
-            .text()
-            .trim()
-        );
-      });
-    }
-
-    console.log(featureProductData);
 
     var content = "";
     content = '<li class="product">';
@@ -207,29 +187,15 @@ jQuery(document).ready(function($) {
       '<i class="window close outline icon" style="font-size:25px;"></i></div>';
     content += '<div class="check"></div>';
     if (result.image_url === "undefined" || result.image_url == null) {
+      // Need to set default product image url
+      // content += '<img class="featured-image" src="' + result.image_url + '">';
       content += "";
-      // content +=
-      // '<i class="address card outline icon" style="font-size:36px;"></i>';
     } else {
       content += '<img class="featured-image" src="' + result.image_url + '">';
     }
     content += "<h3>" + result.title + "</h3></div>";
     content += '<ul class="cd-features-list">';
-    if (result.stats.length > 0) {
-      for (var incr = 0; incr < result.stats.length; incr++) {
-        stat_name = result.stats[incr].stat_name;
-        stat_rating = result.stats[incr].rating;
-        if ($.inArray(stat_name, featureProductData) != -1) {
-          //found that feature
-          content +=
-            "<li data-stat='" + stat_name + "'>" + stat_rating + "</li>";
-        } else {
-          //not-found that feature
-          console.log("not-found data");
-          content += "<li data-stat='" + stat_name + "'>X</li>";
-        }
-      }
-    }
+    content += self.createHRPProductStatList(result.author_stats);
     content += "</ul>";
     content += "</li>";
 
@@ -239,16 +205,8 @@ jQuery(document).ready(function($) {
   productsTable.prototype.refreshProductTable = function() {
     console.log("reloading product table");
     var self = this;
-    var featureProductColumns = [];
-    if (self.featureItems.find("li").length > 0) {
-      self.featureItems.find("li").each(function() {
-        featureProductColumns.push(
-          $(this)
-            .text()
-            .trim()
-        );
-      });
-    }
+
+    var hrp_stat_table_column = self.getHRPTableColumns();
     var productInfos = self.table.find(".top-info");
     lastIndex = productInfos.length - 1;
 
@@ -266,17 +224,64 @@ jQuery(document).ready(function($) {
           singleProductStats.push(dataStat);
         });
 
-        for (var i = 0; i < featureProductColumns.length; i++) {
-          thisFeatureItem = featureProductColumns[i];
-          if ($.inArray(thisFeatureItem, singleProductStats) != -1) {
+        for (var i = 0; i < hrp_stat_table_column.length; i++) {
+          table_stat_name = hrp_stat_table_column[i];
+          if ($.inArray(table_stat_name, singleProductStats) != -1) {
           } else {
             content = "";
-            content = '<li data-stat="' + thisFeatureItem + '">X</li>';
+            content = '<li data-stat="' + table_stat_name + '">X</li>';
             $parentElement.append(content);
           }
         }
       }
     });
+  };
+
+  productsTable.prototype.createHRPProductStatList = function(author_stats) {
+    var self = this;
+    var content = "";
+    var hrp_stat_table_column = self.getHRPTableColumns();
+    if (hrp_stat_table_column.length > 0) {
+      for (var i = 0; i < hrp_stat_table_column.length; i++) {
+        author_stat_is_found = 0;
+        feature_stat = hrp_stat_table_column[i];
+        if (author_stats.length > 0) {
+          for (var ii = 0; ii < author_stats.length; ii++) {
+            stat_name = author_stats[ii].stat_name;
+            stat_rating = author_stats[ii].rating;
+            if (stat_name === feature_stat) {
+              author_stat_is_found = 1;
+              break;
+            } else {
+              author_stat_is_found = 0;
+            }
+          }
+        }
+        if (author_stat_is_found) {
+          content +=
+            "<li data-stat='" + stat_name + "'>" + stat_rating + "</li>";
+        } else {
+          content += "<li data-stat='" + hrp_stat_table_column[i] + "'>X</li>";
+        }
+      }
+    }
+
+    return content;
+  };
+  //get table feature column
+  productsTable.prototype.getHRPTableColumns = function() {
+    var self = this;
+    var hrp_table_columns = [];
+    if (self.featureItems.find("li").length > 0) {
+      self.featureItems.find("li").each(function() {
+        hrp_table_columns.push(
+          $(this)
+            .text()
+            .trim()
+        );
+      });
+    }
+    return hrp_table_columns;
   };
 
   productsTable.prototype.upadteFilterBtn = function() {
