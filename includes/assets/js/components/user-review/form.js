@@ -1,3 +1,4 @@
+formSubmitted = false;
 var Form = {
     init: function() {
         this.eventListener();
@@ -16,14 +17,29 @@ var Form = {
         // });
         // });
 
+        this.formValidation();
+    },
+
+    formValidation: function(fields) {
+        console.log("Times");
+
+        let formFields = fields ? fields : Form.get_fields();
         jQuery(".hrp-user-review").form({
-            fields: Form.get_fields(),
+            fields: formFields,
             onSuccess: function(event, fields) {
                 event.preventDefault();
-                console.log("!!!!! Form Master !!!!!");
+                if (formSubmitted) {
+                    return;
+                }
+                formSubmitted = true;
                 console.log(fields);
+                // hrpForm.html(Form.getSuccessMessage());
+                jQuery("#hrp-cat-collection").prepend(
+                    Form.reviewItemTemplate(fields.title, fields.description)
+                );
             }
         });
+        // console.log(Times);
     },
 
     getSuccessMessage: function() {
@@ -35,6 +51,13 @@ var Form = {
       </div>`;
 
         return message;
+    },
+
+    reviewItemTemplate: function(title, description) {
+        return `<div class="hrp-collection__col item col-xs-12 col-lg-12"> <div class="hrp-review-card">
+        <div class="review-card__header">${title}</div>        
+        <div class="review-card__body">${description}</div>
+        <span class="reviewCount" data-reviewcount="75"></span></div></div>`;
     },
 
     get_fields: function() {

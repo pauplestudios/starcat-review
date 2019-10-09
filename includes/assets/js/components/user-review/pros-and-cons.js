@@ -1,7 +1,5 @@
 var Form = require("./form.js");
 var formFields = Form.get_fields();
-var formSubmitted = false;
-
 var ProsAndCons = {
     init: function() {
         this.eventListener();
@@ -57,8 +55,6 @@ var ProsAndCons = {
     },
 
     reiniateEvents: function(selector, list, group) {
-        var hrpForm = jQuery(".hrp-user-review");
-
         ProsAndCons.getItemDelete(
             selector + " [data-repeater-item] [data-repeater-delete]",
             list,
@@ -66,20 +62,7 @@ var ProsAndCons = {
         );
 
         ProsAndCons.updateValidateRules(list, group);
-
-        hrpForm.form({
-            fields: formFields,
-            onSuccess: function(event, fields) {
-                event.preventDefault();
-                if (formSubmitted) {
-                    return;
-                }
-                formSubmitted = true;
-                console.log(fields);
-                hrpForm.html(Form.getSuccessMessage());
-            }
-        });
-
+        Form.formValidation(formFields);
         jQuery(selector + " .ui.dropdown").dropdown({
             allowAdditions: true
         });
