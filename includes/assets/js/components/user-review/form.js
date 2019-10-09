@@ -6,25 +6,13 @@ var Form = {
     },
 
     eventListener: function() {
-        // jQuery(".hrp-user-review").submit(function(e) {
-        //     e.preventDefault();
-        //     const props = Submission.getProps(this);
-        //     console.log("##### Props ######");
-        //     console.log(props);
-        // jQuery.post(hrp_ajax.ajax_url, props, function(results) {
-        //     results = JSON.parse(results);
-        //     console.log(results);
-        // });
-        // });
-
         this.formValidation();
     },
 
     formValidation: function(fields) {
-        console.log("Times");
-
+        const HRPForm = jQuery(".hrp-user-review");
         let formFields = fields ? fields : Form.get_fields();
-        jQuery(".hrp-user-review").form({
+        HRPForm.form({
             fields: formFields,
             onSuccess: function(event, fields) {
                 event.preventDefault();
@@ -32,32 +20,59 @@ var Form = {
                     return;
                 }
                 formSubmitted = true;
-                console.log(fields);
-                // hrpForm.html(Form.getSuccessMessage());
-                jQuery("#hrp-cat-collection").prepend(
-                    Form.reviewItemTemplate(fields.title, fields.description)
-                );
+
+                Form.submission(HRPForm, fields);
             }
         });
-        // console.log(Times);
     },
 
-    getSuccessMessage: function() {
-        const message = `<div class="ui positive message transition">        
-        <div class="header">
-          Thanks for your Review.
-        </div>
-        <p>You can see your review below. Also look at the user summary. </p>
-      </div>`;
+    submission: function(HRPForm, fields) {
+        const props = Form.getProps(HRPForm, fields);
 
-        return message;
+        // Ajax Post Submiting
+        jQuery
+            .post(hrp_ajax.ajax_url, props, function(results) {
+                results = JSON.parse(results);
+                console.log(results);
+
+                // Success Message
+                let msgProps = {
+                    type: "positive",
+                    title: "Thanks for your Review.",
+                    description:
+                        "You can see your review below. Also look at the user summary."
+                };
+                HRPForm.html(Form.getMessage(msgProps));
+
+                // Item adding to Reviews List
+                jQuery("#hrp-cat-collection").prepend(
+                    Form.reviewItemTemplate(props.title, props.description)
+                );
+
+                // Reloading the page
+                setInterval("location.reload()", 6000);
+            })
+            .fail(function(response) {
+                // Fail Message
+                let msgProps = {
+                    type: "negative",
+                    title:
+                        "This is a Bad request, Our development team processing it for while so we suggest you should Keep browsing!",
+                    description: "Thanks for your Review though."
+                };
+                HRPForm.html(Form.getMessage(msgProps));
+
+                // Reloading the page
+                setInterval("location.reload()", 6000);
+            });
     },
 
-    reviewItemTemplate: function(title, description) {
-        return `<div class="hrp-collection__col item col-xs-12 col-lg-12"> <div class="hrp-review-card">
-        <div class="review-card__header">${title}</div>        
-        <div class="review-card__body">${description}</div>
-        <span class="reviewCount" data-reviewcount="75"></span></div></div>`;
+    getProps: function(submittingForm, fields) {
+        fields.action = submittingForm.attr("action");
+        fields.type = submittingForm.attr("method");
+        fields.post_id = submittingForm.attr("post_id");
+
+        return fields;
     },
 
     get_fields: function() {
@@ -103,40 +118,22 @@ var Form = {
         };
     },
 
-    getProps: function(submittedForm) {
-        const props = {},
-            pros = {},
-            cons = {};
-        const form = jQuery(submittedForm);
+    getMessage: function(props) {
+        const message = `<div class="ui ${props.type} message transition">        
+        <div class="header">
+          ${props.title}
+        </div>
+        <p>${props.description}</p>
+      </div>`;
 
-        props.action = form.attr("action");
-        props.type = form.attr("method");
-        props.post_id = form.attr("post_id");
+        return message;
+    },
 
-        form.find("[name]").each(function(i, v) {
-            var input = jQuery(this),
-                name = input.attr("name"),
-                value = input.val();
-            props[name] = value;
-        });
-
-        // Pros
-        form.find("[data-pros]").each(function(i) {
-            var input = jQuery(this),
-                value = input.val();
-            pros[i] = value;
-        });
-        props.pros = pros;
-
-        // Cons
-        form.find("[data-cons]").each(function(i) {
-            var input = jQuery(this),
-                value = input.val();
-            cons[i] = value;
-        });
-        props.cons = cons;
-
-        return props;
+    reviewItemTemplate: function(title, description) {
+        return `<div class="hrp-collection__col item col-xs-12 col-lg-12"> <div class="hrp-review-card">
+        <div class="review-card__header">${title}</div>        
+        <div class="review-card__body">${description}</div>
+        <span class="reviewCount" data-reviewcount="75"></span></div></div>`;
     }
 };
 
