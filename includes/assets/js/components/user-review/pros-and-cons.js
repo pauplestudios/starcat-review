@@ -1,5 +1,5 @@
 var Form = require("./form.js");
-var formFields = Form.get_fields();
+var formRules = Form.getRules();
 var ProsAndCons = {
     init: function() {
         this.eventListener();
@@ -59,7 +59,7 @@ var ProsAndCons = {
 
     reinitiateEvents: function(list, group) {
         ProsAndCons.setRules(list, group);
-        Form.formValidation(formFields);
+        Form.formValidation(formRules);
     },
 
     setIndex: function(list, item, dataAttr) {
@@ -101,7 +101,7 @@ var ProsAndCons = {
             let field = jQuery(item)
                 .find("[data-" + group + "]")
                 .attr("name");
-            formFields[field] = ProsAndCons.updateRules(field, group);
+            formRules[field] = ProsAndCons.updateRules(field, group);
         });
     },
 

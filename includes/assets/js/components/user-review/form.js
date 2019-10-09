@@ -11,7 +11,7 @@ var Form = {
 
     formValidation: function(fields) {
         const HRPForm = jQuery(".hrp-user-review");
-        let formFields = fields ? fields : Form.get_fields();
+        let formFields = fields ? fields : Form.getRules();
         HRPForm.form({
             fields: formFields,
             onSuccess: function(event, fields) {
@@ -42,11 +42,11 @@ var Form = {
                     description:
                         "You can see your review below. Also look at the user summary."
                 };
-                HRPForm.html(Form.getMessage(msgProps));
+                HRPForm.html(Form.getMessageTemplate(msgProps));
 
-                // Item adding to Reviews List
+                // Reviewed item prepending to Reviews List
                 jQuery("#hrp-cat-collection").prepend(
-                    Form.reviewItemTemplate(props.title, props.description)
+                    Form.getReviewTemplate(props.title, props.description)
                 );
 
                 // Reloading the page
@@ -60,7 +60,7 @@ var Form = {
                         "This is a Bad request, Our development team processing it for while so we suggest you should Keep browsing!",
                     description: "Thanks for your Review though."
                 };
-                HRPForm.html(Form.getMessage(msgProps));
+                HRPForm.html(Form.getMessageTemplate(msgProps));
 
                 // Reloading the page
                 setInterval("location.reload()", 6000);
@@ -75,7 +75,7 @@ var Form = {
         return fields;
     },
 
-    get_fields: function() {
+    getRules: function() {
         return {
             title: {
                 identifier: "title",
@@ -118,7 +118,7 @@ var Form = {
         };
     },
 
-    getMessage: function(props) {
+    getMessageTemplate: function(props) {
         const message = `<div class="ui ${props.type} message transition">        
         <div class="header">
           ${props.title}
@@ -129,7 +129,7 @@ var Form = {
         return message;
     },
 
-    reviewItemTemplate: function(title, description) {
+    getReviewTemplate: function(title, description) {
         return `<div class="hrp-collection__col item col-xs-12 col-lg-12"> <div class="hrp-review-card">
         <div class="review-card__header">${title}</div>        
         <div class="review-card__body">${description}</div>
