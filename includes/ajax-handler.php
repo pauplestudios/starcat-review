@@ -56,6 +56,7 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
         {
             $user_review_repo = new \HelpieReviews\App\Repositories\User_Reviews_Repo();
             $props = $user_review_repo->get_processed_data();
+            error_log("Something : " . print_r($props, true));
 
             $comment_id = $user_review_repo->insert($props);
             $review = $user_review_repo->get($comment_id);

@@ -47,8 +47,8 @@ if (!class_exists('\HelpieReviews\App\Summary')) {
         protected function get_items()
         {
             $post_meta = get_post_meta(get_the_ID(), '_helpie_reviews_post_options', true);
-            // $comments = $this->get_comments_list();
-            // error_log("Options : " . print_r($post_meta, true));
+            $comments = $this->get_comments_list();
+
             $items = [];
 
             if (isset($post_meta['stats-list']) || !empty($post_meta['stats-list'])) {
@@ -61,7 +61,27 @@ if (!class_exists('\HelpieReviews\App\Summary')) {
                 $items['cons-list'] = $post_meta['cons-list'];
             }
 
+            if (isset($comments) || !empty($comments)) {
+                $items['comments-list'] = $comments;
+            }
+
             return $items;
+        }
+
+        protected function get_comments_list()
+        {
+            $args = [
+                'post_id' => get_the_ID(),
+                'type' => 'helpie_reviews'
+            ];
+
+            $comments = get_comments($args);
+
+            foreach ($comments as $comment) {
+                $comment->review_props = get_comment_meta($comment->comment_ID, 'hrp_user_review_props', true);
+            }
+
+            return $comments;
         }
     }
 }

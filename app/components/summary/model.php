@@ -12,11 +12,18 @@ if (!class_exists('\HelpieReviews\App\Components\Summary\Model')) {
         public function get_Props($args)
         {
             $props = $args;
-            error_log("pros-list" . print_r($args['items']['pros-list'], true));
+
             $props['items']['author'] = $args['items'];
             $props['items']['user'] = $this->get_userSummaryItems($props);
 
+            $this->get_items($args['items']);
             return $props;
+        }
+
+        protected function get_items($items)
+        {
+            error_log("Items : " . print_r($items, true));
+            return $items;
         }
 
         protected function get_userSummaryItems($collection)
@@ -34,7 +41,7 @@ if (!class_exists('\HelpieReviews\App\Components\Summary\Model')) {
             $groups['cons-list'] = array();
 
             foreach ($comments as $comment) {
-                $comment->review_props = get_comment_meta($comment->comment_ID, 'hrp_user_review_props', true);
+                // $comment->review_props = get_comment_meta($comment->comment_ID, 'hrp_user_review_props', true);
 
                 foreach ($collection['global_stats'] as $allowed_stat) {
                     $allowed_stat_name = strtolower($allowed_stat['stat_name']);

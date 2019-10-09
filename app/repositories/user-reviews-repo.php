@@ -81,28 +81,27 @@ if (!class_exists('\HelpieReviews\App\Repositories\User_Reviews_Repo')) {
             $props['post_id']  = $_POST['post_id'];
             $props['title'] = $_POST['title'];
             $props['description'] = $_POST['description'];
-            $props['pros'] = $_POST['pros'];
-            $props['cons'] = $_POST['cons'];
+            $props['pros'] = $this->get_prosandcons($_POST['pros']);
+            $props['cons'] = $this->get_prosandcons($_POST['cons']);
             $props['rating'] = $this->get_rating($_POST['scores']);
             $props['stats'] = $this->get_stat($_POST['scores']);
+
             return $props;
         }
 
-        protected function get_rating($scores)
+        protected function get_prosandcons($features)
         {
-            $count = 0;
-            $rating = 0;
-            $cumulative = 0;
+            $items = [];
 
-            if (isset($scores)) {
-                foreach ($scores as $key => $value) {
-                    $cumulative += $value;
-                    $count++;
+            if (isset($features) && !empty($features)) {
+                foreach ($features as $key => $value) {
+                    $items[$key] = [
+                        'item' => $value
+                    ];
                 }
-
-                return $rating = round($cumulative / $count);
             }
-            return $rating;
+
+            return $items;
         }
 
         protected function get_stat($scores)
