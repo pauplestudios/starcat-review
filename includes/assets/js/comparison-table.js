@@ -132,7 +132,7 @@ jQuery(document).ready(function($) {
 
           $(".hrp-search-filter-wrapper").before(productContent);
           self.refreshProductTable();
-          var products = self.tableColumns.children(".product");
+     x     var products = self.tableColumns.children(".product");
           self.products = [];
           self.products = products;
           noOfProducts = self.products.length;
@@ -265,7 +265,6 @@ jQuery(document).ready(function($) {
         }
       }
     }
-
     return content;
   };
   //get table feature column
