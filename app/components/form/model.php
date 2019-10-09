@@ -51,8 +51,8 @@ if (!class_exists('\HelpieReviews\App\Components\Form\Model')) {
         public function get_itemsProps($args)
         {
             $items = [];
-            $items['pros'] = $this->get_filtered_prosorcons($args, 'pros-list', 'pro');
-            $items['cons'] = $this->get_filtered_prosorcons($args, 'cons-list', 'con');
+            $items['pros'] = $this->get_filtered_prosorcons($args, 'pros-list');
+            $items['cons'] = $this->get_filtered_prosorcons($args, 'cons-list');
             $items['stats'] = $this->get_filtered_stats($args);
 
             return $items;
@@ -85,7 +85,7 @@ if (!class_exists('\HelpieReviews\App\Components\Form\Model')) {
             return $stats;
         }
 
-        protected function get_filtered_prosorcons($args, $prosorcons, $id)
+        protected function get_filtered_prosorcons($args, $prosorcons)
         {
             $items = [];
 
@@ -94,9 +94,9 @@ if (!class_exists('\HelpieReviews\App\Components\Form\Model')) {
             }
 
             foreach ($args['items'][$prosorcons] as $key => $item) {
-                $proorcon = strtolower(preg_replace('/\s+/', '_', $item[$id]));
+                $proorcon = strtolower(preg_replace('/\s+/', '_', $item['item']));
                 $items[] = [
-                    $id => $item[$id],
+                    'item' => $item['item'],
                     'unique' => $proorcon
                 ];
             }

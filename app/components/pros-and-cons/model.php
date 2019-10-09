@@ -44,11 +44,11 @@ if (!class_exists('\HelpieReviews\App\Components\ProsAndCons\Model')) {
             $itemsProps['cons'] = [];
 
             foreach ($pros_list as $key => $item) {
-                $itemsProps['pros'][] = $item['pro'];
+                $itemsProps['pros'][] = $item['item'];
             }
 
             foreach ($cons_list as $key => $item) {
-                $itemsProps['cons'][] = $item['con'];
+                $itemsProps['cons'][] = $item['item'];
             }
 
             return $itemsProps;

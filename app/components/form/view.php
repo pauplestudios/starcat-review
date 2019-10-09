@@ -82,7 +82,7 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
             $html .= '<div class="unstackable fields" data-repeater-item >';
             $html .= '<div class="fourteen wide field">';
             $html .= '<select class="ui fluid search dropdown" name data-cons="pros">';
-            $html .= $this->get_prosandcons_option('pros', 'pro');
+            $html .= $this->get_prosandcons_option('pros');
             $html .= '</select>';
             $html .= '</div>';
             $html .= '<div class="two wide field">';
@@ -106,7 +106,7 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
             $html .= '<div class="unstackable fields" data-repeater-item >';
             $html .= '<div class="fourteen wide field">';
             $html .= '<select  class="ui fluid search dropdown" name data-cons="cons" >';
-            $html .= $this->get_prosandcons_option('cons', 'con');
+            $html .= $this->get_prosandcons_option('cons');
             $html .= '</select>';
             $html .= '</div>';
             $html .= '<div class="two wide field">';
@@ -121,11 +121,11 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
             return $html;
         }
 
-        protected function get_prosandcons_option($option, $item)
+        protected function get_prosandcons_option($option)
         {
             $html = '<option value=""> Type a new one or select existing ' . $option . '</option>';
             foreach ($this->props['items'][$option] as $value) {
-                $html .= '<option value="' . $value['unique'] . '"> ' . $value[$item] . '</option>';
+                $html .= '<option value="' . $value['item'] . '"> ' . $value['item'] . '</option>';
             }
 
             return $html;

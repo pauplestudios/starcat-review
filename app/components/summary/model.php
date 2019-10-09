@@ -12,7 +12,7 @@ if (!class_exists('\HelpieReviews\App\Components\Summary\Model')) {
         public function get_Props($args)
         {
             $props = $args;
-            // error_log("pros-list" . print_r($args, true));
+            error_log("pros-list" . print_r($args['items']['pros-list'], true));
             $props['items']['author'] = $args['items'];
             $props['items']['user'] = $this->get_userSummaryItems($props);
 
@@ -106,8 +106,8 @@ if (!class_exists('\HelpieReviews\App\Components\Summary\Model')) {
                 // }
             }
 
-            error_log("prosandcons : " . print_r($pros, true));
-            error_log("fliped : " . print_r($prosandcons, true));
+            // error_log("prosandcons : " . print_r($pros, true));
+            // error_log("fliped : " . print_r($prosandcons, true));
 
             return $items;
         }
