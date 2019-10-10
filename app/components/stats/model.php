@@ -99,7 +99,7 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
 
         protected function get_overall_stat($cumulative, $count)
         {
-            $rating = round($cumulative / $count);
+            $rating = round($cumulative / $count, 1);
             $stat_value = $rating;
             $stat_score = $this->get_stat_score($stat_value);
 
@@ -135,7 +135,7 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
 
             $stat_score = $stat_value / (100 / $collection['limit']);
 
-            $stat_score = $collection['steps'] == "precise" ? number_format($stat_score, 1) : $stat_score;
+            $stat_score = $collection['steps'] == "precise" ? number_format($stat_score, 1) : round($stat_score, 1);
 
             return $stat_score;
         }

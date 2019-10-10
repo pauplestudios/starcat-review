@@ -125,7 +125,9 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
         {
             $html = '<option value=""> Type a new one or select existing ' . $option . '</option>';
             foreach ($this->props['items'][$option] as $value) {
-                $html .= '<option value="' . $value['item'] . '"> ' . $value['item'] . '</option>';
+                if (!empty($value['item'])) {
+                    $html .= '<option value="' . $value['item'] . '"> ' . $value['item'] . '</option>';
+                }
             }
 
             return $html;

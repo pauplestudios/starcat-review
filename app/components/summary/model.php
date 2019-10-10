@@ -14,90 +14,74 @@ if (!class_exists('\HelpieReviews\App\Components\Summary\Model')) {
             $props = $args;
 
             $props['items']['author'] = $args['items'];
-            $props['items']['user'] = $this->get_userSummaryItems($props);
+            $props['items']['user'] = $this->get_userItems($args);
 
-            $this->get_items($args['items']);
             return $props;
         }
 
-        protected function get_items($items)
-        {
-            // error_log("Items : " . print_r($items, true));
-            return $items;
-        }
-
-        protected function get_userSummaryItems($collection)
+        protected function get_userItems($args)
         {
             $items = [];
 
-            $args = [
-                'post_id' => $collection['post_id'],
-                'type' => 'helpie_reviews'
-            ];
-            $comments = get_comments($args);
-
             $groups = [];
-            $groups['pros-list'] = array();
-            $groups['cons-list'] = array();
+            // $groups['pros-list'] = array();
+            // $groups['cons-list'] = array();
+            $groups['stats-list'] = array();
 
-            foreach ($comments as $comment) {
-                // $comment->review_props = get_comment_meta($comment->comment_ID, 'hrp_user_review_props', true);
+            $count = 0;
+            foreach ($args['items']['comments-list'] as $comment) {
 
-                foreach ($collection['global_stats'] as $allowed_stat) {
-                    $allowed_stat_name = strtolower($allowed_stat['stat_name']);
-                    if (!isset($groups['stats-list'][$allowed_stat_name])) {
-                        $groups['stats-list'][$allowed_stat_name] = 0;
+                foreach ($comment->reviews['stats'] as $stat_key => $stat_value) {
+
+                    $global_stats = array_map(function ($stat) {
+                        return strtolower($stat['stat_name']);
+                    }, $args['global_stats']);
+
+                    if (in_array(strtolower($stat_key), $global_stats)) {
+                        if (!isset($groups['stats-list'][$stat_key])) {
+                            $groups['stats-list'][$stat_key] = 0;
+                        }
+
+                        $groups['stats-list'][$stat_key] += $comment->reviews['stats'][$stat_key]['rating'];
                     }
-
-                    $count = count($comment->review_props['stats'][$allowed_stat_name]);
-
-                    $groups['stats-list'][$allowed_stat_name] += $comment->review_props['stats'][$allowed_stat_name]['rating'] / $count;
                 }
-
-                $groups['pros-list'] = array_merge($groups['pros-list'], $comment->review_props['pros']);
-                $groups['cons-list'] = array_merge($groups['cons-list'], $comment->review_props['cons']);
+                $count++;
             }
 
             if (!empty($groups['stats-list'])) {
-                $items['stats-list'] = $this->get_stats($groups['stats-list']);
+                $items['stats-list'] = $this->get_user_stats($groups['stats-list'], $count);
             }
-            if (!empty($groups['pros-list'])) {
-                $items['pros-list'] = $this->get_prosandcons($groups['pros-list']);
-            }
-            if (!empty($groups['cons-list'])) {
-                $items['cons-list'] = $this->get_prosandcons($groups['cons-list']);
-            }
-            // error_log("Pros list : " . print_r($items['pros-list'], true));
-            // error_log("cons List : " . print_r($items['cons-list'], true));
+            // if (!empty($groups['pros-list'])) {
+            //     $items['pros-list'] = $this->get_prosandcons($groups['pros-list']);
+            // }
+            // if (!empty($groups['cons-list'])) {
+            //     $items['cons-list'] = $this->get_prosandcons($groups['cons-list']);
+            // }
+
             return $items;
         }
 
 
-        protected function get_stats($groups)
+        protected function get_user_stats($groups, $count)
         {
             $stats = [];
 
             foreach ($groups as $key => $value) {
                 $stats[$key] = [
                     'stat_name' => $key,
-                    'rating' => $value
+                    'rating' => round($value / $count, 1)
                 ];
             }
 
             return $stats;
         }
+
+        //Todo:  Not Working Properly 
         protected function get_prosandcons($groups)
         {
             $items = [];
             $prosandcons = array_count_values($groups);
             $fliped = array_flip($prosandcons);
-            // foreach ($prosandcons as $key => $value) {
-            //     if ($count = ($value)) {
-            //         $items[] = [
-            //             'item' => $key
-            //         ];
-            //     }
-            // }
 
             $max = max($prosandcons);
             $pros = [];
@@ -108,13 +92,7 @@ if (!class_exists('\HelpieReviews\App\Components\Summary\Model')) {
                 } else if ($value == $max) {
                     $pros[] = $key;
                 }
-                //  else if ($value <= $max) {
-                //     $pros[] = $key;
-                // }
             }
-
-            // error_log("prosandcons : " . print_r($pros, true));
-            // error_log("fliped : " . print_r($prosandcons, true));
 
             return $items;
         }

@@ -104,6 +104,23 @@ if (!class_exists('\HelpieReviews\App\Repositories\User_Reviews_Repo')) {
             return $items;
         }
 
+        protected function get_rating($scores)
+        {
+            $count = 0;
+            $rating = 0;
+            $cumulative = 0;
+
+            if (isset($scores)) {
+                foreach ($scores as $key => $value) {
+                    $cumulative += $value;
+                    $count++;
+                }
+
+                return $rating = round($cumulative / $count);
+            }
+            return $rating;
+        }
+
         protected function get_stat($scores)
         {
             $stats = [];
