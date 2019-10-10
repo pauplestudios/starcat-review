@@ -137,8 +137,11 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
 
         protected function get_prosandcons_view($props)
         {
-            $prosandcons = new \HelpieReviews\App\Components\ProsAndCons\Controller($props['args']);
-            $view = $prosandcons->get_view();
+            $view = '';
+            if ($props['args']['enable_pros_cons']) {
+                $prosandcons = new \HelpieReviews\App\Components\ProsAndCons\Controller($props['args']);
+                $view = $prosandcons->get_view();
+            }
 
             return $view;
         }

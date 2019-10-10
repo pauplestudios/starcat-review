@@ -36,7 +36,7 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
                 $html .= '</div><br / ><br />';
             }
 
-            if ($this->props['collection']['show_stats'] && !empty($this->props['items']['stats'])) {
+            if ($this->props['collection']['show_stats']) {
                 $html .= '<div class="field">';
                 $html .= $this->get_user_review();
                 $html .= '</div>';
@@ -136,6 +136,9 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
         protected function get_user_review()
         {
             $html  = '';
+            if (sizeof($this->props['items']['stats']) == 0) {
+                return $html;
+            }
             // $html .= '<label>User Review</label>';
             $html .= '<ul class="review-list"
                 data-type="' . $this->props['collection']['review_type'] . '"

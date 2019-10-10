@@ -63,9 +63,9 @@ if (!class_exists('\HelpieReviews\App\Components\Form\Model')) {
             $stats = [];
             $stat_count = 0;
 
-            if (!isset($args['items']['stats-list']) && empty($args['items']['stats-list'])) {
-                return $stats;
-            }
+            // if (!isset($args['items']['stats-list']) && empty($args['items']['stats-list'])) {
+            //     return $stats;
+            // }
             if (isset($args['global_stats']) && !empty($args['global_stats'])) {
                 foreach ($args['global_stats'] as $allowed_stat) {
 
@@ -73,11 +73,9 @@ if (!class_exists('\HelpieReviews\App\Components\Form\Model')) {
                         break;
                     }
 
-                    $allowed_stat_name = strtolower($allowed_stat['stat_name']);
-                    $stat = $args['items']['stats-list'][$allowed_stat_name]['stat_name'];
-                    $rating = $args['items']['stats-list'][$allowed_stat_name]['rating'];
+                    $stat = strtolower($allowed_stat['stat_name']);
 
-                    $stats[$stat] = $rating;
+                    $stats[$stat] = ['stat_name' => $stat];
 
                     $stat_count++;
                 }
