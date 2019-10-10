@@ -78,13 +78,32 @@ if (!class_exists('\HelpieReviews\App\Repositories\User_Reviews_Repo')) {
 
         public function get_processed_data()
         {
-            $props['post_id']  = $_POST['post_id'];
-            $props['title'] = $_POST['title'];
-            $props['description'] = $_POST['description'];
-            $props['pros'] = $this->get_prosandcons($_POST['pros']);
-            $props['cons'] = $this->get_prosandcons($_POST['cons']);
-            $props['rating'] = $this->get_rating($_POST['scores']);
-            $props['stats'] = $this->get_stat($_POST['scores']);
+            $props = [];
+
+            if (isset($_POST['post_id']) && !empty($_POST['post_id'])) {
+                $props['post_id']  = $_POST['post_id'];
+            }
+
+            if (isset($_POST['title']) && !empty($_POST['title'])) {
+                $props['title'] = $_POST['title'];
+            }
+
+            if (isset($_POST['description']) && !empty($_POST['description'])) {
+                $props['description'] = $_POST['description'];
+            }
+
+            if (isset($_POST['pros']) && !empty($_POST['pros'])) {
+                $props['pros'] = $this->get_prosandcons($_POST['pros']);
+            }
+
+            if (isset($_POST['cons']) && !empty($_POST['cons'])) {
+                $props['cons'] = $this->get_prosandcons($_POST['cons']);
+            }
+
+            if (isset($_POST['scores']) && !empty($_POST['scores'])) {
+                $props['rating'] = $this->get_rating($_POST['scores']);
+                $props['stats'] = $this->get_stat($_POST['scores']);
+            }
 
             return $props;
         }

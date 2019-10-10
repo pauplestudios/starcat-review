@@ -32,10 +32,13 @@ if (!class_exists('\HelpieReviews\App\Components\Summary\Model')) {
             foreach ($args['items']['comments-list'] as $comment) {
 
                 foreach ($comment->reviews['stats'] as $stat_key => $stat_value) {
+                    $global_stats = [];
+                    if (isset($args['global_stats']) && !empty($args['global_stats'])) {
+                        $global_stats = array_map(function ($stat) {
+                            return strtolower($stat['stat_name']);
+                        }, $args['global_stats']);
+                    }
 
-                    $global_stats = array_map(function ($stat) {
-                        return strtolower($stat['stat_name']);
-                    }, $args['global_stats']);
 
                     if (in_array(strtolower($stat_key), $global_stats)) {
                         if (!isset($groups['stats-list'][$stat_key])) {

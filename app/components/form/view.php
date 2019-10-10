@@ -36,7 +36,7 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
                 $html .= '</div><br / ><br />';
             }
 
-            if ($this->props['collection']['show_stats']) {
+            if ($this->props['collection']['show_stats'] && !empty($this->props['items']['stats'])) {
                 $html .= '<div class="field">';
                 $html .= $this->get_user_review();
                 $html .= '</div>';

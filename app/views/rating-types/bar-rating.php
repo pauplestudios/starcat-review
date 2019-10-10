@@ -17,16 +17,19 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Bar_Rating')) {
 
         public function get_view()
         {
+            $html = '';
+            if (isset($this->props['items']) && !empty($this->props['items'])) {
 
-            $html = '<ul class="reviewed-list"
+                $html .= '<ul class="reviewed-list"
                 data-animate="' . $this->props['collection']['animate'] . '"
-            >';
+                >';
 
-            foreach ($this->props['items'] as $key => $stat) {
-                $html .= $this->get_reviewed_stat($key, $stat['value'], $stat['score']);
+                foreach ($this->props['items'] as $key => $stat) {
+                    $html .= $this->get_reviewed_stat($key, $stat['value'], $stat['score']);
+                }
+
+                $html .= '</ul>';
             }
-
-            $html .= '</ul>';
 
             return $html;
         }
