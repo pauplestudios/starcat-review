@@ -40,7 +40,8 @@ if (!class_exists('\HelpieReviews\App\Components\Form\Model')) {
                 'limit' => $args['limit'],
                 'steps' => $args['steps'], // full or half or progress
                 'no_rated_message' => $args['no_rated_message'],
-                'animate' => false
+                'animate' => false,
+                'can_user_review' => $args['can_user_review'],
             ];
 
             $collection = $this->get_icons($collection);

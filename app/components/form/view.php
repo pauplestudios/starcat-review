@@ -21,6 +21,11 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
         {
             $html = '';
 
+            // User Already Reviewed or Not Logged in User
+            if (!$this->props['collection']['can_user_review']) {
+                return $html;
+            }
+
             $html .= '<form class="ui form hrp-user-review" action="hrp_user_review_submission" method="post" post_id ="' . get_the_ID() . '">';
 
             if ($this->props['collection']['show_form_title']) {

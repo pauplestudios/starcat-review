@@ -53,9 +53,10 @@ if (!class_exists('\HelpieReviews\App\User_Review')) {
                 'form_title' => HRP_Getter::get('ur_form_title'),
                 'show_title' => HRP_Getter::get('ur_show_title'),
                 'show_stats' => HRP_Getter::get('ur_show_stats'),
-                'show_description' => HRP_Getter::get('ur_show_description'),
-
+                'show_description' => HRP_Getter::get('ur_show_description')
             ];
+
+            $args['can_user_review'] = $this->get_user_can_review($args);
 
             return $args;
         }
@@ -100,6 +101,26 @@ if (!class_exists('\HelpieReviews\App\User_Review')) {
             }
 
             return $comments;
+        }
+
+        protected function get_user_can_review($args)
+        {
+            $user_can_review = false;
+
+            if (is_user_logged_in()) {
+                $user_can_review = true;
+            }
+
+            if (isset($args['items']['comments-list']) && !empty($args['items']['comments-list'])) {
+                foreach ($args['items']['comments-list'] as $comment) {
+                    if ($comment->user_id == get_current_user_id()) {
+                        $user_can_review = false;
+                        break;
+                    }
+                }
+            }
+
+            return $user_can_review;
         }
     }
 }
