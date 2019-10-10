@@ -105,17 +105,22 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
             $single_review = isset($reviews[$ii]) ? $reviews[$ii] : 1;
 
             $stats_html = $this->get_stats_view($post) . '</br>';
+
+            $prosandcons_html = $this->get_prosandcons_view($post);
             $item = [
                 'title' => $post['title'],
                 'content' => $post['content'],
                 'url' => '',
                 'reviews' => $single_review,
+                'date' => $post['comment_date'],
+                'author' => $post['comment_author'],
                 'columns' => $collectionProps['columns'],
                 // 'items_display' => $collectionProps['items_display'],
                 'html_parts' => [
                     'title',
                     $stats_html,
-                    'content'
+                    $prosandcons_html,
+                    'content',
                 ]
             ];
 
@@ -124,11 +129,20 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
 
         protected function get_stats_view($props)
         {
-            $stats = new \HelpieReviews\App\Components\Stats\Controller($props['stats_args']);
+            $stats = new \HelpieReviews\App\Components\Stats\Controller($props['args']);
             $view = $stats->get_view();
 
             return $view;
         }
+
+        protected function get_prosandcons_view($props)
+        {
+            $prosandcons = new \HelpieReviews\App\Components\ProsAndCons\Controller($props['args']);
+            $view = $prosandcons->get_view();
+
+            return $view;
+        }
+
 
         private function get_excerpt($content)
         {

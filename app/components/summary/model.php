@@ -47,6 +47,7 @@ if (!class_exists('\HelpieReviews\App\Components\Summary\Model')) {
                 }
                 $count++;
             }
+            $items['review_count'] = $count;
 
             if (!empty($groups['stats-list'])) {
                 $items['stats-list'] = $this->get_user_stats($groups['stats-list'], $count);

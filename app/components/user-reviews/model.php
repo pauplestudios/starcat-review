@@ -48,25 +48,28 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\Model')) {
             foreach ($args['items']['comments-list'] as $comment) {
                 $items[] = [
                     'comment_id' => $comment->comment_ID,
-                    'title' => $comment->review_props['title'],
+                    'title' => $comment->review['title'],
                     'content' => $comment->comment_content,
                     'comment_author' => $comment->comment_author,
                     'comment_author_email' => $comment->comment_author_email,
-                    'comment_date' => get_comment_date('d', $comment->comment_ID),
-                    'rating' => $comment->review_props['rating'],
-                    'stats_args' => $this->get_stat_args($args, $comment)
+                    'comment_date' => get_comment_date('', $comment->comment_ID),
+                    'rating' => $comment->review['rating'],
+                    'args' => $this->get_args($args, $comment)
                 ];
             }
 
             return $items;
         }
 
-        public function get_stat_args($args, $comment)
+        public function get_args($component_args, $comment)
         {
-            $stat_args = $args;
-            unset($stat_args['items']);
-            $stat_args['items']['stats-list'] = $comment->review_props['stats'];
-            return $stat_args;
+            $args = $component_args;
+            unset($args['items']);
+            $args['items']['stats-list'] = $comment->review['stats'];
+            $args['items']['pros-list'] = $comment->review['pros'];
+            $args['items']['cons-list'] = $comment->review['cons'];
+
+            return $args;
         }
     }
 }

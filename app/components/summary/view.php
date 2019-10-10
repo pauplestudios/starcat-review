@@ -25,15 +25,16 @@ if (!class_exists('\HelpieReviews\App\Components\Summary\View')) {
             // Author Summary
             $html .= '<div class="column">';
             $args['items'] = $props['items']['author'];
+            $html .= '<h4 class="ui header"> Author Rating </h4>';
             $author_stat = new \HelpieReviews\App\Components\Stats\Controller($args);
             $author_prosandcons = new \HelpieReviews\App\Components\ProsAndCons\Controller($args);
             $html .= $author_stat->get_view();
-            $html .= $author_prosandcons->get_view();
             $html .= '</div>';
 
             // User Summary 
             if ($show_user !== true) {
                 $html .= '<div class="column">';
+                $html .= '<h4 class="ui header"> User Rating ( ' . $props['items']['user']['review_count'] . ' )</h4>';
                 $args['items'] = $props['items']['user'];
                 $user_stat = new \HelpieReviews\App\Components\Stats\Controller($args);
                 // $user_prosandcons = new \HelpieReviews\App\Components\ProsAndCons\Controller($props);
@@ -41,6 +42,7 @@ if (!class_exists('\HelpieReviews\App\Components\Summary\View')) {
                 // $html .= $user_prosandcons->get_view();
                 $html .= '</div>';
             }
+            $html .= $author_prosandcons->get_view();
 
             $html .= '</div>';
 
