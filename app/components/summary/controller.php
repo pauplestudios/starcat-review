@@ -11,12 +11,14 @@ if (!class_exists('\HelpieReviews\App\Components\Summary\Controller')) {
     {
         public function __construct()
         {
+            $this->model = new \HelpieReviews\App\Components\Summary\Model();
             $this->view = new \HelpieReviews\App\Components\Summary\View();
         }
 
         public function get_view($args)
         {
-            return $this->view->get($args);
+            $props = $this->model->get_Props($args);
+            return $this->view->get($props);
         }
     }
 }
