@@ -23,7 +23,9 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
         {
             $collectionProps = $viewProps['collection'];
 
-            //  error_log('$collectionProps : ' . print_r($collectionProps, true));
+            if (!isset($viewProps['items']) || empty($viewProps['items'])) {
+                return '';
+            }
 
             $html = '<div id="hrp-controlled-list">';
             $html .= '<h2>' . $collectionProps['title'] . '</h2>';

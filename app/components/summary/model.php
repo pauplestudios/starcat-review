@@ -22,7 +22,7 @@ if (!class_exists('\HelpieReviews\App\Components\Summary\Model')) {
 
         protected function get_items($items)
         {
-            error_log("Items : " . print_r($items, true));
+            // error_log("Items : " . print_r($items, true));
             return $items;
         }
 

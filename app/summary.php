@@ -78,7 +78,7 @@ if (!class_exists('\HelpieReviews\App\Summary')) {
             $comments = get_comments($args);
 
             foreach ($comments as $comment) {
-                $comment->review_props = get_comment_meta($comment->comment_ID, 'hrp_user_review_props', true);
+                $comment->reviews = get_comment_meta($comment->comment_ID, 'hrp_user_review_props', true);
             }
 
             return $comments;
