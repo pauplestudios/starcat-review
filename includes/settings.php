@@ -667,6 +667,12 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                                     'placeholder' => 'Feature'
                                 ),
                             ),
+                            'min' => 1,
+                            'default'   => array(
+                                array(
+                                    'stat_name' => 'Feature',
+                                ),
+                            )
                         ),
                         array(
                             'type'    => 'submessage',
