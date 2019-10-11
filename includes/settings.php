@@ -713,7 +713,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                                 'icon' => 'Icon',
                                 'image' => 'Image',
                             ),
-                            'dependency' => array('stats-type', '==', 'star'),
+                            // 'dependency' => array('stats-type', '==', 'star'),
                             'default' => 'icon'
                         ),
 
@@ -728,7 +728,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'id'      => 'stats-icons',
                             'type'    => 'icon_dropdown',
                             'title'   => 'Icons',
-                            'dependency' => array('stats-source-type|stats-type', '==|==', 'icon|star'),
+                            // 'dependency' => array('stats-source-type|stats-type', '==|==', 'icon|star'),
+                            'dependency' => array('stats-source-type', '==', 'icon'),
                             'default' => 'star'
                         ),
 
@@ -736,7 +737,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'id'      => 'stats-images',
                             'type'    => 'fieldset',
                             'title'   => 'Images',
-                            'dependency' => array('stats-source-type|stats-type', '==|==', 'image|star'),
+                            // 'dependency' => array('stats-source-type|stats-type', '==|==', 'image|star'),
+                            'dependency' => array('stats-source-type', '==', 'image'),
                             'fields' => array(
                                 array(
                                     'id'    => 'image',
