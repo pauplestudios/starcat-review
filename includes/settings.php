@@ -284,24 +284,24 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'default' => 'combined',
                         ),
 
-
-                        array(
-                            'id' => 'sp_stats_order',
-                            'type' => 'sorter',
-                            'title' => 'Stats Order',
-                            'default' => [
-                                'enabled' => [
-                                    'feature1' => 'Feature1',
-                                    'feature2' => 'Feature2',
-                                    'feature3' => 'Feature3',
-                                    'feature4' => 'Feature4',
-                                ],
-                                'disabled' => [
-                                    'feature5' => 'Feature5',
-                                    'feature6' => 'Feature6',
-                                ]
-                            ],
-                        ),
+                        // Replaced by general stats ordering
+                        // array(
+                        //     'id' => 'sp_stats_order',
+                        //     'type' => 'sorter',
+                        //     'title' => 'Stats Order',
+                        //     'default' => [
+                        //         'enabled' => [
+                        //             'feature1' => 'Feature1',
+                        //             'feature2' => 'Feature2',
+                        //             'feature3' => 'Feature3',
+                        //             'feature4' => 'Feature4',
+                        //         ],
+                        //         'disabled' => [
+                        //             'feature5' => 'Feature5',
+                        //             'feature6' => 'Feature6',
+                        //         ]
+                        //     ],
+                        // ),
 
                     )
                 )
