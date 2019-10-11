@@ -19,11 +19,13 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
             $this->controls_builder = new \HelpieReviews\App\Builders\Controls_Builder();
         }
 
-        public function get_html($viewProps)
+        public function get($viewProps)
         {
             $collectionProps = $viewProps['collection'];
 
-            //  error_log('$collectionProps : ' . print_r($collectionProps, true));
+            if (!isset($viewProps['items']) || empty($viewProps['items'])) {
+                return '';
+            }
 
             $html = '<div id="hrp-controlled-list">';
             $html .= '<h2>' . $collectionProps['title'] . '</h2>';
@@ -76,6 +78,7 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
             $html .= '<div id="hrp-cat-collection" class="hrp-collection list row">';
 
             foreach ($posts as $key => $post) {
+
                 // Set initial $ii
                 if (!isset($ii)) $ii = 0;
 
@@ -101,23 +104,49 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
             // $excerpt = $this->get_excerpt($post->post_content);
             $single_review = isset($reviews[$ii]) ? $reviews[$ii] : 1;
 
-            $stats_html = "<div class='stats'>Stats HTML CONTENT</div>";
+            $stats_html = $this->get_stats_view($post) . '</br>';
+
+            $prosandcons_html = $this->get_prosandcons_view($post);
             $item = [
                 'title' => $post['title'],
                 'content' => $post['content'],
                 'url' => '',
                 'reviews' => $single_review,
+                'date' => $post['comment_date'],
+                'author' => $post['comment_author'],
                 'columns' => $collectionProps['columns'],
                 // 'items_display' => $collectionProps['items_display'],
                 'html_parts' => [
                     'title',
+                    $stats_html,
+                    $prosandcons_html,
                     'content',
-                    $stats_html
                 ]
             ];
 
             return $this->card->get_view($item);
         }
+
+        protected function get_stats_view($props)
+        {
+            $stats = new \HelpieReviews\App\Components\Stats\Controller($props['args']);
+            $view = $stats->get_view();
+
+            return $view;
+        }
+
+        protected function get_prosandcons_view($props)
+        {
+            $view = '';
+            if ($props['args']['enable_pros_cons']) {
+                $prosandcons = new \HelpieReviews\App\Components\ProsAndCons\Controller($props['args']);
+                $view = $prosandcons->get_view();
+            }
+
+            return $view;
+        }
+
+
         private function get_excerpt($content)
         {
             $word_count = 150;

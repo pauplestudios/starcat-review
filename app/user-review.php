@@ -8,14 +8,23 @@ if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Summary')) {
-    class Summary
+if (!class_exists('\HelpieReviews\App\User_Review')) {
+    class User_Review
     {
+        public function __construct()
+        {
+            $this->form_controller = new \HelpieReviews\App\Components\Form\Controller();
+            $this->reviews_controller = new \HelpieReviews\App\Components\User_Reviews\Controller();
+        }
+
         public function get_view()
         {
+
             $args = $this->get_default_args();
-            $summary = new \HelpieReviews\App\Components\Summary\Controller();
-            $view = $summary->get_view($args);
+            $form_view = $this->form_controller->get_view($args);
+            $reviews_list_view = $this->reviews_controller->get_view($args);
+
+            $view = $form_view . $reviews_list_view;
 
             return $view;
         }
@@ -26,7 +35,6 @@ if (!class_exists('\HelpieReviews\App\Summary')) {
             $limit = ($type == 'star') ? HRP_Getter::get('stats-stars-limit') : HRP_Getter::get('stats-bars-limit');
 
             $args = [
-                'post_id' => get_the_ID(),
                 'global_stats' => HRP_Getter::get('global_stats'),
                 'items' => $this->get_items(),
                 'singularity' => HRP_Getter::get('stat-singularity'),
@@ -39,7 +47,16 @@ if (!class_exists('\HelpieReviews\App\Summary')) {
                 'limit' => $limit,
                 'animate' => HRP_Getter::get('stats-animate'),
                 'no_rated_message' => HRP_Getter::get('stats-no-rated-message'),
+
+                'enable_pros_cons' => HRP_Getter::get('enable-pros-cons'),
+                'show_form_title' => HRP_Getter::get('ur_show_form_title'),
+                'form_title' => HRP_Getter::get('ur_form_title'),
+                'show_title' => HRP_Getter::get('ur_show_title'),
+                'show_stats' => HRP_Getter::get('ur_show_stats'),
+                'show_description' => HRP_Getter::get('ur_show_description')
             ];
+
+            $args['can_user_review'] = $this->get_user_can_review($args);
 
             return $args;
         }
@@ -48,7 +65,7 @@ if (!class_exists('\HelpieReviews\App\Summary')) {
         {
             $post_meta = get_post_meta(get_the_ID(), '_helpie_reviews_post_options', true);
             $comments = $this->get_comments_list();
-
+            // error_log("Options : " . print_r($post_meta, true));
             $items = [];
 
             if (isset($post_meta['stats-list']) || !empty($post_meta['stats-list'])) {
@@ -65,6 +82,8 @@ if (!class_exists('\HelpieReviews\App\Summary')) {
                 $items['comments-list'] = $comments;
             }
 
+
+
             return $items;
         }
 
@@ -78,10 +97,30 @@ if (!class_exists('\HelpieReviews\App\Summary')) {
             $comments = get_comments($args);
 
             foreach ($comments as $comment) {
-                $comment->reviews = get_comment_meta($comment->comment_ID, 'hrp_user_review_props', true);
+                $comment->review = get_comment_meta($comment->comment_ID, 'hrp_user_review_props', true);
             }
 
             return $comments;
+        }
+
+        protected function get_user_can_review($args)
+        {
+            $user_can_review = false;
+
+            if (is_user_logged_in()) {
+                $user_can_review = true;
+            }
+
+            if (isset($args['items']['comments-list']) && !empty($args['items']['comments-list'])) {
+                foreach ($args['items']['comments-list'] as $comment) {
+                    if ($comment->user_id == get_current_user_id()) {
+                        $user_can_review = false;
+                        break;
+                    }
+                }
+            }
+
+            return $user_can_review;
         }
     }
 }

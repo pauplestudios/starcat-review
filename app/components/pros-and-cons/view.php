@@ -43,7 +43,9 @@ if (!class_exists('\HelpieReviews\App\Components\ProsAndCons\View')) {
             $html .= '<ol>';
 
             for ($ii = 0; $ii < sizeof($pros); $ii++) {
-                $html .= "<li>" . $pros[$ii] . "</li>";
+                if (!empty($pros[$ii])) {
+                    $html .= "<li>" . $pros[$ii] . "</li>";
+                }
             }
 
             // $html .= "<li>Pros here</li>";
@@ -61,7 +63,9 @@ if (!class_exists('\HelpieReviews\App\Components\ProsAndCons\View')) {
             $html .= "<ol class='cons'>";
 
             for ($ii = 0; $ii < sizeof($cons); $ii++) {
-                $html .= "<li>" . $cons[$ii] . "</li>";
+                if (!empty($cons[$ii])) {
+                    $html .= "<li>" . $cons[$ii] . "</li>";
+                }
             }
 
             $html .= "</ol>";

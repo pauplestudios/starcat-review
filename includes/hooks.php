@@ -36,10 +36,7 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
             add_action('plugins_loaded', array($this, 'plugins_loaded_action'));
 
             add_filter('the_content', array($this, 'content_filter'));
-            // add_filter('the_excerpt', array($this, 'content_filter'));
-
-            // Ajax Hooks In compare table
-            add_action('wp_ajax_get_hrp_results', array($this, 'get_hrp_results'));
+            // add_filter('the_excerpt', array($this, 'content_filter'));            
         }
 
         public function init_hook()
@@ -150,14 +147,9 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
 
         public function content_filter($content)
         {
-            // return "Helllo";
             $review_content = $this->get_review_content();
-            $this->utils = new \HelpieReviews\Includes\Utils();
-            $user_review_controller = new \HelpieReviews\App\Components\User_Reviews\User_Reviews_Controller();
+            $fullcontent = $content . $review_content;
 
-            $user_review_content = $user_review_controller->get_view();
-            $fullcontent = $content . $review_content . $user_review_content;
-            // $fullcontent = $content . $review_content;
             return $fullcontent;
         }
 
@@ -165,9 +157,8 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
 
         public function get_review_content()
         {
-            $post_id = get_the_ID();
             $reviews_builder = new \HelpieReviews\App\Builders\Review_Builder();
-            return $reviews_builder->get_reviews($post_id);
+            return $reviews_builder->get_reviews();
         }
 
         public function enqueue_scripts()
@@ -190,16 +181,6 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
                 'ajax_nonce' => wp_create_nonce('helpie-reviews-ajax-nonce')
             ));
             wp_enqueue_style('style-name', HELPIE_REVIEWS_URL . "includes/assets/bundle/main.bundle.css");
-        }
-
-        public function get_hrp_results()
-        {
-            //get hrp resultSets 
-            //echo "get hrp resultSets";
-            $search_key = $_REQUEST['search_key'];
-            $comparison_controller = new \HelpieReviews\App\Components\Comparison\Controller();
-            $hrp_search_result_sets = $comparison_controller->get_hrp_details($search_key);
-            wp_die();
         }
     } // END CLASS
 

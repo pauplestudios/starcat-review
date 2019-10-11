@@ -17,16 +17,19 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Bar_Rating')) {
 
         public function get_view()
         {
+            $html = '';
+            if (isset($this->props['items']) && !empty($this->props['items'])) {
 
-            $html = '<ul class="reviewed-list"
+                $html .= '<ul class="reviewed-list"
                 data-animate="' . $this->props['collection']['animate'] . '"
-            >';
+                >';
 
-            foreach ($this->props['items'] as $key => $stat) {
-                $html .= $this->get_reviewed_stat($key, $stat['value'], $stat['score']);
+                foreach ($this->props['items'] as $key => $stat) {
+                    $html .= $this->get_reviewed_stat($key, $stat['value'], $stat['score']);
+                }
+
+                $html .= '</ul>';
             }
-
-            $html .= '</ul>';
 
             return $html;
         }
@@ -46,7 +49,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Bar_Rating')) {
             $html .= '<div class="review-item-label">';
             $html .= '<span class="review-item-label__text">' . $key . '</span>';
             $html .= '<span class="review-item-label__divider"></span>';
-            if ($this->props['collection']['display_rating']) {
+            if ($this->props['collection']['show_rating_label']) {
                 $html .= '<span class="review-item-label__score">' . $score . '</span>';
             }
             $html .= '</div>';
@@ -70,7 +73,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Bar_Rating')) {
             $html .= '<div class="reviewed-item-label">';
             $html .= '<span class="reviewed-item-label__text">' . $key . '</span>';
             $html .= '<span class="reviewed-item-label__divider"></span>';
-            if ($this->props['collection']['display_rating']) {
+            if ($this->props['collection']['show_rating_label']) {
                 $html .= '<span class="reviewed-item-label__score">' . $score . '</span>';
             }
             $html .= '</div>';

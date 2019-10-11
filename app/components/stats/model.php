@@ -33,7 +33,7 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
                 'images' => $args['images'],
                 'animate' => $args['animate'],
                 'limit' => $args['limit'],
-                'display_rating' => $args['display_rating'],
+                'show_rating_label' => $args['show_rating_label'],
                 'no_rated_message' =>  'Not Rated Yet !!!',
                 'steps' => $args['steps'], // full or half or progress
             ];
@@ -89,9 +89,11 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
         protected function get_filter_stats($args)
         {
             $stats = [];
-            foreach ($args['global_stats'] as $allowed_stat) {
-                $allowed_stat_name = strtolower($allowed_stat['stat_name']);
-                $stats[$allowed_stat_name] = $args['items']['stats-list'][$allowed_stat_name];
+            if (isset($args['global_stats']) && !empty($args['global_stats'])) {
+                foreach ($args['global_stats'] as $allowed_stat) {
+                    $allowed_stat_name = strtolower($allowed_stat['stat_name']);
+                    $stats[$allowed_stat_name] = $args['items']['stats-list'][$allowed_stat_name];
+                }
             }
 
             return $stats;
@@ -99,7 +101,7 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
 
         protected function get_overall_stat($cumulative, $count)
         {
-            $rating = round($cumulative / $count);
+            $rating = round($cumulative / $count, 1);
             $stat_value = $rating;
             $stat_score = $this->get_stat_score($stat_value);
 
@@ -135,7 +137,7 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
 
             $stat_score = $stat_value / (100 / $collection['limit']);
 
-            $stat_score = $collection['steps'] == "precise" ? number_format($stat_score, 1) : $stat_score;
+            $stat_score = $collection['steps'] == "precise" ? number_format($stat_score, 1) : round($stat_score, 1);
 
             return $stat_score;
         }

@@ -20,7 +20,7 @@ if (!class_exists('\HelpieReviews\App\Repositories\User_Reviews_Repo')) {
         {
             if (is_user_logged_in()) {
                 if (!empty($_SERVER['REMOTE_ADDR']) && rest_is_ip_address(wp_unslash($_SERVER['REMOTE_ADDR']))) { // WPCS: input var ok, sanitization ok.
-                    $comment_author_IP = wc_clean(wp_unslash($_SERVER['REMOTE_ADDR'])); // WPCS: input var ok.
+                    $comment_author_IP = wp_unslash($_SERVER['REMOTE_ADDR']); // WPCS: input var ok.
                 } else {
                     $comment_author_IP = '127.0.0.1';
                 }
@@ -78,25 +78,59 @@ if (!class_exists('\HelpieReviews\App\Repositories\User_Reviews_Repo')) {
 
         public function get_processed_data()
         {
-            $props['post_id']  = $_POST['post_id'];
-            $props['title'] = $_POST['title'];
-            $props['description'] = $_POST['description'];
-            $props['pros'] = $_POST['pros'];
-            $props['cons'] = $_POST['cons'];
-            $props['stats'] = $_POST['scores'];
-            $props['rating'] = $this->get_rating($props);
+            $props = [];
+
+            if (isset($_POST['post_id']) && !empty($_POST['post_id'])) {
+                $props['post_id']  = $_POST['post_id'];
+            }
+
+            if (isset($_POST['title']) && !empty($_POST['title'])) {
+                $props['title'] = $_POST['title'];
+            }
+
+            if (isset($_POST['description']) && !empty($_POST['description'])) {
+                $props['description'] = $_POST['description'];
+            }
+
+            if (isset($_POST['pros']) && !empty($_POST['pros'])) {
+                $props['pros'] = $this->get_prosandcons($_POST['pros']);
+            }
+
+            if (isset($_POST['cons']) && !empty($_POST['cons'])) {
+                $props['cons'] = $this->get_prosandcons($_POST['cons']);
+            }
+
+            if (isset($_POST['scores']) && !empty($_POST['scores'])) {
+                $props['rating'] = $this->get_rating($_POST['scores']);
+                $props['stats'] = $this->get_stat($_POST['scores']);
+            }
 
             return $props;
         }
 
-        protected function get_rating($props)
+        protected function get_prosandcons($features)
+        {
+            $items = [];
+
+            if (isset($features) && !empty($features)) {
+                foreach ($features as $key => $value) {
+                    $items[$key] = [
+                        'item' => $value
+                    ];
+                }
+            }
+
+            return $items;
+        }
+
+        protected function get_rating($scores)
         {
             $count = 0;
             $rating = 0;
             $cumulative = 0;
 
-            if (isset($props['stats'])) {
-                foreach ($props['stats'] as $key => $value) {
+            if (isset($scores)) {
+                foreach ($scores as $key => $value) {
                     $cumulative += $value;
                     $count++;
                 }
@@ -104,6 +138,22 @@ if (!class_exists('\HelpieReviews\App\Repositories\User_Reviews_Repo')) {
                 return $rating = round($cumulative / $count);
             }
             return $rating;
+        }
+
+        protected function get_stat($scores)
+        {
+            $stats = [];
+
+            if (isset($scores) && !empty($scores)) {
+                foreach ($scores as $key => $value) {
+                    $stats[$key] = [
+                        'stat_name' => $key,
+                        'rating' => $value
+                    ];
+                }
+            }
+
+            return $stats;
         }
     }
     // END CLASS

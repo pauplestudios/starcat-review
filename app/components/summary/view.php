@@ -12,26 +12,42 @@ if (!class_exists('\HelpieReviews\App\Components\Summary\View')) {
         public function __construct()
         { }
 
-        public function get($args)
+        public function get($props)
         {
-            if ($this->is_empty($args['items'])) {
-                return '';
-            }
-            $this->stat = new \HelpieReviews\App\Components\Stats\Controller($args);
-            $this->prosandcons = new \HelpieReviews\App\Components\ProsAndCons\Controller($args);
+            $args = $props;
 
-            $html = '<div class="ui stackable two column grid">';
-            $html .= '<div class="column">';
+            $show_user = $this->is_empty($props['items']['user']);
+            $show_author = $this->is_empty($props['items']['author']);
+            $no_of_column = ($show_user == true) ? 'one' : 'two';
+
+
+            $html = '<div class="ui stackable ' . $no_of_column . ' column grid">';
+
             // Author Summary
-            $html .= $this->stat->get_view();
-            $html .= $this->prosandcons->get_view();
-            $html .= '</div>';
+            if ($show_author !== true) {
+                $html .= '<div class="column">';
+                $args['items'] = $props['items']['author'];
+                $html .= '<h4 class="ui header"> Author Rating </h4>';
+                $author_stat = new \HelpieReviews\App\Components\Stats\Controller($args);
+                $html .= $author_stat->get_view();
+                $html .= '</div>';
+            }
 
-            $html .= '<div class="column">';
-            // User Summary         
-            $html .= $this->stat->get_view();
-            $html .= $this->prosandcons->get_view();
-            $html .= '</div>';
+            // User Summary 
+            if ($show_user !== true) {
+                $html .= '<div class="column">';
+                $html .= '<h4 class="ui header"> User Rating ( ' . $props['items']['user']['review_count'] . ' )</h4>';
+                $args['items'] = $props['items']['user'];
+                $user_stat = new \HelpieReviews\App\Components\Stats\Controller($args);
+                // $user_prosandcons = new \HelpieReviews\App\Components\ProsAndCons\Controller($props);
+                $html .= $user_stat->get_view();
+                // $html .= $user_prosandcons->get_view();
+                $html .= '</div>';
+            }
+
+            $author_prosandcons = new \HelpieReviews\App\Components\ProsAndCons\Controller($args);
+            $html .= $author_prosandcons->get_view();
+
             $html .= '</div>';
 
             return $html;

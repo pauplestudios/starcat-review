@@ -2,8 +2,6 @@
 
 namespace HelpieReviews\App\Builders;
 
-use \HelpieReviews\Includes\Settings\HRP_Getter;
-
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -11,17 +9,16 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\HelpieReviews\App\Builders\Review_Builder')) {
     class Review_Builder
     {
-
         public function __construct()
-        { }
-        public function get_reviews($post_id)
         {
-            $html = '';
-            $summary = new \HelpieReviews\App\Summary();
-            $html .= $summary->get_view();
+            $this->summary = new \HelpieReviews\App\Summary();
+            $this->user_review = new \HelpieReviews\App\User_Review();
+        }
 
-            $form_controller = new \HelpieReviews\App\Components\Form\Controller($post_id);
-            $html .= $form_controller->get_view();
+        public function get_reviews()
+        {
+            $html = $this->summary->get_view();
+            $html .= $this->user_review->get_view();
 
             return $html;
         }

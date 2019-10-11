@@ -18,7 +18,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Category_Templa
 
             $html = '';
             $html .= $this->get_category_post_listing();
-            $html .= $this->get_comparison_table();
+            // $html .= $this->get_comparison_table();
 
             return $html;
         }
@@ -59,12 +59,12 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Category_Templa
             return $args;
         }
 
-        public function get_comparison_table()
-        {
-            $post_ids = [131, 123, 119];
-            $comparison_controller = new \HelpieReviews\App\Components\Comparison\Controller();
-            return $comparison_controller->get_view($post_ids);
-        }
+        // public function get_comparison_table()
+        // {
+        //     $post_ids = [131, 123, 119];
+        //     $comparison_controller = new \HelpieReviews\App\Components\Comparison\Controller();
+        //     return $comparison_controller->get_view($post_ids);
+        // }
 
         public function get_category_posts($args)
         {
