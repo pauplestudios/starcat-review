@@ -164,12 +164,12 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         //     'default' => true,
                         // ),
 
-                        array(
-                            'id' => 'ur_enable_approval',
-                            'type' => 'switcher',
-                            'title' => __('Require Admin Approval to publish reviews', 'pauple-helpie'),
-                            'default' => true,
-                        ),
+                        // array(
+                        //     'id' => 'ur_enable_approval',
+                        //     'type' => 'switcher',
+                        //     'title' => __('Require Admin Approval to publish reviews', 'pauple-helpie'),
+                        //     'default' => true,
+                        // ),
 
                         array(
                             'type'    => 'subheading',
