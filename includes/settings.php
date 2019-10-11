@@ -69,7 +69,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                 $this->category_page_settings($prefix);
                 // $this->single_page_settings($prefix);
                 $this->user_review_settings($prefix);
-                $this->comparison_table_settings($prefix);
+                // $this->comparison_table_settings($prefix);
 
 
                 // $this->single_post_settings($prefix);
@@ -78,6 +78,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
             }
         }
 
+        // Note : Not used in MVP but it will be after MVP release
         public function comparison_table_settings($prefix)
         {
             \CSF::createSection(
