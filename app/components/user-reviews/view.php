@@ -28,12 +28,12 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
             }
 
             $html = '<div id="hrp-controlled-list">';
-            $html .= '<h2>' . $collectionProps['title'] . '</h2>';
+            $html .= '<h3>' . $collectionProps['title'] . '</h3>';
 
 
-            if ($collectionProps['show_controls']) {
-                $html .= $this->controls_builder->get_controls($collectionProps['show_controls']);
-            }
+            // if ($collectionProps['show_controls']) {
+            // $html .= $this->controls_builder->get_controls($collectionProps['show_controls']);
+            // }
 
 
             $html .= $this->get_card_collection($viewProps);
@@ -114,6 +114,7 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
                 'url' => '',
                 'reviews' => $single_review,
                 'date' => $post['comment_date'],
+                'time' => $post['comment_time'],
                 'avatar' => $post['commentor_avatar'],
                 'author' => $post['comment_author'],
                 'columns' => $collectionProps['columns'],
