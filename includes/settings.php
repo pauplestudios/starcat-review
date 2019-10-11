@@ -698,9 +698,9 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'title'     => 'Stats Type',
                             'options'   => array(
                                 'star' => HELPIE_REVIEWS_URL . 'includes/assets/img/stars-stat.png',
-                                'bar' => HELPIE_REVIEWS_URL . 'includes/assets/img/bars-stat.png',
+                                // 'bar' => HELPIE_REVIEWS_URL . 'includes/assets/img/bars-stat.png',
                             ),
-                            'desc' => 'choose between star and bars stats types',
+                            // 'desc' => 'choose between star and bars stats types',
                             'default'   => 'star'
                         ),
 
@@ -768,18 +768,18 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             ),
                         ),
 
-                        array(
-                            'id'      => 'stats-bars-limit',
-                            'title'   => 'Limit',
-                            'type'    => 'slider',
-                            'min'     => 5,
-                            'max'     => 100,
-                            'step'    => 5,
-                            'unit'    => '%',
-                            'default' => 100,
-                            'desc' => 'Bar stat Limit b/w <b> 5 to 100 </b>',
-                            'dependency' => array('stats-type', '==', 'bar'),
-                        ),
+                        // array(
+                        //     'id'      => 'stats-bars-limit',
+                        //     'title'   => 'Limit',
+                        //     'type'    => 'slider',
+                        //     'min'     => 5,
+                        //     'max'     => 100,
+                        //     'step'    => 5,
+                        //     'unit'    => '%',
+                        //     'default' => 100,
+                        //     'desc' => 'Bar stat Limit b/w <b> 5 to 100 </b>',
+                        //     'dependency' => array('stats-type', '==', 'bar'),
+                        // ),
 
                         array(
                             'id'      => 'stats-stars-limit',
@@ -790,8 +790,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'step'    => 5,
                             'unit'    => '#',
                             'default' => 5,
-                            'desc' => 'Star stat scale b/w limit <b> 5 to 20 </b>',
-                            'dependency' => array('stats-type', '==', 'star'),
+                            'desc' => 'Star stat scale b/w limit <b> 5 to 10 </b>',
+                            // 'dependency' => array('stats-type', '==', 'star'),
                         ),
 
                         array(
