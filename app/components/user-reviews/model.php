@@ -53,6 +53,7 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\Model')) {
                     'comment_author' => $comment->comment_author,
                     'comment_author_email' => $comment->comment_author_email,
                     'comment_date' => get_comment_date('', $comment->comment_ID),
+                    'comment_time' => human_time_diff(get_comment_time('U'), current_time('timestamp')),
                     'rating' => $comment->review['rating'],
                     'args' => $this->get_args($args, $comment)
                 ];

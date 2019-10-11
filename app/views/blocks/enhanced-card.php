@@ -13,8 +13,38 @@ if (!class_exists('\HelpieReviews\App\Views\Blocks\Enhanced_Card')) {
         public function __construct()
         { }
 
-        /* HTML for Single Card */
         public function get_view($item)
+        {
+            $this->props = $this->interprete_input_props($item);
+            $html = '';
+
+            $col_classes = "col-xs-12 col-lg-" . $this->props['col-lg'];
+
+
+
+            $html .= '<div class="hrp-collection__col item ' . $col_classes . '">'; // can't add additional classes
+            $html .= '<div class="hrp-review-card ui comment">';
+            $html .= '<a class="avatar">
+                        <img src="https://semantic-ui.com/images/avatar/small/joe.jpg">
+                    </a>
+                    <div class="content">
+                        <a class="author">Joe Henderson</a>
+                        <div class="metadata">
+                            <div class="date"> ' . $item['comment_time'] . ' day ago</div>
+                        </div>
+                        <div class="text">
+                        <div class="review-card__header"> title </div>
+                        <div class="review-card__body"> Description </div>
+                        </div>                       
+                    </div>
+                    </div>';
+            $html .= '</div>';
+
+            return $html;
+        }
+
+        /* HTML for Single Card */
+        public function get_views($item)
         {
 
             // error_log('$item : ' . print_r($item, true));

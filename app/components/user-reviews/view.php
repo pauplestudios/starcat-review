@@ -75,7 +75,8 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
             $posts = $viewProps['items'];
 
             $html = '';
-            $html .= '<div id="hrp-cat-collection" class="hrp-collection list row">';
+            // $html .= '<div class="">';
+            $html .= '<div id="hrp-cat-collection" class="hrp-collection list row ui comments">';
 
             foreach ($posts as $key => $post) {
 
@@ -96,7 +97,7 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
 
         private function get_single_card($post, $ii, $viewProps)
         {
-            // error_log('$post : ' . print_r($post, true));
+            error_log('$post : ' . print_r($post, true));
             $collectionProps = $viewProps['collection'];
             $reviews = [2, 4, 7, 25, 50, 75, 100];
 
