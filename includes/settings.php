@@ -220,32 +220,32 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         //     'default' => true,
                         // ),
 
-                        array(
-                            'id'     => 'ur_form_custom_fields',
-                            'type'   => 'repeater',
-                            'title'  => 'Custom Form Fields',
-                            'fields' => array(
+                        // array(
+                        //     'id'     => 'ur_form_custom_fields',
+                        //     'type'   => 'repeater',
+                        //     'title'  => 'Custom Form Fields',
+                        //     'fields' => array(
 
-                                array(
-                                    'id'    => 'field_name',
-                                    'type'  => 'text',
-                                    'placeholder' => 'Field Name',
-                                    'title' => 'Name'
-                                ),
+                        //         array(
+                        //             'id'    => 'field_name',
+                        //             'type'  => 'text',
+                        //             'placeholder' => 'Field Name',
+                        //             'title' => 'Name'
+                        //         ),
 
-                                array(
-                                    'id'    => 'field_type',
-                                    'type'  => 'select',
-                                    'desc' => 'Field Type',
-                                    'title' => 'Type',
-                                    'options' => array(
-                                        'text' => 'Text',
-                                        'textarea' => 'Text Area'
-                                    )
-                                ),
+                        //         array(
+                        //             'id'    => 'field_type',
+                        //             'type'  => 'select',
+                        //             'desc' => 'Field Type',
+                        //             'title' => 'Type',
+                        //             'options' => array(
+                        //                 'text' => 'Text',
+                        //                 'textarea' => 'Text Area'
+                        //             )
+                        //         ),
 
-                            ),
-                        ),
+                        //     ),
+                        // ),
 
                     )
                 )
