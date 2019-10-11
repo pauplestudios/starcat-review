@@ -496,17 +496,17 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'default' => 'recent',
                             'dependency' => array('mp_show_review_listing', '==', 'true'),
                         ),
-                        array(
-                            'id' => 'mp_article_listing_topics',
-                            'type' => 'select',
-                            'chosen' => true,
-                            'multiple' => true,
-                            'title' => __('Topics', 'pauple-helpie'),
-                            'placeholder' => __('Select an option', 'pauple-helpie'),
-                            'options' => 'csf_get_all_helpie_kb_topics',
-                            'default' => 'all',
-                            'dependency' => array('mp_show_review_listing', '==', 'true'),
-                        ),
+                        // array(
+                        //     'id' => 'mp_article_listing_topics',
+                        //     'type' => 'select',
+                        //     'chosen' => true,
+                        //     'multiple' => true,
+                        //     'title' => __('Topics', 'pauple-helpie'),
+                        //     'placeholder' => __('Select an option', 'pauple-helpie'),
+                        //     'options' => 'csf_get_all_helpie_kb_topics',
+                        //     'default' => 'all',
+                        //     'dependency' => array('mp_show_review_listing', '==', 'true'),
+                        // ),
 
                         array(
                             'id' => 'mp_article_listing_style',
