@@ -97,7 +97,7 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
 
         private function get_single_card($post, $ii, $viewProps)
         {
-            error_log('$post : ' . print_r($post, true));
+            // error_log('$post : ' . print_r($post, true));
             $collectionProps = $viewProps['collection'];
             $reviews = [2, 4, 7, 25, 50, 75, 100];
 
@@ -105,7 +105,7 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
             // $excerpt = $this->get_excerpt($post->post_content);
             $single_review = isset($reviews[$ii]) ? $reviews[$ii] : 1;
 
-            $stats_html = $this->get_stats_view($post) . '</br>';
+            $stats_html = $this->get_stats_view($post);
 
             $prosandcons_html = $this->get_prosandcons_view($post);
             $item = [
@@ -114,14 +114,15 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
                 'url' => '',
                 'reviews' => $single_review,
                 'date' => $post['comment_date'],
+                'avatar' => $post['commentor_avatar'],
                 'author' => $post['comment_author'],
                 'columns' => $collectionProps['columns'],
                 // 'items_display' => $collectionProps['items_display'],
                 'html_parts' => [
                     'title',
                     $stats_html,
-                    $prosandcons_html,
                     'content',
+                    $prosandcons_html,
                 ]
             ];
 

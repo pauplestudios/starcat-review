@@ -12,18 +12,6 @@
     }
 }
 
-// Single Page Review Comment List
-.hrp-collection.list.row.ui.comments {
-    max-width: inherit;
-    margin: -1rem;
-    & .hrp-review-card.comment {
-        padding: 1em;
-        width: 100%;
-        box-shadow: none;
-        border: solid 1px rgba(0, 0, 0, 0.1);
-    }
-}
-
 /* Enhancement to Simple Grid */
 
 .hrp-categories-list {
