@@ -799,11 +799,11 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'type'    => 'select',
                             'title'   => 'Steps',
                             'options'   => array(
-                                'precise' => 'Precise',
+                                // 'precise' => 'Precise',
                                 'half' => 'Half',
                                 'full' => 'Full',
                             ),
-                            'default' => 'precise'
+                            'default' => 'half'
                         ),
 
                         array(
