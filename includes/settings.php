@@ -157,12 +157,12 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             )
                         ),
 
-                        array(
-                            'id' => 'ur_enable_replies',
-                            'type' => 'switcher',
-                            'title' => __('Enable Replies to Reviews', 'pauple-helpie'),
-                            'default' => true,
-                        ),
+                        // array(
+                        //     'id' => 'ur_enable_replies',
+                        //     'type' => 'switcher',
+                        //     'title' => __('Enable Replies to Reviews', 'pauple-helpie'),
+                        //     'default' => true,
+                        // ),
 
                         array(
                             'id' => 'ur_enable_approval',
