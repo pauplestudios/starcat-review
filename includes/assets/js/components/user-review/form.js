@@ -1,20 +1,20 @@
 formSubmitted = false;
 var Form = {
-    init: function () {
+    init: function() {
         this.eventListener();
         console.log("Submission JS Loaded !!!");
     },
 
-    eventListener: function () {
+    eventListener: function() {
         this.formValidation();
     },
 
-    formValidation: function (fields) {
+    formValidation: function(fields) {
         const HRPForm = jQuery(".hrp-user-review");
         let formFields = fields ? fields : Form.getRules();
         HRPForm.form({
             fields: formFields,
-            onSuccess: function (event, fields) {
+            onSuccess: function(event, fields) {
                 event.preventDefault();
                 if (formSubmitted) {
                     return;
@@ -26,12 +26,12 @@ var Form = {
         });
     },
 
-    submission: function (HRPForm, fields) {
+    submission: function(HRPForm, fields) {
         const props = Form.getProps(HRPForm, fields);
         console.log(props);
         // Ajax Post Submiting
         jQuery
-            .post(hrp_ajax.ajax_url, props, function (results) {
+            .post(hrp_ajax.ajax_url, props, function(results) {
                 results = JSON.parse(results);
                 console.log(results);
 
@@ -50,9 +50,9 @@ var Form = {
                 );
 
                 // Reloading the page
-                // setInterval("document.location", 6000);
+                setInterval("document.location", 6000);
             })
-            .fail(function (response) {
+            .fail(function(response) {
                 // Fail Message
                 let msgProps = {
                     type: "negative",
@@ -63,11 +63,11 @@ var Form = {
                 HRPForm.html(Form.getMessageTemplate(msgProps));
 
                 // Reloading the page
-                setInterval("document.location", 6000);
+                // setInterval("document.location", 6000);
             });
     },
 
-    getProps: function (submittingForm, fields) {
+    getProps: function(submittingForm, fields) {
         fields.action = submittingForm.attr("action");
         fields.type = submittingForm.attr("method");
         fields.post_id = submittingForm.attr("post_id");
@@ -75,7 +75,7 @@ var Form = {
         return fields;
     },
 
-    getRules: function () {
+    getRules: function() {
         return {
             title: {
                 identifier: "title",
@@ -118,7 +118,7 @@ var Form = {
         };
     },
 
-    getMessageTemplate: function (props) {
+    getMessageTemplate: function(props) {
         const message = `<div class="ui ${props.type} message transition">        
         <div class="header">
           ${props.title}
@@ -129,7 +129,7 @@ var Form = {
         return message;
     },
 
-    getReviewTemplate: function (title, description) {
+    getReviewTemplate: function(title, description) {
         return `<div class="hrp-collection__col item col-xs-12 col-lg-12"> <div class="hrp-review-card">
         <div class="review-card__header">${title}</div>        
         <div class="review-card__body">${description}</div>
