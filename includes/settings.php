@@ -67,7 +67,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
 
                 $this->mainpage_settings($prefix);
                 $this->category_page_settings($prefix);
-                $this->single_page_settings($prefix);
+                // $this->single_page_settings($prefix);
                 $this->user_review_settings($prefix);
                 $this->comparison_table_settings($prefix);
 
@@ -273,8 +273,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'id' => 'sp_rating_combination',
                             'type' => 'select',
                             'chosen' => true,
-                            'title' => __('Default Sort By', 'pauple-helpie'),
-                            'placeholder' => __('Select an option', 'pauple-helpie'),
+                            'title' => __('Show Review', 'helpie-review'),
+                            'placeholder' => __('Select an option', 'helpie-review'),
                             'options' => array(
                                 'author' => 'Author Only',
                                 'user' => 'User Only',
