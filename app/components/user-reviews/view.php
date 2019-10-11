@@ -114,7 +114,6 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
                 'url' => '',
                 'reviews' => $single_review,
                 'date' => $post['comment_date'],
-                'time' => $post['comment_time'],
                 'avatar' => $post['commentor_avatar'],
                 'author' => $post['comment_author'],
                 'columns' => $collectionProps['columns'],
