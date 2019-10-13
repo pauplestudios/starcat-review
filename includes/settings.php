@@ -67,9 +67,9 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
 
                 $this->mainpage_settings($prefix);
                 $this->category_page_settings($prefix);
-                $this->single_page_settings($prefix);
+                // $this->single_page_settings($prefix);
                 $this->user_review_settings($prefix);
-                $this->comparison_table_settings($prefix);
+                // $this->comparison_table_settings($prefix);
 
 
                 // $this->single_post_settings($prefix);
@@ -78,6 +78,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
             }
         }
 
+        // Note : Not used in MVP but it will be after MVP release
         public function comparison_table_settings($prefix)
         {
             \CSF::createSection(
@@ -157,19 +158,19 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             )
                         ),
 
-                        array(
-                            'id' => 'ur_enable_replies',
-                            'type' => 'switcher',
-                            'title' => __('Enable Replies to Reviews', 'pauple-helpie'),
-                            'default' => true,
-                        ),
+                        // array(
+                        //     'id' => 'ur_enable_replies',
+                        //     'type' => 'switcher',
+                        //     'title' => __('Enable Replies to Reviews', 'pauple-helpie'),
+                        //     'default' => true,
+                        // ),
 
-                        array(
-                            'id' => 'ur_enable_approval',
-                            'type' => 'switcher',
-                            'title' => __('Require Admin Approval to publish reviews', 'pauple-helpie'),
-                            'default' => true,
-                        ),
+                        // array(
+                        //     'id' => 'ur_enable_approval',
+                        //     'type' => 'switcher',
+                        //     'title' => __('Require Admin Approval to publish reviews', 'pauple-helpie'),
+                        //     'default' => true,
+                        // ),
 
                         array(
                             'type'    => 'subheading',
@@ -220,32 +221,32 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         //     'default' => true,
                         // ),
 
-                        array(
-                            'id'     => 'ur_form_custom_fields',
-                            'type'   => 'repeater',
-                            'title'  => 'Custom Form Fields',
-                            'fields' => array(
+                        // array(
+                        //     'id'     => 'ur_form_custom_fields',
+                        //     'type'   => 'repeater',
+                        //     'title'  => 'Custom Form Fields',
+                        //     'fields' => array(
 
-                                array(
-                                    'id'    => 'field_name',
-                                    'type'  => 'text',
-                                    'placeholder' => 'Field Name',
-                                    'title' => 'Name'
-                                ),
+                        //         array(
+                        //             'id'    => 'field_name',
+                        //             'type'  => 'text',
+                        //             'placeholder' => 'Field Name',
+                        //             'title' => 'Name'
+                        //         ),
 
-                                array(
-                                    'id'    => 'field_type',
-                                    'type'  => 'select',
-                                    'desc' => 'Field Type',
-                                    'title' => 'Type',
-                                    'options' => array(
-                                        'text' => 'Text',
-                                        'textarea' => 'Text Area'
-                                    )
-                                ),
+                        //         array(
+                        //             'id'    => 'field_type',
+                        //             'type'  => 'select',
+                        //             'desc' => 'Field Type',
+                        //             'title' => 'Type',
+                        //             'options' => array(
+                        //                 'text' => 'Text',
+                        //                 'textarea' => 'Text Area'
+                        //             )
+                        //         ),
 
-                            ),
-                        ),
+                        //     ),
+                        // ),
 
                     )
                 )
@@ -273,8 +274,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'id' => 'sp_rating_combination',
                             'type' => 'select',
                             'chosen' => true,
-                            'title' => __('Default Sort By', 'pauple-helpie'),
-                            'placeholder' => __('Select an option', 'pauple-helpie'),
+                            'title' => __('Show Review', 'helpie-review'),
+                            'placeholder' => __('Select an option', 'helpie-review'),
                             'options' => array(
                                 'author' => 'Author Only',
                                 'user' => 'User Only',
@@ -284,24 +285,24 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'default' => 'combined',
                         ),
 
-
-                        array(
-                            'id' => 'sp_stats_order',
-                            'type' => 'sorter',
-                            'title' => 'Stats Order',
-                            'default' => [
-                                'enabled' => [
-                                    'feature1' => 'Feature1',
-                                    'feature2' => 'Feature2',
-                                    'feature3' => 'Feature3',
-                                    'feature4' => 'Feature4',
-                                ],
-                                'disabled' => [
-                                    'feature5' => 'Feature5',
-                                    'feature6' => 'Feature6',
-                                ]
-                            ],
-                        ),
+                        // Replaced by general stats ordering
+                        // array(
+                        //     'id' => 'sp_stats_order',
+                        //     'type' => 'sorter',
+                        //     'title' => 'Stats Order',
+                        //     'default' => [
+                        //         'enabled' => [
+                        //             'feature1' => 'Feature1',
+                        //             'feature2' => 'Feature2',
+                        //             'feature3' => 'Feature3',
+                        //             'feature4' => 'Feature4',
+                        //         ],
+                        //         'disabled' => [
+                        //             'feature5' => 'Feature5',
+                        //             'feature6' => 'Feature6',
+                        //         ]
+                        //     ],
+                        // ),
 
                     )
                 )
@@ -496,17 +497,17 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'default' => 'recent',
                             'dependency' => array('mp_show_review_listing', '==', 'true'),
                         ),
-                        array(
-                            'id' => 'mp_article_listing_topics',
-                            'type' => 'select',
-                            'chosen' => true,
-                            'multiple' => true,
-                            'title' => __('Topics', 'pauple-helpie'),
-                            'placeholder' => __('Select an option', 'pauple-helpie'),
-                            'options' => 'csf_get_all_helpie_kb_topics',
-                            'default' => 'all',
-                            'dependency' => array('mp_show_review_listing', '==', 'true'),
-                        ),
+                        // array(
+                        //     'id' => 'mp_article_listing_topics',
+                        //     'type' => 'select',
+                        //     'chosen' => true,
+                        //     'multiple' => true,
+                        //     'title' => __('Topics', 'pauple-helpie'),
+                        //     'placeholder' => __('Select an option', 'pauple-helpie'),
+                        //     'options' => 'csf_get_all_helpie_kb_topics',
+                        //     'default' => 'all',
+                        //     'dependency' => array('mp_show_review_listing', '==', 'true'),
+                        // ),
 
                         array(
                             'id' => 'mp_article_listing_style',
@@ -667,6 +668,12 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                                     'placeholder' => 'Feature'
                                 ),
                             ),
+                            'min' => 1,
+                            'default'   => array(
+                                array(
+                                    'stat_name' => 'Feature',
+                                ),
+                            )
                         ),
                         array(
                             'type'    => 'submessage',
@@ -692,9 +699,9 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'title'     => 'Stats Type',
                             'options'   => array(
                                 'star' => HELPIE_REVIEWS_URL . 'includes/assets/img/stars-stat.png',
-                                'bar' => HELPIE_REVIEWS_URL . 'includes/assets/img/bars-stat.png',
+                                // 'bar' => HELPIE_REVIEWS_URL . 'includes/assets/img/bars-stat.png',
                             ),
-                            'desc' => 'choose between star and bars stats types',
+                            // 'desc' => 'choose between star and bars stats types',
                             'default'   => 'star'
                         ),
 
@@ -762,18 +769,18 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             ),
                         ),
 
-                        array(
-                            'id'      => 'stats-bars-limit',
-                            'title'   => 'Limit',
-                            'type'    => 'slider',
-                            'min'     => 5,
-                            'max'     => 100,
-                            'step'    => 5,
-                            'unit'    => '%',
-                            'default' => 100,
-                            'desc' => 'Bar stat Limit b/w <b> 5 to 100 </b>',
-                            'dependency' => array('stats-type', '==', 'bar'),
-                        ),
+                        // array(
+                        //     'id'      => 'stats-bars-limit',
+                        //     'title'   => 'Limit',
+                        //     'type'    => 'slider',
+                        //     'min'     => 5,
+                        //     'max'     => 100,
+                        //     'step'    => 5,
+                        //     'unit'    => '%',
+                        //     'default' => 100,
+                        //     'desc' => 'Bar stat Limit b/w <b> 5 to 100 </b>',
+                        //     'dependency' => array('stats-type', '==', 'bar'),
+                        // ),
 
                         array(
                             'id'      => 'stats-stars-limit',
@@ -784,8 +791,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'step'    => 5,
                             'unit'    => '#',
                             'default' => 5,
-                            'desc' => 'Star stat scale b/w limit <b> 5 to 20 </b>',
-                            'dependency' => array('stats-type', '==', 'star'),
+                            'desc' => 'Star stat scale b/w limit <b> 5 to 10 </b>',
+                            // 'dependency' => array('stats-type', '==', 'star'),
                         ),
 
                         array(
@@ -793,11 +800,11 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'type'    => 'select',
                             'title'   => 'Steps',
                             'options'   => array(
-                                'precise' => 'Precise',
+                                // 'precise' => 'Precise',
                                 'half' => 'Half',
                                 'full' => 'Full',
                             ),
-                            'default' => 'precise'
+                            'default' => 'half'
                         ),
 
                         array(

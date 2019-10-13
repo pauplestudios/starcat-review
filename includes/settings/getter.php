@@ -53,6 +53,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
                 'template_source' => 'theme',
                 'enable-pros-cons' => true,
                 'review-location' => [HELPIE_REVIEWS_POST_TYPE],
+                'global_stat' => ['stat_name' => 'Feature'],
                 'stat-singularity' => 'single',
                 'stats-type' => 'star',
                 'stats-source-type' => 'icon',

@@ -27,6 +27,10 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
             // add 'ajax' action when not logged in
             add_action('wp_ajax_nopriv_helpiereview_search_posts', [$this, 'search_posts']);
             add_action('wp_ajax_helpiereview_search_posts', [$this, 'search_posts']);
+
+            // Ajax Hooks In compare table            
+            add_action('wp_ajax_nopriv_get_hrp_results', [$this, 'get_hrp_results']);
+            add_action('wp_ajax_get_hrp_results', [$this, 'get_hrp_results']);
         }
 
         public function hrp_listing_action()
@@ -141,6 +145,17 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
             }
 
             echo json_encode($posts);
+            wp_die();
+        }
+
+
+        public function get_hrp_results()
+        {
+            //get hrp resultSets 
+            //echo "get hrp resultSets";
+            $search_key = $_REQUEST['search_key'];
+            $comparison_controller = new \HelpieReviews\App\Components\Comparison\Controller();
+            $hrp_search_result_sets = $comparison_controller->get_hrp_details($search_key);
             wp_die();
         }
     }
