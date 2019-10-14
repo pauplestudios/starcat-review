@@ -50,7 +50,7 @@ var Form = {
                 );
 
                 // Reloading the page
-                // setInterval("document.location", 6000);
+                setInterval('window.location.reload()', 60000);
             })
             .fail(function (response) {
                 // Fail Message
@@ -63,7 +63,7 @@ var Form = {
                 HRPForm.html(Form.getMessageTemplate(msgProps));
 
                 // Reloading the page
-                setInterval("document.location", 6000);
+                setInterval('window.location.reload()', 60000);
             });
     },
 

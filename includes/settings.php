@@ -116,47 +116,47 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                     'icon' => 'fa fa-commenting',
                     'fields' => array(
 
-                        array(
-                            'id'          => 'ur_enable_post-types',
-                            'type'        => 'select',
-                            'title'       => 'Enable Reviews for custom post types',
-                            'placeholder' => 'Select a Post Type',
-                            'multiple'    => true,
-                            'chosen'      => true,
-                            'options'     => 'post_types',
-                            'query_args'  => array(
-                                'post_type' => 'HELPIE_REVIEWS_POST_TYPE',
-                            ),
-                        ),
+                        // array(
+                        //     'id'          => 'ur_enable_post-types',
+                        //     'type'        => 'select',
+                        //     'title'       => 'Enable Reviews for custom post types',
+                        //     'placeholder' => 'Select a Post Type',
+                        //     'multiple'    => true,
+                        //     'chosen'      => true,
+                        //     'options'     => 'post_types',
+                        //     'query_args'  => array(
+                        //         'post_type' => 'HELPIE_REVIEWS_POST_TYPE',
+                        //     ),
+                        // ),
 
-                        array(
-                            'id' => 'ur_show_controls',
-                            'type' => 'switcher',
-                            'title' => __('Show Reviews Controls', 'pauple-helpie'),
-                            'default' => true,
-                        ),
+                        // array(
+                        //     'id' => 'ur_show_controls',
+                        //     'type' => 'switcher',
+                        //     'title' => __('Show Reviews Controls', 'pauple-helpie'),
+                        //     'default' => true,
+                        // ),
 
-                        array(
-                            'id'      => 'ur_list_controls',
-                            'type'    => 'fieldset',
-                            'title'   => 'Reviews Controls',
-                            'dependency' => array('ur_show_controls', '==', 'true'),
-                            'fields' => array(
+                        // array(
+                        //     'id'      => 'ur_list_controls',
+                        //     'type'    => 'fieldset',
+                        //     'title'   => 'Reviews Controls',
+                        //     'dependency' => array('ur_show_controls', '==', 'true'),
+                        //     'fields' => array(
 
-                                array(
-                                    'id' => 'ur_show_search',
-                                    'type' => 'switcher',
-                                    'title' => __('Show Search', 'pauple-helpie'),
-                                    'default' => true,
-                                ),
-                                array(
-                                    'id' => 'ur_show_sortBy',
-                                    'type' => 'switcher',
-                                    'title' => __('Show SortBy', 'pauple-helpie'),
-                                    'default' => true,
-                                )
-                            )
-                        ),
+                        //         array(
+                        //             'id' => 'ur_show_search',
+                        //             'type' => 'switcher',
+                        //             'title' => __('Show Search', 'pauple-helpie'),
+                        //             'default' => true,
+                        //         ),
+                        //         array(
+                        //             'id' => 'ur_show_sortBy',
+                        //             'type' => 'switcher',
+                        //             'title' => __('Show SortBy', 'pauple-helpie'),
+                        //             'default' => true,
+                        //         )
+                        //     )
+                        // ),
 
                         // array(
                         //     'id' => 'ur_enable_replies',
@@ -172,10 +172,10 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         //     'default' => true,
                         // ),
 
-                        array(
-                            'type'    => 'subheading',
-                            'content' => 'User Review Form',
-                        ),
+                        // array(
+                        //     'type'    => 'subheading',
+                        //     'content' => 'User Review Form',
+                        // ),
 
                         array(
                             'id' => 'ur_show_form_title',
@@ -628,21 +628,21 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         ),
 
                         // Select with CPT (custom post type) pages
-                        array(
-                            'id'          => 'review-location',
-                            'type'        => 'select',
-                            'title'       => 'Where to include reviews?',
-                            'chosen' => true,
-                            'placeholder' => 'Select post types',
-                            'options'     => 'post_types',
-                            'multiple' => true,
-                        ),
+                        // array(
+                        //     'id'          => 'review-location',
+                        //     'type'        => 'select',
+                        //     'title'       => 'Where to include reviews?',
+                        //     'chosen' => true,
+                        //     'placeholder' => 'Select post types',
+                        //     'options'     => 'post_types',
+                        //     'multiple' => true,
+                        // ),
 
-                        array(
-                            'type'    => 'submessage',
-                            'style'   => 'info',
-                            'content' => 'The post edit page of these posts will have the option to add ratings and reviews.',
-                        ),
+                        // array(
+                        //     'type'    => 'submessage',
+                        //     'style'   => 'info',
+                        //     'content' => 'The post edit page of these posts will have the option to add ratings and reviews.',
+                        // ),
 
 
                         array(
@@ -713,7 +713,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                                 'icon' => 'Icon',
                                 'image' => 'Image',
                             ),
-                            'dependency' => array('stats-type', '==', 'star'),
+                            // 'dependency' => array('stats-type', '==', 'star'),
                             'default' => 'icon'
                         ),
 
@@ -728,7 +728,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'id'      => 'stats-icons',
                             'type'    => 'icon_dropdown',
                             'title'   => 'Icons',
-                            'dependency' => array('stats-source-type|stats-type', '==|==', 'icon|star'),
+                            // 'dependency' => array('stats-source-type|stats-type', '==|==', 'icon|star'),
+                            'dependency' => array('stats-source-type', '==', 'icon'),
                             'default' => 'star'
                         ),
 
@@ -736,7 +737,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'id'      => 'stats-images',
                             'type'    => 'fieldset',
                             'title'   => 'Images',
-                            'dependency' => array('stats-source-type|stats-type', '==|==', 'image|star'),
+                            // 'dependency' => array('stats-source-type|stats-type', '==|==', 'image|star'),
+                            'dependency' => array('stats-source-type', '==', 'image'),
                             'fields' => array(
                                 array(
                                     'id'    => 'image',

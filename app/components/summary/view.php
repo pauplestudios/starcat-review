@@ -21,7 +21,8 @@ if (!class_exists('\HelpieReviews\App\Components\Summary\View')) {
             $no_of_column = ($show_user == true) ? 'one' : 'two';
 
 
-            $html = '<div class="ui stackable ' . $no_of_column . ' column grid">';
+            $html = '<div class="hrp-summary">';
+            $html .= '<div class="ui stackable ' . $no_of_column . ' column grid">';
 
             // Author Summary
             if ($show_author !== true) {
@@ -48,7 +49,7 @@ if (!class_exists('\HelpieReviews\App\Components\Summary\View')) {
             $author_prosandcons = new \HelpieReviews\App\Components\ProsAndCons\Controller($args);
             $html .= $author_prosandcons->get_view();
 
-            $html .= '</div>';
+            $html .= '</div></div>';
 
             return $html;
         }

@@ -19,7 +19,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             $html = '';
             if (isset($this->props['items']) && !empty($this->props['items'])) {
 
-                $html = '<ul class="reviewed-list"
+                $html .= '<ul class="reviewed-list"
                 data-animate="' . $this->props['collection']['animate'] . '"
             >';
 
