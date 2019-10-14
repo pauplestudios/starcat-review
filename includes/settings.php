@@ -656,6 +656,28 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'type' => 'subheading',
                             'content' => 'Stats',
                         ),
+                        array(
+                            'type'    => 'submessage',
+                            // 'style'   => 'info',
+                            'content' => 'You can rate each of these stats in the edit post page(author rating). And if you have enabled "user_reviews", your users can rate them from the frontend',
+                        ),
+
+                        array(
+                            'id'          => 'stat-singularity',
+                            'type'        => 'select',
+                            'title'       => 'Single or Multiple Stat',
+                            'options'     => array(
+                                'single'  => 'Single',
+                                'multiple'  => 'Multiple',
+                            ),
+                            'default'     => 'single'
+                        ),
+                        array(
+                            'type'    => 'submessage',
+                            'style'   => 'info',
+                            'content' => 'The first stat is always considered as the primary stat ( highlighted by blue color ), When you change from multiple stat to single stat values from the primary stat are used.',
+                            'dependency' => array('stat-singularity', '==', 'multiple'),
+                        ),
 
                         array(
                             'id'     => 'global_stats',
@@ -673,25 +695,12 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                                 array(
                                     'stat_name' => 'Feature',
                                 ),
-                            )
-                        ),
-                        array(
-                            'type'    => 'submessage',
-                            'style'   => 'info',
-                            'content' => 'You can rate each of these stats in the edit post page(author rating). And if you have enabled "user_reviews", your users can rate them from the frontend',
-                        ),
-
-
-                        array(
-                            'id'          => 'stat-singularity',
-                            'type'        => 'select',
-                            'title'       => 'Single or Multiple Stat',
-                            'options'     => array(
-                                'single'  => 'Single',
-                                'multiple'  => 'Multiple',
                             ),
-                            'default'     => 'single'
+                            'dependency' => array('stat-singularity', '==', 'multiple'),
                         ),
+
+
+
 
                         array(
                             'id'        => 'stats-type',
