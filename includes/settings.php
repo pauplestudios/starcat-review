@@ -302,7 +302,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                     'fields' => array(
 
                         array(
-                            'id' => 'cp_show_controls',
+                            'id' => 'cp_controls',
                             'type' => 'switcher',
                             'title' => __('Show Controls', 'helpie-reviews'),
                             'default' => true,
@@ -311,28 +311,28 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'id' => 'cp_controls_subheading',
                             'type' => 'subheading',
                             'content' => 'Controls',
-                            'dependency' => array('cp_show_controls', '==', 'true'),
+                            'dependency' => array('cp_controls', '==', 'true'),
                         ),
                         array(
-                            'id' => 'cp_show_search',
+                            'id' => 'cp_search',
                             'type' => 'switcher',
                             'title' => __('Show Search', 'helpie-reviews'),
                             'default' => true,
-                            'dependency' => array('cp_show_controls', '==', 'true'),
+                            'dependency' => array('cp_controls', '==', 'true'),
                         ),
                         array(
-                            'id' => 'cp_show_sortBy',
+                            'id' => 'cp_sortBy',
                             'type' => 'switcher',
                             'title' => __('Show SortBy', 'helpie-reviews'),
                             'default' => true,
-                            'dependency' => array('cp_show_controls', '==', 'true'),
+                            'dependency' => array('cp_controls', '==', 'true'),
                         ),
                         array(
-                            'id' => 'cp_show_num_of_reviews_filter',
+                            'id' => 'cp_num_of_reviews_filter',
                             'type' => 'switcher',
                             'title' => __('Show Number of Review Filter', 'helpie-reviews'),
                             'default' => true,
-                            'dependency' => array('cp_show_controls', '==', 'true'),
+                            'dependency' => array('cp_controls', '==', 'true'),
                         ),
 
                         array(
@@ -357,7 +357,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'default' => 'recent',
                         ),
                         array(
-                            'id' => 'cp_listing_num_of_cols',
+                            'id' => 'cp_num_of_cols',
                             'type' => 'select',
                             'chosen' => true,
                             'title' => __('Num Of Columns', 'helpie-reviews'),

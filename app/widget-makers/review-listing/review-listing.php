@@ -37,11 +37,11 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
 
             $component_args = [
                 'posts' => $posts,
-                'show_controls' => HRP_Getter::get('cp_show_controls'),
-                'show_search' => HRP_Getter::get('cp_show_search'),
-                'show_sortBy' => HRP_Getter::get('cp_show_sortBy'),
-                'show_num_of_reviews_filter' => HRP_Getter::get('cp_show_num_of_reviews_filter'),
-                'num_of_cols' => HRP_Getter::get('cp_listing_num_of_cols'),
+                'show_controls' => HRP_Getter::get('cp_controls'),
+                'show_search' => HRP_Getter::get('cp_search'),
+                'show_sortBy' => HRP_Getter::get('cp_sortBy'),
+                'show_num_of_reviews_filter' => HRP_Getter::get('cp_num_of_reviews_filter'),
+                'num_of_cols' => HRP_Getter::get('cp_num_of_cols'),
             ];
 
             // error_log('$component_args : ' . print_r($component_args, true));
@@ -112,23 +112,23 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
         //             'settings' => ''
         //         ],
         //         'show_controls' => [
-        //             'settings' => 'cp_show_controls'
+        //             'settings' => 'cp_controls'
         //         ],
         //         'show_search' => [
-        //             'settings' => 'cp_show_search'
+        //             'settings' => 'cp_search'
         //         ],
         //         'show_sortBy' => [
-        //             'settings' => 'cp_show_sortBy'
+        //             'settings' => 'cp_sortBy'
         //         ],
         //         'show_num_of_reviews_filter' => [
-        //             'settings' => 'cp_show_num_of_reviews_filter'
+        //             'settings' => 'cp_num_of_reviews_filter'
         //         ],
 
         //         'default_sortBy' => [
         //             'settings' => 'cp_default_sortBy'
         //         ],
         //         'listing_num_of_cols' => [
-        //             'settings' => 'cp_listing_num_of_cols'
+        //             'settings' => 'cp_num_of_cols'
         //         ],
 
         //     ];

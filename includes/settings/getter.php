@@ -78,20 +78,21 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
                 'mp_cl_title' => 'Review Categories',
                 'mp_cl_description' => true,
                 'mp_cl_cols' => 'three',
+
                 'mp_rl_title' => 'Reviews Posts',
                 'mp_rl_sortby' => 'recent',
                 'mp_rl_cols' => 'three',
 
                 // Category Page Start 
-                'cp_show_controls' => true,
-                'cp_show_search' => true,
-                'cp_show_sortBy' => true,
-                'cp_show_num_of_reviews_filter' => true,
+                'cp_controls' => true,
+                'cp_search' => true,
+                'cp_sortBy' => true,
+                'cp_num_of_reviews_filter' => true,
                 'cp_default_sortBy' => 'recent',
-                'cp_listing_num_of_cols' => 'three',
-                'sp_show_controls' => true,
+                'cp_num_of_cols' => 'three',
 
                 // Single Page Start
+                'sp_show_controls' => true,
                 'sp_rating_combination' => 'combined',
                 'sp_stats_order' => [
                     'enabled' => [],
