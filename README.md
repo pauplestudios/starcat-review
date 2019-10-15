@@ -7,12 +7,28 @@
 
 ---
 
+# STANDARDS
+
+Inspirations
+
+1. https://moderntribe.github.io/products-engineering/
+2. https://10up.github.io/Engineering-Best-Practices/php/
+
 ## Code Organisation
 
 1. There should be **no WordPress code inside /components folder**.
 2. Components should only have **\$args** as input, there should be no other dependencies / global settings used inside.
 3. Blocks are used only in components and are not directly used anywhere.
 4. To recap, Templates->Widget_Makers->Components->Blocks.
+
+---
+
+## PHP
+
+1. Use Constants for repeated values like post_type, taxonomy, paths, etc
+2. Class Names should always directly be meaningful and container the purpose name ( controller, model, view )
+3. Methods should always have verbs like get, set, update, etc
+4. Constantly look for bad code smells ( https://sourcemaking.com/refactoring )
 
 ---
 
@@ -33,7 +49,9 @@ How to work in development
 1. Make sure every task you do has an issue in Bitbucket / Jira. If it's not, then create one.
 2. After making sure that an issue exists, create a branch with the id and name of that issue.
 3. Use **GitFlow Method** of branching ( https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow )
-4. Always create Pull Requests for every task/issue
+4. Constantly look for bad code smells ( https://sourcemaking.com/refactoring ) before creating pull-requests
+5. Write Unit Tests
+6. Always create Pull Requests for every task/issue
 
 ---
 
