@@ -1,30 +1,57 @@
-**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
+## Getting Started with this Repository
 
-When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
-
-_We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket._
+1. Install Node Modules: **npm install**
+2. Install Composer: **composer install**
+3. Run Webpack to compile scripts, styles and assets: **yarn start**
+4. Run Tests
 
 ---
 
-## HTML, CSS, JAVASCRIPT
+# STANDARDS
+
+Inspirations
+
+1. https://moderntribe.github.io/products-engineering/
+2. https://10up.github.io/Engineering-Best-Practices/php/
+
+## Code Organisation
+
+1. There should be **no WordPress code inside /components folder**.
+2. Components should only have **\$args** as input, there should be no other dependencies / global settings used inside.
+3. Blocks are used only in components and are not directly used anywhere.
+4. To recap, Templates->Widget_Makers->Components->Blocks.
+
+---
+
+## PHP
+
+1. Use Constants for repeated values like post_type, taxonomy, paths, etc
+2. Class Names should always directly be meaningful and container the purpose name ( controller, model, view )
+3. Methods should always have verbs like get, set, update, etc
+4. Constantly look for bad code smells ( https://sourcemaking.com/refactoring )
+
+---
+
+## HTML, CSS, Javascript
 
 The basic rules
 
-1. Every basic component's id/class should start with hrp- prefix
+1. Every basic component's id/class should start with **hrp-** prefix
+2. Names of elements should be hypenated like **hrp-categories-list**
+3. Do not have more than 3 levels of nesting for SCSS files
 
 ---
 
-## Create a file
+## Development Process
 
-Next, you’ll add a new file to this repository.
+How to work in development
 
-1. Click the **New file** button at the top of the **Source** page.
-2. Give the file a filename of **contributors.txt**.
-3. Enter your name in the empty file space.
-4. Click **Commit** and then **Commit** again in the dialog.
-5. Go back to the **Source** page.
-
-Before you move on, go ahead and explore the repository. You've already seen the **Source** page, but check out the **Commits**, **Branches**, and **Settings** pages.
+1. Make sure every task you do has an issue in Bitbucket / Jira. If it's not, then create one.
+2. After making sure that an issue exists, create a branch with the id and name of that issue.
+3. Use **GitFlow Method** of branching ( https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow )
+4. Constantly look for bad code smells ( https://sourcemaking.com/refactoring ) before creating pull-requests
+5. Write Unit Tests
+6. Always create Pull Requests for every task/issue
 
 ---
 
