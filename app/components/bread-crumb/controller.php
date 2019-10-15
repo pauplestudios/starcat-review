@@ -32,7 +32,7 @@ if (!class_exists('\HelpieReviews\App\Components\BreadCrumb\Controller')) {
             // echo '</pre>';
             // exit;
             $order = ['post_type', 'parent_term', 'term', 'post'];
-
+            $html .= "<div class='breadcrumbs hrp-breadcrumbs'>";
             for ($ii = 0; $ii < sizeof($bread_crumb_info); $ii++) {
                 $key = $order[$ii];
                 if (isset($bread_crumb_info[$key]) && !empty($bread_crumb_info[$key])) {
@@ -44,6 +44,7 @@ if (!class_exists('\HelpieReviews\App\Components\BreadCrumb\Controller')) {
                     $html .= $this->view->single_item($bread_crumb_info[$key]['permalink'], $bread_crumb_info[$key]['title']);
                 }
             }
+            $html .= '</div>';
 
             return $html;
         }
