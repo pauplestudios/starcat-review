@@ -12,105 +12,109 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
     class Archive_Template_Controller
     {
         public function __construct()
-        { }
+        {
+            $this->listing = new \HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listing();
+        }
 
         public function get_view()
         {
+            $props = $this->get_props($this->get_args());
+            // error_log('$props : ' . print_r($props, true));
             $html = '';
-            $html .= $this->get_category_listing();
-            $html .= $this->get_post_listing();
+            $html = '<div class="hrp-category-page-content-area">';
+            $html .= $this->get_category_listing($props);
+            $html .= $this->get_post_listing($props);
+            $html .= "</div>";
             return $html;
         }
 
-        public function get_found_posts()
+        public function get_post_listing($props)
         {
-            $query = new WP_Query(array('meta_key' => 'color', 'meta_value' => 'blue'));
+            $html = '';
 
-            return $query->found_posts;
-        }
-
-
-        public function get_post_listing()
-        {
-
-
-
-            $query_args = $this->get_query_args();
-            $posts = $this->get_posts($query_args);
-
-            // error_log('$posts : ' . print_r($posts, true));
-            // $args = $this->get_args($query_args);
-            // error_log('get_post_listing() $args : ' . print_r($args, true));
-
-            $html = '<div class="hrp-category-page-content-area">';
-
-            if (isset($posts) && !empty($posts)) {
-                $args = $this->get_listing_args();
-                $args['posts'] = $posts;
-                // $listing_controller = new \HelpieReviews\App\Widgets\Listing\Controller();
-                // $html .= $listing_controller->get_view($args);
-                $listing_controller = new \HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listing();
-
-                $html .= '<h2 class="hrp-section-title">' . HRP_Getter::get('mp_review_listing_title') . '</h2>';
-                $html .= $listing_controller->get_view($args);
+            if (isset($props['review_list']['posts']) && !empty($props['review_list']['posts'])) {
+                $html .= '<h2 class="hrp-section-title">' . $props['review_list']['title'] . '</h2>';
+                $html .= $this->listing->get_view($props['review_list']);
             } else {
-                $html .= "No Reviews Found";
+                $html .= "No Reviews post Found";
             }
 
-            $html .= "</div>";
+
 
             return $html;
         }
 
-        public function get_category_listing()
+        public function get_category_listing($props)
         {
-            $terms = get_terms('helpie_reviews_category', array('parent' => 0, 'hide_empty' => false));
-            $cats_list = new \HelpieReviews\App\Views\Review_Categories();
-
-            $html = '<h2 class="hrp-section-title">' . HRP_Getter::get('mp_category_section_title') . '</h2>';
-            $html .= $cats_list->get_view($terms);
+            if (isset($props['category_list']['posts']) && !empty($props['category_list']['posts'])) {
+                $html = '<h2 class="hrp-section-title">' . $props['category_list']['title'] . '</h2>';
+                $html .= $this->listing->get_view($props['category_list']['posts']);
+            } else {
+                $html .= "No Reviews Category Found";
+            }
             return $html;
         }
 
         /* Protected */
-
-        protected function get_listing_args()
+        protected function get_props($args)
         {
+            $collection = $args;
+            $collection['category_list']['posts'] = $this->get_terms();
+            $collection['review_list']['posts'] = $this->get_posts($args);
 
+            return $collection;
+        }
+
+        protected function get_args()
+        {
             $args = [
-                'title' => HRP_Getter::get('mp_review_listing_title'),
-                'num_of_cols' => 2,
-                // 'orderby' => "title",
-                // 'order' => "DESC"
+                'category_list' => [
+                    'title' => HRP_Getter::get('mp_cl_title'),
+                    'description' => HRP_Getter::get('mp_cl_description'),
+                    'num_of_cols' => HRP_Getter::get('mp_cl_cols'),
+                    'show_controls' => false,
+                ],
 
+                'review_list' => [
+                    'title' => HRP_Getter::get('mp_rl_title'),
+                    'sortby' => HRP_Getter::get('mp_rl_sortby'),
+                    'num_of_cols' => HRP_Getter::get('mp_rl_cols'),
+                    'show_controls' => false,
+                ]
             ];
 
             return $args;
         }
 
+        protected function get_terms()
+        {
+            $termProps = [];
+            $terms = get_terms(HELPIE_REVIEWS_CATEGORY, array('parent' => 0, 'hide_empty' => false));
+
+            // $ii = 0;
+            // foreach ($terms as $key => $term) {
+            //     $termProps[$ii] = [
+            //         'title' => $term->name,
+            //         'content' => $term->description,
+            //         'url' => get_term_link($term)
+            //     ];
+            //     $ii++;
+            // }
+
+            return $terms;
+        }
+
 
         protected function get_posts($args)
         {
+            $query_args = $this->get_query_args($args);
 
-            return get_posts($args);
+            return get_posts($query_args);
         }
 
-        // protected function get_args($query_args)
-        // {
-        //     $args = array(
-        //         'title' => HRP_Getter::get('mp_review_listing_title'),
-        //     );
-
-        //     $args = array_merge($args, $query_args);
-
-        //     return $args;
-        // }
-
-
-        protected function get_query_args()
+        protected function get_query_args($args)
         {
-            $sortBy = HRP_Getter::get('mp_review_listing_sortby');
-            // error_log(' $sortBy : ' .  $sortBy);
+            $sortBy = $args['review_list']['sortby'];
 
             $term = get_queried_object();
             // the query to set the posts per page to 3
@@ -121,21 +125,22 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
                 'paged' => $paged,
             );
 
-            if ($sortBy == 'alphabetical') {
+            if ($sortBy == 'alphabetical_asc') {
                 $args['orderby'] = "title";
                 $args['order'] = "ASC";
+            } else if ($sortBy == 'alphabetical_desc') {
+                $args['orderby'] = "title";
+                $args['order'] = "DESC";
             } else if ($sortBy == 'recent') {
                 $args['orderby'] = "date";
                 $args['order'] = "DESC";
             } else if ($sortBy == 'updated') {
                 $args['orderby'] = "modified";
                 $args['order'] = "DESC";
-            } else if ($sortBy == 'popular') {
+            } else if ($sortBy == 'num_of_reviews') {
                 // $args['orderby'] = "modified";
                 // $args['order'] = "DESC";
             }
-
-            // error_log('$args : ' . print_r($args, true));
 
             return $args;
         }

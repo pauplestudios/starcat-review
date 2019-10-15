@@ -23,22 +23,16 @@ if (!class_exists('\HelpieReviews\App\Components\Listing\View')) {
         {
             $collectionProps = $viewProps['collection'];
 
-            //  error_log('$collectionProps : ' . print_r($collectionProps, true));
-
             $html = '<div id="hrp-controlled-list">';
             $html .= '<h2>' . $collectionProps['title'] . '</h2>';
 
-            // error_log('collection show_controls : ' . print_r($collectionProps['show_controls'], true));
             if ($collectionProps['show_controls']) {
                 $html .= $this->controls_builder->get_controls($collectionProps['show_controls']);
             }
 
-
             $html .= $this->get_card_collection($viewProps);
 
-            /* Pagination */
             if ($collectionProps['pagination']) {
-                // $html .= '<ul class="ui pagination hrp-pagination menu"></ul>';
                 $html .= $this->get_pagination_html($viewProps);
             }
 
@@ -66,7 +60,6 @@ if (!class_exists('\HelpieReviews\App\Components\Listing\View')) {
         private function get_card_collection($viewProps)
         {
             $posts = $viewProps['items'];
-            // error_log('count : ' . count($posts));
 
             $html = '';
             $html .= '<div id="hrp-cat-collection" class="hrp-collection list row">';
