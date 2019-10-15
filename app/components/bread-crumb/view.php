@@ -12,14 +12,16 @@ if (!class_exists('\HelpieReviews\App\Components\BreadCrumb')) {
         public function __construct()
         { }
 
-        private function single_item($link, $title)
+        public function single_item($link, $title)
         {
+            // echo 'link' . $link;
+            // echo 'title' . $title;
             $html = '';
             $html .= "<a class='mainpage-link' href='" . $link . "'>" . $title . '</a> ';
             return $html;
         }
 
-        private function get_seperator()
+        public function get_seperator()
         {
             $html = '';
             $html .= "<span class='helpiekb_separator'> &nbsp;&nbsp; <i class='fa fa-angle-right' aria-hidden='true'></i>&nbsp;&nbsp;</span>";

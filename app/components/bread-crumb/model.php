@@ -30,21 +30,105 @@ if (!class_exists('\HelpieReviews\App\Components\BreadCrumb\Model')) {
                 $queried_object = get_queried_object();
 
                 $term_id = $queried_object->term_id;
-                $term = get_term($term_id);
-                $breadcrumbs_info['term'] = $this->get_term_info($term);
-                $breadcrumbs_info['parent_term'] = $this->get_parent_of_term($term);
-                echo '<pre>';
-                print_r($term);
-                print_r($breadcrumbs_info);
-                echo '</pre>';
-            } else { }
-            echo '<pre>';
-            print_r($bread_crumbs_info);
-            echo '</pre>';
+                if ($term_id) {
+                    $term = get_term($term_id);
+                    $bread_crumbs_info['term'] = $this->get_term_info($term);
+                    $bread_crumbs_info['parent_term'] = $this->get_parent_of_term($term);
+                } else {
+                    $bread_crumbs_info['term'] = '';
+                    $bread_crumbs_info['parent_term'] = '';
+                }
+            } else {
+                $bread_crumbs_info['parent_term'] = $this->get_parent_term_of_post($post_id, $taxonomy);
+                $bread_crumbs_info['term'] = $this->get_term_of_post($post_id, $taxonomy);
+                $bread_crumbs_info['post'] = $this->get_post_info($post_id);
+            }
 
-            return $mp_hrp_section;
+
+            return $bread_crumbs_info;
         }
 
+        private function get_term_of_post($post_id, $taxonomy)
+        {
+            $term_info = array();
+            $terms = wp_get_post_terms($post_id, $taxonomy);
+            $primary_term_id = $this->get_primary_term($post_id, $taxonomy);
+
+            // Term from Yoast
+            if (isset($primary_term_id) && !empty($primary_term_id)) {
+                $primary_term = get_term_by('id', $primary_term_id, $taxonomy);
+                return $term_info = $this->get_term_info($primary_term);
+            }
+
+            // First Term of n terms
+            foreach ($terms as $term) {
+                $term_info = $this->get_term_info($term);
+                break;
+            }
+
+            return $term_info;
+        }
+
+        private function get_post_info($post_id)
+        {
+            $post = get_post($post_id);
+            // $kb_article = new \Helpie\Includes\Models\Kb_Article($post);
+
+            // use $kb_article->get_title() to get the title, i change  replace $post->post_title
+            // 
+            return  array(
+                'permalink' => get_post_permalink($post_id),
+                'title' => $post->post_title
+            );
+        }
+        private function get_parent_term_of_post($post_id, $taxonomy)
+        {
+            // echo "<li>" . $post_id . "</li>";
+            $parent_term_info = array();
+            $terms = wp_get_post_terms($post_id, $taxonomy);
+            $primary_term = $this->get_primary_term($post_id, $taxonomy);
+
+
+            if (isset($primary_term) && !empty($primary_term)) {
+                $term = get_term_by('id', $primary_term, $taxonomy);
+                echo '<pre>';
+                print_r($term);
+                echo '</pre>';
+                $parent_term_info = $this->get_parent_of_term($term);
+            }
+
+            foreach ($terms as $term) {
+                $parent_term_info = $this->get_parent_of_term($term);
+                break;
+            }
+
+            return $parent_term_info;
+        }
+
+        private function get_primary_term($post_id, $taxonomy)
+        {
+
+            $primary_term = get_post_meta($post_id, '_yoast_wpseo_primary_' . $taxonomy, true);
+
+            $terms = $this->get_terms($post_id, $taxonomy);
+
+            if (!in_array($primary_term, wp_list_pluck($terms, 'term_id'))) {
+                $primary_term = false;
+            }
+
+            $primary_term = (int) $primary_term;
+            return ($primary_term) ? ($primary_term) : false;
+        }
+        private function get_terms($post_id, $taxonomy)
+        {
+            $terms = get_the_terms($post_id, $taxonomy);
+
+            if (!is_array($terms)) {
+                $terms = array();
+            }
+
+            return $terms;
+        }
         private function get_term_info($term)
         {
             return array(
