@@ -26,17 +26,14 @@ The basic rules
 
 ---
 
-## Create a file
+## Development Process
 
-Next, you’ll add a new file to this repository.
+How to work in development
 
-1. Click the **New file** button at the top of the **Source** page.
-2. Give the file a filename of **contributors.txt**.
-3. Enter your name in the empty file space.
-4. Click **Commit** and then **Commit** again in the dialog.
-5. Go back to the **Source** page.
-
-Before you move on, go ahead and explore the repository. You've already seen the **Source** page, but check out the **Commits**, **Branches**, and **Settings** pages.
+1. Make sure every task you do has an issue in Bitbucket / Jira. If it's not, then create one.
+2. After making sure that an issue exists, create a branch with the id and name of that issue.
+3. Use **GitFlow Method** of branching ( https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow )
+4. Always create Pull Requests for every task/issue
 
 ---
 
