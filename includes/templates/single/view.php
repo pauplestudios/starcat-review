@@ -12,18 +12,18 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Single\View')) {
         public function __construct($post)
         {
             $this->post = $post;
+            $this->reviews_builder = new \HelpieReviews\App\Builders\Review_Builder();
         }
 
         public function get_html()
         {
-            $summary = new \HelpieReviews\App\Summary();
-            // $form_controller = new \HelpieReviews\App\Components\Form\Controller();
-
             $html = "<article>";
-            $html .= "<h1 class='title'>" . $this->post->post_title . "</h1>";
-            $html .= "<p class='content'>" . $this->post->post_content . "</p>";
-            $html .= $summary->get_view();
-            // $html .= $form_controller->get_view($args);
+            $html .= "<h1 class='entry-title title'>" . $this->post->post_title . "</h1>";
+            $html .= "<div class='entry-content content'>";
+            $html .= "<p>" . $this->post->post_content . "</p>";
+            $html .= $this->reviews_builder->get_reviews();
+            $html .= "</div>";
+
             $html .= "</article>";
 
             return $html;

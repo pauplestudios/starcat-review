@@ -41,7 +41,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
             $defaults = array(
 
                 // General Settings Start
-                // 'template_source' => 'theme',
+                'template_source' => 'theme',
                 'enable-pros-cons' => true,
                 'review_enable_post-types' => [HELPIE_REVIEWS_POST_TYPE],
                 'global_stat' => ['stat_name' => 'Feature'],
@@ -92,12 +92,12 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
                 'cp_num_of_cols' => 'three',
 
                 // Single Page Start
-                'sp_show_controls' => true,
-                'sp_rating_combination' => 'combined',
-                'sp_stats_order' => [
-                    'enabled' => [],
-                    'disabled' => []
-                ],
+                // 'sp_show_controls' => true,
+                // 'sp_rating_combination' => 'combined',
+                // 'sp_stats_order' => [
+                //     'enabled' => [],
+                //     'disabled' => []
+                // ],
 
                 // User Review Start
                 'ur_enable_post-types' => [HELPIE_REVIEWS_POST_TYPE],

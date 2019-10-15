@@ -543,17 +543,17 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                     'icon' => 'fa fa-cogs',
                     'fields' => array(
 
-                        // array(
-                        //     'id'          => 'template_source',
-                        //     'type'        => 'select',
-                        //     'title'       => 'Template Source',
-                        //     'placeholder' => 'Select Template Source',
-                        //     'options'     => array(
-                        //         'plugin'  => 'Plugin',
-                        //         'theme'  => 'Theme',
-                        //     ),
-                        //     'default'     => 'theme'
-                        // ),
+                        array(
+                            'id'          => 'template_source',
+                            'type'        => 'select',
+                            'title'       => 'Template Source',
+                            'desc' => 'Select a Template Source',
+                            'options'     => array(
+                                'plugin'  => 'Plugin',
+                                'theme'  => 'Theme',
+                            ),
+                            'default'     => 'theme'
+                        ),
 
                         // Select with CPT (custom post type) pages
                         array(

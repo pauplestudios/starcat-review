@@ -54,6 +54,7 @@ if (!class_exists('\HelpieReviews\Includes\Register_Templates')) {
             if ($post->post_type == HELPIE_REVIEWS_POST_TYPE && is_single()) {
                 error_log('Plugin Template');
                 if (file_exists(HELPIE_REVIEWS_PATH . '/includes/templates/single-helpie_reviews.php')) {
+
                     return HELPIE_REVIEWS_PATH . '/includes/templates/single-helpie_reviews.php';
                 }
             }
