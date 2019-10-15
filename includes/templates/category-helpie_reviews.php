@@ -18,13 +18,16 @@ get_header();
 </div>
 
 <div id="primary">
+
+    <?php
+    $bread_crumb = new \HelpieReviews\App\Components\BreadCrumb\Controller();
+    echo $bread_crumb->get_view();
+    ?>
     <section class='hrp-archive-description'>
-        <h1>Topic: <?php single_term_title() ?> </h1>
+        <h1>Category Page Topic: <?php single_term_title() ?> </h1>
     </section>
 
-    <main id="main"
-          class="site-main"
-          role="main">
+    <main id="main" class="site-main" role="main">
 
         <?php
         $category_template_controller = new \HelpieReviews\Includes\Templates\Controllers\Category_Template_Controller();

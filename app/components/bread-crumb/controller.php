@@ -9,6 +9,8 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\HelpieReviews\App\Components\BreadCrumb\Controller')) {
     class Controller
     {
+        private $model;
+
         public function __construct()
         {
             $this->model = new \HelpieReviews\App\Components\BreadCrumb\Model();
@@ -19,6 +21,14 @@ if (!class_exists('\HelpieReviews\App\Components\BreadCrumb\Controller')) {
         {
             $html = '';
             $html = '<p>Bread-crumb Initial Setup ..</p>';
+            $post_id = get_the_ID();
+            $page = is_archive() ? 'archive' : 'single';
+
+            $html .= '<li>' . $post_id . '</li>';
+            $html .= '<li>' . $page . '</li>';
+            $bread_crumb_section_order = $this->model->get_hrp_info($post_id, $page);
+
+
             return $html;
         }
     }
