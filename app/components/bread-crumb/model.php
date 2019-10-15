@@ -1,0 +1,12 @@
+<?php
+
+namespace HelpieReviews\App\Components\BreadCrumb;
+
+if (!defined('ABSPATH')) {
+    exit;
+} // Exit if accessed directly
+
+if (!class_exists('\HelpieReviews\App\Components\BreadCrumb\Model')) {
+    class Model
+    { }
+}
