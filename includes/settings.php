@@ -116,18 +116,19 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                     'icon' => 'fa fa-commenting',
                     'fields' => array(
 
-                        // array(
-                        //     'id'          => 'ur_enable_post-types',
-                        //     'type'        => 'select',
-                        //     'title'       => 'Enable Reviews for custom post types',
-                        //     'placeholder' => 'Select a Post Type',
-                        //     'multiple'    => true,
-                        //     'chosen'      => true,
-                        //     'options'     => 'post_types',
-                        //     'query_args'  => array(
-                        //         'post_type' => 'HELPIE_REVIEWS_POST_TYPE',
-                        //     ),
-                        // ),
+                        array(
+                            'id'          => 'ur_enable_post-types',
+                            'type'        => 'select',
+                            'title'       => 'Enable Reviews for custom post types',
+                            'placeholder' => 'Select a Post Type',
+                            'multiple'    => true,
+                            'chosen'      => true,
+                            'options'     => 'post_types',
+                            'query_args'  => array(
+                                'post_type' => 'HELPIE_REVIEWS_POST_TYPE',
+                            ),
+                            'default' => 'helpie_reviews'
+                        ),
 
                         // array(
                         //     'id' => 'ur_show_controls',
@@ -628,15 +629,19 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         ),
 
                         // Select with CPT (custom post type) pages
-                        // array(
-                        //     'id'          => 'review-location',
-                        //     'type'        => 'select',
-                        //     'title'       => 'Where to include reviews?',
-                        //     'chosen' => true,
-                        //     'placeholder' => 'Select post types',
-                        //     'options'     => 'post_types',
-                        //     'multiple' => true,
-                        // ),
+                        array(
+                            'id'          => 'review_enable_post-types',
+                            'type'        => 'select',
+                            'title'       => 'Where to include reviews?',
+                            'chosen' => true,
+                            'placeholder' => 'Select post types',
+                            'options'     => 'post_types',
+                            'multiple' => true,
+                            'query_args'  => array(
+                                'post_type' => 'HELPIE_REVIEWS_POST_TYPE',
+                            ),
+                            'default' => 'helpie_reviews'
+                        ),
 
                         // array(
                         //     'type'    => 'submessage',
@@ -861,7 +866,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
         /* Single Post - Meta Data Options */
         public function post_meta_fields()
         {
-            $locations = HRP_Getter::get('review-location');
+            $locations = HRP_Getter::get('review_enable_post-types');
             $prefix = '_helpie_reviews_post_options';
 
             \CSF::createMetabox($prefix, array(
