@@ -430,12 +430,12 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                                     'id' => 'mp_review_listing',
                                     'type' => 'switcher',
                                     'title' => __('Review Listing', 'helpie-reviews'),
-                                    'default' => false,
+                                    'default' => true,
                                 ),
                             ),
                             'default'      => array(
                                 'mp_category_listing' => true,
-                                'mp_review_listing' => false,
+                                'mp_review_listing' => true,
                             ),
                         ),
 
@@ -543,17 +543,17 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                     'icon' => 'fa fa-cogs',
                     'fields' => array(
 
-                        array(
-                            'id'          => 'template_source',
-                            'type'        => 'select',
-                            'title'       => 'Template Source',
-                            'placeholder' => 'Select Template Source',
-                            'options'     => array(
-                                'plugin'  => 'Plugin',
-                                'theme'  => 'Theme',
-                            ),
-                            'default'     => 'theme'
-                        ),
+                        // array(
+                        //     'id'          => 'template_source',
+                        //     'type'        => 'select',
+                        //     'title'       => 'Template Source',
+                        //     'placeholder' => 'Select Template Source',
+                        //     'options'     => array(
+                        //         'plugin'  => 'Plugin',
+                        //         'theme'  => 'Theme',
+                        //     ),
+                        //     'default'     => 'theme'
+                        // ),
 
                         // Select with CPT (custom post type) pages
                         array(
@@ -574,6 +574,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'id'    => 'enable-pros-cons',
                             'type'  => 'switcher',
                             'title' => 'Enable Pros and Cons',
+                            'default' => true,
                         ),
 
                         array(

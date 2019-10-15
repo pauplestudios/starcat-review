@@ -41,7 +41,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
             $defaults = array(
 
                 // General Settings Start
-                'template_source' => 'theme',
+                // 'template_source' => 'theme',
                 'enable-pros-cons' => true,
                 'review_enable_post-types' => [HELPIE_REVIEWS_POST_TYPE],
                 'global_stat' => ['stat_name' => 'Feature'],
