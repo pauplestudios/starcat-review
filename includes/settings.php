@@ -443,12 +443,12 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'title'     => 'Components Control',
                             'desc'      => 'Controls order and visibility of these components in Main Page',
                             'fields'    => array(
-                                array(
-                                    'id' => 'mp_show_search',
-                                    'type' => 'switcher',
-                                    'title' => __('Search', 'pauple-helpie'),
-                                    'default' => false,
-                                ),
+                                // array(
+                                //     'id' => 'mp_show_search',
+                                //     'type' => 'switcher',
+                                //     'title' => __('Search', 'pauple-helpie'),
+                                //     'default' => false,
+                                // ),
                                 array(
                                     'id' => 'mp_show_categories',
                                     'type' => 'switcher',
@@ -463,7 +463,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                                 ),
                             ),
                             'default'      => array(
-                                'mp_show_search' => false,
+                                // 'mp_show_search' => false,
                                 'mp_show_categories' => true,
                                 'mp_show_review_listing' => false,
                             ),
@@ -553,26 +553,26 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'default' => 'Review Categories',
                             'dependency' => array('mp_show_categories', '==', 'true'),
                         ),
+                        // array(
+                        //     'id' => 'mp_template',
+                        //     'type' => 'select',
+                        //     'chosen' => true,
+                        //     'title' => __('Main Page Categories Listing Style', 'pauple-helpie'),
+                        //     'placeholder' => 'Select an option',
+                        //     'options' => array(
+                        //         'boxed' => __('Boxed', 'pauple-helpie'),
+                        //         'boxed1' => __('Boxed1', 'pauple-helpie'),
+                        //         'modern' => __('Modern', 'pauple-helpie'),
+                        //     ),
+                        //     'default' => 'boxed',
+                        //     'dependency' => array('mp_show_categories', '==', 'true'),
+                        // ),
                         array(
-                            'id' => 'mp_template',
-                            'type' => 'select',
-                            'chosen' => true,
-                            'title' => __('Main Page Categories Listing Style', 'pauple-helpie'),
-                            'placeholder' => 'Select an option',
-                            'options' => array(
-                                'boxed' => __('Boxed', 'pauple-helpie'),
-                                'boxed1' => __('Boxed1', 'pauple-helpie'),
-                                'modern' => __('Modern', 'pauple-helpie'),
-                            ),
-                            'default' => 'boxed',
-                            'dependency' => array('mp_show_categories', '==', 'true'),
-                        ),
-                        array(
-                            'id' => 'mp_boxed_description',
+                            'id' => 'mp_category_description',
                             'type' => 'switcher',
                             'title' => __('Show Description', 'pauple-helpie'),
                             'dependency' => array('mp_show_categories', '==', 'true'),
-                            'default' => false,
+                            'default' => true,
                         ),
                         array(
                             'id' => 'mp_cl_cols',

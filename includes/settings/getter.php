@@ -81,12 +81,12 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
                 'mp_meta_title' => 'Reviews',
                 'mp_meta_description' => 'These are your reviews',
                 'mp_components_order' => [
-                    'mp_show_search' => true,
+                    // 'mp_show_search' => true,
                     'mp_show_categories' => true,
                     'mp_show_review_listing' => true
                 ],
-                'mp_template' => 'boxed',
-                'mp_boxed_description' => false,
+                // 'mp_template' => 'boxed',
+                'mp_category_description' => true,
                 'mp_cl_cols' => 'three',
                 'mp_review_listing_title' => 'Reviews',
                 'mp_review_listing_sortby' => 'recent',
