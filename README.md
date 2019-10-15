@@ -1,16 +1,28 @@
-**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
+## Getting Started with this Repository
 
-When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
-
-_We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket._
+1. Install Node Modules: **npm install**
+2. Install Composer: **composer install**
+3. Run Webpack to compile scripts, styles and assets: **yarn start**
+4. Run Tests
 
 ---
 
-## HTML, CSS, JAVASCRIPT
+## Code Organisation
+
+1. There should be **no WordPress code inside /components folder**.
+2. Components should only have **\$args** as input, there should be no other dependencies / global settings used inside.
+3. Blocks are used only in components and are not directly used anywhere.
+4. To recap, Templates->Widget_Makers->Components->Blocks.
+
+---
+
+## HTML, CSS, Javascript
 
 The basic rules
 
-1. Every basic component's id/class should start with hrp- prefix
+1. Every basic component's id/class should start with **hrp-** prefix
+2. Names of elements should be hypenated like **hrp-categories-list**
+3. Do not have more than 3 levels of nesting for SCSS files
 
 ---
 
