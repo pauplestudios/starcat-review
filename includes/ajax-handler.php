@@ -71,6 +71,8 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
 
         public function search_posts()
         {
+            $summary = new \HelpieReviews\App\Summary();
+
             $args = array(
                 'post_type' => array('helpie_reviews'),
                 'post_status' => array('publish'),
@@ -82,6 +84,7 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
             $results = new \WP_Query($args);
 
             if ($results->have_posts()) {
+
                 foreach ($results->posts as $post) {
                     $temp_stats = [
                         '0' => [
@@ -95,14 +98,46 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
                         '2' => [
                             'stat_name' => 'camera quality',
                             'rating'    => '4.2'
-                        ]
+                        ],
+                        '3' => [
+                            'stat_name' => 'extras_1',
+                            'rating'    => '4.2'
+                        ],
+                        '4' => [
+                            'stat_name' => 'extras_2',
+                            'rating'    => '4.2'
+                        ],
+                        '5' => [
+                            'stat_name' => 'extras_3',
+                            'rating'    => '4.2'
+                        ],
+
                     ];
+                    if (has_post_thumbnail($post->ID)) {
+                        $image = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID));
+                    }
+
+                    $author_stats = get_post_meta($post->ID, '_helpie_reviews_post_options', true);
+                    // $default_args = $summary->get_default_args();
+
+                    $items = [];
+                    if (isset($author_stats['stats-list']) || !empty($author_stats['stats-list'])) {
+                        // $items['stats-list'] = $author_stats['stats-list'];
+                        $author_stats_lists = $author_stats['stats-list'];
+                        foreach ($author_stats_lists as $author_stat_item) {
+                            $items[]  = $author_stat_item;
+                        }
+                    }
+
                     $posts[] = array(
                         'id' => $post->ID,
                         'title' => $post->post_title,
                         'description' => $post->post_content,
                         // 'url' => $post->guid,
-                        'stats' => $temp_stats
+                        'stats' => $temp_stats,
+                        'image_url' => isset($image) ? $image[0] : "",
+                        'author_stats'  => $items
+
                     );
                 }
             } else {
