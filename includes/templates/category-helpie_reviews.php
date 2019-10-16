@@ -20,6 +20,11 @@ get_header();
 </div> -->
 
 <div id="primary">
+
+    <?php
+    $bread_crumb = new \HelpieReviews\App\Components\BreadCrumb\Controller();
+    echo $bread_crumb->get_view();
+    ?>
     <section class='hrp-archive-description'>
         <h1 class="term-name">Topic: <?= $term->name ?> </h1>
         <div class="term-description"><?= $term->description ?></div>

@@ -9,9 +9,15 @@
  * @since 1.0.0
  */
 
-get_header(); ?>
+get_header();
+
+?>
 
 <div id="primary">
+    <?php
+    $bread_crumb = new \HelpieReviews\App\Components\BreadCrumb\Controller();
+    echo $bread_crumb->get_view();
+    ?>
     <section class='hrp-archive-description'>
         <h1> <?php the_archive_title() ?> </h1>
     </section>
