@@ -54,13 +54,15 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Category_Templa
         protected function get_props($term)
         {
             $args = [
-                'posts' => $this->get_category_posts($this->get_args($term)),
                 'show_controls' => HRP_Getter::get('cp_controls'),
                 'show_search' => HRP_Getter::get('cp_search'),
                 'show_sortBy' => HRP_Getter::get('cp_sortBy'),
                 'show_num_of_reviews_filter' => HRP_Getter::get('cp_num_of_reviews_filter'),
                 'num_of_cols' => HRP_Getter::get('cp_num_of_cols'),
             ];
+
+            $query_args = $this->get_args($term);
+            $args['posts'] = $this->get_category_posts($query_args);
 
             return $args;
         }
@@ -85,6 +87,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Category_Templa
 
         private function get_args($term)
         {
+            $sortBy = HRP_Getter::get('cp_default_sortBy');
             // the query to set the posts per page to 3
             $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
             $args = array(
@@ -99,6 +102,24 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Category_Templa
                     ),
                 )
             );
+
+            if ($sortBy == 'alphabetical_asc') {
+                $args['orderby'] = "title";
+                $args['order'] = "ASC";
+            } else if ($sortBy == 'alphabetical_desc') {
+                $args['orderby'] = "title";
+                $args['order'] = "DESC";
+            } else if ($sortBy == 'recent') {
+                $args['orderby'] = "date";
+                $args['order'] = "DESC";
+            } else if ($sortBy == 'updated') {
+                $args['orderby'] = "modified";
+                $args['order'] = "DESC";
+            } else if ($sortBy == 'num_of_reviews') {
+                // $args['orderby'] = "modified";
+                // $args['order'] = "DESC";
+            }
+
 
             return $args;
         }

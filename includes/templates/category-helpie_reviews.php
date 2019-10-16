@@ -21,8 +21,8 @@ get_header();
 
 <div id="primary">
     <section class='hrp-archive-description'>
-        <h1 class="term-name">Topic: <?php echo $term->name ?> </h1>
-        <div class="term-description"><?php echo $term->description ?></p>
+        <h1 class="term-name">Topic: <?= $term->name ?> </h1>
+        <div class="term-description"><?= $term->description ?></div>
     </section>
 
     <main id="main" class="site-main" role="main">
