@@ -22,13 +22,24 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
             // error_log('$props : ' . print_r($props, true));
             $html = '';
             $html = '<div class="hrp-archive-page-content-area">';
-            $html .= $this->get_category_listing($props);
-            $html .= $this->get_post_listing($props);
+            foreach ($props['order'] as $key => $value) {
+                $html .= $this->get_listing_order($key, $props);
+            }
             $html .= "</div>";
             return $html;
         }
+        protected function get_listing_order($listing = 'mp_category_listing', $props)
+        {
+            $html = '';
+            if ($listing == 'mp_category_listing')
+                $html .= $this->get_category_listing($props);
+            elseif ($listing == 'mp_review_listing')
+                $html .= $this->get_post_listing($props);
 
-        public function get_post_listing($props)
+            return $html;
+        }
+
+        protected function get_post_listing($props)
         {
             $html = '';
 
@@ -44,7 +55,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
             return $html;
         }
 
-        public function get_category_listing($props)
+        protected function get_category_listing($props)
         {
             if (isset($props['category_list']['terms']) && !empty($props['category_list']['terms'])) {
                 $html = '<h2 class="hrp-section-title">' . $props['category_list']['title'] . '</h2>';
@@ -68,6 +79,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
         protected function get_args()
         {
             $args = [
+                'order' => HRP_Getter::get('mp_components_order'),
                 'category_list' => [
                     'title' => HRP_Getter::get('mp_cl_title'),
                     'description' => HRP_Getter::get('mp_cl_description'),
