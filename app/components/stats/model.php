@@ -2,8 +2,6 @@
 
 namespace HelpieReviews\App\Components\Stats;
 
-use HelpieReviews\Includes\Settings\HRP_Getter;
-
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -13,10 +11,8 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
     {
         public function get_viewProps($args)
         {
-            $this->arg = (is_array($args)) ? $args : $this->get_default_args($args);
-
-            $this->collection = $this->get_collectionProps($this->arg);
-            $this->items = $this->get_itemsProps($this->arg);
+            $this->collection = $this->get_collectionProps($args);
+            $this->items = $this->get_itemsProps($args);
 
             $view_props = [
                 'collection' => $this->collection,
@@ -175,72 +171,6 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
             $key = trim($key);
 
             return $key;
-        }
-
-        // protected function get_stat_value($rating)
-        // {
-        //     $collection = $this->collection;
-
-        //     switch ($collection['steps']) {
-        //         case "full":
-        //             $divisor = $collection['limit'] == 5 ? 20 : 10;
-        //             $stat_value = round($rating / $divisor) * $divisor;
-        //             break;
-
-        //         case "half":
-        //             $divisor = $collection['limit'] == 5 ? 10 : 5;
-        //             $stat_value = round($rating / $divisor) * $divisor;
-        //             break;
-
-        //         case "precise":
-        //             $stat_value = $rating;
-        //             break;
-
-        //         default:
-        //             // Default is Star 5
-        //             $divisor = $collection['limit'] == 5 ? 20 : 10;
-        //             $stat_value = round($rating / $divisor) * $divisor;
-        //     }
-
-        //     $stat_value = number_format($stat_value, 0);
-        //     return $stat_value;
-        // }
-
-        public function get_default_args($post_id)
-        {
-            $type = HRP_Getter::get('stats-type');
-            $limit = ($type == 'star') ? HRP_Getter::get('stats-stars-limit') : HRP_Getter::get('stats-bars-limit');
-
-            $args = [
-                'post_id' => $post_id,
-                'global_stats' => HRP_Getter::get('global_stats'),
-                'items' => $this->get_items($post_id),
-                'singularity' => HRP_Getter::get('stat-singularity'),
-                'type' => $type,
-                'source_type' =>  HRP_Getter::get('stats-source-type'),
-                'show_rating_label' => HRP_Getter::get('stats-show-rating-label'),
-                'icons' =>  HRP_Getter::get('stats-icons'),
-                'images' => HRP_Getter::get('stats-images'),
-                'steps' => HRP_Getter::get('stats-steps'),
-                'limit' => $limit,
-                'animate' => HRP_Getter::get('stats-animate'),
-                'no_rated_message' => HRP_Getter::get('stats-no-rated-message'),
-            ];
-
-            return $args;
-        }
-
-        protected function get_items($post_id)
-        {
-            $post_meta = get_post_meta($post_id, '_helpie_reviews_post_options', true);
-
-            $items = [];
-
-            if (isset($post_meta['stats-list']) || !empty($post_meta['stats-list'])) {
-                $items['stats-list'] = $post_meta['stats-list'];
-            }
-
-            return $items;
         }
     } // END CLASS
 
