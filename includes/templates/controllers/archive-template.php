@@ -60,6 +60,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
         {
             $collection = $args;
             $collection['category_list']['terms'] = $this->get_terms();
+            $collection['category_list']['items_display'] = $this->get_category_display_items($args);
             $collection['review_list']['posts'] = $this->get_posts($args);
             return $collection;
         }
@@ -83,6 +84,16 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
             ];
 
             return $args;
+        }
+
+        protected function get_category_display_items($collection)
+        {
+            $display_items = ['title', 'link'];
+            if ($collection['category_list']['description']) {
+                $display_items = ['title', 'content', 'link'];
+            }
+
+            return $display_items;
         }
 
         protected function get_terms()
