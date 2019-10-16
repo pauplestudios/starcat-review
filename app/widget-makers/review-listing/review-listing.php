@@ -25,9 +25,8 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
 
         public function get_view($args)
         {
-            // $cat_posts_repo = new \HelpieReviews\App\Repositories\Category_Posts_Repo();
-            // $posts = $cat_posts_repo->get_category_posts($args);
-            $posts = $args['posts'];
+            $posts = !isset($args['posts']) ? [] : $args['posts'];
+            $terms = !isset($args['terms']) ? [] : $args['terms'];
 
             /* Stat HTML */
             foreach ($posts as $key => $post) {
@@ -37,6 +36,7 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
 
             $component_args = [
                 'posts' => $posts,
+                'terms' => $terms,
                 'show_controls' => HRP_Getter::get('cp_controls'),
                 'show_search' => HRP_Getter::get('cp_search'),
                 'show_sortBy' => HRP_Getter::get('cp_sortBy'),

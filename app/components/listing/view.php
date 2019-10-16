@@ -59,7 +59,8 @@ if (!class_exists('\HelpieReviews\App\Components\Listing\View')) {
 
         private function get_card_collection($viewProps)
         {
-            $posts = $viewProps['items'];
+            $posts = $viewProps['items']['posts'];
+            $terms = $viewProps['items']['terms'];
 
             $html = '';
             $html .= '<div id="hrp-cat-collection" class="hrp-collection list row">';
@@ -70,6 +71,16 @@ if (!class_exists('\HelpieReviews\App\Components\Listing\View')) {
 
                 // Assign card to html
                 $html .= $this->get_single_card($post, $ii, $viewProps);
+                // increment $ii
+                $ii++;
+            }
+
+            foreach ($terms as $key => $term) {
+                // Set initial $ii
+                if (!isset($ii)) $ii = 0;
+
+                // Assign card to html
+                $html .= $this->get_single_term_card($term, $ii, $viewProps);
                 // increment $ii
                 $ii++;
             }
@@ -96,6 +107,21 @@ if (!class_exists('\HelpieReviews\App\Components\Listing\View')) {
                 'reviews' => $single_review,
                 'post_date' => get_post_time('U', 'false', $post->ID),
                 'post_modified' => get_post_modified_time('U', 'false', $post->ID),
+                'columns' => $collectionProps['columns'],
+                'items_display' => $collectionProps['items_display'],
+            ];
+
+            return $this->card->get_view($item);
+        }
+
+        private function get_single_term_card($term, $ii, $viewProps)
+        {
+            $collectionProps = $viewProps['collection'];
+
+            $item = [
+                'title' => $term->name,
+                'content' => $term->description,
+                'url' => get_term_link($term),
                 'columns' => $collectionProps['columns'],
                 'items_display' => $collectionProps['items_display'],
             ];

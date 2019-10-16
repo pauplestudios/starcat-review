@@ -55,8 +55,8 @@ if (!class_exists('\HelpieReviews\App\Components\Listing\Model')) {
         }
 
         protected function get_items_props($args)
-        {
-            return $args['posts'];
+        {            
+            return $args;
         }
 
         public function get_default_args()
