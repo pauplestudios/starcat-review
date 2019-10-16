@@ -21,7 +21,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
             $props = $this->get_props($this->get_args());
             // error_log('$props : ' . print_r($props, true));
             $html = '';
-            $html = '<div class="hrp-category-page-content-area">';
+            $html = '<div class="hrp-archive-page-content-area">';
             $html .= $this->get_category_listing($props);
             $html .= $this->get_post_listing($props);
             $html .= "</div>";
@@ -46,9 +46,9 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
 
         public function get_category_listing($props)
         {
-            if (isset($props['category_list']['posts']) && !empty($props['category_list']['posts'])) {
+            if (isset($props['category_list']['terms']) && !empty($props['category_list']['terms'])) {
                 $html = '<h2 class="hrp-section-title">' . $props['category_list']['title'] . '</h2>';
-                $html .= $this->listing->get_view($props['category_list']['posts']);
+                $html .= $this->listing->get_view($props['category_list']);
             } else {
                 $html .= "No Reviews Category Found";
             }
@@ -59,9 +59,8 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
         protected function get_props($args)
         {
             $collection = $args;
-            $collection['category_list']['posts'] = $this->get_terms();
+            $collection['category_list']['terms'] = $this->get_terms();
             $collection['review_list']['posts'] = $this->get_posts($args);
-
             return $collection;
         }
 
@@ -88,19 +87,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
 
         protected function get_terms()
         {
-            $termProps = [];
             $terms = get_terms(HELPIE_REVIEWS_CATEGORY, array('parent' => 0, 'hide_empty' => false));
-
-            // $ii = 0;
-            // foreach ($terms as $key => $term) {
-            //     $termProps[$ii] = [
-            //         'title' => $term->name,
-            //         'content' => $term->description,
-            //         'url' => get_term_link($term)
-            //     ];
-            //     $ii++;
-            // }
-
             return $terms;
         }
 

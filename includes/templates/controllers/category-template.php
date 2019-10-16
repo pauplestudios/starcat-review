@@ -2,6 +2,8 @@
 
 namespace HelpieReviews\Includes\Templates\Controllers;
 
+use \HelpieReviews\Includes\Settings\HRP_Getter;
+
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -10,34 +12,29 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Category_Templa
     class Category_Template
     {
         public function __construct()
-        { }
-
-        public function get_view()
         {
+            $this->listing = new \HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listing();
+        }
 
-
+        public function get_view($term)
+        {
+            $props = $this->get_props($term);
             $html = '';
-            $html .= $this->get_category_post_listing();
-            // $html .= $this->get_comparison_table();
-
+            $html = '<div class="hrp-category-page-content-area">';
+            $html .= $this->get_category_post_listing($props);
+            // $html .= $this->get_comparison_table($props);
+            $html .= "</div>";
             return $html;
         }
 
-        public function get_category_post_listing()
+        public function get_category_post_listing($props)
         {
-            $args = $this->get_args();
-            $posts = $this->get_category_posts($args);
+            $posts = $props['posts'];
 
             $html = '<div class="hrp-category-page-content-area">';
 
             if (isset($posts) && !empty($posts)) {
-                $args = $this->get_listing_args();
-                $args['posts'] = $posts;
-                // $listing_controller = new \HelpieReviews\App\Components\Listing\Controller();
-                // $html .= $listing_controller->get_view($args);
-
-                $listing_controller = new \HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listing();
-                $html .= $listing_controller->get_view($args);
+                $html .= $this->listing->get_view($props);
             } else {
                 $html .= "No Reviews Found";
             }
@@ -47,18 +44,6 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Category_Templa
             return $html;
         }
 
-        public function get_listing_args()
-        {
-            $term = get_queried_object();
-
-            $args = [
-                'term_id' => $term->term_id
-            ];
-
-
-            return $args;
-        }
-
         // public function get_comparison_table()
         // {
         //     $post_ids = [131, 123, 119];
@@ -66,12 +51,24 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Category_Templa
         //     return $comparison_controller->get_view($post_ids);
         // }
 
-        public function get_category_posts($args)
+        protected function get_props($term)
+        {
+            $args = [
+                'posts' => $this->get_category_posts($this->get_args($term)),
+                'show_controls' => HRP_Getter::get('cp_controls'),
+                'show_search' => HRP_Getter::get('cp_search'),
+                'show_sortBy' => HRP_Getter::get('cp_sortBy'),
+                'show_num_of_reviews_filter' => HRP_Getter::get('cp_num_of_reviews_filter'),
+                'num_of_cols' => HRP_Getter::get('cp_num_of_cols'),
+            ];
+
+            return $args;
+        }
+
+        private function get_category_posts($args)
         {
             $posts    = [];
-
             $query = new \WP_Query($args);
-            // error_log('get_category_posts $args : ' . print_r($args, true));
 
             if ($query->have_posts()) {
                 while ($query->have_posts()) {
@@ -86,9 +83,8 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Category_Templa
         }
 
 
-        public function get_args()
+        private function get_args($term)
         {
-            $term = get_queried_object();
             // the query to set the posts per page to 3
             $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
             $args = array(
@@ -97,7 +93,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Category_Templa
                 'paged' => $paged,
                 'tax_query' => array(
                     array(
-                        'taxonomy' => 'helpie_reviews_category',
+                        'taxonomy' => HELPIE_REVIEWS_CATEGORY,
                         'field'    => 'id',
                         'terms'    => $term->term_id,
                     ),
