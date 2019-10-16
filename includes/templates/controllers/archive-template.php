@@ -73,6 +73,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
                     'description' => HRP_Getter::get('mp_cl_description'),
                     'num_of_cols' => HRP_Getter::get('mp_cl_cols'),
                     'show_controls' => false,
+                    'pagination' => false
                 ],
 
                 'review_list' => [
@@ -80,6 +81,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
                     'sortby' => HRP_Getter::get('mp_rl_sortby'),
                     'num_of_cols' => HRP_Getter::get('mp_rl_cols'),
                     'show_controls' => false,
+                    'pagination' => false
                 ]
             ];
 
@@ -118,7 +120,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
             // the query to set the posts per page to 3
             $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
             $args = array(
-                'posts_per_page' => -1,
+                'posts_per_page' => 6, // show 6 posts for now only
                 'post_type' => HELPIE_REVIEWS_POST_TYPE,
                 'paged' => $paged,
             );

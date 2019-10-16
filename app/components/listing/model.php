@@ -37,7 +37,7 @@ if (!class_exists('\HelpieReviews\App\Components\Listing\Model')) {
                 ],
                 'post_count' => $post_count,
                 'total_pages' => $post_count / $posts_per_page,
-                'pagination' => true,
+                'pagination' => $args['pagination'],
                 'columns' => $args['num_of_cols'],
                 'items_display' => $args['items_display']
             ];

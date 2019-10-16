@@ -44,7 +44,8 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
                 'show_sortBy' => isset($args['show_sortBy']) ? $args['show_sortBy'] : '',
                 'show_num_of_reviews_filter' => isset($args['show_num_of_reviews_filter']) ? $args['show_num_of_reviews_filter'] : '',
                 'num_of_cols' => $args['num_of_cols'],
-                'items_display' => isset($args['items_display']) ? $args['items_display'] : ['title', 'content', 'link']
+                'items_display' => isset($args['items_display']) ? $args['items_display'] : ['title', 'content', 'link'],
+                'pagination' => isset($args['pagination']) ? $args['pagination'] : true
             ];
 
             // error_log('$component_args : ' . print_r($component_args, true));

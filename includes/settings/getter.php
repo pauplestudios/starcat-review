@@ -77,7 +77,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
                 ],
                 'mp_cl_title' => 'Review Categories',
                 'mp_cl_description' => true,
-                'mp_cl_cols' => '3',
+                'mp_cl_cols' => '2',
 
                 'mp_rl_title' => 'Reviews Posts',
                 'mp_rl_sortby' => 'recent',

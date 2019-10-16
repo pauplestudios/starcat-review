@@ -475,7 +475,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                                 '3' => 3,
                                 '4' => 4,
                             ),
-                            'default' => '3',
+                            'default' => '2',
                             'dependency' => array('mp_category_listing', '==', 'true'),
                         ),
 
