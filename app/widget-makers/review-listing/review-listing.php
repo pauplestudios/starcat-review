@@ -42,7 +42,7 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
                 'show_controls' => $args['show_controls'],
                 'show_search' => isset($args['show_search']) ? $args['show_search'] : '',
                 'show_sortBy' => isset($args['show_sortBy']) ? $args['show_sortBy'] : '',
-                'show_num_of_reviews_filter' => isset($args['show_num_of_reviews_filter']) ? $args['show_num_of_reviews_filter'] : '',
+                // 'show_num_of_reviews_filter' => isset($args['show_num_of_reviews_filter']) ? $args['show_num_of_reviews_filter'] : '',
                 'num_of_cols' => $args['num_of_cols'],
                 'items_display' => isset($args['items_display']) ? $args['items_display'] : ['title', 'content', 'link'],
                 'pagination' => isset($args['pagination']) ? $args['pagination'] : true

@@ -22,12 +22,15 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
             // error_log('$props : ' . print_r($props, true));
             $html = '';
             $html = '<div class="hrp-archive-page-content-area">';
-            foreach ($props['order'] as $key => $value) {
-                $html .= $this->get_listing_order($key, $props);
+            foreach ($props['order'] as $listing => $display) {
+                if ($display) {
+                    $html .= $this->get_listing_order($listing, $props);
+                }
             }
             $html .= "</div>";
             return $html;
         }
+
         protected function get_listing_order($listing = 'mp_category_listing', $props)
         {
             $html = '';
@@ -49,8 +52,6 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
             } else {
                 $html .= "No Reviews post Found";
             }
-
-
 
             return $html;
         }

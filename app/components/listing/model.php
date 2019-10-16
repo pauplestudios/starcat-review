@@ -33,7 +33,7 @@ if (!class_exists('\HelpieReviews\App\Components\Listing\Model')) {
                 'show_controls' => [
                     'search' => $args['show_search'],
                     'sort' => $args['show_sortBy'],
-                    'reviews' => $args['show_num_of_reviews_filter'],
+                    // 'reviews' => $args['show_num_of_reviews_filter'],
                 ],
                 'post_count' => $post_count,
                 'total_pages' => $post_count / $posts_per_page,

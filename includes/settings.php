@@ -327,13 +327,13 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'default' => true,
                             'dependency' => array('cp_controls', '==', 'true'),
                         ),
-                        array(
-                            'id' => 'cp_num_of_reviews_filter',
-                            'type' => 'switcher',
-                            'title' => __('Show Number of Review Filter', 'helpie-reviews'),
-                            'default' => true,
-                            'dependency' => array('cp_controls', '==', 'true'),
-                        ),
+                        // array(
+                        //     'id' => 'cp_num_of_reviews_filter',
+                        //     'type' => 'switcher',
+                        //     'title' => __('Show Number of Review Filter', 'helpie-reviews'),
+                        //     'default' => true,
+                        //     'dependency' => array('cp_controls', '==', 'true'),
+                        // ),
 
                         array(
                             'id' => 'cp_listing_options_subheading',
@@ -352,7 +352,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                                 'alphabetical_desc' => 'Alphabetical Descending',
                                 'recent' => 'Recent',
                                 'updated' => 'Recently Updated',
-                                'num_of_reviews' => 'Number of Reviews',
+                                // 'num_of_reviews' => 'Number of Reviews',
                             ),
                             'default' => 'recent',
                         ),
@@ -506,7 +506,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                                 'alphabetical_desc' => 'Alphabetical Descending',
                                 'recent' => 'Recent',
                                 'updated' => 'Recently Updated',
-                                'num_of_reviews' => 'Number of Reviews',
+                                // 'num_of_reviews' => 'Number of Reviews',
                             ),
                             'default' => 'recent',
                             'dependency' => array('mp_review_listing', '==', 'true'),
