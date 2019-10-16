@@ -29,10 +29,7 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
             $terms = !isset($args['terms']) ? [] : $args['terms'];
 
             /* Stat HTML */
-            foreach ($posts as $key => $post) {
-                $stats_controller = new \HelpieReviews\App\Components\Stats\Controller($post->ID);
-                $post->stat_html = $stats_controller->get_view();
-            }
+            $posts = $this->get_combine_rating($posts);
 
             // error_log('get_view $args : ' . print_r($args, true));
 
@@ -108,34 +105,35 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
             return $elementor_args;
         }
 
-        // public function propsRegister()
-        // {
+        protected function get_combine_rating($posts)
+        {
+            foreach ($posts as $key => $post) {
+                $args = HRP_Getter::get_stat_default_args();
+                $args['post_id'] = $post->ID;
+                $args['combination'] = 'overall_combine';
+                $args['items'] = get_post_meta($post->ID, '_helpie_reviews_post_options', true);
+                $args['items']['comments-list'] = $this->get_comments_list($post->ID);
+                $stats_controller = new \HelpieReviews\App\Components\Stats\Controller($args);
+                $post->stat_html = $stats_controller->get_view();
+            }
 
-        //     $register = [
-        //         'title' => [
-        //             'settings' => ''
-        //         ],
-        //         'show_controls' => [
-        //             'settings' => 'cp_controls'
-        //         ],
-        //         'show_search' => [
-        //             'settings' => 'cp_search'
-        //         ],
-        //         'show_sortBy' => [
-        //             'settings' => 'cp_sortBy'
-        //         ],
-        //         'show_num_of_reviews_filter' => [
-        //             'settings' => 'cp_num_of_reviews_filter'
-        //         ],
+            return $posts;
+        }
 
-        //         'default_sortBy' => [
-        //             'settings' => 'cp_default_sortBy'
-        //         ],
-        //         'listing_num_of_cols' => [
-        //             'settings' => 'cp_num_of_cols'
-        //         ],
+        protected function get_comments_list($post_id)
+        {
+            $args = [
+                'post_id' => $post_id,
+                'type' => HELPIE_REVIEWS_POST_TYPE
+            ];
 
-        //     ];
-        // }
+            $comments = get_comments($args);
+
+            foreach ($comments as $comment) {
+                $comment->reviews = get_comment_meta($comment->comment_ID, 'hrp_user_review_props', true);
+            }
+
+            return $comments;
+        }
     } // END CLASS
 }

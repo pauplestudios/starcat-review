@@ -14,6 +14,11 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
             $this->collection = $this->get_collectionProps($args);
             $this->items = $this->get_itemsProps($args);
 
+            if (isset($args['combination']) && $args['combination'] == 'overall_combine') {
+                $this->get_combined_overall($this->items, $args);
+            }
+
+
             $view_props = [
                 'collection' => $this->collection,
                 'items' => $this->items
@@ -41,6 +46,26 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
             $collection = $this->get_icons($collection);
 
             return $collection;
+        }
+
+        protected function get_combined_overall($author_items, $args)
+        {
+            $user_items = $this->get_userItems($args);
+            $user_args = $args;
+            $user_args['items'] = $user_items;
+            $user_items = $this->get_itemsProps($user_args);
+            error_log("Author : " . print_r($author_items, true));
+            error_log("User : " . print_r($user_items, true));
+
+            // $items = $author_items + $user_items;
+            $items = array_map(function (...$arrays) {
+                return array_sum($arrays);
+            }, $author_items, $user_items);
+
+
+            error_log("combined : " . print_r($items, true));
+
+            return;
         }
 
         public function get_itemsProps($args)
@@ -81,6 +106,60 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
             if ($stat_overall_count > 1 && $this->collection['singularity'] !== 'single') {
                 $overall_stat = $this->get_overall_stat($stat_overall_cumulative, $stat_overall_count);
                 $stats = array_merge($overall_stat, $stats);
+            }
+
+            return $stats;
+        }
+
+        protected function get_userItems($args)
+        {
+            $items = [];
+
+            $groups = [];
+            // $groups['pros-list'] = array();
+            // $groups['cons-list'] = array();
+            $groups['stats-list'] = array();
+
+            $count = 0;
+            foreach ($args['items']['comments-list'] as $comment) {
+
+                foreach ($comment->reviews['stats'] as $stat_key => $stat_value) {
+                    $global_stats = [];
+                    if (isset($args['global_stats']) && !empty($args['global_stats'])) {
+                        $global_stats = array_map(function ($stat) {
+                            return strtolower($stat['stat_name']);
+                        }, $args['global_stats']);
+                    }
+
+
+                    if (in_array(strtolower($stat_key), $global_stats)) {
+                        if (!isset($groups['stats-list'][$stat_key])) {
+                            $groups['stats-list'][$stat_key] = 0;
+                        }
+
+                        $groups['stats-list'][$stat_key] += $comment->reviews['stats'][$stat_key]['rating'];
+                    }
+                }
+                $count++;
+            }
+            $items['review_count'] = $count;
+
+            if (!empty($groups['stats-list'])) {
+                $items['stats-list'] = $this->get_user_stats($groups['stats-list'], $count);
+            }
+
+            return $items;
+        }
+
+        protected function get_user_stats($groups, $count)
+        {
+            $stats = [];
+
+            foreach ($groups as $key => $value) {
+                $stats[$key] = [
+                    'stat_name' => $key,
+                    'rating' => round($value / $count, 1)
+                ];
             }
 
             return $stats;
