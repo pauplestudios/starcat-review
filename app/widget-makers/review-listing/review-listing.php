@@ -34,14 +34,16 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
                 $post->stat_html = $stats_controller->get_view();
             }
 
+            // error_log('get_view $args : ' . print_r($args, true));
+
             $component_args = [
                 'posts' => $posts,
                 'terms' => $terms,
-                'show_controls' => HRP_Getter::get('cp_controls'),
-                'show_search' => HRP_Getter::get('cp_search'),
-                'show_sortBy' => HRP_Getter::get('cp_sortBy'),
-                'show_num_of_reviews_filter' => HRP_Getter::get('cp_num_of_reviews_filter'),
-                'num_of_cols' => HRP_Getter::get('cp_num_of_cols'),
+                'show_controls' => $args['show_controls'],
+                'show_search' => isset($args['show_search']) ? $args['show_search'] : '',
+                'show_sortBy' => isset($args['show_sortBy']) ? $args['show_sortBy'] : '',
+                'show_num_of_reviews_filter' => isset($args['show_num_of_reviews_filter']) ? $args['show_num_of_reviews_filter'] : '',
+                'num_of_cols' => $args['num_of_cols'],
             ];
 
             // error_log('$component_args : ' . print_r($component_args, true));
