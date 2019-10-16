@@ -18,11 +18,8 @@ get_header();
         <?php
         while (have_posts()) : the_post();
 
-            $wp_post = get_post();
-
-            // Render via Template Controller
-            $singlePageController = new \HelpieReviews\Includes\Templates\Single\Controller();
-            $singlePageController->render($wp_post);
+            $single_template = new \HelpieReviews\Includes\Templates\Controllers\Single_Template();
+            echo $single_template->get_view(get_post());
 
         endwhile;
         ?>

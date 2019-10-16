@@ -1,26 +1,27 @@
 <?php
 
-namespace HelpieReviews\Includes\Templates\Single;
+namespace HelpieReviews\Includes\Templates\Controllers;
+
+use \HelpieReviews\Includes\Settings\HRP_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\Includes\Templates\Single\View')) {
-    class View
+if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Single_Template')) {
+    class Single_Template
     {
-        public function __construct($post)
+        public function __construct()
         {
-            $this->post = $post;
             $this->reviews_builder = new \HelpieReviews\App\Builders\Review_Builder();
         }
 
-        public function get_html()
+        public function get_view($post)
         {
             $html = "<article>";
-            $html .= "<h1 class='entry-title title'>" . $this->post->post_title . "</h1>";
+            $html .= "<h1 class='entry-title title'>" . $post->post_title . "</h1>";
             $html .= "<div class='entry-content content'>";
-            $html .= "<p>" . $this->post->post_content . "</p>";
+            $html .= "<p>" . $post->post_content . "</p>";
             $html .= $this->reviews_builder->get_reviews();
             $html .= "</div>";
 
@@ -28,5 +29,5 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Single\View')) {
 
             return $html;
         }
-    } // END CLASS
+    }
 }

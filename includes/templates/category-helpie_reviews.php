@@ -10,27 +10,24 @@
  */
 
 get_header();
-// get_sidebar('helpie_reviews_sidebar');
 ?>
 
-<div class='sidebar'>
-    <?php dynamic_sidebar('helpie_reviews_sidebar'); ?>
-</div>
+<!-- <div class='sidebar'>
+    <?php // dynamic_sidebar('helpie_reviews_sidebar'); 
+    ?>
+</div> -->
 
 <div id="primary">
     <section class='hrp-archive-description'>
         <h1>Topic: <?php single_term_title() ?> </h1>
     </section>
 
-    <main id="main"
-          class="site-main"
-          role="main">
+    <main id="main" class="site-main" role="main">
 
         <?php
-        $category_template_controller = new \HelpieReviews\Includes\Templates\Controllers\Category_Template_Controller();
-        echo $category_template_controller->get_view();
+        $category_template = new \HelpieReviews\Includes\Templates\Controllers\Category_Template();
+        echo $category_template->get_view();
         ?>
-
 
     </main>
 </div><!-- #primary -->

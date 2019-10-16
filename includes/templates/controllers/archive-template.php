@@ -8,8 +8,8 @@ if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Template_Controller')) {
-    class Archive_Template_Controller
+if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Template')) {
+    class Archive_Template
     {
         public function __construct()
         {

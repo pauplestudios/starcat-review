@@ -6,8 +6,8 @@ if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Category_Template_Controller')) {
-    class Category_Template_Controller
+if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Category_Template')) {
+    class Category_Template
     {
         public function __construct()
         { }
