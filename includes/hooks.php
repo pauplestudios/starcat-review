@@ -82,7 +82,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         public function setup_data()
         {
             $post_data = [
-                'post_type' => "starcat_review",
+                'post_type' => SCR_POST_TYPE,
                 'taxonomy' => [
                     SCR_CATEGORY => "Getting Started",
                 ],

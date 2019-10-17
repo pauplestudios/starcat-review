@@ -19,7 +19,7 @@ if (!class_exists('\StarcatReview\Includes\Register_Templates')) {
         public function get_archive_template($archive_template)
         {
             global $post;
-            if (is_post_type_archive('starcat_review')) {
+            if (is_post_type_archive(SCR_POST_TYPE)) {
                 if (file_exists(SCR_PATH . '/includes/templates/archive-starcat_review.php')) {
                     $archive_template = SCR_PATH . '/includes/templates/archive-starcat_review.php';
                 }
