@@ -73,7 +73,7 @@ function starcat_review_fail_php_version()
 function starcat_review_fail_wp_version()
 {
     /* translators: %s: WP version */
-    $message = sprintf(esc_html__('Helpie Review requires WordPress version %s+. Because you are using an earlier version, the plugin is currently NOT ACTIVE.', 'starcat-review'), '4.5');
+    $message = sprintf(esc_html__('Starcat Review requires WordPress version %s+. Because you are using an earlier version, the plugin is currently NOT ACTIVE.', 'starcat-review'), '4.5');
     $html_message = sprintf('<div class="error">%s</div>', wpautop($message));
     echo wp_kses_post($html_message);
 }

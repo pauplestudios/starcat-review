@@ -31,7 +31,7 @@ if (!class_exists('\StarcatReview\Includes\Cpt')) {
             $labels = array(
                 'name' => _x('Reviews', 'post type general name', 'starcat-review'),
                 'singular_name' => _x('Review', 'post type singular name', 'starcat-review'),
-                'menu_name' => _x('Helpie Review', 'admin menu', 'starcat-review'),
+                'menu_name' => _x('Starcat Review', 'admin menu', 'starcat-review'),
                 'name_admin_bar' => _x('Review', 'add new on admin bar', 'starcat-review'),
                 'add_new' => _x('Add New', 'Review', 'starcat-review'),
                 'add_new_item' => __('Add New Review', 'starcat-review'),
@@ -97,10 +97,10 @@ if (!class_exists('\StarcatReview\Includes\Cpt')) {
                 'show_in_rest' => true,
                 'show_admin_column' => true,
                 'query_var' => true,
-                'rewrite' => array('slug' => 'SCR_CATEGORY', 'with_front' => false),
+                'rewrite' => array('slug' => SCR_CATEGORY, 'with_front' => false),
             );
 
-            register_taxonomy('SCR_CATEGORY', array($this->post_type_name), $args);
+            register_taxonomy(SCR_CATEGORY, array($this->post_type_name), $args);
         }
 
         public function register_tag()

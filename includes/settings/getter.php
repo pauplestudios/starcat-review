@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
 
 if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
 
-    // HRP - Helpie Review Plugin
+    // HRP - Starcat Review Plugin
     class SCR_Getter
     {
         private static $options;

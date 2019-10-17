@@ -84,7 +84,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             $post_data = [
                 'post_type' => "starcat_review",
                 'taxonomy' => [
-                    'SCR_CATEGORY' => "Getting Started",
+                    SCR_CATEGORY => "Getting Started",
                 ],
                 'title' => "Yours First Reviews Question",
                 'content' => "Yours relevent questions answer."

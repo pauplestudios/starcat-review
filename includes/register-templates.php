@@ -31,7 +31,7 @@ if (!class_exists('\StarcatReview\Includes\Register_Templates')) {
         public function get_category_template($archive_template)
         {
             global $post;
-            if (is_tax('SCR_CATEGORY')) {
+            if (is_tax(SCR_CATEGORY)) {
                 if (file_exists(SCR_PATH . '/includes/templates/category-starcat_review.php')) {
                     $archive_template = SCR_PATH . '/includes/templates/category-starcat_review.php';
                 }

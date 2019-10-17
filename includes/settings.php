@@ -57,7 +57,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                     'menu_title' => 'Settings',
                     'menu_parent' => 'edit.php?post_type=starcat_review',
                     'menu_type' => 'submenu', // menu, submenu, options, theme, etc.
-                    'menu_slug' => 'helpie-review-settings',
+                    'menu_slug' => 'scr-settings',
                     'framework_title' => 'Settings',
                     'theme' => 'light',
                     'show_search' => false, // TODO: Enable once autofill password is fixed

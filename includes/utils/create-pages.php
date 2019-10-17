@@ -15,7 +15,7 @@ if (!class_exists('\StarcatReview\Includes\Utils\Create_Pages')) {
             $post_data = [
                 'post_type' => "starcat_review",
                 'taxonomy' => [
-                    'SCR_CATEGORY' => "Getting Started",
+                    SCR_CATEGORY => "Getting Started",
                 ],
                 'title' => "Yours First Reviews Question",
                 'content' => "Yours relevent questions answer."
@@ -28,7 +28,7 @@ if (!class_exists('\StarcatReview\Includes\Utils\Create_Pages')) {
             if ($the_query->post_count < 1) {
                 /* Setup Demo Reviews Question And Answer */
                 $post_utils = new \StarcatReview\Includes\Utils\Post();
-                $post_utils->insert_term_with_post($post_data['post_type'], "Getting Started", "SCR_CATEGORY", "Yours First Reviews Question", "Yours relevent questions answer.");
+                $post_utils->insert_term_with_post($post_data['post_type'], "Getting Started", SCR_CATEGORY, "Yours First Reviews Question", "Yours relevent questions answer.");
             }
             $this->create_page_on_activate();
             wp_reset_postdata();

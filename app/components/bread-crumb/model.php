@@ -25,7 +25,7 @@ if (!class_exists('\StarcatReview\App\Components\BreadCrumb\Model')) {
                 'title' => $mp_scr_section['scr_main_title']
             );
 
-            $taxonomy = 'SCR_CATEGORY';
+            $taxonomy = SCR_CATEGORY;
             if ($page == 'archive') {
                 $queried_object = get_queried_object();
 
@@ -152,7 +152,7 @@ if (!class_exists('\StarcatReview\App\Components\BreadCrumb\Model')) {
         public function main_page_section()
         {
             $mp_section_order =   array(
-                'scr_main_title' =>  'Helpie Review',
+                'scr_main_title' =>  'Starcat Review',
                 'scr_main_subtitle' => 'We’re here to help.',
                 'scr_main_page_search_display' => 1,
             );

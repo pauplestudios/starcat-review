@@ -57,7 +57,7 @@ if (!class_exists('\StarcatReview\App\Repositories\Category_Posts_Repo')) {
                 'paged' => $paged,
                 'tax_query' => array(
                     array(
-                        'taxonomy' => 'SCR_CATEGORY',
+                        'taxonomy' => SCR_CATEGORY,
                         'field'    => 'id',
                         'terms'    => $input_args['term_id'],
                     ),

@@ -41,7 +41,7 @@ if (!function_exists('scr_fs')) {
 
     function scr_fs_settings_url()
     {
-        return admin_url('edit.php?post_type=starcat_review&page=helpie-review-settings');
+        return admin_url('edit.php?post_type=starcat_review&page=scr-settings');
     }
 
     // scr_fs()->add_filter('connect_url', 'scr_fs_settings_url');

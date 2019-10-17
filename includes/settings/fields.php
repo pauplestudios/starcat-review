@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
 
 if (!class_exists('\StarcatReview\Includes\Settings\Fields')) {
 
-    // HRP - Helpie Review Plugin
+    // HRP - Starcat Review Plugin
     class Fields
     {
 
