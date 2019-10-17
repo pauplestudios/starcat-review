@@ -25,9 +25,8 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
 
         public function get_view($args)
         {
-            // $cat_posts_repo = new \HelpieReviews\App\Repositories\Category_Posts_Repo();
-            // $posts = $cat_posts_repo->get_category_posts($args);
-            $posts = $args['posts'];
+            $posts = !isset($args['posts']) ? [] : $args['posts'];
+            $terms = !isset($args['terms']) ? [] : $args['terms'];
 
             /* Stat HTML */
             foreach ($posts as $key => $post) {
@@ -35,13 +34,18 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
                 $post->stat_html = $stats_controller->get_view();
             }
 
+            // error_log('get_view $args : ' . print_r($args, true));
+
             $component_args = [
                 'posts' => $posts,
-                'show_controls' => HRP_Getter::get('cp_show_controls'),
-                'show_search' => HRP_Getter::get('cp_show_search'),
-                'show_sortBy' => HRP_Getter::get('cp_show_sortBy'),
-                'show_num_of_reviews_filter' => HRP_Getter::get('cp_show_num_of_reviews_filter'),
-                'num_of_cols' => HRP_Getter::get('cp_listing_num_of_cols'),
+                'terms' => $terms,
+                'show_controls' => $args['show_controls'],
+                'show_search' => isset($args['show_search']) ? $args['show_search'] : '',
+                'show_sortBy' => isset($args['show_sortBy']) ? $args['show_sortBy'] : '',
+                // 'show_num_of_reviews_filter' => isset($args['show_num_of_reviews_filter']) ? $args['show_num_of_reviews_filter'] : '',
+                'num_of_cols' => $args['num_of_cols'],
+                'items_display' => isset($args['items_display']) ? $args['items_display'] : ['title', 'content', 'link'],
+                'pagination' => isset($args['pagination']) ? $args['pagination'] : true
             ];
 
             // error_log('$component_args : ' . print_r($component_args, true));
@@ -112,23 +116,23 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
         //             'settings' => ''
         //         ],
         //         'show_controls' => [
-        //             'settings' => 'cp_show_controls'
+        //             'settings' => 'cp_controls'
         //         ],
         //         'show_search' => [
-        //             'settings' => 'cp_show_search'
+        //             'settings' => 'cp_search'
         //         ],
         //         'show_sortBy' => [
-        //             'settings' => 'cp_show_sortBy'
+        //             'settings' => 'cp_sortBy'
         //         ],
         //         'show_num_of_reviews_filter' => [
-        //             'settings' => 'cp_show_num_of_reviews_filter'
+        //             'settings' => 'cp_num_of_reviews_filter'
         //         ],
 
         //         'default_sortBy' => [
         //             'settings' => 'cp_default_sortBy'
         //         ],
         //         'listing_num_of_cols' => [
-        //             'settings' => 'cp_listing_num_of_cols'
+        //             'settings' => 'cp_num_of_cols'
         //         ],
 
         //     ];

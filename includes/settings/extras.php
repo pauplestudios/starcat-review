@@ -12,11 +12,11 @@ if (!class_exists('\HelpieReviews\Includes\Settings\Extras')) {
         public function __construct()
         { }
 
-        public function get_main_page_url($margin_left = 0)
+        public function get_main_page_url()
         {
             $href = $this->get_mainpage_permalink();
 
-            $html = "<a style='margin-left: " . $margin_left . "em;' target ='_blank' class='ui labeled icon small button' href=" . $href . ">";
+            $html = "<a target ='_blank' class='ui labeled icon small button' href=" . $href . ">";
             $html .= __("Visit Main Page", "pauple-helpie");
             $html .= "<i class='external alternate icon'></i>";
             $html .= "</a>";

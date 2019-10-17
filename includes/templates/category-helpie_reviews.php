@@ -10,12 +10,14 @@
  */
 
 get_header();
-// get_sidebar('helpie_reviews_sidebar');
 ?>
 
-<div class='sidebar'>
-    <?php dynamic_sidebar('helpie_reviews_sidebar'); ?>
-</div>
+<!-- <div class='sidebar'>
+    <?php // dynamic_sidebar('helpie_reviews_sidebar');
+    $term = get_queried_object();
+
+    ?>
+</div> -->
 
 <div id="primary">
 
@@ -24,16 +26,16 @@ get_header();
     echo $bread_crumb->get_view();
     ?>
     <section class='hrp-archive-description'>
-        <h1>Category Page Topic: <?php single_term_title() ?> </h1>
+        <h1 class="term-name">Topic: <?= $term->name ?> </h1>
+        <div class="term-description"><?= $term->description ?></div>
     </section>
 
     <main id="main" class="site-main" role="main">
 
         <?php
-        $category_template_controller = new \HelpieReviews\Includes\Templates\Controllers\Category_Template_Controller();
-        echo $category_template_controller->get_view();
+        $category_template = new \HelpieReviews\Includes\Templates\Controllers\Category_Template();
+        echo $category_template->get_view($term);
         ?>
-
 
     </main>
 </div><!-- #primary -->

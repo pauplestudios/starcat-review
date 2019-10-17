@@ -11,15 +11,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
     // HRP - Helpie Review Plugin
     class HRP_Getter
     {
-
         private static $options;
         private static $defaults;
-
-        public  function __construct()
-        {
-            error_log('HRP_Getter');
-        }
-
 
         public static function  get($option_name)
         {
@@ -31,8 +24,6 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
                 self::$options = get_option('helpie-reviews'); // unique id of the framework
             }
 
-            // self::$options = get_option('helpie-reviews');
-            // error_log(' self::$options : ' . print_r(self::$options, true));
             if (isset(self::$options[$option_name])) {
                 return self::$options[$option_name];
             } else {
@@ -47,12 +38,12 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
 
         public static function default_settings()
         {
-
             $defaults = array(
+
                 // General Settings Start
                 'template_source' => 'theme',
                 'enable-pros-cons' => true,
-                'review-location' => [HELPIE_REVIEWS_POST_TYPE],
+                'review_enable_post-types' => [HELPIE_REVIEWS_POST_TYPE],
                 'global_stat' => ['stat_name' => 'Feature'],
                 'stat-singularity' => 'single',
                 'stats-type' => 'star',
@@ -81,31 +72,32 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
                 'mp_meta_title' => 'Reviews',
                 'mp_meta_description' => 'These are your reviews',
                 'mp_components_order' => [
-                    'mp_show_search' => true,
-                    'mp_show_categories' => true,
-                    'mp_show_review_listing' => true
+                    'mp_category_listing' => true,
+                    'mp_review_listing' => true
                 ],
-                'mp_template' => 'boxed',
-                'mp_boxed_description' => false,
-                'mp_cl_cols' => 'three',
-                'mp_review_listing_title' => 'Reviews',
-                'mp_review_listing_sortby' => 'recent',
+                'mp_cl_title' => 'Review Categories',
+                'mp_cl_description' => true,
+                'mp_cl_cols' => '2',
+
+                'mp_rl_title' => 'Reviews Posts',
+                'mp_rl_sortby' => 'recent',
+                'mp_rl_cols' => '3',
 
                 // Category Page Start 
-                'cp_show_controls' => true,
-                'cp_show_search' => true,
-                'cp_show_sortBy' => true,
-                'cp_show_num_of_reviews_filter' => true,
+                'cp_controls' => true,
+                'cp_search' => true,
+                'cp_sortBy' => true,
+                // 'cp_num_of_reviews_filter' => true,
                 'cp_default_sortBy' => 'recent',
-                'cp_listing_num_of_cols' => 'three',
-                'sp_show_controls' => true,
+                'cp_num_of_cols' => '3',
 
                 // Single Page Start
-                'sp_rating_combination' => 'combined',
-                'sp_stats_order' => [
-                    'enabled' => [],
-                    'disabled' => []
-                ],
+                // 'sp_show_controls' => true,
+                // 'sp_rating_combination' => 'combined',
+                // 'sp_stats_order' => [
+                //     'enabled' => [],
+                //     'disabled' => []
+                // ],
 
                 // User Review Start
                 'ur_enable_post-types' => [HELPIE_REVIEWS_POST_TYPE],
@@ -120,11 +112,10 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
                 'ur_show_title' => true,
                 'ur_show_stats' => true,
                 'ur_show_description' => true,
-                // 'ur_show_prosandcons' => true,
-                'ur_form_custom_fields' => [], // [[ 'field_name' => '', 'field_type' => 'text']]                
+                'ur_form_custom_fields' => [],
 
                 // Comparison Table Start
-                'ct_page' => ''
+                // 'ct_page' => ''
 
             );
 

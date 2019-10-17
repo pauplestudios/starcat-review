@@ -1,7 +1,7 @@
 // Single Page Review Comment List
 .hrp-collection.list.row.ui.comments {
     max-width: inherit;
-    margin: -1rem;
+    margin: 0 -1rem;
     & .hrp-review-card.comment {
         padding: 1em;
         width: 100%;
@@ -12,25 +12,6 @@
             margin-top: 1rem !important;
             & h4 {
                 font-weight: 500;
-            }
-        }
-        & .reviewed-list {
-            border: 0px;
-            margin-bottom: 3px;
-            & .reviewed-item {
-                border-bottom: 0;
-                padding: 0;
-                & .reviewed-item-stars {
-                    float: left;
-                    ::after {
-                        clear: both;
-                    }
-                }
-                & .reviewed-item-label__text {
-                    margin-left: 1rem;
-                    font-size: 0.8rem;
-                    font-weight: 600;
-                }
             }
         }
     }

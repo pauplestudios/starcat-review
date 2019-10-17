@@ -3,6 +3,11 @@
     // padding: 5em 6.67em 3.33333em;
     padding: 2em;
     background-color: #eee;
+
+    & .term-description {
+        margin-top: 1em;
+        padding-left: 0.5em;
+    }
 }
 
 .hrp-entry-title {
@@ -31,5 +36,5 @@
 // Category Template
 
 .hrp-category-page-content-area {
-    margin: 40px;
+    margin: 40px 0;
 }

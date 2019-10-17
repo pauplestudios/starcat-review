@@ -105,3 +105,25 @@ $graylight: #e7e7e7;
         }
     }
 }
+
+.hrp-review-card {
+    & .reviewed-list {
+        border: 0px;
+        margin-bottom: 3px;
+        & .reviewed-item {
+            border-bottom: 0;
+            padding: 0;
+            & .reviewed-item-stars {
+                float: left;
+                ::after {
+                    clear: both;
+                }
+            }
+            & .reviewed-item-label__text {
+                margin-left: 1rem;
+                font-size: 0.8rem;
+                font-weight: 600;
+            }
+        }
+    }
+}

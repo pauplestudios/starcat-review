@@ -157,7 +157,7 @@ if (!class_exists('\HelpieReviews\Includes\Cpt')) {
             // }
 
             $cpt_slug = HRP_Getter::get('mp_slug');
-            // $cpt_slug = HRP_Getter::get('review-location');
+            // $cpt_slug = HRP_Getter::get('review_enable_post-types');
 
             return $cpt_slug;
         }

@@ -8,16 +8,23 @@ if (!defined('ABSPATH')) {
  */
 
 get_header();
-while (have_posts()) : the_post();
+?>
 
-    $wp_post = get_post();
-    $bread_crumb = new \HelpieReviews\App\Components\BreadCrumb\Controller();
-    echo $bread_crumb->get_view();
 
-    // Render via Template Controller
-    $singlePageController = new \HelpieReviews\Includes\Templates\Single\Controller();
-    $singlePageController->render($wp_post);
+<div id="primary">
 
-endwhile;
+    <main id="main" class="site-main" role="main">
 
-get_footer();
+        <?php
+        while (have_posts()) : the_post();
+
+            $single_template = new \HelpieReviews\Includes\Templates\Controllers\Single_Template();
+            echo $single_template->get_view(get_post());
+
+        endwhile;
+        ?>
+
+    </main>
+</div><!-- #primary -->
+
+<?php get_footer();
