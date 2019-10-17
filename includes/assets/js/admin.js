@@ -3,7 +3,7 @@ var Admin = {
         this.eventhandlers();
     },
     eventhandlers: function() {
-        console.log("HRP Admin Js loaded !!!");
+        console.log("SCR Admin Js loaded !!!");
         this.iconsOptins();
         this.enableProsandCons();
     },
@@ -15,7 +15,7 @@ var Admin = {
     enableProsandCons: function() {
         const metaBoxOptions = jQuery("#_scr_post_options");
 
-        if (HRPOptins.enable_prosandcons == "0") {
+        if (SCROptins.enable_prosandcons == "0") {
             metaBoxOptions
                 .find("[data-section='_scr_post_options_2']")
                 .css({ display: "none" });

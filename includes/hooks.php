@@ -122,11 +122,11 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             wp_enqueue_style('semantic-css', SCR_URL . "includes/assets/vendors/semantic/bundle/semantic.min.css");
             wp_enqueue_script('semantic-js', SCR_URL . 'includes/assets/vendors/semantic/bundle/semantic.min.js', array('jquery'));
 
-            wp_enqueue_script('helpie-reviews-script', SCR_URL . 'includes/assets/bundle/admin.bundle.js', array('jquery'));
+            wp_enqueue_script('starcat-review-script', SCR_URL . 'includes/assets/bundle/admin.bundle.js', array('jquery'));
             wp_enqueue_style('style-name', SCR_URL . "includes/assets/bundle/admin.bundle.css");
 
             // You Can Access these object from javascript
-            wp_localize_script('helpie-reviews-script', 'HRPOptins', ['enable_prosandcons' => SCR_Getter::get('enable-pros-cons')]);
+            wp_localize_script('starcat-review-script', 'SCROptins', ['enable_prosandcons' => SCR_Getter::get('enable-pros-cons')]);
         }
 
         public function load_ajax_handler()
@@ -170,15 +170,15 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             wp_enqueue_style('flexbox-grid', SCR_URL . "includes/assets/vendors/flexboxgrid.min.css");
 
             /* Application */
-            wp_register_script('helpie-reviews-script', SCR_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'));
-            wp_localize_script('helpie-reviews-script', 'scr_ajax', array(
+            wp_register_script('starcat-review-script', SCR_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'));
+            wp_localize_script('starcat-review-script', 'scr_ajax', array(
                 'ajax_url'  => admin_url('admin-ajax.php'),
-                'ajax_nonce' => wp_create_nonce('helpie-reviews-ajax-nonce')
+                'ajax_nonce' => wp_create_nonce('starcat-review-ajax-nonce')
             ));
-            wp_enqueue_script('helpie-reviews-script', SCR_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'));
-            wp_localize_script('helpie-reviews-script', 'scr_ajax', array(
+            wp_enqueue_script('starcat-review-script', SCR_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'));
+            wp_localize_script('starcat-review-script', 'scr_ajax', array(
                 'ajax_url'  => admin_url('admin-ajax.php'),
-                'ajax_nonce' => wp_create_nonce('helpie-reviews-ajax-nonce')
+                'ajax_nonce' => wp_create_nonce('starcat-review-ajax-nonce')
             ));
             wp_enqueue_style('style-name', SCR_URL . "includes/assets/bundle/main.bundle.css");
         }

@@ -10,9 +10,9 @@ var Form = {
     },
 
     formValidation: function(fields) {
-        const HRPForm = jQuery(".scr-user-review");
+        const SCRForm = jQuery(".scr-user-review");
         let formFields = fields ? fields : Form.getRules();
-        HRPForm.form({
+        SCRForm.form({
             fields: formFields,
             onSuccess: function(event, fields) {
                 event.preventDefault();
@@ -21,13 +21,13 @@ var Form = {
                 }
                 formSubmitted = true;
 
-                Form.submission(HRPForm, fields);
+                Form.submission(SCRForm, fields);
             }
         });
     },
 
-    submission: function(HRPForm, fields) {
-        const props = Form.getProps(HRPForm, fields);
+    submission: function(SCRForm, fields) {
+        const props = Form.getProps(SCRForm, fields);
         console.log(props);
         // Ajax Post Submiting
         jQuery
@@ -42,7 +42,7 @@ var Form = {
                     description:
                         "You can see your review below. Also look at the user summary."
                 };
-                HRPForm.html(Form.getMessageTemplate(msgProps));
+                SCRForm.html(Form.getMessageTemplate(msgProps));
 
                 // Reviewed item prepending to Reviews List
                 jQuery("#scr-cat-collection").prepend(
@@ -60,7 +60,7 @@ var Form = {
                         "This is a Bad request, Our development team processing it for while so we suggest you should Keep browsing!",
                     description: "Thanks for your Review though."
                 };
-                HRPForm.html(Form.getMessageTemplate(msgProps));
+                SCRForm.html(Form.getMessageTemplate(msgProps));
 
                 // Reloading the page
                 setInterval("window.location.reload()", 6000);

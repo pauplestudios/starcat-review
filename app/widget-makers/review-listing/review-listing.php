@@ -76,7 +76,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Review_Listin
         public function get_widget_args()
         {
             $args = [
-                'id' => 'helpie-reviews-listing',
+                'id' => 'starcat-review-listing',
                 'name' => 'Starcat Review Listing',
                 'description' => 'Starcat Review Listing Widget',
                 'icon' => 'fa fa-th-list', // Used by Elementor only

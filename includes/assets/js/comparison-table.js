@@ -155,7 +155,7 @@ jQuery(document).ready(function($) {
   //create Product Items
   productsTable.prototype.productElement = function(result) {
     var self = this;
-    var scr_stat_table_column = self.getHRPTableColumns();
+    var scr_stat_table_column = self.getSCRTableColumns();
     //response data comes with extra stat data's
     var product_extra_stat = [];
     if (result.author_stats.length > 0) {
@@ -195,7 +195,7 @@ jQuery(document).ready(function($) {
     }
     content += "<h3>" + result.title + "</h3></div>";
     content += '<ul class="cd-features-list">';
-    content += self.createHRPProductStatList(result.author_stats);
+    content += self.createSCRProductStatList(result.author_stats);
     content += "</ul>";
     content += "</li>";
 
@@ -206,7 +206,7 @@ jQuery(document).ready(function($) {
     console.log("reloading product table");
     var self = this;
 
-    var scr_stat_table_column = self.getHRPTableColumns();
+    var scr_stat_table_column = self.getSCRTableColumns();
     var productInfos = self.table.find(".top-info");
     lastIndex = productInfos.length - 1;
 
@@ -237,10 +237,10 @@ jQuery(document).ready(function($) {
     });
   };
 
-  productsTable.prototype.createHRPProductStatList = function(author_stats) {
+  productsTable.prototype.createSCRProductStatList = function(author_stats) {
     var self = this;
     var content = "";
-    var scr_stat_table_column = self.getHRPTableColumns();
+    var scr_stat_table_column = self.getSCRTableColumns();
     if (scr_stat_table_column.length > 0) {
       for (var i = 0; i < scr_stat_table_column.length; i++) {
         author_stat_is_found = 0;
@@ -268,7 +268,7 @@ jQuery(document).ready(function($) {
     return content;
   };
   //get table feature column
-  productsTable.prototype.getHRPTableColumns = function() {
+  productsTable.prototype.getSCRTableColumns = function() {
     var self = this;
     var scr_table_columns = [];
     if (self.featureItems.find("li").length > 0) {

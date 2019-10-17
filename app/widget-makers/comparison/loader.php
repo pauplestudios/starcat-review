@@ -47,7 +47,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Comparison\Loader')) {
         public function get_widget_args()
         {
             $args = [
-                'id' => 'helpie-reviews-comparison-table',
+                'id' => 'starcat-review-comparison-table',
                 'name' => 'Helpie Comparison Table',
                 'description' => 'Comparison Table Widget',
                 'icon' => 'fa fa-th-list', // Used by Elementor only

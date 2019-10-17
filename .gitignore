@@ -6,8 +6,8 @@ dist
 *.bundle.css
 *.bundle.css.map
 tmp
-helpie-reviews-build
-helpie-reviews.zip
+starcat-review-build
+starcat-review.zip
 tests/_data/helpie
 *.lock
 reports

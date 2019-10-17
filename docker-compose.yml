@@ -17,7 +17,7 @@ services:
         links:
             - db
         volumes: # Mount relative path source folder on host to absolute path destination folder on docker container
-            - ./artifacts/dist:/var/www/html/wp-content/plugins/helpie-reviews
+            - ./artifacts/dist:/var/www/html/wp-content/plugins/starcat-review
 
     db:
         image: mysql:5.7

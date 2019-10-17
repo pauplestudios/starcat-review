@@ -2,7 +2,7 @@
 
 /*
 Plugin Name: Starcat Review
-Plugin URI: http://helpiewp.com/helpie-reviews/
+Plugin URI: http://helpiewp.com/starcat-review/
 Description: Adds Author and User Reviews to any post_type
 Author: HelpieWP
 Version: 0.1

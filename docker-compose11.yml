@@ -39,7 +39,7 @@ services:
             WP_DEBUG_LOG: "true"
         volumes: # Mount relative path source folder on host to absolute path destination folder on docker container
             # - ./dep/themes/astra:/var/www/html/wp-content/themes/astra
-            - ./helpie-reviews-build:/var/www/html/wp-content/plugins/helpie-reviews
+            - ./starcat-review-build:/var/www/html/wp-content/plugins/starcat-review
             # - ./tests/_data/helpie:/var/www/html/wp-content/plugins/helpie
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
