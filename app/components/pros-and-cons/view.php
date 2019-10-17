@@ -24,7 +24,7 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
                 return '';
             }
 
-            $html = "<div class='hrv-pros-cons hrp-container '>";
+            $html = "<div class='hrv-pros-cons scr-container '>";
             $html .= $this->get_pros_html($this->itemsProps['pros']);
             $html .= $this->get_cons_html($this->itemsProps['cons']);
             $html .= "</div>";

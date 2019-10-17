@@ -20,8 +20,8 @@ if (!class_exists('\StarcatReview\App\Views\Blocks\Enhanced_Card')) {
 
             $col_classes = "col-xs-12 col-lg-" . $this->props['col-lg'];
 
-            $html .= '<div class="hrp-collection__col item ' . $col_classes . '">'; // can't add additional classes
-            $html .= '<div class="hrp-review-card ui comment">';
+            $html .= '<div class="scr-collection__col item ' . $col_classes . '">'; // can't add additional classes
+            $html .= '<div class="scr-review-card ui comment">';
             $html .= '<a class="avatar"> ' . $item['avatar'] . ' </a>';
             $html .= ' <div class="content">
                         <a class="author">' . $item['author'] . '</a>

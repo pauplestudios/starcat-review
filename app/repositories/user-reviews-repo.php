@@ -12,7 +12,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
         public function get($comment_id)
         {
             // $comments = get_comment($comment_id);
-            $comments = get_comment_meta($comment_id, 'hrp_user_review_props');
+            $comments = get_comment_meta($comment_id, 'scr_user_review_props');
             return $comments;
         }
 
@@ -50,7 +50,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 $comment_id = wp_new_comment($commentdata);
 
                 if (isset($comment_id) && !empty($comment_id)) {
-                    add_comment_meta($comment_id, 'hrp_user_review_props', $props);
+                    add_comment_meta($comment_id, 'scr_user_review_props', $props);
                 }
 
                 return $comment_id;
@@ -71,7 +71,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             $comment['comment_approved'] = 1;
             $is_updated = wp_update_comment($comment);
             if ($is_updated) {
-                update_comment_meta($comment_id, 'hrp_user_review_props', $props);
+                update_comment_meta($comment_id, 'scr_user_review_props', $props);
             }
             return $comment_id;
         }

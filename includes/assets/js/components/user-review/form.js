@@ -10,7 +10,7 @@ var Form = {
     },
 
     formValidation: function(fields) {
-        const HRPForm = jQuery(".hrp-user-review");
+        const HRPForm = jQuery(".scr-user-review");
         let formFields = fields ? fields : Form.getRules();
         HRPForm.form({
             fields: formFields,
@@ -31,7 +31,7 @@ var Form = {
         console.log(props);
         // Ajax Post Submiting
         jQuery
-            .post(hrp_ajax.ajax_url, props, function(results) {
+            .post(scr_ajax.ajax_url, props, function(results) {
                 results = JSON.parse(results);
                 console.log(results);
 
@@ -45,7 +45,7 @@ var Form = {
                 HRPForm.html(Form.getMessageTemplate(msgProps));
 
                 // Reviewed item prepending to Reviews List
-                jQuery("#hrp-cat-collection").prepend(
+                jQuery("#scr-cat-collection").prepend(
                     Form.getReviewTemplate(props.title, props.description)
                 );
 
@@ -130,7 +130,7 @@ var Form = {
     },
 
     getReviewTemplate: function(title, description) {
-        return `<div class="hrp-collection__col item col-xs-12 col-lg-12"> <div class="hrp-review-card">
+        return `<div class="scr-collection__col item col-xs-12 col-lg-12"> <div class="scr-review-card">
         <div class="review-card__header">${title}</div>        
         <div class="review-card__body">${description}</div>
         <span class="reviewCount" data-reviewcount="75"></span></div></div>`;

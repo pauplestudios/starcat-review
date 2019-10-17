@@ -17,7 +17,7 @@ var ReviewsList = {
         var thisModule = this;
 
         var data = {
-            action: "hrp_listing_action",
+            action: "scr_listing_action",
             nonce: thisModule.nonce,
             id: id
         };

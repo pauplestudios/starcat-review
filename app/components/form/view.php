@@ -26,7 +26,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
                 return $html;
             }
 
-            $html .= '<form class="ui form hrp-user-review" action="hrp_user_review_submission" method="post" post_id ="' . get_the_ID() . '">';
+            $html .= '<form class="ui form scr-user-review" action="scr_user_review_submission" method="post" post_id ="' . get_the_ID() . '">';
 
             if ($this->props['collection']['show_form_title']) {
                 $html .= '<h2 class="ui header">';
@@ -199,11 +199,11 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
         //  Todo: Range Rating
         protected function get_range_rating_fallback($value = 10, $min = 0, $max = 100)
         {
-            $html = '<div class="hrp-rating-wrapper"><hr class="hrp-divider">';
+            $html = '<div class="scr-rating-wrapper"><hr class="scr-divider">';
 
-            $html .= '<div class="hrp-user-review__rating">';
-            $html .= '<input type="range" min="' . $min . '" max="' . $max . '" value="' . $value . '" class="hrp-user-review__range">';
-            $html .= '</div><span class="hrp-user-review__value">' . $value . " / " . $max . "%" . '</span>';
+            $html .= '<div class="scr-user-review__rating">';
+            $html .= '<input type="range" min="' . $min . '" max="' . $max . '" value="' . $value . '" class="scr-user-review__range">';
+            $html .= '</div><span class="scr-user-review__value">' . $value . " / " . $max . "%" . '</span>';
             $html .= '</div>';
 
             return $html;

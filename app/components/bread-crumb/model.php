@@ -14,15 +14,15 @@ if (!class_exists('\StarcatReview\App\Components\BreadCrumb\Model')) {
             $this->extras = new \StarcatReview\Includes\Settings\Extras();
         }
 
-        public function get_hrp_info($post_id, $page)
+        public function get_scr_info($post_id, $page)
         {
             $bread_crumbs_info = array();
 
-            $mp_hrp_section = $this->main_page_section();
+            $mp_scr_section = $this->main_page_section();
 
             $bread_crumbs_info['post_type'] = array(
                 'permalink' => $this->extras->get_mainpage_permalink(),
-                'title' => $mp_hrp_section['hrp_main_title']
+                'title' => $mp_scr_section['scr_main_title']
             );
 
             $taxonomy = 'SCR_CATEGORY';
@@ -152,9 +152,9 @@ if (!class_exists('\StarcatReview\App\Components\BreadCrumb\Model')) {
         public function main_page_section()
         {
             $mp_section_order =   array(
-                'hrp_main_title' =>  'Helpie Review',
-                'hrp_main_subtitle' => 'We’re here to help.',
-                'hrp_main_page_search_display' => 1,
+                'scr_main_title' =>  'Helpie Review',
+                'scr_main_subtitle' => 'We’re here to help.',
+                'scr_main_page_search_display' => 1,
             );
 
             //Need Some Clarifications

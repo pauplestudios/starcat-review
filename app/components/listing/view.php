@@ -23,7 +23,7 @@ if (!class_exists('\StarcatReview\App\Components\Listing\View')) {
         {
             $collectionProps = $viewProps['collection'];
 
-            $html = '<div id="hrp-controlled-list">';
+            $html = '<div id="scr-controlled-list">';
             $html .= '<h2>' . $collectionProps['title'] . '</h2>';
 
             if ($collectionProps['show_controls']) {
@@ -46,7 +46,7 @@ if (!class_exists('\StarcatReview\App\Components\Listing\View')) {
         private function get_pagination_html($viewProps)
         {
             $html = '';
-            $html .= '<ul class="ui pagination hrp-pagination menu">';
+            $html .= '<ul class="ui pagination scr-pagination menu">';
 
             for ($ii = 1; $ii <= $viewProps['collection']['total_pages']; $ii++) {
                 # code...
@@ -63,7 +63,7 @@ if (!class_exists('\StarcatReview\App\Components\Listing\View')) {
             $terms = $viewProps['items']['terms'];
 
             $html = '';
-            $html .= '<div id="hrp-cat-collection" class="hrp-collection list row">';
+            $html .= '<div id="scr-cat-collection" class="scr-collection list row">';
 
             foreach ($posts as $key => $post) {
                 // Set initial $ii

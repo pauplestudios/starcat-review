@@ -13,7 +13,7 @@ if (!class_exists('\StarcatReview\Includes\Widgets\Register_Widgets')) {
         {
             add_action('widgets_init', function () {
                 $widget_args = array(
-                    'id' => 'hrp-listing',
+                    'id' => 'scr-listing',
                     'name' => 'Review Listing',
                     'description' => 'Review Listing Widget',
                     'model' =>  new \StarcatReview\App\Components\Listing\Model(),

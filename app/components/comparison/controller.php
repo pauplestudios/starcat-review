@@ -34,7 +34,7 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\Controller')) {
             return $this->view->get_html($stats);
         }
 
-        public function get_hrp_details($search_key)
+        public function get_scr_details($search_key)
         {
             // echo $search_key;
             $search_post_data = [];

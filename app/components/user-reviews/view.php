@@ -27,7 +27,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
                 return '';
             }
 
-            $html = '<div id="hrp-controlled-list">';
+            $html = '<div id="scr-controlled-list">';
             $html .= '<h3>' . $collectionProps['title'] . '</h3>';
 
 
@@ -40,7 +40,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
 
             /* Pagination */
             if ($collectionProps['pagination']) {
-                // $html .= '<ul class="ui pagination hrp-pagination menu"></ul>';
+                // $html .= '<ul class="ui pagination scr-pagination menu"></ul>';
                 $html .= $this->get_pagination_html($viewProps);
             }
 
@@ -59,7 +59,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             }
 
             $html = '';
-            $html .= '<ul class="ui pagination hrp-pagination menu">';
+            $html .= '<ul class="ui pagination scr-pagination menu">';
 
             for ($ii = 1; $ii <= $viewProps['collection']['total_pages']; $ii++) {
                 # code...
@@ -76,7 +76,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
 
             $html = '';
             // $html .= '<div class="">';
-            $html .= '<div id="hrp-cat-collection" class="hrp-collection list row ui comments">';
+            $html .= '<div id="scr-cat-collection" class="scr-collection list row ui comments">';
 
             foreach ($posts as $key => $post) {
 

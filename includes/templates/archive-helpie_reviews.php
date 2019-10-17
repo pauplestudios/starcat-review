@@ -18,7 +18,7 @@ get_header();
     $bread_crumb = new \StarcatReview\App\Components\BreadCrumb\Controller();
     echo $bread_crumb->get_view();
     ?>
-    <section class='hrp-archive-description'>
+    <section class='scr-archive-description'>
         <h1> <?php the_archive_title() ?> </h1>
     </section>
 

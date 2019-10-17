@@ -70,7 +70,7 @@ if (!class_exists('\StarcatReview\App\Builders\Controls_Builder')) {
         {
             $html = '';
 
-            $html .= '<div class="hrp-controls">';
+            $html .= '<div class="scr-controls">';
             $html .= '<div class="row">';
 
             foreach ($this->controls as $key => $control) {

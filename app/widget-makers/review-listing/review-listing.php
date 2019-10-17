@@ -130,7 +130,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Review_Listin
             $comments = get_comments($args);
 
             foreach ($comments as $comment) {
-                $comment->reviews = get_comment_meta($comment->comment_ID, 'hrp_user_review_props', true);
+                $comment->reviews = get_comment_meta($comment->comment_ID, 'scr_user_review_props', true);
             }
 
             return $comments;

@@ -21,7 +21,7 @@ if (!class_exists('\StarcatReview\Includes\Templates\Controllers\Archive_Templat
             $props = $this->get_props($this->get_args());
             // error_log('$props : ' . print_r($props, true));
             $html = '';
-            $html = '<div class="hrp-archive-page-content-area">';
+            $html = '<div class="scr-archive-page-content-area">';
             foreach ($props['order'] as $listing => $display) {
                 if ($display) {
                     $html .= $this->get_listing_order($listing, $props);
@@ -47,7 +47,7 @@ if (!class_exists('\StarcatReview\Includes\Templates\Controllers\Archive_Templat
             $html = '';
 
             if (isset($props['review_list']['posts']) && !empty($props['review_list']['posts'])) {
-                $html .= '<h2 class="hrp-section-title">' . $props['review_list']['title'] . '</h2>';
+                $html .= '<h2 class="scr-section-title">' . $props['review_list']['title'] . '</h2>';
                 $html .= $this->listing->get_view($props['review_list']);
             } else {
                 $html .= "No Reviews post Found";
@@ -59,7 +59,7 @@ if (!class_exists('\StarcatReview\Includes\Templates\Controllers\Archive_Templat
         protected function get_category_listing($props)
         {
             if (isset($props['category_list']['terms']) && !empty($props['category_list']['terms'])) {
-                $html = '<h2 class="hrp-section-title">' . $props['category_list']['title'] . '</h2>';
+                $html = '<h2 class="scr-section-title">' . $props['category_list']['title'] . '</h2>';
                 $html .= $this->listing->get_view($props['category_list']);
             } else {
                 $html .= "No Reviews Category Found";

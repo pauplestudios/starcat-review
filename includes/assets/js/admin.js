@@ -9,7 +9,7 @@ var Admin = {
     },
 
     iconsOptins: function() {
-        jQuery(".ui.dropdown.hrp-dropdown").dropdown();
+        jQuery(".ui.dropdown.scr-dropdown").dropdown();
     },
 
     enableProsandCons: function() {

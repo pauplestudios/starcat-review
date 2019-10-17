@@ -1,8 +1,8 @@
 version: "3.1"
 
 services:
-    hrp_db:
-        container_name: hrp_db
+    scr_db:
+        container_name: scr_db
         image: mysql:5.7
         ports: # Set up ports exposed for other containers to connect to
             - 127.0.0.1:3307:3306
@@ -21,17 +21,17 @@ services:
 
     wordpress:
         image: wordpress:php7.1-apache
-        container_name: hrp_wordpress
+        container_name: scr_wordpress
         depends_on:
-            - hrp_db
+            - scr_db
         ports:
             - 127.0.0.1:80:80
         links:
-            - hrp_db
+            - scr_db
         restart: always
         environment:
             WORDPRESS_DB_NAME: starcat_review_acceptance
-            WORDPRESS_DB_HOST: hrp_db:3307
+            WORDPRESS_DB_HOST: scr_db:3307
             WORDPRESS_DB_USER: wordpress
             WORDPRESS_DB_PASSWORD: wordpress
             WP_DEBUG: "true"
@@ -43,14 +43,14 @@ services:
             # - ./tests/_data/helpie:/var/www/html/wp-content/plugins/helpie
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
-        container_name: hrp_phpmyadmin
+        container_name: scr_phpmyadmin
         depends_on:
-            - hrp_db
+            - scr_db
         restart: always
         ports:
             - 127.0.0.1:8080:80
         environment:
-            PMA_HOST: hrp_db
+            PMA_HOST: scr_db
             PMA_PORT: 3307
             PMA_USER: wordpress
             PMA_PASSWORD: wordpress

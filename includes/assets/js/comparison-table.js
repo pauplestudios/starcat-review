@@ -6,7 +6,7 @@ jQuery(document).ready(function($) {
     this.element = element;
     this.table = this.element.children(".cd-products-table");
     this.features = this.table.find(".features");
-    this.featureItems = this.features.find("#hrp-stats-list");
+    this.featureItems = this.features.find("#scr-stats-list");
     this.tableHeight = this.table.height();
     this.productsWrapper = this.table.children(".cd-products-wrapper");
     this.tableColumns = this.productsWrapper.children(".cd-products-columns");
@@ -54,7 +54,7 @@ jQuery(document).ready(function($) {
       // e.stopPropagation();
       var product = $(this).parents(".product");
 
-      if (product.hasClass("hrp-search-filter-wrapper")) {
+      if (product.hasClass("scr-search-filter-wrapper")) {
         return true;
       } else {
         if (!self.filtering && product.hasClass("selected")) {
@@ -118,19 +118,19 @@ jQuery(document).ready(function($) {
     //Add Search Product
     var search_data = {
       action: "helpiereview_search_posts",
-      nonce: hrp_ajax.ajax_nonce
+      nonce: scr_ajax.ajax_nonce
     };
 
-    $.post(hrp_ajax.ajax_url, search_data, function(results) {
+    $.post(scr_ajax.ajax_url, search_data, function(results) {
       results = JSON.parse(results);
-      $(".ui.search.hrp-product-search").search({
+      $(".ui.search.scr-product-search").search({
         source: results,
         onSelect: function(result) {
           var that = self;
           console.log("get product element");
           var productContent = self.productElement(result);
 
-          $(".hrp-search-filter-wrapper").before(productContent);
+          $(".scr-search-filter-wrapper").before(productContent);
           self.refreshProductTable();
      x     var products = self.tableColumns.children(".product");
           self.products = [];
@@ -155,7 +155,7 @@ jQuery(document).ready(function($) {
   //create Product Items
   productsTable.prototype.productElement = function(result) {
     var self = this;
-    var hrp_stat_table_column = self.getHRPTableColumns();
+    var scr_stat_table_column = self.getHRPTableColumns();
     //response data comes with extra stat data's
     var product_extra_stat = [];
     if (result.author_stats.length > 0) {
@@ -163,7 +163,7 @@ jQuery(document).ready(function($) {
         if (
           $.inArray(
             result.author_stats[incr].stat_name,
-            hrp_stat_table_column
+            scr_stat_table_column
           ) != -1
         ) {
           //found stat result
@@ -206,7 +206,7 @@ jQuery(document).ready(function($) {
     console.log("reloading product table");
     var self = this;
 
-    var hrp_stat_table_column = self.getHRPTableColumns();
+    var scr_stat_table_column = self.getHRPTableColumns();
     var productInfos = self.table.find(".top-info");
     lastIndex = productInfos.length - 1;
 
@@ -224,8 +224,8 @@ jQuery(document).ready(function($) {
           singleProductStats.push(dataStat);
         });
 
-        for (var i = 0; i < hrp_stat_table_column.length; i++) {
-          table_stat_name = hrp_stat_table_column[i];
+        for (var i = 0; i < scr_stat_table_column.length; i++) {
+          table_stat_name = scr_stat_table_column[i];
           if ($.inArray(table_stat_name, singleProductStats) != -1) {
           } else {
             content = "";
@@ -240,11 +240,11 @@ jQuery(document).ready(function($) {
   productsTable.prototype.createHRPProductStatList = function(author_stats) {
     var self = this;
     var content = "";
-    var hrp_stat_table_column = self.getHRPTableColumns();
-    if (hrp_stat_table_column.length > 0) {
-      for (var i = 0; i < hrp_stat_table_column.length; i++) {
+    var scr_stat_table_column = self.getHRPTableColumns();
+    if (scr_stat_table_column.length > 0) {
+      for (var i = 0; i < scr_stat_table_column.length; i++) {
         author_stat_is_found = 0;
-        feature_stat = hrp_stat_table_column[i];
+        feature_stat = scr_stat_table_column[i];
         if (author_stats.length > 0) {
           for (var ii = 0; ii < author_stats.length; ii++) {
             stat_name = author_stats[ii].stat_name;
@@ -261,7 +261,7 @@ jQuery(document).ready(function($) {
           content +=
             "<li data-stat='" + stat_name + "'>" + stat_rating + "</li>";
         } else {
-          content += "<li data-stat='" + hrp_stat_table_column[i] + "'>X</li>";
+          content += "<li data-stat='" + scr_stat_table_column[i] + "'>X</li>";
         }
       }
     }
@@ -270,17 +270,17 @@ jQuery(document).ready(function($) {
   //get table feature column
   productsTable.prototype.getHRPTableColumns = function() {
     var self = this;
-    var hrp_table_columns = [];
+    var scr_table_columns = [];
     if (self.featureItems.find("li").length > 0) {
       self.featureItems.find("li").each(function() {
-        hrp_table_columns.push(
+        scr_table_columns.push(
           $(this)
             .text()
             .trim()
         );
       });
     }
-    return hrp_table_columns;
+    return scr_table_columns;
   };
 
   productsTable.prototype.upadteFilterBtn = function() {

@@ -1,13 +1,13 @@
 // Single Page Review Comment List
-.hrp-collection.list.row.ui.comments {
+.scr-collection.list.row.ui.comments {
     max-width: inherit;
     margin: 0 -1rem;
-    & .hrp-review-card.comment {
+    & .scr-review-card.comment {
         padding: 1em;
         width: 100%;
         box-shadow: none;
         border: solid 1px rgba(0, 0, 0, 0.1);
-        & .hrv-pros-cons.hrp-container {
+        & .hrv-pros-cons.scr-container {
             margin: 0 !important;
             margin-top: 1rem !important;
             & h4 {

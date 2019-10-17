@@ -87,7 +87,7 @@ if (!class_exists('\StarcatReview\App\User_Review')) {
             $comments = get_comments($args);
 
             foreach ($comments as $comment) {
-                $comment->review = get_comment_meta($comment->comment_ID, 'hrp_user_review_props', true);
+                $comment->review = get_comment_meta($comment->comment_ID, 'scr_user_review_props', true);
             }
 
             return $comments;

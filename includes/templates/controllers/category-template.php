@@ -20,7 +20,7 @@ if (!class_exists('\StarcatReview\Includes\Templates\Controllers\Category_Templa
         {
             $props = $this->get_props($term);
             $html = '';
-            $html = '<div class="hrp-category-page-content-area">';
+            $html = '<div class="scr-category-page-content-area">';
             $html .= $this->get_category_post_listing($props);
             // $html .= $this->get_comparison_table($props);
             $html .= "</div>";
@@ -31,7 +31,7 @@ if (!class_exists('\StarcatReview\Includes\Templates\Controllers\Category_Templa
         {
             $posts = $props['posts'];
 
-            $html = '<div class="hrp-category-page-content-area">';
+            $html = '<div class="scr-category-page-content-area">';
 
             if (isset($posts) && !empty($posts)) {
                 $html .= $this->listing->get_view($props);

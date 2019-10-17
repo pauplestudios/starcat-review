@@ -17,7 +17,7 @@ if (!class_exists('\StarcatReview\Includes\Widgets\Register_Elementor_Widgets'))
         public function register()
         {
             $widget_args = array(
-                'name' => 'hrp-listing',
+                'name' => 'scr-listing',
                 'title' => 'Review Listing',
                 'icon' => 'fa fa-th-list',
                 'categories' => ['general-elements'],

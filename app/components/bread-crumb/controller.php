@@ -26,13 +26,13 @@ if (!class_exists('\StarcatReview\App\Components\BreadCrumb\Controller')) {
 
             // $html .= '<li>' . $post_id . '</li>';
             // $html .= '<li>' . $page . '</li>';
-            $bread_crumb_info = $this->model->get_hrp_info($post_id, $page);
+            $bread_crumb_info = $this->model->get_scr_info($post_id, $page);
             // echo '<pre>';
             // print_r($bread_crumb_info);
             // echo '</pre>';
             // exit;
             $order = ['post_type', 'parent_term', 'term', 'post'];
-            $html .= "<div class='breadcrumbs hrp-breadcrumbs'>";
+            $html .= "<div class='breadcrumbs scr-breadcrumbs'>";
             for ($ii = 0; $ii < sizeof($bread_crumb_info); $ii++) {
                 $key = $order[$ii];
                 if (isset($bread_crumb_info[$key]) && !empty($bread_crumb_info[$key])) {

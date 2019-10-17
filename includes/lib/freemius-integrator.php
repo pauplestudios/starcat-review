@@ -1,15 +1,15 @@
 <?php
-if (!function_exists('hrp_fs')) {
+if (!function_exists('scr_fs')) {
     // Create a helper function for easy SDK access.
-    function hrp_fs()
+    function scr_fs()
     {
-        global $hrp_fs;
+        global $scr_fs;
 
-        if (!isset($hrp_fs)) {
+        if (!isset($scr_fs)) {
             // Include Freemius SDK.
             require_once dirname(__FILE__) . '/freemius/start.php';
 
-            $hrp_fs = fs_dynamic_init(array(
+            $scr_fs = fs_dynamic_init(array(
                 'id'                  => '3980',
                 'slug'                => 'helpie-review',
                 'type'                => 'plugin',
@@ -31,21 +31,21 @@ if (!function_exists('hrp_fs')) {
             ));
         }
 
-        return $hrp_fs;
+        return $scr_fs;
     }
 
     // Init Freemius.
-    hrp_fs();
+    scr_fs();
     // Signal that SDK was initiated.
-    do_action('hrp_fs_loaded');
+    do_action('scr_fs_loaded');
 
-    function hrp_fs_settings_url()
+    function scr_fs_settings_url()
     {
         return admin_url('edit.php?post_type=starcat_review&page=helpie-review-settings');
     }
 
-    // hrp_fs()->add_filter('connect_url', 'hrp_fs_settings_url');
-    // hrp_fs()->add_filter('after_skip_url', 'hrp_fs_settings_url');
-    // hrp_fs()->add_filter('after_connect_url', 'hrp_fs_settings_url');
-    // hrp_fs()->add_filter('after_pending_connect_url', 'hrp_fs_settings_url');
+    // scr_fs()->add_filter('connect_url', 'scr_fs_settings_url');
+    // scr_fs()->add_filter('after_skip_url', 'scr_fs_settings_url');
+    // scr_fs()->add_filter('after_connect_url', 'scr_fs_settings_url');
+    // scr_fs()->add_filter('after_pending_connect_url', 'scr_fs_settings_url');
 }

@@ -614,8 +614,8 @@ No JS
   display: none;
 }
 
-// #hrp-compare-sidebar {
-//   & .hrp-list-items {
+// #scr-compare-sidebar {
+//   & .scr-list-items {
 //     margin: 4px 0px;
 //     border: 1px solid #ccc;
 //     padding: 5px;
@@ -628,7 +628,7 @@ No JS
 //     line-height: 12px;
 //   }
 // }
-.hrp-compare-pusher {
+.scr-compare-pusher {
   position: fixed;
   top: 0;
   height: 100%;
@@ -637,14 +637,14 @@ No JS
   width: 23%;
   right: 0;
 
-  & .hrp-compare-sidebar-wrapper {
+  & .scr-compare-sidebar-wrapper {
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
 
-    & .hrp-sidebar-btn {
+    & .scr-sidebar-btn {
       background: #000;
       color: #fff;
       padding: 15px;
@@ -653,11 +653,11 @@ No JS
       position: absolute;
       left: -94px;
     }
-    & .hrp-compare-sidebar {
+    & .scr-compare-sidebar {
       width: 100%;
       height: 100%;
     }
-    & .hrp-compare-sidebar .hrp-list-items .item {
+    & .scr-compare-sidebar .scr-list-items .item {
       display: flex;
       flex-direction: column;
       border: 0.5px solid #ccc;
@@ -667,26 +667,26 @@ No JS
       min-height: 30px;
       height: auto;
     }
-    & .hrp-compare-sidebar .hrp-list-items .item p {
+    & .scr-compare-sidebar .scr-list-items .item p {
       margin: 0 0 0.15em;
     }
   }
 }
 
 // Search Field
-.hrp-search-filter {
+.scr-search-filter {
   width: 90% !important;
 }
-.hrp-search-container {
+.scr-search-container {
   widows: 100%;
   position: relative;
 }
-.hrp-search-filter-wrapper {
+.scr-search-filter-wrapper {
   & .top-info {
     padding: 15px 5px !important;
   }
 }
-.hrp-search-lists {
+.scr-search-lists {
   display: none;
   position: absolute;
   background: #fff;
@@ -706,7 +706,7 @@ No JS
   }
 }
 
-// .hrp-compare-sidebar-wrapper {
+// .scr-compare-sidebar-wrapper {
 //   position: fixed;
 //   top: 0;
 //   height: 100%;
@@ -716,7 +716,7 @@ No JS
 //   justify-content: center;
 //   cursor: pointer;
 // }
-// .hrp-compare-sidebar-wrapper .hrp-sidebar-btn-container {
+// .scr-compare-sidebar-wrapper .scr-sidebar-btn-container {
 //   background: #000;
 //   color: #fff;
 //   padding: 15px;

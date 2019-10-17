@@ -17,7 +17,7 @@ if (!class_exists('\StarcatReview\App\Views\Blocks\Blog_Collection')) {
         public function get_view($itemsProps, $collectionProps)
         {
             $html = '';
-            $html .= '<div class="hrp-categories-list hrp-container container">';
+            $html .= '<div class="scr-categories-list scr-container container">';
 
             $columns = $collectionProps['no_of_cols'];
             $count = 1;
@@ -49,8 +49,8 @@ if (!class_exists('\StarcatReview\App\Views\Blocks\Blog_Collection')) {
             $html .= '<article itemtype="https://schema.org/CreativeWork"
                      itemscope="itemscope"
                      id="post-1"
-                     class="post-1 post hrp-archive-post">';
-            $html .= '<h2 class="hrp-entry-title">' . $item['title'] . '</h2>';
+                     class="post-1 post scr-archive-post">';
+            $html .= '<h2 class="scr-entry-title">' . $item['title'] . '</h2>';
             $html .= $item['content'];
             $html .= '</article>';
             $html .= '</div>';
