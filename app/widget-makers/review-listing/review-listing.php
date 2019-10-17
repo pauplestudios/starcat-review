@@ -111,7 +111,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Review_Listin
                 $args = HRP_Getter::get_stat_default_args();
                 $args['post_id'] = $post->ID;
                 $args['combination'] = 'overall_combine';
-                $args['items'] = get_post_meta($post->ID, '_helpie_reviews_post_options', true);
+                $args['items'] = get_post_meta($post->ID, '_scr_post_options', true);
                 $args['items']['comments-list'] = $this->get_comments_list($post->ID);
                 $stats_controller = new \StarcatReview\App\Components\Stats\Controller($args);
                 $post->stat_html = $stats_controller->get_view();

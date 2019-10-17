@@ -117,7 +117,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                         $image = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID));
                     }
 
-                    $author_stats = get_post_meta($post->ID, '_helpie_reviews_post_options', true);
+                    $author_stats = get_post_meta($post->ID, '_scr_post_options', true);
                     // $default_args = $summary->get_default_args();
 
                     $items = [];

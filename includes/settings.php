@@ -787,7 +787,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         public function post_meta_fields()
         {
             $locations = HRP_Getter::get('review_enable_post-types');
-            $prefix = '_helpie_reviews_post_options';
+            $prefix = '_scr_post_options';
 
             \CSF::createMetabox($prefix, array(
                 'title' => 'Helpie Reviews',

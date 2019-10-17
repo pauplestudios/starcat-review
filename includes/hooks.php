@@ -74,7 +74,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         {
             /* Register Post Type and its taxonomy only for setup demo content on activation */
             $cpt = new \StarcatReview\Includes\Cpt();
-            $cpt->register_helpie_reviews_cpt();
+            $cpt->register_scr_cpt();
 
             $this->setup_data();
         }

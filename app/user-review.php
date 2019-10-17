@@ -53,7 +53,7 @@ if (!class_exists('\StarcatReview\App\User_Review')) {
 
         protected function get_items()
         {
-            $post_meta = get_post_meta(get_the_ID(), '_helpie_reviews_post_options', true);
+            $post_meta = get_post_meta(get_the_ID(), '_scr_post_options', true);
             $comments = $this->get_comments_list();
             // error_log("Options : " . print_r($post_meta, true));
             $items = [];

@@ -21,7 +21,7 @@ if (!class_exists('\StarcatReview\Includes\Cpt')) {
         }
 
         /* Register post type on activation hook cause can't call other filter and actions */
-        public function register_helpie_reviews_cpt()
+        public function register_scr_cpt()
         {
             $this->register_post_type_with_taxonomy();
         }
