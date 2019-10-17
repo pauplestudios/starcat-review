@@ -33,11 +33,11 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Loader')) {
         {
 
             // error_log(' register_widget: ');
-            $faq_widget_args = $this->get_widget_args();
+            $scr_widget_args = $this->get_widget_args();
 
             require_once SCR_PATH . '/includes/lib/widgetry/widget-factory.php';
-            $faq_widget = new \Widgetry\Widget_Factory($faq_widget_args);
-            register_widget($faq_widget);
+            $scr_widget = new \Widgetry\Widget_Factory($scr_widget_args);
+            register_widget($scr_widget);
         }
 
 

@@ -11,7 +11,7 @@ if (!class_exists('\StarcatReview\App\Components\Listing\Fields_Model')) {
     {
         public function __construct()
         {
-            // $this->repo = new \HelpieFaq\Includes\Repos\Faq_Repo();
+            // $this->repo = new \StarcatReview\Includes\Repos\Faq_Repo();
         }
 
         public function get_category_options($show_all = false)

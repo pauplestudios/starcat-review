@@ -1,4 +1,4 @@
-/* Triggered by FAQ events, integrates with Insights */
+/* Triggered by SCR events, integrates with Insights */
 var ReviewsList = {
     init: function(nonce) {
         console.log("nonce: " + nonce);
@@ -22,7 +22,7 @@ var ReviewsList = {
             id: id
         };
 
-        jQuery.post(my_faq_ajax_object.ajax_url, data, function(response) {
+        jQuery.post(my_scr_ajax_object.ajax_url, data, function(response) {
             console.log(response);
         });
     }

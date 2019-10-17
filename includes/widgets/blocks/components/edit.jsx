@@ -9,7 +9,7 @@ const { ServerSideRender, PanelBody } = wp.components;
 
 const { InspectorControls } = wp.editor;
 
-class FAQBlockEdit extends Component {
+class SCRBlockEdit extends Component {
     constructor() {
         super(...arguments);
     }
@@ -124,4 +124,4 @@ class FAQBlockEdit extends Component {
     }
 }
 
-export default FAQBlockEdit;
+export default SCRBlockEdit;

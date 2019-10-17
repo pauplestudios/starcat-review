@@ -1,5 +1,5 @@
 /**
- * Helpie FAQ Block
+ * Helpie SCR Block
  */
 
 import edit from "./components/edit.jsx";
@@ -20,7 +20,7 @@ const { registerBlockType } = wp.blocks;
 registerBlockType(
     "starcat-review/starcat-review", // Block name. Must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
     {
-        title: __("Helpie FAQ Block"), // Block title. __() function allows for internationalization.
+        title: __("Helpie SCR Block"), // Block title. __() function allows for internationalization.
         icon: "list-view", // Block icon from Dashicons. https://developer.wordpress.org/resource/dashicons/.
         category: "common", // Block category. Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 

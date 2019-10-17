@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Helpie FAQ\n"
+"Project-Id-Version: Helpie SCR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-31 08:06+0000\n"
 "PO-Revision-Date: 2018-10-31 08:07+0000\n"
@@ -13,39 +13,39 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/"
 
-#. Dashboard FAQ Menu and CPT FAQs Section
-msgid "FAQ"
-msgstr "FAQ"
+#. Dashboard SCR Menu and CPT SCRs Section
+msgid "SCR"
+msgstr "SCR"
 
-msgid "FAQs"
-msgstr "FAQs"
+msgid "SCRs"
+msgstr "SCRs"
 
-msgid "All FAQs"
-msgstr "Toutes les FAQ"
+msgid "All SCRs"
+msgstr "Toutes les SCR"
 
-msgid "Add New FAQ"
-msgstr "Ajouter une nouvelle FAQ"
+msgid "Add New SCR"
+msgstr "Ajouter une nouvelle SCR"
 
 msgid "Add New"
 msgstr "Ajouter un nouveau"
 
-msgid "New FAQ"
-msgstr "Nouvelle FAQ"
+msgid "New SCR"
+msgstr "Nouvelle SCR"
 
-msgid "Edit FAQ"
-msgstr "Modifier la FAQ"
+msgid "Edit SCR"
+msgstr "Modifier la SCR"
 
-msgid "Add FAQ"
-msgstr "Ajouter une FAQ"
+msgid "Add SCR"
+msgstr "Ajouter une SCR"
 
 msgid "Hide"
 msgstr "cacher"
 
-msgid "View FAQ"
-msgstr "Voir la FAQ"
+msgid "View SCR"
+msgstr "Voir la SCR"
 
-msgid "FAQ Category"
-msgstr "Catégorie FAQ"
+msgid "SCR Category"
+msgstr "Catégorie SCR"
 
 msgid "Categories"
 msgstr "Catégories"
@@ -56,26 +56,26 @@ msgstr "Catégories KB"
 msgid "Woo Products"
 msgstr "Woo Products"
 
-msgid "All FAQ Categories"
-msgstr "Toutes les catégories de FAQ"
+msgid "All SCR Categories"
+msgstr "Toutes les catégories de SCR"
 
-msgid "FAQ Categories"
-msgstr "Catégories FAQ"
+msgid "SCR Categories"
+msgstr "Catégories SCR"
 
-msgid "FAQ Tag"
-msgstr "Tag FAQ"
+msgid "SCR Tag"
+msgstr "Tag SCR"
 
 msgid "Tags"
 msgstr "Mots clés"
 
-msgid "All FAQ Tags"
-msgstr "Tous les tags FAQ"
+msgid "All SCR Tags"
+msgstr "Tous les tags SCR"
 
-msgid "FAQ Tags"
-msgstr "Étiquettes de FAQ"
+msgid "SCR Tags"
+msgstr "Étiquettes de SCR"
 
-msgid "FAQ Settings"
-msgstr "Paramètres de la FAQ"
+msgid "SCR Settings"
+msgstr "Paramètres de la SCR"
 
 #. General Tab
 msgid "General"
@@ -84,17 +84,17 @@ msgstr "Général"
 msgid "Title"
 msgstr "Titre"
 
-msgid "FAQ Title"
-msgstr "Titre de la FAQ"
+msgid "SCR Title"
+msgstr "Titre de la SCR"
 
 msgid "Show Search"
 msgstr "Afficher la recherche"
 
-msgid "Show Search in FAQ"
-msgstr "Afficher la recherche dans la FAQ"
+msgid "Show Search in SCR"
+msgstr "Afficher la recherche dans la SCR"
 
-msgid "You can search through all FAQ items"
-msgstr "Vous pouvez rechercher parmi tous les articles de la FAQ"
+msgid "You can search through all SCR items"
+msgstr "Vous pouvez rechercher parmi tous les articles de la SCR"
 
 msgid "Search Placeholder"
 msgstr "Recherche d'espace réservé"
@@ -102,8 +102,8 @@ msgstr "Recherche d'espace réservé"
 msgid "Search Placeholder text"
 msgstr "Rechercher un texte d'espace réservé"
 
-msgid "FAQ Search Placeholder text"
-msgstr "FAQ Rechercher un texte d'espace réservé"
+msgid "SCR Search Placeholder text"
+msgstr "SCR Rechercher un texte d'espace réservé"
 
 msgid "Toggle"
 msgstr "Basculer"
@@ -111,8 +111,8 @@ msgstr "Basculer"
 msgid "Toggle Open / closed Previous Item"
 msgstr "Activer / désactiver l'élément précédent"
 
-msgid "Open First FAQ Item"
-msgstr "Ouvrir le premier article de la FAQ"
+msgid "Open First SCR Item"
+msgstr "Ouvrir le premier article de la SCR"
 
 msgid "First item open by default"
 msgstr "Premier élément ouvert par défaut"
@@ -144,8 +144,8 @@ msgstr "Limite"
 msgid "Limit ( number of items )"
 msgstr "Limite (nombre d'éléments)"
 
-msgid "Limit of the FAQ items"
-msgstr "Limite des éléments de la FAQ"
+msgid "Limit of the SCR items"
+msgstr "Limite des éléments de la SCR"
 
 #. Style Tab
 msgid "Style"
@@ -160,21 +160,21 @@ msgstr "Lumière"
 msgid "Dark"
 msgstr "Foncé"
 
-msgid "Select Theme of FAQ Layout Section"
-msgstr "Sélectionnez le thème de la section Disposition de la FAQ"
+msgid "Select Theme of SCR Layout Section"
+msgstr "Sélectionnez le thème de la section Disposition de la SCR"
 
 #. Integrations Tab
 msgid "Integrations"
 msgstr "Intégrations"
 
-msgid "Enable FAQ in Helpie KB"
-msgstr "Activer la FAQ dans Helpie KB"
+msgid "Enable SCR in Helpie KB"
+msgstr "Activer la SCR dans Helpie KB"
 
-msgid "Show FAQ In Helpie KB Category Page"
-msgstr "Afficher la FAQ dans Helpie KB Page des catégories"
+msgid "Show SCR In Helpie KB Category Page"
+msgstr "Afficher la SCR dans Helpie KB Page des catégories"
 
-msgid "Where to Show FAQ in Helpie KB Category Page"
-msgstr "Où afficher la FAQ dans Helpie KB Page des catégories"
+msgid "Where to Show SCR in Helpie KB Category Page"
+msgstr "Où afficher la SCR dans Helpie KB Page des catégories"
 
 msgid "Content"
 msgstr "Contenu"
@@ -185,16 +185,16 @@ msgstr "Avant le contenu"
 msgid "After Content"
 msgstr "Après le contenu"
 
-msgid "Select show faq before or after content in kb category page"
+msgid "Select show scr before or after content in kb category page"
 msgstr ""
-"Sélectionnez Afficher faq avant ou après le contenu de la page de catégorie "
+"Sélectionnez Afficher scr avant ou après le contenu de la page de catégorie "
 "kb"
 
-msgid "Show FAQ in WooCommerce"
-msgstr "Afficher la FAQ dans WooCommerce"
+msgid "Show SCR in WooCommerce"
+msgstr "Afficher la SCR dans WooCommerce"
 
-msgid "Show FAQ In WooCommerce product tab"
-msgstr "Afficher la FAQ dans l'onglet Produit WooCommerce"
+msgid "Show SCR In WooCommerce product tab"
+msgstr "Afficher la SCR dans l'onglet Produit WooCommerce"
 
 msgid "Tab Title"
 msgstr "Titre de l'onglet"

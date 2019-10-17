@@ -30,8 +30,8 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Comparison\Loader')) {
             $widget_args = $this->get_widget_args();
 
             require_once SCR_PATH . '/includes/lib/widgetry/widget-factory.php';
-            $faq_widget = new \Widgetry\Widget_Factory($widget_args);
-            register_widget($faq_widget);
+            $scr_widget = new \Widgetry\Widget_Factory($widget_args);
+            register_widget($scr_widget);
         }
 
         public function register_elementor_widget()

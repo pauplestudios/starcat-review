@@ -14,21 +14,21 @@ if (!class_exists('\StarcatReview\App\Components\Listing\Style_Config_Model')) {
         {
             $style_config = array(
                 // 'collection' => array(
-                //     'name' => 'helpie_faq',
+                //     'name' => 'starcat_review',
                 //     'selector' => '.starcat-review.accordions .accordion',
-                //     'label' => __('FAQ', 'starcat-review'),
+                //     'label' => __('SCR', 'starcat-review'),
                 //     'styleProps' => array( 'background', 'border', 'padding', 'margin')
                 // ),
 
                 // 'title_icon' => array(
-                //     'name' => 'helpie_faq_title_icon',
+                //     'name' => 'starcat_review_title_icon',
                 //     'selector' => '.starcat-review.accordions .collection-title i',
                 //     'label' => __('Title Icon', 'starcat-review'),
                 //     'styleProps' => array( 'icon', 'position', 'color')
                 // ),
 
                 'title' => array(
-                    'name' => 'helpie_faq_title',
+                    'name' => 'starcat_review_title',
                     'selector' => '.starcat-review.accordions .collection-title',
                     'label' => __('Title', 'starcat-review'),
                     'styleProps' => array('color', 'typography', 'text-align', 'border', 'background', 'padding', 'margin')

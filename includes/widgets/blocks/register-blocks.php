@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieFaq\Includes\Widgets\Blocks;
+namespace StarcatReview\Includes\Widgets\Blocks;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieFaq\Includes\Widgets\Blocks\Register_Blocks')) {
+if (!class_exists('\StarcatReview\Includes\Widgets\Blocks\Register_Blocks')) {
     class Register_Blocks
     {
         public function __construct($fields, $style_config)
@@ -40,10 +40,10 @@ if (!class_exists('\HelpieFaq\Includes\Widgets\Blocks\Register_Blocks')) {
         {
 
             /* Editor only assets */
-            add_action('enqueue_block_editor_assets', array($this, 'helpie_faq_block'));
+            add_action('enqueue_block_editor_assets', array($this, 'starcat_review_block'));
 
             /* For both frontend and editor */
-            add_action('enqueue_block_assets', array($this, 'helpie_faq_block_assets'));
+            add_action('enqueue_block_assets', array($this, 'starcat_review_block_assets'));
 
             register_block_type('starcat-review/starcat-review', array(
                 'attributes' => $this->fields,
@@ -51,23 +51,23 @@ if (!class_exists('\HelpieFaq\Includes\Widgets\Blocks\Register_Blocks')) {
             ));
         }
 
-        public function helpie_faq_block_assets()
+        public function starcat_review_block_assets()
         {
-            // error_log('helpie_faq_block_assets');
+            // error_log('starcat_review_block_assets');
             wp_enqueue_style(
                 'starcat-review/starcat-review',
-                HELPIE_FAQ_URL . 'assets/main.bundle.css',
+                HELPIE_SCR_URL . 'assets/main.bundle.css',
                 array('wp-edit-blocks')
             );
         }
 
-        public function helpie_faq_block()
+        public function starcat_review_block()
         {
             wp_enqueue_script(
                 'starcat-review/starcat-review', // Unique handle.
-                HELPIE_FAQ_URL . 'assets/block.bundle.js', // block js
+                HELPIE_SCR_URL . 'assets/block.bundle.js', // block js
                 array('wp-blocks', 'wp-components', 'wp-i18n', 'wp-element', 'wp-editor'), // Dependencies, defined above.
-                filemtime(HELPIE_FAQ_PATH . 'assets/block.bundle.js') // filemtime — Gets file modification time.
+                filemtime(HELPIE_SCR_PATH . 'assets/block.bundle.js') // filemtime — Gets file modification time.
             );
             wp_localize_script('starcat-review/starcat-review', 'BlockFields', $this->fields);
         }
@@ -79,7 +79,7 @@ if (!class_exists('\HelpieFaq\Includes\Widgets\Blocks\Register_Blocks')) {
             }
 
 
-            $faq = new \HelpieFaq\Features\Faq\Faq();
+            $scr = new \StarcatReview\Features\Faq\Faq();
 
             $style = '';
             if (isset($attributes['style'])) {
@@ -87,7 +87,7 @@ if (!class_exists('\HelpieFaq\Includes\Widgets\Blocks\Register_Blocks')) {
             }
 
             // error_log($style);
-            $view_html =  $faq->get_view($attributes);
+            $view_html =  $scr->get_view($attributes);
 
             return $style . $view_html;
         }
