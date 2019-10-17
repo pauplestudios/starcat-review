@@ -32,8 +32,8 @@ define('SCR_URL', plugins_url('/', SCR__FILE__));
  * Storing Settings Options in Database tables feilds using CS_Framework
  */
 
-define('SCR_OPTIONS', 'helpie_reviews_options');
-define('SCR_CUSTOMIZE_OPTIONS', 'helpie_reviews_customize_options');
+define('SCR_OPTIONS', 'scr_options');
+define('SCR_CUSTOMIZE_OPTIONS', 'scr_customize_options');
 
 helpie_reviews_activation();
 
