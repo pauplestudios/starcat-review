@@ -21,7 +21,7 @@ if (!function_exists('hrp_fs')) {
                 'has_addons'          => false,
                 'has_paid_plans'      => true,
                 'menu'                => array(
-                    'slug'           => 'edit.php?post_type=helpie_reviews',
+                    'slug'           => 'edit.php?post_type=starcat_review',
                     'override_exact' => true,
                     'support'        => false,
                 ),
@@ -41,7 +41,7 @@ if (!function_exists('hrp_fs')) {
 
     function hrp_fs_settings_url()
     {
-        return admin_url('edit.php?post_type=helpie_reviews&page=helpie-review-settings');
+        return admin_url('edit.php?post_type=starcat_review&page=helpie-review-settings');
     }
 
     // hrp_fs()->add_filter('connect_url', 'hrp_fs_settings_url');

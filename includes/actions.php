@@ -14,7 +14,7 @@ if (!class_exists('\StarcatReview\Includes\Actions')) {
             add_action('pre_get_comments', [$this, 'exclude_from_comments']);
         }
 
-        // Comment Type of 'starcat_review' is exclude from standard comments list Unless we call explicitly by get_comments($type = "helpie_reviews")
+        // Comment Type of 'starcat_review' is exclude from standard comments list Unless we call explicitly by get_comments($type = "starcat_review")
 
         public function exclude_from_comments(\WP_Comment_Query $query)
         {

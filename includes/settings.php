@@ -55,7 +55,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 // Create options
                 \CSF::createOptions($prefix, array(
                     'menu_title' => 'Settings',
-                    'menu_parent' => 'edit.php?post_type=helpie_reviews',
+                    'menu_parent' => 'edit.php?post_type=starcat_review',
                     'menu_type' => 'submenu', // menu, submenu, options, theme, etc.
                     'menu_slug' => 'helpie-review-settings',
                     'framework_title' => 'Settings',
@@ -790,7 +790,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             $prefix = '_scr_post_options';
 
             \CSF::createMetabox($prefix, array(
-                'title' => 'Helpie Reviews',
+                'title' => 'Starcat Review',
                 'post_type' => $locations,
                 'show_restore' => true,
                 'theme' => 'light',

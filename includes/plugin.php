@@ -105,7 +105,7 @@ if (!class_exists('\Starcat_Review')) {
         {
             if (is_null(self::$instance)) {
                 self::$instance = new self();
-                do_action('helpie_reviews/loaded');
+                do_action('starcat_review/loaded');
             }
 
             return self::$instance;

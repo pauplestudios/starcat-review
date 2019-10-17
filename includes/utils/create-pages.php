@@ -13,7 +13,7 @@ if (!class_exists('\StarcatReview\Includes\Utils\Create_Pages')) {
         public function setup_data($post_data)
         {
             $post_data = [
-                'post_type' => "helpie_reviews",
+                'post_type' => "starcat_review",
                 'taxonomy' => [
                     'SCR_CATEGORY' => "Getting Started",
                 ],
@@ -37,7 +37,7 @@ if (!class_exists('\StarcatReview\Includes\Utils\Create_Pages')) {
         public function create_page_on_activate()
         {
             // $create_page = new \StarcatReview\Utils\Create_Pages();
-            $this->create('helpie_reviews_page', 'helpie_reviews_page_id', 'Helpie Reviews', '[helpie_reviews]');
+            $this->create('starcat_review_page', 'starcat_review_page_id', 'Starcat Review', '[starcat_review]');
         }
 
         /**

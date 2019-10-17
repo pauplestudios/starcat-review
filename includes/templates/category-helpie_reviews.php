@@ -13,7 +13,7 @@ get_header();
 ?>
 
 <!-- <div class='sidebar'>
-    <?php // dynamic_sidebar('helpie_reviews_sidebar');
+    <?php // dynamic_sidebar('starcat_review_sidebar');
     $term = get_queried_object();
 
     ?>

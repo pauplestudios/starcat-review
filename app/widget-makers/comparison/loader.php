@@ -14,7 +14,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Comparison\Loader')) {
         public function load()
         {
             // Shortcode
-            // add_shortcode('helpie_reviews_list', array($this, 'reviews_list'));
+            // add_shortcode('starcat_review_list', array($this, 'reviews_list'));
 
             // WordPress Widget
             add_action('widgets_init', [$this, 'register_widget']);

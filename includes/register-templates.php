@@ -20,8 +20,8 @@ if (!class_exists('\StarcatReview\Includes\Register_Templates')) {
         {
             global $post;
             if (is_post_type_archive('starcat_review')) {
-                if (file_exists(SCR_PATH . '/includes/templates/archive-helpie_reviews.php')) {
-                    $archive_template = SCR_PATH . '/includes/templates/archive-helpie_reviews.php';
+                if (file_exists(SCR_PATH . '/includes/templates/archive-starcat_review.php')) {
+                    $archive_template = SCR_PATH . '/includes/templates/archive-starcat_review.php';
                 }
             }
 
@@ -32,8 +32,8 @@ if (!class_exists('\StarcatReview\Includes\Register_Templates')) {
         {
             global $post;
             if (is_tax('SCR_CATEGORY')) {
-                if (file_exists(SCR_PATH . '/includes/templates/category-helpie_reviews.php')) {
-                    $archive_template = SCR_PATH . '/includes/templates/category-helpie_reviews.php';
+                if (file_exists(SCR_PATH . '/includes/templates/category-starcat_review.php')) {
+                    $archive_template = SCR_PATH . '/includes/templates/category-starcat_review.php';
                 }
             }
 
@@ -53,8 +53,8 @@ if (!class_exists('\StarcatReview\Includes\Register_Templates')) {
             /* Checks for single template by post type */
             if ($post->post_type == SCR_POST_TYPE && is_single()) {
 
-                if (file_exists(SCR_PATH . '/includes/templates/single-helpie_reviews.php')) {
-                    return SCR_PATH . '/includes/templates/single-helpie_reviews.php';
+                if (file_exists(SCR_PATH . '/includes/templates/single-starcat_review.php')) {
+                    return SCR_PATH . '/includes/templates/single-starcat_review.php';
                 }
             }
 

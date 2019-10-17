@@ -15,7 +15,7 @@ services:
 
         environment: # Set up mysql database name and password
             MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: helpie_reviews_acceptance
+            MYSQL_DATABASE: starcat_review_acceptance
             MYSQL_USER: wordpress
             MYSQL_PASSWORD: wordpress
 
@@ -30,7 +30,7 @@ services:
             - hrp_db
         restart: always
         environment:
-            WORDPRESS_DB_NAME: helpie_reviews_acceptance
+            WORDPRESS_DB_NAME: starcat_review_acceptance
             WORDPRESS_DB_HOST: hrp_db:3307
             WORDPRESS_DB_USER: wordpress
             WORDPRESS_DB_PASSWORD: wordpress

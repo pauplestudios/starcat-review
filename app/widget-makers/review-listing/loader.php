@@ -13,7 +13,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Loader')) {
         public function load()
         {
             // Shortcode
-            add_shortcode('helpie_reviews_list', array($this, 'get_view'));
+            add_shortcode('starcat_review_list', array($this, 'get_view'));
 
             // WordPress Widget
             add_action('widgets_init', [$this, 'register_widget']);
@@ -55,8 +55,8 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Loader')) {
         {
             $args = [
                 'id' => 'helpie-reviews-listing',
-                'name' => 'Helpie Reviews Listing',
-                'description' => 'Helpie Reviews Listing Widget',
+                'name' => 'Starcat Review Listing',
+                'description' => 'Starcat Review Listing Widget',
                 'icon' => 'fa fa-th-list', // Used by Elementor only
                 'categories' => ['general-elements'], // Used by Elementor only
                 'model' =>  new \StarcatReview\App\Components\Listing\Model(),

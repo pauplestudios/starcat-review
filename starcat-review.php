@@ -35,14 +35,14 @@ define('SCR_URL', plugins_url('/', SCR__FILE__));
 define('SCR_OPTIONS', 'scr_options');
 define('SCR_CUSTOMIZE_OPTIONS', 'scr_customize_options');
 
-helpie_reviews_activation();
+starcat_review_activation();
 
-function helpie_reviews_activation()
+function starcat_review_activation()
 {
     if (!version_compare(PHP_VERSION, '5.4', '>=')) {
-        add_action('admin_notices', 'helpie_reviews_fail_php_version');
+        add_action('admin_notices', 'starcat_review_fail_php_version');
     } elseif (!version_compare(get_bloginfo('version'), '4.5', '>=')) {
-        add_action('admin_notices', 'helpie_reviews_fail_wp_version');
+        add_action('admin_notices', 'starcat_review_fail_wp_version');
     } else {
         require SCR_PATH . 'includes/plugin.php';
     }
@@ -55,10 +55,10 @@ function helpie_reviews_activation()
  *
  * @return void
  */
-function helpie_reviews_fail_php_version()
+function starcat_review_fail_php_version()
 {
     /* translators: %s: PHP version */
-    $message = sprintf(esc_html__('Helpie Reviews requires PHP version %s+, plugin is currently NOT ACTIVE.', 'starcat-review'), '5.4');
+    $message = sprintf(esc_html__('Starcat Review requires PHP version %s+, plugin is currently NOT ACTIVE.', 'starcat-review'), '5.4');
     $html_message = sprintf('<div class="error">%s</div>', wpautop($message));
     echo wp_kses_post($html_message);
 }
@@ -70,7 +70,7 @@ function helpie_reviews_fail_php_version()
  *
  * @return void
  */
-function helpie_reviews_fail_wp_version()
+function starcat_review_fail_wp_version()
 {
     /* translators: %s: WP version */
     $message = sprintf(esc_html__('Helpie Review requires WordPress version %s+. Because you are using an earlier version, the plugin is currently NOT ACTIVE.', 'starcat-review'), '4.5');
@@ -78,5 +78,5 @@ function helpie_reviews_fail_wp_version()
     echo wp_kses_post($html_message);
 }
 /**
- * Helpie Reviews Internalization
+ * Starcat Review Internalization
  */

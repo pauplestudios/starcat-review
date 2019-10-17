@@ -126,10 +126,10 @@ if (!class_exists('\StarcatReview\Includes\Cpt')) {
                 'show_in_rest' => true,
                 'show_admin_column' => true,
                 'query_var' => true,
-                'rewrite' => array('slug' => 'helpie_reviews_tag', 'with_front' => false),
+                'rewrite' => array('slug' => 'starcat_review_tag', 'with_front' => false),
             );
 
-            register_taxonomy('helpie_reviews_tag', array($this->post_type_name), $args);
+            register_taxonomy('starcat_review_tag', array($this->post_type_name), $args);
         }
 
         public function show_other_cpt_and_tax()

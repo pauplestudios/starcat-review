@@ -12,7 +12,7 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
 
         public function __construct()
         {
-            // add_shortcode('helpie_reviews_list', array($this, 'reviews_list'));
+            // add_shortcode('starcat_review_list', array($this, 'reviews_list'));
         }
         public function reviews_list()
         {

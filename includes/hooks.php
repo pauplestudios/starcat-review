@@ -58,9 +58,9 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
             register_sidebar(
                 array(
-                    'id' => 'helpie_reviews_sidebar',
+                    'id' => 'starcat_review_sidebar',
                     'name' => __('Reviews Sidebar'),
-                    'description' => __('Sidebar of Helpie Reviews plugin'),
+                    'description' => __('Sidebar of Starcat Review plugin'),
                     'before_widget' => '<div id="%1$s" class="widget %2$s">',
                     'after_widget' => '</div>',
                     'before_title' => '<h3 class="widget-title">',
@@ -82,7 +82,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         public function setup_data()
         {
             $post_data = [
-                'post_type' => "helpie_reviews",
+                'post_type' => "starcat_review",
                 'taxonomy' => [
                     'SCR_CATEGORY' => "Getting Started",
                 ],
@@ -105,7 +105,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             /*  Reviews Settings */
             //  new \StarcatReview\Includes\Settings();
 
-            /*  Helpie Reviews Plugin Translation  */
+            /*  Starcat Review Plugin Translation  */
             // load_plugin_textdomain('starcat-review', false, basename(dirname(__FILE__)) . '/languages/');
 
             // Plugins Actions 
@@ -115,7 +115,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         {
             // $admin = new \StarcatReview\Includes\Admin($this->plugin_domain, $this->version);
 
-            /* remove 'helpdesk_cateory' taxonomy submenu from Helpie Reviews Menu */
+            /* remove 'helpdesk_cateory' taxonomy submenu from Starcat Review Menu */
             // $admin->remove_kb_category_submenu();
 
             /* Vendors */
