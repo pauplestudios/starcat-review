@@ -1,13 +1,13 @@
 <?php
 
 
-namespace HelpieReviews\App\Components\Listing;
+namespace StarcatReview\App\Components\Listing;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\Listing\View')) {
+if (!class_exists('\StarcatReview\App\Components\Listing\View')) {
     class View
     {
         private $html;
@@ -15,8 +15,8 @@ if (!class_exists('\HelpieReviews\App\Components\Listing\View')) {
         public function __construct()
         {
             /* Views */
-            $this->card = new \HelpieReviews\App\Views\Blocks\Card();
-            $this->controls_builder = new \HelpieReviews\App\Builders\Controls_Builder();
+            $this->card = new \StarcatReview\App\Views\Blocks\Card();
+            $this->controls_builder = new \StarcatReview\App\Builders\Controls_Builder();
         }
 
         public function get_html($viewProps)

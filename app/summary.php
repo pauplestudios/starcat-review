@@ -1,20 +1,20 @@
 <?php
 
-namespace HelpieReviews\App;
+namespace StarcatReview\App;
 
-use HelpieReviews\Includes\Settings\HRP_Getter;
+use StarcatReview\Includes\Settings\HRP_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Summary')) {
+if (!class_exists('\StarcatReview\App\Summary')) {
     class Summary
     {
         public function get_view()
         {
             $args = $this->get_default_args();
-            $summary = new \HelpieReviews\App\Components\Summary\Controller();
+            $summary = new \StarcatReview\App\Components\Summary\Controller();
             $view = $summary->get_view($args);
 
             return $view;

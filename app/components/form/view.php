@@ -1,20 +1,20 @@
 <?php
 
-namespace HelpieReviews\App\Components\Form;
+namespace StarcatReview\App\Components\Form;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
+if (!class_exists('\StarcatReview\App\Components\Form\View')) {
     class View
     {
         public function __construct($viewProps)
         {
             $this->props = $viewProps;
 
-            $this->star_rating = new \HelpieReviews\App\Views\Rating_Types\Star_Rating($viewProps);
-            $this->bar_rating = new \HelpieReviews\App\Views\Rating_Types\Bar_Rating($viewProps);
+            $this->star_rating = new \StarcatReview\App\Views\Rating_Types\Star_Rating($viewProps);
+            $this->bar_rating = new \StarcatReview\App\Views\Rating_Types\Bar_Rating($viewProps);
         }
 
         public function get()

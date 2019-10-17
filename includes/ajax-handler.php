@@ -1,14 +1,14 @@
 <?php
 
-namespace HelpieReviews\Includes;
+namespace StarcatReview\Includes;
 
-use HelpieReviews\Includes\Utils\Post;
+use StarcatReview\Includes\Utils\Post;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
+if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
     class Ajax_Handler
     {
         public function __construct()
@@ -58,7 +58,7 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
 
         public function user_review_submission()
         {
-            $user_review_repo = new \HelpieReviews\App\Repositories\User_Reviews_Repo();
+            $user_review_repo = new \StarcatReview\App\Repositories\User_Reviews_Repo();
             $props = $user_review_repo->get_processed_data();
 
             $comment_id = $user_review_repo->insert($props);
@@ -71,7 +71,7 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
 
         public function search_posts()
         {
-            $summary = new \HelpieReviews\App\Summary();
+            $summary = new \StarcatReview\App\Summary();
 
             $args = array(
                 'post_type' => array('starcat_review'),
@@ -154,7 +154,7 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
             //get hrp resultSets 
             //echo "get hrp resultSets";
             $search_key = $_REQUEST['search_key'];
-            $comparison_controller = new \HelpieReviews\App\Components\Comparison\Controller();
+            $comparison_controller = new \StarcatReview\App\Components\Comparison\Controller();
             $hrp_search_result_sets = $comparison_controller->get_hrp_details($search_key);
             wp_die();
         }

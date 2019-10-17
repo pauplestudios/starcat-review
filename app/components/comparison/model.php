@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Components\Comparison;
+namespace StarcatReview\App\Components\Comparison;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\Comparison\Model')) {
+if (!class_exists('\StarcatReview\App\Components\Comparison\Model')) {
     class Model
     {
 

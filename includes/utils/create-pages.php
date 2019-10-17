@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\Includes\Utils;
+namespace StarcatReview\Includes\Utils;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\Includes\Utils\Create_Pages')) {
+if (!class_exists('\StarcatReview\Includes\Utils\Create_Pages')) {
     class Create_Pages
     {
 
@@ -27,7 +27,7 @@ if (!class_exists('\HelpieReviews\Includes\Utils\Create_Pages')) {
             // Create Post only if it does not already exists
             if ($the_query->post_count < 1) {
                 /* Setup Demo Reviews Question And Answer */
-                $post_utils = new \HelpieReviews\Includes\Utils\Post();
+                $post_utils = new \StarcatReview\Includes\Utils\Post();
                 $post_utils->insert_term_with_post($post_data['post_type'], "Getting Started", "SCR_CATEGORY", "Yours First Reviews Question", "Yours relevent questions answer.");
             }
             $this->create_page_on_activate();
@@ -36,7 +36,7 @@ if (!class_exists('\HelpieReviews\Includes\Utils\Create_Pages')) {
 
         public function create_page_on_activate()
         {
-            // $create_page = new \HelpieReviews\Utils\Create_Pages();
+            // $create_page = new \StarcatReview\Utils\Create_Pages();
             $this->create('helpie_reviews_page', 'helpie_reviews_page_id', 'Helpie Reviews', '[helpie_reviews]');
         }
 

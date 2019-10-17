@@ -1,6 +1,6 @@
 <?php
 
-namespace HelpieReviews\Includes;
+namespace StarcatReview\Includes;
 
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
  *
  * @since 1.9
  */
-if (!class_exists('\HelpieReviews\Includes\Upgrades')) {
+if (!class_exists('\StarcatReview\Includes\Upgrades')) {
     class Upgrades
     {
 
@@ -27,7 +27,7 @@ if (!class_exists('\HelpieReviews\Includes\Upgrades')) {
                 'slug' => 'starcat_review'
             ];
 
-            $upgrades_list = new \HelpieReviews\Includes\Upgrades_List();
+            $upgrades_list = new \StarcatReview\Includes\Upgrades_List();
             include_once SCR_PATH . 'includes/lib/upgrader/upgrader.php';
             $upgrader = new \Upgrader\Upgrader($args, $upgrades_list);
             $upgrader::add_actions();

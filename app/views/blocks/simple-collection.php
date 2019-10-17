@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Views\Blocks;
+namespace StarcatReview\App\Views\Blocks;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Views\Blocks\Simple_Collection')) {
+if (!class_exists('\StarcatReview\App\Views\Blocks\Simple_Collection')) {
     class Simple_Collection
     {
 

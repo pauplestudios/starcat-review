@@ -22,7 +22,7 @@ get_header();
 <div id="primary">
 
     <?php
-    $bread_crumb = new \HelpieReviews\App\Components\BreadCrumb\Controller();
+    $bread_crumb = new \StarcatReview\App\Components\BreadCrumb\Controller();
     echo $bread_crumb->get_view();
     ?>
     <section class='hrp-archive-description'>
@@ -33,7 +33,7 @@ get_header();
     <main id="main" class="site-main" role="main">
 
         <?php
-        $category_template = new \HelpieReviews\Includes\Templates\Controllers\Category_Template();
+        $category_template = new \StarcatReview\Includes\Templates\Controllers\Category_Template();
         echo $category_template->get_view($term);
         ?>
 

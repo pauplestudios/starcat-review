@@ -1,13 +1,13 @@
 <?php
 
-namespace HelpieReviews\App\Widget_Makers\Comparison;
+namespace StarcatReview\App\Widget_Makers\Comparison;
 
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Widget_Makers\Comparison\Widget')) {
+if (!class_exists('\StarcatReview\App\Widget_Makers\Comparison\Widget')) {
     class Widget
     {
 
@@ -27,7 +27,7 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Comparison\Widget')) {
 
         public function get_view()
         {
-            $comparison_controller = new \HelpieReviews\App\Components\Comparison\Controller();
+            $comparison_controller = new \StarcatReview\App\Components\Comparison\Controller();
             $post_ids = [];
             return $comparison_controller->get_view($post_ids);
         }

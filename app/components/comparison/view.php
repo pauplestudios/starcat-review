@@ -1,13 +1,13 @@
 <?php
 
 
-namespace HelpieReviews\App\Components\Comparison;
+namespace StarcatReview\App\Components\Comparison;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\Comparison\View')) {
+if (!class_exists('\StarcatReview\App\Components\Comparison\View')) {
     class View
     {
         private $html;
@@ -15,7 +15,7 @@ if (!class_exists('\HelpieReviews\App\Components\Comparison\View')) {
         public function __construct()
         {
             /* Views */
-            // $this->Comparison_Table = new \HelpieReviews\App\Views\Blocks\Comparison_Table();
+            // $this->Comparison_Table = new \StarcatReview\App\Views\Blocks\Comparison_Table();
         }
 
         public function get_html($stats = [])

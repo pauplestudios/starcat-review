@@ -1,17 +1,17 @@
 <?php
 
-namespace HelpieReviews\App\Components\BreadCrumb;
+namespace StarcatReview\App\Components\BreadCrumb;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\BreadCrumb\Model')) {
+if (!class_exists('\StarcatReview\App\Components\BreadCrumb\Model')) {
     class Model
     {
         public function __construct()
         {
-            $this->extras = new \HelpieReviews\Includes\Settings\Extras();
+            $this->extras = new \StarcatReview\Includes\Settings\Extras();
         }
 
         public function get_hrp_info($post_id, $page)

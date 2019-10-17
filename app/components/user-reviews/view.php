@@ -1,13 +1,13 @@
 <?php
 
 
-namespace HelpieReviews\App\Components\User_Reviews;
+namespace StarcatReview\App\Components\User_Reviews;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
+if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
     class View
     {
         private $html;
@@ -15,8 +15,8 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
         public function __construct()
         {
             /* Views */
-            $this->card = new \HelpieReviews\App\Views\Blocks\Enhanced_Card();
-            $this->controls_builder = new \HelpieReviews\App\Builders\Controls_Builder();
+            $this->card = new \StarcatReview\App\Views\Blocks\Enhanced_Card();
+            $this->controls_builder = new \StarcatReview\App\Builders\Controls_Builder();
         }
 
         public function get($viewProps)
@@ -131,7 +131,7 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
 
         protected function get_stats_view($props)
         {
-            $stats = new \HelpieReviews\App\Components\Stats\Controller($props['args']);
+            $stats = new \StarcatReview\App\Components\Stats\Controller($props['args']);
             $view = $stats->get_view();
 
             return $view;
@@ -141,7 +141,7 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
         {
             $view = '';
             if ($props['args']['enable_pros_cons']) {
-                $prosandcons = new \HelpieReviews\App\Components\ProsAndCons\Controller($props['args']);
+                $prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller($props['args']);
                 $view = $prosandcons->get_view();
             }
 

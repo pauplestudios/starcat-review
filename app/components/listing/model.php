@@ -1,25 +1,25 @@
 <?php
 
-namespace HelpieReviews\App\Components\Listing;
+namespace StarcatReview\App\Components\Listing;
 
-use \HelpieReviews\App\Abstracts\Widget_Model_Interface as Widget_Model_Interface;
-use \HelpieReviews\App\Abstracts\Widget_Model as Widget_Model;
+use \StarcatReview\App\Abstracts\Widget_Model_Interface as Widget_Model_Interface;
+use \StarcatReview\App\Abstracts\Widget_Model as Widget_Model;
 
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\Listing\Model')) {
+if (!class_exists('\StarcatReview\App\Components\Listing\Model')) {
     class Model extends Widget_Model implements Widget_Model_Interface
     {
 
         public function __construct()
         {
-            $this->fields_model = new \HelpieReviews\App\Components\Listing\Fields_Model();
-            $this->cat_posts_repo = new \HelpieReviews\App\Repositories\Category_Posts_Repo();
+            $this->fields_model = new \StarcatReview\App\Components\Listing\Fields_Model();
+            $this->cat_posts_repo = new \StarcatReview\App\Repositories\Category_Posts_Repo();
             parent::__construct($this->fields_model);
-            $this->style_config = new \HelpieReviews\App\Components\Listing\Style_Config_Model();
+            $this->style_config = new \StarcatReview\App\Components\Listing\Style_Config_Model();
         }
 
         protected function get_collection_props($args)

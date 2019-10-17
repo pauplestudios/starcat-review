@@ -1,19 +1,19 @@
 <?php
 
-namespace HelpieReviews\Includes\Templates\Controllers;
+namespace StarcatReview\Includes\Templates\Controllers;
 
-use \HelpieReviews\Includes\Settings\HRP_Getter;
+use \StarcatReview\Includes\Settings\HRP_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Template')) {
+if (!class_exists('\StarcatReview\Includes\Templates\Controllers\Archive_Template')) {
     class Archive_Template
     {
         public function __construct()
         {
-            $this->listing = new \HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listing();
+            $this->listing = new \StarcatReview\App\Widget_Makers\Review_Listing\Review_Listing();
         }
 
         public function get_view()

@@ -1,14 +1,14 @@
 <?php
 
-namespace HelpieReviews\App\Widget_Makers\Review_Listing;
+namespace StarcatReview\App\Widget_Makers\Review_Listing;
 
-use \HelpieReviews\Includes\Settings\HRP_Getter;
+use \StarcatReview\Includes\Settings\HRP_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listing')) {
+if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Review_Listing')) {
     class Review_Listing
     {
         public function load()
@@ -47,7 +47,7 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
 
             // error_log('$component_args : ' . print_r($component_args, true));
 
-            $listing_controller = new \HelpieReviews\App\Components\Listing\Controller();
+            $listing_controller = new \StarcatReview\App\Components\Listing\Controller();
             return $listing_controller->get_view($component_args);
         }
 
@@ -81,8 +81,8 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
                 'description' => 'Helpie Reviews Listing Widget',
                 'icon' => 'fa fa-th-list', // Used by Elementor only
                 'categories' => ['general-elements'], // Used by Elementor only
-                'model' =>  new \HelpieReviews\App\Components\Listing\Model(),
-                'view' => new \HelpieReviews\App\Components\Listing\Controller(),
+                'model' =>  new \StarcatReview\App\Components\Listing\Model(),
+                'view' => new \StarcatReview\App\Components\Listing\Controller(),
             ];
 
             return $args;
@@ -113,7 +113,7 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
                 $args['combination'] = 'overall_combine';
                 $args['items'] = get_post_meta($post->ID, '_helpie_reviews_post_options', true);
                 $args['items']['comments-list'] = $this->get_comments_list($post->ID);
-                $stats_controller = new \HelpieReviews\App\Components\Stats\Controller($args);
+                $stats_controller = new \StarcatReview\App\Components\Stats\Controller($args);
                 $post->stat_html = $stats_controller->get_view();
             }
 

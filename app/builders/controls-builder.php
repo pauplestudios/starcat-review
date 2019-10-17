@@ -1,14 +1,14 @@
 <?php
 
-namespace HelpieReviews\App\Builders;
+namespace StarcatReview\App\Builders;
 
-use \HelpieReviews\Includes\Settings\HRP_Getter;
+use \StarcatReview\Includes\Settings\HRP_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Builders\Controls_Builder')) {
+if (!class_exists('\StarcatReview\App\Builders\Controls_Builder')) {
     class Controls_Builder
     {
 
@@ -62,8 +62,8 @@ if (!class_exists('\HelpieReviews\App\Builders\Controls_Builder')) {
                 // ]
             ];
 
-            $this->semantic = new \HelpieReviews\App\Views\Blocks\List_Controls_Semantic();
-            $this->listjs = new \HelpieReviews\App\Views\Blocks\List_Controls_Listjs();
+            $this->semantic = new \StarcatReview\App\Views\Blocks\List_Controls_Semantic();
+            $this->listjs = new \StarcatReview\App\Views\Blocks\List_Controls_Listjs();
         }
 
         public function get_controls($show_controls)
@@ -96,19 +96,19 @@ if (!class_exists('\HelpieReviews\App\Builders\Controls_Builder')) {
         {
             $map = [
                 'search' => [
-                    'class' => new \HelpieReviews\App\Views\Blocks\List_Controls_Listjs(),
+                    'class' => new \StarcatReview\App\Views\Blocks\List_Controls_Listjs(),
                     'methodName' => 'search'
                 ],
                 'sort_button' => [
-                    'class' => new \HelpieReviews\App\Views\Blocks\List_Controls_Listjs(),
+                    'class' => new \StarcatReview\App\Views\Blocks\List_Controls_Listjs(),
                     'methodName' => 'sort_button'
                 ],
                 'dropdown' => [
-                    'class' => new \HelpieReviews\App\Views\Blocks\List_Controls_Semantic(),
+                    'class' => new \StarcatReview\App\Views\Blocks\List_Controls_Semantic(),
                     'methodName' => 'dropdown'
                 ],
                 'radio' => [
-                    'class' => new \HelpieReviews\App\Views\Blocks\List_Controls_Semantic(),
+                    'class' => new \StarcatReview\App\Views\Blocks\List_Controls_Semantic(),
                     'methodName' => 'radio_group'
                 ]
             ];

@@ -1,18 +1,18 @@
 <?php
 
-namespace HelpieReviews\App\Components\Comparison;
+namespace StarcatReview\App\Components\Comparison;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\Comparison\Controller')) {
+if (!class_exists('\StarcatReview\App\Components\Comparison\Controller')) {
     class Controller
     {
         public function __construct()
         {
-            $this->model = new \HelpieReviews\App\Components\Comparison\Model();
-            $this->view = new \HelpieReviews\App\Components\Comparison\View();
+            $this->model = new \StarcatReview\App\Components\Comparison\Model();
+            $this->view = new \StarcatReview\App\Components\Comparison\View();
         }
 
         public function get_view($post_ids = [])

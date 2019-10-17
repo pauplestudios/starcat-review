@@ -1,6 +1,6 @@
 <?php
 
-namespace HelpieReviews\Includes;
+namespace StarcatReview\Includes;
 
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
 /**
 
  */
-if (!class_exists('\HelpieReviews\Includes\Upgrades_List')) {
+if (!class_exists('\StarcatReview\Includes\Upgrades_List')) {
     class Upgrades_List
     {
 

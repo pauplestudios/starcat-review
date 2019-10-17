@@ -1,13 +1,13 @@
 <?php
 
-namespace HelpieReviews\App\Collections;
+namespace StarcatReview\App\Collections;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Collections\User_Reviews')) {
-    class User_Reviews extends \HelpieReviews\App\Abstracts\Collection
+if (!class_exists('\StarcatReview\App\Collections\User_Reviews')) {
+    class User_Reviews extends \StarcatReview\App\Abstracts\Collection
     {
 
         public function get_reviews()

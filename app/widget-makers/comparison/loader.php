@@ -1,13 +1,13 @@
 <?php
 
-namespace HelpieReviews\App\Widget_Makers\Comparison;
+namespace StarcatReview\App\Widget_Makers\Comparison;
 
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Widget_Makers\Comparison\Loader')) {
+if (!class_exists('\StarcatReview\App\Widget_Makers\Comparison\Loader')) {
     class Loader
     {
 
@@ -52,8 +52,8 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Comparison\Loader')) {
                 'description' => 'Comparison Table Widget',
                 'icon' => 'fa fa-th-list', // Used by Elementor only
                 'categories' => ['general-elements'], // Used by Elementor only
-                'model' =>  new \HelpieReviews\App\Widget_Makers\Comparison\Widget(),
-                'view' => new \HelpieReviews\App\Widget_Makers\Comparison\Widget(),
+                'model' =>  new \StarcatReview\App\Widget_Makers\Comparison\Widget(),
+                'view' => new \StarcatReview\App\Widget_Makers\Comparison\Widget(),
             ];
 
             return $args;
@@ -79,7 +79,7 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Comparison\Loader')) {
 
         public function get_view()
         {
-            $comparison_controller = new \HelpieReviews\App\Components\Comparison\Controller();
+            $comparison_controller = new \StarcatReview\App\Components\Comparison\Controller();
             $post_ids = [];
             return $comparison_controller->get_view($post_ids);
         }

@@ -31,37 +31,37 @@ if (!class_exists('\Starcat_Review')) {
 
         public function register_cpt_and_taxonomy()
         {
-            $cpt = new \HelpieReviews\Includes\Cpt();
+            $cpt = new \StarcatReview\Includes\Cpt();
             $cpt->register();
         }
 
         public function load_hooks()
         {
-            $hooks = new \HelpieReviews\Includes\Hooks();
+            $hooks = new \StarcatReview\Includes\Hooks();
         }
 
 
         public function load_ajax_handler()
         {
-            $ajax_handler = new \HelpieReviews\Includes\Ajax_Handler();
+            $ajax_handler = new \StarcatReview\Includes\Ajax_Handler();
             $ajax_handler->register_ajax_actions();
         }
 
 
         public function load_components()
         {
-            $shortcodes = new \HelpieReviews\Includes\Shortcodes();
-            $settings = new \HelpieReviews\Includes\Settings();
+            $shortcodes = new \StarcatReview\Includes\Shortcodes();
+            $settings = new \StarcatReview\Includes\Settings();
 
             /* Notifications */
-            // new \HelpieReviews\Includes\Notifications();
+            // new \StarcatReview\Includes\Notifications();
 
             /* Upgrades */
-            $Upgrades = new \HelpieReviews\Includes\Upgrades();
-            \HelpieReviews\Includes\Upgrades::init();
+            $Upgrades = new \StarcatReview\Includes\Upgrades();
+            \StarcatReview\Includes\Upgrades::init();
 
             /* Load Widgets */
-            $widgets = new \HelpieReviews\Includes\Widget_Controller();
+            $widgets = new \StarcatReview\Includes\Widget_Controller();
             $widgets->load();
         }
 
@@ -114,7 +114,7 @@ if (!class_exists('\Starcat_Review')) {
         protected function setup_autoload()
         {
             require_once SCR_PATH . '/includes/autoloader.php';
-            \HelpieReviews\Autoloader::run();
+            \StarcatReview\Autoloader::run();
         }
 
 

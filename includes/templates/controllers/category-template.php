@@ -1,19 +1,19 @@
 <?php
 
-namespace HelpieReviews\Includes\Templates\Controllers;
+namespace StarcatReview\Includes\Templates\Controllers;
 
-use \HelpieReviews\Includes\Settings\HRP_Getter;
+use \StarcatReview\Includes\Settings\HRP_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Category_Template')) {
+if (!class_exists('\StarcatReview\Includes\Templates\Controllers\Category_Template')) {
     class Category_Template
     {
         public function __construct()
         {
-            $this->listing = new \HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listing();
+            $this->listing = new \StarcatReview\App\Widget_Makers\Review_Listing\Review_Listing();
         }
 
         public function get_view($term)
@@ -47,7 +47,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Category_Templa
         // public function get_comparison_table()
         // {
         //     $post_ids = [131, 123, 119];
-        //     $comparison_controller = new \HelpieReviews\App\Components\Comparison\Controller();
+        //     $comparison_controller = new \StarcatReview\App\Components\Comparison\Controller();
         //     return $comparison_controller->get_view($post_ids);
         // }
 

@@ -1,20 +1,20 @@
 <?php
 
-namespace HelpieReviews\App;
+namespace StarcatReview\App;
 
-use HelpieReviews\Includes\Settings\HRP_Getter;
+use StarcatReview\Includes\Settings\HRP_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\User_Review')) {
+if (!class_exists('\StarcatReview\App\User_Review')) {
     class User_Review
     {
         public function __construct()
         {
-            $this->form_controller = new \HelpieReviews\App\Components\Form\Controller();
-            $this->reviews_controller = new \HelpieReviews\App\Components\User_Reviews\Controller();
+            $this->form_controller = new \StarcatReview\App\Components\Form\Controller();
+            $this->reviews_controller = new \StarcatReview\App\Components\User_Reviews\Controller();
         }
 
         public function get_view()

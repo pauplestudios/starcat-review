@@ -1,14 +1,14 @@
 <?php
 
-namespace HelpieReviews;
+namespace StarcatReview;
 
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 /**
- * HelpieReviews autoloader.
+ * StarcatReview autoloader.
  *
- * HelpieReviews autoloader handler class is responsible for loading the different
+ * StarcatReview autoloader handler class is responsible for loading the different
  * classes needed to run the plugin.
  *
  * @since 1.6.0
@@ -18,13 +18,13 @@ class Autoloader
     /**
      * Classes map.
      *
-     * Maps HelpieReviews classes to file names.
+     * Maps StarcatReview classes to file names.
      *
      * @since 1.6.0
      * @access private
      * @static
      *
-     * @var array Classes used by HelpieReviews.
+     * @var array Classes used by StarcatReview.
      */
     private static $classes_map = [
         // 'Rest_Interface' =>  'server/rest-interface.php',
@@ -32,7 +32,7 @@ class Autoloader
     /**
      * Classes aliases.
      *
-     * Maps HelpieReviews classes to aliases.
+     * Maps StarcatReview classes to aliases.
      *
      * @since 1.6.0
      * @access private

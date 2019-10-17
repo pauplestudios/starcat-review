@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\Includes;
+namespace StarcatReview\Includes;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\Includes\Register_Templates')) {
+if (!class_exists('\StarcatReview\Includes\Register_Templates')) {
     class Register_Templates
     {
         public function __construct()
@@ -44,7 +44,7 @@ if (!class_exists('\HelpieReviews\Includes\Register_Templates')) {
         {
             global $wp_query, $post;
 
-            $template_source = \HelpieReviews\Includes\Settings\HRP_Getter::get('template_source');
+            $template_source = \StarcatReview\Includes\Settings\HRP_Getter::get('template_source');
 
             if ($template_source == 'theme') {
                 return;

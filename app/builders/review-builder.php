@@ -1,20 +1,20 @@
 <?php
 
-namespace HelpieReviews\App\Builders;
+namespace StarcatReview\App\Builders;
 
-use \HelpieReviews\Includes\Settings\HRP_Getter;
+use \StarcatReview\Includes\Settings\HRP_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Builders\Review_Builder')) {
+if (!class_exists('\StarcatReview\App\Builders\Review_Builder')) {
     class Review_Builder
     {
         public function __construct()
         {
-            $this->summary = new \HelpieReviews\App\Summary();
-            $this->user_review = new \HelpieReviews\App\User_Review();
+            $this->summary = new \StarcatReview\App\Summary();
+            $this->user_review = new \StarcatReview\App\User_Review();
         }
 
         public function get_reviews()

@@ -1,13 +1,13 @@
 <?php
 
-namespace HelpieReviews\App\Widget_Makers\Review_Listing;
+namespace StarcatReview\App\Widget_Makers\Review_Listing;
 
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Loader')) {
+if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Loader')) {
     class Loader
     {
         public function load()
@@ -24,7 +24,7 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Loader')) {
 
         public function get_view()
         {
-            $comparison_controller = new \HelpieReviews\App\Components\Listing\Controller();
+            $comparison_controller = new \StarcatReview\App\Components\Listing\Controller();
             $args = [];
             return $comparison_controller->get_view($args);
         }
@@ -59,8 +59,8 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Loader')) {
                 'description' => 'Helpie Reviews Listing Widget',
                 'icon' => 'fa fa-th-list', // Used by Elementor only
                 'categories' => ['general-elements'], // Used by Elementor only
-                'model' =>  new \HelpieReviews\App\Components\Listing\Model(),
-                'view' => new \HelpieReviews\App\Components\Listing\Controller(),
+                'model' =>  new \StarcatReview\App\Components\Listing\Model(),
+                'view' => new \StarcatReview\App\Components\Listing\Controller(),
             ];
 
             return $args;

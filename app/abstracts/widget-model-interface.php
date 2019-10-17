@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Abstracts;
+namespace StarcatReview\App\Abstracts;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!interface_exists('\HelpieReviews\App\Abstracts\Widget_Model_Interface')) {
+if (!interface_exists('\StarcatReview\App\Abstracts\Widget_Model_Interface')) {
     interface  Widget_Model_Interface
     {
         // Must have methods 

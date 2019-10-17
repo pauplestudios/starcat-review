@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\Includes\Settings;
+namespace StarcatReview\Includes\Settings;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\Includes\Settings\Fields')) {
+if (!class_exists('\StarcatReview\Includes\Settings\Fields')) {
 
     // HRP - Helpie Review Plugin
     class Fields

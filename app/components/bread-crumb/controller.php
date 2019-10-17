@@ -1,20 +1,20 @@
 <?php
 
-namespace HelpieReviews\App\Components\BreadCrumb;
+namespace StarcatReview\App\Components\BreadCrumb;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\BreadCrumb\Controller')) {
+if (!class_exists('\StarcatReview\App\Components\BreadCrumb\Controller')) {
     class Controller
     {
         private $model;
 
         public function __construct()
         {
-            $this->model = new \HelpieReviews\App\Components\BreadCrumb\Model();
-            $this->view = new \HelpieReviews\App\Components\BreadCrumb\View();
+            $this->model = new \StarcatReview\App\Components\BreadCrumb\Model();
+            $this->view = new \StarcatReview\App\Components\BreadCrumb\View();
         }
 
         public function get_view()

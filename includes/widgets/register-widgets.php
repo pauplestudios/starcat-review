@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\Includes\Widgets;
+namespace StarcatReview\Includes\Widgets;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\Includes\Widgets\Register_Widgets')) {
+if (!class_exists('\StarcatReview\Includes\Widgets\Register_Widgets')) {
     class Register_Widgets
     {
         public function load()
@@ -16,8 +16,8 @@ if (!class_exists('\HelpieReviews\Includes\Widgets\Register_Widgets')) {
                     'id' => 'hrp-listing',
                     'name' => 'Review Listing',
                     'description' => 'Review Listing Widget',
-                    'model' =>  new \HelpieReviews\App\Components\Listing\Model(),
-                    'view' => new \HelpieReviews\App\Components\Listing\Controller(),
+                    'model' =>  new \StarcatReview\App\Components\Listing\Model(),
+                    'view' => new \StarcatReview\App\Components\Listing\Controller(),
                 );
 
                 require_once SCR_PATH . '/lib/widgetry/widget-factory.php';

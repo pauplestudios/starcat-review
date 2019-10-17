@@ -1,14 +1,14 @@
 <?php
 
-namespace HelpieReviews\Includes;
+namespace StarcatReview\Includes;
 
-use \HelpieReviews\Includes\Settings\HRP_Getter;
+use \StarcatReview\Includes\Settings\HRP_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\Includes\Hooks')) {
+if (!class_exists('\StarcatReview\Includes\Hooks')) {
     class Hooks
     {
         public function __construct()
@@ -50,7 +50,7 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
 
 
 
-            $register_templates = new \HelpieReviews\Includes\Register_Templates();
+            $register_templates = new \StarcatReview\Includes\Register_Templates();
         }
 
         public function register_sidebar()
@@ -73,7 +73,7 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
         public function reviews_activate()
         {
             /* Register Post Type and its taxonomy only for setup demo content on activation */
-            $cpt = new \HelpieReviews\Includes\Cpt();
+            $cpt = new \StarcatReview\Includes\Cpt();
             $cpt->register_helpie_reviews_cpt();
 
             $this->setup_data();
@@ -90,7 +90,7 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
                 'content' => "Yours relevent questions answer."
             ];
 
-            $create_pages = new \HelpieReviews\Includes\Utils\Create_Pages();
+            $create_pages = new \StarcatReview\Includes\Utils\Create_Pages();
             $create_pages->setup_data($post_data);
         }
 
@@ -103,17 +103,17 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
         public function plugins_loaded_action()
         {
             /*  Reviews Settings */
-            //  new \HelpieReviews\Includes\Settings();
+            //  new \StarcatReview\Includes\Settings();
 
             /*  Helpie Reviews Plugin Translation  */
             // load_plugin_textdomain('starcat-review', false, basename(dirname(__FILE__)) . '/languages/');
 
             // Plugins Actions 
-            new \HelpieReviews\Includes\Actions();
+            new \StarcatReview\Includes\Actions();
         }
         public function load_admin_hooks()
         {
-            // $admin = new \HelpieReviews\Includes\Admin($this->plugin_domain, $this->version);
+            // $admin = new \StarcatReview\Includes\Admin($this->plugin_domain, $this->version);
 
             /* remove 'helpdesk_cateory' taxonomy submenu from Helpie Reviews Menu */
             // $admin->remove_kb_category_submenu();
@@ -131,16 +131,16 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
 
         public function load_ajax_handler()
         {
-            $ajax_handler = new \HelpieReviews\Includes\Ajax_Handler();
+            $ajax_handler = new \StarcatReview\Includes\Ajax_Handler();
             $ajax_handler->register_ajax_actions();
         }
 
         public function load_widgets()
         {
-            $widgets = new \HelpieReviews\Includes\Widgets\Register_Widgets();
+            $widgets = new \StarcatReview\Includes\Widgets\Register_Widgets();
             $widgets->load();
 
-            $elementor_widgets = new \HelpieReviews\Includes\Widgets\Register_Elementor_Widgets();
+            $elementor_widgets = new \StarcatReview\Includes\Widgets\Register_Elementor_Widgets();
             $elementor_widgets->load();
         }
 
@@ -157,7 +157,7 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
 
         public function get_review_content()
         {
-            $reviews_builder = new \HelpieReviews\App\Builders\Review_Builder();
+            $reviews_builder = new \StarcatReview\App\Builders\Review_Builder();
             return $reviews_builder->get_reviews();
         }
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Repositories;
+namespace StarcatReview\App\Repositories;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Repositories\User_Reviews_Repo')) {
+if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
     class User_Reviews_Repo
     {
         public function get($comment_id)
@@ -38,7 +38,7 @@ if (!class_exists('\HelpieReviews\App\Repositories\User_Reviews_Repo')) {
                     'comment_author_email' => $comment_author_email,
                     'comment_author_url'   => $comment_author_url,
                     'comment_content'      => $props['description'],
-                    'comment_agent'        => 'HelpieReviews',
+                    'comment_agent'        => 'StarcatReview',
                     'comment_type'         => 'starcat_review',
                     'comment_date'         => $time,
                     'comment_parent'       => 0,

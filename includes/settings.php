@@ -1,8 +1,8 @@
 <?php
 
-namespace HelpieReviews\Includes;
+namespace StarcatReview\Includes;
 
-use \HelpieReviews\Includes\Settings\HRP_Getter;
+use \StarcatReview\Includes\Settings\HRP_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
 
 
 
-if (!class_exists('\HelpieReviews\Includes\Settings')) {
+if (!class_exists('\StarcatReview\Includes\Settings')) {
     class Settings
     {
         public function __construct()
@@ -21,7 +21,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
             add_filter('csf_helpie-kb_sections', [$this, 'filter_args']);
             // $this->init();
 
-            $this->fields = new \HelpieReviews\Includes\Settings\Fields();
+            $this->fields = new \StarcatReview\Includes\Settings\Fields();
         }
 
         public function filter_args($content)
@@ -376,7 +376,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
         }
         public function mainpage_settings($prefix)
         {
-            $extras = new \HelpieReviews\Includes\Settings\Extras();
+            $extras = new \StarcatReview\Includes\Settings\Extras();
             $main_page_button = $extras->get_main_page_url();
 
             \CSF::createSection(

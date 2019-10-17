@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Components\Summary;
+namespace StarcatReview\App\Components\Summary;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\Summary\Model')) {
+if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
     class Model
     {
         public function get_Props($args)

@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Views\Blocks;
+namespace StarcatReview\App\Views\Blocks;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Views\Blocks\Card')) {
+if (!class_exists('\StarcatReview\App\Views\Blocks\Card')) {
     class Card
     {
         /* HTML for Single Card */

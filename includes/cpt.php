@@ -1,14 +1,14 @@
 <?php
 
-namespace HelpieReviews\Includes;
+namespace StarcatReview\Includes;
 
-use \HelpieReviews\Includes\Settings\HRP_Getter;
+use \StarcatReview\Includes\Settings\HRP_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\Includes\Cpt')) {
+if (!class_exists('\StarcatReview\Includes\Cpt')) {
     class Cpt
     {
         private $post_type_name = SCR_POST_TYPE;
