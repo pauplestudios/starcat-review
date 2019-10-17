@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
-if (!class_exists('\Helpie_Reviews')) {
-    class Helpie_Reviews
+if (!class_exists('\Starcat_Review')) {
+    class Starcat_Review
     {
         public $plugin_domain;
         public $views_dir;
@@ -130,4 +130,4 @@ if (!class_exists('\Helpie_Reviews')) {
     } // END CLASS
 }
 
-new Helpie_Reviews();
+new Starcat_Review();
