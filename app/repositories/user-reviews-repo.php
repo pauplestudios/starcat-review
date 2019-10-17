@@ -39,7 +39,7 @@ if (!class_exists('\HelpieReviews\App\Repositories\User_Reviews_Repo')) {
                     'comment_author_url'   => $comment_author_url,
                     'comment_content'      => $props['description'],
                     'comment_agent'        => 'HelpieReviews',
-                    'comment_type'         => 'helpie_reviews',
+                    'comment_type'         => 'starcat_review',
                     'comment_date'         => $time,
                     'comment_parent'       => 0,
                     'user_id'              => $user->ID,

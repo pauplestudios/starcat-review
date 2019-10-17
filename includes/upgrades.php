@@ -24,7 +24,7 @@ if (!class_exists('\HelpieReviews\Includes\Upgrades')) {
                 'db_version' => get_option('helpie_reviews_version'),
                 'file_version' => HELPIE_REVIEWS_VERSION,
                 'version_option' => 'helpie_reviews_version',
-                'slug' => 'helpie_reviews'
+                'slug' => 'starcat_review'
             ];
 
             $upgrades_list = new \HelpieReviews\Includes\Upgrades_List();

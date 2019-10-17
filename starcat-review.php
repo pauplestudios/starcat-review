@@ -1,14 +1,14 @@
 <?php
 
 /*
-Plugin Name: Helpie Reviews
+Plugin Name: Starcat Review
 Plugin URI: http://helpiewp.com/helpie-reviews/
 Description: Adds Author and User Reviews to any post_type
 Author: HelpieWP
 Version: 0.1
 Author URI: http://helpiewp.com
 Network: True
-Text Domain: helpie-reviews
+Text Domain: starcat-review
 Domain Path: /languages
 
  */
@@ -20,9 +20,9 @@ if (!defined('ABSPATH')) {
 require_once plugin_dir_path(__FILE__) . "/includes/lib/freemius-integrator.php";
 
 define('HELPIE_REVIEWS_VERSION', '0.2');
-define('HELPIE_REVIEWS_DOMAIN', 'helpie-reviews');
-define('HELPIE_REVIEWS_POST_TYPE', 'helpie_reviews');
-define('HELPIE_REVIEWS_CATEGORY', 'helpie_reviews_category');
+define('HELPIE_REVIEWS_DOMAIN', 'starcat-review');
+define('HELPIE_REVIEWS_POST_TYPE', 'starcat_review');
+define('HELPIE_REVIEWS_CATEGORY', 'scr_category');
 define('HELPIE_REVIEWS__FILE__', __FILE__);
 define('HELPIE_REVIEWS_PLUGIN_BASE', plugin_basename(HELPIE_REVIEWS__FILE__));
 define('HELPIE_REVIEWS_PATH', plugin_dir_path(HELPIE_REVIEWS__FILE__));
@@ -58,7 +58,7 @@ function helpie_reviews_activation()
 function helpie_reviews_fail_php_version()
 {
     /* translators: %s: PHP version */
-    $message = sprintf(esc_html__('Helpie Reviews requires PHP version %s+, plugin is currently NOT ACTIVE.', 'helpie-reviews'), '5.4');
+    $message = sprintf(esc_html__('Helpie Reviews requires PHP version %s+, plugin is currently NOT ACTIVE.', 'starcat-review'), '5.4');
     $html_message = sprintf('<div class="error">%s</div>', wpautop($message));
     echo wp_kses_post($html_message);
 }
@@ -73,7 +73,7 @@ function helpie_reviews_fail_php_version()
 function helpie_reviews_fail_wp_version()
 {
     /* translators: %s: WP version */
-    $message = sprintf(esc_html__('Helpie Review requires WordPress version %s+. Because you are using an earlier version, the plugin is currently NOT ACTIVE.', 'helpie-reviews'), '4.5');
+    $message = sprintf(esc_html__('Helpie Review requires WordPress version %s+. Because you are using an earlier version, the plugin is currently NOT ACTIVE.', 'starcat-review'), '4.5');
     $html_message = sprintf('<div class="error">%s</div>', wpautop($message));
     echo wp_kses_post($html_message);
 }

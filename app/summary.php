@@ -56,7 +56,7 @@ if (!class_exists('\HelpieReviews\App\Summary')) {
         {
             $args = [
                 'post_id' => get_the_ID(),
-                'type' => 'helpie_reviews'
+                'type' => 'starcat_review'
             ];
 
             $comments = get_comments($args);

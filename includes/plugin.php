@@ -78,7 +78,7 @@ if (!class_exists('\Helpie_Reviews')) {
         public function __clone()
         {
             // Cloning instances of the class is forbidden.
-            _doing_it_wrong(__FUNCTION__, esc_html__('Cheatin&#8217; huh?', 'helpie-reviews'), '1.0.0');
+            _doing_it_wrong(__FUNCTION__, esc_html__('Cheatin&#8217; huh?', 'starcat-review'), '1.0.0');
         }
 
         /**
@@ -91,7 +91,7 @@ if (!class_exists('\Helpie_Reviews')) {
         public function __wakeup()
         {
             // Unserializing instances of the class is forbidden.
-            _doing_it_wrong(__FUNCTION__, esc_html__('Cheatin&#8217; huh?', 'helpie-reviews'), '1.0.0');
+            _doing_it_wrong(__FUNCTION__, esc_html__('Cheatin&#8217; huh?', 'starcat-review'), '1.0.0');
         }
 
         /**

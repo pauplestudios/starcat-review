@@ -106,7 +106,7 @@ if (!class_exists('\HelpieReviews\Includes\Hooks')) {
             //  new \HelpieReviews\Includes\Settings();
 
             /*  Helpie Reviews Plugin Translation  */
-            // load_plugin_textdomain('helpie-reviews', false, basename(dirname(__FILE__)) . '/languages/');
+            // load_plugin_textdomain('starcat-review', false, basename(dirname(__FILE__)) . '/languages/');
 
             // Plugins Actions 
             new \HelpieReviews\Includes\Actions();

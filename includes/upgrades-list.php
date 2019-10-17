@@ -27,7 +27,7 @@ if (!class_exists('\HelpieReviews\Includes\Upgrades_List')) {
         {
 
             error_log('upgrade_v02');
-            $option_name = 'helpie-reviews';
+            $option_name = 'starcat-review';
             $settings = get_option($option_name);
 
             /* Set new version for verification later */

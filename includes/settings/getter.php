@@ -21,7 +21,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
 
             // Only set one time
             if (!isset(self::$options) || empty(self::$options)) {
-                self::$options = get_option('helpie-reviews'); // unique id of the framework
+                self::$options = get_option('starcat-review'); // unique id of the framework
             }
 
             if (isset(self::$options[$option_name])) {

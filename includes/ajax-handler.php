@@ -74,7 +74,7 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
             $summary = new \HelpieReviews\App\Summary();
 
             $args = array(
-                'post_type' => array('helpie_reviews'),
+                'post_type' => array('starcat_review'),
                 'post_status' => array('publish'),
                 'nopaging' => true,
                 'order' => 'ASC',

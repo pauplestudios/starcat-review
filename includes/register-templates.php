@@ -19,7 +19,7 @@ if (!class_exists('\HelpieReviews\Includes\Register_Templates')) {
         public function get_archive_template($archive_template)
         {
             global $post;
-            if (is_post_type_archive('helpie_reviews')) {
+            if (is_post_type_archive('starcat_review')) {
                 if (file_exists(HELPIE_REVIEWS_PATH . '/includes/templates/archive-helpie_reviews.php')) {
                     $archive_template = HELPIE_REVIEWS_PATH . '/includes/templates/archive-helpie_reviews.php';
                 }
