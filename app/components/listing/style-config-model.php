@@ -14,7 +14,7 @@ if (!class_exists('\StarcatReview\App\Components\Listing\Style_Config_Model')) {
         {
             $style_config = array(
                 // 'collection' => array(
-                //     'name' => 'starcat_review',
+                //     'name' => SCR_POST_TYPE,
                 //     'selector' => '.starcat-review.accordions .accordion',
                 //     'label' => __('SCR', 'starcat-review'),
                 //     'styleProps' => array( 'background', 'border', 'padding', 'margin')

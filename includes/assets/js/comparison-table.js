@@ -117,7 +117,7 @@ jQuery(document).ready(function($) {
 
     //Add Search Product
     var search_data = {
-      action: "helpiereview_search_posts",
+      action: "scr_search_posts",
       nonce: scr_ajax.ajax_nonce
     };
 

@@ -30,7 +30,7 @@ if (!class_exists('\StarcatReview\App\Views\Reviews_List')) {
 
             $html .= '<div id="lovely-things-list">';
             $html .= $this->get_list_header();
-            $html .= '<ul class="list helpie-list">';
+            $html .= '<ul class="list scr-list">';
             $html .= $this->get_items();
             $html .= '</ul>';
             $html .= ' <ul class="pagination"></ul>';

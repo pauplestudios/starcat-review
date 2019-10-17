@@ -25,8 +25,8 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
             add_action('wp_ajax_scr_user_review_submission', [$this, 'user_review_submission']);
 
             // add 'ajax' action when not logged in
-            add_action('wp_ajax_nopriv_helpiereview_search_posts', [$this, 'search_posts']);
-            add_action('wp_ajax_helpiereview_search_posts', [$this, 'search_posts']);
+            add_action('wp_ajax_nopriv_scr_search_posts', [$this, 'search_posts']);
+            add_action('wp_ajax_scr_search_posts', [$this, 'search_posts']);
 
             // Ajax Hooks In compare table            
             add_action('wp_ajax_nopriv_get_scr_results', [$this, 'get_scr_results']);
@@ -74,7 +74,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
             $summary = new \StarcatReview\App\Summary();
 
             $args = array(
-                'post_type' => array('starcat_review'),
+                'post_type' => array(SCR_POST_TYPE),
                 'post_status' => array('publish'),
                 'nopaging' => true,
                 'order' => 'ASC',

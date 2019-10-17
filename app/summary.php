@@ -56,7 +56,7 @@ if (!class_exists('\StarcatReview\App\Summary')) {
         {
             $args = [
                 'post_id' => get_the_ID(),
-                'type' => 'starcat_review'
+                'type' => SCR_POST_TYPE
             ];
 
             $comments = get_comments($args);

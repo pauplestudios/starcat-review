@@ -68,7 +68,7 @@ class ReviewPostTest extends \Codeception\TestCase\WPTestCase
         return wp_insert_post(array(
             'post_title' => $post['title'],
             'post_content' => $post['content'],
-            'post_type' => 'starcat_review',
+            'post_type' => SCR_POST_TYPE,
             'meta_input' => array(
                 'stats' => $post['stats'],
                 'pros_and_cons' => $post['pros_and_cons'],

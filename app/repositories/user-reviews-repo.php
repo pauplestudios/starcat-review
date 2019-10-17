@@ -39,7 +39,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                     'comment_author_url'   => $comment_author_url,
                     'comment_content'      => $props['description'],
                     'comment_agent'        => 'StarcatReview',
-                    'comment_type'         => 'starcat_review',
+                    'comment_type'         => SCR_POST_TYPE,
                     'comment_date'         => $time,
                     'comment_parent'       => 0,
                     'user_id'              => $user->ID,
@@ -56,8 +56,8 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 return $comment_id;
             }
             // else{
-            //     $comment_author        = __('HelpieReview', 'helpie-review');
-            //     $comment_author_email  = 'helpiereview' . '@';
+            //     $comment_author        = __('StarcatReview', SCR_POST_TYPE);
+            //     $comment_author_email  = 'starcatreview' . '@';
             //     $comment_author_email .= isset($_SERVER['HTTP_HOST']) ? str_replace('www.', '', sanitize_text_field(wp_unslash($_SERVER['HTTP_HOST']))) : 'noreply.com'; // WPCS: input var ok.
             //     $comment_author_email  = sanitize_email($comment_author_email);
             // }

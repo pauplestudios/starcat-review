@@ -127,7 +127,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'query_args'  => array(
                                 'post_type' => 'SCR_POST_TYPE',
                             ),
-                            'default' => 'starcat_review'
+                            'default' => SCR_POST_TYPE
                         ),
 
                         // array(
@@ -567,7 +567,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'query_args'  => array(
                                 'post_type' => 'SCR_POST_TYPE',
                             ),
-                            'default' => 'starcat_review'
+                            'default' => SCR_POST_TYPE
                         ),
 
                         array(
