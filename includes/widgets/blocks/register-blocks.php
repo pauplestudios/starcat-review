@@ -26,16 +26,15 @@ if (!class_exists('\HelpieFaq\Includes\Widgets\Blocks\Register_Blocks')) {
                 $name = $element['name'];
 
                 // $styleProps = $element['styleProps'];
-                
-                if( isset($element['styleProps']) ){
+
+                if (isset($element['styleProps'])) {
                     $this->fields['style'][$name] = $element;
                 }
-                
+
                 if (isset($element['children'])) {
                     $this->get_element_config($element['children']);
                 }
             }
-
         }
         public function load()
         {
@@ -46,7 +45,7 @@ if (!class_exists('\HelpieFaq\Includes\Widgets\Blocks\Register_Blocks')) {
             /* For both frontend and editor */
             add_action('enqueue_block_assets', array($this, 'helpie_faq_block_assets'));
 
-            register_block_type('helpie-faq/helpie-faq', array(
+            register_block_type('starcat-review/starcat-review', array(
                 'attributes' => $this->fields,
                 'render_callback' => array($this, 'render'),
             ));
@@ -56,7 +55,7 @@ if (!class_exists('\HelpieFaq\Includes\Widgets\Blocks\Register_Blocks')) {
         {
             // error_log('helpie_faq_block_assets');
             wp_enqueue_style(
-                'helpie-faq/helpie-faq',
+                'starcat-review/starcat-review',
                 HELPIE_FAQ_URL . 'assets/main.bundle.css',
                 array('wp-edit-blocks')
             );
@@ -65,36 +64,36 @@ if (!class_exists('\HelpieFaq\Includes\Widgets\Blocks\Register_Blocks')) {
         public function helpie_faq_block()
         {
             wp_enqueue_script(
-                'helpie-faq/helpie-faq', // Unique handle.
+                'starcat-review/starcat-review', // Unique handle.
                 HELPIE_FAQ_URL . 'assets/block.bundle.js', // block js
                 array('wp-blocks', 'wp-components', 'wp-i18n', 'wp-element', 'wp-editor'), // Dependencies, defined above.
                 filemtime(HELPIE_FAQ_PATH . 'assets/block.bundle.js') // filemtime — Gets file modification time.
             );
-            wp_localize_script('helpie-faq/helpie-faq', 'BlockFields', $this->fields);
+            wp_localize_script('starcat-review/starcat-review', 'BlockFields', $this->fields);
         }
 
         public function render($attributes)
         {
-            if(!isset($attributes['id'])){
-                $attributes['id'] = uniqid( 'helpie-faq-' );
+            if (!isset($attributes['id'])) {
+                $attributes['id'] = uniqid('starcat-review-');
             }
-             
-            
+
+
             $faq = new \HelpieFaq\Features\Faq\Faq();
 
             $style = '';
-            if( isset($attributes['style'])){
-                $style = $this->get_block_styles($attributes); 
+            if (isset($attributes['style'])) {
+                $style = $this->get_block_styles($attributes);
             }
-            
+
             // error_log($style);
             $view_html =  $faq->get_view($attributes);
 
             return $style . $view_html;
-
         }
 
-        public function get_block_styles($attributes){
+        public function get_block_styles($attributes)
+        {
             $id = $attributes['id'];
             $block_style  = $attributes['style'];
             $style  = '<style>';
@@ -103,28 +102,27 @@ if (!class_exists('\HelpieFaq\Includes\Widgets\Blocks\Register_Blocks')) {
             return $style;
         }
 
-        public function get_style($block_style, $style_config, $id){
+        public function get_style($block_style, $style_config, $id)
+        {
             $style = '';
 
             foreach ($style_config as $key => $config) {
                 $element_name =  $config['name'];
-                
-                if( isset($block_style[$element_name]) ){
-                    $style .= "#".$id . $config['selector'] . " { " ;
+
+                if (isset($block_style[$element_name])) {
+                    $style .= "#" . $id . $config['selector'] . " { ";
                     /* Loop through each style attribute */
                     foreach ($block_style[$element_name] as $key1 => $value) {
-                        $style .= $key1 . " : " . $value .";";
+                        $style .= $key1 . " : " . $value . ";";
                     }
                     $style .= " } ";
-                    
-                }    
-                
+                }
+
                 if (isset($config['children'])) {
                     $style .= $this->get_style($block_style, $config['children'], $id);
                 }
             }
             return $style;
         }
-
     } // END CLASS
 }

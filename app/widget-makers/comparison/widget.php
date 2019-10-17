@@ -61,18 +61,18 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Comparison\Widget')) {
             $fields = array(
                 'title' => [
                     'name' => 'title',
-                    'label' => __('Title', 'helpie-faq'),
+                    'label' => __('Title', 'starcat-review'),
                     'default' => 'Title of Comparison Table',
                     'type' => 'text',
                 ],
                 'max_num_of_items' => [
                     'name' => 'num_of_cols',
-                    'label' => __('Maximum Number of Items', 'helpie-faq'),
+                    'label' => __('Maximum Number of Items', 'starcat-review'),
                     'default' => 'two',
                     'options' => array(
-                        '1' => __('1', 'helpie-faq'),
-                        '2' => __('2', 'helpie-faq'),
-                        '3' => __('3', 'helpie-faq'),
+                        '1' => __('1', 'starcat-review'),
+                        '2' => __('2', 'starcat-review'),
+                        '3' => __('3', 'starcat-review'),
                     ),
                     'type' => 'select',
                 ],

@@ -8,7 +8,6 @@ dist
 tmp
 starcat-review-build
 starcat-review.zip
-tests/_data/helpie
 *.lock
 reports
 .scannerwork

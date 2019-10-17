@@ -12,8 +12,8 @@ if (!class_exists('\HelpieFaq\Languages\FAQ_Strings')) {
         public function get_strings()
         {
             $strings = array(
-                'hide' => __("Hide", "helpie-faq"),
-                'addFAQ' => __("Add FAQ", "helpie-faq"),
+                'hide' => __("Hide", "starcat-review"),
+                'addFAQ' => __("Add FAQ", "starcat-review"),
             );
 
             return $strings;

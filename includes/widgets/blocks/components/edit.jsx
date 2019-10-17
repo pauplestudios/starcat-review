@@ -1,26 +1,13 @@
 import produce from "immer";
-import {
-    getElement
-} from './elements.jsx';
-import ElementsList from './elementsList.jsx';
+import { getElement } from "./elements.jsx";
+import ElementsList from "./elementsList.jsx";
 
+const { Component, Fragment } = wp.element;
+const { __ } = wp.i18n;
 
-const {
-    Component,
-    Fragment
-} = wp.element;
-const {
-    __
-} = wp.i18n;
+const { ServerSideRender, PanelBody } = wp.components;
 
-const {
-    ServerSideRender,
-    PanelBody
-} = wp.components;
-
-const {
-    InspectorControls
-} = wp.editor;
+const { InspectorControls } = wp.editor;
 
 class FAQBlockEdit extends Component {
     constructor() {
@@ -54,7 +41,6 @@ class FAQBlockEdit extends Component {
         }
 
         const style = produce(styleOld, draftStyle => {
-
             if (!draftStyle[element]) {
                 draftStyle[element] = {};
             }
@@ -63,39 +49,50 @@ class FAQBlockEdit extends Component {
 
         // style[fieldName] = newValue;
         this.props.setAttributes({
-            'style': style
+            style: style
         });
     }
 
     getStyleSettings() {
-
         let MainArray = [];
         let Elements = BlockFields.style;
 
-
         for (var elementKey in Elements) {
-
             let StylesArray = [];
-            let StylesFields = Elements[elementKey]['styleProps'];
+            let StylesFields = Elements[elementKey]["styleProps"];
 
             for (var key in StylesFields) {
                 if (StylesFields.hasOwnProperty(key)) {
                     let singleField = StylesFields[key];
-                    let value = '';
+                    let value = "";
 
-                    if( this.props.attributes.style && this.props.attributes.style[elementKey] && this.props.attributes.style[elementKey][key] ){
+                    if (
+                        this.props.attributes.style &&
+                        this.props.attributes.style[elementKey] &&
+                        this.props.attributes.style[elementKey][key]
+                    ) {
                         value = this.props.attributes.style[elementKey][key];
                     }
-                    
-                    const element = (<ElementsList value={value} field={singleField} elementKey={elementKey} onChangeStyle={this.onChangeStyle.bind(this)} />);
+
+                    const element = (
+                        <ElementsList
+                            value={value}
+                            field={singleField}
+                            elementKey={elementKey}
+                            onChangeStyle={this.onChangeStyle.bind(this)}
+                        />
+                    );
                     StylesArray.push(element);
                 }
             }
 
             const SingleStylePanel = (
-                <PanelBody initialOpen={false} title={Elements[elementKey]['label'] + " Settings"}>
-					{ StylesArray }
-				</PanelBody>
+                <PanelBody
+                    initialOpen={false}
+                    title={Elements[elementKey]["label"] + " Settings"}
+                >
+                    {StylesArray}
+                </PanelBody>
             );
             MainArray.push(SingleStylePanel);
         }
@@ -108,24 +105,23 @@ class FAQBlockEdit extends Component {
 
         const inspectorControls = (
             <InspectorControls>
-				<PanelBody title="Query Settings">
-					{ this.getQuerySettings() }
-				</PanelBody>
-				{ this.getStyleSettings() }
-			</InspectorControls>
+                <PanelBody title="Query Settings">
+                    {this.getQuerySettings()}
+                </PanelBody>
+                {this.getStyleSettings()}
+            </InspectorControls>
         );
 
         return (
             <Fragment>
-				{ inspectorControls }
-				<ServerSideRender
-					block='helpie-faq/helpie-faq'
-					attributes={ this.props.attributes }
-				/>
-			</Fragment>
+                {inspectorControls}
+                <ServerSideRender
+                    block="starcat-review/starcat-review"
+                    attributes={this.props.attributes}
+                />
+            </Fragment>
         );
     }
 }
-
 
 export default FAQBlockEdit;
