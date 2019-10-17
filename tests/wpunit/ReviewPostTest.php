@@ -48,7 +48,7 @@ class ReviewPostTest extends \Codeception\TestCase\WPTestCase
             'comment_author_email' => 'admin@admin.com',
             'comment_author_url' => 'http://',
             'comment_content' => 'User Review content here',
-            'comment_type' => 'helpie_user_review',
+            'comment_type' => SCR_POST_TYPE,
             'comment_parent' => 0,
             'user_id' => 1,
             'comment_author_IP' => '127.0.0.1',
