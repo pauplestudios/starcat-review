@@ -89,16 +89,14 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
         {
             $items = [];
 
-            if (!isset($args['items'][$prosorcons]) && empty($args['items'][$prosorcons])) {
-                return $items;
-            }
-
-            foreach ($args['items'][$prosorcons] as $key => $item) {
-                $proorcon = strtolower(preg_replace('/\s+/', '_', $item['item']));
-                $items[] = [
-                    'item' => $item['item'],
-                    'unique' => $proorcon
-                ];
+            if (isset($args['items'][$prosorcons]) && !empty($args['items'][$prosorcons])) {
+                foreach ($args['items'][$prosorcons] as $key => $item) {
+                    $proorcon = strtolower(preg_replace('/\s+/', '_', $item['item']));
+                    $items[] = [
+                        'item' => $item['item'],
+                        'unique' => $proorcon
+                    ];
+                }
             }
 
             return $items;
