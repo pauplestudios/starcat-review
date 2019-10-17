@@ -2,7 +2,7 @@
 
 namespace StarcatReview\Includes;
 
-use \StarcatReview\Includes\Settings\HRP_Getter;
+use \StarcatReview\Includes\Settings\SCR_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -786,7 +786,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         /* Single Post - Meta Data Options */
         public function post_meta_fields()
         {
-            $locations = HRP_Getter::get('review_enable_post-types');
+            $locations = SCR_Getter::get('review_enable_post-types');
             $prefix = '_scr_post_options';
 
             \CSF::createMetabox($prefix, array(
@@ -926,7 +926,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         {
             $stats_list = [];
 
-            $stats = HRP_Getter::get('global_stats');
+            $stats = SCR_Getter::get('global_stats');
             if (isset($stats) && !empty($stats)) {
                 $stats_list[] = array(
                     'type'    => 'submessage',

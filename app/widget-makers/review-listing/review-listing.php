@@ -2,7 +2,7 @@
 
 namespace StarcatReview\App\Widget_Makers\Review_Listing;
 
-use \StarcatReview\Includes\Settings\HRP_Getter;
+use \StarcatReview\Includes\Settings\SCR_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -108,7 +108,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Review_Listin
         protected function get_combine_rating($posts)
         {
             foreach ($posts as $key => $post) {
-                $args = HRP_Getter::get_stat_default_args();
+                $args = SCR_Getter::get_stat_default_args();
                 $args['post_id'] = $post->ID;
                 $args['combination'] = 'overall_combine';
                 $args['items'] = get_post_meta($post->ID, '_scr_post_options', true);

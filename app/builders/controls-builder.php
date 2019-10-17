@@ -2,7 +2,7 @@
 
 namespace StarcatReview\App\Builders;
 
-use \StarcatReview\Includes\Settings\HRP_Getter;
+use \StarcatReview\Includes\Settings\SCR_Getter;
 
 if (!defined('ABSPATH')) {
     exit;

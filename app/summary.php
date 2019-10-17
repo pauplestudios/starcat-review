@@ -2,7 +2,7 @@
 
 namespace StarcatReview\App;
 
-use StarcatReview\Includes\Settings\HRP_Getter;
+use StarcatReview\Includes\Settings\SCR_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -22,7 +22,7 @@ if (!class_exists('\StarcatReview\App\Summary')) {
 
         public function get_default_args()
         {
-            $args = HRP_Getter::get_stat_default_args();
+            $args = SCR_Getter::get_stat_default_args();
             $args['post_id'] = get_the_ID();
             $args['items'] = $this->get_items();
             return $args;

@@ -2,7 +2,7 @@
 
 namespace StarcatReview\Includes\Templates\Controllers;
 
-use \StarcatReview\Includes\Settings\HRP_Getter;
+use \StarcatReview\Includes\Settings\SCR_Getter;
 
 if (!defined('ABSPATH')) {
     exit;

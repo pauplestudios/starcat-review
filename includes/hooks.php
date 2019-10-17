@@ -2,7 +2,7 @@
 
 namespace StarcatReview\Includes;
 
-use \StarcatReview\Includes\Settings\HRP_Getter;
+use \StarcatReview\Includes\Settings\SCR_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -126,7 +126,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             wp_enqueue_style('style-name', SCR_URL . "includes/assets/bundle/admin.bundle.css");
 
             // You Can Access these object from javascript
-            wp_localize_script('helpie-reviews-script', 'HRPOptins', ['enable_prosandcons' => HRP_Getter::get('enable-pros-cons')]);
+            wp_localize_script('helpie-reviews-script', 'HRPOptins', ['enable_prosandcons' => SCR_Getter::get('enable-pros-cons')]);
         }
 
         public function load_ajax_handler()

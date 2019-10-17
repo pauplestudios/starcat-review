@@ -2,7 +2,7 @@
 
 namespace StarcatReview\Includes;
 
-use \StarcatReview\Includes\Settings\HRP_Getter;
+use \StarcatReview\Includes\Settings\SCR_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -156,8 +156,8 @@ if (!class_exists('\StarcatReview\Includes\Cpt')) {
             //     $cpt_slug = $post->post_name;
             // }
 
-            $cpt_slug = HRP_Getter::get('mp_slug');
-            // $cpt_slug = HRP_Getter::get('review_enable_post-types');
+            $cpt_slug = SCR_Getter::get('mp_slug');
+            // $cpt_slug = SCR_Getter::get('review_enable_post-types');
 
             return $cpt_slug;
         }

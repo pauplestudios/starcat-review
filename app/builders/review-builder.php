@@ -2,7 +2,7 @@
 
 namespace StarcatReview\App\Builders;
 
-use \StarcatReview\Includes\Settings\HRP_Getter;
+use \StarcatReview\Includes\Settings\SCR_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -20,8 +20,8 @@ if (!class_exists('\StarcatReview\App\Builders\Review_Builder')) {
         public function get_reviews()
         {
             $post_type = get_post_type();
-            $review_enable_post_types = HRP_Getter::get('review_enable_post-types');
-            $user_review_enable_post_types = HRP_Getter::get('ur_enable_post-types');
+            $review_enable_post_types = SCR_Getter::get('review_enable_post-types');
+            $user_review_enable_post_types = SCR_Getter::get('ur_enable_post-types');
 
             $html = '';
             // error_log("is_enable Review : " . $this->is_enable_post_type($post_type, $review_enable_post_types));

@@ -6,10 +6,10 @@ if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\StarcatReview\Includes\Settings\HRP_Getter')) {
+if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
 
     // HRP - Helpie Review Plugin
-    class HRP_Getter
+    class SCR_Getter
     {
         private static $options;
         private static $defaults;
@@ -124,21 +124,21 @@ if (!class_exists('\StarcatReview\Includes\Settings\HRP_Getter')) {
 
         public static function get_stat_default_args()
         {
-            $type = HRP_Getter::get('stats-type');
-            $limit = ($type == 'star') ? HRP_Getter::get('stats-stars-limit') : HRP_Getter::get('stats-bars-limit');
+            $type = SCR_Getter::get('stats-type');
+            $limit = ($type == 'star') ? SCR_Getter::get('stats-stars-limit') : SCR_Getter::get('stats-bars-limit');
 
             $args = [
-                'global_stats' => HRP_Getter::get('global_stats'),
-                'singularity' => HRP_Getter::get('stat-singularity'),
+                'global_stats' => SCR_Getter::get('global_stats'),
+                'singularity' => SCR_Getter::get('stat-singularity'),
                 'type' => $type,
-                'source_type' =>  HRP_Getter::get('stats-source-type'),
-                'show_rating_label' => HRP_Getter::get('stats-show-rating-label'),
-                'icons' =>  HRP_Getter::get('stats-icons'),
-                'images' => HRP_Getter::get('stats-images'),
-                'steps' => HRP_Getter::get('stats-steps'),
+                'source_type' =>  SCR_Getter::get('stats-source-type'),
+                'show_rating_label' => SCR_Getter::get('stats-show-rating-label'),
+                'icons' =>  SCR_Getter::get('stats-icons'),
+                'images' => SCR_Getter::get('stats-images'),
+                'steps' => SCR_Getter::get('stats-steps'),
                 'limit' => $limit,
-                'animate' => HRP_Getter::get('stats-animate'),
-                'no_rated_message' => HRP_Getter::get('stats-no-rated-message'),
+                'animate' => SCR_Getter::get('stats-animate'),
+                'no_rated_message' => SCR_Getter::get('stats-no-rated-message'),
             ];
 
             return $args;

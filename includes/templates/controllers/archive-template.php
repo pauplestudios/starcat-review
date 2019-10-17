@@ -2,7 +2,7 @@
 
 namespace StarcatReview\Includes\Templates\Controllers;
 
-use \StarcatReview\Includes\Settings\HRP_Getter;
+use \StarcatReview\Includes\Settings\SCR_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -80,19 +80,19 @@ if (!class_exists('\StarcatReview\Includes\Templates\Controllers\Archive_Templat
         protected function get_args()
         {
             $args = [
-                'order' => HRP_Getter::get('mp_components_order'),
+                'order' => SCR_Getter::get('mp_components_order'),
                 'category_list' => [
-                    'title' => HRP_Getter::get('mp_cl_title'),
-                    'description' => HRP_Getter::get('mp_cl_description'),
-                    'num_of_cols' => HRP_Getter::get('mp_cl_cols'),
+                    'title' => SCR_Getter::get('mp_cl_title'),
+                    'description' => SCR_Getter::get('mp_cl_description'),
+                    'num_of_cols' => SCR_Getter::get('mp_cl_cols'),
                     'show_controls' => false,
                     'pagination' => false
                 ],
 
                 'review_list' => [
-                    'title' => HRP_Getter::get('mp_rl_title'),
-                    'sortby' => HRP_Getter::get('mp_rl_sortby'),
-                    'num_of_cols' => HRP_Getter::get('mp_rl_cols'),
+                    'title' => SCR_Getter::get('mp_rl_title'),
+                    'sortby' => SCR_Getter::get('mp_rl_sortby'),
+                    'num_of_cols' => SCR_Getter::get('mp_rl_cols'),
                     'show_controls' => false,
                     'pagination' => false
                 ]

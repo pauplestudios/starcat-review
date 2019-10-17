@@ -2,7 +2,7 @@
 
 namespace StarcatReview\Includes\Templates\Controllers;
 
-use \StarcatReview\Includes\Settings\HRP_Getter;
+use \StarcatReview\Includes\Settings\SCR_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -54,11 +54,11 @@ if (!class_exists('\StarcatReview\Includes\Templates\Controllers\Category_Templa
         protected function get_props($term)
         {
             $args = [
-                'show_controls' => HRP_Getter::get('cp_controls'),
-                'show_search' => HRP_Getter::get('cp_search'),
-                'show_sortBy' => HRP_Getter::get('cp_sortBy'),
-                // 'show_num_of_reviews_filter' => HRP_Getter::get('cp_num_of_reviews_filter'),
-                'num_of_cols' => HRP_Getter::get('cp_num_of_cols'),
+                'show_controls' => SCR_Getter::get('cp_controls'),
+                'show_search' => SCR_Getter::get('cp_search'),
+                'show_sortBy' => SCR_Getter::get('cp_sortBy'),
+                // 'show_num_of_reviews_filter' => SCR_Getter::get('cp_num_of_reviews_filter'),
+                'num_of_cols' => SCR_Getter::get('cp_num_of_cols'),
             ];
 
             $query_args = $this->get_args($term);
@@ -87,7 +87,7 @@ if (!class_exists('\StarcatReview\Includes\Templates\Controllers\Category_Templa
 
         private function get_args($term)
         {
-            $sortBy = HRP_Getter::get('cp_default_sortBy');
+            $sortBy = SCR_Getter::get('cp_default_sortBy');
             // the query to set the posts per page to 3
             $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
             $args = array(

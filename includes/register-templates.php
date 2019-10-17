@@ -44,7 +44,7 @@ if (!class_exists('\StarcatReview\Includes\Register_Templates')) {
         {
             global $wp_query, $post;
 
-            $template_source = \StarcatReview\Includes\Settings\HRP_Getter::get('template_source');
+            $template_source = \StarcatReview\Includes\Settings\SCR_Getter::get('template_source');
 
             if ($template_source == 'theme') {
                 return;
