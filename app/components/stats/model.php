@@ -202,10 +202,13 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
             if (!isset($args['global_stats']) || !isset($args['items']['stats-list'])) {
                 return $stats;
             }
-
+            $global_stats = $args['global_stats'];
+            if ($args['singularity'] == 'single') {
+                $global_stats = [$global_stats[0]];
+            }
             if (!empty($args['global_stats']) && !empty($args['items']['stats-list'])) {
 
-                foreach ($args['global_stats'] as $allowed_stat) {
+                foreach ($global_stats as $allowed_stat) {
                     $allowed_stat_name = strtolower($allowed_stat['stat_name']);
                     if (array_key_exists($allowed_stat_name, $args['items']['stats-list'])) {
                         $stats[$allowed_stat_name] = $args['items']['stats-list'][$allowed_stat_name];
