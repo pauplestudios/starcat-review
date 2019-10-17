@@ -10,14 +10,12 @@ if (!class_exists('\HelpieReviews\Includes\Utils')) {
     class Utils
     {
         public function __construct()
-        {
-
-        }
+        { }
 
         /* NOTE: Only for Testing and Development Mode */
         public function get_reviews_data()
         {
-            $review_data_json = file_get_contents(HELPIE_REVIEWS_PATH . "/tests/_data/review-data.json");
+            $review_data_json = file_get_contents(STARCAT_REVIEW_PATH . "/tests/_data/review-data.json");
             $post_data = json_decode($review_data_json, true);
 
             return $post_data;
@@ -31,5 +29,4 @@ if (!class_exists('\HelpieReviews\Includes\Utils')) {
             return 'value';
         }
     }
-
 } // END CLASS

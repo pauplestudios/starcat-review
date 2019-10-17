@@ -31,7 +31,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
 
         public function setup_options_init()
         {
-            // require_once HELPIE_REVIEWS_PATH . 'includes/settings/settings-config.php';
+            // require_once STARCAT_REVIEW_PATH . 'includes/settings/settings-config.php';
         }
 
         public function wp_loaded()
@@ -41,10 +41,10 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
 
 
             if (!function_exists('\CSF') && !class_exists('\CSF')) {
-                require_once HELPIE_REVIEWS_PATH . 'includes/lib/codestar-framework/codestar-framework.php';
+                require_once STARCAT_REVIEW_PATH . 'includes/lib/codestar-framework/codestar-framework.php';
             }
 
-            include_once HELPIE_REVIEWS_PATH . 'includes/settings/helper.php';
+            include_once STARCAT_REVIEW_PATH . 'includes/settings/helper.php';
             // require_once 'settings-config.php';
 
             if (class_exists('\CSF')) {
@@ -125,7 +125,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'chosen'      => true,
                             'options'     => 'post_types',
                             'query_args'  => array(
-                                'post_type' => 'HELPIE_REVIEWS_POST_TYPE',
+                                'post_type' => 'STARCAT_REVIEW_POST_TYPE',
                             ),
                             'default' => 'starcat_review'
                         ),
@@ -565,7 +565,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'options'     => 'post_types',
                             'multiple' => true,
                             'query_args'  => array(
-                                'post_type' => 'HELPIE_REVIEWS_POST_TYPE',
+                                'post_type' => 'STARCAT_REVIEW_POST_TYPE',
                             ),
                             'default' => 'starcat_review'
                         ),
@@ -632,8 +632,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'type'      => 'image_select',
                             'title'     => 'Stats Type',
                             'options'   => array(
-                                'star' => HELPIE_REVIEWS_URL . 'includes/assets/img/stars-stat.png',
-                                // 'bar' => HELPIE_REVIEWS_URL . 'includes/assets/img/bars-stat.png',
+                                'star' => STARCAT_REVIEW_URL . 'includes/assets/img/stars-stat.png',
+                                // 'bar' => STARCAT_REVIEW_URL . 'includes/assets/img/bars-stat.png',
                             ),
                             // 'desc' => 'choose between star and bars stats types',
                             'default'   => 'star'
@@ -681,8 +681,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                                     'library' => 'image',
                                     'placeholder'  => 'http://',
                                     'default' => [
-                                        'url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png',
-                                        'thumbnail' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png'
+                                        'url' => STARCAT_REVIEW_URL . 'includes/assets/img/tomato.png',
+                                        'thumbnail' => STARCAT_REVIEW_URL . 'includes/assets/img/tomato.png'
                                     ]
                                 ),
                                 array(
@@ -692,8 +692,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                                     'library' => 'image',
                                     'placeholder'  => 'http://',
                                     'default' => [
-                                        'url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png',
-                                        'thumbnail' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png'
+                                        'url' => STARCAT_REVIEW_URL . 'includes/assets/img/tomato-outline.png',
+                                        'thumbnail' => STARCAT_REVIEW_URL . 'includes/assets/img/tomato-outline.png'
                                     ],
                                 ),
 

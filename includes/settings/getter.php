@@ -43,7 +43,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
                 // General Settings Start
                 'template_source' => 'theme',
                 'enable-pros-cons' => true,
-                'review_enable_post-types' => [HELPIE_REVIEWS_POST_TYPE],
+                'review_enable_post-types' => [STARCAT_REVIEW_POST_TYPE],
                 'global_stat' => ['stat_name' => 'Feature'],
                 'stat-singularity' => 'single',
                 'stats-type' => 'star',
@@ -51,13 +51,13 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
                 'stats-icons' => 'star',
                 'stats-images' => [
                     'image' => [
-                        'url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png',
-                        'thumbnail' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png'
+                        'url' => STARCAT_REVIEW_URL . 'includes/assets/img/tomato.png',
+                        'thumbnail' => STARCAT_REVIEW_URL . 'includes/assets/img/tomato.png'
                     ],
 
                     'image-outline' => [
-                        'url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png',
-                        'thumbnail' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png'
+                        'url' => STARCAT_REVIEW_URL . 'includes/assets/img/tomato-outline.png',
+                        'thumbnail' => STARCAT_REVIEW_URL . 'includes/assets/img/tomato-outline.png'
                     ]
                 ],
                 'stats-show-rating-label' => true,
@@ -100,7 +100,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
                 // ],
 
                 // User Review Start
-                'ur_enable_post-types' => [HELPIE_REVIEWS_POST_TYPE],
+                'ur_enable_post-types' => [STARCAT_REVIEW_POST_TYPE],
                 'ur_show_controls' => true,
                 'ur_controls_subheading' => true,
                 'ur_show_search' => true,

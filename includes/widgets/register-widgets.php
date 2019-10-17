@@ -20,7 +20,7 @@ if (!class_exists('\HelpieReviews\Includes\Widgets\Register_Widgets')) {
                     'view' => new \HelpieReviews\App\Components\Listing\Controller(),
                 );
 
-                require_once HELPIE_REVIEWS_PATH . '/lib/widgetry/widget-factory.php';
+                require_once STARCAT_REVIEW_PATH . '/lib/widgetry/widget-factory.php';
                 $widget = new \Widgetry\Widget_Factory($widget_args);
                 register_widget($widget);
             });

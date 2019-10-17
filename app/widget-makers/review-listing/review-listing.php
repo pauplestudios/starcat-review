@@ -57,7 +57,7 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
             // error_log(' register_widget: ');
             $widget_args = $this->get_widget_args();
 
-            require_once HELPIE_REVIEWS_PATH . '/includes/lib/widgetry/widget-factory.php';
+            require_once STARCAT_REVIEW_PATH . '/includes/lib/widgetry/widget-factory.php';
             $widget = new \Widgetry\Widget_Factory($widget_args);
             register_widget($widget);
         }
@@ -69,7 +69,7 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
             $elementor_args = $this->get_elementor_args($args);
 
 
-            require_once HELPIE_REVIEWS_PATH . '/includes/lib/widgetry/elementor-widget-factory.php';
+            require_once STARCAT_REVIEW_PATH . '/includes/lib/widgetry/elementor-widget-factory.php';
             \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new \Widgetry\Elementor_Widget_Factory([], $elementor_args));
         }
 
@@ -124,7 +124,7 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
         {
             $args = [
                 'post_id' => $post_id,
-                'type' => HELPIE_REVIEWS_POST_TYPE
+                'type' => STARCAT_REVIEW_POST_TYPE
             ];
 
             $comments = get_comments($args);

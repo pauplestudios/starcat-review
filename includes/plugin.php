@@ -14,8 +14,8 @@ if (!class_exists('\Helpie_Reviews')) {
         public function __construct()
         {
             $this->setup_autoload();
-            $this->plugin_domain = HELPIE_REVIEWS_DOMAIN;
-            $this->version = HELPIE_REVIEWS_VERSION;
+            $this->plugin_domain = STARCAT_REVIEW_DOMAIN;
+            $this->version = STARCAT_REVIEW_VERSION;
 
             /*  Reviews Register Post types and its Taxonomies */
             $this->register_cpt_and_taxonomy();
@@ -113,7 +113,7 @@ if (!class_exists('\Helpie_Reviews')) {
 
         protected function setup_autoload()
         {
-            require_once HELPIE_REVIEWS_PATH . '/includes/autoloader.php';
+            require_once STARCAT_REVIEW_PATH . '/includes/autoloader.php';
             \HelpieReviews\Autoloader::run();
         }
 

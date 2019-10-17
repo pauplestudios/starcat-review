@@ -35,7 +35,7 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Loader')) {
             // error_log(' register_widget: ');
             $faq_widget_args = $this->get_widget_args();
 
-            require_once HELPIE_REVIEWS_PATH . '/includes/lib/widgetry/widget-factory.php';
+            require_once STARCAT_REVIEW_PATH . '/includes/lib/widgetry/widget-factory.php';
             $faq_widget = new \Widgetry\Widget_Factory($faq_widget_args);
             register_widget($faq_widget);
         }
@@ -47,7 +47,7 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Loader')) {
             $elementor_args = $this->get_elementor_args($args);
 
 
-            require_once HELPIE_REVIEWS_PATH . '/includes/lib/widgetry/elementor-widget-factory.php';
+            require_once STARCAT_REVIEW_PATH . '/includes/lib/widgetry/elementor-widget-factory.php';
             \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new \Widgetry\Elementor_Widget_Factory([], $elementor_args));
         }
 

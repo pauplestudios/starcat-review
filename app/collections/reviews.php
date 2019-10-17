@@ -13,7 +13,7 @@ if (!class_exists('\HelpieReviews\App\Collections\Reviews')) {
         public function get_reviews()
         {
             $args = array(
-                'post_type' => HELPIE_REVIEWS_POST_TYPE,
+                'post_type' => STARCAT_REVIEW_POST_TYPE,
             );
             return get_posts($args);
         }

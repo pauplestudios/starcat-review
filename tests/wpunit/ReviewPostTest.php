@@ -19,7 +19,7 @@ class ReviewPostTest extends \Codeception\TestCase\WPTestCase
 
     public function test_review_setup()
     {
-        $review_data_json = file_get_contents(HELPIE_REVIEWS_PATH . "/tests/_data/review-data.json");
+        $review_data_json = file_get_contents(STARCAT_REVIEW_PATH . "/tests/_data/review-data.json");
         $review_data = json_decode($review_data_json, true);
         $post_data = $review_data[0];
         error_log('$post_data : ' . print_r($post_data, true));

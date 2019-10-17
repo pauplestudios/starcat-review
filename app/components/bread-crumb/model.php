@@ -25,7 +25,7 @@ if (!class_exists('\HelpieReviews\App\Components\BreadCrumb\Model')) {
                 'title' => $mp_hrp_section['hrp_main_title']
             );
 
-            $taxonomy = 'helpie_reviews_category';
+            $taxonomy = 'STARCAT_REVIEW_CATEGORY';
             if ($page == 'archive') {
                 $queried_object = get_queried_object();
 
@@ -142,7 +142,7 @@ if (!class_exists('\HelpieReviews\App\Components\BreadCrumb\Model')) {
             $parent_term_info = [];
             if (isset($term) && isset($term->parent) && !empty($term->parent) && $term->parent != 0) {
                 $parent_term_id = $term->parent;
-                $parent_term = get_term($parent_term_id, 'helpie_reviews_category');
+                $parent_term = get_term($parent_term_id, 'STARCAT_REVIEW_CATEGORY');
                 $parent_term_info = $this->get_term_info($parent_term);
             }
 

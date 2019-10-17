@@ -20,8 +20,8 @@ if (!class_exists('\HelpieReviews\Includes\Register_Templates')) {
         {
             global $post;
             if (is_post_type_archive('starcat_review')) {
-                if (file_exists(HELPIE_REVIEWS_PATH . '/includes/templates/archive-helpie_reviews.php')) {
-                    $archive_template = HELPIE_REVIEWS_PATH . '/includes/templates/archive-helpie_reviews.php';
+                if (file_exists(STARCAT_REVIEW_PATH . '/includes/templates/archive-helpie_reviews.php')) {
+                    $archive_template = STARCAT_REVIEW_PATH . '/includes/templates/archive-helpie_reviews.php';
                 }
             }
 
@@ -31,9 +31,9 @@ if (!class_exists('\HelpieReviews\Includes\Register_Templates')) {
         public function get_category_template($archive_template)
         {
             global $post;
-            if (is_tax('helpie_reviews_category')) {
-                if (file_exists(HELPIE_REVIEWS_PATH . '/includes/templates/category-helpie_reviews.php')) {
-                    $archive_template = HELPIE_REVIEWS_PATH . '/includes/templates/category-helpie_reviews.php';
+            if (is_tax('STARCAT_REVIEW_CATEGORY')) {
+                if (file_exists(STARCAT_REVIEW_PATH . '/includes/templates/category-helpie_reviews.php')) {
+                    $archive_template = STARCAT_REVIEW_PATH . '/includes/templates/category-helpie_reviews.php';
                 }
             }
 
@@ -51,10 +51,10 @@ if (!class_exists('\HelpieReviews\Includes\Register_Templates')) {
             }
 
             /* Checks for single template by post type */
-            if ($post->post_type == HELPIE_REVIEWS_POST_TYPE && is_single()) {
+            if ($post->post_type == STARCAT_REVIEW_POST_TYPE && is_single()) {
 
-                if (file_exists(HELPIE_REVIEWS_PATH . '/includes/templates/single-helpie_reviews.php')) {
-                    return HELPIE_REVIEWS_PATH . '/includes/templates/single-helpie_reviews.php';
+                if (file_exists(STARCAT_REVIEW_PATH . '/includes/templates/single-helpie_reviews.php')) {
+                    return STARCAT_REVIEW_PATH . '/includes/templates/single-helpie_reviews.php';
                 }
             }
 

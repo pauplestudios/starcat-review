@@ -17,7 +17,7 @@ if (!class_exists('\HelpieReviews\App\Components\Listing\Fields_Model')) {
         public function get_category_options($show_all = false)
         {
             $category_options = [];
-            $terms = get_terms('helpie_reviews_category', array(
+            $terms = get_terms('STARCAT_REVIEW_CATEGORY', array(
                 'hide_empty' => false,
             ));
 
