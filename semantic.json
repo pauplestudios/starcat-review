@@ -8,7 +8,7 @@
             "themes": "src/themes/"
         },
         "output": {
-            "packaged": "bundle",
+            "packaged": "bundle/",
             "uncompressed": "bundle/components/",
             "compressed": "bundle/components/",
             "themes": "bundle/themes/"

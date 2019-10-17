@@ -1,19 +1,19 @@
 var Admin = {
-    init: function() {
+    init: function () {
         this.eventhandlers();
     },
-    eventhandlers: function() {
+    eventhandlers: function () {
         console.log("SCR Admin Js loaded !!!");
         this.iconsOptins();
         this.enableProsandCons();
     },
 
-    iconsOptins: function() {
+    iconsOptins: function () {
         jQuery(".ui.dropdown.scr-dropdown").dropdown();
     },
 
-    enableProsandCons: function() {
-        const metaBoxOptions = jQuery("#_scr_post_options");
+    enableProsandCons: function () {
+        var metaBoxOptions = jQuery("#_scr_post_options");
 
         if (SCROptins.enable_prosandcons == "0") {
             metaBoxOptions
@@ -26,7 +26,7 @@ var Admin = {
     }
 };
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
     Admin.init();
 });
 

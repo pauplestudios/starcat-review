@@ -1,20 +1,20 @@
 formSubmitted = false;
 var Form = {
-    init: function() {
+    init: function () {
         this.eventListener();
         console.log("Submission JS Loaded !!!");
     },
 
-    eventListener: function() {
+    eventListener: function () {
         this.formValidation();
     },
 
-    formValidation: function(fields) {
-        const SCRForm = jQuery(".scr-user-review");
-        let formFields = fields ? fields : Form.getRules();
+    formValidation: function (fields) {
+        var SCRForm = jQuery(".scr-user-review");
+        var formFields = fields ? fields : Form.getRules();
         SCRForm.form({
             fields: formFields,
-            onSuccess: function(event, fields) {
+            onSuccess: function (event, fields) {
                 event.preventDefault();
                 if (formSubmitted) {
                     return;
@@ -26,17 +26,17 @@ var Form = {
         });
     },
 
-    submission: function(SCRForm, fields) {
-        const props = Form.getProps(SCRForm, fields);
+    submission: function (SCRForm, fields) {
+        var props = Form.getProps(SCRForm, fields);
         console.log(props);
         // Ajax Post Submiting
         jQuery
-            .post(scr_ajax.ajax_url, props, function(results) {
+            .post(scr_ajax.ajax_url, props, function (results) {
                 results = JSON.parse(results);
                 console.log(results);
 
                 // Success Message
-                let msgProps = {
+                var msgProps = {
                     type: "positive",
                     title: "Thanks for your Review.",
                     description:
@@ -52,9 +52,9 @@ var Form = {
                 // Reloading the page
                 setInterval("window.location.reload()", 6000);
             })
-            .fail(function(response) {
+            .fail(function (response) {
                 // Fail Message
-                let msgProps = {
+                var msgProps = {
                     type: "negative",
                     title:
                         "This is a Bad request, Our development team processing it for while so we suggest you should Keep browsing!",
@@ -67,7 +67,7 @@ var Form = {
             });
     },
 
-    getProps: function(submittingForm, fields) {
+    getProps: function (submittingForm, fields) {
         fields.action = submittingForm.attr("action");
         fields.type = submittingForm.attr("method");
         fields.post_id = submittingForm.attr("post_id");
@@ -75,7 +75,7 @@ var Form = {
         return fields;
     },
 
-    getRules: function() {
+    getRules: function () {
         return {
             title: {
                 identifier: "title",
@@ -118,22 +118,24 @@ var Form = {
         };
     },
 
-    getMessageTemplate: function(props) {
-        const message = `<div class="ui ${props.type} message transition">        
-        <div class="header">
-          ${props.title}
-        </div>
-        <p>${props.description}</p>
-      </div>`;
+    getMessageTemplate: function (props) {
+        var message = '<div class="ui ' + props.type + ' message transition"></div>';
+        message += '<div class="header">';
+        message += props.title;
+        message += '</div>';
+        message += '<p>' + props.description + '</p>';
+        message += '</div>';
 
         return message;
     },
 
-    getReviewTemplate: function(title, description) {
-        return `<div class="scr-collection__col item col-xs-12 col-lg-12"> <div class="scr-review-card">
-        <div class="review-card__header">${title}</div>        
-        <div class="review-card__body">${description}</div>
-        <span class="reviewCount" data-reviewcount="75"></span></div></div>`;
+    getReviewTemplate: function (title, description) {
+        var template = '<div class="scr-collection__col item col-xs-12 col-lg-12"> <div class="scr-review-card">';
+        template += '<div class="review-card__header">' + title + '</div>';
+        template += '<div class="review-card__body">' + description + '</div>';
+        template += '<span class="reviewCount" data-reviewcount="75"></span></div></div>';
+
+        return template;
     }
 };
 
