@@ -723,7 +723,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'title'   => 'Limit',
                             'type'    => 'slider',
                             'min'     => 5,
-                            'max'     => 20,
+                            'max'     => 10,
                             'step'    => 5,
                             'unit'    => '#',
                             'default' => 5,
