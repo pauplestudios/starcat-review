@@ -24,7 +24,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             >';
 
                 foreach ($this->props['items'] as $key => $stat) {
-                    $html .= $this->get_reviewed_stat($key, $stat['value'], $stat['score']);
+                    $html .= $this->get_reviewed_stat($key, $stat['rating'], $stat['score']);
                 }
 
                 $html .= '</ul>';

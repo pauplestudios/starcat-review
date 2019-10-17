@@ -15,9 +15,8 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
             $this->items = $this->get_itemsProps($args);
 
             if (isset($args['combination']) && $args['combination'] == 'overall_combine') {
-                $this->get_combined_overall($this->items, $args);
+                $this->items = $this->get_combined_overall($this->items, $args);
             }
-
 
             $view_props = [
                 'collection' => $this->collection,
@@ -48,26 +47,6 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
             return $collection;
         }
 
-        protected function get_combined_overall($author_items, $args)
-        {
-            $user_items = $this->get_userItems($args);
-            $user_args = $args;
-            $user_args['items'] = $user_items;
-            $user_items = $this->get_itemsProps($user_args);
-            error_log("Author : " . print_r($author_items, true));
-            error_log("User : " . print_r($user_items, true));
-
-            // $items = $author_items + $user_items;
-            $items = array_map(function (...$arrays) {
-                return array_sum($arrays);
-            }, $author_items, $user_items);
-
-
-            error_log("combined : " . print_r($items, true));
-
-            return;
-        }
-
         public function get_itemsProps($args)
         {
             $stats = [];
@@ -95,7 +74,6 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
                 if ($this->is_stat_included('all', $this->collection)) {
                     $stats[$stat['stat_name']] = [
                         'rating' => $stat['rating'],
-                        'value' => $stat_value,
                         'score' => $stat_score
                     ];
                 }
@@ -108,7 +86,59 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
                 $stats = array_merge($overall_stat, $stats);
             }
 
-            return $stats;
+            return array_change_key_case($stats);
+        }
+
+        protected function get_combined_overall($author_items, $args)
+        {
+            $user_items = $this->get_userItems($args);
+            $user_args = $args;
+            $user_args['items'] = $user_items;
+            $user_items = $this->get_itemsProps($user_args);
+            // error_log("Author : " . print_r($author_items, true));
+            // error_log("User : " . print_r($user_items, true));
+            // error_log("Global : " . print_r($args['global_stats'], true));
+
+            $count = 0;
+            $combine = [
+                'user_overall' => 0,
+                'author_overall' => 0
+            ];
+
+            foreach ($args['global_stats'] as $allowed_stat) {
+
+                if ($args['singularity'] == 'single' && $count >= 1) {
+                    break;
+                }
+
+                $allowed_stat_name = strtolower($allowed_stat['stat_name']);
+
+                if (array_key_exists($allowed_stat_name, $user_items)) {
+                    $combine['user_overall'] += $user_items[$allowed_stat_name]['rating'];
+                    // error_log("I am User Exist : " . $user_items[$allowed_stat_name]['rating']);
+                }
+                if (array_key_exists($allowed_stat_name, $author_items)) {
+                    $combine['author_overall'] += $author_items[$allowed_stat_name]['rating'];
+                    // error_log("I am Author Exist : " . $author_items[$allowed_stat_name]['rating']);
+                }
+                $count++;
+            }
+
+            $user_overall = $combine['user_overall'] / $count;
+            $author_overall = $combine['author_overall'] / $count;
+            $overall_rating = ($author_overall + $user_overall) / 2;
+            $overall_score = $this->get_stat_score($overall_rating);
+
+            $combine = [
+                'overall' => [
+                    'rating' => $overall_rating,
+                    'score' => $overall_score
+                ]
+            ];
+
+            // error_log("combined : " . print_r($combine, true));
+
+            return $combine;
         }
 
         protected function get_userItems($args)
@@ -195,7 +225,6 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
             $overall_stat = [
                 'overall' => [
                     'rating' => $rating,
-                    'value' => $stat_value,
                     'score' => $stat_score
                 ]
             ];
