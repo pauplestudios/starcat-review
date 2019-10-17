@@ -113,7 +113,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
 
         protected function get_terms()
         {
-            $terms = get_terms(STARCAT_REVIEW_CATEGORY, array('parent' => 0, 'hide_empty' => false));
+            $terms = get_terms(SCR_CATEGORY, array('parent' => 0, 'hide_empty' => false));
             return $terms;
         }
 
@@ -134,7 +134,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
             $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
             $args = array(
                 'posts_per_page' => 6, // show 6 posts for now only
-                'post_type' => STARCAT_REVIEW_POST_TYPE,
+                'post_type' => SCR_POST_TYPE,
                 'paged' => $paged,
             );
 

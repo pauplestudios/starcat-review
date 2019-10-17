@@ -26,7 +26,7 @@ if (!class_exists('\HelpieReviews\Includes\Widgets\Register_Elementor_Widgets'))
             );
 
 
-            require_once STARCAT_REVIEW_PATH . '/lib/widgetry/elementor-widget-factory.php';
+            require_once SCR_PATH . '/lib/widgetry/elementor-widget-factory.php';
 
 
             \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new \Widgetry\Elementor_Widget_Factory([], $widget_args));

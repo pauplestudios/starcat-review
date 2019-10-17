@@ -19,21 +19,21 @@ if (!defined('ABSPATH')) {
 
 require_once plugin_dir_path(__FILE__) . "/includes/lib/freemius-integrator.php";
 
-define('STARCAT_REVIEW_VERSION', '0.2');
-define('STARCAT_REVIEW_DOMAIN', 'starcat-review');
-define('STARCAT_REVIEW_POST_TYPE', 'starcat_review');
-define('STARCAT_REVIEW_CATEGORY', 'scr_category');
-define('STARCAT_REVIEW__FILE__', __FILE__);
-define('STARCAT_REVIEW_PLUGIN_BASE', plugin_basename(STARCAT_REVIEW__FILE__));
-define('STARCAT_REVIEW_PATH', plugin_dir_path(STARCAT_REVIEW__FILE__));
-define('STARCAT_REVIEW_URL', plugins_url('/', STARCAT_REVIEW__FILE__));
+define('SCR_VERSION', '0.2');
+define('SCR_DOMAIN', 'starcat-review');
+define('SCR_POST_TYPE', 'starcat_review');
+define('SCR_CATEGORY', 'scr_category');
+define('SCR__FILE__', __FILE__);
+define('SCR_PLUGIN_BASE', plugin_basename(SCR__FILE__));
+define('SCR_PATH', plugin_dir_path(SCR__FILE__));
+define('SCR_URL', plugins_url('/', SCR__FILE__));
 
 /**
  * Storing Settings Options in Database tables feilds using CS_Framework
  */
 
-define('HELPIE_REVIEWS_OPTIONS', 'helpie_reviews_options');
-define('HELPIE_REVIEWS_CUSTOMIZE_OPTIONS', 'helpie_reviews_customize_options');
+define('SCR_OPTIONS', 'helpie_reviews_options');
+define('SCR_CUSTOMIZE_OPTIONS', 'helpie_reviews_customize_options');
 
 helpie_reviews_activation();
 
@@ -44,7 +44,7 @@ function helpie_reviews_activation()
     } elseif (!version_compare(get_bloginfo('version'), '4.5', '>=')) {
         add_action('admin_notices', 'helpie_reviews_fail_wp_version');
     } else {
-        require STARCAT_REVIEW_PATH . 'includes/plugin.php';
+        require SCR_PATH . 'includes/plugin.php';
     }
 }
 

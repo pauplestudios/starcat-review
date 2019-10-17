@@ -21,14 +21,14 @@ if (!class_exists('\HelpieReviews\Includes\Upgrades')) {
         {
             // error_log('Upgrades->init()');
             $args = [
-                'db_version' => get_option('STARCAT_REVIEW_VERSION'),
-                'file_version' => STARCAT_REVIEW_VERSION,
-                'version_option' => 'STARCAT_REVIEW_VERSION',
+                'db_version' => get_option('SCR_VERSION'),
+                'file_version' => SCR_VERSION,
+                'version_option' => 'SCR_VERSION',
                 'slug' => 'starcat_review'
             ];
 
             $upgrades_list = new \HelpieReviews\Includes\Upgrades_List();
-            include_once STARCAT_REVIEW_PATH . 'includes/lib/upgrader/upgrader.php';
+            include_once SCR_PATH . 'includes/lib/upgrader/upgrader.php';
             $upgrader = new \Upgrader\Upgrader($args, $upgrades_list);
             $upgrader::add_actions();
         }

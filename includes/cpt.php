@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\HelpieReviews\Includes\Cpt')) {
     class Cpt
     {
-        private $post_type_name = STARCAT_REVIEW_POST_TYPE;
+        private $post_type_name = SCR_POST_TYPE;
 
         /* Register post type in init Hook */
         public function register()
@@ -97,10 +97,10 @@ if (!class_exists('\HelpieReviews\Includes\Cpt')) {
                 'show_in_rest' => true,
                 'show_admin_column' => true,
                 'query_var' => true,
-                'rewrite' => array('slug' => 'STARCAT_REVIEW_CATEGORY', 'with_front' => false),
+                'rewrite' => array('slug' => 'SCR_CATEGORY', 'with_front' => false),
             );
 
-            register_taxonomy('STARCAT_REVIEW_CATEGORY', array($this->post_type_name), $args);
+            register_taxonomy('SCR_CATEGORY', array($this->post_type_name), $args);
         }
 
         public function register_tag()

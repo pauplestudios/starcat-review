@@ -92,11 +92,11 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Category_Templa
             $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
             $args = array(
                 'posts_per_page' => -1,
-                'post_type' => STARCAT_REVIEW_POST_TYPE,
+                'post_type' => SCR_POST_TYPE,
                 'paged' => $paged,
                 'tax_query' => array(
                     array(
-                        'taxonomy' => STARCAT_REVIEW_CATEGORY,
+                        'taxonomy' => SCR_CATEGORY,
                         'field'    => 'id',
                         'terms'    => $term->term_id,
                     ),

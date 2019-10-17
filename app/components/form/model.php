@@ -106,8 +106,8 @@ if (!class_exists('\HelpieReviews\App\Components\Form\Model')) {
 
         protected function get_icons($collection)
         {
-            $image = STARCAT_REVIEW_URL . 'includes/assets/img/tomato.png';
-            $image_outline =  STARCAT_REVIEW_URL . 'includes/assets/img/tomato-outline.png';
+            $image = SCR_URL . 'includes/assets/img/tomato.png';
+            $image_outline =  SCR_URL . 'includes/assets/img/tomato-outline.png';
             $collection['icon'] = (isset($collection['images']['image']['thumbnail'])) ? $collection['images']['image']['thumbnail'] : $image;
             $collection['outline_icon'] = (isset($collection['images']['image-outline']['thumbnail'])) ? $collection['images']['image-outline']['thumbnail'] : $image_outline;
 

@@ -17,7 +17,7 @@ if (!class_exists('\HelpieReviews\App\Views\Single_Review')) {
             $this->model = [];
             $this->reviews_builder = new \HelpieReviews\App\Builders\Review_Builder();
 
-            // $review_data_json = file_get_contents(STARCAT_REVIEW_PATH . "/tests/_data/review-data.json");
+            // $review_data_json = file_get_contents(SCR_PATH . "/tests/_data/review-data.json");
             // $post_data = json_decode($review_data_json, true);
             // $this->model->stats = $post_data[0]['stats'];
         }

@@ -29,7 +29,7 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Comparison\Loader')) {
             // error_log(' Comparison Table register_widget: ');
             $widget_args = $this->get_widget_args();
 
-            require_once STARCAT_REVIEW_PATH . '/includes/lib/widgetry/widget-factory.php';
+            require_once SCR_PATH . '/includes/lib/widgetry/widget-factory.php';
             $faq_widget = new \Widgetry\Widget_Factory($widget_args);
             register_widget($faq_widget);
         }
@@ -40,7 +40,7 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Comparison\Loader')) {
             $elementor_args = $this->get_elementor_args($args);
 
 
-            require_once STARCAT_REVIEW_PATH . '/includes/lib/widgetry/elementor-widget-factory.php';
+            require_once SCR_PATH . '/includes/lib/widgetry/elementor-widget-factory.php';
             \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new \Widgetry\Elementor_Widget_Factory([], $elementor_args));
         }
 

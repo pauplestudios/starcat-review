@@ -22,7 +22,7 @@ if (!class_exists('\HelpieReviews\App\Components\Comparison\Controller')) {
 
             $args = array(
                 'post__in' => $post_ids,
-                'post_type' => STARCAT_REVIEW_POST_TYPE
+                'post_type' => SCR_POST_TYPE
             );
 
             $posts = get_posts($args);

@@ -88,7 +88,7 @@ class Autoloader
     {
 
         if (isset(self::$classes_map[$relative_class_name])) {
-            $filename = STARCAT_REVIEW_PATH . self::$classes_map[$relative_class_name];
+            $filename = SCR_PATH . self::$classes_map[$relative_class_name];
         } else {
             $filename = strtolower(
                 preg_replace(
@@ -97,7 +97,7 @@ class Autoloader
                     $relative_class_name
                 )
             );
-            $filename = STARCAT_REVIEW_PATH . $filename . '.php';
+            $filename = SCR_PATH . $filename . '.php';
         }
 
         // error_log('filename: ' . $filename);
