@@ -1,6 +1,6 @@
 <?php
 
-namespace HelpieReviews\Includes\Utils;
+namespace StarcatReview\Includes\Utils;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
 
 
 
-if (!class_exists('\HelpieReviews\Includes\Utils\Post')) {
+if (!class_exists('\StarcatReview\Includes\Utils\Post')) {
     class Post
     {
 

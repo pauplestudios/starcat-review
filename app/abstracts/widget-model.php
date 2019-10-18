@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Abstracts;
+namespace StarcatReview\App\Abstracts;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Abstracts\Widget_Model')) {
+if (!class_exists('\StarcatReview\App\Abstracts\Widget_Model')) {
     abstract class Widget_Model
     {
         public function __construct($fields_model)

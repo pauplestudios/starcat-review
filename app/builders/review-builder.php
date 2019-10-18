@@ -1,27 +1,27 @@
 <?php
 
-namespace HelpieReviews\App\Builders;
+namespace StarcatReview\App\Builders;
 
-use \HelpieReviews\Includes\Settings\HRP_Getter;
+use \StarcatReview\Includes\Settings\SCR_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Builders\Review_Builder')) {
+if (!class_exists('\StarcatReview\App\Builders\Review_Builder')) {
     class Review_Builder
     {
         public function __construct()
         {
-            $this->summary = new \HelpieReviews\App\Summary();
-            $this->user_review = new \HelpieReviews\App\User_Review();
+            $this->summary = new \StarcatReview\App\Summary();
+            $this->user_review = new \StarcatReview\App\User_Review();
         }
 
         public function get_reviews()
         {
             $post_type = get_post_type();
-            $review_enable_post_types = HRP_Getter::get('review_enable_post-types');
-            $user_review_enable_post_types = HRP_Getter::get('ur_enable_post-types');
+            $review_enable_post_types = SCR_Getter::get('review_enable_post-types');
+            $user_review_enable_post_types = SCR_Getter::get('ur_enable_post-types');
 
             $html = '';
             // error_log("is_enable Review : " . $this->is_enable_post_type($post_type, $review_enable_post_types));

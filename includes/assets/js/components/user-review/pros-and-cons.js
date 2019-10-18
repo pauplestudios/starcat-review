@@ -1,16 +1,16 @@
 var Form = require("./form.js");
 var formRules = Form.getRules();
 var ProsAndCons = {
-    init: function() {
+    init: function () {
         this.eventListener();
     },
 
-    eventListener: function() {
+    eventListener: function () {
         this.getRepeater(".review-pros-repeater", "pros");
         this.getRepeater(".review-cons-repeater", "cons");
     },
 
-    getRepeater: function(selector, group) {
+    getRepeater: function (selector, group) {
         var list = jQuery(selector).find("[data-repeater-list=" + group + "]");
 
         ProsAndCons.addItem(selector, list, group);
@@ -22,15 +22,15 @@ var ProsAndCons = {
         });
     },
 
-    addItem: function(selector, list, group) {
-        const duplicateItem = list
+    addItem: function (selector, list, group) {
+        var duplicateItem = list
             .find("[data-repeater-item]")
             .first()
             .parent()
             .html();
 
-        jQuery(selector + " [data-repeater-create]").on("click", function() {
-            let indexedItem = ProsAndCons.setIndex(list, duplicateItem, group);
+        jQuery(selector + " [data-repeater-create]").on("click", function () {
+            var indexedItem = ProsAndCons.setIndex(list, duplicateItem, group);
 
             list.append(indexedItem);
             ProsAndCons.deleteItem(selector, list, group);
@@ -43,10 +43,10 @@ var ProsAndCons = {
         });
     },
 
-    deleteItem: function(selector, list, group) {
+    deleteItem: function (selector, list, group) {
         jQuery(selector + " [data-repeater-item] [data-repeater-delete]").on(
             "click",
-            function() {
+            function () {
                 jQuery(this)
                     .parent()
                     .parent()
@@ -57,25 +57,25 @@ var ProsAndCons = {
         );
     },
 
-    reinitiateEvents: function(list, group) {
+    reinitiateEvents: function (list, group) {
         ProsAndCons.setRules(list, group);
         Form.formValidation(formRules);
     },
 
-    setIndex: function(list, item, dataAttr) {
-        let key = list.children().length;
+    setIndex: function (list, item, dataAttr) {
+        var key = list.children().length;
 
-        let field = jQuery(item);
+        var field = jQuery(item);
 
-        let indexedField = field
+        var indexedField = field
             .find("[data-" + dataAttr + "]")
             .attr("name", dataAttr + "[" + key + "]")
             .parent()
             .parent()
             .html();
 
-        let fieldHtml = field.html(indexedField);
-        let indexedHtml = fieldHtml
+        var fieldHtml = field.html(indexedField);
+        var indexedHtml = fieldHtml
             .wrapAll("<div>")
             .parent()
             .html();
@@ -83,11 +83,11 @@ var ProsAndCons = {
         return indexedHtml;
     },
 
-    updateIndex: function(list, group) {
-        let items = list.find("[data-repeater-item]");
+    updateIndex: function (list, group) {
+        var items = list.find("[data-repeater-item]");
 
-        let count = 0;
-        items.each(function(index, item) {
+        var count = 0;
+        items.each(function (index, item) {
             jQuery(item)
                 .find("[data-" + group + "]")
                 .attr("name", group + "[" + count + "]");
@@ -95,17 +95,17 @@ var ProsAndCons = {
         });
     },
 
-    setRules: function(list, group) {
-        let items = list.find("[data-repeater-item]");
-        items.each(function(index, item) {
-            let field = jQuery(item)
+    setRules: function (list, group) {
+        var items = list.find("[data-repeater-item]");
+        items.each(function (index, item) {
+            var field = jQuery(item)
                 .find("[data-" + group + "]")
                 .attr("name");
             formRules[field] = ProsAndCons.updateRules(field, group);
         });
     },
 
-    updateRules: function(identifier, group) {
+    updateRules: function (identifier, group) {
         return {
             identifier: identifier,
             rules: [

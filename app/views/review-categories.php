@@ -1,18 +1,18 @@
 <?php
 
-namespace HelpieReviews\App\Views;
+namespace StarcatReview\App\Views;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Views\Review_Categories')) {
+if (!class_exists('\StarcatReview\App\Views\Review_Categories')) {
     class Review_Categories
     {
 
         public function __construct()
         {
-            $this->blocks = new \HelpieReviews\App\Views\Blocks();
+            $this->blocks = new \StarcatReview\App\Views\Blocks();
         }
 
         public function get_view($terms)

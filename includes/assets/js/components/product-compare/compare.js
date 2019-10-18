@@ -17,11 +17,11 @@ var ProductComparison = {
   sample: function() {},
   addProduct: function() {
     var that = this;
-    var hrpCompareTable = jQuery(".cd-products-comparison-table");
-    var hrpProductWrapper = hrpCompareTable.find(".cd-products-wrapper");
-    var searchContainer = hrpProductWrapper.find(".hrp-search-filter-wrapper");
+    var scrCompareTable = jQuery(".cd-products-comparison-table");
+    var scrProductWrapper = scrCompareTable.find(".cd-products-wrapper");
+    var searchContainer = scrProductWrapper.find(".scr-search-filter-wrapper");
     var productHeader = searchContainer.find(".top-info");
-    var addProductBtn = jQuery(".hrp-add-product");
+    var addProductBtn = jQuery(".scr-add-product");
     console.log("check..");
     addProductBtn.on("click", function(e) {
       e.stopPropagation();
@@ -52,9 +52,9 @@ var ProductComparison = {
     });
   },
   addItemToCompare: function() {
-    jQuery("#hrp-cat-collection").on(
+    jQuery("#scr-cat-collection").on(
       "click",
-      ".hrp-collection__col",
+      ".scr-collection__col",
       function() {
         var $post_item = jQuery(this);
         var headerText = $post_item
@@ -76,11 +76,11 @@ var ProductComparison = {
 
         this.addItemToCompare(options);
         // let item_content = "";
-        // item_content += '<div class="items hrp-list-items">';
+        // item_content += '<div class="items scr-list-items">';
         // item_content += "<h5>" + headerText + "</h5>";
         // item_content += "<span>" + body_content + "</span>";
         // item_content += "</div>";
-        // jQuery("#hrp-compare-sidebar").append(item_content);
+        // jQuery("#scr-compare-sidebar").append(item_content);
         // console.log(headerText, bodyContent);
       }
     );
@@ -94,7 +94,7 @@ var ProductComparison = {
 
       jQuery(".ui.sidebar").toggleClass("very thin icon");
       // jQuery("body")
-      // // .find("#hrp-compare-sidebar")
+      // // .find("#scr-compare-sidebar")
       // .toggle("sidebar");
     });
   },
@@ -104,7 +104,7 @@ var ProductComparison = {
     content += '<div class="item" data-id="' + props.id + '">';
     content +=
       "<p>" + props.heading + "</p><span>" + props.desc + "</span></div>";
-    jQuery(".hrp-list-items").append(content);
+    jQuery(".scr-list-items").append(content);
   }
 }; //End module
 

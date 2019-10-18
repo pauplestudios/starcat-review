@@ -1,18 +1,18 @@
 <?php
 
-namespace HelpieReviews\App\Components\User_Reviews;
+namespace StarcatReview\App\Components\User_Reviews;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\User_Reviews\Controller')) {
+if (!class_exists('\StarcatReview\App\Components\User_Reviews\Controller')) {
     class Controller
     {
         public function __construct()
         {
-            $this->model = new \HelpieReviews\App\Components\User_Reviews\Model();
-            $this->view = new \HelpieReviews\App\Components\User_Reviews\View();
+            $this->model = new \StarcatReview\App\Components\User_Reviews\Model();
+            $this->view = new \StarcatReview\App\Components\User_Reviews\View();
         }
 
         public function get_view($args)

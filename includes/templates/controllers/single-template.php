@@ -1,19 +1,19 @@
 <?php
 
-namespace HelpieReviews\Includes\Templates\Controllers;
+namespace StarcatReview\Includes\Templates\Controllers;
 
-use \HelpieReviews\Includes\Settings\HRP_Getter;
+use \StarcatReview\Includes\Settings\SCR_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Single_Template')) {
+if (!class_exists('\StarcatReview\Includes\Templates\Controllers\Single_Template')) {
     class Single_Template
     {
         public function __construct()
         {
-            $this->reviews_builder = new \HelpieReviews\App\Builders\Review_Builder();
+            $this->reviews_builder = new \StarcatReview\App\Builders\Review_Builder();
         }
 
         public function get_view($post)

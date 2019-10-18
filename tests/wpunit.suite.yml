@@ -17,6 +17,6 @@ modules:
             tablePrefix: "%TEST_TABLE_PREFIX%"
             domain: "%WP_DOMAIN%"
             adminEmail: "%ADMIN_EMAIL%"
-            title: "Test"        
-            plugins: ['helpie-reviews/helpie-reviews.php']
-            activatePlugins: ['helpie-reviews/helpie-review.php']
+            title: "Test"
+            plugins: ["starcat-review/starcat-review.php"]
+            activatePlugins: ["starcat-review/helpie-review.php"]

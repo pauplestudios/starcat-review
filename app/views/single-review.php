@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Views;
+namespace StarcatReview\App\Views;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Views\Single_Review')) {
+if (!class_exists('\StarcatReview\App\Views\Single_Review')) {
     class Single_Review
     {
         private $html;
@@ -15,9 +15,9 @@ if (!class_exists('\HelpieReviews\App\Views\Single_Review')) {
         {
             $this->ID = $post_id;
             $this->model = [];
-            $this->reviews_builder = new \HelpieReviews\App\Builders\Review_Builder();
+            $this->reviews_builder = new \StarcatReview\App\Builders\Review_Builder();
 
-            // $review_data_json = file_get_contents(HELPIE_REVIEWS_PATH . "/tests/_data/review-data.json");
+            // $review_data_json = file_get_contents(SCR_PATH . "/tests/_data/review-data.json");
             // $post_data = json_decode($review_data_json, true);
             // $this->model->stats = $post_data[0]['stats'];
         }

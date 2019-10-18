@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\Includes\Settings;
+namespace StarcatReview\Includes\Settings;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\Includes\Settings\Extras')) {
+if (!class_exists('\StarcatReview\Includes\Settings\Extras')) {
     class Extras
     {
         public function __construct()
@@ -28,7 +28,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings\Extras')) {
         {
 
             // if ($this->mp_settings->get_mp_location() == 'archive') {
-            return get_post_type_archive_link(HELPIE_REVIEWS_POST_TYPE);
+            return get_post_type_archive_link(SCR_POST_TYPE);
             // } else {
             //     $post_id = $this->get_mp_selected_page();
             //     return get_permalink($post_id);

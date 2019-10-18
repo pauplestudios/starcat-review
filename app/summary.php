@@ -1,20 +1,20 @@
 <?php
 
-namespace HelpieReviews\App;
+namespace StarcatReview\App;
 
-use HelpieReviews\Includes\Settings\HRP_Getter;
+use StarcatReview\Includes\Settings\SCR_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Summary')) {
+if (!class_exists('\StarcatReview\App\Summary')) {
     class Summary
     {
         public function get_view()
         {
             $args = $this->get_default_args();
-            $summary = new \HelpieReviews\App\Components\Summary\Controller();
+            $summary = new \StarcatReview\App\Components\Summary\Controller();
             $view = $summary->get_view($args);
 
             return $view;
@@ -22,7 +22,7 @@ if (!class_exists('\HelpieReviews\App\Summary')) {
 
         public function get_default_args()
         {
-            $args = HRP_Getter::get_stat_default_args();
+            $args = SCR_Getter::get_stat_default_args();
             $args['post_id'] = get_the_ID();
             $args['items'] = $this->get_items();
             return $args;
@@ -30,7 +30,7 @@ if (!class_exists('\HelpieReviews\App\Summary')) {
 
         protected function get_items()
         {
-            $post_meta = get_post_meta(get_the_ID(), '_helpie_reviews_post_options', true);
+            $post_meta = get_post_meta(get_the_ID(), '_scr_post_options', true);
             $comments = $this->get_comments_list();
 
             $items = [];
@@ -56,13 +56,13 @@ if (!class_exists('\HelpieReviews\App\Summary')) {
         {
             $args = [
                 'post_id' => get_the_ID(),
-                'type' => 'helpie_reviews'
+                'type' => SCR_POST_TYPE
             ];
 
             $comments = get_comments($args);
 
             foreach ($comments as $comment) {
-                $comment->reviews = get_comment_meta($comment->comment_ID, 'hrp_user_review_props', true);
+                $comment->reviews = get_comment_meta($comment->comment_ID, 'scr_user_review_props', true);
             }
 
             return $comments;

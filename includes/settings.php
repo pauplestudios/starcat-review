@@ -1,8 +1,8 @@
 <?php
 
-namespace HelpieReviews\Includes;
+namespace StarcatReview\Includes;
 
-use \HelpieReviews\Includes\Settings\HRP_Getter;
+use \StarcatReview\Includes\Settings\SCR_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
 
 
 
-if (!class_exists('\HelpieReviews\Includes\Settings')) {
+if (!class_exists('\StarcatReview\Includes\Settings')) {
     class Settings
     {
         public function __construct()
@@ -21,7 +21,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
             add_filter('csf_helpie-kb_sections', [$this, 'filter_args']);
             // $this->init();
 
-            $this->fields = new \HelpieReviews\Includes\Settings\Fields();
+            $this->fields = new \StarcatReview\Includes\Settings\Fields();
         }
 
         public function filter_args($content)
@@ -31,7 +31,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
 
         public function setup_options_init()
         {
-            // require_once HELPIE_REVIEWS_PATH . 'includes/settings/settings-config.php';
+            // require_once SCR_PATH . 'includes/settings/settings-config.php';
         }
 
         public function wp_loaded()
@@ -41,23 +41,23 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
 
 
             if (!function_exists('\CSF') && !class_exists('\CSF')) {
-                require_once HELPIE_REVIEWS_PATH . 'includes/lib/codestar-framework/codestar-framework.php';
+                require_once SCR_PATH . 'includes/lib/codestar-framework/codestar-framework.php';
             }
 
-            include_once HELPIE_REVIEWS_PATH . 'includes/settings/helper.php';
+            include_once SCR_PATH . 'includes/settings/helper.php';
             // require_once 'settings-config.php';
 
             if (class_exists('\CSF')) {
 
                 // Set a unique slug-like ID
-                $prefix = 'helpie-reviews';
+                $prefix = 'starcat-review';
 
                 // Create options
                 \CSF::createOptions($prefix, array(
                     'menu_title' => 'Settings',
-                    'menu_parent' => 'edit.php?post_type=helpie_reviews',
+                    'menu_parent' => 'edit.php?post_type=starcat_review',
                     'menu_type' => 'submenu', // menu, submenu, options, theme, etc.
-                    'menu_slug' => 'helpie-review-settings',
+                    'menu_slug' => 'scr-settings',
                     'framework_title' => 'Settings',
                     'theme' => 'light',
                     'show_search' => false, // TODO: Enable once autofill password is fixed
@@ -125,15 +125,15 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'chosen'      => true,
                             'options'     => 'post_types',
                             'query_args'  => array(
-                                'post_type' => 'HELPIE_REVIEWS_POST_TYPE',
+                                'post_type' => 'SCR_POST_TYPE',
                             ),
-                            'default' => 'helpie_reviews'
+                            'default' => SCR_POST_TYPE
                         ),
 
                         // array(
                         //     'id' => 'ur_show_controls',
                         //     'type' => 'switcher',
-                        //     'title' => __('Show Reviews Controls', 'helpie-reviews'),
+                        //     'title' => __('Show Reviews Controls', 'starcat-review'),
                         //     'default' => true,
                         // ),
 
@@ -147,13 +147,13 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         //         array(
                         //             'id' => 'ur_show_search',
                         //             'type' => 'switcher',
-                        //             'title' => __('Show Search', 'helpie-reviews'),
+                        //             'title' => __('Show Search', 'starcat-review'),
                         //             'default' => true,
                         //         ),
                         //         array(
                         //             'id' => 'ur_show_sortBy',
                         //             'type' => 'switcher',
-                        //             'title' => __('Show SortBy', 'helpie-reviews'),
+                        //             'title' => __('Show SortBy', 'starcat-review'),
                         //             'default' => true,
                         //         )
                         //     )
@@ -162,14 +162,14 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         // array(
                         //     'id' => 'ur_enable_replies',
                         //     'type' => 'switcher',
-                        //     'title' => __('Enable Replies to Reviews', 'helpie-reviews'),
+                        //     'title' => __('Enable Replies to Reviews', 'starcat-review'),
                         //     'default' => true,
                         // ),
 
                         // array(
                         //     'id' => 'ur_enable_approval',
                         //     'type' => 'switcher',
-                        //     'title' => __('Require Admin Approval to publish reviews', 'helpie-reviews'),
+                        //     'title' => __('Require Admin Approval to publish reviews', 'starcat-review'),
                         //     'default' => true,
                         // ),
 
@@ -181,7 +181,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         array(
                             'id' => 'ur_show_form_title',
                             'type' => 'switcher',
-                            'title' => __('Show Form Title', 'helpie-reviews'),
+                            'title' => __('Show Form Title', 'starcat-review'),
                             'default' => true,
                         ),
 
@@ -196,14 +196,14 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         array(
                             'id' => 'ur_show_title',
                             'type' => 'switcher',
-                            'title' => __('Show Title', 'helpie-reviews'),
+                            'title' => __('Show Title', 'starcat-review'),
                             'default' => true,
                         ),
 
                         array(
                             'id' => 'ur_show_stats',
                             'type' => 'switcher',
-                            'title' => __('Show Stat', 'helpie-reviews'),
+                            'title' => __('Show Stat', 'starcat-review'),
                             'default' => true,
                             'desc' => '<b>User Review Rating</b> options are based on stats option from general settings section'
                         ),
@@ -211,14 +211,14 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         array(
                             'id' => 'ur_show_description',
                             'type' => 'switcher',
-                            'title' => __('Show Description', 'helpie-reviews'),
+                            'title' => __('Show Description', 'starcat-review'),
                             'default' => true,
                         ),
 
                         // array(
                         //     'id' => 'ur_show_prosandcons',
                         //     'type' => 'switcher',
-                        //     'title' => __('Show Pros and Cons', 'helpie-reviews'),
+                        //     'title' => __('Show Pros and Cons', 'starcat-review'),
                         //     'default' => true,
                         // ),
 
@@ -267,7 +267,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         array(
                             'id' => 'sp_show_controls',
                             'type' => 'switcher',
-                            'title' => __('Show Controls', 'helpie-reviews'),
+                            'title' => __('Show Controls', 'starcat-review'),
                             'default' => true,
                         ),
 
@@ -304,7 +304,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         array(
                             'id' => 'cp_controls',
                             'type' => 'switcher',
-                            'title' => __('Show Controls', 'helpie-reviews'),
+                            'title' => __('Show Controls', 'starcat-review'),
                             'default' => true,
                         ),
                         array(
@@ -316,21 +316,21 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         array(
                             'id' => 'cp_search',
                             'type' => 'switcher',
-                            'title' => __('Show Search', 'helpie-reviews'),
+                            'title' => __('Show Search', 'starcat-review'),
                             'default' => true,
                             'dependency' => array('cp_controls', '==', 'true'),
                         ),
                         array(
                             'id' => 'cp_sortBy',
                             'type' => 'switcher',
-                            'title' => __('Show SortBy', 'helpie-reviews'),
+                            'title' => __('Show SortBy', 'starcat-review'),
                             'default' => true,
                             'dependency' => array('cp_controls', '==', 'true'),
                         ),
                         // array(
                         //     'id' => 'cp_num_of_reviews_filter',
                         //     'type' => 'switcher',
-                        //     'title' => __('Show Number of Review Filter', 'helpie-reviews'),
+                        //     'title' => __('Show Number of Review Filter', 'starcat-review'),
                         //     'default' => true,
                         //     'dependency' => array('cp_controls', '==', 'true'),
                         // ),
@@ -345,8 +345,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'id' => 'cp_default_sortBy',
                             'type' => 'select',
                             'chosen' => true,
-                            'title' => __('Default Sort By', 'helpie-reviews'),
-                            'placeholder' => __('Select a sortby option', 'helpie-reviews'),
+                            'title' => __('Default Sort By', 'starcat-review'),
+                            'placeholder' => __('Select a sortby option', 'starcat-review'),
                             'options' => array(
                                 'alphabetical_asc' => 'Alphabetical Ascending',
                                 'alphabetical_desc' => 'Alphabetical Descending',
@@ -360,8 +360,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'id' => 'cp_num_of_cols',
                             'type' => 'select',
                             'chosen' => true,
-                            'title' => __('Num Of Columns', 'helpie-reviews'),
-                            'placeholder' => __('Select an option', 'helpie-reviews'),
+                            'title' => __('Num Of Columns', 'starcat-review'),
+                            'placeholder' => __('Select an option', 'starcat-review'),
                             'options' => array(
                                 '1' => 1,
                                 '2' => 2,
@@ -376,7 +376,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
         }
         public function mainpage_settings($prefix)
         {
-            $extras = new \HelpieReviews\Includes\Settings\Extras();
+            $extras = new \StarcatReview\Includes\Settings\Extras();
             $main_page_button = $extras->get_main_page_url();
 
             \CSF::createSection(
@@ -390,21 +390,21 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         array(
                             'id' => 'mp_meta_title',
                             'type' => 'text',
-                            'title' => __('Main Page Meta Title', 'helpie-reviews'),
+                            'title' => __('Main Page Meta Title', 'starcat-review'),
                             'desc' => '<strong> Note </strong>: Keep your meta title between 60 and 64 characters.',
                             'default' => 'Reviews',
                         ),
                         array(
                             'id' => 'mp_meta_description',
                             'type' => 'text',
-                            'title' => __('Main Page Meta Description', 'helpie-reviews'),
+                            'title' => __('Main Page Meta Description', 'starcat-review'),
                             'desc' => '<strong> Note </strong>: Keep your meta descriptions between 150 and 154 characters.',
                             'default' => 'These are your reviews',
                         ),
                         array(
                             'id' => 'mp_slug',
                             'type' => 'text',
-                            'title' => __('Main Page Slug', 'helpie-reviews'),
+                            'title' => __('Main Page Slug', 'starcat-review'),
                             'default' => 'reviews',
                         ),
                         array(
@@ -423,13 +423,13 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                                 array(
                                     'id' => 'mp_category_listing',
                                     'type' => 'switcher',
-                                    'title' => __('Category  Listing', 'helpie-reviews'),
+                                    'title' => __('Category  Listing', 'starcat-review'),
                                     'default' => true,
                                 ),
                                 array(
                                     'id' => 'mp_review_listing',
                                     'type' => 'switcher',
-                                    'title' => __('Review Listing', 'helpie-reviews'),
+                                    'title' => __('Review Listing', 'starcat-review'),
                                     'default' => true,
                                 ),
                             ),
@@ -450,7 +450,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         array(
                             'id' => 'mp_cl_title',
                             'type' => 'text',
-                            'title' => __('Title', 'helpie-reviews'),
+                            'title' => __('Title', 'starcat-review'),
                             'default' => 'Review Categories',
                             'dependency' => array('mp_category_listing', '==', 'true'),
                         ),
@@ -458,7 +458,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         array(
                             'id' => 'mp_cl_description',
                             'type' => 'switcher',
-                            'title' => __('Show Description', 'helpie-reviews'),
+                            'title' => __('Show Description', 'starcat-review'),
                             'dependency' => array('mp_category_listing', '==', 'true'),
                             'default' => true,
                         ),
@@ -467,7 +467,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'id' => 'mp_cl_cols',
                             'type' => 'select',
                             'chosen' => true,
-                            'title' => __('Num Of Columns', 'helpie-reviews'),
+                            'title' => __('Num Of Columns', 'starcat-review'),
                             'placeholder' => 'Select an option',
                             'options' => array(
                                 '1' => 1,
@@ -490,7 +490,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         array(
                             'id' => 'mp_rl_title',
                             'type' => 'text',
-                            'title' => __('Title', 'helpie-reviews'),
+                            'title' => __('Title', 'starcat-review'),
                             'default' => 'Review Listing',
                             'default' => 'Review Posts',
                             'dependency' => array('mp_review_listing', '==', 'true'),
@@ -499,8 +499,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'id' => 'mp_rl_sortby',
                             'type' => 'select',
                             'chosen' => true,
-                            'title' => __('Default Sort By', 'helpie-reviews'),
-                            'placeholder' => __('Select a sortby option', 'helpie-reviews'),
+                            'title' => __('Default Sort By', 'starcat-review'),
+                            'placeholder' => __('Select a sortby option', 'starcat-review'),
                             'options' => array(
                                 'alphabetical_asc' => 'Alphabetical Ascending',
                                 'alphabetical_desc' => 'Alphabetical Descending',
@@ -516,8 +516,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'id' => 'mp_rl_cols',
                             'type' => 'select',
                             'chosen' => true,
-                            'title' => __('Num Of Columns', 'helpie-reviews'),
-                            'placeholder' => __('Select an option', 'helpie-reviews'),
+                            'title' => __('Num Of Columns', 'starcat-review'),
+                            'placeholder' => __('Select an option', 'starcat-review'),
                             'options' => array(
                                 '1' => 1,
                                 '2' => 2,
@@ -565,9 +565,9 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'options'     => 'post_types',
                             'multiple' => true,
                             'query_args'  => array(
-                                'post_type' => 'HELPIE_REVIEWS_POST_TYPE',
+                                'post_type' => 'SCR_POST_TYPE',
                             ),
-                            'default' => 'helpie_reviews'
+                            'default' => SCR_POST_TYPE
                         ),
 
                         array(
@@ -632,8 +632,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'type'      => 'image_select',
                             'title'     => 'Stats Type',
                             'options'   => array(
-                                'star' => HELPIE_REVIEWS_URL . 'includes/assets/img/stars-stat.png',
-                                // 'bar' => HELPIE_REVIEWS_URL . 'includes/assets/img/bars-stat.png',
+                                'star' => SCR_URL . 'includes/assets/img/stars-stat.png',
+                                // 'bar' => SCR_URL . 'includes/assets/img/bars-stat.png',
                             ),
                             // 'desc' => 'choose between star and bars stats types',
                             'default'   => 'star'
@@ -681,8 +681,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                                     'library' => 'image',
                                     'placeholder'  => 'http://',
                                     'default' => [
-                                        'url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png',
-                                        'thumbnail' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png'
+                                        'url' => SCR_URL . 'includes/assets/img/tomato.png',
+                                        'thumbnail' => SCR_URL . 'includes/assets/img/tomato.png'
                                     ]
                                 ),
                                 array(
@@ -692,8 +692,8 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                                     'library' => 'image',
                                     'placeholder'  => 'http://',
                                     'default' => [
-                                        'url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png',
-                                        'thumbnail' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png'
+                                        'url' => SCR_URL . 'includes/assets/img/tomato-outline.png',
+                                        'thumbnail' => SCR_URL . 'includes/assets/img/tomato-outline.png'
                                     ],
                                 ),
 
@@ -723,7 +723,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                             'title'   => 'Limit',
                             'type'    => 'slider',
                             'min'     => 5,
-                            'max'     => 20,
+                            'max'     => 10,
                             'step'    => 5,
                             'unit'    => '#',
                             'default' => 5,
@@ -746,7 +746,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
                         array(
                             'id' => 'stats-animate',
                             'type' => 'switcher',
-                            'title' => __('Stat Animate', 'helpie-reviews'),
+                            'title' => __('Stat Animate', 'starcat-review'),
                             'default' => false,
                         ),
 
@@ -786,11 +786,11 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
         /* Single Post - Meta Data Options */
         public function post_meta_fields()
         {
-            $locations = HRP_Getter::get('review_enable_post-types');
-            $prefix = '_helpie_reviews_post_options';
+            $locations = SCR_Getter::get('review_enable_post-types');
+            $prefix = '_scr_post_options';
 
             \CSF::createMetabox($prefix, array(
-                'title' => 'Helpie Reviews',
+                'title' => 'Starcat Review',
                 'post_type' => $locations,
                 'show_restore' => true,
                 'theme' => 'light',
@@ -926,7 +926,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings')) {
         {
             $stats_list = [];
 
-            $stats = HRP_Getter::get('global_stats');
+            $stats = SCR_Getter::get('global_stats');
             if (isset($stats) && !empty($stats)) {
                 $stats_list[] = array(
                     'type'    => 'submessage',

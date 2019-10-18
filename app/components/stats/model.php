@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Components\Stats;
+namespace StarcatReview\App\Components\Stats;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
+if (!class_exists('\StarcatReview\App\Components\Stats\Model')) {
     class Model
     {
         public function get_viewProps($args)
@@ -237,9 +237,9 @@ if (!class_exists('\HelpieReviews\App\Components\Stats\Model')) {
 
         protected function get_icons($collection)
         {
-            $image = HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png';
+            $image = SCR_URL . 'includes/assets/img/tomato.png';
 
-            $image_outline =  HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png';
+            $image_outline =  SCR_URL . 'includes/assets/img/tomato-outline.png';
 
             $collection['icon'] = (isset($collection['images']['image']['thumbnail'])) ? $collection['images']['image']['thumbnail'] : $image;
 

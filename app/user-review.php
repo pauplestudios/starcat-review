@@ -1,20 +1,20 @@
 <?php
 
-namespace HelpieReviews\App;
+namespace StarcatReview\App;
 
-use HelpieReviews\Includes\Settings\HRP_Getter;
+use StarcatReview\Includes\Settings\SCR_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\User_Review')) {
+if (!class_exists('\StarcatReview\App\User_Review')) {
     class User_Review
     {
         public function __construct()
         {
-            $this->form_controller = new \HelpieReviews\App\Components\Form\Controller();
-            $this->reviews_controller = new \HelpieReviews\App\Components\User_Reviews\Controller();
+            $this->form_controller = new \StarcatReview\App\Components\Form\Controller();
+            $this->reviews_controller = new \StarcatReview\App\Components\User_Reviews\Controller();
         }
 
         public function get_view()
@@ -31,17 +31,17 @@ if (!class_exists('\HelpieReviews\App\User_Review')) {
 
         public function get_default_args()
         {
-            $stat_args = HRP_Getter::get_stat_default_args();
+            $stat_args = SCR_Getter::get_stat_default_args();
 
             $args = [
                 'post_id' => get_the_ID(),
                 'items' => $this->get_items(),
-                'enable_pros_cons' => HRP_Getter::get('enable-pros-cons'),
-                'show_form_title' => HRP_Getter::get('ur_show_form_title'),
-                'form_title' => HRP_Getter::get('ur_form_title'),
-                'show_title' => HRP_Getter::get('ur_show_title'),
-                'show_stats' => HRP_Getter::get('ur_show_stats'),
-                'show_description' => HRP_Getter::get('ur_show_description')
+                'enable_pros_cons' => SCR_Getter::get('enable-pros-cons'),
+                'show_form_title' => SCR_Getter::get('ur_show_form_title'),
+                'form_title' => SCR_Getter::get('ur_form_title'),
+                'show_title' => SCR_Getter::get('ur_show_title'),
+                'show_stats' => SCR_Getter::get('ur_show_stats'),
+                'show_description' => SCR_Getter::get('ur_show_description')
             ];
 
             $args = array_merge($stat_args, $args);
@@ -53,7 +53,7 @@ if (!class_exists('\HelpieReviews\App\User_Review')) {
 
         protected function get_items()
         {
-            $post_meta = get_post_meta(get_the_ID(), '_helpie_reviews_post_options', true);
+            $post_meta = get_post_meta(get_the_ID(), '_scr_post_options', true);
             $comments = $this->get_comments_list();
             // error_log("Options : " . print_r($post_meta, true));
             $items = [];
@@ -81,13 +81,13 @@ if (!class_exists('\HelpieReviews\App\User_Review')) {
         {
             $args = [
                 'post_id' => get_the_ID(),
-                'type' => 'helpie_reviews'
+                'type' => SCR_POST_TYPE
             ];
 
             $comments = get_comments($args);
 
             foreach ($comments as $comment) {
-                $comment->review = get_comment_meta($comment->comment_ID, 'hrp_user_review_props', true);
+                $comment->review = get_comment_meta($comment->comment_ID, 'scr_user_review_props', true);
             }
 
             return $comments;

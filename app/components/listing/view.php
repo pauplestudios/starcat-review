@@ -1,13 +1,13 @@
 <?php
 
 
-namespace HelpieReviews\App\Components\Listing;
+namespace StarcatReview\App\Components\Listing;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\Listing\View')) {
+if (!class_exists('\StarcatReview\App\Components\Listing\View')) {
     class View
     {
         private $html;
@@ -15,15 +15,15 @@ if (!class_exists('\HelpieReviews\App\Components\Listing\View')) {
         public function __construct()
         {
             /* Views */
-            $this->card = new \HelpieReviews\App\Views\Blocks\Card();
-            $this->controls_builder = new \HelpieReviews\App\Builders\Controls_Builder();
+            $this->card = new \StarcatReview\App\Views\Blocks\Card();
+            $this->controls_builder = new \StarcatReview\App\Builders\Controls_Builder();
         }
 
         public function get_html($viewProps)
         {
             $collectionProps = $viewProps['collection'];
 
-            $html = '<div id="hrp-controlled-list">';
+            $html = '<div id="scr-controlled-list">';
             $html .= '<h2>' . $collectionProps['title'] . '</h2>';
 
             if ($collectionProps['show_controls']) {
@@ -46,7 +46,7 @@ if (!class_exists('\HelpieReviews\App\Components\Listing\View')) {
         private function get_pagination_html($viewProps)
         {
             $html = '';
-            $html .= '<ul class="ui pagination hrp-pagination menu">';
+            $html .= '<ul class="ui pagination scr-pagination menu">';
 
             for ($ii = 1; $ii <= $viewProps['collection']['total_pages']; $ii++) {
                 # code...
@@ -63,7 +63,7 @@ if (!class_exists('\HelpieReviews\App\Components\Listing\View')) {
             $terms = $viewProps['items']['terms'];
 
             $html = '';
-            $html .= '<div id="hrp-cat-collection" class="hrp-collection list row">';
+            $html .= '<div id="scr-cat-collection" class="scr-collection list row">';
 
             foreach ($posts as $key => $post) {
                 // Set initial $ii

@@ -18,7 +18,7 @@ get_header();
         <?php
         while (have_posts()) : the_post();
 
-            $single_template = new \HelpieReviews\Includes\Templates\Controllers\Single_Template();
+            $single_template = new \StarcatReview\Includes\Templates\Controllers\Single_Template();
             echo $single_template->get_view(get_post());
 
         endwhile;

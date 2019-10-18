@@ -1,19 +1,19 @@
 <?php
 
-namespace HelpieReviews\Includes\Templates\Controllers;
+namespace StarcatReview\Includes\Templates\Controllers;
 
-use \HelpieReviews\Includes\Settings\HRP_Getter;
+use \StarcatReview\Includes\Settings\SCR_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Template')) {
+if (!class_exists('\StarcatReview\Includes\Templates\Controllers\Archive_Template')) {
     class Archive_Template
     {
         public function __construct()
         {
-            $this->listing = new \HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listing();
+            $this->listing = new \StarcatReview\App\Widget_Makers\Review_Listing\Review_Listing();
         }
 
         public function get_view()
@@ -21,7 +21,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
             $props = $this->get_props($this->get_args());
             // error_log('$props : ' . print_r($props, true));
             $html = '';
-            $html = '<div class="hrp-archive-page-content-area">';
+            $html = '<div class="scr-archive-page-content-area">';
             foreach ($props['order'] as $listing => $display) {
                 if ($display) {
                     $html .= $this->get_listing_order($listing, $props);
@@ -47,7 +47,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
             $html = '';
 
             if (isset($props['review_list']['posts']) && !empty($props['review_list']['posts'])) {
-                $html .= '<h2 class="hrp-section-title">' . $props['review_list']['title'] . '</h2>';
+                $html .= '<h2 class="scr-section-title">' . $props['review_list']['title'] . '</h2>';
                 $html .= $this->listing->get_view($props['review_list']);
             } else {
                 $html .= "No Reviews post Found";
@@ -59,7 +59,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
         protected function get_category_listing($props)
         {
             if (isset($props['category_list']['terms']) && !empty($props['category_list']['terms'])) {
-                $html = '<h2 class="hrp-section-title">' . $props['category_list']['title'] . '</h2>';
+                $html = '<h2 class="scr-section-title">' . $props['category_list']['title'] . '</h2>';
                 $html .= $this->listing->get_view($props['category_list']);
             } else {
                 $html .= "No Reviews Category Found";
@@ -80,19 +80,19 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
         protected function get_args()
         {
             $args = [
-                'order' => HRP_Getter::get('mp_components_order'),
+                'order' => SCR_Getter::get('mp_components_order'),
                 'category_list' => [
-                    'title' => HRP_Getter::get('mp_cl_title'),
-                    'description' => HRP_Getter::get('mp_cl_description'),
-                    'num_of_cols' => HRP_Getter::get('mp_cl_cols'),
+                    'title' => SCR_Getter::get('mp_cl_title'),
+                    'description' => SCR_Getter::get('mp_cl_description'),
+                    'num_of_cols' => SCR_Getter::get('mp_cl_cols'),
                     'show_controls' => false,
                     'pagination' => false
                 ],
 
                 'review_list' => [
-                    'title' => HRP_Getter::get('mp_rl_title'),
-                    'sortby' => HRP_Getter::get('mp_rl_sortby'),
-                    'num_of_cols' => HRP_Getter::get('mp_rl_cols'),
+                    'title' => SCR_Getter::get('mp_rl_title'),
+                    'sortby' => SCR_Getter::get('mp_rl_sortby'),
+                    'num_of_cols' => SCR_Getter::get('mp_rl_cols'),
                     'show_controls' => false,
                     'pagination' => false
                 ]
@@ -113,7 +113,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
 
         protected function get_terms()
         {
-            $terms = get_terms(HELPIE_REVIEWS_CATEGORY, array('parent' => 0, 'hide_empty' => false));
+            $terms = get_terms(SCR_CATEGORY, array('parent' => 0, 'hide_empty' => false));
             return $terms;
         }
 
@@ -134,7 +134,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Archive_Templat
             $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
             $args = array(
                 'posts_per_page' => 6, // show 6 posts for now only
-                'post_type' => HELPIE_REVIEWS_POST_TYPE,
+                'post_type' => SCR_POST_TYPE,
                 'paged' => $paged,
             );
 

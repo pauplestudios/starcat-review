@@ -1,13 +1,13 @@
 <?php
 
 
-namespace HelpieReviews\App\Components\User_Reviews;
+namespace StarcatReview\App\Components\User_Reviews;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
+if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
     class View
     {
         private $html;
@@ -15,8 +15,8 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
         public function __construct()
         {
             /* Views */
-            $this->card = new \HelpieReviews\App\Views\Blocks\Enhanced_Card();
-            $this->controls_builder = new \HelpieReviews\App\Builders\Controls_Builder();
+            $this->card = new \StarcatReview\App\Views\Blocks\Enhanced_Card();
+            $this->controls_builder = new \StarcatReview\App\Builders\Controls_Builder();
         }
 
         public function get($viewProps)
@@ -27,7 +27,7 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
                 return '';
             }
 
-            $html = '<div id="hrp-controlled-list">';
+            $html = '<div id="scr-controlled-list">';
             $html .= '<h3>' . $collectionProps['title'] . '</h3>';
 
 
@@ -40,7 +40,7 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
 
             /* Pagination */
             if ($collectionProps['pagination']) {
-                // $html .= '<ul class="ui pagination hrp-pagination menu"></ul>';
+                // $html .= '<ul class="ui pagination scr-pagination menu"></ul>';
                 $html .= $this->get_pagination_html($viewProps);
             }
 
@@ -59,7 +59,7 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
             }
 
             $html = '';
-            $html .= '<ul class="ui pagination hrp-pagination menu">';
+            $html .= '<ul class="ui pagination scr-pagination menu">';
 
             for ($ii = 1; $ii <= $viewProps['collection']['total_pages']; $ii++) {
                 # code...
@@ -76,7 +76,7 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
 
             $html = '';
             // $html .= '<div class="">';
-            $html .= '<div id="hrp-cat-collection" class="hrp-collection list row ui comments">';
+            $html .= '<div id="scr-cat-collection" class="scr-collection list row ui comments">';
 
             foreach ($posts as $key => $post) {
 
@@ -131,7 +131,7 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
 
         protected function get_stats_view($props)
         {
-            $stats = new \HelpieReviews\App\Components\Stats\Controller($props['args']);
+            $stats = new \StarcatReview\App\Components\Stats\Controller($props['args']);
             $view = $stats->get_view();
 
             return $view;
@@ -141,7 +141,7 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\View')) {
         {
             $view = '';
             if ($props['args']['enable_pros_cons']) {
-                $prosandcons = new \HelpieReviews\App\Components\ProsAndCons\Controller($props['args']);
+                $prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller($props['args']);
                 $view = $prosandcons->get_view();
             }
 

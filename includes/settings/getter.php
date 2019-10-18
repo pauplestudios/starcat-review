@@ -1,15 +1,15 @@
 <?php
 
-namespace HelpieReviews\Includes\Settings;
+namespace StarcatReview\Includes\Settings;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
+if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
 
-    // HRP - Helpie Review Plugin
-    class HRP_Getter
+    // SCR - Starcat Review Plugin
+    class SCR_Getter
     {
         private static $options;
         private static $defaults;
@@ -21,7 +21,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
 
             // Only set one time
             if (!isset(self::$options) || empty(self::$options)) {
-                self::$options = get_option('helpie-reviews'); // unique id of the framework
+                self::$options = get_option('starcat-review'); // unique id of the framework
             }
 
             if (isset(self::$options[$option_name])) {
@@ -43,7 +43,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
                 // General Settings Start
                 'template_source' => 'theme',
                 'enable-pros-cons' => true,
-                'review_enable_post-types' => [HELPIE_REVIEWS_POST_TYPE],
+                'review_enable_post-types' => [SCR_POST_TYPE],
                 'global_stat' => ['stat_name' => 'Feature'],
                 'stat-singularity' => 'single',
                 'stats-type' => 'star',
@@ -51,13 +51,13 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
                 'stats-icons' => 'star',
                 'stats-images' => [
                     'image' => [
-                        'url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png',
-                        'thumbnail' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png'
+                        'url' => SCR_URL . 'includes/assets/img/tomato.png',
+                        'thumbnail' => SCR_URL . 'includes/assets/img/tomato.png'
                     ],
 
                     'image-outline' => [
-                        'url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png',
-                        'thumbnail' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png'
+                        'url' => SCR_URL . 'includes/assets/img/tomato-outline.png',
+                        'thumbnail' => SCR_URL . 'includes/assets/img/tomato-outline.png'
                     ]
                 ],
                 'stats-show-rating-label' => true,
@@ -100,7 +100,7 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
                 // ],
 
                 // User Review Start
-                'ur_enable_post-types' => [HELPIE_REVIEWS_POST_TYPE],
+                'ur_enable_post-types' => [SCR_POST_TYPE],
                 'ur_show_controls' => true,
                 'ur_controls_subheading' => true,
                 'ur_show_search' => true,
@@ -124,21 +124,21 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
 
         public static function get_stat_default_args()
         {
-            $type = HRP_Getter::get('stats-type');
-            $limit = ($type == 'star') ? HRP_Getter::get('stats-stars-limit') : HRP_Getter::get('stats-bars-limit');
+            $type = SCR_Getter::get('stats-type');
+            $limit = ($type == 'star') ? SCR_Getter::get('stats-stars-limit') : SCR_Getter::get('stats-bars-limit');
 
             $args = [
-                'global_stats' => HRP_Getter::get('global_stats'),
-                'singularity' => HRP_Getter::get('stat-singularity'),
+                'global_stats' => SCR_Getter::get('global_stats'),
+                'singularity' => SCR_Getter::get('stat-singularity'),
                 'type' => $type,
-                'source_type' =>  HRP_Getter::get('stats-source-type'),
-                'show_rating_label' => HRP_Getter::get('stats-show-rating-label'),
-                'icons' =>  HRP_Getter::get('stats-icons'),
-                'images' => HRP_Getter::get('stats-images'),
-                'steps' => HRP_Getter::get('stats-steps'),
+                'source_type' =>  SCR_Getter::get('stats-source-type'),
+                'show_rating_label' => SCR_Getter::get('stats-show-rating-label'),
+                'icons' =>  SCR_Getter::get('stats-icons'),
+                'images' => SCR_Getter::get('stats-images'),
+                'steps' => SCR_Getter::get('stats-steps'),
                 'limit' => $limit,
-                'animate' => HRP_Getter::get('stats-animate'),
-                'no_rated_message' => HRP_Getter::get('stats-no-rated-message'),
+                'animate' => SCR_Getter::get('stats-animate'),
+                'no_rated_message' => SCR_Getter::get('stats-no-rated-message'),
             ];
 
             return $args;

@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Components\Summary;
+namespace StarcatReview\App\Components\Summary;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\Summary\View')) {
+if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
     class View
     {
         public function __construct()
@@ -22,7 +22,7 @@ if (!class_exists('\HelpieReviews\App\Components\Summary\View')) {
             $no_of_column = ($show_user == true) ? 'one' : 'two';
 
 
-            $html = '<div class="hrp-summary">';
+            $html = '<div class="scr-summary">';
             $html .= '<div class="ui stackable ' . $no_of_column . ' column grid">';
 
             // Author Summary
@@ -30,7 +30,7 @@ if (!class_exists('\HelpieReviews\App\Components\Summary\View')) {
                 $html .= '<div class="column">';
                 $author_args['items'] = $props['items']['author'];
                 $html .= '<h4 class="ui header"> Author Rating </h4>';
-                $author_stat = new \HelpieReviews\App\Components\Stats\Controller($author_args);
+                $author_stat = new \StarcatReview\App\Components\Stats\Controller($author_args);
                 $html .= $author_stat->get_view();
                 $html .= '</div>';
             }
@@ -40,14 +40,14 @@ if (!class_exists('\HelpieReviews\App\Components\Summary\View')) {
                 $html .= '<div class="column">';
                 $html .= '<h4 class="ui header"> User Rating ( ' . $props['items']['user']['review_count'] . ' )</h4>';
                 $user_args['items'] = $props['items']['user'];
-                $user_stat = new \HelpieReviews\App\Components\Stats\Controller($user_args);
-                // $user_prosandcons = new \HelpieReviews\App\Components\ProsAndCons\Controller($props);
+                $user_stat = new \StarcatReview\App\Components\Stats\Controller($user_args);
+                // $user_prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller($props);
                 $html .= $user_stat->get_view();
                 // $html .= $user_prosandcons->get_view();
                 $html .= '</div>';
             }
 
-            $author_prosandcons = new \HelpieReviews\App\Components\ProsAndCons\Controller($author_args);
+            $author_prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller($author_args);
             $html .= $author_prosandcons->get_view();
 
             $html .= '</div></div>';

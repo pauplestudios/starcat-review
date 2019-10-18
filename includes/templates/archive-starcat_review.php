@@ -15,16 +15,16 @@ get_header();
 
 <div id="primary">
     <?php
-    $bread_crumb = new \HelpieReviews\App\Components\BreadCrumb\Controller();
+    $bread_crumb = new \StarcatReview\App\Components\BreadCrumb\Controller();
     echo $bread_crumb->get_view();
     ?>
-    <section class='hrp-archive-description'>
+    <section class='scr-archive-description'>
         <h1> <?php the_archive_title() ?> </h1>
     </section>
 
     <main id="main" class="site-main" role="main">
         <?php
-        $archive_template = new \HelpieReviews\Includes\Templates\Controllers\Archive_Template();
+        $archive_template = new \StarcatReview\Includes\Templates\Controllers\Archive_Template();
         echo $archive_template->get_view();
         ?>
     </main>

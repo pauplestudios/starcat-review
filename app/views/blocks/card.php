@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Views\Blocks;
+namespace StarcatReview\App\Views\Blocks;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Views\Blocks\Card')) {
+if (!class_exists('\StarcatReview\App\Views\Blocks\Card')) {
     class Card
     {
         /* HTML for Single Card */
@@ -17,8 +17,8 @@ if (!class_exists('\HelpieReviews\App\Views\Blocks\Card')) {
             $html = '';
 
             $col_classes = "col-xs-12 col-lg-" . $this->props['col-lg'];
-            $html .= '<div class="hrp-collection__col item ' . $col_classes . '">'; // can't add additional classes
-            $html .= '<div class="hrp-review-card" >';
+            $html .= '<div class="scr-collection__col item ' . $col_classes . '">'; // can't add additional classes
+            $html .= '<div class="scr-review-card" >';
 
             if ($this->show_item('title')) {
                 $html .= '<div class="review-card__header">' . $item['title'] . '</div>';
