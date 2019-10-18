@@ -50,7 +50,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             if (class_exists('\CSF')) {
 
                 // Set a unique slug-like ID
-                $prefix = 'starcat-review';
+                $prefix = SCR_OPTIONS; // scr_options
 
                 // Create options
                 \CSF::createOptions($prefix, array(

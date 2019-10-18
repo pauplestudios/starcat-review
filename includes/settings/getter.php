@@ -21,7 +21,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
 
             // Only set one time
             if (!isset(self::$options) || empty(self::$options)) {
-                self::$options = get_option('starcat-review'); // unique id of the framework
+                self::$options = get_option(SCR_OPTIONS); // unique id of the framework
             }
 
             if (isset(self::$options[$option_name])) {

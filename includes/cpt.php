@@ -59,7 +59,7 @@ if (!class_exists('\StarcatReview\Includes\Cpt')) {
                 'menu_icon' => 'dashicons-star-filled',
                 'show_in_nav_menus' => true,
                 'show_in_rest' => true,
-                // 'map_meta_cap' => false,
+                'map_meta_cap' => true,
                 'can_export' => true,
                 'has_archive' => true,
                 'exclude_from_search' => false,
