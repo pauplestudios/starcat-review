@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Components\Comparison;
+namespace StarcatReview\App\Components\Comparison;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\Comparison\Model')) {
+if (!class_exists('\StarcatReview\App\Components\Comparison\Model')) {
     class Model
     {
 
@@ -141,7 +141,7 @@ if (!class_exists('\HelpieReviews\App\Components\Comparison\Model')) {
 
         protected function get_stats_list($post_id)
         {
-            $review_post_meta =   get_post_meta($post_id, '_helpie_reviews_post_options', true);
+            $review_post_meta =   get_post_meta($post_id, '_scr_post_options', true);
 
             // Return if empty
             if (!isset($review_post_meta['stats']) || empty($review_post_meta['stats'])) {

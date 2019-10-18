@@ -17,7 +17,7 @@
 @import "styles/form.scss";
 @import "styles/listing.scss";
 @import "styles/stats.scss";
-@import "../../app/views/styles/pros-and-cons.scss";
+@import "styles/pros-and-cons.scss";
 
 /* Vendors */
 // @import "vendors/comparison-table/scss/style.scss";
@@ -26,13 +26,13 @@ html {
     background: black;
 }
 
-.hrp-container {
+.scr-container {
     margin: 40px 0 !important;
     overflow: auto;
     width: 100%;
 }
 
-.hrp-review-list {
+.scr-review-list {
     margin: 0;
     list-style: none;
     padding: 0;

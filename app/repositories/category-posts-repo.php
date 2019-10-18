@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Repositories;
+namespace StarcatReview\App\Repositories;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Repositories\Category_Posts_Repo')) {
+if (!class_exists('\StarcatReview\App\Repositories\Category_Posts_Repo')) {
     class Category_Posts_Repo
     {
 
@@ -53,11 +53,11 @@ if (!class_exists('\HelpieReviews\App\Repositories\Category_Posts_Repo')) {
             $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
             $args = array(
                 'posts_per_page' => $input_args['posts_per_page'] ? $input_args['posts_per_page'] : -1,
-                'post_type' => HELPIE_REVIEWS_POST_TYPE,
+                'post_type' => SCR_POST_TYPE,
                 'paged' => $paged,
                 'tax_query' => array(
                     array(
-                        'taxonomy' => 'helpie_reviews_category',
+                        'taxonomy' => SCR_CATEGORY,
                         'field'    => 'id',
                         'terms'    => $input_args['term_id'],
                     ),

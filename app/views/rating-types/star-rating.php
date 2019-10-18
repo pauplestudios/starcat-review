@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Views\Rating_Types;
+namespace StarcatReview\App\Views\Rating_Types;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
+if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
     class Star_Rating
     {
         public function __construct($viewProps)
@@ -24,7 +24,7 @@ if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
             >';
 
                 foreach ($this->props['items'] as $key => $stat) {
-                    $html .= $this->get_reviewed_stat($key, $stat['value'], $stat['score']);
+                    $html .= $this->get_reviewed_stat($key, $stat['rating'], $stat['score']);
                 }
 
                 $html .= '</ul>';

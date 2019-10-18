@@ -19,7 +19,7 @@ class ReviewPostTest extends \Codeception\TestCase\WPTestCase
 
     public function test_review_setup()
     {
-        $review_data_json = file_get_contents(HELPIE_REVIEWS_PATH . "/tests/_data/review-data.json");
+        $review_data_json = file_get_contents(SCR_PATH . "/tests/_data/review-data.json");
         $review_data = json_decode($review_data_json, true);
         $post_data = $review_data[0];
         error_log('$post_data : ' . print_r($post_data, true));
@@ -27,7 +27,7 @@ class ReviewPostTest extends \Codeception\TestCase\WPTestCase
         $wp_review_post = get_post($post_id);
         $comment_id = $this->insert_comment($post_id, $post_data);
 
-        $review_post = new \HelpieReviews\App\Models\Review_Post($wp_review_post);
+        $review_post = new \StarcatReview\App\Models\Review_Post($wp_review_post);
 
         $this->assertEquals($post_id, $review_post->id);
         $this->assertEquals($post_data['content'], $review_post->content);
@@ -48,7 +48,7 @@ class ReviewPostTest extends \Codeception\TestCase\WPTestCase
             'comment_author_email' => 'admin@admin.com',
             'comment_author_url' => 'http://',
             'comment_content' => 'User Review content here',
-            'comment_type' => 'helpie_user_review',
+            'comment_type' => SCR_POST_TYPE,
             'comment_parent' => 0,
             'user_id' => 1,
             'comment_author_IP' => '127.0.0.1',
@@ -68,12 +68,11 @@ class ReviewPostTest extends \Codeception\TestCase\WPTestCase
         return wp_insert_post(array(
             'post_title' => $post['title'],
             'post_content' => $post['content'],
-            'post_type' => 'helpie_reviews',
+            'post_type' => SCR_POST_TYPE,
             'meta_input' => array(
                 'stats' => $post['stats'],
                 'pros_and_cons' => $post['pros_and_cons'],
             ),
         ));
     }
-
 } // END TEST CLASS

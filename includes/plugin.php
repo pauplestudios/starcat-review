@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
-if (!class_exists('\Helpie_Reviews')) {
-    class Helpie_Reviews
+if (!class_exists('\Starcat_Review')) {
+    class Starcat_Review
     {
         public $plugin_domain;
         public $views_dir;
@@ -14,8 +14,8 @@ if (!class_exists('\Helpie_Reviews')) {
         public function __construct()
         {
             $this->setup_autoload();
-            $this->plugin_domain = HELPIE_REVIEWS_DOMAIN;
-            $this->version = HELPIE_REVIEWS_VERSION;
+            $this->plugin_domain = SCR_DOMAIN;
+            $this->version = SCR_VERSION;
 
             /*  Reviews Register Post types and its Taxonomies */
             $this->register_cpt_and_taxonomy();
@@ -31,37 +31,37 @@ if (!class_exists('\Helpie_Reviews')) {
 
         public function register_cpt_and_taxonomy()
         {
-            $cpt = new \HelpieReviews\Includes\Cpt();
+            $cpt = new \StarcatReview\Includes\Cpt();
             $cpt->register();
         }
 
         public function load_hooks()
         {
-            $hooks = new \HelpieReviews\Includes\Hooks();
+            $hooks = new \StarcatReview\Includes\Hooks();
         }
 
 
         public function load_ajax_handler()
         {
-            $ajax_handler = new \HelpieReviews\Includes\Ajax_Handler();
+            $ajax_handler = new \StarcatReview\Includes\Ajax_Handler();
             $ajax_handler->register_ajax_actions();
         }
 
 
         public function load_components()
         {
-            $shortcodes = new \HelpieReviews\Includes\Shortcodes();
-            $settings = new \HelpieReviews\Includes\Settings();
+            $shortcodes = new \StarcatReview\Includes\Shortcodes();
+            $settings = new \StarcatReview\Includes\Settings();
 
             /* Notifications */
-            // new \HelpieReviews\Includes\Notifications();
+            // new \StarcatReview\Includes\Notifications();
 
             /* Upgrades */
-            $Upgrades = new \HelpieReviews\Includes\Upgrades();
-            \HelpieReviews\Includes\Upgrades::init();
+            $Upgrades = new \StarcatReview\Includes\Upgrades();
+            \StarcatReview\Includes\Upgrades::init();
 
             /* Load Widgets */
-            $widgets = new \HelpieReviews\Includes\Widget_Controller();
+            $widgets = new \StarcatReview\Includes\Widget_Controller();
             $widgets->load();
         }
 
@@ -78,7 +78,7 @@ if (!class_exists('\Helpie_Reviews')) {
         public function __clone()
         {
             // Cloning instances of the class is forbidden.
-            _doing_it_wrong(__FUNCTION__, esc_html__('Cheatin&#8217; huh?', 'helpie-reviews'), '1.0.0');
+            _doing_it_wrong(__FUNCTION__, esc_html__('Cheatin&#8217; huh?', 'starcat-review'), '1.0.0');
         }
 
         /**
@@ -91,7 +91,7 @@ if (!class_exists('\Helpie_Reviews')) {
         public function __wakeup()
         {
             // Unserializing instances of the class is forbidden.
-            _doing_it_wrong(__FUNCTION__, esc_html__('Cheatin&#8217; huh?', 'helpie-reviews'), '1.0.0');
+            _doing_it_wrong(__FUNCTION__, esc_html__('Cheatin&#8217; huh?', 'starcat-review'), '1.0.0');
         }
 
         /**
@@ -105,7 +105,7 @@ if (!class_exists('\Helpie_Reviews')) {
         {
             if (is_null(self::$instance)) {
                 self::$instance = new self();
-                do_action('helpie_reviews/loaded');
+                do_action('starcat_review/loaded');
             }
 
             return self::$instance;
@@ -113,8 +113,8 @@ if (!class_exists('\Helpie_Reviews')) {
 
         protected function setup_autoload()
         {
-            require_once HELPIE_REVIEWS_PATH . '/includes/autoloader.php';
-            \HelpieReviews\Autoloader::run();
+            require_once SCR_PATH . '/includes/autoloader.php';
+            \StarcatReview\Autoloader::run();
         }
 
 
@@ -130,4 +130,4 @@ if (!class_exists('\Helpie_Reviews')) {
     } // END CLASS
 }
 
-new Helpie_Reviews();
+new Starcat_Review();

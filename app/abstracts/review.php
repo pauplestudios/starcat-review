@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Abstracts;
+namespace StarcatReview\App\Abstracts;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Abstracts\Review')) {
+if (!class_exists('\StarcatReview\App\Abstracts\Review')) {
     abstract class Review
     {
         public function __construct($post)

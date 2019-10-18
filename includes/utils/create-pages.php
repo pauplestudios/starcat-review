@@ -1,21 +1,21 @@
 <?php
 
-namespace HelpieReviews\Includes\Utils;
+namespace StarcatReview\Includes\Utils;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\Includes\Utils\Create_Pages')) {
+if (!class_exists('\StarcatReview\Includes\Utils\Create_Pages')) {
     class Create_Pages
     {
 
         public function setup_data($post_data)
         {
             $post_data = [
-                'post_type' => "helpie_reviews",
+                'post_type' => SCR_POST_TYPE,
                 'taxonomy' => [
-                    'helpie_reviews_category' => "Getting Started",
+                    SCR_CATEGORY => "Getting Started",
                 ],
                 'title' => "Yours First Reviews Question",
                 'content' => "Yours relevent questions answer."
@@ -27,17 +27,17 @@ if (!class_exists('\HelpieReviews\Includes\Utils\Create_Pages')) {
             // Create Post only if it does not already exists
             if ($the_query->post_count < 1) {
                 /* Setup Demo Reviews Question And Answer */
-                $post_utils = new \HelpieReviews\Includes\Utils\Post();
-                $post_utils->insert_term_with_post($post_data['post_type'], "Getting Started", "helpie_reviews_category", "Yours First Reviews Question", "Yours relevent questions answer.");
+                $post_utils = new \StarcatReview\Includes\Utils\Post();
+                $post_utils->insert_term_with_post($post_data['post_type'], "Getting Started", SCR_CATEGORY, "Yours First Review Post", "Yours relevent post review.");
             }
-            $this->create_page_on_activate();
+            // $this->create_page_on_activate();
             wp_reset_postdata();
         }
 
         public function create_page_on_activate()
         {
-            // $create_page = new \HelpieReviews\Utils\Create_Pages();
-            $this->create('helpie_reviews_page', 'helpie_reviews_page_id', 'Helpie Reviews', '[helpie_reviews]');
+            // $create_page = new \StarcatReview\Utils\Create_Pages();
+            $this->create('starcat_review_page', 'starcat_review_page_id', 'Starcat Review', '[starcat_review]');
         }
 
         /**

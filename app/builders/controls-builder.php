@@ -1,14 +1,14 @@
 <?php
 
-namespace HelpieReviews\App\Builders;
+namespace StarcatReview\App\Builders;
 
-use \HelpieReviews\Includes\Settings\HRP_Getter;
+use \StarcatReview\Includes\Settings\SCR_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Builders\Controls_Builder')) {
+if (!class_exists('\StarcatReview\App\Builders\Controls_Builder')) {
     class Controls_Builder
     {
 
@@ -29,25 +29,25 @@ if (!class_exists('\HelpieReviews\App\Builders\Controls_Builder')) {
                         'alphabet-asc' => 'Alphabetic Asc',
                         'alphabet-desc' => 'Alphabetic Desc',
                         'avg-rating' => 'Average Rating',
-                        'review-count' => 'Number of Reviews',
+                        // 'review-count' => 'Number of Reviews',
                         'post-date' => 'Recent',
                         'post-modified' => 'Recently Updated',
                     ],
                     'size' => 4
                 ],
-                'reviews' => [
-                    'name' => 'reviews',
-                    'type' => 'dropdown',
-                    'default' => '',
-                    'label' => 'No. of reviews',
-                    'options' => [
-                        '2' => '2+',
-                        '4' => '4+',
-                        '25' => '25+',
-                        '50' => '50+'
-                    ],
-                    'size' => 4
-                ],
+                // 'reviews' => [
+                //     'name' => 'reviews',
+                //     'type' => 'dropdown',
+                //     'default' => '',
+                //     'label' => 'No. of reviews',
+                //     'options' => [
+                //         '2' => '2+',
+                //         '4' => '4+',
+                //         '25' => '25+',
+                //         '50' => '50+'
+                //     ],
+                //     'size' => 4
+                // ],
                 // 'verified' => [
                 //     'name' => 'verified',
                 //     'type' => 'radio',
@@ -62,15 +62,15 @@ if (!class_exists('\HelpieReviews\App\Builders\Controls_Builder')) {
                 // ]
             ];
 
-            $this->semantic = new \HelpieReviews\App\Views\Blocks\List_Controls_Semantic();
-            $this->listjs = new \HelpieReviews\App\Views\Blocks\List_Controls_Listjs();
+            $this->semantic = new \StarcatReview\App\Views\Blocks\List_Controls_Semantic();
+            $this->listjs = new \StarcatReview\App\Views\Blocks\List_Controls_Listjs();
         }
 
         public function get_controls($show_controls)
         {
             $html = '';
 
-            $html .= '<div class="hrp-controls">';
+            $html .= '<div class="scr-controls">';
             $html .= '<div class="row">';
 
             foreach ($this->controls as $key => $control) {
@@ -96,19 +96,19 @@ if (!class_exists('\HelpieReviews\App\Builders\Controls_Builder')) {
         {
             $map = [
                 'search' => [
-                    'class' => new \HelpieReviews\App\Views\Blocks\List_Controls_Listjs(),
+                    'class' => new \StarcatReview\App\Views\Blocks\List_Controls_Listjs(),
                     'methodName' => 'search'
                 ],
                 'sort_button' => [
-                    'class' => new \HelpieReviews\App\Views\Blocks\List_Controls_Listjs(),
+                    'class' => new \StarcatReview\App\Views\Blocks\List_Controls_Listjs(),
                     'methodName' => 'sort_button'
                 ],
                 'dropdown' => [
-                    'class' => new \HelpieReviews\App\Views\Blocks\List_Controls_Semantic(),
+                    'class' => new \StarcatReview\App\Views\Blocks\List_Controls_Semantic(),
                     'methodName' => 'dropdown'
                 ],
                 'radio' => [
-                    'class' => new \HelpieReviews\App\Views\Blocks\List_Controls_Semantic(),
+                    'class' => new \StarcatReview\App\Views\Blocks\List_Controls_Semantic(),
                     'methodName' => 'radio_group'
                 ]
             ];

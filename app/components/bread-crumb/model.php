@@ -1,31 +1,31 @@
 <?php
 
-namespace HelpieReviews\App\Components\BreadCrumb;
+namespace StarcatReview\App\Components\BreadCrumb;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\BreadCrumb\Model')) {
+if (!class_exists('\StarcatReview\App\Components\BreadCrumb\Model')) {
     class Model
     {
         public function __construct()
         {
-            $this->extras = new \HelpieReviews\Includes\Settings\Extras();
+            $this->extras = new \StarcatReview\Includes\Settings\Extras();
         }
 
-        public function get_hrp_info($post_id, $page)
+        public function get_scr_info($post_id, $page)
         {
             $bread_crumbs_info = array();
 
-            $mp_hrp_section = $this->main_page_section();
+            $mp_scr_section = $this->main_page_section();
 
             $bread_crumbs_info['post_type'] = array(
                 'permalink' => $this->extras->get_mainpage_permalink(),
-                'title' => $mp_hrp_section['hrp_main_title']
+                'title' => $mp_scr_section['scr_main_title']
             );
 
-            $taxonomy = 'helpie_reviews_category';
+            $taxonomy = SCR_CATEGORY;
             if ($page == 'archive') {
                 $queried_object = get_queried_object();
 
@@ -142,7 +142,7 @@ if (!class_exists('\HelpieReviews\App\Components\BreadCrumb\Model')) {
             $parent_term_info = [];
             if (isset($term) && isset($term->parent) && !empty($term->parent) && $term->parent != 0) {
                 $parent_term_id = $term->parent;
-                $parent_term = get_term($parent_term_id, 'helpie_reviews_category');
+                $parent_term = get_term($parent_term_id, 'SCR_CATEGORY');
                 $parent_term_info = $this->get_term_info($parent_term);
             }
 
@@ -152,9 +152,9 @@ if (!class_exists('\HelpieReviews\App\Components\BreadCrumb\Model')) {
         public function main_page_section()
         {
             $mp_section_order =   array(
-                'hrp_main_title' =>  'Helpie Review',
-                'hrp_main_subtitle' => 'We’re here to help.',
-                'hrp_main_page_search_display' => 1,
+                'scr_main_title' =>  'Starcat Review',
+                'scr_main_subtitle' => 'We’re here to help.',
+                'scr_main_page_search_display' => 1,
             );
 
             //Need Some Clarifications

@@ -1,23 +1,23 @@
 var Stats = {
-    init: function() {
+    init: function () {
         console.log("Stats JS Loaded !!!");
         this.eventListener();
     },
 
-    eventListener: function() {
+    eventListener: function () {
         this.getReviewStat();
         this.getReviewedStat();
     },
 
-    getReviewedStat: function() {
+    getReviewedStat: function () {
         // Animating Reviewed Stat
-        const reviewed = jQuery(".reviewed-list");
-        const animate = reviewed.attr("data-animate");
+        var reviewed = jQuery(".reviewed-list");
+        var animate = reviewed.attr("data-animate");
 
         if (animate == "1") {
-            reviewed.find(".reviewed-item").each(function(i) {
-                let reviewedItem = jQuery(this);
-                let value = reviewedItem.find("input[name]").attr("value");
+            reviewed.find(".reviewed-item").each(function (i) {
+                var reviewedItem = jQuery(this);
+                var value = reviewedItem.find("input[name]").attr("value");
 
                 reviewedItem
                     .find(".stars-result")
@@ -29,10 +29,10 @@ var Stats = {
         }
     },
 
-    getReviewStat: function() {
-        const review = jQuery(".review-list");
+    getReviewStat: function () {
+        var review = jQuery(".review-list");
 
-        const props = {
+        var props = {
             type: review.attr("data-type"),
             limit: review.attr("data-limit"),
             steps: review.attr("data-steps"),
@@ -47,13 +47,13 @@ var Stats = {
         );
     },
 
-    getRatingStat: function(ratingElement, resultElement, props) {
+    getRatingStat: function (ratingElement, resultElement, props) {
         jQuery(ratingElement)
-            .on("mousemove touchmove", function(e) {
-                let element = jQuery(this);
-                let elmentOffsetLeft = element.offset().left;
-                let pageX = e.pageX || e.originalEvent.touches[0].pageX;
-                let elementWidth = (
+            .on("mousemove touchmove", function (e) {
+                var element = jQuery(this);
+                var elmentOffsetLeft = element.offset().left;
+                var pageX = e.pageX || e.originalEvent.touches[0].pageX;
+                var elementWidth = (
                     ((pageX - elmentOffsetLeft) / element.width()) *
                     100
                 ).toFixed();
@@ -65,8 +65,8 @@ var Stats = {
                     elementWidth = 100;
                 }
 
-                let statWidth = Stats.getStatWidth(elementWidth, props);
-                let score = Stats.getStatScore(statWidth, props);
+                var statWidth = Stats.getStatWidth(elementWidth, props);
+                var score = Stats.getStatScore(statWidth, props);
 
                 element = props.type == "bar" ? element.parent() : element;
 
@@ -88,11 +88,11 @@ var Stats = {
                 // Update Result
                 element.attr("result", statWidth);
             })
-            .on("mouseleave", function() {
-                let element = jQuery(this);
+            .on("mouseleave", function () {
+                var element = jQuery(this);
                 element = props.type == "bar" ? element.parent() : element;
-                let value = element.find("input").val();
-                let score = Stats.getStatScore(value, props);
+                var value = element.find("input").val();
+                var score = Stats.getStatScore(value, props);
 
                 // Update Score
                 element
@@ -116,18 +116,18 @@ var Stats = {
                 // Update Result
                 element.attr("result", value);
             })
-            .on("click touchmove", function() {
-                let element = jQuery(this);
+            .on("click touchmove", function () {
+                var element = jQuery(this);
                 element = props.type == "bar" ? element.parent() : element;
-                let value = element.attr("result");
+                var value = element.attr("result");
 
                 // Update Hidden Input Value
                 element.find("input").val(value);
             });
     },
 
-    getStatWidth: function(elementWidth, props) {
-        let divisor, statWidth;
+    getStatWidth: function (elementWidth, props) {
+        var divisor, statWidth;
 
         switch (props.steps) {
             case "full":
@@ -153,8 +153,8 @@ var Stats = {
         return statWidth;
     },
 
-    getStatScore: function(statValue, props) {
-        let score;
+    getStatScore: function (statValue, props) {
+        var score;
 
         score = statValue / (100 / props.limit);
         score = props.steps == "precise" ? score.toFixed(1) : score;
