@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\Includes\Widgets;
+namespace StarcatReview\Includes\Widgets;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\Includes\Widgets\Register_Elementor_Widgets')) {
+if (!class_exists('\StarcatReview\Includes\Widgets\Register_Elementor_Widgets')) {
     class Register_Elementor_Widgets
     {
         public function load()
@@ -17,16 +17,16 @@ if (!class_exists('\HelpieReviews\Includes\Widgets\Register_Elementor_Widgets'))
         public function register()
         {
             $widget_args = array(
-                'name' => 'hrp-listing',
+                'name' => 'scr-listing',
                 'title' => 'Review Listing',
                 'icon' => 'fa fa-th-list',
                 'categories' => ['general-elements'],
-                'model' =>  new \HelpieReviews\App\Components\Listing\Model(),
-                'view' => new \HelpieReviews\App\Components\Listing\Controller(),
+                'model' =>  new \StarcatReview\App\Components\Listing\Model(),
+                'view' => new \StarcatReview\App\Components\Listing\Controller(),
             );
 
 
-            require_once HELPIE_REVIEWS_PATH . '/lib/widgetry/elementor-widget-factory.php';
+            require_once SCR_PATH . '/lib/widgetry/elementor-widget-factory.php';
 
 
             \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new \Widgetry\Elementor_Widget_Factory([], $widget_args));

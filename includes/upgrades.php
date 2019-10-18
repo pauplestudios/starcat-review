@@ -1,6 +1,6 @@
 <?php
 
-namespace HelpieReviews\Includes;
+namespace StarcatReview\Includes;
 
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
  *
  * @since 1.9
  */
-if (!class_exists('\HelpieReviews\Includes\Upgrades')) {
+if (!class_exists('\StarcatReview\Includes\Upgrades')) {
     class Upgrades
     {
 
@@ -21,14 +21,14 @@ if (!class_exists('\HelpieReviews\Includes\Upgrades')) {
         {
             // error_log('Upgrades->init()');
             $args = [
-                'db_version' => get_option('helpie_reviews_version'),
-                'file_version' => HELPIE_REVIEWS_VERSION,
-                'version_option' => 'helpie_reviews_version',
-                'slug' => 'helpie_reviews'
+                'db_version' => get_option('SCR_VERSION'),
+                'file_version' => SCR_VERSION,
+                'version_option' => 'SCR_VERSION',
+                'slug' => SCR_POST_TYPE
             ];
 
-            $upgrades_list = new \HelpieReviews\Includes\Upgrades_List();
-            include_once HELPIE_REVIEWS_PATH . 'includes/lib/upgrader/upgrader.php';
+            $upgrades_list = new \StarcatReview\Includes\Upgrades_List();
+            include_once SCR_PATH . 'includes/lib/upgrader/upgrader.php';
             $upgrader = new \Upgrader\Upgrader($args, $upgrades_list);
             $upgrader::add_actions();
         }

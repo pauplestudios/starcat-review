@@ -1,13 +1,13 @@
 <?php
 
 
-namespace HelpieReviews\App\Components\User_Reviews;
+namespace StarcatReview\App\Components\User_Reviews;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\User_Reviews\Model')) {
+if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
     class Model
     {
         public function get_viewProps($args)

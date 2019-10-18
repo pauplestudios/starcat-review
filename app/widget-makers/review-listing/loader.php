@@ -1,19 +1,19 @@
 <?php
 
-namespace HelpieReviews\App\Widget_Makers\Review_Listing;
+namespace StarcatReview\App\Widget_Makers\Review_Listing;
 
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Loader')) {
+if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Loader')) {
     class Loader
     {
         public function load()
         {
             // Shortcode
-            add_shortcode('helpie_reviews_list', array($this, 'get_view'));
+            add_shortcode('starcat_review_list', array($this, 'get_view'));
 
             // WordPress Widget
             add_action('widgets_init', [$this, 'register_widget']);
@@ -24,7 +24,7 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Loader')) {
 
         public function get_view()
         {
-            $comparison_controller = new \HelpieReviews\App\Components\Listing\Controller();
+            $comparison_controller = new \StarcatReview\App\Components\Listing\Controller();
             $args = [];
             return $comparison_controller->get_view($args);
         }
@@ -33,11 +33,11 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Loader')) {
         {
 
             // error_log(' register_widget: ');
-            $faq_widget_args = $this->get_widget_args();
+            $scr_widget_args = $this->get_widget_args();
 
-            require_once HELPIE_REVIEWS_PATH . '/includes/lib/widgetry/widget-factory.php';
-            $faq_widget = new \Widgetry\Widget_Factory($faq_widget_args);
-            register_widget($faq_widget);
+            require_once SCR_PATH . '/includes/lib/widgetry/widget-factory.php';
+            $scr_widget = new \Widgetry\Widget_Factory($scr_widget_args);
+            register_widget($scr_widget);
         }
 
 
@@ -47,20 +47,20 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Loader')) {
             $elementor_args = $this->get_elementor_args($args);
 
 
-            require_once HELPIE_REVIEWS_PATH . '/includes/lib/widgetry/elementor-widget-factory.php';
+            require_once SCR_PATH . '/includes/lib/widgetry/elementor-widget-factory.php';
             \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new \Widgetry\Elementor_Widget_Factory([], $elementor_args));
         }
 
         public function get_widget_args()
         {
             $args = [
-                'id' => 'helpie-reviews-listing',
-                'name' => 'Helpie Reviews Listing',
-                'description' => 'Helpie Reviews Listing Widget',
+                'id' => 'starcat-review-listing',
+                'name' => 'Starcat Review Listing',
+                'description' => 'Starcat Review Listing Widget',
                 'icon' => 'fa fa-th-list', // Used by Elementor only
                 'categories' => ['general-elements'], // Used by Elementor only
-                'model' =>  new \HelpieReviews\App\Components\Listing\Model(),
-                'view' => new \HelpieReviews\App\Components\Listing\Controller(),
+                'model' =>  new \StarcatReview\App\Components\Listing\Model(),
+                'view' => new \StarcatReview\App\Components\Listing\Controller(),
             ];
 
             return $args;

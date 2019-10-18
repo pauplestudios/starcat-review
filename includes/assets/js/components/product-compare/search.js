@@ -6,7 +6,7 @@ var Search = {
     this.bindEvents();
   },
   bindEvents: function() {
-    var search_element_container = jQuery(".hrp-search-container");
+    var search_element_container = jQuery(".scr-search-container");
     this.searchProduct(search_element_container);
     this.selectItem(search_element_container);
     this.closeSearchListDiv();
@@ -15,15 +15,15 @@ var Search = {
   },
   searchProduct: function(search_element) {
     console.log(this);
-    var search_list = jQuery(search_element).find(".hrp-search-lists");
-    jQuery(search_element).on("keyup", ".hrp-search", function() {
+    var search_list = jQuery(search_element).find(".scr-search-lists");
+    jQuery(search_element).on("keyup", ".scr-search", function() {
       var search_data = {
-        action: "get_hrp_results"
+        action: "get_scr_results"
       };
 
       jQuery.ajax({
         type: "POST",
-        url: hrp_ajax.ajax_url,
+        url: scr_ajax.ajax_url,
         data: search_data,
         dataType: "json",
         success: function(response) {
@@ -53,16 +53,16 @@ var Search = {
   selectItem: function(search_element_container) {
     jQuery(search_element_container).on(
       "click",
-      ".hrp-search-lists .item",
+      ".scr-search-lists .item",
       function(e) {
         e.preventDefault();
         let heading = jQuery(this)
           .text()
           .trim();
         jQuery(search_element_container)
-          .find(".hrp-search")
+          .find(".scr-search")
           .val(heading);
-        jQuery(".hrp-search-lists").hide();
+        jQuery(".scr-search-lists").hide();
 
         contents = {
           headingText: heading
@@ -74,7 +74,7 @@ var Search = {
   },
   closeSearchListDiv: function() {
     jQuery(document).mouseup(function(e) {
-      container = jQuery(".hrp-search-lists");
+      container = jQuery(".scr-search-lists");
       if (!container.is(e.target) && container.has(e.target).length === 0) {
         container.hide();
       }

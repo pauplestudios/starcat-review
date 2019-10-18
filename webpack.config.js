@@ -144,7 +144,7 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
                 archive: [
                     {
                         source: "./test-artifacts/build",
-                        destination: "./helpie-reviews.zip"
+                        destination: "./starcat-review.zip"
                     }
                 ]
             }

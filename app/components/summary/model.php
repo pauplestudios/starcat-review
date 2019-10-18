@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Components\Summary;
+namespace StarcatReview\App\Components\Summary;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\Summary\Model')) {
+if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
     class Model
     {
         public function get_Props($args)
@@ -38,7 +38,10 @@ if (!class_exists('\HelpieReviews\App\Components\Summary\Model')) {
                             return strtolower($stat['stat_name']);
                         }, $args['global_stats']);
                     }
-
+                    if ($args['singularity'] == 'single') {
+                        $global_stats = [$global_stats[0]];
+                    }
+                    // error_log("global" . print_r($global_stats, true));
 
                     if (in_array(strtolower($stat_key), $global_stats)) {
                         if (!isset($groups['stats-list'][$stat_key])) {

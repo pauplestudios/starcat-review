@@ -1,26 +1,55 @@
 <?php
 
-namespace HelpieReviews\App\Builders;
+namespace StarcatReview\App\Builders;
+
+use \StarcatReview\Includes\Settings\SCR_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Builders\Review_Builder')) {
+if (!class_exists('\StarcatReview\App\Builders\Review_Builder')) {
     class Review_Builder
     {
         public function __construct()
         {
-            $this->summary = new \HelpieReviews\App\Summary();
-            $this->user_review = new \HelpieReviews\App\User_Review();
+            $this->summary = new \StarcatReview\App\Summary();
+            $this->user_review = new \StarcatReview\App\User_Review();
         }
 
         public function get_reviews()
         {
-            $html = $this->summary->get_view();
-            $html .= $this->user_review->get_view();
+            $post_type = get_post_type();
+            $review_enable_post_types = SCR_Getter::get('review_enable_post-types');
+            $user_review_enable_post_types = SCR_Getter::get('ur_enable_post-types');
+
+            $html = '';
+            // error_log("is_enable Review : " . $this->is_enable_post_type($post_type, $review_enable_post_types));
+            if ($this->is_enable_post_type($post_type, $review_enable_post_types)) {
+
+                $html .= $this->summary->get_view();
+            }
+            // error_log("is_enable User Review : " . $this->is_enable_post_type($post_type, $user_review_enable_post_types));
+            if ($this->is_enable_post_type($post_type, $user_review_enable_post_types)) {
+
+
+                $html .= $this->user_review->get_view();
+            }
 
             return $html;
+        }
+
+        public function is_enable_post_type($post_type, $enable_post_types)
+        {
+            $is_enable = false;
+            if (is_string($enable_post_types) && ($post_type == $enable_post_types)) {
+                $is_enable = true;
+            }
+            if (is_array($enable_post_types) && in_array($post_type, $enable_post_types)) {
+                $is_enable = true;
+            }
+
+            return $is_enable;
         }
     } // END CLASS
 

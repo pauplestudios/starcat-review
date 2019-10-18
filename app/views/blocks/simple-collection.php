@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Views\Blocks;
+namespace StarcatReview\App\Views\Blocks;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Views\Blocks\Simple_Collection')) {
+if (!class_exists('\StarcatReview\App\Views\Blocks\Simple_Collection')) {
     class Simple_Collection
     {
 
@@ -17,7 +17,7 @@ if (!class_exists('\HelpieReviews\App\Views\Blocks\Simple_Collection')) {
         public function get_view($itemsProps, $collectionProps)
         {
             $html = '';
-            $html .= '<div class="hrp-collection row">';
+            $html .= '<div class="scr-collection row">';
 
             $columns = $collectionProps['no_of_cols'];
             $count = 1;
@@ -45,8 +45,8 @@ if (!class_exists('\HelpieReviews\App\Views\Blocks\Simple_Collection')) {
         {
             $html = '';
 
-            $html .= '<div class="hrp-collection__col col-xs-12 col-lg-4">'; // can't add additional classes
-            $html .= '<div class="hrp-review-card">';
+            $html .= '<div class="scr-collection__col col-xs-12 col-lg-4">'; // can't add additional classes
+            $html .= '<div class="scr-review-card">';
             $html .= '<div class="review-card__header">' . $item['title'] . '</div>';
             $html .= '<div class="review-card__body">' . $item['content'] . '</div>';
             $html .= '<div class="review-card__footer"><a href="' . $item['url'] . '">See all >> </a></div>';
