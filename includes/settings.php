@@ -916,7 +916,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         break;
                     }
                     if (is_string($stat)) {
-                        $stat = ['stat_name' => $stat];
+                        $stat = ['stat_name' => $stat]; // Fix : On first installation undefined property
                     }
                     $stats_list[] = array(
                         'id'     => strtolower($stat['stat_name']),
