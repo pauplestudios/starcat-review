@@ -1,5 +1,5 @@
 {
-    "base": "includes/assets/vendors/semantic/",
+    "base": "includes\\assets\\vendors\\semantic\\",
     "paths": {
         "source": {
             "config": "src/theme.config",
@@ -25,21 +25,11 @@
         "input",
         "label",
         "segment",
-        "form",
         "grid",
-        "message",
         "table",
         "card",
-        "accordion",
-        "checkbox",
-        "dimmer",
         "dropdown",
-        "modal",
-        "progress",
-        "rating",
         "search",
-        "transition",
-        "placeholder",
         "comment",
         "form"
     ],
