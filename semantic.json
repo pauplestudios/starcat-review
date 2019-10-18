@@ -24,6 +24,7 @@
         "image",
         "input",
         "label",
+        "message",
         "segment",
         "grid",
         "table",
