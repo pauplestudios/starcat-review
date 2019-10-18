@@ -161,5 +161,35 @@ if (!class_exists('\HelpieReviews\App\Components\BreadCrumb\Model')) {
 
             return $mp_section_order;
         }
+
+        public function get_style_config()
+        {
+            $style_config = array(
+
+                'element' => array(
+                    'name' => 'hrp_breadcrumbs',
+                    'selector' => '.hrp-breadcrumbs',
+                    'label' => __('Breadcrumbs Container', 'elementor'),
+                    'styleProps' => array('text-align', 'background', 'border', 'border_radius', 'padding', 'margin'),
+                    'children' => array(
+                        'label' => array(
+                            'name' => 'hrp-breadcrumbs',
+                            'selector' => '.hrp-breadcrumbs a',
+                            'label' => __('Link', 'pauple-helpie'),
+                            'styleProps' => array('color', 'typography', 'text-align', 'padding'),
+                        ),
+                        'icon' => array(
+                            'name' => 'helpie_element_icon',
+                            'selector' => '.hrp-breadcrumbs .hrp_separator',
+                            'label' => __('Voting Icon', 'pauple-helpie'),
+                            'styleProps' => array('color', 'text-align'),
+                        ),
+
+                    ),
+                ),
+            );
+
+            return $style_config;
+        }
     }
 }

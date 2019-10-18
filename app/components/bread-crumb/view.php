@@ -24,7 +24,7 @@ if (!class_exists('\HelpieReviews\App\Components\BreadCrumb')) {
         public function get_seperator()
         {
             $html = '';
-            $html .= "<span class='helpiekb_separator'> &nbsp;&nbsp; <i class='fa fa-angle-right' aria-hidden='true'></i>&nbsp;&nbsp;</span>";
+            $html .= "<span class='hrp_separator'> &nbsp;&nbsp; <i class='fa fa-angle-right' aria-hidden='true'></i>&nbsp;&nbsp;</span>";
             return $html;
         }
     }
