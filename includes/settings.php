@@ -915,6 +915,9 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                     if ($singularity == 'single' && $count >= 1) {
                         break;
                     }
+                    if (is_string($stat)) {
+                        $stat = ['stat_name' => $stat];
+                    }
                     $stats_list[] = array(
                         'id'     => strtolower($stat['stat_name']),
                         'type'   => 'fieldset',
