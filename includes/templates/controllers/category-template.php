@@ -57,7 +57,7 @@ if (!class_exists('\HelpieReviews\Includes\Templates\Controllers\Category_Templa
                 'show_controls' => HRP_Getter::get('cp_controls'),
                 'show_search' => HRP_Getter::get('cp_search'),
                 'show_sortBy' => HRP_Getter::get('cp_sortBy'),
-                'show_num_of_reviews_filter' => HRP_Getter::get('cp_num_of_reviews_filter'),
+                // 'show_num_of_reviews_filter' => HRP_Getter::get('cp_num_of_reviews_filter'),
                 'num_of_cols' => HRP_Getter::get('cp_num_of_cols'),
             ];
 
