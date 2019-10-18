@@ -69,12 +69,9 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 $this->category_page_settings($prefix);
                 // $this->single_page_settings($prefix);
                 $this->user_review_settings($prefix);
-                // $this->comparison_table_settings($prefix);
+                // $this->comparison_table_settings($prefix);               
 
-
-                // $this->single_post_settings($prefix);
-
-                $this->post_meta_fields();
+                $this->single_post_meta_fields();
             }
         }
 
@@ -761,30 +758,8 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             );
         }
 
-
-        public function single_post_settings($prefix)
-        {
-            $details_field = $this->fields->single_details_fields();
-            $stats_fields = $this->fields->stats_field();
-            $pro_fields = $this->fields->single_post_pros_fields();
-            $con_fields = $this->fields->single_post_cons_fields();
-            $rich_snippets_fields = $this->fields->rich_snippets_fields();
-
-            $fields = array_merge($details_field, $pro_fields, $con_fields, $rich_snippets_fields);
-            \CSF::createSection(
-                $prefix,
-                array(
-                    // 'parent' => 'user_access',
-                    'id' => 'single_post',
-                    'title' => 'Single Post',
-                    'icon' => 'fa fa-eye',
-                    'fields' =>  $fields
-                )
-            );
-        }
-
         /* Single Post - Meta Data Options */
-        public function post_meta_fields()
+        public function single_post_meta_fields()
         {
             $locations = SCR_Getter::get('review_enable_post-types');
             $prefix = '_scr_post_options';
@@ -841,6 +816,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         public function single_details($prefix, $parent = null)
         {
             $details_fields = $this->fields->single_details_fields();
+
             \CSF::createSection(
                 $prefix,
                 array(
@@ -927,14 +903,18 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             $stats_list = [];
 
             $stats = SCR_Getter::get('global_stats');
+            $singularity = SCR_Getter::get('stat-singularity');
+
             if (isset($stats) && !empty($stats)) {
                 $stats_list[] = array(
                     'type'    => 'submessage',
                     'content' => 'Stats List',
                 );
-                $iteration = 0;
+                $count = 0;
                 foreach ($stats as $stat) {
-
+                    if ($singularity == 'single' && $count >= 1) {
+                        break;
+                    }
                     $stats_list[] = array(
                         'id'     => strtolower($stat['stat_name']),
                         'type'   => 'fieldset',
@@ -968,7 +948,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         ),
                     );
 
-                    $iteration++;
+                    $count++;
                 }
             }
 

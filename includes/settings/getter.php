@@ -44,7 +44,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'template_source' => 'theme',
                 'enable-pros-cons' => true,
                 'review_enable_post-types' => [SCR_POST_TYPE],
-                'global_stat' => ['stat_name' => 'Feature'],
+                'global_stats' => ['stat_name' => 'Feature'],
                 'stat-singularity' => 'single',
                 'stats-type' => 'star',
                 'stats-source-type' => 'icon',
