@@ -1,4 +1,4 @@
-.hrp-breadcrumbs {
+.scr-breadcrumbs {
   @include basic-font-props();
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   // float: left;
@@ -14,4 +14,10 @@
     color: $link-text-color2;
     font-weight: 500;
   }
+}
+
+// Helpie Template Breadcrumbs
+.helpie-single-page-module .scr-breadcrumbs {
+  text-align: center;
+  padding: 40px 0;
 }
