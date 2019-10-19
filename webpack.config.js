@@ -5,6 +5,7 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const TerserJsPlugin = require("terser-webpack-plugin");
 
 const FileManagerPlugin = require("filemanager-webpack-plugin");
 
@@ -76,16 +77,20 @@ const webpackConfig = {
 if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
     const buildFolder = path.resolve(__dirname, "test-artifacts/build");
     webpackConfig.plugins.push(
-        new UglifyJsPlugin({
+        new TerserJsPlugin({
             cache: true,
             parallel: true,
-            uglifyOptions: {
+            terserOptions: {
                 compress: {
                     drop_console: true
+                },
+                output: {
+                    comments: false
                 },
                 ecma: 6,
                 mangle: true
             },
+            extractComments: false,
             sourceMap: true
         })
     );
@@ -104,7 +109,6 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
                     to: buildFolder + "/includes",
                     ignore: [
                         "**/*.scss",
-                        "**/*.map",
                         "**/*.md",
                         "**/*.yml",
                         "**/*.env",
