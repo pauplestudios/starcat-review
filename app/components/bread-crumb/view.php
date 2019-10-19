@@ -24,7 +24,7 @@ if (!class_exists('\StarcatReview\App\Components\BreadCrumb')) {
         public function get_seperator()
         {
             $html = '';
-            $html .= "<span class='scr_separator'> &nbsp;&nbsp; <i class='fa fa-angle-right' aria-hidden='true'></i>&nbsp;&nbsp;</span>";
+            $html .= "<span class='scr_separator'> &nbsp; <i class='angle right icon'></i>&nbsp;</span>";
             return $html;
         }
     }
