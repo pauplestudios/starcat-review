@@ -1,12 +1,12 @@
 <?php
 
-namespace StarcatReview\App\Components\BreadCrumb;
+namespace StarcatReview\App\Components\Breadcrumbs;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\StarcatReview\App\Components\BreadCrumb')) {
+if (!class_exists('\StarcatReview\App\Components\Breadcrumbs')) {
     class View
     {
         public function __construct()

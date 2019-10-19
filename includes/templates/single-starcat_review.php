@@ -19,7 +19,7 @@ get_header();
 
         while (have_posts()) : the_post();
 
-            $bread_crumb = new \StarcatReview\App\Components\BreadCrumb\Controller();
+            $bread_crumb = new \StarcatReview\App\Components\Breadcrumbs\Controller();
             echo $bread_crumb->get_view();
 
             $single_template = new \StarcatReview\Includes\Templates\Controllers\Single_Template();

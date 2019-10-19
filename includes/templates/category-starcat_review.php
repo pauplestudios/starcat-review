@@ -22,7 +22,7 @@ get_header();
 <div id="primary">
 
     <?php
-    $bread_crumb = new \StarcatReview\App\Components\BreadCrumb\Controller();
+    $bread_crumb = new \StarcatReview\App\Components\Breadcrumbs\Controller();
     echo $bread_crumb->get_view();
     ?>
     <section class='scr-archive-description'>
