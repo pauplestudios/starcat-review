@@ -16,7 +16,11 @@ get_header();
     <main id="main" class="site-main" role="main">
 
         <?php
+
         while (have_posts()) : the_post();
+
+            $bread_crumb = new \StarcatReview\App\Components\BreadCrumb\Controller();
+            echo $bread_crumb->get_view();
 
             $single_template = new \StarcatReview\Includes\Templates\Controllers\Single_Template();
             echo $single_template->get_view(get_post());
