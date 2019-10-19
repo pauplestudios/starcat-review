@@ -1,20 +1,20 @@
 formSubmitted = false;
 var Form = {
-    init: function () {
+    init: function() {
         this.eventListener();
         console.log("Submission JS Loaded !!!");
     },
 
-    eventListener: function () {
+    eventListener: function() {
         this.formValidation();
     },
 
-    formValidation: function (fields) {
+    formValidation: function(fields) {
         var SCRForm = jQuery(".scr-user-review");
         var formFields = fields ? fields : Form.getRules();
         SCRForm.form({
             fields: formFields,
-            onSuccess: function (event, fields) {
+            onSuccess: function(event, fields) {
                 event.preventDefault();
                 if (formSubmitted) {
                     return;
@@ -26,12 +26,12 @@ var Form = {
         });
     },
 
-    submission: function (SCRForm, fields) {
+    submission: function(SCRForm, fields) {
         var props = Form.getProps(SCRForm, fields);
         console.log(props);
         // Ajax Post Submiting
         jQuery
-            .post(scr_ajax.ajax_url, props, function (results) {
+            .post(scr_ajax.ajax_url, props, function(results) {
                 results = JSON.parse(results);
                 console.log(results);
 
@@ -52,7 +52,7 @@ var Form = {
                 // Reloading the page
                 setInterval("window.location.reload()", 6000);
             })
-            .fail(function (response) {
+            .fail(function(response) {
                 // Fail Message
                 var msgProps = {
                     type: "negative",
@@ -67,7 +67,7 @@ var Form = {
             });
     },
 
-    getProps: function (submittingForm, fields) {
+    getProps: function(submittingForm, fields) {
         fields.action = submittingForm.attr("action");
         fields.type = submittingForm.attr("method");
         fields.post_id = submittingForm.attr("post_id");
@@ -75,7 +75,7 @@ var Form = {
         return fields;
     },
 
-    getRules: function () {
+    getRules: function() {
         return {
             title: {
                 identifier: "title",
@@ -118,22 +118,24 @@ var Form = {
         };
     },
 
-    getMessageTemplate: function (props) {
-        var message = '<div class="ui ' + props.type + ' message transition"></div>';
+    getMessageTemplate: function(props) {
+        var message = '<div class="ui ' + props.type + ' message transition">';
         message += '<div class="header">';
         message += props.title;
-        message += '</div>';
-        message += '<p>' + props.description + '</p>';
-        message += '</div>';
+        message += "</div>";
+        message += "<p>" + props.description + "</p>";
+        message += "</div>";
 
         return message;
     },
 
-    getReviewTemplate: function (title, description) {
-        var template = '<div class="scr-collection__col item col-xs-12 col-lg-12"> <div class="scr-review-card">';
-        template += '<div class="review-card__header">' + title + '</div>';
-        template += '<div class="review-card__body">' + description + '</div>';
-        template += '<span class="reviewCount" data-reviewcount="75"></span></div></div>';
+    getReviewTemplate: function(title, description) {
+        var template =
+            '<div class="scr-collection__col item col-xs-12 col-lg-12">';
+        template += '< div class="scr-review-card" > ';
+        template += '<div class="review-card__header">' + title + "</div>";
+        template += '<div class="review-card__body">' + description + "</div>";
+        template += "</div></div>";
 
         return template;
     }

@@ -151,26 +151,28 @@ if (!class_exists('\StarcatReview\App\Components\Stats\Model')) {
             $groups['stats-list'] = array();
 
             $count = 0;
-            foreach ($args['items']['comments-list'] as $comment) {
+            if (isset($args['items']['comments-list']) || !empty($args['items']['comments-list'])) {
+                foreach ($args['items']['comments-list'] as $comment) {
 
-                foreach ($comment->reviews['stats'] as $stat_key => $stat_value) {
-                    $global_stats = [];
-                    if (isset($args['global_stats']) && !empty($args['global_stats'])) {
-                        $global_stats = array_map(function ($stat) {
-                            return strtolower($stat['stat_name']);
-                        }, $args['global_stats']);
-                    }
-
-
-                    if (in_array(strtolower($stat_key), $global_stats)) {
-                        if (!isset($groups['stats-list'][$stat_key])) {
-                            $groups['stats-list'][$stat_key] = 0;
+                    foreach ($comment->reviews['stats'] as $stat_key => $stat_value) {
+                        $global_stats = [];
+                        if (isset($args['global_stats']) && !empty($args['global_stats'])) {
+                            $global_stats = array_map(function ($stat) {
+                                return strtolower($stat['stat_name']);
+                            }, $args['global_stats']);
                         }
 
-                        $groups['stats-list'][$stat_key] += $comment->reviews['stats'][$stat_key]['rating'];
+
+                        if (in_array(strtolower($stat_key), $global_stats)) {
+                            if (!isset($groups['stats-list'][$stat_key])) {
+                                $groups['stats-list'][$stat_key] = 0;
+                            }
+
+                            $groups['stats-list'][$stat_key] += $comment->reviews['stats'][$stat_key]['rating'];
+                        }
                     }
+                    $count++;
                 }
-                $count++;
             }
             $items['review_count'] = $count;
 

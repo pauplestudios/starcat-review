@@ -1,8 +1,8 @@
 <?php
 
 /*
-Plugin Name: Starcat Review
-Plugin URI: http://helpiewp.com/starcat-review/
+Plugin Name: StarCat Review
+Plugin URI: https://helpiewp.com/advanced-review-pro/
 Description: Adds Author and User Reviews to any post_type
 Author: HelpieWP
 Version: 0.1
@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
-require_once plugin_dir_path(__FILE__) . "/includes/lib/freemius-integrator.php";
+// require_once plugin_dir_path(__FILE__) . "/includes/lib/freemius-integrator.php";
 
 define('SCR_VERSION', '0.2');
 define('SCR_DOMAIN', 'starcat-review');

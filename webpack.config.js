@@ -103,6 +103,18 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
                     from: path.resolve(__dirname, "includes") + "/",
                     to: buildFolder + "/includes",
                     ignore: [
+                        "**/*.scss",
+                        "**/*.map",
+                        "**/*.md",
+                        "**/*.yml",
+                        "**/*.env",
+                        "**/tests/**/*",
+                        "**/sample/**/*",
+                        "**/samples/**/*",
+                        "lib/freemius/**/*",
+                        "assets/js/**/*",
+                        "assets/styles/**/*",
+
                         "assets/vendors/semantic/src/**/*",
                         "assets/vendors/semantic/tasks/**/*",
                         "assets/vendors/semantic/bundle/components/**/*",
@@ -111,14 +123,16 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
                         "assets/vendors/semantic/bundle/themes/material/**/*",
                         "assets/vendors/semantic/bundle/semantic.css",
                         "assets/vendors/semantic/bundle/semantic.js",
-                        "assets/vendors/semantic/gulpfile.js"
+                        "assets/vendors/semantic/gulpfile.js",
+
+                        "assets/vendors/comparison-table/**/*"
                     ]
                 },
 
-                {
-                    from: path.resolve(__dirname, "languages") + "/**",
-                    to: buildFolder
-                },
+                // {
+                //     from: path.resolve(__dirname, "languages") + "/**",
+                //     to: buildFolder
+                // },
 
                 {
                     from: path.resolve(__dirname, "*.php"),
