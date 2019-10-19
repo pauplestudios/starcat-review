@@ -37,7 +37,7 @@ if (!class_exists('\StarcatReview\App\Components\Listing\Model')) {
                 ],
                 'post_count' => $post_count,
                 'total_pages' => $post_count / $posts_per_page,
-                'pagination' => $args['pagination'],
+                'pagination' => true,
                 'columns' => $args['num_of_cols'],
                 'items_display' => $args['items_display']
             ];
@@ -55,7 +55,7 @@ if (!class_exists('\StarcatReview\App\Components\Listing\Model')) {
         }
 
         protected function get_items_props($args)
-        {            
+        {
             return $args;
         }
 

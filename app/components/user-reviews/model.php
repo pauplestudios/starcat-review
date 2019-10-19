@@ -34,7 +34,6 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
                     'verified' => false
                 ],
                 'pagination' => true,
-
             ];
         }
 

@@ -24,3 +24,10 @@
         margin-bottom: 20px;
     }
 }
+
+.single-starcat_review,
+.post-type-archive-starcat_review {
+    .scr-pagination {
+        display: none;
+    }
+}

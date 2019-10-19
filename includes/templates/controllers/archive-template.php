@@ -86,7 +86,6 @@ if (!class_exists('\StarcatReview\Includes\Templates\Controllers\Archive_Templat
                     'description' => SCR_Getter::get('mp_cl_description'),
                     'num_of_cols' => SCR_Getter::get('mp_cl_cols'),
                     'show_controls' => false,
-                    'pagination' => false
                 ],
 
                 'review_list' => [
@@ -94,7 +93,6 @@ if (!class_exists('\StarcatReview\Includes\Templates\Controllers\Archive_Templat
                     'sortby' => SCR_Getter::get('mp_rl_sortby'),
                     'num_of_cols' => SCR_Getter::get('mp_rl_cols'),
                     'show_controls' => false,
-                    'pagination' => false
                 ]
             ];
 
