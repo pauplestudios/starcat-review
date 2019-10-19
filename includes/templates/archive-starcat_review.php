@@ -15,8 +15,8 @@ get_header();
 
 <div id="primary">
     <?php
-    $bread_crumb = new \StarcatReview\App\Components\Breadcrumbs\Controller();
-    echo $bread_crumb->get_view();
+    $breadcrumb = new \StarcatReview\App\Components\Breadcrumbs\Controller();
+    echo $breadcrumb->get_view();
     ?>
     <section class='scr-archive-description'>
         <h1> <?php the_archive_title() ?> </h1>

@@ -19,8 +19,8 @@ get_header();
 
         while (have_posts()) : the_post();
 
-            $bread_crumb = new \StarcatReview\App\Components\Breadcrumbs\Controller();
-            echo $bread_crumb->get_view();
+            $breadcrumb = new \StarcatReview\App\Components\Breadcrumbs\Controller();
+            echo $breadcrumb->get_view();
 
             $single_template = new \StarcatReview\Includes\Templates\Controllers\Single_Template();
             echo $single_template->get_view(get_post());

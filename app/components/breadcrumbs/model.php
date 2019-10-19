@@ -16,11 +16,11 @@ if (!class_exists('\StarcatReview\App\Components\Breadcrumbs\Model')) {
 
         public function get_scr_info($post_id, $page)
         {
-            $bread_crumbs_info = array();
+            $breadcrumbs_info = array();
 
             $mp_scr_section = $this->main_page_section();
 
-            $bread_crumbs_info['post_type'] = array(
+            $breadcrumbs_info['post_type'] = array(
                 'permalink' => $this->extras->get_mainpage_permalink(),
                 'title' => $mp_scr_section['scr_main_title']
             );
@@ -32,20 +32,20 @@ if (!class_exists('\StarcatReview\App\Components\Breadcrumbs\Model')) {
                 $term_id = $queried_object->term_id;
                 if ($term_id) {
                     $term = get_term($term_id);
-                    $bread_crumbs_info['term'] = $this->get_term_info($term);
-                    $bread_crumbs_info['parent_term'] = $this->get_parent_of_term($term);
+                    $breadcrumbs_info['term'] = $this->get_term_info($term);
+                    $breadcrumbs_info['parent_term'] = $this->get_parent_of_term($term);
                 } else {
-                    $bread_crumbs_info['term'] = '';
-                    $bread_crumbs_info['parent_term'] = '';
+                    $breadcrumbs_info['term'] = '';
+                    $breadcrumbs_info['parent_term'] = '';
                 }
             } else {
-                $bread_crumbs_info['parent_term'] = $this->get_parent_term_of_post($post_id, $taxonomy);
-                $bread_crumbs_info['term'] = $this->get_term_of_post($post_id, $taxonomy);
-                $bread_crumbs_info['post'] = $this->get_post_info($post_id);
+                $breadcrumbs_info['parent_term'] = $this->get_parent_term_of_post($post_id, $taxonomy);
+                $breadcrumbs_info['term'] = $this->get_term_of_post($post_id, $taxonomy);
+                $breadcrumbs_info['post'] = $this->get_post_info($post_id);
             }
 
 
-            return $bread_crumbs_info;
+            return $breadcrumbs_info;
         }
 
         private function get_term_of_post($post_id, $taxonomy)
