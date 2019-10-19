@@ -45,9 +45,9 @@ var Form = {
                 SCRForm.html(Form.getMessageTemplate(msgProps));
 
                 // Reviewed item prepending to Reviews List
-                jQuery("#scr-cat-collection").prepend(
-                    Form.getReviewTemplate(props.title, props.description)
-                );
+                // jQuery("#scr-cat-collection").prepend(
+                //     Form.getReviewTemplate(props.title, props.description)
+                // );
 
                 // Reloading the page
                 setInterval("window.location.reload()", 6000);
