@@ -1,7 +1,7 @@
 <?php
 
 /*
-Plugin Name: StarCat Review
+Plugin Name: Starcat Review
 Plugin URI: https://helpiewp.com/advanced-review-pro/
 Description: Adds Author and User Reviews to any post_type
 Author: HelpieWP
