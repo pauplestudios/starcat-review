@@ -167,20 +167,20 @@ if (!class_exists('\StarcatReview\App\Components\BreadCrumb\Model')) {
             $style_config = array(
 
                 'element' => array(
-                    'name' => 'hrp_breadcrumbs',
-                    'selector' => '.hrp-breadcrumbs',
+                    'name' => 'scr_breadcrumbs',
+                    'selector' => '.scr-breadcrumbs',
                     'label' => __('Breadcrumbs Container', 'elementor'),
                     'styleProps' => array('text-align', 'background', 'border', 'border_radius', 'padding', 'margin'),
                     'children' => array(
                         'label' => array(
-                            'name' => 'hrp-breadcrumbs',
-                            'selector' => '.hrp-breadcrumbs a',
+                            'name' => 'scr-breadcrumbs',
+                            'selector' => '.scr-breadcrumbs a',
                             'label' => __('Link', 'pauple-helpie'),
                             'styleProps' => array('color', 'typography', 'text-align', 'padding'),
                         ),
                         'icon' => array(
                             'name' => 'helpie_element_icon',
-                            'selector' => '.hrp-breadcrumbs .hrp_separator',
+                            'selector' => '.scr-breadcrumbs .scr_separator',
                             'label' => __('Voting Icon', 'pauple-helpie'),
                             'styleProps' => array('color', 'text-align'),
                         ),

@@ -11,7 +11,7 @@ if (!function_exists('scr_fs')) {
 
             $scr_fs = fs_dynamic_init(array(
                 'id'                  => '3980',
-                'slug'                => 'helpie-review',
+                'slug'                => 'starcat-review',
                 'type'                => 'plugin',
                 'public_key'          => 'pk_ad2b6650d9ef2e5df3c203ea9046f',
                 'is_premium'          => true,

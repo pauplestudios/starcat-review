@@ -272,8 +272,8 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'id' => 'sp_rating_combination',
                             'type' => 'select',
                             'chosen' => true,
-                            'title' => __('Show Review', 'helpie-review'),
-                            'placeholder' => __('Select an option', 'helpie-review'),
+                            'title' => __('Show Review', 'starcat-review'),
+                            'placeholder' => __('Select an option', 'starcat-review'),
                             'options' => array(
                                 'author' => 'Author Only',
                                 'user' => 'User Only',

@@ -19,4 +19,4 @@ modules:
             adminEmail: "%ADMIN_EMAIL%"
             title: "Test"
             plugins: ["starcat-review/starcat-review.php"]
-            activatePlugins: ["starcat-review/helpie-review.php"]
+            activatePlugins: ["starcat-review/starcat-review.php"]
