@@ -114,7 +114,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Review_Listin
                 $args['items'] = get_post_meta($post->ID, '_scr_post_options', true);
                 $comments = $this->get_comments_list($post->ID);
                 if (isset($comments) || !empty($comments)) {
-                    $args['items']['comments-list'] = $comments;
+                    $args['items'] = ['comments-list' => $comments];
                 }
                 $stats_controller = new \StarcatReview\App\Components\Stats\Controller($args);
                 $post->stat_html = $stats_controller->get_view();

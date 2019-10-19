@@ -40,7 +40,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
 
             /* Pagination */
             if ($collectionProps['pagination']) {
-                // $html .= '<ul class="ui pagination scr-pagination menu"></ul>';
+                $html .= '<ul class="ui pagination scr-pagination menu"></ul>';
                 $html .= $this->get_pagination_html($viewProps);
             }
 
