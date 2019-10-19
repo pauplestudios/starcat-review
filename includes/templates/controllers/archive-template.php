@@ -127,7 +127,6 @@ if (!class_exists('\StarcatReview\Includes\Templates\Controllers\Archive_Templat
         {
             $sortBy = $args['review_list']['sortby'];
 
-            $term = get_queried_object();
             // the query to set the posts per page to 3
             $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
             $args = array(

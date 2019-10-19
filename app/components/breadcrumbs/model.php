@@ -28,9 +28,8 @@ if (!class_exists('\StarcatReview\App\Components\Breadcrumbs\Model')) {
             $taxonomy = SCR_CATEGORY;
             if ($page == 'archive') {
                 $queried_object = get_queried_object();
-
-                $term_id = $queried_object->term_id;
-                if ($term_id) {
+                if (isset($queried_object->term_id)) {
+                    $term_id = $queried_object->term_id;
                     $term = get_term($term_id);
                     $breadcrumbs_info['term'] = $this->get_term_info($term);
                     $breadcrumbs_info['parent_term'] = $this->get_parent_of_term($term);
