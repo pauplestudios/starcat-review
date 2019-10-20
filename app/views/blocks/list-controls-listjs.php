@@ -20,7 +20,7 @@ if (!class_exists('\StarcatReview\App\Views\Blocks\List_Controls_Listjs')) {
             $html = '';
 
             $html .= '<div class="scr-controls-container scr-container">';
-            $html .= '<input class="collection-search" placeholder="Search lovely things" />';
+            $html .= '<input class="collection-search" placeholder="Search" />';
             $html .= '<ul class="sort-by">';
             $html .= '<li class="sort btn" data-sort="review-card__header">Sort by name</li>';
             $html .= '</ul>';
@@ -32,7 +32,7 @@ if (!class_exists('\StarcatReview\App\Views\Blocks\List_Controls_Listjs')) {
         public function search()
         {
             $html = '';
-            $html .= '<input class="collection-search scr-search" placeholder="Search lovely things" />';
+            $html .= '<input class="collection-search scr-search" placeholder="Search" />';
 
             return $html;
         }
