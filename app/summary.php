@@ -35,17 +35,17 @@ if (!class_exists('\StarcatReview\App\Summary')) {
 
             $items = [];
 
-            if (isset($post_meta['stats-list']) || !empty($post_meta['stats-list'])) {
+            if (isset($post_meta['stats-list']) && !empty($post_meta['stats-list'])) {
                 $items['stats-list'] = $post_meta['stats-list'];
             }
-            if (isset($post_meta['pros-list']) || !empty($post_meta['pros-list'])) {
+            if (isset($post_meta['pros-list']) && !empty($post_meta['pros-list'])) {
                 $items['pros-list'] = $post_meta['pros-list'];
             }
-            if (isset($post_meta['cons-list']) || !empty($post_meta['cons-list'])) {
+            if (isset($post_meta['cons-list']) && !empty($post_meta['cons-list'])) {
                 $items['cons-list'] = $post_meta['cons-list'];
             }
 
-            if (isset($comments) || !empty($comments)) {
+            if (isset($comments) && !empty($comments)) {
                 $items['comments-list'] = $comments;
             }
 
