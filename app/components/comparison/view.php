@@ -158,7 +158,7 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\View')) {
             $html .= '<h4>Add Product</h4>';
             $html .= '<div class="ui search scr-product-search">';
             $html .= '<div class="ui input">';
-            $html .= '<input type="text" class="prompt " placeholder="Search lovely things" />';
+            $html .= '<input type="text" class="prompt " placeholder="Search" />';
             $html .= '</div>';
             $html .= '<div class="results"></div>';
             $html .= '</div>';

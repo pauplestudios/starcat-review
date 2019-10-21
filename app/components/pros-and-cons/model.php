@@ -43,13 +43,17 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\Model')) {
             $itemsProps['pros'] = [];
             $itemsProps['cons'] = [];
 
-            foreach ($pros_list as $key => $item) {
-                $itemsProps['pros'][] = $item['item'];
+            if (isset($pros_list) && !empty($pros_list)) {
+                foreach ($pros_list as $key => $item) {
+                    $itemsProps['pros'][] = $item['item'];
+                }
+            }
+            if (isset($cons_list) && !empty($cons_list)) {
+                foreach ($cons_list as $key => $item) {
+                    $itemsProps['cons'][] = $item['item'];
+                }
             }
 
-            foreach ($cons_list as $key => $item) {
-                $itemsProps['cons'][] = $item['item'];
-            }
 
             return $itemsProps;
         }

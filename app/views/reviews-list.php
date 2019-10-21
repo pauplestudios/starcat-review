@@ -45,7 +45,7 @@ if (!class_exists('\StarcatReview\App\Views\Reviews_List')) {
         {
             $html = '';
 
-            $html .= '<input class="search" placeholder="Search lovely things" />';
+            $html .= '<input class="search" placeholder="Search" />';
 
             $html .= '<ul class="sort-by">';
             $html .= '<li class="sort btn" data-sort="title">Sort by name</li>';

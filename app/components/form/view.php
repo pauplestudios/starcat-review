@@ -42,7 +42,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             }
 
             if ($this->props['collection']['show_stats']) {
-                $html .= '<div class="field">';
+                $html .= '<div class="rating fields">';
                 $html .= $this->get_user_review();
                 $html .= '</div>';
             }

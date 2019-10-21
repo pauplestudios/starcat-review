@@ -17,7 +17,6 @@ if (!class_exists('\StarcatReview\Includes\Cpt')) {
         public function register()
         {
             add_action('init', array($this, 'register_post_type_with_taxonomy'));
-            add_action('init', array($this, 'show_other_cpt_and_tax'));
         }
 
         /* Register post type on activation hook cause can't call other filter and actions */
@@ -130,13 +129,6 @@ if (!class_exists('\StarcatReview\Includes\Cpt')) {
             );
 
             register_taxonomy('starcat_review_tag', array($this->post_type_name), $args);
-        }
-
-        public function show_other_cpt_and_tax()
-        {
-            if (taxonomy_exists('helpdesk_category')) {
-                register_taxonomy_for_object_type('helpdesk_category', $this->post_type_name);
-            }
         }
 
         /* Protected Methods */

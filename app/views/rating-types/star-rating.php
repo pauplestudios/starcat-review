@@ -35,7 +35,7 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
 
         public function get_review_stat($key, $value, $score)
         {
-            $html = '<li class="review-item">';
+            $html = '<li class="review-item field">';
 
             $html .= '<div class="review-item-stars"
                 title="' . $this->props['collection']['no_rated_message'] . '"

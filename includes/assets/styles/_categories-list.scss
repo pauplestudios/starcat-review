@@ -25,9 +25,12 @@
     }
 }
 
-.single-starcat_review,
-.post-type-archive-starcat_review {
+.ui.pagination.scr-pagination {
+    display: none;
+}
+
+.tax-scr_category {
     .scr-pagination {
-        display: none;
+        display: block;
     }
 }
