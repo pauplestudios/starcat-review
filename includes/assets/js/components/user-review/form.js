@@ -123,22 +123,12 @@ var Form = {
     },
 
     ratingRules: function(rules) {
-        // console.log(SCROptins.global_stats);
         if (SCROptins.global_stats) {
             jQuery(SCROptins.global_stats).each(function(index, item) {
                 var identifier = "scores[" + item.stat_name.toLowerCase() + "]";
                 rules[identifier] = {
                     identifier: identifier,
-                    rules: [
-                        {
-                            type: "empty",
-                            prompt: "Please rate " + item.stat_name
-                        },
-                        {
-                            type: "regExp[/^[1-9]+[0-9]*$/]",
-                            prompt: "Please rate " + item.stat_name
-                        }
-                    ]
+                    rules: ["empty", "regExp[/^[1-9]+[0-9]*$/]"]
                 };
             });
         }
