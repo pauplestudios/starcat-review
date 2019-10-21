@@ -24,7 +24,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
         public function get_collectionProps($args)
         {
             return [
-                'title' => 'Reviews,',
+                'title' => 'Reviews',
                 'columns' => 1,
                 'items_display' => ['title', 'content'],
                 'show_controls' => [
