@@ -128,7 +128,16 @@ var Form = {
                 var identifier = "scores[" + item.stat_name.toLowerCase() + "]";
                 rules[identifier] = {
                     identifier: identifier,
-                    rules: ["empty", "regExp[/^[1-9]+[0-9]*$/]"]
+                    rules: [
+                        {
+                            type: "empty",
+                            prompt: "Please rate " + item.stat_name
+                        },
+                        {
+                            type: "regExp[/^[1-9]+[0-9]*$/]",
+                            prompt: "Please rate " + item.stat_name
+                        }
+                    ]
                 };
             });
         }
