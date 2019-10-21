@@ -15,7 +15,7 @@ var Admin = {
     enableProsandCons: function () {
         var metaBoxOptions = jQuery("#_scr_post_options");
 
-        if (SCROptins.enable_prosandcons == "0") {
+        if (SCROptions.enable_prosandcons == "0") {
             metaBoxOptions
                 .find("[data-section='_scr_post_options_2']")
                 .css({ display: "none" });

@@ -126,7 +126,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             wp_enqueue_style('style-name', SCR_URL . "includes/assets/bundle/admin.bundle.css");
 
             // You Can Access these object from javascript
-            wp_localize_script('starcat-review-script', 'SCROptins', ['enable_prosandcons' => SCR_Getter::get('enable-pros-cons')]);
+            wp_localize_script('starcat-review-script', 'SCROptions', ['enable_prosandcons' => SCR_Getter::get('enable-pros-cons')]);
         }
 
         public function load_ajax_handler()
@@ -186,7 +186,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
                 'ajax_nonce' => wp_create_nonce('starcat-review-ajax-nonce')
             ));
             // You Can Access these object from javascript
-            wp_localize_script('starcat-review-script', 'SCROptins', [
+            wp_localize_script('starcat-review-script', 'SCROptions', [
                 'global_stats' => SCR_Getter::get('global_stats')
             ]);
             wp_enqueue_style('style-name', SCR_URL . "includes/assets/bundle/main.bundle.css");

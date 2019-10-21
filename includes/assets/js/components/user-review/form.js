@@ -123,8 +123,8 @@ var Form = {
     },
 
     ratingRules: function(rules) {
-        if (SCROptins.global_stats) {
-            jQuery(SCROptins.global_stats).each(function(index, item) {
+        if (SCROptions.global_stats) {
+            jQuery(SCROptions.global_stats).each(function(index, item) {
                 var identifier = "scores[" + item.stat_name.toLowerCase() + "]";
                 rules[identifier] = {
                     identifier: identifier,
