@@ -110,7 +110,8 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Review_Listin
                 $args = SCR_Getter::get_stat_default_args();
                 $args['post_id'] = $post->ID;
                 $args['combination'] = 'overall_combine';
-                $args['items'] = get_post_meta($post->ID, '_scr_post_options');
+                $author_review = get_post_meta($post->ID, '_scr_post_options', true);
+                $args['items'] = isset($author_review) && !empty($author_review) ? $author_review : [];
                 $comments = $this->get_comments_list($post->ID);
                 if (isset($comments) && !empty($comments)) {
                     $args['items']['comments-list'] = $comments;
