@@ -11,10 +11,15 @@
             width: auto !important;
         }
     }
+
     .rating.fields {
         & ul.review-list {
             width: 100%;
             margin: 0 0.5em;
+            li.review-item {
+                float: none;
+                display: block;
+            }
         }
         & .review-item.field.error {
             background: #fff6f6;
