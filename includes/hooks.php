@@ -180,6 +180,10 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
                 'ajax_url'  => admin_url('admin-ajax.php'),
                 'ajax_nonce' => wp_create_nonce('starcat-review-ajax-nonce')
             ));
+            // You Can Access these object from javascript
+            wp_localize_script('starcat-review-script', 'SCROptins', [
+                'global_stats' => SCR_Getter::get('global_stats')
+            ]);
             wp_enqueue_style('style-name', SCR_URL . "includes/assets/bundle/main.bundle.css");
         }
     } // END CLASS
