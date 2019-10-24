@@ -44,7 +44,6 @@ $graylight: #e7e7e7;
     .review-item-stars,
     .reviewed-item-stars {
         float: right;
-        height: 35px;
         box-sizing: border-box;
 
         .stars-wrapper {
@@ -52,7 +51,6 @@ $graylight: #e7e7e7;
             display: inline-block;
         }
         .stars-result {
-            height: 35px;
             overflow: hidden;
             position: relative;
             white-space: nowrap;
