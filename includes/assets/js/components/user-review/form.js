@@ -45,9 +45,9 @@ var Form = {
                 SCRForm.html(Form.getMessageTemplate(msgProps));
 
                 // Reviewed item prepending to Reviews List
-                jQuery("#scr-cat-collection").prepend(
-                    Form.getReviewTemplate(props.title, props.description)
-                );
+                // jQuery("#scr-cat-collection").prepend(
+                //     Form.getReviewTemplate(props.title, props.description)
+                // );
 
                 // Reloading the page
                 setInterval("window.location.reload()", 6000);
@@ -76,7 +76,7 @@ var Form = {
     },
 
     getRules: function() {
-        return {
+        var rules = {
             title: {
                 identifier: "title",
                 rules: [
@@ -116,6 +116,32 @@ var Form = {
                 ]
             }
         };
+
+        rules = Form.ratingRules(rules);
+
+        return rules;
+    },
+
+    ratingRules: function(rules) {
+        if (SCROptions.global_stats) {
+            jQuery(SCROptions.global_stats).each(function(index, item) {
+                var identifier = "scores[" + item.stat_name.toLowerCase() + "]";
+                rules[identifier] = {
+                    identifier: identifier,
+                    rules: [
+                        {
+                            type: "empty",
+                            prompt: "Please rate " + item.stat_name
+                        },
+                        {
+                            type: "regExp[/^[1-9]+[0-9]*$/]",
+                            prompt: "Please rate " + item.stat_name
+                        }
+                    ]
+                };
+            });
+        }
+        return rules;
     },
 
     getMessageTemplate: function(props) {

@@ -17,16 +17,22 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
             $author_args = $props;
             $user_args = $props;
 
-            $show_user = $this->is_empty($props['items']['user']);
-            $show_author = $this->is_empty($props['items']['author']);
-            $no_of_column = ($show_user == true) ? 'one' : 'two';
+            $is_user_empty = $this->is_empty($props['items']['user']);
+            $is_author_empty = $this->is_empty($props['items']['author']);
 
+            if (!$is_author_empty && !$is_user_empty) {
+                $no_of_column = 'two';
+            } elseif (!$is_author_empty || !$is_user_empty) {
+                $no_of_column = 'one';
+            } else {
+                $no_of_column = 'one';
+            }
 
             $html = '<div class="scr-summary">';
             $html .= '<div class="ui stackable ' . $no_of_column . ' column grid">';
 
             // Author Summary
-            if ($show_author !== true) {
+            if ($is_author_empty !== true) {
                 $html .= '<div class="column">';
                 $author_args['items'] = $props['items']['author'];
                 $html .= '<h4 class="ui header"> Author Rating </h4>';
@@ -36,7 +42,7 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
             }
 
             // User Summary 
-            if ($show_user !== true) {
+            if ($is_user_empty !== true) {
                 $html .= '<div class="column">';
                 $html .= '<h4 class="ui header"> User Rating ( ' . $props['items']['user']['review_count'] . ' )</h4>';
                 $user_args['items'] = $props['items']['user'];
@@ -56,21 +62,12 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
         }
 
         /* PRIVATE METHODS */
-        private function is_empty($items)
+        private function is_empty($items = [])
         {
-            $is_empty = true;
+            $is_empty = false;
 
-            if (!isset($items) || empty($items)) {
-                return $is_empty;
-            }
-
-            $is_pros_empty = (!isset($items['pros-list']) || empty($items['pros-list']));
-            $is_cons_empty = (!isset($items['cons-list']) || empty($items['cons-list']));
-            $is_stats_empty = (!isset($items['stats-list']) || empty($items['stats-list']));
-
-            // Either should be NOT EMPTY 
-            if (!$is_pros_empty  || !$is_cons_empty || !$is_stats_empty) {
-                $is_empty = false;
+            if (!isset($items['stats-list']) || empty($items['stats-list'])) {
+                $is_empty = true;
             }
 
             return $is_empty;

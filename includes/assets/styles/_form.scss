@@ -1,7 +1,32 @@
 .ui.form.scr-user-review {
     margin: 2em 0;
     .icon.button {
-        width: auto !important;
-        box-sizing: content-box;
+        width: fit-content;
+        // box-sizing: content-box;
+    }
+    .unstackable.fields {
+        margin: 0 -0.5em 1em;
+        &.fourteen.wide.field,
+        .two.wide.field {
+            width: auto !important;
+        }
+    }
+
+    .rating.fields {
+        & ul.review-list {
+            width: 100%;
+            margin: 0 0.5em;
+            li.review-item {
+                float: none;
+                display: block;
+            }
+        }
+        & .review-item.field.error {
+            background: #fff6f6;
+            border-color: #e0b4b4;
+            color: #9f3a38;
+            border: 1px solid #e0b4b4;
+            border-radius: 2px;
+        }
     }
 }

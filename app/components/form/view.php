@@ -38,11 +38,11 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
                 $html .= '<div class="field">';
                 // $html .= '<label>Review Title</label>';
                 $html .= '<input type="text" name="title" placeholder="Title" />';
-                $html .= '</div><br / ><br />';
+                $html .= '</div>';
             }
 
             if ($this->props['collection']['show_stats']) {
-                $html .= '<div class="field">';
+                $html .= '<div class="rating fields">';
                 $html .= $this->get_user_review();
                 $html .= '</div>';
             }

@@ -44,14 +44,13 @@ if (!class_exists('\StarcatReview\Includes\Register_Templates')) {
         {
             global $wp_query, $post;
 
-            $template_source = \StarcatReview\Includes\Settings\SCR_Getter::get('template_source');
-
-            if ($template_source == 'theme') {
-                return;
-            }
-
             /* Checks for single template by post type */
             if ($post->post_type == SCR_POST_TYPE && is_single()) {
+                $template_source = \StarcatReview\Includes\Settings\SCR_Getter::get('template_source');
+
+                if ($template_source == 'theme') {
+                    return $single;
+                }
 
                 if (file_exists(SCR_PATH . '/includes/templates/single-starcat_review.php')) {
                     return SCR_PATH . '/includes/templates/single-starcat_review.php';

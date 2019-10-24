@@ -35,7 +35,7 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
 
         public function get_review_stat($key, $value, $score)
         {
-            $html = '<li class="review-item">';
+            $html = '<li class="review-item field">';
 
             $html .= '<div class="review-item-stars"
                 title="' . $this->props['collection']['no_rated_message'] . '"
@@ -73,8 +73,10 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
             $html .= '</div>';
 
             $html .= '<div class="reviewed-item-label">';
-            $html .= '<span class="reviewed-item-label__text">' . $key . '</span>';
-            $html .= '<span class="reviewed-item-label__divider"></span>';
+            if($this->props['collection']['combination'] !== 'overall_combine'){
+                $html .= '<span class="reviewed-item-label__text">' . $key . '</span>';
+                $html .= '<span class="reviewed-item-label__divider"></span>';
+            }
             if ($this->props['collection']['show_rating_label']) {
                 $html .= '<span class="reviewed-item-label__score">' . $score . '</span>';
             }
