@@ -1,54 +1,126 @@
 <?php
 
-namespace HelpieReviews\App\Views\Rating_Types;
+namespace StarcatReview\App\Views\Rating_Types;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Star_Rating')) {
+if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
     class Star_Rating
     {
-        private $html;
-
-        public function __construct($stats)
+        public function __construct($viewProps)
         {
-            $this->model = $stats;
+            $this->props = $viewProps;
         }
 
-        public function get_html()
+        public function get_view()
         {
             $html = '';
+            if (isset($this->props['items']) && !empty($this->props['items'])) {
 
-            foreach ($this->model as $key => $value) {
-                $html .= "<div class='single-rating'><span class='rating-label'>" . $key . "</span>";
-                $html .= $this->get_star_set();
-                $html .= "</div>";
+                $html .= '<ul class="reviewed-list"
+                data-animate="' . $this->props['collection']['animate'] . '"
+            >';
+
+                foreach ($this->props['items'] as $key => $stat) {
+                    $html .= $this->get_reviewed_stat($key, $stat['rating'], $stat['score']);
+                }
+
+                $html .= '</ul>';
             }
-
-            $this->html = $html;
-            return $this->html;
-        }
-
-        public function get_star_set()
-        {
-            $html = '';
-            $html .= '<fieldset class="rating">';
-            $html .= '<input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>';
-            $html .= '<input type="radio" id="star4half" name="rating" value="4 and a half" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>';
-            $html .= '<input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>';
-            $html .= '<input type="radio" id="star3half" name="rating" value="3 and a half" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>';
-            $html .= ' <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>';
-            $html .= '<input type="radio" id="star2half" name="rating" value="2 and a half" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>';
-            $html .= '<input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>';
-            $html .= '<input type="radio" id="star1half" name="rating" value="1 and a half" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>';
-            $html .= '<input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>';
-            $html .= '<input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>';
-
-            $html .= '</fieldset>';
 
             return $html;
         }
 
-    } // END CLASS
+        public function get_review_stat($key, $value, $score)
+        {
+            $html = '<li class="review-item field">';
+
+            $html .= '<div class="review-item-stars"
+                title="' . $this->props['collection']['no_rated_message'] . '"
+                result                
+            >';
+            $html .= $this->get_wrapper_html();
+            $html .= $this->get_result_html($value);
+            $html .= '<input type="hidden" name="scores[' . strtolower($key) . ']"  value="' . $value . '">';
+            $html .= '</div>';
+
+            $html .= '<div class="review-item-label">';
+            $html .= '<span class="review-item-label__text">' . $key . '</span>';
+            $html .= '<span class="review-item-label__divider"></span>';
+            if ($this->props['collection']['show_rating_label']) {
+                $html .= '<span class="review-item-label__score">' . $score . '</span>';
+            }
+            $html .= '</div>';
+
+
+            $html .= '</li>';
+
+            return $html;
+        }
+
+        protected function get_reviewed_stat($key, $value, $score)
+        {
+            $html = '<li class="reviewed-item">';
+
+            $html .= '<div class="reviewed-item-stars"
+                title="' . $score . ' / ' . $this->props['collection']['limit'] . '"
+            >';
+            $html .= $this->get_wrapper_html();
+            $html .= $this->get_result_html($value);
+            $html .= '<input type="hidden" name="scores[' . strtolower($key) . ']"  value="' . $value . '">';
+            $html .= '</div>';
+
+            $html .= '<div class="reviewed-item-label">';
+            if($this->props['collection']['combination'] !== 'overall_combine'){
+                $html .= '<span class="reviewed-item-label__text">' . $key . '</span>';
+                $html .= '<span class="reviewed-item-label__divider"></span>';
+            }
+            if ($this->props['collection']['show_rating_label']) {
+                $html .= '<span class="reviewed-item-label__score">' . $score . '</span>';
+            }
+            $html .= '</div>';
+
+            $html .= '</li>';
+
+            return $html;
+        }
+
+        protected function get_wrapper_html()
+        {
+            $outline_icon = $this->props['collection']['outline_icon'];
+            $icon_html = "<i class='" . $outline_icon . "'></i>";
+            $image_html = "<img src='" . $outline_icon . "' />";
+
+            $outline_icon_html = ($this->props['collection']['source_type'] == 'icon') ? $icon_html : $image_html;
+
+            $html = "<div class='stars-wrapper'>";
+            for ($ii = 0; $ii < $this->props['collection']['limit']; $ii++) {
+                $html .= $outline_icon_html;
+            }
+            $html .= "</div>";
+
+            return $html;
+        }
+
+        protected function get_result_html($value)
+        {
+            $icon = $this->props['collection']['icon'];
+            $filled_icon_html = "<i class='" . $icon . "'></i>";
+            $filled_image_html = "<img src='" . $icon . "' />";
+
+            $icon_html = ($this->props['collection']['source_type'] == 'icon') ? $filled_icon_html : $filled_image_html;
+
+            $value = $this->props['collection']['animate'] == true ? 0 : $value;
+
+            $html = '<div class="stars-result" style="width: ' . $value . '%">';
+            for ($ii = 0; $ii < $this->props['collection']['limit']; $ii++) {
+                $html .= $icon_html;
+            }
+            $html .= '</div>';
+
+            return $html;
+        }
+    }
 }

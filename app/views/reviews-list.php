@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Views;
+namespace StarcatReview\App\Views;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Views\Reviews_List')) {
+if (!class_exists('\StarcatReview\App\Views\Reviews_List')) {
     class Reviews_List
     {
         private $html;
@@ -30,7 +30,7 @@ if (!class_exists('\HelpieReviews\App\Views\Reviews_List')) {
 
             $html .= '<div id="lovely-things-list">';
             $html .= $this->get_list_header();
-            $html .= '<ul class="list helpie-list">';
+            $html .= '<ul class="list scr-list">';
             $html .= $this->get_items();
             $html .= '</ul>';
             $html .= ' <ul class="pagination"></ul>';
@@ -45,7 +45,7 @@ if (!class_exists('\HelpieReviews\App\Views\Reviews_List')) {
         {
             $html = '';
 
-            $html .= '<input class="search" placeholder="Search lovely things" />';
+            $html .= '<input class="search" placeholder="Search" />';
 
             $html .= '<ul class="sort-by">';
             $html .= '<li class="sort btn" data-sort="title">Sort by name</li>';
@@ -78,7 +78,7 @@ if (!class_exists('\HelpieReviews\App\Views\Reviews_List')) {
             $html = '';
 
             $html .= '<li>';
-            $html .= '<img src="https://ununsplash.imgix.net/photo-1414788020357-3690cfdab669?q=75&fm=jpg&s=da7d3842604f06bf5c6ded7f4fe7aeed" />';
+            // $html .= '<img src="https://ununsplash.imgix.net/photo-1414788020357-3690cfdab669?q=75&fm=jpg&s=da7d3842604f06bf5c6ded7f4fe7aeed" />';
             $html .= '<h3 class="title">Blog Post ' . $number . '</h3>';
             $html .= '<p class="content">Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio.</p>';
             $html .= '<div class="button">Read More</div>';

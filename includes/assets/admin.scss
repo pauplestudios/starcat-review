@@ -1,0 +1,15 @@
+.ui.selection.dropdown {
+    min-height: 1.2em;
+}
+
+.ui.icon.button {
+    padding: 0.78571429em 0.78571429em 1.785714em;
+    margin: 0.5em 0.5em 0 0;
+}
+.csf-field.csf-field-repeater {
+    & .csf-repeater-wrapper[data-unique-id="scr_options"] {
+        & .csf-repeater-item:first-child .csf-repeater-content {
+            background: #d9edf7;
+        }
+    }
+}

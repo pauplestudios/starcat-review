@@ -1,13 +1,13 @@
 <?php
 
-namespace HelpieReviews\App\Models;
+namespace StarcatReview\App\Models;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Models\User_Review')) {
-    class User_Review extends \HelpieReviews\App\Abstracts\Review
+if (!class_exists('\StarcatReview\App\Models\User_Review')) {
+    class User_Review extends \StarcatReview\App\Abstracts\Review
     {
         public function __construct($wp_comment = null)
         {

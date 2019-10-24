@@ -1,0 +1,16 @@
+.scr-pagination {
+    & li {
+        list-style: none;
+        padding: 8px 20px;
+        display: inline-block;
+        background: white;
+        border: solid 1px #eee;
+        margin: 0 3px;
+
+        &.active {
+            font-weight: 500;
+            border-width: 2px;
+            border-color: #8acefb;
+        }
+    }
+}
