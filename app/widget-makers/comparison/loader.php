@@ -1,20 +1,20 @@
 <?php
 
-namespace HelpieReviews\App\Widget_Makers\Comparison;
+namespace StarcatReview\App\Widget_Makers\Comparison;
 
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Widget_Makers\Comparison\Loader')) {
+if (!class_exists('\StarcatReview\App\Widget_Makers\Comparison\Loader')) {
     class Loader
     {
 
         public function load()
         {
             // Shortcode
-            // add_shortcode('helpie_reviews_list', array($this, 'reviews_list'));
+            // add_shortcode('starcat_review_list', array($this, 'reviews_list'));
 
             // WordPress Widget
             add_action('widgets_init', [$this, 'register_widget']);
@@ -29,9 +29,9 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Comparison\Loader')) {
             // error_log(' Comparison Table register_widget: ');
             $widget_args = $this->get_widget_args();
 
-            require_once HELPIE_REVIEWS_PATH . '/includes/lib/widgetry/widget-factory.php';
-            $faq_widget = new \Widgetry\Widget_Factory($widget_args);
-            register_widget($faq_widget);
+            require_once SCR_PATH . '/includes/lib/widgetry/widget-factory.php';
+            $scr_widget = new \Widgetry\Widget_Factory($widget_args);
+            register_widget($scr_widget);
         }
 
         public function register_elementor_widget()
@@ -40,20 +40,20 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Comparison\Loader')) {
             $elementor_args = $this->get_elementor_args($args);
 
 
-            require_once HELPIE_REVIEWS_PATH . '/includes/lib/widgetry/elementor-widget-factory.php';
+            require_once SCR_PATH . '/includes/lib/widgetry/elementor-widget-factory.php';
             \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new \Widgetry\Elementor_Widget_Factory([], $elementor_args));
         }
 
         public function get_widget_args()
         {
             $args = [
-                'id' => 'helpie-reviews-comparison-table',
+                'id' => 'starcat-review-comparison-table',
                 'name' => 'Helpie Comparison Table',
                 'description' => 'Comparison Table Widget',
                 'icon' => 'fa fa-th-list', // Used by Elementor only
                 'categories' => ['general-elements'], // Used by Elementor only
-                'model' =>  new \HelpieReviews\App\Widget_Makers\Comparison\Widget(),
-                'view' => new \HelpieReviews\App\Widget_Makers\Comparison\Widget(),
+                'model' =>  new \StarcatReview\App\Widget_Makers\Comparison\Widget(),
+                'view' => new \StarcatReview\App\Widget_Makers\Comparison\Widget(),
             ];
 
             return $args;
@@ -79,7 +79,7 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Comparison\Loader')) {
 
         public function get_view()
         {
-            $comparison_controller = new \HelpieReviews\App\Components\Comparison\Controller();
+            $comparison_controller = new \StarcatReview\App\Components\Comparison\Controller();
             $post_ids = [];
             return $comparison_controller->get_view($post_ids);
         }
@@ -113,18 +113,18 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Comparison\Loader')) {
             $fields = array(
                 'title' => [
                     'name' => 'title',
-                    'label' => __('Title', 'helpie-faq'),
+                    'label' => __('Title', 'starcat-review'),
                     'default' => 'Title of Comparison Table',
                     'type' => 'text',
                 ],
                 'max_num_of_items' => [
                     'name' => 'num_of_cols',
-                    'label' => __('Maximum Number of Items', 'helpie-faq'),
+                    'label' => __('Maximum Number of Items', 'starcat-review'),
                     'default' => 'two',
                     'options' => array(
-                        '1' => __('1', 'helpie-faq'),
-                        '2' => __('2', 'helpie-faq'),
-                        '3' => __('3', 'helpie-faq'),
+                        '1' => __('1', 'starcat-review'),
+                        '2' => __('2', 'starcat-review'),
+                        '3' => __('3', 'starcat-review'),
                     ),
                     'type' => 'select',
                 ],

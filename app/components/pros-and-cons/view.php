@@ -1,19 +1,19 @@
 <?php
 
-namespace HelpieReviews\App\Components\ProsAndCons;
+namespace StarcatReview\App\Components\ProsAndCons;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\ProsAndCons\View')) {
+if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
     class View
     {
         private $html;
 
-        public function __construct($pros_and_cons)
+        public function __construct($viewProps)
         {
-            $this->model = $pros_and_cons;
+            $this->itemsProps = $viewProps['items'];
         }
 
 
@@ -24,9 +24,9 @@ if (!class_exists('\HelpieReviews\App\Components\ProsAndCons\View')) {
                 return '';
             }
 
-            $html = "<div class='hrv-pros-cons hrp-container '>";
-            $html .= $this->get_pros_html($this->model['pros']);
-            $html .= $this->get_cons_html($this->model['cons']);
+            $html = "<div class='hrv-pros-cons scr-container '>";
+            $html .= $this->get_pros_html($this->itemsProps['pros']);
+            $html .= $this->get_cons_html($this->itemsProps['cons']);
             $html .= "</div>";
 
             $this->html = $html;
@@ -43,7 +43,9 @@ if (!class_exists('\HelpieReviews\App\Components\ProsAndCons\View')) {
             $html .= '<ol>';
 
             for ($ii = 0; $ii < sizeof($pros); $ii++) {
-                $html .= "<li>" . $pros[$ii] . "</li>";
+                if (!empty($pros[$ii])) {
+                    $html .= "<li>" . $pros[$ii] . "</li>";
+                }
             }
 
             // $html .= "<li>Pros here</li>";
@@ -61,7 +63,9 @@ if (!class_exists('\HelpieReviews\App\Components\ProsAndCons\View')) {
             $html .= "<ol class='cons'>";
 
             for ($ii = 0; $ii < sizeof($cons); $ii++) {
-                $html .= "<li>" . $cons[$ii] . "</li>";
+                if (!empty($cons[$ii])) {
+                    $html .= "<li>" . $cons[$ii] . "</li>";
+                }
             }
 
             $html .= "</ol>";
@@ -74,12 +78,12 @@ if (!class_exists('\HelpieReviews\App\Components\ProsAndCons\View')) {
         {
             $is_empty = true;
 
-            if (!isset($this->model) || empty($this->model)) {
+            if (!isset($this->itemsProps) || empty($this->itemsProps)) {
                 return $is_empty;
             }
 
-            $is_pros_empty = (!isset($this->model['pros']) || empty($this->model['pros']));
-            $is_cons_empty = (!isset($this->model['cons']) || empty($this->model['cons']));
+            $is_pros_empty = (!isset($this->itemsProps['pros']) || empty($this->itemsProps['pros']));
+            $is_cons_empty = (!isset($this->itemsProps['cons']) || empty($this->itemsProps['cons']));
 
             // Either should be NOT EMPTY 
             if (!$is_pros_empty  || !$is_cons_empty) {

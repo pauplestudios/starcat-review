@@ -1,11 +1,11 @@
 var Stats = require("./user-review/stats.js");
-var Submission = require("./user-review/submission.js");
+var Form = require("./user-review/form.js");
 var ProsAndCons = require("./user-review/pros-and-cons.js");
 
 var UserReview = {
     init: function() {
         Stats.init();
-        Submission.init();
+        Form.init();
         ProsAndCons.init();
 
         this.eventListener();

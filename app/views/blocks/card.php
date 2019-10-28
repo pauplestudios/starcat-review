@@ -1,58 +1,46 @@
 <?php
 
-namespace HelpieReviews\App\Views\Blocks;
+namespace StarcatReview\App\Views\Blocks;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Views\Blocks\Card')) {
+if (!class_exists('\StarcatReview\App\Views\Blocks\Card')) {
     class Card
     {
-
-        public function __construct()
-        {
-            // $input_props = [
-            //     'columns' => 2,
-            //     'items_display' => ['title', 'content', 'link']
-            // ];
-
-            // $this->props = [];
-        }
-
         /* HTML for Single Card */
         public function get_view($item)
         {
-
-            // error_log('$item : ' . print_r($item, true));
             $this->props = $this->interprete_input_props($item);
 
-            // error_log('$item : ' . print_r($item, true));
             $html = '';
 
             $col_classes = "col-xs-12 col-lg-" . $this->props['col-lg'];
-            $html .= '<div class="hrp-collection__col item ' . $col_classes . '">'; // can't add additional classes
-            $html .= '<div class="hrp-review-card" >';
+            $html .= '<div class="scr-collection__col item ' . $col_classes . '">'; // can't add additional classes
+            $html .= '<div class="scr-review-card" >';
 
             if ($this->show_item('title')) {
                 $html .= '<div class="review-card__header">' . $item['title'] . '</div>';
             }
 
             if ($this->show_item('content')) {
-                $html .= '<div class="review-card__body">' . $item['content'] . $item['stat_html'] . '</div>';
+                $stat_html = isset($item['stat_html']) ? $item['stat_html'] : '';
+                $html .= '<div class="review-card__body">' .  $stat_html . $item['content'] . '</div>';
             }
-
-
-
-
 
             if ($this->show_item('link')) {
                 $html .= '<div class="review-card__footer"><a href="' . $item['url'] . '">See all >> </a></div>';
             }
-
-            $html .= '<span class="reviewCount"  data-reviewCount="' . $item['reviews'] . '"></span>';
-            $html .= '<span class="postDate"   data-postDate="' . $item['post_date'] .  '"></span>';
-            $html .= '<span class="postModified"   data-postModified="' . $item['post_modified'] .  '"></span>';
+            if (isset($item['reviews'])) {
+                $html .= '<span class="reviewCount"  data-reviewCount="' . $item['reviews'] . '"></span>';
+            }
+            if (isset($item['date'])) {
+                $html .= '<span class="postDate"   data-postDate="' . $item['date'] .  '"></span>';
+            }
+            if (isset($item['modified_date'])) {
+                $html .= '<span class="postModified"   data-postModified="' . $item['modified_date'] .  '"></span>';
+            }
             $html .= '</div>';
             $html .= '</div>';
 

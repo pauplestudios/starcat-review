@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\Includes;
+namespace StarcatReview\Includes;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\Includes\Actions')) {
+if (!class_exists('\StarcatReview\Includes\Actions')) {
     class Actions
     {
         public function __construct()
@@ -14,16 +14,16 @@ if (!class_exists('\HelpieReviews\Includes\Actions')) {
             add_action('pre_get_comments', [$this, 'exclude_from_comments']);
         }
 
-        // Comment Type of 'helpie_reviews' is exclude from standard comments list Unless we call explicitly by get_comments($type = "helpie_reviews")
+        // Comment Type of SCR_POST_TYPE is exclude from standard comments list Unless we call explicitly by get_comments($type = "starcat_review")
 
         public function exclude_from_comments(\WP_Comment_Query $query)
         {
-            /* only allow 'helpie_reviews' when is required explicitly */
+            /* only allow SCR_POST_TYPE when is required explicitly */
 
-            if ($query->query_vars['type'] !== 'helpie_reviews') {
+            if ($query->query_vars['type'] !== SCR_POST_TYPE) {
                 $query->query_vars['type__not_in'] = array_merge(
                     (array) $query->query_vars['type__not_in'],
-                    array('helpie_reviews')
+                    array(SCR_POST_TYPE)
                 );
             }
         }

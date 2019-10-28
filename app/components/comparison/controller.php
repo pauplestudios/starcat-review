@@ -1,18 +1,18 @@
 <?php
 
-namespace HelpieReviews\App\Components\Comparison;
+namespace StarcatReview\App\Components\Comparison;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\Comparison\Controller')) {
+if (!class_exists('\StarcatReview\App\Components\Comparison\Controller')) {
     class Controller
     {
         public function __construct()
         {
-            $this->model = new \HelpieReviews\App\Components\Comparison\Model();
-            $this->view = new \HelpieReviews\App\Components\Comparison\View();
+            $this->model = new \StarcatReview\App\Components\Comparison\Model();
+            $this->view = new \StarcatReview\App\Components\Comparison\View();
         }
 
         public function get_view($post_ids = [])
@@ -22,7 +22,7 @@ if (!class_exists('\HelpieReviews\App\Components\Comparison\Controller')) {
 
             $args = array(
                 'post__in' => $post_ids,
-                'post_type' => HELPIE_REVIEWS_POST_TYPE
+                'post_type' => SCR_POST_TYPE
             );
 
             $posts = get_posts($args);
@@ -34,7 +34,7 @@ if (!class_exists('\HelpieReviews\App\Components\Comparison\Controller')) {
             return $this->view->get_html($stats);
         }
 
-        public function get_hrp_details($search_key)
+        public function get_scr_details($search_key)
         {
             // echo $search_key;
             $search_post_data = [];

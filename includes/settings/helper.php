@@ -23,7 +23,7 @@ if (!class_exists('CSF_Field_icon_dropdown')) {
 
         protected function get_icon_dropdown_html()
         {
-            $html = '<div class="ui search selection dropdown hrp-dropdown">';
+            $html = '<div class="ui search selection dropdown scr-dropdown">';
             $html .= '<input type="hidden" name="' . $this->field_name() . '" value="' . $this->value . '" ' . $this->field_attributes() . '>';
             $html .= '<i class="dropdown icon"></i>';
             $html .= '<div class="default text">Select Icon</div>';

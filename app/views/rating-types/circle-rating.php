@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Views\Rating_Types;
+namespace StarcatReview\App\Views\Rating_Types;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Views\Rating_Types\Circle_Rating')) {
+if (!class_exists('\StarcatReview\App\Views\Rating_Types\Circle_Rating')) {
     class Circle_Rating
     {
         public function __construct($var)

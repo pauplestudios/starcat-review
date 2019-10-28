@@ -1,4 +1,4 @@
-=== Helpie Reviews - WordPress Reviews & Rating Plugin ===
+=== Starcat Review - WordPress Reviews & Rating Plugin ===
 Donate link: http://helpiewp.com/
 Tags: helpdesk, support, knowledge base, customer, helpie, documentation
 Requires at least: 5.0

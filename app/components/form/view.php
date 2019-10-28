@@ -1,93 +1,102 @@
 <?php
 
-namespace HelpieReviews\App\Components\Form;
+namespace StarcatReview\App\Components\Form;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
+if (!class_exists('\StarcatReview\App\Components\Form\View')) {
     class View
     {
         public function __construct($viewProps)
         {
             $this->props = $viewProps;
 
-            $this->star_rating = new \HelpieReviews\App\Views\Rating_Types\Star_Rating($viewProps);
-            $this->bar_rating = new \HelpieReviews\App\Views\Rating_Types\Bar_Rating($viewProps);
+            $this->star_rating = new \StarcatReview\App\Views\Rating_Types\Star_Rating($viewProps);
+            $this->bar_rating = new \StarcatReview\App\Views\Rating_Types\Bar_Rating($viewProps);
         }
 
-        public function get_html()
+        public function get()
         {
-            $html = "<div class='hrp-container'>";
-            $html .= "<div class='ui segment'>";
+            $html = '';
 
-            if ($this->props['collection']['display_form_title']) {
-                $html .= '<div class="ui attached label">';
-                $html .= ($this->props['collection']['form_title']) ? $this->props['collection']['form_title'] : __("Helpie Review Form", "helpie-reviews");
-                $html .= '</div></br>';
+            // User Already Reviewed or Not Logged in User
+            if (!$this->props['collection']['can_user_review']) {
+                return $html;
             }
 
-            $html .= '<form class="ui form hrp-user-review-submission" action="hrp_user_review_submission" method="post" post_id ="' . get_the_ID() . '">';
+            $html .= '<form class="ui form scr-user-review" action="scr_user_review_submission" method="post" post_id ="' . get_the_ID() . '">';
 
-            if ($this->props['collection']['display_title']) {
+            if ($this->props['collection']['show_form_title']) {
+                $html .= '<h2 class="ui header">';
+                $html .= $this->props['collection']['form_title'];
+                $html .= '</h2>';
+            }
+
+            if ($this->props['collection']['show_title']) {
                 $html .= '<div class="field">';
-                $html .= '<label>Review Title</label>';
+                // $html .= '<label>Review Title</label>';
                 $html .= '<input type="text" name="title" placeholder="Title" />';
-                $html .= '</div><br / ><br />';
+                $html .= '</div>';
             }
 
-            if ($this->props['collection']['display_user_stat']) {
-                $html .= '<div class="field">';
+            if ($this->props['collection']['show_stats']) {
+                $html .= '<div class="rating fields">';
                 $html .= $this->get_user_review();
                 $html .= '</div>';
             }
 
-            if ($this->props['collection']['display_description']) {
+            if ($this->props['collection']['show_description']) {
                 $html .= '<div class="field">';
-                $html .= '<label>Review Description</label>';
+                // $html .= '<label>Review Description</label>';
                 $html .= '<textarea rows="5" spellcheck="false" name="description" placeholder="Description"></textarea>';
                 $html .= '</div>';
             }
 
-            if ($this->props['collection']['display_pros_and_cons']) {
+            if ($this->props['collection']['show_prosandcons']) {
                 $html .= $this->get_pros_and_cons();
             }
 
-            $html .= '<button class="ui mini submit right button">Submit</button>';
+            $html .= '<div class="field">';
+            $html .= '<button class="ui submit button"> Submit </button>';
+            $html .= '</div>';
             $html .= '</form>';
-            $html .= "</div></div>";
 
             return $html;
         }
 
         protected function get_pros_and_cons()
         {
-            $html = '<div class="ui segment">';
-            $html .= '<div class="ui two column divided grid">';
+            $html = '<div class="two fields">';
 
             $html .= $this->get_pros_field();
             $html .= $this->get_cons_field();
 
-            $html .= '</div></div>';
+            $html .= '</div>';
 
             return $html;
         }
 
         protected function get_pros_field()
         {
-            $html = '<div class="column review-pros-repeater">';
-            $html .= '<div class="ui attached label"> Pros </div><br />';
+            $html = '<div class="field review-pros-repeater">';
+            $html .= '<div class="ui segment">';
+            $html .= '<h5> Pros </h5>';
             $html .= '<div data-repeater-list="pros" >';
-            $html .= '<div data-repeater-item >
-                <select class="ui fluid search dropdown" data-pros="pros" >
-                <option value="">Pros</option>            
-                <option value="affordable">Affordable</option>
-                <option value="ui">UI</option>
-                </select>
-                <div data-repeater-delete class="mini ui red basic button">&#8722;</div>
-            </div></div>';
-            $html .= '<div data-repeater-create class="mini ui green basic button">&#65291;</div>';
+            $html .= '<div class="unstackable fields" data-repeater-item >';
+            $html .= '<div class="fourteen wide field">';
+            $html .= '<select class="ui fluid search dropdown" name="pros[0]" data-pros="pros">';
+            $html .= $this->get_prosandcons_option('pros');
+            $html .= '</select>';
+            $html .= '</div>';
+            $html .= '<div class="two wide field">';
+            $html .= '<div class="ui icon basic button" data-repeater-delete><i class="minus icon"></i></div>';
+            $html .= '</div>';
+            $html .= '</div>';
+            $html .= '</div>';
+            $html .= '<div data-repeater-create class="ui icon basic button"><i class="plus icon"></i></div>';
+            $html .= '</div>';
             $html .= '</div>';
 
             return $html;
@@ -95,19 +104,36 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
 
         protected function get_cons_field()
         {
-            $html = '<div class="column review-cons-repeater">';
-            $html .= '<div class="ui attached label"> Cons </div> <br />';
+            $html = '<div class="field review-cons-repeater">';
+            $html .= '<div class="ui segment">';
+            $html .= '<h5> Cons </h5>';
             $html .= '<div data-repeater-list="cons" >';
-            $html .= '<div data-repeater-item >
-                <select  class="ui fluid search dropdown"  data-cons="cons" >
-                <option value="">Cons</option>            
-                <option value="affordable">Affordable</option>
-                <option value="ui">UI</option>
-                </select>
-                <div data-repeater-delete class="mini ui red basic button">&#8722;</div>
-            </div></div>';
-            $html .= '<div data-repeater-create class="mini ui green basic button">&#65291;</div>';
+            $html .= '<div class="unstackable fields" data-repeater-item >';
+            $html .= '<div class="fourteen wide field">';
+            $html .= '<select  class="ui fluid search dropdown" name="cons[0]" data-cons="cons" >';
+            $html .= $this->get_prosandcons_option('cons');
+            $html .= '</select>';
             $html .= '</div>';
+            $html .= '<div class="two wide field">';
+            $html .= '<div data-repeater-delete class="ui icon basic button"><i class="minus icon"></i></div>';
+            $html .= '</div>';
+            $html .= '</div>';
+            $html .= '</div>';
+            $html .= '<div data-repeater-create class="ui icon basic button"><i class="plus icon"></i></div>';
+            $html .= '</div>';
+            $html .= '</div>';
+
+            return $html;
+        }
+
+        protected function get_prosandcons_option($option)
+        {
+            $html = '<option value=""> Type a new one or select existing ' . $option . '</option>';
+            foreach ($this->props['items'][$option] as $value) {
+                if (!empty($value['item'])) {
+                    $html .= '<option value="' . $value['item'] . '"> ' . $value['item'] . '</option>';
+                }
+            }
 
             return $html;
         }
@@ -115,16 +141,19 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
         protected function get_user_review()
         {
             $html  = '';
-            $html .= '<label>User Review</label>';
+            if (sizeof($this->props['items']['stats']) == 0) {
+                return $html;
+            }
+            // $html .= '<label>User Review</label>';
             $html .= '<ul class="review-list"
                 data-type="' . $this->props['collection']['review_type'] . '"
                 data-limit="' . $this->props['collection']['limit'] . '" 
-                data-valuetype="' . $this->props['collection']['value_type'] . '"
+                data-steps="' . $this->props['collection']['steps'] . '"
                 data-no-rated-message ="' . $this->props['collection']['no_rated_message'] . '"
                 data-list="items"
                 >';
 
-            foreach ($this->props['items'] as $key => $value) {
+            foreach ($this->props['items']['stats'] as $key => $value) {
                 switch ($this->props['collection']['review_type']) {
                     case "star":
                         $html .= $this->get_star_rating($key);
@@ -170,11 +199,11 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
         //  Todo: Range Rating
         protected function get_range_rating_fallback($value = 10, $min = 0, $max = 100)
         {
-            $html = '<div class="hrp-rating-wrapper"><hr class="hrp-divider">';
+            $html = '<div class="scr-rating-wrapper"><hr class="scr-divider">';
 
-            $html .= '<div class="hrp-user-review__rating">';
-            $html .= '<input type="range" min="' . $min . '" max="' . $max . '" value="' . $value . '" class="hrp-user-review__range">';
-            $html .= '</div><span class="hrp-user-review__value">' . $value . " / " . $max . "%" . '</span>';
+            $html .= '<div class="scr-user-review__rating">';
+            $html .= '<input type="range" min="' . $min . '" max="' . $max . '" value="' . $value . '" class="scr-user-review__range">';
+            $html .= '</div><span class="scr-user-review__value">' . $value . " / " . $max . "%" . '</span>';
             $html .= '</div>';
 
             return $html;

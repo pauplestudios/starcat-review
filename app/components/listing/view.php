@@ -1,13 +1,13 @@
 <?php
 
 
-namespace HelpieReviews\App\Components\Listing;
+namespace StarcatReview\App\Components\Listing;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\Listing\View')) {
+if (!class_exists('\StarcatReview\App\Components\Listing\View')) {
     class View
     {
         private $html;
@@ -15,30 +15,24 @@ if (!class_exists('\HelpieReviews\App\Components\Listing\View')) {
         public function __construct()
         {
             /* Views */
-            $this->card = new \HelpieReviews\App\Views\Blocks\Card();
-            $this->controls_builder = new \HelpieReviews\App\Builders\Controls_Builder();
+            $this->card = new \StarcatReview\App\Views\Blocks\Card();
+            $this->controls_builder = new \StarcatReview\App\Builders\Controls_Builder();
         }
 
         public function get_html($viewProps)
         {
             $collectionProps = $viewProps['collection'];
 
-            //  error_log('$collectionProps : ' . print_r($collectionProps, true));
-
-            $html = '<div id="hrp-controlled-list">';
+            $html = '<div id="scr-controlled-list">';
             $html .= '<h2>' . $collectionProps['title'] . '</h2>';
 
-            error_log('collectionPropsshow_controls : ' . $collectionProps['show_controls']);
             if ($collectionProps['show_controls']) {
                 $html .= $this->controls_builder->get_controls($collectionProps['show_controls']);
             }
 
-
             $html .= $this->get_card_collection($viewProps);
 
-            /* Pagination */
             if ($collectionProps['pagination']) {
-                // $html .= '<ul class="ui pagination hrp-pagination menu"></ul>';
                 $html .= $this->get_pagination_html($viewProps);
             }
 
@@ -52,7 +46,7 @@ if (!class_exists('\HelpieReviews\App\Components\Listing\View')) {
         private function get_pagination_html($viewProps)
         {
             $html = '';
-            $html .= '<ul class="ui pagination hrp-pagination menu">';
+            $html .= '<ul class="ui pagination scr-pagination menu">';
 
             for ($ii = 1; $ii <= $viewProps['collection']['total_pages']; $ii++) {
                 # code...
@@ -65,10 +59,11 @@ if (!class_exists('\HelpieReviews\App\Components\Listing\View')) {
 
         private function get_card_collection($viewProps)
         {
-            $posts = $viewProps['items'];
+            $posts = $viewProps['items']['posts'];
+            $terms = $viewProps['items']['terms'];
 
             $html = '';
-            $html .= '<div id="hrp-cat-collection" class="hrp-collection list row">';
+            $html .= '<div id="scr-cat-collection" class="scr-collection list row">';
 
             foreach ($posts as $key => $post) {
                 // Set initial $ii
@@ -76,7 +71,16 @@ if (!class_exists('\HelpieReviews\App\Components\Listing\View')) {
 
                 // Assign card to html
                 $html .= $this->get_single_card($post, $ii, $viewProps);
+                // increment $ii
+                $ii++;
+            }
 
+            foreach ($terms as $key => $term) {
+                // Set initial $ii
+                if (!isset($ii)) $ii = 0;
+
+                // Assign card to html
+                $html .= $this->get_single_term_card($term, $ii, $viewProps);
                 // increment $ii
                 $ii++;
             }
@@ -91,24 +95,40 @@ if (!class_exists('\HelpieReviews\App\Components\Listing\View')) {
             $collectionProps = $viewProps['collection'];
             $reviews = [2, 4, 7, 25, 50, 75, 100];
 
-
             $excerpt = $this->get_excerpt($post->post_content);
             $single_review = isset($reviews[$ii]) ? $reviews[$ii] : 1;
+
 
             $item = [
                 'title' => $post->post_title,
                 'content' => $excerpt,
                 'stat_html' => $post->stat_html,
-                'url' => '',
+                'url' => get_post_permalink($post->ID),
                 'reviews' => $single_review,
                 'post_date' => get_post_time('U', 'false', $post->ID),
                 'post_modified' => get_post_modified_time('U', 'false', $post->ID),
                 'columns' => $collectionProps['columns'],
-                'items_display' => $collectionProps['items_display']
+                'items_display' => $collectionProps['items_display'],
             ];
 
             return $this->card->get_view($item);
         }
+
+        private function get_single_term_card($term, $ii, $viewProps)
+        {
+            $collectionProps = $viewProps['collection'];
+
+            $item = [
+                'title' => $term->name,
+                'content' => $term->description,
+                'url' => get_term_link($term),
+                'columns' => $collectionProps['columns'],
+                'items_display' => $collectionProps['items_display'],
+            ];
+
+            return $this->card->get_view($item);
+        }
+
         private function get_excerpt($content)
         {
             $word_count = 150;

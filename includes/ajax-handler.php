@@ -1,14 +1,14 @@
 <?php
 
-namespace HelpieReviews\Includes;
+namespace StarcatReview\Includes;
 
-use HelpieReviews\Includes\Utils\Post;
+use StarcatReview\Includes\Utils\Post;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
+if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
     class Ajax_Handler
     {
         public function __construct()
@@ -17,18 +17,23 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
         public function register_ajax_actions()
         {
             // add 'ajax' action when not logged in
-            add_action('wp_ajax_nopriv_hrp_listing_action', array($this, 'hrp_listing_action'));
-            add_action('wp_ajax_hrp_listing_action', array($this, 'hrp_listing_action'));
-        }
+            add_action('wp_ajax_nopriv_scr_listing_action', array($this, 'scr_listing_action'));
+            add_action('wp_ajax_scr_listing_action', array($this, 'scr_listing_action'));
 
-        public function search_posts()
-        {
             // add 'ajax' action when not logged in
-            add_action('wp_ajax_nopriv_hrp_user_review_submission', [$this, 'user_review_submission']);
-            add_action('wp_ajax_hrp_user_review_submission', [$this, 'user_review_submission']);
+            add_action('wp_ajax_nopriv_scr_user_review_submission', [$this, 'user_review_submission']);
+            add_action('wp_ajax_scr_user_review_submission', [$this, 'user_review_submission']);
+
+            // add 'ajax' action when not logged in
+            add_action('wp_ajax_nopriv_scr_search_posts', [$this, 'search_posts']);
+            add_action('wp_ajax_scr_search_posts', [$this, 'search_posts']);
+
+            // Ajax Hooks In compare table            
+            add_action('wp_ajax_nopriv_get_scr_results', [$this, 'get_scr_results']);
+            add_action('wp_ajax_get_scr_results', [$this, 'get_scr_results']);
         }
 
-        public function hrp_listing_action()
+        public function scr_listing_action()
         {
 
             if (isset($_GET['search'])) {
@@ -53,7 +58,7 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
 
         public function user_review_submission()
         {
-            $user_review_repo = new \HelpieReviews\App\Repositories\User_Reviews_Repo();
+            $user_review_repo = new \StarcatReview\App\Repositories\User_Reviews_Repo();
             $props = $user_review_repo->get_processed_data();
 
             $comment_id = $user_review_repo->insert($props);
@@ -63,12 +68,95 @@ if (!class_exists('\HelpieReviews\Includes\Ajax_Handler')) {
 
             wp_die();
         }
-    } // END CLASS
+
+        public function search_posts()
+        {
+            $summary = new \StarcatReview\App\Summary();
+
+            $args = array(
+                'post_type' => array(SCR_POST_TYPE),
+                'post_status' => array('publish'),
+                'nopaging' => true,
+                'order' => 'ASC',
+                'orderby' => 'menu_order',
+            );
+
+            $results = new \WP_Query($args);
+
+            if ($results->have_posts()) {
+
+                foreach ($results->posts as $post) {
+                    $temp_stats = [
+                        '0' => [
+                            'stat_name' => 'quality',
+                            'rating' => '2',
+                        ],
+                        '1' => [
+                            'stat_name' => 'battery performance',
+                            'rating'    => '4.3'
+                        ],
+                        '2' => [
+                            'stat_name' => 'camera quality',
+                            'rating'    => '4.2'
+                        ],
+                        '3' => [
+                            'stat_name' => 'extras_1',
+                            'rating'    => '4.2'
+                        ],
+                        '4' => [
+                            'stat_name' => 'extras_2',
+                            'rating'    => '4.2'
+                        ],
+                        '5' => [
+                            'stat_name' => 'extras_3',
+                            'rating'    => '4.2'
+                        ],
+
+                    ];
+                    if (has_post_thumbnail($post->ID)) {
+                        $image = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID));
+                    }
+
+                    $author_stats = get_post_meta($post->ID, '_scr_post_options', true);
+                    // $default_args = $summary->get_default_args();
+
+                    $items = [];
+                    if (isset($author_stats['stats-list']) || !empty($author_stats['stats-list'])) {
+                        // $items['stats-list'] = $author_stats['stats-list'];
+                        $author_stats_lists = $author_stats['stats-list'];
+                        foreach ($author_stats_lists as $author_stat_item) {
+                            $items[]  = $author_stat_item;
+                        }
+                    }
+
+                    $posts[] = array(
+                        'id' => $post->ID,
+                        'title' => $post->post_title,
+                        'description' => $post->post_content,
+                        // 'url' => $post->guid,
+                        'stats' => $temp_stats,
+                        'image_url' => isset($image) ? $image[0] : "",
+                        'author_stats'  => $items
+
+                    );
+                }
+            } else {
+                $posts = [];
+            }
+
+            echo json_encode($posts);
+            wp_die();
+        }
+
+
+        public function get_scr_results()
+        {
+            //get scr resultSets 
+            //echo "get scr resultSets";
+            $search_key = $_REQUEST['search_key'];
+            $comparison_controller = new \StarcatReview\App\Components\Comparison\Controller();
+            $scr_search_result_sets = $comparison_controller->get_scr_details($search_key);
+            wp_die();
+        }
+    }
 }
-
-
-$ajax_hanlder = new \HelpieReviews\Includes\Ajax_Handler();
-
-add_action('wp_ajax_helpiereview_search_posts', [$ajax_hanlder, 'search_posts']);
-// add 'ajax' action when not logged in
-add_action('wp_ajax_nopriv_helpiereview_search_posts', [$ajax_hanlder, 'search_posts']);

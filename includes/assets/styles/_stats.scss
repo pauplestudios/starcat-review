@@ -44,7 +44,6 @@ $graylight: #e7e7e7;
     .review-item-stars,
     .reviewed-item-stars {
         float: right;
-        height: 35px;
         box-sizing: border-box;
 
         .stars-wrapper {
@@ -52,7 +51,6 @@ $graylight: #e7e7e7;
             display: inline-block;
         }
         .stars-result {
-            height: 35px;
             overflow: hidden;
             position: relative;
             white-space: nowrap;
@@ -102,6 +100,28 @@ $graylight: #e7e7e7;
     .review-item-bars {
         :hover {
             cursor: pointer;
+        }
+    }
+}
+
+.scr-review-card {
+    & .reviewed-list {
+        border: 0px;
+        margin-bottom: 3px;
+        & .reviewed-item {
+            border-bottom: 0;
+            padding: 0;
+            & .reviewed-item-stars {
+                float: left;
+                ::after {
+                    clear: both;
+                }
+            }
+            & .reviewed-item-label__text {
+                margin-left: 1rem;
+                font-size: 0.8rem;
+                font-weight: 600;
+            }
         }
     }
 }

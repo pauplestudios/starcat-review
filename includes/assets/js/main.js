@@ -1,14 +1,14 @@
 var UserReview = require("./components/user-review.js");
 var ListControl = require("./blocks/list-control.js");
 var ReviewsList = require("./components/reviews-list.js");
-var ComparisonTable = require("./comparison-table.js");
+// var ComparisonTable = require("./comparison-table.js");
 var UserReviewsList = require("./components/user-reviews-list.js");
 
-var HelpieReviews = {
+var StarcatReview = {
     init: function() {
         UserReview.init();
         ListControl.init();
-        Comparison.init();
+        // Comparison.init();
     },
 
     eventHandlers: function() {
@@ -17,7 +17,7 @@ var HelpieReviews = {
 };
 
 jQuery(document).ready(function() {
-    HelpieReviews.init();
+    StarcatReview.init();
 });
 
 import "./../style.scss";

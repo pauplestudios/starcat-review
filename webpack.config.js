@@ -5,6 +5,7 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const TerserJsPlugin = require("terser-webpack-plugin");
 
 const FileManagerPlugin = require("filemanager-webpack-plugin");
 
@@ -76,16 +77,20 @@ const webpackConfig = {
 if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
     const buildFolder = path.resolve(__dirname, "test-artifacts/build");
     webpackConfig.plugins.push(
-        new UglifyJsPlugin({
+        new TerserJsPlugin({
             cache: true,
             parallel: true,
-            uglifyOptions: {
+            terserOptions: {
                 compress: {
                     drop_console: true
+                },
+                output: {
+                    comments: false
                 },
                 ecma: 6,
                 mangle: true
             },
+            extractComments: false,
             sourceMap: true
         })
     );
@@ -103,6 +108,17 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
                     from: path.resolve(__dirname, "includes") + "/",
                     to: buildFolder + "/includes",
                     ignore: [
+                        "**/*.scss",
+                        "**/*.md",
+                        "**/*.yml",
+                        "**/*.env",
+                        "**/tests/**/*",
+                        "**/sample/**/*",
+                        "**/samples/**/*",
+                        "lib/freemius/**/*",
+                        "assets/js/**/*",
+                        "assets/styles/**/*",
+
                         "assets/vendors/semantic/src/**/*",
                         "assets/vendors/semantic/tasks/**/*",
                         "assets/vendors/semantic/bundle/components/**/*",
@@ -111,14 +127,16 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
                         "assets/vendors/semantic/bundle/themes/material/**/*",
                         "assets/vendors/semantic/bundle/semantic.css",
                         "assets/vendors/semantic/bundle/semantic.js",
-                        "assets/vendors/semantic/gulpfile.js"
+                        "assets/vendors/semantic/gulpfile.js",
+
+                        "assets/vendors/comparison-table/**/*"
                     ]
                 },
 
-                {
-                    from: path.resolve(__dirname, "languages") + "/**",
-                    to: buildFolder
-                },
+                // {
+                //     from: path.resolve(__dirname, "languages") + "/**",
+                //     to: buildFolder
+                // },
 
                 {
                     from: path.resolve(__dirname, "*.php"),
@@ -144,7 +162,7 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
                 archive: [
                     {
                         source: "./test-artifacts/build",
-                        destination: "./helpie-reviews.zip"
+                        destination: "./starcat-review.zip"
                     }
                 ]
             }

@@ -1,14 +1,14 @@
 <?php
 
-namespace HelpieReviews\Includes\Settings;
+namespace StarcatReview\Includes\Settings;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\Includes\Settings\Fields')) {
+if (!class_exists('\StarcatReview\Includes\Settings\Fields')) {
 
-    // HRP - Helpie Review Plugin
+    // SCR - Starcat Review Plugin
     class Fields
     {
 
@@ -113,42 +113,18 @@ if (!class_exists('\HelpieReviews\Includes\Settings\Fields')) {
             );
         }
 
-        public function single_post_pros_fields()
-        {
-            return array(
-
-
-                array(
-                    'id'     => 'pros-list',
-                    'type'   => 'repeater',
-                    'title'  => 'Pros',
-                    'fields' => array(
-
-                        array(
-                            'id'    => 'pro_con',
-                            'type'  => 'text',
-                            'title' => 'Feature'
-                        ),
-                    ),
-                ),
-
-            );
-        }
-
-
-        public function single_post_cons_fields()
+        public function single_post_prosandcons_fields($id = 'pros-list', $title = 'Pros')
         {
             return array(
                 array(
-                    'id'     => 'cons-list',
+                    'id'     => $id,
                     'type'   => 'repeater',
-                    'title'  => 'Cons',
+                    'title'  => $title,
                     'fields' => array(
-
                         array(
-                            'id'    => 'pro_con',
+                            'id' => 'item',
                             'type'  => 'text',
-                            'title' => 'Feature'
+                            'placeholder' => strtolower($title)
                         ),
                     ),
                 ),

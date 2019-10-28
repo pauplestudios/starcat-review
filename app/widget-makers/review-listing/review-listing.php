@@ -1,20 +1,20 @@
 <?php
 
-namespace HelpieReviews\App\Widget_Makers\Review_Listing;
+namespace StarcatReview\App\Widget_Makers\Review_Listing;
 
-use \HelpieReviews\Includes\Settings\HRP_Getter;
+use \StarcatReview\Includes\Settings\SCR_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listing')) {
+if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Review_Listing')) {
     class Review_Listing
     {
         public function load()
         {
             // Shortcode
-            add_shortcode('helpie_reviews_list', array($this, 'get_view'));
+            add_shortcode('starcat_review_list', array($this, 'get_view'));
 
             // WordPress Widget
             add_action('widgets_init', [$this, 'register_widget']);
@@ -25,27 +25,28 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
 
         public function get_view($args)
         {
-            $cat_posts_repo = new \HelpieReviews\App\Repositories\Category_Posts_Repo();
-            $posts = $cat_posts_repo->get_category_posts($args);
+            $posts = !isset($args['posts']) ? [] : $args['posts'];
+            $terms = !isset($args['terms']) ? [] : $args['terms'];
 
             /* Stat HTML */
-            foreach ($posts as $key => $post) {
-                $stats_controller = new \HelpieReviews\App\Components\Stats\Controller($post->ID);
-                $post->stat_html = $stats_controller->get_view();
-            }
+            $posts = $this->get_combine_rating($posts);
+
+            // error_log('get_view $args : ' . print_r($args, true));
 
             $component_args = [
                 'posts' => $posts,
-                'show_controls' => HRP_Getter::get('cp_show_controls'),
-                'show_search' => HRP_Getter::get('cp_show_search'),
-                'show_sortBy' => HRP_Getter::get('cp_show_sortBy'),
-                'show_num_of_reviews_filter' => HRP_Getter::get('cp_show_num_of_reviews_filter'),
-                'num_of_cols' => HRP_Getter::get('cp_listing_num_of_cols'),
+                'terms' => $terms,
+                'show_controls' => $args['show_controls'],
+                'show_search' => isset($args['show_search']) ? $args['show_search'] : '',
+                'show_sortBy' => isset($args['show_sortBy']) ? $args['show_sortBy'] : '',
+                // 'show_num_of_reviews_filter' => isset($args['show_num_of_reviews_filter']) ? $args['show_num_of_reviews_filter'] : '',
+                'num_of_cols' => $args['num_of_cols'],
+                'items_display' => isset($args['items_display']) ? $args['items_display'] : ['title', 'content', 'link'],
             ];
 
-            error_log('$component_args : ' . print_r($component_args, true));
+            // error_log('$component_args : ' . print_r($component_args, true));
 
-            $listing_controller = new \HelpieReviews\App\Components\Listing\Controller();
+            $listing_controller = new \StarcatReview\App\Components\Listing\Controller();
             return $listing_controller->get_view($component_args);
         }
 
@@ -55,7 +56,7 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
             // error_log(' register_widget: ');
             $widget_args = $this->get_widget_args();
 
-            require_once HELPIE_REVIEWS_PATH . '/includes/lib/widgetry/widget-factory.php';
+            require_once SCR_PATH . '/includes/lib/widgetry/widget-factory.php';
             $widget = new \Widgetry\Widget_Factory($widget_args);
             register_widget($widget);
         }
@@ -67,20 +68,20 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
             $elementor_args = $this->get_elementor_args($args);
 
 
-            require_once HELPIE_REVIEWS_PATH . '/includes/lib/widgetry/elementor-widget-factory.php';
+            require_once SCR_PATH . '/includes/lib/widgetry/elementor-widget-factory.php';
             \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new \Widgetry\Elementor_Widget_Factory([], $elementor_args));
         }
 
         public function get_widget_args()
         {
             $args = [
-                'id' => 'helpie-reviews-listing',
-                'name' => 'Helpie Reviews Listing',
-                'description' => 'Helpie Reviews Listing Widget',
+                'id' => 'starcat-review-listing',
+                'name' => 'Starcat Review Listing',
+                'description' => 'Starcat Review Listing Widget',
                 'icon' => 'fa fa-th-list', // Used by Elementor only
                 'categories' => ['general-elements'], // Used by Elementor only
-                'model' =>  new \HelpieReviews\App\Components\Listing\Model(),
-                'view' => new \HelpieReviews\App\Components\Listing\Controller(),
+                'model' =>  new \StarcatReview\App\Components\Listing\Model(),
+                'view' => new \StarcatReview\App\Components\Listing\Controller(),
             ];
 
             return $args;
@@ -103,34 +104,41 @@ if (!class_exists('\HelpieReviews\App\Widget_Makers\Review_Listing\Review_Listin
             return $elementor_args;
         }
 
-        // public function propsRegister()
-        // {
+        protected function get_combine_rating($posts)
+        {
+            foreach ($posts as $key => $post) {
+                $args = SCR_Getter::get_stat_default_args();
+                $args['post_id'] = $post->ID;
+                $args['combination'] = 'overall_combine';
+                $author_review = get_post_meta($post->ID, '_scr_post_options', true);
+                $args['items'] = isset($author_review) && !empty($author_review) ? $author_review : [];
+                $comments = $this->get_comments_list($post->ID);
+                if (isset($comments) && !empty($comments)) {
+                    $args['items']['comments-list'] = $comments;
+                }
+                if (!empty($args['items'])) {
+                    $stats_controller = new \StarcatReview\App\Components\Stats\Controller($args);
+                    $post->stat_html = $stats_controller->get_view();
+                }
+            }
 
-        //     $register = [
-        //         'title' => [
-        //             'settings' => ''
-        //         ],
-        //         'show_controls' => [
-        //             'settings' => 'cp_show_controls'
-        //         ],
-        //         'show_search' => [
-        //             'settings' => 'cp_show_search'
-        //         ],
-        //         'show_sortBy' => [
-        //             'settings' => 'cp_show_sortBy'
-        //         ],
-        //         'show_num_of_reviews_filter' => [
-        //             'settings' => 'cp_show_num_of_reviews_filter'
-        //         ],
+            return $posts;
+        }
 
-        //         'default_sortBy' => [
-        //             'settings' => 'cp_default_sortBy'
-        //         ],
-        //         'listing_num_of_cols' => [
-        //             'settings' => 'cp_listing_num_of_cols'
-        //         ],
+        protected function get_comments_list($post_id)
+        {
+            $args = [
+                'post_id' => $post_id,
+                'type' => SCR_POST_TYPE
+            ];
 
-        //     ];
-        // }
+            $comments = get_comments($args);
+
+            foreach ($comments as $comment) {
+                $comment->reviews = get_comment_meta($comment->comment_ID, 'scr_user_review_props', true);
+            }
+
+            return $comments;
+        }
     } // END CLASS
 }
