@@ -16,7 +16,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Loader')) {
             add_shortcode('starcat_review_list', array($this, 'get_view'));
 
             // WordPress Widget
-            add_action('widgets_init', [$this, 'register_widget']);
+            // add_action('widgets_init', [$this, 'register_widget']);
 
             // Elementor Widget
             add_action('elementor/widgets/widgets_registered', [$this, 'register_elementor_widget']);

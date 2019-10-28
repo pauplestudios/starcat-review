@@ -11,6 +11,7 @@ if (!class_exists('\StarcatReview\Includes\Widgets\Register_Widgets')) {
     {
         public function load()
         {
+            // error_log('widgets->load() : ');
             add_action('widgets_init', function () {
                 $widget_args = array(
                     'id' => 'scr-listing',
@@ -20,7 +21,23 @@ if (!class_exists('\StarcatReview\Includes\Widgets\Register_Widgets')) {
                     'view' => new \StarcatReview\App\Components\Listing\Controller(),
                 );
 
-                require_once SCR_PATH . '/lib/widgetry/widget-factory.php';
+                $url = SCR_PATH . '/includes/lib/widgetry/widget-factory.php';
+                require_once $url;
+                $widget = new \Widgetry\Widget_Factory($widget_args);
+                register_widget($widget);
+            });
+
+            add_action('widgets_init', function () {
+                $widget_args = array(
+                    'id' => 'scr-comparison-table',
+                    'name' => 'Comparison Table',
+                    'description' => 'Comparison Table Widget',
+                    'model' =>  new \StarcatReview\App\Widget_Makers\Comparison\Widget(),
+                    'view' => new \StarcatReview\App\Widget_Makers\Comparison\Widget(),
+                );
+
+                $url = SCR_PATH . '/includes/lib/widgetry/widget-factory.php';
+                require_once $url;
                 $widget = new \Widgetry\Widget_Factory($widget_args);
                 register_widget($widget);
             });

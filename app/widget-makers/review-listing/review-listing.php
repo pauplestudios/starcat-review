@@ -14,10 +14,10 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Review_Listin
         public function load()
         {
             // Shortcode
-            add_shortcode('starcat_review_list', array($this, 'get_view'));
+            // add_shortcode('starcat_review_list', array($this, 'get_view'));
 
             // WordPress Widget
-            add_action('widgets_init', [$this, 'register_widget']);
+            // add_action('widgets_init', [$this, 'register_widget']);
 
             // Elementor Widget
             add_action('elementor/widgets/widgets_registered', [$this, 'register_elementor_widget']);
@@ -36,11 +36,11 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Review_Listin
             $component_args = [
                 'posts' => $posts,
                 'terms' => $terms,
-                'show_controls' => $args['show_controls'],
-                'show_search' => isset($args['show_search']) ? $args['show_search'] : '',
-                'show_sortBy' => isset($args['show_sortBy']) ? $args['show_sortBy'] : '',
+                'show_controls' =>  isset($args['show_controls']) ? $args['show_controls'] : true,
+                'show_search' => isset($args['show_search']) ? $args['show_search'] : true,
+                'show_sortBy' => isset($args['show_sortBy']) ? $args['show_sortBy'] : true,
                 // 'show_num_of_reviews_filter' => isset($args['show_num_of_reviews_filter']) ? $args['show_num_of_reviews_filter'] : '',
-                'num_of_cols' => $args['num_of_cols'],
+                'num_of_cols' => isset($args['num_of_cols']) ? $args['num_of_cols'] : 3,
                 'items_display' => isset($args['items_display']) ? $args['items_display'] : ['title', 'content', 'link'],
             ];
 
