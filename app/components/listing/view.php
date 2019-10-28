@@ -75,15 +75,21 @@ if (!class_exists('\StarcatReview\App\Components\Listing\View')) {
                 $ii++;
             }
 
-            foreach ($terms as $key => $term) {
-                // Set initial $ii
-                if (!isset($ii)) $ii = 0;
+            // error_log('$terms : ' . print_r($terms, true));
+            if (isset($terms) && is_array($terms) && sizeof($terms) > 0) {
+                foreach ($terms as $key => $term) {
+                    // Set initial $ii
+                    if (!isset($ii)) $ii = 0;
 
-                // Assign card to html
-                $html .= $this->get_single_term_card($term, $ii, $viewProps);
-                // increment $ii
-                $ii++;
+                    // Assign card to html
+                    $html .= $this->get_single_term_card($term, $ii, $viewProps);
+                    // increment $ii
+                    $ii++;
+                }
+            } else {
+                error_log('$terms is not set (or) not array (or) empty.');
             }
+
 
             $html .= '</div>';
 

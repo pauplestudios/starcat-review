@@ -32,8 +32,8 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
             $posts = $category_posts_repo->get_category_posts($args);
 
             $widget_args = [
-                'terms' => 46,
-                'posts' => $posts
+                // 'terms' => [],
+                // 'posts' => []
             ];
 
             $review_listing_widget = new \StarcatReview\App\Widget_Makers\Review_Listing\Review_Listing();

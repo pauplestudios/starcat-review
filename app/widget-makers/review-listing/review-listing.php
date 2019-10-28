@@ -11,6 +11,11 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Review_Listing')) {
     class Review_Listing
     {
+        public function __construct()
+        {
+            $this->fields_model = new \StarcatReview\App\Components\Listing\Fields_Model();
+        }
+
         public function load()
         {
             // Shortcode
@@ -25,7 +30,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Review_Listin
 
         public function get_view($args)
         {
-            $posts = !isset($args['posts']) ? [] : $args['posts'];
+            $posts = !isset($args['posts']) ? $this->get_default_posts() : $args['posts'];
             $terms = !isset($args['terms']) ? [] : $args['terms'];
 
             /* Stat HTML */
@@ -49,6 +54,19 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Review_Listin
             $listing_controller = new \StarcatReview\App\Components\Listing\Controller();
             return $listing_controller->get_view($component_args);
         }
+
+        public function get_fields()
+        {
+            return $this->fields_model->get_fields();
+        }
+
+        public function get_default_args()
+        {
+            $default_args = $this->fields_model->get_default_args();
+
+            return $default_args;
+        }
+
 
         public function register_widget()
         {
@@ -102,6 +120,34 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Review_Listin
             $elementor_args['view'] = $args['view'];
 
             return $elementor_args;
+        }
+
+        /* PROTECTED METHODS */
+        protected function get_default_posts()
+        {
+            $posts = [];
+
+            $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+            $args = array(
+                'posts_per_page' => -1,
+                'post_type' => SCR_POST_TYPE,
+                'paged' => $paged,
+            );
+
+
+            $query = new \WP_Query($args);
+
+            if ($query->have_posts()) {
+                while ($query->have_posts()) {
+                    // Optionally, pick parts of the post and create a custom collection.
+                    $query->the_post();
+                    $posts[] = get_post();
+                }
+                wp_reset_postdata();
+            }
+
+            // error_log('$posts : ' . print_r($posts, true));
+            return $posts;
         }
 
         protected function get_combine_rating($posts)
