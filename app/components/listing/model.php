@@ -2,23 +2,18 @@
 
 namespace StarcatReview\App\Components\Listing;
 
-use \StarcatReview\App\Abstracts\Widget_Model_Interface as Widget_Model_Interface;
-use \StarcatReview\App\Abstracts\Widget_Model as Widget_Model;
-
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
 if (!class_exists('\StarcatReview\App\Components\Listing\Model')) {
-    class Model extends Widget_Model implements Widget_Model_Interface
+    class Model
     {
 
         public function __construct()
         {
-            $this->fields_model = new \StarcatReview\App\Components\Listing\Fields_Model();
             $this->cat_posts_repo = new \StarcatReview\App\Repositories\Category_Posts_Repo();
-            parent::__construct($this->fields_model);
             $this->style_config = new \StarcatReview\App\Components\Listing\Style_Config_Model();
         }
 
@@ -57,13 +52,6 @@ if (!class_exists('\StarcatReview\App\Components\Listing\Model')) {
         protected function get_items_props($args)
         {
             return $args;
-        }
-
-        public function get_default_args()
-        {
-            $default_args = $this->fields_model->get_default_args();
-
-            return $default_args;
         }
     } // END CLASS
 }

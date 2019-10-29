@@ -2,6 +2,8 @@
 
 namespace StarcatReview\App\Widget_Makers\Review_Listing;
 
+use \StarcatReview\App\Abstracts\Widget_Model_Interface as Widget_Model_Interface;
+use \StarcatReview\App\Abstracts\Widget_Model as Widget_Model;
 use \StarcatReview\Includes\Settings\SCR_Getter;
 
 if (!defined('ABSPATH')) {
@@ -9,11 +11,12 @@ if (!defined('ABSPATH')) {
 } // Exit if accessed directly
 
 if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Review_Listing')) {
-    class Review_Listing
+    class Review_Listing extends Widget_Model implements Widget_Model_Interface
     {
         public function __construct()
         {
             $this->fields_model = new \StarcatReview\App\Components\Listing\Fields_Model();
+            parent::__construct($this->fields_model);
         }
 
         public function load()
