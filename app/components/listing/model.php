@@ -14,7 +14,16 @@ if (!class_exists('\StarcatReview\App\Components\Listing\Model')) {
         public function __construct()
         {
             $this->cat_posts_repo = new \StarcatReview\App\Repositories\Category_Posts_Repo();
-            $this->style_config = new \StarcatReview\App\Components\Listing\Style_Config_Model();
+        }
+
+        public function get_viewProps($args)
+        {
+            $viewProps = array(
+                'collection' => $this->get_collection_props($args),
+                'items' => $this->get_items_props($args),
+            );
+
+            return $viewProps;
         }
 
         protected function get_collection_props($args)
@@ -26,15 +35,15 @@ if (!class_exists('\StarcatReview\App\Components\Listing\Model')) {
                 'title' => '',
                 'posts_per_page' => $posts_per_page,
                 'show_controls' => [
-                    'search' => $args['show_search'],
-                    'sort' => $args['show_sortBy'],
+                    'search' => isset($args['show_search']) ? $args['show_search'] : true,
+                    'sort' =>  isset($args['show_sortBy']) ? $args['show_sortBy'] : true,
                     // 'reviews' => $args['show_num_of_reviews_filter'],
                 ],
                 'post_count' => $post_count,
                 'total_pages' => $post_count / $posts_per_page,
                 'pagination' => true,
-                'columns' => $args['num_of_cols'],
-                'items_display' => $args['items_display']
+                'columns' => isset($args['num_of_cols']) ? $args['num_of_cols'] : 3,
+                'items_display' => isset($args['items_display']) ? $args['items_display'] : ['title', 'content', 'link']
             ];
 
             if ($args['show_controls'] == false) {

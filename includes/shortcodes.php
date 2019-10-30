@@ -36,7 +36,7 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
                 // 'posts' => []
             ];
 
-            $review_listing_widget = new \StarcatReview\App\Widget_Makers\Review_Listing\Review_Listing();
+            $review_listing_widget = new \StarcatReview\App\Widget_Makers\Review_Listing\Controller();
             return $review_listing_widget->get_view($widget_args);
         }
     } // END CLASS

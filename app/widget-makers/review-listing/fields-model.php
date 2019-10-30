@@ -1,12 +1,12 @@
 <?php
 
-namespace StarcatReview\App\Components\Listing;
+namespace StarcatReview\App\Widget_Makers\Review_Listing;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\StarcatReview\App\Components\Listing\Fields_Model')) {
+if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Fields_Model')) {
     class Fields_Model
     {
         public function __construct()
@@ -14,27 +14,7 @@ if (!class_exists('\StarcatReview\App\Components\Listing\Fields_Model')) {
             // $this->repo = new \StarcatReview\Includes\Repos\Faq_Repo();
         }
 
-        public function get_category_options($show_all = false)
-        {
-            $category_options = [];
-            $terms = get_terms(SCR_CATEGORY, array(
-                'hide_empty' => false,
-            ));
 
-            foreach ($terms as $term) {
-                if (!isset($term->term_id)) {
-                    continue;
-                }
-                $category_options[$term->term_id] = $term->name;
-            }
-
-            if ($show_all == true) {
-                $category_options = array('all' => 'All') + $category_options;
-            }
-            // error_log('Visible Terms : ' . print_r($category_options, true));
-
-            return $category_options;
-        }
 
         public function get_fields()
         {
@@ -135,18 +115,29 @@ if (!class_exists('\StarcatReview\App\Components\Listing\Fields_Model')) {
             return $fields;
         }
 
-        public function get_default_args()
+        public function get_category_options($show_all = false)
         {
-            $args = array();
+            $category_options = [];
+            $terms = get_terms(SCR_CATEGORY, array(
+                'hide_empty' => false,
+            ));
 
-            // Get Default Values from GET - FIELDS
-            $fields = $this->get_fields();
-            foreach ($fields as $key => $field) {
-                $args[$key] = $field['default'];
+            foreach ($terms as $term) {
+                if (!isset($term->term_id)) {
+                    continue;
+                }
+                $category_options[$term->term_id] = $term->name;
             }
 
-            return $args;
+            if ($show_all == true) {
+                $category_options = array('all' => 'All') + $category_options;
+            }
+            // error_log('Visible Terms : ' . print_r($category_options, true));
+
+            return $category_options;
         }
+
+
 
 
         // OTHER

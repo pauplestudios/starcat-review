@@ -17,8 +17,8 @@ if (!class_exists('\StarcatReview\Includes\Widgets\Register_Widgets')) {
                     'id' => 'scr-listing',
                     'name' => 'Review Listing',
                     'description' => 'Review Listing Widget',
-                    'model' =>  new \StarcatReview\App\Widget_Makers\Review_Listing\Review_Listing(),
-                    'view' => new \StarcatReview\App\Widget_Makers\Review_Listing\Review_Listing(),
+                    'model' =>  new \StarcatReview\App\Widget_Makers\Review_Listing\Controller(),
+                    'view' => new \StarcatReview\App\Widget_Makers\Review_Listing\Controller(),
                 );
 
                 $url = SCR_PATH . '/includes/lib/widgetry/widget-factory.php';

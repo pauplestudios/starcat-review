@@ -13,7 +13,7 @@ if (!class_exists('\StarcatReview\Includes\Templates\Controllers\Category_Templa
     {
         public function __construct()
         {
-            $this->listing = new \StarcatReview\App\Widget_Makers\Review_Listing\Review_Listing();
+            $this->listing = new \StarcatReview\App\Widget_Makers\Review_Listing\Controller();
         }
 
         public function get_view($term)
