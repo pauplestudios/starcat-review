@@ -41,7 +41,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Fields_Model'
                 'show_search' => [
                     'name' => 'show_search',
                     'label' => __('Show Search', 'starcat-review'),
-                    'default' => 'off',
+                    'default' => 'on',
                     'options' => array(
                         'on' => __('On', 'starcat-review'),
                         'off' => __('Off', 'starcat-review'),
@@ -51,7 +51,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Fields_Model'
                 'show_sortBy' => [
                     'name' => 'show_sortBy',
                     'label' => __('Show SortBy', 'starcat-review'),
-                    'default' => 'off',
+                    'default' => 'on',
                     'options' => array(
                         'on' => __('On', 'starcat-review'),
                         'off' => __('Off', 'starcat-review'),
@@ -61,7 +61,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Fields_Model'
                 'show_num_of_reviews_filter' => [
                     'name' => 'show_num_of_reviews_filter',
                     'label' => __('Show Number of Reviews Filter', 'starcat-review'),
-                    'default' => 'off',
+                    'default' => 'on',
                     'options' => array(
                         'on' => __('On', 'starcat-review'),
                         'off' => __('Off', 'starcat-review'),
@@ -72,7 +72,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Fields_Model'
                 'default_sortBy' => [
                     'name' => 'default_sortBy',
                     'label' => __('Default SortBy', 'starcat-review'),
-                    'default' => 'off',
+                    'default' => 'on',
                     'options' => array(
                         'on' => __('On', 'starcat-review'),
                         'off' => __('Off', 'starcat-review'),
@@ -83,7 +83,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Fields_Model'
                 'num_of_cols' => [
                     'name' => 'num_of_cols',
                     'label' => __('Number of Columns', 'starcat-review'),
-                    'default' => 'two',
+                    'default' => '2',
                     'options' => array(
                         '1' => __('1', 'starcat-review'),
                         '2' => __('2', 'starcat-review'),

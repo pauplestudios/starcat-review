@@ -1,6 +1,6 @@
 <?php
 
-namespace StarcatReview\App\Components\Listing;
+namespace StarcatReview\App\Widget_Makers\Review_Listing;
 
 if (!defined('ABSPATH')) {
     exit;

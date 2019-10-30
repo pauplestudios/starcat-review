@@ -25,18 +25,19 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
             $comparison_table_widget = new \StarcatReview\App\Widget_Makers\Comparison\Widget();
             return $comparison_table_widget->get_view();
         }
-        public function reviews_list()
+        public function reviews_list($atts)
         {
-            $args['term_id'] = 46;
-            $category_posts_repo = new Category_Posts_Repo();
-            $posts = $category_posts_repo->get_category_posts($args);
+            // $args['term_id'] = 46;
+            // $category_posts_repo = new Category_Posts_Repo();
+            // $posts = $category_posts_repo->get_category_posts($args);
 
-            $widget_args = [
-                // 'terms' => [],
-                // 'posts' => []
-            ];
-
+            // $widget_args = [
+            //     // 'terms' => [],
+            //     // 'posts' => []
+            // ];
             $review_listing_widget = new \StarcatReview\App\Widget_Makers\Review_Listing\Controller();
+            $defaults = $review_listing_widget->get_default_args();
+            $widget_args = shortcode_atts($defaults, $atts);
             return $review_listing_widget->get_view($widget_args);
         }
     } // END CLASS
