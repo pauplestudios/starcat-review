@@ -13,13 +13,15 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
     {
         public function __construct()
         {
-            // error_log('hooks __construct');
 
             /* settings getter */
             require_once(SCR_PATH . 'includes/settings/getter.php');
 
             /*  Reviews Init Hook */
             add_action('init', array($this, 'init_hook'));
+
+            /*  Reviews Widget */
+            $this->load_widgets();
 
             /* */
             add_action('widgets_init', [$this, 'register_sidebar']);
@@ -43,10 +45,6 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         {
             /*  Reviews Ajax Hooks */
             $this->load_ajax_handler();
-
-            /*  Reviews Widget */
-            // $this->load_widgets();
-
 
 
 
@@ -137,6 +135,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
         public function load_widgets()
         {
+
             $widgets = new \StarcatReview\Includes\Widgets\Register_Widgets();
             $widgets->load();
 

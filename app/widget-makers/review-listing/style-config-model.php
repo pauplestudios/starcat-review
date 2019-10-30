@@ -1,13 +1,13 @@
 <?php
 
-namespace StarcatReview\App\Components\Listing;
+namespace StarcatReview\App\Widget_Makers\Review_Listing;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
 
-if (!class_exists('\StarcatReview\App\Components\Listing\Style_Config_Model')) {
+if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Style_Config_Model')) {
     class Style_Config_Model
     {
         public function get_config()
