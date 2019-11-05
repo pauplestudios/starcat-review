@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\Includes;
+namespace StarcatReview\Includes;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\Includes\Register_Templates')) {
+if (!class_exists('\StarcatReview\Includes\Register_Templates')) {
     class Register_Templates
     {
         public function __construct()
@@ -19,9 +19,9 @@ if (!class_exists('\HelpieReviews\Includes\Register_Templates')) {
         public function get_archive_template($archive_template)
         {
             global $post;
-            if (is_post_type_archive('helpie_reviews')) {
-                if (file_exists(HELPIE_REVIEWS_PATH . '/includes/templates/archive-helpie_reviews.php')) {
-                    $archive_template = HELPIE_REVIEWS_PATH . '/includes/templates/archive-helpie_reviews.php';
+            if (is_post_type_archive(SCR_POST_TYPE)) {
+                if (file_exists(SCR_PATH . '/includes/templates/archive-starcat_review.php')) {
+                    $archive_template = SCR_PATH . '/includes/templates/archive-starcat_review.php';
                 }
             }
 
@@ -31,9 +31,9 @@ if (!class_exists('\HelpieReviews\Includes\Register_Templates')) {
         public function get_category_template($archive_template)
         {
             global $post;
-            if (is_tax('helpie_reviews_category')) {
-                if (file_exists(HELPIE_REVIEWS_PATH . '/includes/templates/category-helpie_reviews.php')) {
-                    $archive_template = HELPIE_REVIEWS_PATH . '/includes/templates/category-helpie_reviews.php';
+            if (is_tax(SCR_CATEGORY)) {
+                if (file_exists(SCR_PATH . '/includes/templates/category-starcat_review.php')) {
+                    $archive_template = SCR_PATH . '/includes/templates/category-starcat_review.php';
                 }
             }
 
@@ -44,17 +44,16 @@ if (!class_exists('\HelpieReviews\Includes\Register_Templates')) {
         {
             global $wp_query, $post;
 
-            $template_source = \HelpieReviews\Includes\Settings\HRP_Getter::get('template_source');
-
-            if ($template_source == 'theme') {
-                return;
-            }
-
             /* Checks for single template by post type */
-            if ($post->post_type == HELPIE_REVIEWS_POST_TYPE && is_single()) {
-                error_log('Plugin Template');
-                if (file_exists(HELPIE_REVIEWS_PATH . '/includes/templates/single-helpie_reviews.php')) {
-                    return HELPIE_REVIEWS_PATH . '/includes/templates/single-helpie_reviews.php';
+            if ($post->post_type == SCR_POST_TYPE && is_single()) {
+                $template_source = \StarcatReview\Includes\Settings\SCR_Getter::get('template_source');
+
+                if ($template_source == 'theme') {
+                    return $single;
+                }
+
+                if (file_exists(SCR_PATH . '/includes/templates/single-starcat_review.php')) {
+                    return SCR_PATH . '/includes/templates/single-starcat_review.php';
                 }
             }
 

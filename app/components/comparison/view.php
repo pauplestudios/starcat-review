@@ -1,13 +1,13 @@
 <?php
 
 
-namespace HelpieReviews\App\Components\Comparison;
+namespace StarcatReview\App\Components\Comparison;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\Comparison\View')) {
+if (!class_exists('\StarcatReview\App\Components\Comparison\View')) {
     class View
     {
         private $html;
@@ -15,7 +15,7 @@ if (!class_exists('\HelpieReviews\App\Components\Comparison\View')) {
         public function __construct()
         {
             /* Views */
-            // $this->Comparison_Table = new \HelpieReviews\App\Views\Blocks\Comparison_Table();
+            // $this->Comparison_Table = new \StarcatReview\App\Views\Blocks\Comparison_Table();
         }
 
         public function get_html($stats = [])
@@ -39,9 +39,9 @@ if (!class_exists('\HelpieReviews\App\Components\Comparison\View')) {
             $html = '';
             $html .= '<header class="col-12">';
             $html .= '<div class="col-lg-6"><div class="col-xs-12">';
-            $html .= '<div class="ui input focus hrp-search-container" style="width:100%;">';
-            $html .= '<input type="text" class="hrp-search" placeholder="Search...">';
-            $html .= '<div class="hrp-search-lists"></div></div>';
+            $html .= '<div class="ui input focus scr-search-container" style="width:100%;">';
+            $html .= '<input type="text" class="scr-search" placeholder="Search...">';
+            $html .= '<div class="scr-search-lists"></div></div>';
             $html .= '</div></div>';
             $html .= '<div class="col-xs-6 actions">';
             $html .= '<a href="#0" class="reset">Reset</a>';
@@ -56,7 +56,7 @@ if (!class_exists('\HelpieReviews\App\Components\Comparison\View')) {
             $html = '';
             $html .= '<div class="features">';
             $html .= '<div class="top-info">Models</div>';
-            $html .= '<ul class="cd-features-list" id="hrp-stats-list">';
+            $html .= '<ul class="cd-features-list" id="scr-stats-list">';
 
             // error_log('$stat_cols : ' . print_r($stat_cols, true));
             for ($ii = 0; $ii < sizeof($stat_cols); $ii++) {
@@ -151,14 +151,14 @@ if (!class_exists('\HelpieReviews\App\Components\Comparison\View')) {
         {
 
             $html = '';
-            $html .= '<li class="product hrp-search-filter-wrapper">';
+            $html .= '<li class="product scr-search-filter-wrapper">';
             $html .= '<div class="top-info">';
             //$html .= '<div class="check"></div>';
             //$html .= '<img class="featured-image" src="" alt="product image">';
             $html .= '<h4>Add Product</h4>';
-            $html .= '<div class="ui search hrp-product-search">';
+            $html .= '<div class="ui search scr-product-search">';
             $html .= '<div class="ui input">';
-            $html .= '<input type="text" class="prompt " placeholder="Search lovely things" />';
+            $html .= '<input type="text" class="prompt " placeholder="Search" />';
             $html .= '</div>';
             $html .= '<div class="results"></div>';
             $html .= '</div>';
@@ -173,9 +173,9 @@ if (!class_exists('\HelpieReviews\App\Components\Comparison\View')) {
         public function add_product_btn()
         {
             $html = '';
-            $html .= '<div class="ui single column grid hrp-compare-add-button" style="padding:5px;">';
+            $html .= '<div class="ui single column grid scr-compare-add-button" style="padding:5px;">';
             $html .= '<div class="row"><div class="column">';
-            $html .= '<button class="ui button hrp-add-product" style="width:40%;">Add</button>';
+            $html .= '<button class="ui button scr-add-product" style="width:40%;">Add</button>';
             $html .= '</div></div>';
             $html .= '</div>';
             return $html;

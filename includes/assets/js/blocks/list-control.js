@@ -6,7 +6,7 @@ var UserReviewsList = {
         this.dropDownInit();
 
         var options = {
-            // item: "hrp-collection__col",
+            // item: "scr-collection__col",
             valueNames: [
                 "review-card__header",
                 "review-card__body",
@@ -26,7 +26,7 @@ var UserReviewsList = {
             }
         };
 
-        this.featureList = new List("hrp-controlled-list", options);
+        this.featureList = new List("scr-controlled-list", options);
         this.eventHandlers();
 
         jQuery(".pagination a").addClass("item");
@@ -36,7 +36,7 @@ var UserReviewsList = {
     dropDownInit: function() {
         var thisModule = this;
 
-        jQuery("#hrp-controlled-list .ui.dropdown").dropdown({
+        jQuery("#scr-controlled-list .ui.dropdown").dropdown({
             clearable: true
         });
     },
@@ -54,7 +54,7 @@ var UserReviewsList = {
     filters: function() {
         var thisModule = this;
 
-        jQuery("#hrp-controlled-list .ui.dropdown.reviews").dropdown(
+        jQuery("#scr-controlled-list .ui.dropdown.reviews").dropdown(
             "setting",
             "onChange",
             function(value, text, $selectedItem) {
@@ -79,7 +79,7 @@ var UserReviewsList = {
     sorting: function() {
         var thisModule = this;
 
-        jQuery("#hrp-controlled-list .ui.dropdown.sort").dropdown(
+        jQuery("#scr-controlled-list .ui.dropdown.sort").dropdown(
             "setting",
             "onChange",
             function(value, text, $selectedItem) {

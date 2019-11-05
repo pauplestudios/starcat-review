@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App;
+namespace StarcatReview\App;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Review')) {
+if (!class_exists('\StarcatReview\App\Review')) {
     class Review
     {
         public function __construct()

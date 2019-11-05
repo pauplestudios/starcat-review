@@ -1,55 +1,55 @@
 <?php
 
-namespace HelpieReviews\App\Components\Listing;
+namespace StarcatReview\App\Widget_Makers\Review_Listing;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
 
-if (!class_exists('\HelpieReviews\App\Components\Listing\Style_Config_Model')) {
+if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Style_Config_Model')) {
     class Style_Config_Model
     {
         public function get_config()
         {
             $style_config = array(
                 // 'collection' => array(
-                //     'name' => 'helpie_faq',
-                //     'selector' => '.helpie-faq.accordions .accordion',
-                //     'label' => __('FAQ', 'helpie-faq'),
+                //     'name' => SCR_POST_TYPE,
+                //     'selector' => '.starcat-review.accordions .accordion',
+                //     'label' => __('SCR', 'starcat-review'),
                 //     'styleProps' => array( 'background', 'border', 'padding', 'margin')
                 // ),
 
                 // 'title_icon' => array(
-                //     'name' => 'helpie_faq_title_icon',
-                //     'selector' => '.helpie-faq.accordions .collection-title i',
-                //     'label' => __('Title Icon', 'helpie-faq'),
+                //     'name' => 'starcat_review_title_icon',
+                //     'selector' => '.starcat-review.accordions .collection-title i',
+                //     'label' => __('Title Icon', 'starcat-review'),
                 //     'styleProps' => array( 'icon', 'position', 'color')
                 // ),
 
                 'title' => array(
-                    'name' => 'helpie_faq_title',
-                    'selector' => '.helpie-faq.accordions .collection-title',
-                    'label' => __('Title', 'helpie-faq'),
+                    'name' => 'starcat_review_title',
+                    'selector' => '.starcat-review.accordions .collection-title',
+                    'label' => __('Title', 'starcat-review'),
                     'styleProps' => array('color', 'typography', 'text-align', 'border', 'background', 'padding', 'margin')
                 ),
 
                 'element' => array(
                     'name' => 'helpie_element',
-                    'selector' => '.helpie-faq.accordions .accordion__item',
-                    'label' => __('Single Item', 'helpie-faq'),
+                    'selector' => '.starcat-review.accordions .accordion__item',
+                    'label' => __('Single Item', 'starcat-review'),
                     // 'styleProps' => array( 'background', 'border', 'padding', 'margin'),
                     'children' => array(
                         'header' => array(
                             'name' => 'helpie_element_header',
-                            'selector' => '.helpie-faq.accordions .accordion__header',
-                            'label' => __('Single Item - Header', 'helpie-faq'),
+                            'selector' => '.starcat-review.accordions .accordion__header',
+                            'label' => __('Single Item - Header', 'starcat-review'),
                             'styleProps' => array('background', 'color', 'typography', 'text-align', 'border')
                         ),
                         'content' => array(
                             'name' => 'helpie_element_content',
-                            'selector' => '.helpie-faq.accordions .accordion__body',
-                            'label' => __('Single Item - Body', 'helpie-faq'),
+                            'selector' => '.starcat-review.accordions .accordion__body',
+                            'label' => __('Single Item - Body', 'starcat-review'),
                             'styleProps' => array('background', 'color', 'typography', 'text-align'),
                         )
 

@@ -1,18 +1,18 @@
 <?php
 
-namespace HelpieReviews\App\Repositories;
+namespace StarcatReview\App\Repositories;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Repositories\User_Reviews_Repo')) {
+if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
     class User_Reviews_Repo
     {
         public function get($comment_id)
         {
             // $comments = get_comment($comment_id);
-            $comments = get_comment_meta($comment_id, 'hrp_user_review_props');
+            $comments = get_comment_meta($comment_id, 'scr_user_review_props');
             return $comments;
         }
 
@@ -38,8 +38,8 @@ if (!class_exists('\HelpieReviews\App\Repositories\User_Reviews_Repo')) {
                     'comment_author_email' => $comment_author_email,
                     'comment_author_url'   => $comment_author_url,
                     'comment_content'      => $props['description'],
-                    'comment_agent'        => 'HelpieReviews',
-                    'comment_type'         => 'helpie_reviews',
+                    'comment_agent'        => 'StarcatReview',
+                    'comment_type'         => SCR_POST_TYPE,
                     'comment_date'         => $time,
                     'comment_parent'       => 0,
                     'user_id'              => $user->ID,
@@ -50,14 +50,14 @@ if (!class_exists('\HelpieReviews\App\Repositories\User_Reviews_Repo')) {
                 $comment_id = wp_new_comment($commentdata);
 
                 if (isset($comment_id) && !empty($comment_id)) {
-                    add_comment_meta($comment_id, 'hrp_user_review_props', $props);
+                    add_comment_meta($comment_id, 'scr_user_review_props', $props);
                 }
 
                 return $comment_id;
             }
             // else{
-            //     $comment_author        = __('HelpieReview', 'helpie-review');
-            //     $comment_author_email  = 'helpiereview' . '@';
+            //     $comment_author        = __('StarcatReview', SCR_POST_TYPE);
+            //     $comment_author_email  = 'starcatreview' . '@';
             //     $comment_author_email .= isset($_SERVER['HTTP_HOST']) ? str_replace('www.', '', sanitize_text_field(wp_unslash($_SERVER['HTTP_HOST']))) : 'noreply.com'; // WPCS: input var ok.
             //     $comment_author_email  = sanitize_email($comment_author_email);
             // }
@@ -71,7 +71,7 @@ if (!class_exists('\HelpieReviews\App\Repositories\User_Reviews_Repo')) {
             $comment['comment_approved'] = 1;
             $is_updated = wp_update_comment($comment);
             if ($is_updated) {
-                update_comment_meta($comment_id, 'hrp_user_review_props', $props);
+                update_comment_meta($comment_id, 'scr_user_review_props', $props);
             }
             return $comment_id;
         }

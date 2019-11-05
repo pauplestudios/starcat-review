@@ -1,6 +1,6 @@
 <?php
 
-namespace HelpieReviews\Includes;
+namespace StarcatReview\Includes;
 
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
 /**
 
  */
-if (!class_exists('\HelpieReviews\Includes\Upgrades_List')) {
+if (!class_exists('\StarcatReview\Includes\Upgrades_List')) {
     class Upgrades_List
     {
 
@@ -27,7 +27,7 @@ if (!class_exists('\HelpieReviews\Includes\Upgrades_List')) {
         {
 
             error_log('upgrade_v02');
-            $option_name = 'helpie-reviews';
+            $option_name = 'starcat-review';
             $settings = get_option($option_name);
 
             /* Set new version for verification later */

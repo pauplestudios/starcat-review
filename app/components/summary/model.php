@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Components\Summary;
+namespace StarcatReview\App\Components\Summary;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\Summary\Model')) {
+if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
     class Model
     {
         public function get_Props($args)
@@ -29,26 +29,31 @@ if (!class_exists('\HelpieReviews\App\Components\Summary\Model')) {
             $groups['stats-list'] = array();
 
             $count = 0;
-            foreach ($args['items']['comments-list'] as $comment) {
+            if (isset($args['items']['comments-list']) || !empty($args['items']['comments-list'])) {
+                foreach ($args['items']['comments-list'] as $comment) {
 
-                foreach ($comment->reviews['stats'] as $stat_key => $stat_value) {
-                    $global_stats = [];
-                    if (isset($args['global_stats']) && !empty($args['global_stats'])) {
-                        $global_stats = array_map(function ($stat) {
-                            return strtolower($stat['stat_name']);
-                        }, $args['global_stats']);
-                    }
-
-
-                    if (in_array(strtolower($stat_key), $global_stats)) {
-                        if (!isset($groups['stats-list'][$stat_key])) {
-                            $groups['stats-list'][$stat_key] = 0;
+                    foreach ($comment->reviews['stats'] as $stat_key => $stat_value) {
+                        $global_stats = [];
+                        if (isset($args['global_stats']) && !empty($args['global_stats'])) {
+                            $global_stats = array_map(function ($stat) {
+                                return strtolower($stat['stat_name']);
+                            }, $args['global_stats']);
                         }
+                        if ($args['singularity'] == 'single') {
+                            $global_stats = [$global_stats[0]];
+                        }
+                        // error_log("global" . print_r($global_stats, true));
 
-                        $groups['stats-list'][$stat_key] += $comment->reviews['stats'][$stat_key]['rating'];
+                        if (in_array(strtolower($stat_key), $global_stats)) {
+                            if (!isset($groups['stats-list'][$stat_key])) {
+                                $groups['stats-list'][$stat_key] = 0;
+                            }
+
+                            $groups['stats-list'][$stat_key] += $comment->reviews['stats'][$stat_key]['rating'];
+                        }
                     }
+                    $count++;
                 }
-                $count++;
             }
             $items['review_count'] = $count;
 

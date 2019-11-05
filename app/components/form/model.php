@@ -1,12 +1,12 @@
 <?php
 
-namespace HelpieReviews\App\Components\Form;
+namespace StarcatReview\App\Components\Form;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\Form\Model')) {
+if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
     class Model
     {
         public function get_viewProps($args)
@@ -89,16 +89,14 @@ if (!class_exists('\HelpieReviews\App\Components\Form\Model')) {
         {
             $items = [];
 
-            if (!isset($args['items'][$prosorcons]) && empty($args['items'][$prosorcons])) {
-                return $items;
-            }
-
-            foreach ($args['items'][$prosorcons] as $key => $item) {
-                $proorcon = strtolower(preg_replace('/\s+/', '_', $item['item']));
-                $items[] = [
-                    'item' => $item['item'],
-                    'unique' => $proorcon
-                ];
+            if (isset($args['items'][$prosorcons]) && !empty($args['items'][$prosorcons])) {
+                foreach ($args['items'][$prosorcons] as $key => $item) {
+                    $proorcon = strtolower(preg_replace('/\s+/', '_', $item['item']));
+                    $items[] = [
+                        'item' => $item['item'],
+                        'unique' => $proorcon
+                    ];
+                }
             }
 
             return $items;
@@ -106,8 +104,8 @@ if (!class_exists('\HelpieReviews\App\Components\Form\Model')) {
 
         protected function get_icons($collection)
         {
-            $image = HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png';
-            $image_outline =  HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png';
+            $image = SCR_URL . 'includes/assets/img/tomato.png';
+            $image_outline =  SCR_URL . 'includes/assets/img/tomato-outline.png';
             $collection['icon'] = (isset($collection['images']['image']['thumbnail'])) ? $collection['images']['image']['thumbnail'] : $image;
             $collection['outline_icon'] = (isset($collection['images']['image-outline']['thumbnail'])) ? $collection['images']['image-outline']['thumbnail'] : $image_outline;
 

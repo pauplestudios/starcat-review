@@ -1,13 +1,13 @@
 <?php
 
 
-namespace HelpieReviews\App\Components\User_Reviews;
+namespace StarcatReview\App\Components\User_Reviews;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\User_Reviews\Model')) {
+if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
     class Model
     {
         public function get_viewProps($args)
@@ -24,7 +24,7 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\Model')) {
         public function get_collectionProps($args)
         {
             return [
-                'title' => 'User Review For ...',
+                'title' => 'Reviews',
                 'columns' => 1,
                 'items_display' => ['title', 'content'],
                 'show_controls' => [
@@ -34,7 +34,6 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\Model')) {
                     'verified' => false
                 ],
                 'pagination' => true,
-
             ];
         }
 
@@ -50,8 +49,9 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\Model')) {
                     'comment_id' => $comment->comment_ID,
                     'title' => $comment->review['title'],
                     'content' => $comment->comment_content,
-                    'comment_author' => $comment->comment_author,
+                    'comment_author' => ucfirst($comment->comment_author),
                     'comment_author_email' => $comment->comment_author_email,
+                    'commentor_avatar' => get_avatar($comment->user_id),
                     'comment_date' => get_comment_date('', $comment->comment_ID),
                     'rating' => $comment->review['rating'],
                     'args' => $this->get_args($args, $comment)
@@ -65,9 +65,19 @@ if (!class_exists('\HelpieReviews\App\Components\User_Reviews\Model')) {
         {
             $args = $component_args;
             unset($args['items']);
-            $args['items']['stats-list'] = $comment->review['stats'];
-            $args['items']['pros-list'] = $comment->review['pros'];
-            $args['items']['cons-list'] = $comment->review['cons'];
+
+            $args['items'] = [];
+
+            if (isset($comment->review['stats']) && !empty($comment->review['stats'])) {
+                $args['items']['stats-list'] = $comment->review['stats'];
+            }
+            if (isset($comment->review['pros']) && !empty($comment->review['pros'])) {
+
+                $args['items']['pros-list'] = $comment->review['pros'];
+            }
+            if (isset($comment->review['cons']) && !empty($comment->review['cons'])) {
+                $args['items']['cons-list'] = $comment->review['cons'];
+            }
 
             return $args;
         }

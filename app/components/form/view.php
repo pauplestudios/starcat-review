@@ -1,20 +1,20 @@
 <?php
 
-namespace HelpieReviews\App\Components\Form;
+namespace StarcatReview\App\Components\Form;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
+if (!class_exists('\StarcatReview\App\Components\Form\View')) {
     class View
     {
         public function __construct($viewProps)
         {
             $this->props = $viewProps;
 
-            $this->star_rating = new \HelpieReviews\App\Views\Rating_Types\Star_Rating($viewProps);
-            $this->bar_rating = new \HelpieReviews\App\Views\Rating_Types\Bar_Rating($viewProps);
+            $this->star_rating = new \StarcatReview\App\Views\Rating_Types\Star_Rating($viewProps);
+            $this->bar_rating = new \StarcatReview\App\Views\Rating_Types\Bar_Rating($viewProps);
         }
 
         public function get()
@@ -26,7 +26,7 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
                 return $html;
             }
 
-            $html .= '<form class="ui form hrp-user-review" action="hrp_user_review_submission" method="post" post_id ="' . get_the_ID() . '">';
+            $html .= '<form class="ui form scr-user-review" action="scr_user_review_submission" method="post" post_id ="' . get_the_ID() . '">';
 
             if ($this->props['collection']['show_form_title']) {
                 $html .= '<h2 class="ui header">';
@@ -38,11 +38,11 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
                 $html .= '<div class="field">';
                 // $html .= '<label>Review Title</label>';
                 $html .= '<input type="text" name="title" placeholder="Title" />';
-                $html .= '</div><br / ><br />';
+                $html .= '</div>';
             }
 
             if ($this->props['collection']['show_stats']) {
-                $html .= '<div class="field">';
+                $html .= '<div class="rating fields">';
                 $html .= $this->get_user_review();
                 $html .= '</div>';
             }
@@ -199,11 +199,11 @@ if (!class_exists('\HelpieReviews\App\Components\Form\View')) {
         //  Todo: Range Rating
         protected function get_range_rating_fallback($value = 10, $min = 0, $max = 100)
         {
-            $html = '<div class="hrp-rating-wrapper"><hr class="hrp-divider">';
+            $html = '<div class="scr-rating-wrapper"><hr class="scr-divider">';
 
-            $html .= '<div class="hrp-user-review__rating">';
-            $html .= '<input type="range" min="' . $min . '" max="' . $max . '" value="' . $value . '" class="hrp-user-review__range">';
-            $html .= '</div><span class="hrp-user-review__value">' . $value . " / " . $max . "%" . '</span>';
+            $html .= '<div class="scr-user-review__rating">';
+            $html .= '<input type="range" min="' . $min . '" max="' . $max . '" value="' . $value . '" class="scr-user-review__range">';
+            $html .= '</div><span class="scr-user-review__value">' . $value . " / " . $max . "%" . '</span>';
             $html .= '</div>';
 
             return $html;

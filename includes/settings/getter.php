@@ -1,25 +1,18 @@
 <?php
 
-namespace HelpieReviews\Includes\Settings;
+namespace StarcatReview\Includes\Settings;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
+if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
 
-    // HRP - Helpie Review Plugin
-    class HRP_Getter
+    // SCR - Starcat Review Plugin
+    class SCR_Getter
     {
-
         private static $options;
         private static $defaults;
-
-        public  function __construct()
-        {
-            error_log('HRP_Getter');
-        }
-
 
         public static function  get($option_name)
         {
@@ -28,11 +21,9 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
 
             // Only set one time
             if (!isset(self::$options) || empty(self::$options)) {
-                self::$options = get_option('helpie-reviews'); // unique id of the framework
+                self::$options = get_option(SCR_OPTIONS); // unique id of the framework
             }
 
-            // self::$options = get_option('helpie-reviews');
-            // error_log(' self::$options : ' . print_r(self::$options, true));
             if (isset(self::$options[$option_name])) {
                 return self::$options[$option_name];
             } else {
@@ -47,26 +38,26 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
 
         public static function default_settings()
         {
-
             $defaults = array(
+
                 // General Settings Start
                 'template_source' => 'theme',
                 'enable-pros-cons' => true,
-                'review-location' => [HELPIE_REVIEWS_POST_TYPE],
-                'global_stat' => ['stat_name' => 'Feature'],
+                'review_enable_post-types' => [SCR_POST_TYPE],
+                'global_stats' => ['stat_name' => 'Feature'],
                 'stat-singularity' => 'single',
                 'stats-type' => 'star',
                 'stats-source-type' => 'icon',
                 'stats-icons' => 'star',
                 'stats-images' => [
                     'image' => [
-                        'url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png',
-                        'thumbnail' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato.png'
+                        'url' => SCR_URL . 'includes/assets/img/tomato.png',
+                        'thumbnail' => SCR_URL . 'includes/assets/img/tomato.png'
                     ],
 
                     'image-outline' => [
-                        'url' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png',
-                        'thumbnail' => HELPIE_REVIEWS_URL . 'includes/assets/img/tomato-outline.png'
+                        'url' => SCR_URL . 'includes/assets/img/tomato-outline.png',
+                        'thumbnail' => SCR_URL . 'includes/assets/img/tomato-outline.png'
                     ]
                 ],
                 'stats-show-rating-label' => true,
@@ -81,34 +72,35 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
                 'mp_meta_title' => 'Reviews',
                 'mp_meta_description' => 'These are your reviews',
                 'mp_components_order' => [
-                    'mp_show_search' => true,
-                    'mp_show_categories' => true,
-                    'mp_show_review_listing' => true
+                    'mp_category_listing' => true,
+                    'mp_review_listing' => true
                 ],
-                'mp_template' => 'boxed',
-                'mp_boxed_description' => false,
-                'mp_cl_cols' => 'three',
-                'mp_review_listing_title' => 'Reviews',
-                'mp_review_listing_sortby' => 'recent',
+                'mp_cl_title' => 'Review Categories',
+                'mp_cl_description' => true,
+                'mp_cl_cols' => '2',
+
+                'mp_rl_title' => 'Reviews Posts',
+                'mp_rl_sortby' => 'recent',
+                'mp_rl_cols' => '3',
 
                 // Category Page Start 
-                'cp_show_controls' => true,
-                'cp_show_search' => true,
-                'cp_show_sortBy' => true,
-                'cp_show_num_of_reviews_filter' => true,
+                'cp_controls' => true,
+                'cp_search' => true,
+                'cp_sortBy' => true,
+                // 'cp_num_of_reviews_filter' => true,
                 'cp_default_sortBy' => 'recent',
-                'cp_listing_num_of_cols' => 'three',
-                'sp_show_controls' => true,
+                'cp_num_of_cols' => '3',
 
                 // Single Page Start
-                'sp_rating_combination' => 'combined',
-                'sp_stats_order' => [
-                    'enabled' => [],
-                    'disabled' => []
-                ],
+                // 'sp_show_controls' => true,
+                // 'sp_rating_combination' => 'combined',
+                // 'sp_stats_order' => [
+                //     'enabled' => [],
+                //     'disabled' => []
+                // ],
 
                 // User Review Start
-                'ur_enable_post-types' => [HELPIE_REVIEWS_POST_TYPE],
+                'ur_enable_post-types' => [SCR_POST_TYPE],
                 'ur_show_controls' => true,
                 'ur_controls_subheading' => true,
                 'ur_show_search' => true,
@@ -120,15 +112,36 @@ if (!class_exists('\HelpieReviews\Includes\Settings\HRP_Getter')) {
                 'ur_show_title' => true,
                 'ur_show_stats' => true,
                 'ur_show_description' => true,
-                // 'ur_show_prosandcons' => true,
-                'ur_form_custom_fields' => [], // [[ 'field_name' => '', 'field_type' => 'text']]                
+                'ur_form_custom_fields' => [],
 
                 // Comparison Table Start
-                'ct_page' => ''
+                // 'ct_page' => ''
 
             );
 
             return $defaults;
+        }
+
+        public static function get_stat_default_args()
+        {
+            $type = SCR_Getter::get('stats-type');
+            $limit = ($type == 'star') ? SCR_Getter::get('stats-stars-limit') : SCR_Getter::get('stats-bars-limit');
+
+            $args = [
+                'global_stats' => SCR_Getter::get('global_stats'),
+                'singularity' => SCR_Getter::get('stat-singularity'),
+                'type' => $type,
+                'source_type' =>  SCR_Getter::get('stats-source-type'),
+                'show_rating_label' => SCR_Getter::get('stats-show-rating-label'),
+                'icons' =>  SCR_Getter::get('stats-icons'),
+                'images' => SCR_Getter::get('stats-images'),
+                'steps' => SCR_Getter::get('stats-steps'),
+                'limit' => $limit,
+                'animate' => SCR_Getter::get('stats-animate'),
+                'no_rated_message' => SCR_Getter::get('stats-no-rated-message'),
+            ];
+
+            return $args;
         }
     } // END CLASS
 }

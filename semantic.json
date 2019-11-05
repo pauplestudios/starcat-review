@@ -1,5 +1,5 @@
 {
-    "base": "includes/assets/vendors/semantic/",
+    "base": "includes\\assets\\vendors\\semantic\\",
     "paths": {
         "source": {
             "config": "src/theme.config",
@@ -8,7 +8,7 @@
             "themes": "src/themes/"
         },
         "output": {
-            "packaged": "bundle",
+            "packaged": "bundle/",
             "uncompressed": "bundle/components/",
             "compressed": "bundle/components/",
             "themes": "bundle/themes/"
@@ -24,22 +24,15 @@
         "image",
         "input",
         "label",
-        "segment",
-        "form",
-        "grid",
         "message",
+        "segment",
+        "grid",
         "table",
         "card",
-        "accordion",
-        "checkbox",
-        "dimmer",
         "dropdown",
-        "modal",
-        "progress",
-        "rating",
         "search",
         "transition",
-        "placeholder",
+        "comment",
         "form"
     ],
     "version": "2.4.2"
