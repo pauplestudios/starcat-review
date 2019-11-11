@@ -11,24 +11,23 @@ get_header();
 ?>
 
 
-<div id="primary">
 
-    <main id="main" class="site-main" role="main">
 
-        <?php
+<?php
 
-        while (have_posts()) : the_post();
+while (have_posts()) : the_post();
 
-            $breadcrumb = new \StarcatReview\App\Components\Breadcrumbs\Controller();
-            echo $breadcrumb->get_view();
+    $breadcrumb = new \StarcatReview\App\Components\Breadcrumbs\Controller();
+    echo $breadcrumb->get_view();
 
-            $single_template = new \StarcatReview\Includes\Templates\Controllers\Single_Template();
-            echo $single_template->get_view(get_post());
+    $single_template = new \StarcatReview\Includes\Templates\Controllers\Single_Template();
+    $content = $single_template->get_view(get_post());
 
-        endwhile;
-        ?>
+    $template_builder = new \StarcatReview\Includes\Utils\Template_Builder($content);
+    echo $template_builder->get_html();
 
-    </main>
-</div><!-- #primary -->
+endwhile;
+?>
+</div><!-- #ast-container -->
 
 <?php get_footer();
