@@ -15,7 +15,7 @@ if (!class_exists('\StarcatReview\Includes\Utils\Template_Builder')) {
 
             // Set Props
             $this->template_name = 'mainpage_template';
-            $this->sidebar_template_style = 'full-width';
+            $this->sidebar_template_style = 'right-sidebar';
             // $this->sidebar_template_style = $this->settings->main_page->get_sidebar_template();
             $this->content = $content;
         }
@@ -24,12 +24,13 @@ if (!class_exists('\StarcatReview\Includes\Utils\Template_Builder')) {
         {
             // Fix for Divi Theme Header not shrinking
             $id = 'main-content';
-
+            error_log('sidebar: ' . $this->sidebar_template_style);
             $html = "<div id='" . $id . "' class='helpie-primary-view " . $this->sidebar_template_style . "'><div id='helpiekb-main-wrapper' class='wrapper'>";
             if ($this->sidebar_template_style == 'left-sidebar') {
                 $html .= $this->get_sidebar('left');
                 $html .= $this->get_content();
             } elseif ($this->sidebar_template_style == 'right-sidebar') {
+
                 $html .= $this->get_content();
                 $html .= $this->get_sidebar('right');
             } elseif ($this->sidebar_template_style == 'both-side-sidebars') {
@@ -62,7 +63,23 @@ if (!class_exists('\StarcatReview\Includes\Utils\Template_Builder')) {
 
             // return $sidebar;
 
-            return "Sidebar";
+            $html = "<div id='secondary'>";
+            $html .= $this->get_other_wp_sidebar();
+            $html .= "</div>";
+
+            return "Sidebar: " . $html;
         }
-    }
+
+        protected function get_other_wp_sidebar($template = 1)
+        {
+            $html = '';
+            ob_start();
+            dynamic_sidebar($template);
+            $sidebar = ob_get_contents();
+            ob_end_clean();
+            $html .= $sidebar;
+
+            return $html;
+        }
+    } // END CLASS
 }

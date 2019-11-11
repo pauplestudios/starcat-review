@@ -20,14 +20,20 @@ if (!class_exists('\StarcatReview\Includes\Templates\Controllers\Archive_Templat
         {
             $props = $this->get_props($this->get_args());
             // error_log('$props : ' . print_r($props, true));
-            $html = '';
-            $html = '<div class="scr-archive-page-content-area">';
+            $html = '<div id="primary">';
+            $html .= '<section class="scr-archive-description">';
+            $html .= '<h1>' . get_the_archive_title() . '</h1>';
+            $html .= '</section>';
+            $html .= '<main id="main" class="site-main" role="main">';
+            $html .= '<div class="scr-archive-page-content-area">';
             foreach ($props['order'] as $listing => $display) {
                 if ($display) {
                     $html .= $this->get_listing_order($listing, $props);
                 }
             }
-            $html .= "</div>";
+            $html .= "</div>"; // .scr-archive-page-content-area
+            $html .= "</main>";
+            $html .= "</div>"; // #primary
             return $html;
         }
 
