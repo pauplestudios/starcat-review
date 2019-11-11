@@ -21,6 +21,6 @@ $template_builder = new \StarcatReview\Includes\Utils\Template_Builder($content)
 echo $template_builder->get_html();
 ?>
 
-</div><!-- #primary -->
+</div><!-- #ast-container -->
 
 <?php get_footer(); ?>

@@ -10,34 +10,18 @@
  */
 
 get_header();
+
+$term = get_queried_object();
+
 ?>
 
-<!-- <div class='sidebar'>
-    <?php // dynamic_sidebar('starcat_review_sidebar');
-    $term = get_queried_object();
+<?php
+$category_template = new \StarcatReview\Includes\Templates\Controllers\Category_Template();
+$content = $category_template->get_view($term);
 
-    ?>
-</div> -->
-
-<div id="primary">
-
-    <?php
-    $breadcrumb = new \StarcatReview\App\Components\Breadcrumbs\Controller();
-    echo $breadcrumb->get_view();
-    ?>
-    <section class='scr-archive-description'>
-        <h1 class="term-name">Topic: <?= $term->name ?> </h1>
-        <div class="term-description"><?= $term->description ?></div>
-    </section>
-
-    <main id="main" class="site-main" role="main">
-
-        <?php
-        $category_template = new \StarcatReview\Includes\Templates\Controllers\Category_Template();
-        echo $category_template->get_view($term);
-        ?>
-
-    </main>
-</div><!-- #primary -->
+$template_builder = new \StarcatReview\Includes\Utils\Template_Builder($content);
+echo $template_builder->get_html();
+?>
+</div><!-- #ast-container -->
 
 <?php get_footer(); ?>

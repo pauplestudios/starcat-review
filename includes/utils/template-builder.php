@@ -18,6 +18,8 @@ if (!class_exists('\StarcatReview\Includes\Utils\Template_Builder')) {
             $this->sidebar_template_style = 'right-sidebar';
             // $this->sidebar_template_style = $this->settings->main_page->get_sidebar_template();
             $this->content = $content;
+
+            error_log('$this->content : ' . $this->content);
         }
 
         public function get_html()
