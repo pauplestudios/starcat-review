@@ -22,10 +22,15 @@ get_header();
         <h1> <?php the_archive_title() ?> </h1>
     </section>
 
-    <main id="main" class="site-main" role="main">
+    <main id="main"
+          class="site-main"
+          role="main">
         <?php
         $archive_template = new \StarcatReview\Includes\Templates\Controllers\Archive_Template();
-        echo $archive_template->get_view();
+        $content = $archive_template->get_view();
+
+        $template_builder = new \StarcatReview\Includes\Utils\Template_Builder($content);
+        echo $template_builder->get_content();
         ?>
     </main>
 </div><!-- #primary -->

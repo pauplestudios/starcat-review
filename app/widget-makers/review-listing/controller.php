@@ -25,7 +25,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Controller'))
 
         public function get_view($args)
         {
-            error_log('$args : ' . print_r($args, true));
+            // error_log('$args : ' . print_r($args, true));
             $default_args = $this->get_default_args();
             $component_args = array_merge($default_args, $args);
             $component_args = $this->get_interpreted_args($component_args);
