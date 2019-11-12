@@ -1,3 +1,18 @@
+/* Basic Structure */
+
+#primary {
+    width: 70%;
+}
+
+#secondary {
+    padding-left: 60px;
+    width: 30%;
+}
+
+.scr-left-sidebar#secondary {
+    padding-right: 60px;
+}
+
 .scr-archive-description {
     margin: 0;
     // padding: 5em 6.67em 3.33333em;

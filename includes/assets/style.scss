@@ -11,13 +11,13 @@
 @import "styles/blocks/collection.scss";
 
 // @import "styles/comparison-table.scss";
-@import "styles/categories-list.scss";
-@import "styles/single-list.scss";
-@import "styles/summary.scss";
-@import "styles/form.scss";
-@import "styles/listing.scss";
-@import "styles/stats.scss";
-@import "styles/pros-and-cons.scss";
+@import "styles/components/categories-list.scss";
+@import "styles/components/single-list.scss";
+@import "styles/components/summary.scss";
+@import "styles/components/form.scss";
+@import "styles/components/listing.scss";
+@import "styles/components/stats.scss";
+@import "styles/components/pros-and-cons.scss";
 
 /* Vendors */
 // @import "vendors/comparison-table/scss/style.scss";
