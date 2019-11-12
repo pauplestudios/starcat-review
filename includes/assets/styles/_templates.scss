@@ -1,5 +1,17 @@
 /* Basic Structure */
 
+.scr-container {
+    max-width: 1240px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+#primary,
+#secondary {
+    float: left;
+}
+
 #primary {
     width: 70%;
 }
@@ -9,7 +21,7 @@
     width: 30%;
 }
 
-.scr-left-sidebar#secondary {
+.scr-left-sidebar #secondary {
     padding-right: 60px;
 }
 

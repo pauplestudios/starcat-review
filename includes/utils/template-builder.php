@@ -26,8 +26,8 @@ if (!class_exists('\StarcatReview\Includes\Utils\Template_Builder')) {
         {
             // Fix for Divi Theme Header not shrinking
             $id = 'main-content';
-            error_log('sidebar: ' . $this->sidebar_template_style);
-            $html = "<div id='" . $id . "' class='helpie-primary-view " . $this->sidebar_template_style . "'><div id='helpiekb-main-wrapper' class='wrapper'>";
+
+            $html = "<div class='scr-container scr-" . $this->sidebar_template_style . "  id='" . $id . "' >";
             if ($this->sidebar_template_style == 'left-sidebar') {
                 $html .= $this->get_sidebar('left');
                 $html .= $this->get_content();
@@ -43,13 +43,15 @@ if (!class_exists('\StarcatReview\Includes\Utils\Template_Builder')) {
                 $html .= $this->get_content();
             }
 
+            $html .= "</div>";
+
             return $html;
         }
 
         public function get_content()
         {
             // return $this->get_have_access_content();
-            return "Content: " . $this->content;
+            return $this->content;
         }
 
         public function get_sidebar($position, $sidebar_count = 'single')
@@ -66,13 +68,13 @@ if (!class_exists('\StarcatReview\Includes\Utils\Template_Builder')) {
             // return $sidebar;
 
             $html = "<div id='secondary'>";
-            $html .= $this->get_other_wp_sidebar();
+            $html .= $this->get_reviews_sidebar();
             $html .= "</div>";
 
-            return "Sidebar: " . $html;
+            return $html;
         }
 
-        protected function get_other_wp_sidebar($template = 1)
+        protected function get_reviews_sidebar($template = 'starcat_review_sidebar')
         {
             $html = '';
             ob_start();
