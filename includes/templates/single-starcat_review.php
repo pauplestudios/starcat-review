@@ -8,27 +8,21 @@ if (!defined('ABSPATH')) {
  */
 
 get_header();
+
+while (have_posts()) : the_post();
+
+    $template_settings = [
+        'template_sidebar_style' => 'right-sidebar'
+    ];
+
+    $single_template = new \StarcatReview\Includes\Templates\Controllers\Single_Template();
+    $content = $single_template->get_view(get_post());
+
+    $template_builder = new \StarcatReview\Includes\Utils\Template_Builder($content, 'single_page');
+    echo $template_builder->get_html();
+
+endwhile;
 ?>
-
-
-<div id="primary">
-
-    <main id="main" class="site-main" role="main">
-
-        <?php
-
-        while (have_posts()) : the_post();
-
-            $breadcrumb = new \StarcatReview\App\Components\Breadcrumbs\Controller();
-            echo $breadcrumb->get_view();
-
-            $single_template = new \StarcatReview\Includes\Templates\Controllers\Single_Template();
-            echo $single_template->get_view(get_post());
-
-        endwhile;
-        ?>
-
-    </main>
-</div><!-- #primary -->
+</div><!-- #ast-container -->
 
 <?php get_footer();

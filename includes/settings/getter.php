@@ -24,6 +24,8 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 self::$options = get_option(SCR_OPTIONS); // unique id of the framework
             }
 
+            // error_log('self::$options : ' . print_r(self::$options, true));
+
             if (isset(self::$options[$option_name])) {
                 return self::$options[$option_name];
             } else {
@@ -71,6 +73,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'mp_slug' => 'reviews',
                 'mp_meta_title' => 'Reviews',
                 'mp_meta_description' => 'These are your reviews',
+                'mp_template_layout' => 'full-width',
                 'mp_components_order' => [
                     'mp_category_listing' => true,
                     'mp_review_listing' => true
@@ -84,6 +87,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'mp_rl_cols' => '3',
 
                 // Category Page Start 
+                'cp_template_layout' => 'left-sidebar',
                 'cp_controls' => true,
                 'cp_search' => true,
                 'cp_sortBy' => true,
@@ -98,7 +102,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 //     'enabled' => [],
                 //     'disabled' => []
                 // ],
-
+                'sp_template_layout' => 'left-sidebar',
                 // User Review Start
                 'ur_enable_post-types' => [SCR_POST_TYPE],
                 'ur_show_controls' => true,

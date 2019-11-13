@@ -18,12 +18,24 @@ if (!class_exists('\StarcatReview\Includes\Templates\Controllers\Category_Templa
 
         public function get_view($term)
         {
+            $breadcrumb = new \StarcatReview\App\Components\Breadcrumbs\Controller();
             $props = $this->get_props($term);
-            $html = '';
-            $html = '<div class="scr-category-page-content-area">';
+
+
+            $html = '<div id="primary">';
+
+            // $html .=  $breadcrumb->get_view();
+            $html .= '<section class="scr-archive-description">';
+            $html .= '<h1 class="term-name">Topic:' . $term->name . ' </h1>';
+            $html .= '<div class="term-description">' . $term->description . '</div>';
+            $html .= '</section>';
+            $html .= '<main id="main" class="site-main" role="main">';
+            $html .= '<div class="scr-category-page-content-area">';
             $html .= $this->get_category_post_listing($props);
             // $html .= $this->get_comparison_table($props);
             $html .= "</div>";
+            $html .= "</main>";
+            $html .= "</div>"; // #primary
             return $html;
         }
 

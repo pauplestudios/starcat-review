@@ -13,21 +13,19 @@ get_header();
 
 ?>
 
-<div id="primary">
-    <?php
-    // $breadcrumb = new \StarcatReview\App\Components\Breadcrumbs\Controller();
-    // echo $breadcrumb->get_view();
-    ?>
-    <section class='scr-archive-description'>
-        <h1> <?php the_archive_title() ?> </h1>
-    </section>
+<?php
 
-    <main id="main" class="site-main" role="main">
-        <?php
-        $archive_template = new \StarcatReview\Includes\Templates\Controllers\Archive_Template();
-        echo $archive_template->get_view();
-        ?>
-    </main>
-</div><!-- #primary -->
+$template_settings = [
+    'template_sidebar_style' => 'full-width'
+];
+
+$archive_template = new \StarcatReview\Includes\Templates\Controllers\Archive_Template();
+$content = $archive_template->get_view();
+
+$template_builder = new \StarcatReview\Includes\Utils\Template_Builder($content, 'main_page');
+echo $template_builder->get_html();
+?>
+
+</div><!-- #ast-container -->
 
 <?php get_footer(); ?>
