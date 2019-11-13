@@ -14,10 +14,15 @@ get_header();
 ?>
 
 <?php
+
+$template_settings = [
+    'template_sidebar_style' => 'full-width'
+];
+
 $archive_template = new \StarcatReview\Includes\Templates\Controllers\Archive_Template();
 $content = $archive_template->get_view();
 
-$template_builder = new \StarcatReview\Includes\Utils\Template_Builder($content);
+$template_builder = new \StarcatReview\Includes\Utils\Template_Builder($content, 'main_page');
 echo $template_builder->get_html();
 ?>
 

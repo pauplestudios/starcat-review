@@ -67,7 +67,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
                 $this->mainpage_settings($prefix);
                 $this->category_page_settings($prefix);
-                // $this->single_page_settings($prefix);
+                $this->single_page_settings($prefix);
                 $this->user_review_settings($prefix);
                 // $this->comparison_table_settings($prefix);               
 
@@ -260,6 +260,33 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                     'title' => 'Single Page ',
                     'icon' => 'fa fa-file',
                     'fields' => array(
+                        array(
+                            'type'    => 'submessage',
+                            // 'style'   => 'info',
+                            'content' => 'These settings are only for starcat-review post type.',
+                        ),
+                        array(
+                            'type' => 'subheading',
+                            'content' => __('Template', 'pauple-helpie'),
+                        ),
+                        array(
+                            'id' => 'sp_template_layout',
+                            'type' => 'image_select',
+                            'title' => __('Template', 'pauple-helpie'),
+                            'options' => array(
+                                'left-sidebar' => SCR_URL . '/includes/assets/img/templates/left-sidebar.png',
+                                'right-sidebar' => SCR_URL . '/includes/assets/img/templates/right-sidebar.png',
+                                'full-width' => SCR_URL . '/includes/assets/img/templates/full-width.png',
+                            ),
+                            'default' => 'full-width',
+                            'desc' => "Layout Types for your Single Review Page. Left / Right Sidebar, No-sidebar."
+                        ),
+                        // A Submessage
+                        array(
+                            'type'    => 'submessage',
+                            'style'   => 'success',
+                            'content' => 'You can add widgets to your sidebar from Appearance -> Widgets'
+                        ),
 
                         array(
                             'id' => 'sp_show_controls',
@@ -297,7 +324,28 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                     'title' => 'Category Page ',
                     'icon' => 'fa fa-folder-open',
                     'fields' => array(
-
+                        array(
+                            'type' => 'subheading',
+                            'content' => __('Template', 'pauple-helpie'),
+                        ),
+                        array(
+                            'id' => 'cp_template_layout',
+                            'type' => 'image_select',
+                            'title' => __('Template', 'pauple-helpie'),
+                            'options' => array(
+                                'left-sidebar' => SCR_URL . '/includes/assets/img/templates/left-sidebar.png',
+                                'right-sidebar' => SCR_URL . '/includes/assets/img/templates/right-sidebar.png',
+                                'full-width' => SCR_URL . '/includes/assets/img/templates/full-width.png',
+                            ),
+                            'default' => 'full-width',
+                            'desc' => "Layout Types for your Review Categories Page. Left / Right Sidebar, No-sidebar"
+                        ),
+                        // A Submessage
+                        array(
+                            'type'    => 'submessage',
+                            'style'   => 'success',
+                            'content' => 'You can add widgets to your sidebar from Appearance -> Widgets'
+                        ),
                         array(
                             'id' => 'cp_controls',
                             'type' => 'switcher',
@@ -410,6 +458,28 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                                 . '<span><b>Where is my main page?</b></span>'
                                 . '<br>'
                                 . $main_page_button . '<span>Save and Refresh Page if you changed it.</span></div>',
+                        ),
+                        array(
+                            'type' => 'subheading',
+                            'content' => __('Template', 'pauple-helpie'),
+                        ),
+                        array(
+                            'id' => 'mp_template_layout',
+                            'type' => 'image_select',
+                            'title' => __('Template', 'pauple-helpie'),
+                            'options' => array(
+                                'left-sidebar' => SCR_URL . '/includes/assets/img/templates/left-sidebar.png',
+                                'right-sidebar' => SCR_URL . '/includes/assets/img/templates/right-sidebar.png',
+                                'full-width' => SCR_URL . '/includes/assets/img/templates/full-width.png',
+                            ),
+                            'default' => 'full-width',
+                            'desc' => "Layout Types for your Reviews Main Page. Left / Right Sidebar, No-sidebar"
+                        ),
+                        // A Submessage
+                        array(
+                            'type'    => 'submessage',
+                            'style'   => 'success',
+                            'content' => 'You can add widgets to your sidebar from Appearance -> Widgets'
                         ),
                         array(
                             'id'        => 'mp_components_order',
