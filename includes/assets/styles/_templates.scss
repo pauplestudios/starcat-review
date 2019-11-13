@@ -7,16 +7,16 @@
     padding-left: 20px;
     padding-right: 20px;
 }
-#primary,
-#secondary {
+.scr-container #primary,
+.scr-container #secondary {
     float: left;
 }
 
-#primary {
+.scr-container #primary {
     width: 70%;
 }
 
-#secondary {
+.scr-container #secondary {
     padding-left: 60px;
     width: 30%;
 }
@@ -25,6 +25,24 @@
     padding-right: 60px;
 }
 
+@media (max-width: 768px) {
+    .scr-left-sidebar.scr-container {
+        width: 100%;
+    }
+
+    .scr-container #primary,
+    .scr-container #secondary {
+        width: 100%;
+    }
+}
+
+/* Basic Style */
+body .scr-container #primary {
+    background: white;
+    padding: 40px !important;
+}
+
+/* Other */
 .scr-archive-description {
     margin: 0;
     // padding: 5em 6.67em 3.33333em;

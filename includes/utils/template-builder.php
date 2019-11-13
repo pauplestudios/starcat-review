@@ -28,6 +28,10 @@ if (!class_exists('\StarcatReview\Includes\Utils\Template_Builder')) {
             $id = 'main-content';
 
             $html = "<div class='scr-container scr-" . $this->sidebar_template_style . "  id='" . $id . "' >";
+
+            $breadcrumb = new \StarcatReview\App\Components\Breadcrumbs\Controller();
+            $html .= $breadcrumb->get_view();
+
             if ($this->sidebar_template_style == 'left-sidebar') {
                 $html .= $this->get_sidebar('left');
                 $html .= $this->get_content();
