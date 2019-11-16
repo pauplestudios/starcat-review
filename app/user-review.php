@@ -122,14 +122,11 @@ if (!class_exists('\StarcatReview\App\User_Review')) {
 
         protected function process_schema($comments)
         {
-            // echo "<pre>";
-            // print_r($comments);
-            // echo "</pre>";
             $schema_reviews = array();
             foreach ($comments as $comment) {
                 $comment_date = date('Y-n-j', strtotime($comment->comment_date));
                 $review = $comment->review;
-
+                $stats = $this->get_min_max_ratings($review['stats']);
                 $schema_review = Schema::review()
                     ->name($review['title'])
                     ->reviewBody($review['description'])
@@ -137,6 +134,8 @@ if (!class_exists('\StarcatReview\App\User_Review')) {
                     ->reviewRating(
                         Schema::rating()
                             ->ratingValue($review['rating'])
+                            ->bestRating($stats['max_rating'])
+                            ->worstRating($stats['min_rating'])
                     )
                     ->author(
                         Schema::person()
@@ -147,6 +146,29 @@ if (!class_exists('\StarcatReview\App\User_Review')) {
             $build_review = Schema::product()
                 ->review($schema_reviews);
             echo json_encode($build_review);
+        }
+
+        public function get_min_max_ratings($stats)
+        {
+            //get the min and max ratings 
+            if (count($stats) > 0) {
+                //
+                $ratings = array();
+                foreach ($stats as $stat) {
+                    $ratings[] = $stat['rating'];
+                }
+                $min_ratings = min($ratings);
+                $max_ratings = max($ratings);
+                return array(
+                    'min_rating' => $min_ratings,
+                    'max_rating' => $max_ratings
+                );
+            } else {
+                return array(
+                    'min_rating' => 0,
+                    'max_rating' => 0
+                );
+            }
         }
     }
 }
