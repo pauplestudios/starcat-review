@@ -2,7 +2,12 @@
 
 namespace StarcatReview\App;
 
+require __DIR__ . '/../vendor/autoload.php';
+
+use Spatie\SchemaOrg\Schema;
 use StarcatReview\Includes\Settings\SCR_Getter;
+
+use function GuzzleHttp\json_encode;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -55,7 +60,9 @@ if (!class_exists('\StarcatReview\App\User_Review')) {
         {
             $post_meta = get_post_meta(get_the_ID(), '_scr_post_options', true);
             $comments = $this->get_comments_list();
+            $schema = $this->process_schema($comments);
             // error_log("Options : " . print_r($post_meta, true));
+            // error_log("Comments : " . print_r($comments, true));
             $items = [];
 
             if (isset($post_meta['stats-list']) && !empty($post_meta['stats-list'])) {
@@ -111,6 +118,35 @@ if (!class_exists('\StarcatReview\App\User_Review')) {
             }
 
             return $user_can_review;
+        }
+
+        protected function process_schema($comments)
+        {
+            // echo "<pre>";
+            // print_r($comments);
+            // echo "</pre>";
+            $schema_reviews = array();
+            foreach ($comments as $comment) {
+                $comment_date = date('Y-n-j', strtotime($comment->comment_date));
+                $review = $comment->review;
+
+                $schema_review = Schema::review()
+                    ->name($review['title'])
+                    ->reviewBody($review['description'])
+                    ->datePublished($comment_date)
+                    ->reviewRating(
+                        Schema::rating()
+                            ->ratingValue($review['rating'])
+                    )
+                    ->author(
+                        Schema::person()
+                            ->name($comment->comment_author)
+                    );
+                $schema_reviews[] = $schema_review;
+            }
+            $build_review = Schema::product()
+                ->review($schema_reviews);
+            echo json_encode($build_review);
         }
     }
 }
