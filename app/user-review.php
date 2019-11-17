@@ -2,9 +2,6 @@
 
 namespace StarcatReview\App;
 
-require __DIR__ . '/../vendor/autoload.php';
-
-use Spatie\SchemaOrg\Schema;
 use StarcatReview\Includes\Settings\SCR_Getter;
 
 use function GuzzleHttp\json_encode;
@@ -34,6 +31,14 @@ if (!class_exists('\StarcatReview\App\User_Review')) {
             return $view;
         }
 
+        //for rich snippet product schema purpose
+        public function get_schema_reviews()
+        {
+            $post_meta = get_post_meta(get_the_ID(), '_scr_post_options', true);
+            $reviews = $this->get_comments_list();
+            return $reviews;
+        }
+
         public function get_default_args()
         {
             $stat_args = SCR_Getter::get_stat_default_args();
@@ -60,9 +65,7 @@ if (!class_exists('\StarcatReview\App\User_Review')) {
         {
             $post_meta = get_post_meta(get_the_ID(), '_scr_post_options', true);
             $comments = $this->get_comments_list();
-            $schema = $this->process_schema($comments);
             // error_log("Options : " . print_r($post_meta, true));
-            // error_log("Comments : " . print_r($comments, true));
             $items = [];
 
             if (isset($post_meta['stats-list']) && !empty($post_meta['stats-list'])) {
@@ -118,57 +121,6 @@ if (!class_exists('\StarcatReview\App\User_Review')) {
             }
 
             return $user_can_review;
-        }
-
-        protected function process_schema($comments)
-        {
-            $schema_reviews = array();
-            foreach ($comments as $comment) {
-                $comment_date = date('Y-n-j', strtotime($comment->comment_date));
-                $review = $comment->review;
-                $stats = $this->get_min_max_ratings($review['stats']);
-                $schema_review = Schema::review()
-                    ->name($review['title'])
-                    ->reviewBody($review['description'])
-                    ->datePublished($comment_date)
-                    ->reviewRating(
-                        Schema::rating()
-                            ->ratingValue($review['rating'])
-                            ->bestRating($stats['max_rating'])
-                            ->worstRating($stats['min_rating'])
-                    )
-                    ->author(
-                        Schema::person()
-                            ->name($comment->comment_author)
-                    );
-                $schema_reviews[] = $schema_review;
-            }
-            $build_review = Schema::product()
-                ->review($schema_reviews);
-            echo json_encode($build_review);
-        }
-
-        public function get_min_max_ratings($stats)
-        {
-            //get the min and max ratings 
-            if (count($stats) > 0) {
-                //
-                $ratings = array();
-                foreach ($stats as $stat) {
-                    $ratings[] = $stat['rating'];
-                }
-                $min_ratings = min($ratings);
-                $max_ratings = max($ratings);
-                return array(
-                    'min_rating' => $min_ratings,
-                    'max_rating' => $max_ratings
-                );
-            } else {
-                return array(
-                    'min_rating' => 0,
-                    'max_rating' => 0
-                );
-            }
         }
     }
 }

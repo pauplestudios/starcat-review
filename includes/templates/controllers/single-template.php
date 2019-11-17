@@ -14,6 +14,7 @@ if (!class_exists('\StarcatReview\Includes\Templates\Controllers\Single_Template
         public function __construct()
         {
             $this->reviews_builder = new \StarcatReview\App\Builders\Review_Builder();
+            $this->review_schema = new \StarcatReview\App\Schema_Builder();
         }
 
         public function get_view($post)
@@ -33,6 +34,8 @@ if (!class_exists('\StarcatReview\Includes\Templates\Controllers\Single_Template
             $html .= "</main>";
             $html .= "</div>"; // #primary
 
+            $review_scrits = $this->review_schema->get_post_review_schema();
+            $html .= $review_scrits;
             return $html;
         }
     }
