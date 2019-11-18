@@ -1,6 +1,6 @@
 <?php
 
-namespace StarcatReview\Includes\Templates\Controllers;
+namespace StarcatReview\App\Templates\Controllers;
 
 use \StarcatReview\Includes\Settings\SCR_Getter;
 
@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\StarcatReview\Includes\Templates\Controllers\Category_Template')) {
+if (!class_exists('\StarcatReview\App\Templates\Controllers\Category_Template')) {
     class Category_Template
     {
         public function __construct()
