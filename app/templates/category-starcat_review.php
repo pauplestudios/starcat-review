@@ -17,7 +17,7 @@ $template_settings = [
     'template_sidebar_style' => 'left-sidebar'
 ];
 
-$category_template = new \StarcatReview\Includes\Templates\Controllers\Category_Template();
+$category_template = new \StarcatReview\App\Templates\Controllers\Category_Template();
 $content = $category_template->get_view($term);
 
 $template_builder = new \StarcatReview\Includes\Utils\Template_Builder($content, 'category_page');

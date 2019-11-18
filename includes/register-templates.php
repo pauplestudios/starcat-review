@@ -20,8 +20,8 @@ if (!class_exists('\StarcatReview\Includes\Register_Templates')) {
         {
             global $post;
             if (is_post_type_archive(SCR_POST_TYPE)) {
-                if (file_exists(SCR_PATH . '/includes/templates/archive-starcat_review.php')) {
-                    $archive_template = SCR_PATH . '/includes/templates/archive-starcat_review.php';
+                if (file_exists(SCR_PATH . '/app/templates/archive-starcat_review.php')) {
+                    $archive_template = SCR_PATH . '/app/templates/archive-starcat_review.php';
                 }
             }
 
@@ -32,8 +32,8 @@ if (!class_exists('\StarcatReview\Includes\Register_Templates')) {
         {
             global $post;
             if (is_tax(SCR_CATEGORY)) {
-                if (file_exists(SCR_PATH . '/includes/templates/category-starcat_review.php')) {
-                    $archive_template = SCR_PATH . '/includes/templates/category-starcat_review.php';
+                if (file_exists(SCR_PATH . '/app/templates/category-starcat_review.php')) {
+                    $archive_template = SCR_PATH . '/app/templates/category-starcat_review.php';
                 }
             }
 
@@ -52,8 +52,8 @@ if (!class_exists('\StarcatReview\Includes\Register_Templates')) {
                 //     return $single;
                 // }
 
-                if (file_exists(SCR_PATH . '/includes/templates/single-starcat_review.php')) {
-                    return SCR_PATH . '/includes/templates/single-starcat_review.php';
+                if (file_exists(SCR_PATH . '/app/templates/single-starcat_review.php')) {
+                    return SCR_PATH . '/app/templates/single-starcat_review.php';
                 }
             }
 
