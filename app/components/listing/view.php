@@ -59,20 +59,23 @@ if (!class_exists('\StarcatReview\App\Components\Listing\View')) {
 
         private function get_card_collection($viewProps)
         {
+            error_log('$viewProps : ' . print_r($viewProps, true));
             $posts = $viewProps['items']['posts'];
             $terms = $viewProps['items']['terms'];
 
             $html = '';
             $html .= '<div id="scr-cat-collection" class="scr-collection list row">';
 
-            foreach ($posts as $key => $post) {
-                // Set initial $ii
-                if (!isset($ii)) $ii = 0;
+            if (isset($posts) && is_array($posts) && sizeof($posts) > 0) {
+                foreach ($posts as $key => $post) {
+                    // Set initial $ii
+                    if (!isset($ii)) $ii = 0;
 
-                // Assign card to html
-                $html .= $this->get_single_card($post, $ii, $viewProps);
-                // increment $ii
-                $ii++;
+                    // Assign card to html
+                    $html .= $this->get_single_card($post, $ii, $viewProps);
+                    // increment $ii
+                    $ii++;
+                }
             }
 
             // error_log('$terms : ' . print_r($terms, true));
@@ -104,9 +107,10 @@ if (!class_exists('\StarcatReview\App\Components\Listing\View')) {
             $excerpt = $this->get_excerpt($post->post_content);
             $single_review = isset($reviews[$ii]) ? $reviews[$ii] : 1;
 
-
+            $featured_image = get_the_post_thumbnail_url($post->ID) ? get_the_post_thumbnail_url($post->ID) : SCR_URL . 'includes/assets/img/dummy-review.jpg';
             $item = [
                 'title' => $post->post_title,
+                'featured_image' => $featured_image,
                 'content' => $excerpt,
                 'stat_html' => $post->stat_html,
                 'url' => get_post_permalink($post->ID),
@@ -116,6 +120,8 @@ if (!class_exists('\StarcatReview\App\Components\Listing\View')) {
                 'columns' => $collectionProps['columns'],
                 'items_display' => $collectionProps['items_display'],
             ];
+
+            // error_log('$item : ' . print_r($item, true));
 
             return $this->card->get_view($item);
         }

@@ -25,33 +25,45 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Controller'))
 
         public function get_view($args)
         {
-            // error_log('$args : ' . print_r($args, true));
             $default_args = $this->get_default_args();
             $component_args = array_merge($default_args, $args);
             $component_args = $this->get_interpreted_args($component_args);
             $component_args = $this->boolean_conversion($component_args);
 
-            // error_log('$component_args : ' . print_r($component_args, true));
-
-            $listing_controller = new \StarcatReview\App\Components\Listing\Controller();
+            $listing_controller = new \StarcatReview\App\Components\Listing_New\Controller();
             return $listing_controller->get_view($component_args);
         }
 
         protected function get_interpreted_args($component_args)
         {
             $posts = !isset($component_args['posts']) ? $this->get_default_posts() : $component_args['posts'];
-            $terms = !isset($component_args['terms']) ? [] : $component_args['terms'];
 
-            /* Stat HTML */
+            /* Adding Stat HTML to $post objects */
             $posts = $this->get_combine_rating($posts);
 
-            /* Unique $args */
-            $additional_args = [
-                'posts' => $posts,
-                'terms' => $terms
-            ];
-            $interpreted_args = array_merge($component_args, $additional_args);
-            return $interpreted_args;
+            $component_args = $this->get_post_listing_args($component_args, $posts);
+
+            return $component_args;
+        }
+
+        protected function get_post_listing_args($component_args, $posts)
+        {
+            $items = [];
+            foreach ($posts as $key => $post) {
+                $items[] = [
+                    'title' => $post->post_title,
+                    'featured_image' => SCR_URL . 'includes/assets/img/dummy-review.jpg',
+                    'content' => $post->post_content,
+                    'pre_content_html' => $post->stat_html,
+                    'url' =>  get_post_permalink($post->ID),
+                    'columns' => $component_args['num_of_cols'],
+                    'items_display' => $component_args['items_display'] ? $component_args['items_display'] : ['title', 'content', 'link'],
+                ];
+            }
+
+            $component_args['items'] = $items;
+
+            return $component_args;
         }
 
         public function get_fields()
@@ -116,7 +128,6 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Controller'))
                 wp_reset_postdata();
             }
 
-            // error_log('$posts : ' . print_r($posts, true));
             return $posts;
         }
 
@@ -125,6 +136,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Controller'))
             foreach ($posts as $key => $post) {
                 $args = SCR_Getter::get_stat_default_args();
                 $args['post_id'] = $post->ID;
+
                 $args['combination'] = 'overall_combine';
                 $author_review = get_post_meta($post->ID, '_scr_post_options', true);
                 $args['items'] = isset($author_review) && !empty($author_review) ? $author_review : [];

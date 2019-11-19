@@ -24,9 +24,14 @@ if (!class_exists('\StarcatReview\App\Views\Blocks\Card')) {
                 $html .= '<div class="review-card__header">' . $item['title'] . '</div>';
             }
 
+            error_log('featured_image: ' . $item['featured_image']);
+            if ($this->show_item('title')) {
+                $html .= '<img src="' . $item['featured_image'] . '"/>';
+            }
+
             if ($this->show_item('content')) {
-                $stat_html = isset($item['stat_html']) ? $item['stat_html'] : '';
-                $html .= '<div class="review-card__body">' .  $stat_html . $item['content'] . '</div>';
+                $pre_content_html = isset($item['pre_content_html']) ? $item['pre_content_html'] : '';
+                $html .= '<div class="review-card__body">' .  $pre_content_html . $item['content'] . '</div>';
             }
 
             if ($this->show_item('link')) {
