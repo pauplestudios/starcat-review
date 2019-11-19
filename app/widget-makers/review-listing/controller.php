@@ -50,6 +50,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Controller'))
         {
             $items = [];
             foreach ($posts as $key => $post) {
+                $review_count = scr_get_user_reviews_count($post->ID);
                 $items[] = [
                     'title' => $post->post_title,
                     'featured_image' => SCR_URL . 'includes/assets/img/dummy-review.jpg',
@@ -58,6 +59,11 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Controller'))
                     'url' =>  get_post_permalink($post->ID),
                     'columns' => $component_args['num_of_cols'],
                     'items_display' => $component_args['items_display'] ? $component_args['items_display'] : ['title', 'content', 'link'],
+                    'meta_data' => [
+                        'review_count' => $review_count,
+                        'date' => get_post_time('U', 'false', $post->ID),
+                        'modified_date' => get_post_modified_time('U', 'false', $post->ID),
+                    ],
                 ];
             }
 

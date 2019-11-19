@@ -24,7 +24,7 @@ if (!class_exists('\StarcatReview\App\Views\Blocks\Card')) {
                 $html .= '<div class="review-card__header">' . $item['title'] . '</div>';
             }
 
-            error_log('featured_image: ' . $item['featured_image']);
+            error_log('meta_data : ' . print_r($item['meta_data'], true));
             if ($this->show_item('title')) {
                 $html .= '<img src="' . $item['featured_image'] . '"/>';
             }
@@ -37,14 +37,14 @@ if (!class_exists('\StarcatReview\App\Views\Blocks\Card')) {
             if ($this->show_item('link')) {
                 $html .= '<div class="review-card__footer"><a href="' . $item['url'] . '">See all >> </a></div>';
             }
-            if (isset($item['reviews'])) {
-                $html .= '<span class="reviewCount"  data-reviewCount="' . $item['reviews'] . '"></span>';
+            if (isset($item['meta_data']['review_count'])) {
+                $html .= '<span class="reviewCount"  data-reviewCount="' . $item['meta_data']['review_count'] . '"></span>';
             }
-            if (isset($item['date'])) {
-                $html .= '<span class="postDate"   data-postDate="' . $item['date'] .  '"></span>';
+            if (isset($item['meta_data']['date'])) {
+                $html .= '<span class="postDate"   data-postDate="' . $item['meta_data']['date'] .  '"></span>';
             }
-            if (isset($item['modified_date'])) {
-                $html .= '<span class="postModified"   data-postModified="' . $item['modified_date'] .  '"></span>';
+            if (isset($item['meta_data']['modified_date'])) {
+                $html .= '<span class="postModified"   data-postModified="' . $item['meta_data']['modified_date'] .  '"></span>';
             }
             $html .= '</div>';
             $html .= '</div>';

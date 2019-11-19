@@ -14,10 +14,11 @@ if (!class_exists('\StarcatReview\App\Templates\Controllers\Archive_Template')) 
         public function __construct()
         {
 
-            $this->listing = new \StarcatReview\App\Components\Listing\Controller();
+            // $this->listing = new \StarcatReview\App\Components\Listing\Controller();
             $this->review_listing = new \StarcatReview\App\Widget_Makers\Review_Listing\Controller();
+            $this->category_listing = new \StarcatReview\App\Widget_Makers\Category_Listing\Controller();
 
-            $this->listing_new = new \StarcatReview\App\Components\Listing_New\Controller();
+            // $this->listing_new = new \StarcatReview\App\Components\Listing_New\Controller();
         }
 
         public function get_view()
@@ -58,10 +59,7 @@ if (!class_exists('\StarcatReview\App\Templates\Controllers\Archive_Template')) 
             error_log('get_category_listing START');
             if (isset($props['category_list']['terms']) && !empty($props['category_list']['terms'])) {
                 $html = '<h2 class="scr-section-title">' . $props['category_list']['title'] . '</h2>';
-
-                $args = $this->get_category_listing_args($props);
-
-                $html .= $this->listing_new->get_view($args);
+                $html .= $this->category_listing->get_view($props['category_list']);
                 // $html .= "No Reviews Category Found";
             } else {
                 $html .= "No Reviews Category Found";
