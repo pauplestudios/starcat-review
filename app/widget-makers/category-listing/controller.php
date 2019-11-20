@@ -44,9 +44,14 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Category_Listing\Controller'
 
             $items = [];
             foreach ($terms as $key => $term) {
+                $term_options = get_term_meta($term->term_id, '_scr_category_options', true);
+                $featured_image = $term_options ? $term_options['featured_image'] : null;
+
+                error_log('$featured_image : ' . print_r($featured_image, true));
+
                 $items[] = [
                     'title' => $term->name,
-                    'featured_image' => SCR_URL . 'includes/assets/img/dummy-review.jpg',
+                    'featured_image' => $featured_image ? $featured_image['url'] : SCR_URL . 'includes/assets/img/dummy-review.jpg',
                     'content' => $term->description,
                     'pre_content_html' => '<div>Pre Content HTML</div>',
                     'url' =>  get_term_link($term),

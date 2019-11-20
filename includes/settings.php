@@ -72,7 +72,32 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 // $this->comparison_table_settings($prefix);               
 
                 $this->single_post_meta_fields();
+                $this->category_meta_fields();
             }
+        }
+
+        public function category_meta_fields()
+        {
+            // taxonomy-prefix
+            $prefix = '_scr_category_options';
+            // Create taxonomy options
+            \CSF::createTaxonomyOptions($prefix, array(
+                'taxonomy'  => SCR_CATEGORY,
+                'data_type' => 'serialize', // The type of the database save options. `serialize` or `unserialize`
+            ));
+
+            // Create a section
+            \CSF::createSection($prefix, array(
+                'fields' => array(
+                    array(
+                        'id'      => 'featured_image',
+                        'type'    => 'media',
+                        'title'   => 'Media',
+                        'library' => 'image',
+                    ),
+
+                )
+            ));
         }
 
         // Note : Not used in MVP but it will be after MVP release

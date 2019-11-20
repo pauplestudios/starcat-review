@@ -31,7 +31,7 @@ if (!class_exists('\StarcatReview\App\Components\Listing_New\Model')) {
 
         protected function get_collection_props($args)
         {
-            error_log('get_collection_props $args : ' . print_r($args, true));
+            // error_log('get_collection_props $args : ' . print_r($args, true));
             $post_count = $this->get_posts_count();
             $posts_per_page = 6;
 

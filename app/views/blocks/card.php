@@ -24,7 +24,7 @@ if (!class_exists('\StarcatReview\App\Views\Blocks\Card')) {
                 $html .= '<div class="review-card__header">' . $item['title'] . '</div>';
             }
 
-            error_log('meta_data : ' . print_r($item['meta_data'], true));
+            // error_log('meta_data : ' . print_r($item['meta_data'], true));
             if ($this->show_item('title')) {
                 $html .= '<img src="' . $item['featured_image'] . '"/>';
             }
@@ -35,7 +35,7 @@ if (!class_exists('\StarcatReview\App\Views\Blocks\Card')) {
             }
 
             if ($this->show_item('link')) {
-                $html .= '<div class="review-card__footer"><a href="' . $item['url'] . '">See all >> </a></div>';
+                $html .= '<div class="review-card__footer"><a class="button" href="' . $item['url'] . '">See More</a></div>';
             }
             if (isset($item['meta_data']['review_count'])) {
                 $html .= '<span class="reviewCount"  data-reviewCount="' . $item['meta_data']['review_count'] . '"></span>';
