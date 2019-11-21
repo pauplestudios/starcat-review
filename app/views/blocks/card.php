@@ -46,6 +46,9 @@ if (!class_exists('\StarcatReview\App\Views\Blocks\Card')) {
             if (isset($item['meta_data']['modified_date'])) {
                 $html .= '<span class="postModified"   data-postModified="' . $item['meta_data']['modified_date'] .  '"></span>';
             }
+            if (isset($item['meta_data']['trendScore'])) {
+                $html .= '<span class="trendScore"   data-trendScore="' . $item['meta_data']['trendScore'] .  '"></span>';
+            }
             $html .= '</div>';
             $html .= '</div>';
 

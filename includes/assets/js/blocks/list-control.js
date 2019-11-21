@@ -14,6 +14,7 @@ var UserReviewsList = {
                 { name: "reviewCount", attr: "data-reviewCount" },
                 { name: "postDate", attr: "data-postDate" },
                 { name: "postModified", attr: "data-postModified" },
+                { name: "trendScore", attr: "data-trendScore" },
             ],
 
             page: 10,
@@ -100,6 +101,10 @@ var UserReviewsList = {
                     });
                 } else if (value == "review-count") {
                     thisModule.featureList.sort("reviewCount", {
+                        order: "desc",
+                    });
+                } else if (value == "trending") {
+                    thisModule.featureList.sort("trendScore", {
                         order: "desc",
                     });
                 } else if (value == "post-date") {

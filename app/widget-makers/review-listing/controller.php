@@ -64,6 +64,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Controller'))
                         'review_count' => $review_count,
                         'date' => get_post_time('U', 'false', $post->ID),
                         'modified_date' => get_post_modified_time('U', 'false', $post->ID),
+                        'trendScore' => scr_get_trend_score($post->ID),
                     ],
                 ];
             }
