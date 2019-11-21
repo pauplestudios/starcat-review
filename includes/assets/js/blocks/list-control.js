@@ -3,6 +3,7 @@ var List = require("list.js");
 
 var UserReviewsList = {
     init: function() {
+        console.log("UserReviewsList JS");
         this.dropDownInit();
 
         var options = {
@@ -12,7 +13,7 @@ var UserReviewsList = {
                 "review-card__body",
                 { name: "reviewCount", attr: "data-reviewCount" },
                 { name: "postDate", attr: "data-postDate" },
-                { name: "postModified", attr: "data-postModified" }
+                { name: "postModified", attr: "data-postModified" },
             ],
 
             page: 10,
@@ -22,8 +23,8 @@ var UserReviewsList = {
                 location: 0,
                 distance: 100,
                 threshold: 0.4,
-                multiSearch: true
-            }
+                multiSearch: true,
+            },
         };
 
         this.featureList = new List("scr-controlled-list", options);
@@ -37,13 +38,13 @@ var UserReviewsList = {
         var thisModule = this;
 
         jQuery("#scr-controlled-list .ui.dropdown").dropdown({
-            clearable: true
+            clearable: true,
         });
     },
 
     eventHandlers: function() {
         // console.log("ListControl eventHandlers");
-        this.filters();
+        // this.filters();
         this.sorting();
     },
 
@@ -53,12 +54,15 @@ var UserReviewsList = {
 
     filters: function() {
         var thisModule = this;
-
-        jQuery("#scr-controlled-list .ui.dropdown.reviews").dropdown(
+        console.log("filters()");
+        jQuery("#scr-controlled-list .ui.dropdown").click(function() {
+            console.log("clicked event: ");
+        });
+        jQuery("#scr-controlled-list .ui.dropdown").dropdown(
             "setting",
             "onChange",
-            function(value, text, $selectedItem) {
-                // console.log("clicked: " + value);
+            function(value, text, selectedItem) {
+                console.log("clicked: " + value);
 
                 if (value == "") {
                     thisModule.featureList.clear();
@@ -79,6 +83,7 @@ var UserReviewsList = {
     sorting: function() {
         var thisModule = this;
 
+        console.log("sorting()");
         jQuery("#scr-controlled-list .ui.dropdown.sort").dropdown(
             "setting",
             "onChange",
@@ -87,28 +92,28 @@ var UserReviewsList = {
 
                 if (value == "alphabet-asc") {
                     thisModule.featureList.sort("review-card__header", {
-                        order: "asc"
+                        order: "asc",
                     });
                 } else if (value == "alphabet-desc") {
                     thisModule.featureList.sort("review-card__header", {
-                        order: "desc"
+                        order: "desc",
                     });
                 } else if (value == "review-count") {
                     thisModule.featureList.sort("reviewCount", {
-                        order: "desc"
+                        order: "desc",
                     });
                 } else if (value == "post-date") {
                     thisModule.featureList.sort("postDate", {
-                        order: "desc"
+                        order: "desc",
                     });
                 } else if (value == "post-modified") {
                     thisModule.featureList.sort("postModified", {
-                        order: "desc"
+                        order: "desc",
                     });
                 }
             }
         );
-    }
+    },
 };
 
 module.exports = UserReviewsList;

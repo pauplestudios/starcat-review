@@ -29,7 +29,7 @@ if (!class_exists('\StarcatReview\App\Builders\Controls_Builder')) {
                         'alphabet-asc' => 'Alphabetic Asc',
                         'alphabet-desc' => 'Alphabetic Desc',
                         'avg-rating' => 'Average Rating',
-                        // 'review-count' => 'Number of Reviews',
+                        'review-count' => 'Number of Reviews',
                         'post-date' => 'Recent',
                         'post-modified' => 'Recently Updated',
                     ],
