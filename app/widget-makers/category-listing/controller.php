@@ -52,7 +52,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Category_Listing\Controller'
                 $items[] = [
                     'title' => $term->name,
                     'featured_image' => $featured_image ? $featured_image['url'] : SCR_URL . 'includes/assets/img/dummy-review.jpg',
-                    'content' => $term->description,
+                    'content' => substr(wp_strip_all_tags($term->description), 0, 100) . '...',
                     'pre_content_html' => '<div>Pre Content HTML</div>',
                     'url' =>  get_term_link($term),
                     'columns' => $args['num_of_cols'],

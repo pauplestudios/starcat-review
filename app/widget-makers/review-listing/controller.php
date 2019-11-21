@@ -54,7 +54,8 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Controller'))
                 $items[] = [
                     'title' => $post->post_title,
                     'featured_image' => SCR_URL . 'includes/assets/img/dummy-review.jpg',
-                    'content' => $post->post_content,
+                    'content' => substr(wp_strip_all_tags($post->post_content), 0, 100) . '...',
+                    // 'content' => get_the_excerpt($post->ID),
                     'pre_content_html' => $post->stat_html,
                     'url' =>  get_post_permalink($post->ID),
                     'columns' => $component_args['num_of_cols'],
