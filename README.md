@@ -53,8 +53,8 @@ Inspirations
 
 The basic rules
 
-1. Every basic component's id/class should start with **hrp-** prefix
-2. Names of elements should be hypenated like **hrp-categories-list**
+1. Every basic component's id/class should start with **scr-** prefix
+2. Names of elements should be hypenated like **scr-categories-list**
 3. Do not have more than 3 levels of nesting for SCSS files
 
 ### JS
