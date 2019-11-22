@@ -16,10 +16,27 @@ Inspirations
 
 ## Code Organisation
 
+1. To recap, Templates->Widget_Makers->Components->Blocks.
+
+### Components
+
 1. There should be **no WordPress code inside /components folder**.
 2. Components should only have **\$args** as input, there should be no other dependencies / global settings used inside.
 3. Blocks are used only in components and are not directly used anywhere.
-4. To recap, Templates->Widget_Makers->Components->Blocks.
+
+### Widgets
+
+1. Passing arguments to JS:
+
+    1. The component should have the JS \$args / config as HTML attribute
+    2. There should be a Builder JS file for constructing multiple instances ( example List_Builder )
+    3. The Builder JS Class will read the HTML attributes and then construct the component instances ( List_Builder.js-> List.js )
+
+        Pros:
+
+    4. Supports Multiple Instances of Widgets without conflict
+    5. No need of complicated Localize methods
+    6. Easy to code and maintain
 
 ---
 
@@ -39,6 +56,10 @@ The basic rules
 1. Every basic component's id/class should start with **hrp-** prefix
 2. Names of elements should be hypenated like **hrp-categories-list**
 3. Do not have more than 3 levels of nesting for SCSS files
+
+### JS
+
+1. When a JS file has a lot of selectors, create a property called selectors and add selectors as sub-properties
 
 ---
 
