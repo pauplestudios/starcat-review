@@ -41,6 +41,21 @@ if (!class_exists('\StarcatReview\Includes\Widgets\Register_Widgets')) {
                 $widget = new \Widgetry\Widget_Factory($widget_args);
                 register_widget($widget);
             });
+
+            add_action('widgets_init', function () {
+                $widget_args = array(
+                    'id' => 'scr-toc',
+                    'name' => 'Reviews Table of Contents',
+                    'description' => 'Starcat Reviews Table of Contents Widget',
+                    'model' =>  new \StarcatReview\App\Widget_Makers\Toc\Widget(),
+                    'view' => new \StarcatReview\App\Widget_Makers\Toc\Widget(),
+                );
+                error_log("widget_args:::" . $widget_args);
+                $url = SCR_PATH . '/includes/lib/widgetry/widget-factory.php';
+                require_once $url;
+                $widget = new \Widgetry\Widget_Factory($widget_args);
+                register_widget($widget);
+            });
         }
     } // END CLASS
 }
