@@ -33,11 +33,11 @@ if (!class_exists('\StarcatReview\App\Components\Listing_New\Model')) {
         {
             // error_log('get_collection_props $args : ' . print_r($args, true));
             $post_count = $this->get_posts_count();
-            $posts_per_page = 2;
 
+            $posts_per_page = isset($args['posts_per_page']) ? $args['posts_per_page'] : 9;
             $collectionProps = [
                 'title' => '',
-                'posts_per_page' => $posts_per_page,
+                'posts_per_page' =>  $posts_per_page,
                 'show_controls' => [
                     'search' => isset($args['show_search']) ? $args['show_search'] : true,
                     'sort' =>  isset($args['show_sortBy']) ? $args['show_sortBy'] : true,
