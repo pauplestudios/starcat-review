@@ -25,6 +25,10 @@ if (!class_exists('\StarcatReview\App\Services\Review_Schema')) {
         protected function get_product_schema($args)
         {
             // generate product review 
+            // echo '<pre>';
+            // print_r($args);
+            // echo '</pre>';
+            // exit;
             $reviews_schema = $this->get_reviews_schema($args);
             $schema_review = Schema::product()
                 ->review($reviews_schema);
@@ -37,7 +41,7 @@ if (!class_exists('\StarcatReview\App\Services\Review_Schema')) {
             $review_schema = array();
             foreach ($args as $comment) {
                 $comment_date = date('Y-n-j', strtotime($comment->comment_date));
-                $review = $comment->review;
+                $review = $comment->reviews;
                 $stats_ratings = $this->get_min_max_ratings($review['stats']);
                 $schema_review = Schema::review()
                     ->name($review['title'])
