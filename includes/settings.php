@@ -411,6 +411,13 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'content' => 'Listing Options',
 
                         ),
+
+                        array(
+                            'id' => 'cp_posts_per_page',
+                            'type' => 'text',
+                            'title' => __('Posts Per Page', 'starcat-review'),
+                            'default' => '9',
+                        ),
                         array(
                             'id' => 'cp_default_sortBy',
                             'type' => 'select',

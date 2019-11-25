@@ -66,6 +66,7 @@ if (!class_exists('\StarcatReview\App\Templates\Controllers\Category_Template'))
         protected function get_props($term)
         {
             $args = [
+                'posts_per_page' => SCR_Getter::get('cp_posts_per_page'),
                 'show_controls' => SCR_Getter::get('cp_controls'),
                 'show_search' => SCR_Getter::get('cp_search'),
                 'show_sortBy' => SCR_Getter::get('cp_sortBy'),
