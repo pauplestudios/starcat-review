@@ -10,6 +10,12 @@
         font-weight: 600;
         margin-bottom: 12px;
     }
+
+    & .button {
+        padding: 10px 18px;
+        margin: 15px 0px;
+        display: inline-block;
+    }
 }
 
 /* Enhancement to Simple Grid */
@@ -30,7 +36,7 @@
 }
 
 .tax-scr_category {
-    .scr-pagination {
+    & .ui.pagination.scr-pagination {
         display: block;
     }
 }

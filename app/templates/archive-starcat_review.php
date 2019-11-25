@@ -19,7 +19,7 @@ $template_settings = [
     'template_sidebar_style' => 'full-width'
 ];
 
-$archive_template = new \StarcatReview\Includes\Templates\Controllers\Archive_Template();
+$archive_template = new \StarcatReview\App\Templates\Controllers\Archive_Template();
 $content = $archive_template->get_view();
 
 $template_builder = new \StarcatReview\Includes\Utils\Template_Builder($content, 'main_page');

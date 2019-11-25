@@ -1,6 +1,6 @@
 <?php
 
-namespace StarcatReview\Includes\Templates\Controllers;
+namespace StarcatReview\App\Templates\Controllers;
 
 use \StarcatReview\Includes\Settings\SCR_Getter;
 
@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\StarcatReview\Includes\Templates\Controllers\Category_Template')) {
+if (!class_exists('\StarcatReview\App\Templates\Controllers\Category_Template')) {
     class Category_Template
     {
         public function __construct()
@@ -66,6 +66,7 @@ if (!class_exists('\StarcatReview\Includes\Templates\Controllers\Category_Templa
         protected function get_props($term)
         {
             $args = [
+                'posts_per_page' => SCR_Getter::get('cp_posts_per_page'),
                 'show_controls' => SCR_Getter::get('cp_controls'),
                 'show_search' => SCR_Getter::get('cp_search'),
                 'show_sortBy' => SCR_Getter::get('cp_sortBy'),

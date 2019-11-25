@@ -31,9 +31,9 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '<h3>' . $collectionProps['title'] . '</h3>';
 
 
-            // if ($collectionProps['show_controls']) {
-            // $html .= $this->controls_builder->get_controls($collectionProps['show_controls']);
-            // }
+            if ($collectionProps['show_controls']) {
+                $html .= $this->controls_builder->get_controls($collectionProps['show_controls']);
+            }
 
 
             $html .= $this->get_card_collection($viewProps);

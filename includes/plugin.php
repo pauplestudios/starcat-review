@@ -17,6 +17,9 @@ if (!class_exists('\Starcat_Review')) {
             $this->plugin_domain = SCR_DOMAIN;
             $this->version = SCR_VERSION;
 
+            /* Require functions.php */
+            require_once SCR_PATH . 'includes/functions.php';
+
             /*  Reviews Register Post types and its Taxonomies */
             $this->register_cpt_and_taxonomy();
 

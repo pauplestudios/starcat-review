@@ -92,6 +92,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'cp_search' => true,
                 'cp_sortBy' => true,
                 // 'cp_num_of_reviews_filter' => true,
+                'cp_posts_per_page' => '9',
                 'cp_default_sortBy' => 'recent',
                 'cp_num_of_cols' => '3',
 
