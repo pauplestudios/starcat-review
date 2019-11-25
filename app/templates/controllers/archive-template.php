@@ -13,7 +13,12 @@ if (!class_exists('\StarcatReview\App\Templates\Controllers\Archive_Template')) 
     {
         public function __construct()
         {
-            $this->listing = new \StarcatReview\App\Widget_Makers\Review_Listing\Controller();
+
+            // $this->listing = new \StarcatReview\App\Components\Listing\Controller();
+            $this->review_listing = new \StarcatReview\App\Widget_Makers\Review_Listing\Controller();
+            $this->category_listing = new \StarcatReview\App\Widget_Makers\Category_Listing\Controller();
+
+            // $this->listing_new = new \StarcatReview\App\Components\Listing_New\Controller();
         }
 
         public function get_view()
@@ -39,22 +44,38 @@ if (!class_exists('\StarcatReview\App\Templates\Controllers\Archive_Template')) 
 
         protected function get_listing_order($listing = 'mp_category_listing', $props)
         {
+            error_log('get_listing_order');
             $html = '';
             if ($listing == 'mp_category_listing')
                 $html .= $this->get_category_listing($props);
             elseif ($listing == 'mp_review_listing')
                 $html .= $this->get_post_listing($props);
+            // $html .= " Post Listing";
+            return $html;
+        }
 
+        protected function get_category_listing($props)
+        {
+            error_log('get_category_listing START');
+            if (isset($props['category_list']['terms']) && !empty($props['category_list']['terms'])) {
+                $html = '<h2 class="scr-section-title">' . $props['category_list']['title'] . '</h2>';
+                $html .= $this->category_listing->get_view($props['category_list']);
+                // $html .= "No Reviews Category Found";
+            } else {
+                $html .= "No Reviews Category Found";
+            }
+            error_log('get_category_listing END');
             return $html;
         }
 
         protected function get_post_listing($props)
         {
+            error_log('get_post_listing');
             $html = '';
 
             if (isset($props['review_list']['posts']) && !empty($props['review_list']['posts'])) {
                 $html .= '<h2 class="scr-section-title">' . $props['review_list']['title'] . '</h2>';
-                $html .= $this->listing->get_view($props['review_list']);
+                $html .= $this->review_listing->get_view($props['review_list']);
             } else {
                 $html .= "No Reviews post Found";
             }
@@ -62,15 +83,27 @@ if (!class_exists('\StarcatReview\App\Templates\Controllers\Archive_Template')) 
             return $html;
         }
 
-        protected function get_category_listing($props)
+        protected function get_category_listing_args($props)
         {
-            if (isset($props['category_list']['terms']) && !empty($props['category_list']['terms'])) {
-                $html = '<h2 class="scr-section-title">' . $props['category_list']['title'] . '</h2>';
-                $html .= $this->listing->get_view($props['category_list']);
-            } else {
-                $html .= "No Reviews Category Found";
+
+            $args = $props['category_list'];
+            $terms = $props['category_list']['terms'];
+
+            $items = [];
+            foreach ($terms as $key => $term) {
+                $items[] = [
+                    'title' => $term->name,
+                    'featured_image' => SCR_URL . 'includes/assets/img/dummy-review.jpg',
+                    'content' => $term->description,
+                    'pre_content_html' => '<div>Pre Content HTML</div>',
+                    'url' =>  get_term_link($term),
+                    'columns' => $args['num_of_cols'],
+                    'items_display' => $args['items_display'],
+                ];
             }
-            return $html;
+
+            $args['items'] = $items;
+            return $args;
         }
 
         /* Protected */

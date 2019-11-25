@@ -17,8 +17,9 @@ if (!class_exists('\StarcatReview\App\Components\Listing\Controller')) {
 
         public function get_view($args)
         {
+            // error_log('Listing->get_view $args : ' . print_r($args, true));
             $viewProps = $this->model->get_viewProps($args);
-            // error_log('get_view $args : ' . print_r($viewProps, true));
+
             return $this->view->get_html($viewProps);
         }
     } // END CLASS

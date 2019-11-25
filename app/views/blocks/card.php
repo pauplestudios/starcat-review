@@ -24,22 +24,30 @@ if (!class_exists('\StarcatReview\App\Views\Blocks\Card')) {
                 $html .= '<div class="review-card__header">' . $item['title'] . '</div>';
             }
 
+            // error_log('meta_data : ' . print_r($item['meta_data'], true));
+            if ($this->show_item('title')) {
+                $html .= '<img src="' . $item['featured_image'] . '"/>';
+            }
+
             if ($this->show_item('content')) {
-                $stat_html = isset($item['stat_html']) ? $item['stat_html'] : '';
-                $html .= '<div class="review-card__body">' .  $stat_html . $item['content'] . '</div>';
+                $pre_content_html = isset($item['pre_content_html']) ? $item['pre_content_html'] : '';
+                $html .= '<div class="review-card__body">' .  $pre_content_html . $item['content'] . '</div>';
             }
 
             if ($this->show_item('link')) {
-                $html .= '<div class="review-card__footer"><a href="' . $item['url'] . '">See all >> </a></div>';
+                $html .= '<div class="review-card__footer"><a class="button" href="' . $item['url'] . '">See More</a></div>';
             }
-            if (isset($item['reviews'])) {
-                $html .= '<span class="reviewCount"  data-reviewCount="' . $item['reviews'] . '"></span>';
+            if (isset($item['meta_data']['review_count'])) {
+                $html .= '<span class="reviewCount"  data-reviewCount="' . $item['meta_data']['review_count'] . '"></span>';
             }
-            if (isset($item['date'])) {
-                $html .= '<span class="postDate"   data-postDate="' . $item['date'] .  '"></span>';
+            if (isset($item['meta_data']['date'])) {
+                $html .= '<span class="postDate"   data-postDate="' . $item['meta_data']['date'] .  '"></span>';
             }
-            if (isset($item['modified_date'])) {
-                $html .= '<span class="postModified"   data-postModified="' . $item['modified_date'] .  '"></span>';
+            if (isset($item['meta_data']['modified_date'])) {
+                $html .= '<span class="postModified"   data-postModified="' . $item['meta_data']['modified_date'] .  '"></span>';
+            }
+            if (isset($item['meta_data']['trendScore'])) {
+                $html .= '<span class="trendScore"   data-trendScore="' . $item['meta_data']['trendScore'] .  '"></span>';
             }
             $html .= '</div>';
             $html .= '</div>';
