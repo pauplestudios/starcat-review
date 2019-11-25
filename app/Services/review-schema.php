@@ -1,35 +1,35 @@
 <?php
 
-namespace StarcatReview\App\Services\Schema;
+namespace StarcatReview\App\Services;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-require __DIR__ . '/../../../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 
 
 use Spatie\SchemaOrg\Schema;
 
 
-if (!class_exists('\StarcatReview\App\Services\Schema\Review')) {
-    class Review
+if (!class_exists('\StarcatReview\App\Services\Review_Schema')) {
+    class Review_Schema
     {
         public function get_schema($args)
         {
             $get_review_scripts =  $this->get_product_schema($args);
-
             return $get_review_scripts;
         }
+
 
         protected function get_product_schema($args)
         {
             // generate product review 
             $reviews_schema = $this->get_reviews_schema($args);
-            $build_review = Schema::product()
+            $schema_review = Schema::product()
                 ->review($reviews_schema);
 
-            return json_encode($build_review);
+            return $schema_review;
         }
 
         protected function get_reviews_schema($args)
@@ -58,11 +58,21 @@ if (!class_exists('\StarcatReview\App\Services\Schema\Review')) {
             return $review_schema;
         }
 
+        protected function get_article_schema($args)
+        {
+            // need to implement
+        }
+
+        protected function get_breadcrump_schema($args)
+        {
+            // need to implement
+        }
+
         protected function get_min_max_ratings($args)
         {
             //get the min and max ratings 
             if (count($args) > 0) {
-                //
+                
                 $ratings = array();
                 foreach ($args as $stat) {
                     $ratings[] = $stat['rating'];
