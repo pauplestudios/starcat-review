@@ -23,7 +23,7 @@ if (!class_exists('\StarcatReview\App\Components\Listing_New\View')) {
         {
             $collectionProps = $viewProps['collection'];
 
-            $html = '<div id="scr-controlled-list">';
+            $html = '<div id="scr-controlled-list" data-collectionProps="' . $this->get_js_config($collectionProps) . '">';
             $html .= '<h2>' . $collectionProps['title'] . '</h2>';
 
             if ($collectionProps['show_controls']) {
@@ -43,6 +43,18 @@ if (!class_exists('\StarcatReview\App\Components\Listing_New\View')) {
 
         /* PRIVATE CLASS */
 
+        private function get_js_config($collectionProps)
+        {
+            $js_config = [];
+            $js_config['pagination'] = $collectionProps['pagination'];
+            $js_config['page'] = $collectionProps['posts_per_page'];
+
+            $js_config = json_encode($js_config);
+
+            $js_config = str_replace('"', "<", $js_config);
+
+            return $js_config;
+        }
         private function get_pagination_html($viewProps)
         {
             $html = '';

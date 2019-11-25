@@ -33,7 +33,7 @@ if (!class_exists('\StarcatReview\App\Components\Listing_New\Model')) {
         {
             // error_log('get_collection_props $args : ' . print_r($args, true));
             $post_count = $this->get_posts_count();
-            $posts_per_page = 6;
+            $posts_per_page = 2;
 
             $collectionProps = [
                 'title' => '',

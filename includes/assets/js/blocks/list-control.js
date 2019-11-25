@@ -2,8 +2,10 @@
 var List = require("list.js");
 
 var UserReviewsList = {
-    init: function() {
-        console.log("UserReviewsList JS");
+    init: function(list_config) {
+        console.log("List-Control JS");
+        console.log(list_config.pagination);
+
         this.dropDownInit();
 
         var options = {
@@ -17,8 +19,8 @@ var UserReviewsList = {
                 { name: "trendScore", attr: "data-trendScore" },
             ],
 
-            page: 10,
-            pagination: true,
+            page: list_config.page ? list_config.page : 10,
+            pagination: list_config.pagination ? list_config.pagination : true,
             fuzzySearch: {
                 searchClass: "collection-search",
                 location: 0,
@@ -27,6 +29,8 @@ var UserReviewsList = {
                 multiSearch: true,
             },
         };
+
+        console.log(options);
 
         this.featureList = new List("scr-controlled-list", options);
         this.eventHandlers();
