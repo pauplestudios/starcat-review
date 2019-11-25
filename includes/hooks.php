@@ -39,6 +39,8 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
             add_filter('the_content', array($this, 'content_filter'));
             // add_filter('the_excerpt', array($this, 'content_filter'));            
+
+            add_action('wp_head', array($this, 'scr_schema_reviews'));
         }
 
         public function init_hook()
@@ -92,6 +94,24 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             $create_pages->setup_data($post_data);
         }
 
+        public function scr_schema_reviews()
+        {
+            global $post;
+
+            /* Checks for single template by post type */
+
+            if ($post->post_type == SCR_POST_TYPE && is_single()) {
+                
+                $schema_controller = new \StarcatReview\App\Components\Schema_Reviews\Controller();
+                $get_schema = $schema_controller->generate_schema(get_post());
+                $html = '';
+                if ($get_schema) {
+                    $html .= '<!-- This site is optimized -->';
+                    $html .= '<script type="application/ld+json">' . json_encode($get_schema) . '</script>';
+                }
+                echo $html;
+            }
+        }
 
 
 
