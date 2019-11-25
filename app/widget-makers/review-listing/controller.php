@@ -40,6 +40,8 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Controller'))
 
             /* Adding Stat HTML to $post objects */
             $posts = $this->get_combine_rating($posts);
+            // error_log('posts : ' . print_r($posts, true));
+
 
             $component_args = $this->get_post_listing_args($component_args, $posts);
 
@@ -145,7 +147,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Controller'))
                 $args = SCR_Getter::get_stat_default_args();
                 $args['post_id'] = $post->ID;
 
-                $args['combination'] = 'overall_combine';
+                $args['combine_type'] = 'overall';
                 $author_review = get_post_meta($post->ID, '_scr_post_options', true);
                 $args['items'] = isset($author_review) && !empty($author_review) ? $author_review : [];
                 $comments = $this->get_comments_list($post->ID);

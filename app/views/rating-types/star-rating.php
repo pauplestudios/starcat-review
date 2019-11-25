@@ -73,7 +73,7 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
             $html .= '</div>';
 
             $html .= '<div class="reviewed-item-label">';
-            if($this->props['collection']['combination'] !== 'overall_combine'){
+            if ($this->props['collection']['combine_type'] !== 'overall') {
                 $html .= '<span class="reviewed-item-label__text">' . $key . '</span>';
                 $html .= '<span class="reviewed-item-label__divider"></span>';
             }
