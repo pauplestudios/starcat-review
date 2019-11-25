@@ -48,8 +48,8 @@ function scr_get_user_reviews_count($post_id)
 
     $comments_count = count(get_comments($args));
 
-    error_log('$post_id : ' . $post_id);
-    error_log('$comments_count : ' . $comments_count);
+    // error_log('$post_id : ' . $post_id);
+    // error_log('$comments_count : ' . $comments_count);
 
     return $comments_count;
 }

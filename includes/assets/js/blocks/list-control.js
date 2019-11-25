@@ -17,6 +17,7 @@ var UserReviewsList = {
                 { name: "postDate", attr: "data-postDate" },
                 { name: "postModified", attr: "data-postModified" },
                 { name: "trendScore", attr: "data-trendScore" },
+                { name: "positiveScore", attr: "data-positiveScore" },
             ],
 
             page: list_config.page ? list_config.page : 10,
@@ -117,6 +118,10 @@ var UserReviewsList = {
                     });
                 } else if (value == "post-modified") {
                     thisModule.featureList.sort("postModified", {
+                        order: "desc",
+                    });
+                } else if (value == "avg-rating") {
+                    thisModule.featureList.sort("positiveScore", {
                         order: "desc",
                     });
                 }
