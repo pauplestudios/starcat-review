@@ -17,7 +17,7 @@ var ProsAndCons = {
         ProsAndCons.deleteItem(selector, list, group);
 
         // Already loaded element Pros and Cons Dropdown
-        jQuery(selector + " .ui.prosandcons.dropdown").dropdownY({
+        jQuery(selector + " .ui.prosandcons.dropdown").dropdownX({
             allowAdditions: true,
         });
     },
@@ -37,7 +37,7 @@ var ProsAndCons = {
             ProsAndCons.reinitiateEvents(list, group);
 
             // Pros and Cons Dropdown Items
-            jQuery(selector + " .ui.prosandcons.dropdown").dropdownY({
+            jQuery(selector + " .ui.prosandcons.dropdown").dropdownX({
                 allowAdditions: true,
             });
         });
