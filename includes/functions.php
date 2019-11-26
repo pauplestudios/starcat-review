@@ -1,10 +1,33 @@
 <?php
 
+use \StarcatReview\Includes\Settings\SCR_Getter;
+
+function scr_get_overall_rating($post_id)
+{
+    $args = [
+        'post_id' => $post_id,
+        'combine_type' => 'overall',
+    ];
+
+    $args['items'] = get_post_meta($post_id, '_scr_post_options', true);
+    $args['items']['comments-list'] = scr_get_user_reviews($post_id);
+
+    $args = array_merge(SCR_Getter::get_stat_default_args(), $args);
+
+    $controller = new \StarcatReview\App\Components\Stats\Controller($args);
+    $rating = $controller->get_rating();
+
+    // error_log('args : ' . print_r($args, true));
+    // error_log('rating : ' . print_r($rating, true));
+
+    return $rating;
+}
+
 function scr_get_user_reviews($post_id)
 {
     $args = [
         'post_id' => $post_id,
-        'type' => SCR_POST_TYPE
+        'type' => SCR_POST_TYPE,
     ];
 
     $comments = get_comments($args);
@@ -20,13 +43,13 @@ function scr_get_user_reviews_count($post_id)
 {
     $args = [
         'post_id' => $post_id,
-        'type' => SCR_POST_TYPE
+        'type' => SCR_POST_TYPE,
     ];
 
     $comments_count = count(get_comments($args));
 
-    error_log('$post_id : ' . $post_id);
-    error_log('$comments_count : ' . $comments_count);
+    // error_log('$post_id : ' . $post_id);
+    // error_log('$comments_count : ' . $comments_count);
 
     return $comments_count;
 }

@@ -21,7 +21,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Controller'))
         }
 
         public function load()
-        { }
+        {}
 
         public function get_view($args)
         {
@@ -40,6 +40,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Controller'))
 
             /* Adding Stat HTML to $post objects */
             $posts = $this->get_combine_rating($posts);
+            // error_log('posts : ' . print_r($posts, true));
 
             $component_args = $this->get_post_listing_args($component_args, $posts);
 
@@ -57,7 +58,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Controller'))
                     'content' => substr(wp_strip_all_tags($post->post_content), 0, 100) . '...',
                     // 'content' => get_the_excerpt($post->ID),
                     'pre_content_html' => $post->stat_html,
-                    'url' =>  get_post_permalink($post->ID),
+                    'url' => get_post_permalink($post->ID),
                     'columns' => $component_args['num_of_cols'],
                     'items_display' => $component_args['items_display'] ? $component_args['items_display'] : ['title', 'content', 'link'],
                     'meta_data' => [
@@ -65,6 +66,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Controller'))
                         'date' => get_post_time('U', 'false', $post->ID),
                         'modified_date' => get_post_modified_time('U', 'false', $post->ID),
                         'trendScore' => scr_get_trend_score($post->ID),
+                        'positiveScore' => scr_get_overall_rating($post->ID)['overall']['rating'],
                     ],
                 ];
             }
@@ -124,7 +126,6 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Controller'))
                 'paged' => $paged,
             );
 
-
             $query = new \WP_Query($args);
 
             if ($query->have_posts()) {
@@ -145,7 +146,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Controller'))
                 $args = SCR_Getter::get_stat_default_args();
                 $args['post_id'] = $post->ID;
 
-                $args['combination'] = 'overall_combine';
+                $args['combine_type'] = 'overall';
                 $author_review = get_post_meta($post->ID, '_scr_post_options', true);
                 $args['items'] = isset($author_review) && !empty($author_review) ? $author_review : [];
                 $comments = $this->get_comments_list($post->ID);
@@ -165,7 +166,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Controller'))
         {
             $args = [
                 'post_id' => $post_id,
-                'type' => SCR_POST_TYPE
+                'type' => SCR_POST_TYPE,
             ];
 
             $comments = get_comments($args);

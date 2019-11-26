@@ -14,7 +14,7 @@ if (!class_exists('\StarcatReview\App\Components\Stats\Model')) {
             $this->collection = $this->get_collectionProps($args);
             $this->items = $this->get_itemsProps($args);
 
-            if (isset($args['combination']) && $args['combination'] == 'overall_combine') {
+            if (isset($args['combine_type']) && $args['combine_type'] == 'overall') {
                 $this->items = $this->get_combined_overall($this->items, $args);
             }
 
@@ -43,7 +43,7 @@ if (!class_exists('\StarcatReview\App\Components\Stats\Model')) {
             ];
 
             $collection = $this->get_icons($collection);
-            $collection['combination'] = isset($args['combination']) ? $args['combination'] : '';
+            $collection['combine_type'] = isset($args['combine_type']) ? $args['combine_type'] : '';
 
             return $collection;
         }
