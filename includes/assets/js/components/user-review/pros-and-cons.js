@@ -1,35 +1,35 @@
 var Form = require("./form.js");
 var formRules = Form.getRules();
 var ProsAndCons = {
-    init: function () {
+    init: function() {
         this.eventListener();
     },
 
-    eventListener: function () {
+    eventListener: function() {
         this.getRepeater(".review-pros-repeater", "pros");
         this.getRepeater(".review-cons-repeater", "cons");
     },
 
-    getRepeater: function (selector, group) {
+    getRepeater: function(selector, group) {
         var list = jQuery(selector).find("[data-repeater-list=" + group + "]");
 
         ProsAndCons.addItem(selector, list, group);
         ProsAndCons.deleteItem(selector, list, group);
 
         // Already loaded element Pros and Cons Dropdown
-        jQuery(selector + " .ui.dropdown").dropdown({
-            allowAdditions: true
+        jQuery(selector + " .ui.prosandcons.dropdown").dropdownY({
+            allowAdditions: true,
         });
     },
 
-    addItem: function (selector, list, group) {
+    addItem: function(selector, list, group) {
         var duplicateItem = list
             .find("[data-repeater-item]")
             .first()
             .parent()
             .html();
 
-        jQuery(selector + " [data-repeater-create]").on("click", function () {
+        jQuery(selector + " [data-repeater-create]").on("click", function() {
             var indexedItem = ProsAndCons.setIndex(list, duplicateItem, group);
 
             list.append(indexedItem);
@@ -37,16 +37,16 @@ var ProsAndCons = {
             ProsAndCons.reinitiateEvents(list, group);
 
             // Pros and Cons Dropdown Items
-            jQuery(selector + " .ui.dropdown").dropdown({
-                allowAdditions: true
+            jQuery(selector + " .ui.prosandcons.dropdown").dropdownY({
+                allowAdditions: true,
             });
         });
     },
 
-    deleteItem: function (selector, list, group) {
+    deleteItem: function(selector, list, group) {
         jQuery(selector + " [data-repeater-item] [data-repeater-delete]").on(
             "click",
-            function () {
+            function() {
                 jQuery(this)
                     .parent()
                     .parent()
@@ -57,12 +57,12 @@ var ProsAndCons = {
         );
     },
 
-    reinitiateEvents: function (list, group) {
+    reinitiateEvents: function(list, group) {
         ProsAndCons.setRules(list, group);
         Form.formValidation(formRules);
     },
 
-    setIndex: function (list, item, dataAttr) {
+    setIndex: function(list, item, dataAttr) {
         var key = list.children().length;
 
         var field = jQuery(item);
@@ -83,11 +83,11 @@ var ProsAndCons = {
         return indexedHtml;
     },
 
-    updateIndex: function (list, group) {
+    updateIndex: function(list, group) {
         var items = list.find("[data-repeater-item]");
 
         var count = 0;
-        items.each(function (index, item) {
+        items.each(function(index, item) {
             jQuery(item)
                 .find("[data-" + group + "]")
                 .attr("name", group + "[" + count + "]");
@@ -95,9 +95,9 @@ var ProsAndCons = {
         });
     },
 
-    setRules: function (list, group) {
+    setRules: function(list, group) {
         var items = list.find("[data-repeater-item]");
-        items.each(function (index, item) {
+        items.each(function(index, item) {
             var field = jQuery(item)
                 .find("[data-" + group + "]")
                 .attr("name");
@@ -105,17 +105,17 @@ var ProsAndCons = {
         });
     },
 
-    updateRules: function (identifier, group) {
+    updateRules: function(identifier, group) {
         return {
             identifier: identifier,
             rules: [
                 {
                     type: "empty",
-                    prompt: "Please select or type a " + group
-                }
-            ]
+                    prompt: "Please select or type a " + group,
+                },
+            ],
         };
-    }
+    },
 };
 
 module.exports = ProsAndCons;

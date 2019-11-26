@@ -86,7 +86,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             $html .= '<div data-repeater-list="pros" >';
             $html .= '<div class="unstackable fields" data-repeater-item >';
             $html .= '<div class="fourteen wide field">';
-            $html .= '<select class="ui fluid search dropdown" name="pros[0]" data-pros="pros">';
+            $html .= '<select class="ui fluid search prosandcons dropdown" name="pros[0]" data-pros="pros">';
             $html .= $this->get_prosandcons_option('pros');
             $html .= '</select>';
             $html .= '</div>';
@@ -110,7 +110,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             $html .= '<div data-repeater-list="cons" >';
             $html .= '<div class="unstackable fields" data-repeater-item >';
             $html .= '<div class="fourteen wide field">';
-            $html .= '<select  class="ui fluid search dropdown" name="cons[0]" data-cons="cons" >';
+            $html .= '<select  class="ui fluid search prosandcons dropdown" name="cons[0]" data-cons="cons" >';
             $html .= $this->get_prosandcons_option('cons');
             $html .= '</select>';
             $html .= '</div>';
@@ -140,14 +140,14 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
 
         protected function get_user_review()
         {
-            $html  = '';
+            $html = '';
             if (sizeof($this->props['items']['stats']) == 0) {
                 return $html;
             }
             // $html .= '<label>User Review</label>';
             $html .= '<ul class="review-list"
                 data-type="' . $this->props['collection']['review_type'] . '"
-                data-limit="' . $this->props['collection']['limit'] . '" 
+                data-limit="' . $this->props['collection']['limit'] . '"
                 data-steps="' . $this->props['collection']['steps'] . '"
                 data-no-rated-message ="' . $this->props['collection']['no_rated_message'] . '"
                 data-list="items"
@@ -189,9 +189,9 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
         {
             return '<div class="column">
                 <div> Feature </div>
-                <div class="ui left labeled input"> 
-                    <div class="ui basic label"> # </div>                  
-                    <input type="number" name="review_number" placeholder="Number" min="1" max="100" maxlength="2">                   
+                <div class="ui left labeled input">
+                    <div class="ui basic label"> # </div>
+                    <input type="number" name="review_number" placeholder="Number" min="1" max="100" maxlength="2">
                 </div>
             </div>';
         }

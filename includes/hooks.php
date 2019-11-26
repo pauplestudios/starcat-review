@@ -161,6 +161,8 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         public function enqueue_scripts()
         {
             /* Vendors */
+            wp_enqueue_script('main-js-before-fix', SCR_URL . 'includes/assets/js/fix/before.js', array('jquery'));
+
             wp_enqueue_style('semantic-css', SCR_URL . "includes/assets/vendors/semantic/bundle/semantic.min.css");
             wp_enqueue_script('semantic-js', SCR_URL . 'includes/assets/vendors/semantic/bundle/semantic.min.js', array('jquery'));
 
@@ -182,6 +184,9 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
                 'global_stats' => SCR_Getter::get('global_stats'),
             ]);
             wp_enqueue_style('style-name', SCR_URL . "includes/assets/bundle/main.bundle.css");
+
+            wp_enqueue_script('main-js-after-fix', SCR_URL . 'includes/assets/js/fix/after.js', array('jquery'));
+
         }
     } // END CLASS
 
