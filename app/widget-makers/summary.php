@@ -1,6 +1,6 @@
 <?php
 
-namespace StarcatReview\App;
+namespace StarcatReview\App\Widget_Makers;
 
 use StarcatReview\Includes\Settings\SCR_Getter;
 
@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\StarcatReview\App\Summary')) {
+if (!class_exists('\StarcatReview\App\Widget_Makers\Summary')) {
     class Summary
     {
         public function get_view()
@@ -56,7 +56,7 @@ if (!class_exists('\StarcatReview\App\Summary')) {
         {
             $args = [
                 'post_id' => get_the_ID(),
-                'type' => SCR_POST_TYPE
+                'type' => SCR_POST_TYPE,
             ];
 
             $comments = get_comments($args);

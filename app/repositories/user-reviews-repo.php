@@ -27,24 +27,24 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
 
                 $time = current_time('mysql', true);
 
-                $user                 = get_user_by('id', get_current_user_id());
-                $comment_author       = $user->display_name;
+                $user = get_user_by('id', get_current_user_id());
+                $comment_author = $user->display_name;
                 $comment_author_email = $user->user_email;
-                $comment_author_url   = $user->user_url;
+                $comment_author_url = $user->user_url;
 
                 $commentdata = array(
-                    'comment_post_ID'      => $props['post_id'],
-                    'comment_author'       => $comment_author,
+                    'comment_post_ID' => $props['post_id'],
+                    'comment_author' => $comment_author,
                     'comment_author_email' => $comment_author_email,
-                    'comment_author_url'   => $comment_author_url,
-                    'comment_content'      => $props['description'],
-                    'comment_agent'        => 'StarcatReview',
-                    'comment_type'         => SCR_POST_TYPE,
-                    'comment_date'         => $time,
-                    'comment_parent'       => 0,
-                    'user_id'              => $user->ID,
-                    'comment_author_IP'    => $comment_author_IP,
-                    'comment_approved'     => 1,
+                    'comment_author_url' => $comment_author_url,
+                    'comment_content' => $props['description'],
+                    'comment_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36',
+                    'comment_type' => SCR_POST_TYPE,
+                    'comment_date' => $time,
+                    'comment_parent' => 0,
+                    'user_id' => $user->ID,
+                    'comment_author_IP' => $comment_author_IP,
+                    'comment_approved' => 1,
                 );
 
                 $comment_id = wp_new_comment($commentdata);
@@ -81,7 +81,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             $props = [];
 
             if (isset($_POST['post_id']) && !empty($_POST['post_id'])) {
-                $props['post_id']  = $_POST['post_id'];
+                $props['post_id'] = $_POST['post_id'];
             }
 
             if (isset($_POST['title']) && !empty($_POST['title'])) {
@@ -115,7 +115,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             if (isset($features) && !empty($features)) {
                 foreach ($features as $key => $value) {
                     $items[$key] = [
-                        'item' => $value
+                        'item' => $value,
                     ];
                 }
             }
@@ -148,7 +148,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 foreach ($scores as $key => $value) {
                     $stats[$key] = [
                         'stat_name' => $key,
-                        'rating' => $value
+                        'rating' => $value,
                     ];
                 }
             }

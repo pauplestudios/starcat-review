@@ -13,8 +13,8 @@ if (!class_exists('\StarcatReview\App\Builders\Review_Builder')) {
     {
         public function __construct()
         {
-            $this->summary = new \StarcatReview\App\Summary();
-            $this->user_review = new \StarcatReview\App\User_Review();
+            $this->summary = new \StarcatReview\App\Widget_Makers\Summary();
+            $this->user_review = new \StarcatReview\App\Widget_Makers\User_Review();
         }
 
         public function get_reviews()
