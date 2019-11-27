@@ -33,6 +33,8 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View_New')) {
                 $html .= $this->get_comment_item($comment);
             }
 
+            $html .= $this->get_reply_form();
+
             $html .= '</div>';
 
             return $html;
@@ -44,6 +46,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View_New')) {
             $html .= '<a class="avatar"> ' . $comment['commentor_avatar'] . '</a>';
 
             $html .= '<div class="content">';
+
             $html .= '<span class="author"> ' . $comment['comment_author'] . ' </span>';
             $html .= '<div class="metadata"> <span class="date"> ' . $comment['comment_date'] . '</span> </div>';
 
@@ -51,15 +54,14 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View_New')) {
             $html .= '<div class="title"> ' . $comment['title'] . ' </div>';
             $html .= '<div class="stats"> ' . $this->get_stats_view($comment) . '</div>';
             $html .= $this->get_prosandcons_view($comment);
-            $html .= '<div class="content"><p> ' . $comment['content'] . ' </p></div>';
+            $html .= '<div class="content">' . $comment['content'] . '</div>';
             $html .= '</div>';
 
             $html .= '<div class="actions">';
-            $html .= '<div><a><i class="reply icon"></i> REPLY</a></div>';
+            $html .= '<div><a class="reply_link"><i class="reply icon"></i> REPLY</a></div>';
             $html .= $this->get_helpful();
             $html .= '</div>';
 
-            $html .= $this->get_reply_form();
             $html .= '</div>';
 
             $html .= '</div>';
@@ -110,9 +112,9 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View_New')) {
         {
             $html = '<form class="ui user-review-reply form">
                 <div class="field">
-                <textarea rows="2" placeholder="Reply to @them ..."></textarea>
+                <textarea rows="2" name="review_reply" placeholder="Reply to @them ..." ></textarea>
                 </div>
-                <div class="ui icon mini basic button"><i class="reply icon"></i> REPLY </div>
+                <div class="ui icon mini basic submit button"><i class="reply icon"></i> REPLY </div>
             </form>';
 
             return $html;
