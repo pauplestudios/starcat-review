@@ -1,73 +1,16 @@
-$number-bg: dodgerblue;
-$con-number-bg: rgb(230, 24, 24);
-$number-color: #fff;
-
-$number-size: 30px;
-$number-bg-size: 5px;
-
-// Count mixin
-@for $i from 1 through 20 {
-    ol[start="#{$i}"] {
-        counter-reset: step-counter $i - 1;
+.prosandcons {
+    margin-top: 0.5em;
+    .items-container {
+        display: flex;
     }
-}
-
-/* https://codepen.io/ahebler/pen/bOwOPW?&page=1 */
-.hrv-pros-cons {
-    ol {
-        list-style-type: none;
-        padding-left: 0;
-        margin: 0;
-    }
-    ol > li {
-        counter-increment: step-counter;
-        margin: $number-bg-size 0 1em;
-        padding-left: $number-size + 15px;
-        position: relative;
-        // Optional
-        font-size: 1.1em;
-        line-height: 1.58;
-        &:before {
-            background-color: $number-bg;
-            border-radius: 50%;
-            color: $number-color;
-            content: counter(step-counter);
-            font-size: 80%;
-            font-weight: bold;
-            text-align: center;
-            position: absolute;
-            width: $number-size;
-            height: $number-size;
-            line-height: $number-size;
-            left: 0;
-            // Top Aligned
-            top: 0;
-            // Centered Vertically
-            top: 50%;
-            transform: translateY(-50%);
+    ul {
+        list-style: none;
+        li {
+            text-transform: capitalize;
+            margin-bottom: 0.6em;
+            &:last-child {
+                margin-bottom: 0;
+            }
         }
     }
-
-    ol.cons > li:before {
-        background-color: $con-number-bg;
-    }
-
-    // Demo styles
-    // body {
-    //     color: #fff;
-    //     background-color: #222;
-    //     font-family: sans-serif;
-    //     .numbers {
-    //         max-width: 800px;
-    //         margin: 0 auto;
-    //     }
-    // }
-}
-
-.hrv-pros-cons {
-    width: 100%;
-    display: grid;
-    /*Define our columns */
-    // grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    grid-template-columns: 1fr 1fr;
 }

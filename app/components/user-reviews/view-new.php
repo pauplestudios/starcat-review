@@ -53,7 +53,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View_New')) {
             $html .= '<div class="text">';
             $html .= '<div class="title"> ' . $comment['title'] . ' </div>';
             $html .= '<div class="stats"> ' . $this->get_stats_view($comment) . '</div>';
-            $html .= '<div class="prosandcons"> ' . $this->get_prosandcons_view($comment) . '</div>';
+            $html .= $this->get_prosandcons_view($comment);
             $html .= '<div class="content"> ' . $comment['content'] . ' </div>';
             $html .= '</div>';
 
