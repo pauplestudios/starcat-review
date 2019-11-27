@@ -26,22 +26,19 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View_New')) {
                 return '';
             }
 
-            $html = '<div class="ui threaded scr_user_reviews comments">';
+            $html = '<div class="ui scr_user_reviews comments">';
             $html .= '<h3 class="ui dividing header"> User Reviews </h3>';
 
             foreach ($viewProps['items'] as $comment) {
-                $html .= $this->get_item($comment);
+                $html .= $this->get_comment_item($comment);
             }
 
-            // $html .= $this->get_comment2();
-            // $html .= $this->get_comment();
-            // $html .= $this->get_comment2();
             $html .= '</div>';
 
             return $html;
         }
 
-        protected function get_item($comment)
+        protected function get_comment_item($comment)
         {
             $html = '<div class="comment" id="' . $comment['comment_id'] . '">';
             $html .= '<a class="avatar"> ' . $comment['commentor_avatar'] . '</a>';
@@ -54,93 +51,21 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View_New')) {
             $html .= '<div class="title"> ' . $comment['title'] . ' </div>';
             $html .= '<div class="stats"> ' . $this->get_stats_view($comment) . '</div>';
             $html .= $this->get_prosandcons_view($comment);
-            $html .= '<div class="content"> ' . $comment['content'] . ' </div>';
+            $html .= '<div class="content"><p> ' . $comment['content'] . ' </p></div>';
             $html .= '</div>';
 
-            $html .= '<div class="actions"> <a class="reply">Reply</a> </div>';
+            $html .= '<div class="actions">';
+            $html .= '<div><a><i class="reply icon"></i> REPLY</a></div>';
+            $html .= $this->get_helpful();
             $html .= '</div>';
 
+            $html .= $this->get_reply_form();
             $html .= '</div>';
 
-            return $html;
-
-        }
-
-        protected function get_comment()
-        {
-            $html = '<div class="comment">';
-            $html .= '<a class="avatar"> <img src="https://semantic-ui.com/images/avatar/small/joe.jpg"> </a>';
-            $html .= '<div class="content">';
-            $html .= '<a class="author">Joe Henderson</a>';
-            $html .= '<div class="metadata"> <span class="date">5 days ago</span> </div>';
-            $html .= '<div class="text">
-                    First thing you’d notice about this product is the stealthy nature of its built.
-                </div>';
-            $html .= '<div class="actions">
-                    <a class="reply">Reply</a>
-                </div>';
-            $html .= '</div>';
-            $html .= $this->get_comments();
             $html .= '</div>';
 
             return $html;
 
-        }
-
-        protected function get_comment2()
-        {
-            $html = '<div class="comment">';
-            $html .= '<a class="avatar"> <img src="https://semantic-ui.com/images/avatar/small/joe.jpg"> </a>';
-            $html .= '<div class="content">';
-            $html .= '<a class="author">Joe Henderson</a>';
-            $html .= '<div class="metadata"> <span class="date">5 days ago</span> </div>';
-            $html .= '<div class="text">
-                    First thing you’d notice about this product is the stealthy nature of its built. True to its name Bose manages to provide a balanced sound out that sits just right for most ears without being too bass heavy. Frequency response as per my test sits between 35 hz - 15 khz. Best feature of this pair is the listening comfort. Most comfortable headphones I ever owned. Period. Does amazing job in filtering out ambient noice but I would suggest using this feature sparingly when it is actually required as it drains the battery faster. Overall a superior device and best in class for a refined and dignified listening experience.
-                </div>';
-            $html .= '<div class="actions">
-                    <a class="reply">Reply</a>
-                </div>';
-            $html .= '</div>';
-            $html .= '</div>';
-
-            return $html;
-
-        }
-
-        protected function get_comments()
-        {
-            $html = '<div class="comments">';
-            $html .= '<div class="comment">';
-            $html .= '<a class="avatar"> <img src="https://semantic-ui.com/images/avatar/small/joe.jpg"> </a>';
-            $html .= '<div class="content">';
-            $html .= '<a class="author">Joe Henderson</a>';
-            $html .= '<div class="metadata"> <span class="date">5 days ago</span> </div>';
-            $html .= '<div class="text">
-                    First thing you’d notice about this product is the stealthy nature of its built. True to its name Bose manages to provide a balanced sound out that sits just right for most ears without being too bass heavy. Frequency response as per my test sits between 35 hz - 15 khz. Best feature of this pair is the listening comfort. Most comfortable headphones I ever owned. Period. Does amazing job in filtering out ambient noice but I would suggest using this feature sparingly when it is actually required as it drains the battery faster. Overall a superior device and best in class for a refined and dignified listening experience.
-                </div>';
-            $html .= '<div class="actions">
-                    <a class="reply">Reply</a>
-                </div>';
-            $html .= '</div>';
-            $html .= '</div>';
-            $html .= '</div>';
-
-            return $html;
-
-        }
-
-        protected function get_reply_form()
-        {
-            $html = '<form class="ui reply form">
-                <div class="field">
-                <textarea spellcheck="false"></textarea>
-                </div>
-                <div class="ui blue labeled submit icon button">
-                <i class="icon edit"></i> Add Reply
-                </div>
-            </form>';
-
-            return $html;
         }
 
         protected function get_stats_view($props)
@@ -160,6 +85,56 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View_New')) {
             }
 
             return $view;
+        }
+
+        protected function get_helpful()
+        {
+            $html = '<div class="ui user-review-helpful"> ';
+
+            $html .= '<div class="vote">';
+            $html .= 'Was this helpful to you ? ';
+            $html .= '<a><i class="green bordered thumbs up outline icon"></i></a>';
+            $html .= '<a><i class="red bordered thumbs down outline icon"></i></a>';
+            $html .= '</div>';
+
+            $html .= '<div class="vote-summary">';
+            $html .= '0 of 0 people found this review helpful';
+            $html .= '</div>';
+
+            $html .= '</div>';
+
+            return $html;
+        }
+
+        protected function get_reply_form()
+        {
+            $html = '<form class="ui user-review-reply form">
+                <div class="field">
+                <textarea rows="2" placeholder="Reply to @them ..."></textarea>
+                </div>
+                <div class="ui icon mini basic button"><i class="reply icon"></i> REPLY </div>
+            </form>';
+
+            return $html;
+        }
+
+        protected function get_comment()
+        {
+            $html = '<div class="comment">';
+            $html .= '<a class="avatar"> <img src="https://semantic-ui.com/images/avatar/small/joe.jpg"> </a>';
+            $html .= '<div class="content">';
+            $html .= '<a class="author">Joe Henderson</a>';
+            $html .= '<div class="metadata"> <span class="date">5 days ago</span> </div>';
+            $html .= '<div class="text">
+                    First thing you’d notice about this product is the stealthy nature of its built. True to its name Bose manages to provide a balanced sound out that sits just right for most ears without being too bass heavy. Frequency response as per my test sits between 35 hz - 15 khz. Best feature of this pair is the listening comfort. Most comfortable headphones I ever owned. Period. Does amazing job in filtering out ambient noice but I would suggest using this feature sparingly when it is actually required as it drains the battery faster. Overall a superior device and best in class for a refined and dignified listening experience.
+                </div>';
+            $html .= '<div class="actions">
+                    <a class="reply">Reply</a>
+                </div>';
+            $html .= '</div>';
+            $html .= '</div>';
+
+            return $html;
         }
 
         private function get_excerpt($content)

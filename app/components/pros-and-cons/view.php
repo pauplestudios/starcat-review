@@ -24,7 +24,7 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
             }
 
             $html = "<div class='prosandcons'>";
-            $html .= "<div class='ui tiny header'>Pros & Cons</div>";
+            $html .= "<h6 class='ui header'>Pros & Cons</h6>";
             $html .= "<div class='items-container'>";
             $html .= $this->get_pros_html($this->itemsProps['pros']);
             $html .= $this->get_cons_html($this->itemsProps['cons']);

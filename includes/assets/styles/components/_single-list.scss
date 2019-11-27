@@ -1,3 +1,17 @@
 .scr_user_reviews.comments {
     max-width: inherit;
+    & .comment .content .actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .vote-summary {
+            margin-top: 0.3em;
+            font-style: italic;
+        }
+    }
+
+    .user-review-reply {
+        margin-top: 1em;
+    }
 }
