@@ -116,9 +116,27 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                     if (has_post_thumbnail($post->ID)) {
                         $image = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID));
                     }
-                    
+
                     $author_stats = get_post_meta($post->ID, '_scr_post_options', true);
                     // $default_args = $summary->get_default_args();
+
+                    $get_comments = scr_get_user_reviews($post->ID);
+
+                    $user_stats = array();
+
+                    if (isset($get_comments) && !empty($get_comments)) {
+                        foreach ($get_comments as $comment) {
+                            if (isset($comment->reviews)) {
+                                $review = $comment->reviews;
+                                $stats = $review['stats'];
+                                if (count($stats) > 0) {
+                                    foreach ($stats as $stat) {
+                                        $user_stats[] = $stat;
+                                    }
+                                }
+                            }
+                        }
+                    }
 
                     $items = [];
                     if (isset($author_stats['stats-list']) || !empty($author_stats['stats-list'])) {
@@ -136,7 +154,8 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                         // 'url' => $post->guid,
                         // 'stats' => $temp_stats,
                         'image_url' => isset($image) ? $image[0] : "",
-                        'author_stats'  => $items
+                        'author_stats'  => $items,
+                        'user_stats'    => $user_stats
 
                     );
                 }
