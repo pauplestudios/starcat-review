@@ -55,7 +55,7 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\View')) {
         {
             $html = '';
             $html .= '<div class="features">';
-            $html .= '<div class="top-info">Models</div>';
+            $html .= '<div class="top-info">Features</div>';
             $html .= '<ul class="cd-features-list" id="scr-stats-list">';
 
             // error_log('$stat_cols : ' . print_r($stat_cols, true));
@@ -101,7 +101,7 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\View')) {
             $html .= '<div class="close-product">';
             $html .= '<i class="window close outline icon" style="font-size:25px;"></i>';
             $html .= '</div>';
-            $html .= '<div class="check"></div>';
+            // $html .= '<div class="check"></div>';
             $html .= '<img class="featured-image" src="' . $stats['featured_image_url'] . '" alt="product image">';
             $html .= '<h3>' . $stats['title'] . '</h3>';
             $html .= '</div> <!-- .top-info -->';
@@ -158,7 +158,7 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\View')) {
             $html .= '<h4>Add Product</h4>';
             $html .= '<div class="ui search scr-product-search">';
             $html .= '<div class="ui input">';
-            $html .= '<input type="text" class="prompt " placeholder="Search" />';
+            $html .= '<input type="text" class="prompt scr-search" placeholder="Search" />';
             $html .= '</div>';
             $html .= '<div class="results"></div>';
             $html .= '</div>';
