@@ -86,37 +86,37 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
             if ($results->have_posts()) {
 
                 foreach ($results->posts as $post) {
-                    $temp_stats = [
-                        '0' => [
-                            'stat_name' => 'quality',
-                            'rating' => '2',
-                        ],
-                        '1' => [
-                            'stat_name' => 'battery performance',
-                            'rating'    => '4.3'
-                        ],
-                        '2' => [
-                            'stat_name' => 'camera quality',
-                            'rating'    => '4.2'
-                        ],
-                        '3' => [
-                            'stat_name' => 'extras_1',
-                            'rating'    => '4.2'
-                        ],
-                        '4' => [
-                            'stat_name' => 'extras_2',
-                            'rating'    => '4.2'
-                        ],
-                        '5' => [
-                            'stat_name' => 'extras_3',
-                            'rating'    => '4.2'
-                        ],
+                    // $temp_stats = [
+                    //     '0' => [
+                    //         'stat_name' => 'quality',
+                    //         'rating' => '2',
+                    //     ],
+                    //     '1' => [
+                    //         'stat_name' => 'battery performance',
+                    //         'rating'    => '4.3'
+                    //     ],
+                    //     '2' => [
+                    //         'stat_name' => 'camera quality',
+                    //         'rating'    => '4.2'
+                    //     ],
+                    //     '3' => [
+                    //         'stat_name' => 'extras_1',
+                    //         'rating'    => '4.2'
+                    //     ],
+                    //     '4' => [
+                    //         'stat_name' => 'extras_2',
+                    //         'rating'    => '4.2'
+                    //     ],
+                    //     '5' => [
+                    //         'stat_name' => 'extras_3',
+                    //         'rating'    => '4.2'
+                    //     ],
 
-                    ];
+                    // ];
                     if (has_post_thumbnail($post->ID)) {
                         $image = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID));
                     }
-
+                    
                     $author_stats = get_post_meta($post->ID, '_scr_post_options', true);
                     // $default_args = $summary->get_default_args();
 
@@ -134,7 +134,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                         'title' => $post->post_title,
                         'description' => $post->post_content,
                         // 'url' => $post->guid,
-                        'stats' => $temp_stats,
+                        // 'stats' => $temp_stats,
                         'image_url' => isset($image) ? $image[0] : "",
                         'author_stats'  => $items
 
