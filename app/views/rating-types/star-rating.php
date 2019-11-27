@@ -37,23 +37,20 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
         {
             $html = '<li class="review-item field">';
 
+            $html .= '<div class="review-item-label__text">' . $key . '</div>';
+
             $html .= '<div class="review-item-stars"
                 title="' . $this->props['collection']['no_rated_message'] . '"
-                result                
+                result
             >';
             $html .= $this->get_wrapper_html();
             $html .= $this->get_result_html($value);
             $html .= '<input type="hidden" name="scores[' . strtolower($key) . ']"  value="' . $value . '">';
             $html .= '</div>';
 
-            $html .= '<div class="review-item-label">';
-            $html .= '<span class="review-item-label__text">' . $key . '</span>';
-            $html .= '<span class="review-item-label__divider"></span>';
             if ($this->props['collection']['show_rating_label']) {
-                $html .= '<span class="review-item-label__score">' . $score . '</span>';
+                $html .= '<div class="review-item-label__score">' . $score . '</div>';
             }
-            $html .= '</div>';
-
 
             $html .= '</li>';
 
@@ -64,6 +61,11 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
         {
             $html = '<li class="reviewed-item">';
 
+            if ($this->props['collection']['combine_type'] !== 'overall') {
+                $html .= '<div class="reviewed-item-label__text">' . $key . '</div>';
+
+            }
+
             $html .= '<div class="reviewed-item-stars"
                 title="' . $score . ' / ' . $this->props['collection']['limit'] . '"
             >';
@@ -72,15 +74,9 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
             $html .= '<input type="hidden" name="scores[' . strtolower($key) . ']"  value="' . $value . '">';
             $html .= '</div>';
 
-            $html .= '<div class="reviewed-item-label">';
-            if ($this->props['collection']['combine_type'] !== 'overall') {
-                $html .= '<span class="reviewed-item-label__text">' . $key . '</span>';
-                $html .= '<span class="reviewed-item-label__divider"></span>';
-            }
             if ($this->props['collection']['show_rating_label']) {
-                $html .= '<span class="reviewed-item-label__score">' . $score . '</span>';
+                $html .= '<div class="reviewed-item-label__score">' . $score . '</div>';
             }
-            $html .= '</div>';
 
             $html .= '</li>';
 

@@ -12,7 +12,9 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Controller')) {
         public function __construct()
         {
             $this->model = new \StarcatReview\App\Components\User_Reviews\Model();
-            $this->view = new \StarcatReview\App\Components\User_Reviews\View();
+            // $this->view = new \StarcatReview\App\Components\User_Reviews\View();
+
+            $this->view = new \StarcatReview\App\Components\User_Reviews\View_new();
         }
 
         public function get_view($args)
