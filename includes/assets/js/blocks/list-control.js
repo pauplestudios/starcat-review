@@ -43,7 +43,7 @@ var UserReviewsList = {
     dropDownInit: function() {
         var thisModule = this;
 
-        jQuery("#scr-controlled-list .ui.dropdown").dropdown({
+        jQuery("#scr-controlled-list .ui.dropdown").dropdownX({
             clearable: true,
         });
     },
@@ -64,7 +64,7 @@ var UserReviewsList = {
         jQuery("#scr-controlled-list .ui.dropdown").click(function() {
             console.log("clicked event: ");
         });
-        jQuery("#scr-controlled-list .ui.dropdown").dropdown(
+        jQuery("#scr-controlled-list .ui.dropdown").dropdownX(
             "setting",
             "onChange",
             function(value, text, selectedItem) {
@@ -90,7 +90,7 @@ var UserReviewsList = {
         var thisModule = this;
 
         console.log("sorting()");
-        jQuery("#scr-controlled-list .ui.dropdown.sort").dropdown(
+        jQuery("#scr-controlled-list .ui.dropdown.sort").dropdownX(
             "setting",
             "onChange",
             function(value, text, $selectedItem) {
