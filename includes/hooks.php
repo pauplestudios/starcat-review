@@ -15,7 +15,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         {
 
             /* settings getter */
-            require_once(SCR_PATH . 'includes/settings/getter.php');
+            require_once SCR_PATH . 'includes/settings/getter.php';
 
             /*  Reviews Init Hook */
             add_action('init', array($this, 'init_hook'));
@@ -38,15 +38,13 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             add_action('plugins_loaded', array($this, 'plugins_loaded_action'));
 
             add_filter('the_content', array($this, 'content_filter'));
-            // add_filter('the_excerpt', array($this, 'content_filter'));            
+            // add_filter('the_excerpt', array($this, 'content_filter'));
         }
 
         public function init_hook()
         {
             /*  Reviews Ajax Hooks */
             $this->load_ajax_handler();
-
-
 
             $register_templates = new \StarcatReview\Includes\Register_Templates();
         }
@@ -67,7 +65,6 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             );
         }
 
-
         public function reviews_activate()
         {
             /* Register Post Type and its taxonomy only for setup demo content on activation */
@@ -85,18 +82,12 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
                     SCR_CATEGORY => "Getting Started",
                 ],
                 'title' => "Yours First Reviews Question",
-                'content' => "Yours relevent questions answer."
+                'content' => "Yours relevent questions answer.",
             ];
 
             $create_pages = new \StarcatReview\Includes\Utils\Create_Pages();
             $create_pages->setup_data($post_data);
         }
-
-
-
-
-
-
 
         public function plugins_loaded_action()
         {
@@ -106,7 +97,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             /*  Starcat Review Plugin Translation  */
             // load_plugin_textdomain('starcat-review', false, basename(dirname(__FILE__)) . '/languages/');
 
-            // Plugins Actions 
+            // Plugins Actions
             new \StarcatReview\Includes\Actions();
         }
         public function load_admin_hooks()
@@ -145,16 +136,18 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
         public function content_filter($content)
         {
-            $review_content = $this->get_review_content();
-            $fullcontent = $content . $review_content;
-
+            // Add breadcrumbs for starcat post type only
             if (get_post_type(get_the_ID()) == SCR_POST_TYPE) {
                 $breadcrumb = new \StarcatReview\App\Components\Breadcrumbs\Controller();
-                $breadcrumbs = $breadcrumb->get_view();
-                $fullcontent = $breadcrumbs . $content . $review_content;
+                $content = $breadcrumb->get_view() . $content;
             }
 
-            return $fullcontent;
+            if (is_singular()) {
+                $review_content = $this->get_review_content();
+                $content = $content . $review_content;
+            }
+
+            return $content;
         }
 
         /* Non-Hooked */
@@ -176,17 +169,17 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             /* Application */
             wp_register_script('starcat-review-script', SCR_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'));
             wp_localize_script('starcat-review-script', 'scr_ajax', array(
-                'ajax_url'  => admin_url('admin-ajax.php'),
-                'ajax_nonce' => wp_create_nonce('starcat-review-ajax-nonce')
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'ajax_nonce' => wp_create_nonce('starcat-review-ajax-nonce'),
             ));
             wp_enqueue_script('starcat-review-script', SCR_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'));
             wp_localize_script('starcat-review-script', 'scr_ajax', array(
-                'ajax_url'  => admin_url('admin-ajax.php'),
-                'ajax_nonce' => wp_create_nonce('starcat-review-ajax-nonce')
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'ajax_nonce' => wp_create_nonce('starcat-review-ajax-nonce'),
             ));
             // You Can Access these object from javascript
             wp_localize_script('starcat-review-script', 'SCROptions', [
-                'global_stats' => SCR_Getter::get('global_stats')
+                'global_stats' => SCR_Getter::get('global_stats'),
             ]);
             wp_enqueue_style('style-name', SCR_URL . "includes/assets/bundle/main.bundle.css");
         }
