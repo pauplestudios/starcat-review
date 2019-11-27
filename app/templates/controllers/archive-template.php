@@ -14,11 +14,11 @@ if (!class_exists('\StarcatReview\App\Templates\Controllers\Archive_Template')) 
         public function __construct()
         {
 
-            // $this->listing = new \StarcatReview\App\Components\Listing\Controller();
+            // $this->listing = new \StarcatReview\App\Components\Listing_Old\Controller();
             $this->review_listing = new \StarcatReview\App\Widget_Makers\Review_Listing\Controller();
             $this->category_listing = new \StarcatReview\App\Widget_Makers\Category_Listing\Controller();
 
-            // $this->listing_new = new \StarcatReview\App\Components\Listing_New\Controller();
+            // $this->listing_new = new \StarcatReview\App\Components\Listing\Controller();
         }
 
         public function get_view()

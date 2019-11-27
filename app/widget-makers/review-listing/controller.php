@@ -30,7 +30,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Controller'))
             $component_args = $this->get_interpreted_args($component_args);
             $component_args = $this->boolean_conversion($component_args);
 
-            $listing_controller = new \StarcatReview\App\Components\Listing_New\Controller();
+            $listing_controller = new \StarcatReview\App\Components\Listing\Controller();
             return $listing_controller->get_view($component_args);
         }
 
