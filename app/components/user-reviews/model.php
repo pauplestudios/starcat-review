@@ -1,6 +1,5 @@
 <?php
 
-
 namespace StarcatReview\App\Components\User_Reviews;
 
 if (!defined('ABSPATH')) {
@@ -15,7 +14,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
             // error_log("Comments List : " . print_r($args['items']['comments-list'], true));
             $viewProps = [
                 'collection' => $this->get_collectionProps($args),
-                'items' => $this->get_itemPorps($args)
+                'items' => $this->get_itemPorps($args),
             ];
 
             return $viewProps;
@@ -31,7 +30,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
                     'search' => true,
                     'sort' => true,
                     'reviews' => true,
-                    'verified' => false
+                    'verified' => false,
                 ],
                 'pagination' => true,
             ];
@@ -45,6 +44,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
             }
 
             foreach ($args['items']['comments-list'] as $comment) {
+
                 $items[] = [
                     'comment_id' => $comment->comment_ID,
                     'title' => $comment->review['title'],
@@ -53,8 +53,9 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
                     'comment_author_email' => $comment->comment_author_email,
                     'commentor_avatar' => get_avatar($comment->user_id),
                     'comment_date' => get_comment_date('', $comment->comment_ID),
+                    'comment_time' => $this->get_comment_time($comment->comment_date),
                     'rating' => $comment->review['rating'],
-                    'args' => $this->get_args($args, $comment)
+                    'args' => $this->get_args($args, $comment),
                 ];
             }
 
@@ -80,6 +81,15 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
             }
 
             return $args;
+        }
+
+        private function get_comment_time($date)
+        {
+            $date = mysql2date(get_option('time_format'), $date
+                , true);
+
+            return apply_filters('get_comment_time', $date);
+
         }
     }
 }

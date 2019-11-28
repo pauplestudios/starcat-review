@@ -48,7 +48,10 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View_New')) {
             $html .= '<div class="content">';
 
             $html .= '<span class="author"> ' . $comment['comment_author'] . ' </span>';
-            $html .= '<div class="metadata"> <span class="date"> ' . $comment['comment_date'] . '</span> </div>';
+            $html .= '<div class="metadata">';
+            $html .= '<span class="date">' . $comment['comment_date'] . '</span>';
+            $html .= '<span class="time"> AT ' . $comment['comment_time'] . '</span>';
+            $html .= '</div>';
 
             $html .= '<div class="text">';
             $html .= '<div class="title"> ' . $comment['title'] . ' </div>';
