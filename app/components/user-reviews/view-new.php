@@ -28,7 +28,10 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View_New')) {
             $html .= '<h3 class="ui dividing header"> User Reviews </h3>';
 
             foreach ($viewProps['items'] as $comment) {
-                $html .= $this->get_comment_item($comment);
+
+                if ($comment['comment_parent'] == 0) {
+                    $html .= $this->get_comment_item($comment, $viewProps['items']);
+                }
             }
 
             $html .= $this->get_reply_form($viewProps['collection']['post_id']);
@@ -38,7 +41,26 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View_New')) {
             return $html;
         }
 
-        protected function get_comment_item($comment)
+        public function get_reply_comment($comment)
+        {
+            $html = '<div class="comment" id="' . $comment['comment_id'] . '" data-comment-parent-id ="' . $comment['comment_parent'] . '" >';
+            $html .= '<a class="avatar"> ' . $comment['commentor_avatar'] . '</a>';
+            $html .= '<div class="content">';
+
+            $html .= '<span class="author"> ' . $comment['comment_author'] . ' </span>';
+            $html .= '<div class="metadata">';
+            $html .= '<span class="date">' . $comment['comment_date'] . '</span>';
+            $html .= '<span class="time">AT ' . $comment['comment_time'] . '</span>';
+            $html .= '</div>';
+            $html .= '<div class="text"><p>' . $comment['content'] . '</p></div>';
+
+            $html .= '</div>';
+            $html .= '</div>';
+
+            return $html;
+        }
+
+        protected function get_comment_item($comment, $items)
         {
             $html = '<div class="comment" id="' . $comment['comment_id'] . '">';
             $html .= '<a class="avatar"> ' . $comment['commentor_avatar'] . '</a>';
@@ -63,6 +85,13 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View_New')) {
             $html .= $this->get_helpful();
             $html .= '</div>';
 
+            //1st level comment children
+            foreach ($items as $item) {
+                if ($item['comment_parent'] == $comment['comment_id']) {
+                    $html .= $this->get_reply_comment($item);
+                }
+            }
+
             $html .= '</div>';
 
             $html .= '</div>';
@@ -71,7 +100,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View_New')) {
 
         }
 
-        protected function get_stats_view($props)
+        private function get_stats_view($props)
         {
             $stats = new \StarcatReview\App\Components\Stats\Controller($props['args']);
             $view = $stats->get_view();
@@ -79,7 +108,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View_New')) {
             return $view;
         }
 
-        protected function get_prosandcons_view($props)
+        private function get_prosandcons_view($props)
         {
             $view = '';
             if ($props['args']['enable_pros_cons']) {
@@ -90,7 +119,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View_New')) {
             return $view;
         }
 
-        protected function get_helpful()
+        private function get_helpful()
         {
             $html = '<div class="ui user-review-helpful"> ';
 
@@ -109,51 +138,14 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View_New')) {
             return $html;
         }
 
-        protected function get_reply_form($post_id)
+        private function get_reply_form($post_id)
         {
-            $html = '<form class="ui user-review-reply form" action="scr_user_review_submission" method="post" data-post-id ="' . $post_id . '">
-                <div class="field">';
+            $html = '<form class="ui user-review-reply form" action="scr_user_review_submission" method="post" data-post-id ="' . $post_id . '">';
+            $html .= '<div class="field">';
             $html .= '<textarea rows="2" name="description" placeholder="Reply to @them ..." ></textarea>';
-            // $html .= $this->get_wp_editor_inlite();
-
-            $html .= '</div>
-                <div class="ui mini icon basic submit button"><i class="plus circle icon"></i> REPLY</div>
-            </form>';
-
-            // $html .= ;
-
-            return $html;
-        }
-
-        public function get_wp_editor_inlite()
-        {
-            $html = "<div class='helpie-wp-editor-container'>";
-
-            ob_start();
-            wp_editor('', 'singleticketeditor');
-            $html .= ob_get_contents();
-            ob_end_clean();
-
             $html .= '</div>';
-
-            return $html;
-        }
-
-        public function get_comment($comment)
-        {
-            $html = '<div class="comment" id="' . $comment['comment_id'] . '" >';
-            $html .= '<a class="avatar"> ' . $comment['commentor_avatar'] . '</a>';
-            $html .= '<div class="content">';
-
-            $html .= '<span class="author"> ' . $comment['comment_author'] . ' </span>';
-            $html .= '<div class="metadata">';
-            $html .= '<span class="date">' . $comment['comment_date'] . '</span>';
-            $html .= '<span class="time">AT ' . $comment['comment_time'] . '</span>';
-            $html .= '</div>';
-            $html .= '<div class="text"> ' . $comment['content'] . '</div>';
-
-            $html .= '</div>';
-            $html .= '</div>';
+            $html .= '<div class="ui mini icon basic submit button"><i class="plus circle icon"></i> REPLY</div>';
+            $html .= '</form>';
 
             return $html;
         }

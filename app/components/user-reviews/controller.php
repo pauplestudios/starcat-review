@@ -28,7 +28,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Controller')) {
         public function get_reply_review($props)
         {
             $props = $this->model->get_comment_item($props, null);
-            $view = $this->view->get_comment($props);
+            $view = $this->view->get_reply_comment($props);
 
             return $view;
         }

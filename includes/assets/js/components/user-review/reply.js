@@ -23,8 +23,10 @@ var Reply = {
             var author = link
                 .closest(".content")
                 .find(".author")
+                .first()
                 .text()
                 .trim();
+
             var parent_id = link.closest(".comment").attr("id");
             var placeholder = "Reply to @" + author + " ...";
 
@@ -32,7 +34,8 @@ var Reply = {
             link.hide();
             jQuery(selectors.form).remove();
 
-            // Append review reply form to comment content along with set a placeholder and a data-comement-parent-id attributes
+            /*  Append review reply form to comment content
+                set a placeholder and a data-comement-parent-id attributes  */
             link.closest(".comment .content")
                 .append(formClone)
                 .find(selectors.form)
