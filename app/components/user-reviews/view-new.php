@@ -20,8 +20,6 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View_New')) {
 
         public function get($viewProps)
         {
-            $collectionProps = $viewProps['collection'];
-
             if (!isset($viewProps['items']) || empty($viewProps['items'])) {
                 return '';
             }
@@ -33,7 +31,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View_New')) {
                 $html .= $this->get_comment_item($comment);
             }
 
-            $html .= $this->get_reply_form();
+            $html .= $this->get_reply_form($viewProps['collection']['post_id']);
 
             $html .= '</div>';
 
@@ -50,14 +48,14 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View_New')) {
             $html .= '<span class="author"> ' . $comment['comment_author'] . ' </span>';
             $html .= '<div class="metadata">';
             $html .= '<span class="date">' . $comment['comment_date'] . '</span>';
-            $html .= '<span class="time"> AT ' . $comment['comment_time'] . '</span>';
+            $html .= '<span class="time">AT ' . $comment['comment_time'] . '</span>';
             $html .= '</div>';
 
             $html .= '<div class="text">';
             $html .= '<div class="title"> ' . $comment['title'] . ' </div>';
             $html .= '<div class="stats"> ' . $this->get_stats_view($comment) . '</div>';
             $html .= $this->get_prosandcons_view($comment);
-            $html .= '<div class="content">' . $comment['content'] . '</div>';
+            $html .= '<div class="description">' . $comment['content'] . '</div>';
             $html .= '</div>';
 
             $html .= '<div class="actions">';
@@ -111,31 +109,49 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View_New')) {
             return $html;
         }
 
-        protected function get_reply_form()
+        protected function get_reply_form($post_id)
         {
-            $html = '<form class="ui user-review-reply form">
-                <div class="field">
-                <textarea rows="2" name="review_reply" placeholder="Reply to @them ..." ></textarea>
-                </div>
-                <div class="ui icon mini basic submit button"><i class="reply icon"></i> REPLY </div>
+            $html = '<form class="ui user-review-reply form" action="scr_user_review_submission" method="post" data-post-id ="' . $post_id . '">
+                <div class="field">';
+            $html .= '<textarea rows="2" name="description" placeholder="Reply to @them ..." ></textarea>';
+            // $html .= $this->get_wp_editor_inlite();
+
+            $html .= '</div>
+                <div class="ui mini icon basic submit button"><i class="plus circle icon"></i> REPLY</div>
             </form>';
+
+            // $html .= ;
 
             return $html;
         }
 
-        protected function get_comment()
+        public function get_wp_editor_inlite()
         {
-            $html = '<div class="comment">';
-            $html .= '<a class="avatar"> <img src="https://semantic-ui.com/images/avatar/small/joe.jpg"> </a>';
+            $html = "<div class='helpie-wp-editor-container'>";
+
+            ob_start();
+            wp_editor('', 'singleticketeditor');
+            $html .= ob_get_contents();
+            ob_end_clean();
+
+            $html .= '</div>';
+
+            return $html;
+        }
+
+        public function get_comment($comment)
+        {
+            $html = '<div class="comment" id="' . $comment['comment_id'] . '" >';
+            $html .= '<a class="avatar"> ' . $comment['commentor_avatar'] . '</a>';
             $html .= '<div class="content">';
-            $html .= '<a class="author">Joe Henderson</a>';
-            $html .= '<div class="metadata"> <span class="date">5 days ago</span> </div>';
-            $html .= '<div class="text">
-                    First thing you’d notice about this product is the stealthy nature of its built. True to its name Bose manages to provide a balanced sound out that sits just right for most ears without being too bass heavy. Frequency response as per my test sits between 35 hz - 15 khz. Best feature of this pair is the listening comfort. Most comfortable headphones I ever owned. Period. Does amazing job in filtering out ambient noice but I would suggest using this feature sparingly when it is actually required as it drains the battery faster. Overall a superior device and best in class for a refined and dignified listening experience.
-                </div>';
-            $html .= '<div class="actions">
-                    <a class="reply">Reply</a>
-                </div>';
+
+            $html .= '<span class="author"> ' . $comment['comment_author'] . ' </span>';
+            $html .= '<div class="metadata">';
+            $html .= '<span class="date">' . $comment['comment_date'] . '</span>';
+            $html .= '<span class="time">AT ' . $comment['comment_time'] . '</span>';
+            $html .= '</div>';
+            $html .= '<div class="text"> ' . $comment['content'] . '</div>';
+
             $html .= '</div>';
             $html .= '</div>';
 

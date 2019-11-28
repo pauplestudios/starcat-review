@@ -26,7 +26,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
                 return $html;
             }
 
-            $html .= '<form class="ui form scr-user-review" action="scr_user_review_submission" method="post" post_id ="' . get_the_ID() . '">';
+            $html .= '<form class="ui form scr-user-review" action="scr_user_review_submission" method="post" post_id ="' . $this->props['collection']['post_id'] . '">';
 
             if ($this->props['collection']['show_form_title']) {
                 $html .= '<h2 class="ui header">';

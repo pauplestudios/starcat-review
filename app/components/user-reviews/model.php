@@ -23,6 +23,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
         public function get_collectionProps($args)
         {
             return [
+                'post_id' => $args['post_id'],
                 'title' => 'Reviews',
                 'columns' => 1,
                 'items_display' => ['title', 'content'],
@@ -45,21 +46,35 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
 
             foreach ($args['items']['comments-list'] as $comment) {
 
-                $items[] = [
-                    'comment_id' => $comment->comment_ID,
-                    'title' => $comment->review['title'],
-                    'content' => $comment->comment_content,
-                    'comment_author' => ucfirst($comment->comment_author),
-                    'comment_author_email' => $comment->comment_author_email,
-                    'commentor_avatar' => get_avatar($comment->user_id),
-                    'comment_date' => get_comment_date('', $comment->comment_ID),
-                    'comment_time' => $this->get_comment_time($comment->comment_date),
-                    'rating' => $comment->review['rating'],
-                    'args' => $this->get_args($args, $comment),
-                ];
+                $items[] = $this->get_comment_item($comment, $args);
             }
 
             return $items;
+        }
+
+        public function get_comment_item($comment, $args)
+        {
+            $comment_item = [
+                'content' => $comment->comment_content,
+                'comment_id' => $comment->comment_ID,
+                'comment_date' => get_comment_date('', $comment->comment_ID),
+                'comment_time' => $this->get_comment_time($comment->comment_date),
+                'comment_parent' => $comment->comment_parent,
+                'comment_author' => ucfirst($comment->comment_author),
+                'commentor_avatar' => get_avatar($comment->user_id),
+                'comment_author_email' => $comment->comment_author_email,
+            ];
+
+            if (isset($args)) {
+                $comment_item['args'] = $this->get_args($args, $comment);
+            }
+
+            if (isset($comment->review) && !empty($comment->review)) {
+                $comment_item['title'] = $comment->review['title'];
+                $comment_item['rating'] = $comment->review['rating'];
+            }
+
+            return $comment_item;
         }
 
         public function get_args($component_args, $comment)
@@ -85,11 +100,9 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
 
         private function get_comment_time($date)
         {
-            $date = mysql2date(get_option('time_format'), $date
-                , true);
+            $date = mysql2date(get_option('time_format'), $date, true);
 
             return apply_filters('get_comment_time', $date);
-
         }
     }
 }

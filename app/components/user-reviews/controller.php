@@ -24,6 +24,14 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Controller')) {
 
             return $view;
         }
+
+        public function get_reply_review($props)
+        {
+            $props = $this->model->get_comment_item($props, null);
+            $view = $this->view->get_comment($props);
+
+            return $view;
+        }
     } // END CLASS
 
 }

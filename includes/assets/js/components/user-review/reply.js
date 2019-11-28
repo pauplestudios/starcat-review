@@ -19,15 +19,26 @@ var Reply = {
         var formClone = this.getFormClone();
 
         links.click(function() {
-            links.show();
             var link = jQuery(this);
+            var author = link
+                .closest(".content")
+                .find(".author")
+                .text()
+                .trim();
+            var parent_id = link.closest(".comment").attr("id");
+            var placeholder = "Reply to @" + author + " ...";
+
+            links.show();
             link.hide();
             jQuery(selectors.form).remove();
 
-            link.parent()
-                .parent()
-                .parent()
-                .append(formClone);
+            // Append review reply form to comment content along with set a placeholder and a data-comement-parent-id attributes
+            link.closest(".comment .content")
+                .append(formClone)
+                .find(selectors.form)
+                .attr("data-comment-parent-id", parent_id)
+                .find('[name="description"]')
+                .attr("placeholder", placeholder);
 
             thisModule.formValidation();
         });
@@ -48,17 +59,61 @@ var Reply = {
     },
 
     formValidation: function() {
-        var forms = jQuery(selectors.form);
-        jQuery(forms).form({
+        var thisModule = this;
+        var replyForm = jQuery(selectors.form);
+        var placeholderContent = this.getPlaceholderContent();
+
+        jQuery(replyForm).form({
             fields: {
-                review_reply: "empty",
+                description: "empty",
             },
-            onSuccess: function(event, fields) {
-                event.preventDefault();
-                forms.remove();
-                console.log(fields);
+            onSuccess: function(e, fields) {
+                e.preventDefault();
+                replyForm.parent().append(placeholderContent);
+                replyForm.remove();
+                thisModule.submit(replyForm, fields);
             },
         });
+    },
+
+    submit: function(form, fields) {
+        var props = this.getProps(form, fields);
+        console.log(props);
+
+        jQuery
+            .post(scr_ajax.ajax_url, props, function(results) {
+                results = JSON.parse(results);
+                console.log(results);
+            })
+            .fail(function(response) {
+                console.log("review_reply failed");
+                console.log(response);
+            });
+    },
+
+    getProps: function(submittingForm, fields) {
+        fields.action = submittingForm.attr("action");
+        fields.type = submittingForm.attr("method");
+        fields.post_id = submittingForm.attr("data-post-id");
+        fields.parent = submittingForm.attr("data-comment-parent-id");
+
+        return fields;
+    },
+
+    getPlaceholderContent: function() {
+        var html = "";
+        html += '<div class="ui review_reply placeholder">';
+        html += '<div class="image header">';
+        html += '<div class="line"></div>';
+        html += '<div class="line"></div>';
+        html += "</div>";
+        html += '<div class="paragraph">';
+        html += '<div class="line"></div>';
+        html += '<div class="line"></div>';
+        html += "</div>";
+        html += "</div>";
+
+        return html;
     },
 };
 
