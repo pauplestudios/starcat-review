@@ -99,13 +99,16 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             /* Checks for single template by post type */
 
             if ($post->post_type == SCR_POST_TYPE && is_single()) {
-                
+
                 $schema_controller = new \StarcatReview\App\Components\Schema_Reviews\Controller();
-                $get_schema = $schema_controller->generate_schema(get_post());
+                $get_schema = $schema_controller->generate_schema();
                 $html = '';
                 if ($get_schema) {
+                    $check_schema = $get_schema;
+                    //error_log("schema check:" . $check_schema);
                     $html .= '<!-- This site is optimized -->';
-                    $html .= '<script type="application/ld+json">' . json_encode($get_schema) . '</script>';
+                    // $html .= '<script type="application/ld+json">' . json_encode($get_schema) . '</script>';
+                    $html .= '<script type="application/ld+json">' . $get_schema . '</script>';
                 }
                 echo $html;
             }
