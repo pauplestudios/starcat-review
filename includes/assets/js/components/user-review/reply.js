@@ -27,7 +27,8 @@ var Reply = {
                 .text()
                 .trim();
 
-            var parent_id = link.closest(".comment").attr("id");
+            var parent = link.closest(".comment").attr("id");
+            // console.log(link.closest(".comment").find.children().length);
             var placeholder = "Reply to @" + author + " ...";
 
             links.show();
@@ -36,10 +37,10 @@ var Reply = {
 
             /*  Append review reply form to comment content
                 set a placeholder and a data-comement-parent-id attributes  */
-            link.closest(".comment .content")
-                .append(formClone)
-                .find(selectors.form)
-                .attr("data-comment-parent-id", parent_id)
+            link.closest(".comment .content .actions")
+                .after(formClone)
+                .next(selectors.form)
+                .attr("data-comment-parent-id", parent)
                 .find('[name="description"]')
                 .attr("placeholder", placeholder);
 
@@ -72,8 +73,7 @@ var Reply = {
             },
             onSuccess: function(e, fields) {
                 e.preventDefault();
-                replyForm.parent().append(placeholderContent);
-                replyForm.remove();
+                replyForm.replaceWith(placeholderContent);
                 thisModule.submit(replyForm, fields);
             },
         });
@@ -81,12 +81,18 @@ var Reply = {
 
     submit: function(form, fields) {
         var props = this.getProps(form, fields);
-        console.log(props);
+        // console.log(props);
 
         jQuery
             .post(scr_ajax.ajax_url, props, function(results) {
                 results = JSON.parse(results);
-                console.log(results);
+                // console.log(results);
+                jQuery("#" + results.props.comment_parent)
+                    .find(".review_reply.placeholder")
+                    .first()
+                    .replaceWith(results.view);
+
+                jQuery("#" + results.props.comment_id).transition("pulse");
             })
             .fail(function(response) {
                 console.log("review_reply failed");
@@ -105,15 +111,10 @@ var Reply = {
 
     getPlaceholderContent: function() {
         var html = "";
-        html += '<div class="ui review_reply placeholder">';
+        html += '<div class="ui review_reply placeholder" data-reply-token="">';
         html += '<div class="image header">';
         html += '<div class="line"></div>';
         html += '<div class="line"></div>';
-        html += "</div>";
-        html += '<div class="paragraph">';
-        html += '<div class="line"></div>';
-        html += '<div class="line"></div>';
-        html += "</div>";
         html += "</div>";
 
         return html;

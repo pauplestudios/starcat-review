@@ -40,7 +40,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                     'comment_content' => $props['description'],
                     'comment_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36',
                     'comment_type' => SCR_POST_TYPE,
-                    'comment_date' => current_time('mysql', true),
+                    // 'comment_date' => current_time('timestamp', true),
                     'comment_parent' => !isset($props['parent']) ? 0 : $props['parent'],
                     'user_id' => $user->ID,
                     'comment_author_IP' => $comment_author_IP,

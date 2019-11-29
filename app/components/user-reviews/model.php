@@ -61,8 +61,8 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
                 'comment_time' => $this->get_comment_time($comment->comment_date),
                 'comment_parent' => $comment->comment_parent,
                 'comment_author' => ucfirst($comment->comment_author),
-                'commentor_avatar' => get_avatar($comment->user_id),
                 'comment_author_email' => $comment->comment_author_email,
+                'commentor_avatar' => get_avatar($comment->user_id),
             ];
 
             if (isset($args)) {

@@ -30,7 +30,12 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Controller')) {
             $props = $this->model->get_comment_item($props, null);
             $view = $this->view->get_reply_comment($props);
 
-            return $view;
+            $result = [
+                'props' => $props,
+                'view' => $view,
+            ];
+
+            return $result;
         }
     } // END CLASS
 
