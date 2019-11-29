@@ -17,6 +17,7 @@ var UserReviewsList = {
                 { name: "postDate", attr: "data-postDate" },
                 { name: "postModified", attr: "data-postModified" },
                 { name: "trendScore", attr: "data-trendScore" },
+                { name: "positiveScore", attr: "data-positiveScore" },
             ],
 
             page: list_config.page ? list_config.page : 10,
@@ -42,7 +43,7 @@ var UserReviewsList = {
     dropDownInit: function() {
         var thisModule = this;
 
-        jQuery("#scr-controlled-list .ui.dropdown").dropdown({
+        jQuery("#scr-controlled-list .ui.dropdown").dropdownX({
             clearable: true,
         });
     },
@@ -63,7 +64,7 @@ var UserReviewsList = {
         jQuery("#scr-controlled-list .ui.dropdown").click(function() {
             console.log("clicked event: ");
         });
-        jQuery("#scr-controlled-list .ui.dropdown").dropdown(
+        jQuery("#scr-controlled-list .ui.dropdown").dropdownX(
             "setting",
             "onChange",
             function(value, text, selectedItem) {
@@ -89,7 +90,7 @@ var UserReviewsList = {
         var thisModule = this;
 
         console.log("sorting()");
-        jQuery("#scr-controlled-list .ui.dropdown.sort").dropdown(
+        jQuery("#scr-controlled-list .ui.dropdown.sort").dropdownX(
             "setting",
             "onChange",
             function(value, text, $selectedItem) {
@@ -117,6 +118,10 @@ var UserReviewsList = {
                     });
                 } else if (value == "post-modified") {
                     thisModule.featureList.sort("postModified", {
+                        order: "desc",
+                    });
+                } else if (value == "avg-rating") {
+                    thisModule.featureList.sort("positiveScore", {
                         order: "desc",
                     });
                 }

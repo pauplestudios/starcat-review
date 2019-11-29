@@ -31,7 +31,7 @@ if (!class_exists('\StarcatReview\App\Views\Blocks\Card')) {
 
             if ($this->show_item('content')) {
                 $pre_content_html = isset($item['pre_content_html']) ? $item['pre_content_html'] : '';
-                $html .= '<div class="review-card__body">' .  $pre_content_html . $item['content'] . '</div>';
+                $html .= '<div class="review-card__body">' . $pre_content_html . $item['content'] . '</div>';
             }
 
             if ($this->show_item('link')) {
@@ -41,14 +41,18 @@ if (!class_exists('\StarcatReview\App\Views\Blocks\Card')) {
                 $html .= '<span class="reviewCount"  data-reviewCount="' . $item['meta_data']['review_count'] . '"></span>';
             }
             if (isset($item['meta_data']['date'])) {
-                $html .= '<span class="postDate"   data-postDate="' . $item['meta_data']['date'] .  '"></span>';
+                $html .= '<span class="postDate"   data-postDate="' . $item['meta_data']['date'] . '"></span>';
             }
             if (isset($item['meta_data']['modified_date'])) {
-                $html .= '<span class="postModified"   data-postModified="' . $item['meta_data']['modified_date'] .  '"></span>';
+                $html .= '<span class="postModified"   data-postModified="' . $item['meta_data']['modified_date'] . '"></span>';
             }
             if (isset($item['meta_data']['trendScore'])) {
-                $html .= '<span class="trendScore"   data-trendScore="' . $item['meta_data']['trendScore'] .  '"></span>';
+                $html .= '<span class="trendScore"   data-trendScore="' . $item['meta_data']['trendScore'] . '"></span>';
             }
+            if (isset($item['meta_data']['positiveScore'])) {
+                $html .= '<span class="positiveScore"   data-positiveScore="' . $item['meta_data']['positiveScore'] . '"></span>';
+            }
+
             $html .= '</div>';
             $html .= '</div>';
 
