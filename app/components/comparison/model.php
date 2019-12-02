@@ -45,76 +45,38 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\Model')) {
 
             foreach ($posts as $key => $post) {
                 $stats_list = $this->get_stats_list($post->ID);
+                $get_scr_get_user_reviews = scr_get_user_reviews($post->ID);
+
+                // echo '<pre>';
+                // print_r($get_scr_get_user_reviews);
+                // echo '</pre>';
+                $review_stats = array();
+                if (count($get_scr_get_user_reviews) > 0) {
+                    foreach ($get_scr_get_user_reviews  as $user_reviews) {
+                        $reviews = isset($user_reviews->reviews) ? $user_reviews->reviews : [];
+                        if (isset($reviews) && count($reviews) > 0) {
+                            $review_stats = $reviews['stats'];
+                        }
+                    }
+                }
+
+                /*if (count($review_stats) > 0) {
+                    //get stat features only
+                    $stats_columns = array_keys($review_stats);
+                } else {
+                    $stats_columns = array();
+                }*/
+
+                // error_log('get_scr_get_user_reviews' . print_r($get_scr_get_user_reviews, true));
+                // error_log('stats_columns' . print_r($stats_columns, true));
 
                 $post_info = [];
                 $post_info['title'] = $post->post_title;
                 $post_info['featured_image_url'] = get_the_post_thumbnail_url($post->ID);
+                $post_info['stats']  = [];
+                // $post_info['stats'] = $stats_columns;
 
-                $post_info['stats'] = [];
-                if ($post->ID == 40) {
-                    $stats_list = [
-                        '0' => [
-                            'stat_name' => 'quality',
-                            'rating' => '2',
-                        ],
-                        '1' => [
-                            'stat_name' => 'battery performance',
-                            'rating'    => '4.3'
-                        ],
-                        '2' => [
-                            'stat_name' => 'camera quality',
-                            'rating'    => '4.2'
-                        ]
-                    ];
-                } else if ($post->ID == 47) {
-                    $stats_list = [
-                        '0' => [
-                            'stat_name' => 'quality',
-                            'rating' => '4',
-                        ],
-                        '1' => [
-                            'stat_name' => 'battery performance',
-                            'rating'    => '4'
-                        ],
-                        '2' => [
-                            'stat_name' => 'camera quality',
-                            'rating'    => '4.4'
-                        ]
-                    ];
-                } else if ($post->ID == 49) {
-                    $stats_list = [
-                        '0' => [
-                            'stat_name' => 'quality',
-                            'rating' => '5',
-                        ],
-                        '1' => [
-                            'stat_name' => 'battery performance',
-                            'rating'    => '4.5'
-                        ],
-                        '2' => [
-                            'stat_name' => 'camera quality',
-                            'rating'    => '4.5'
-                        ]
-                    ];
-                } else if ($post->ID == 42) {
-                    $stats_list = [
-                        '0' => [
-                            'stat_name' => 'quality',
-                            'rating' => '5',
-                        ],
-                        '1' => [
-                            'stat_name' => 'battery performance',
-                            'rating'    => '4.5'
-                        ],
-                        '2' => [
-                            'stat_name' => 'camera quality',
-                            'rating'    => '4.5'
-                        ]
-                    ];
-                }
-
-
-                foreach ($stats_list as $key => $single_post_stat) {
+                foreach ($review_stats as $key => $single_post_stat) {
                     $stat_name = $single_post_stat['stat_name'];
 
                     // if (!isset($stats[$stat_name])) {

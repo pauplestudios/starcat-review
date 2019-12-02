@@ -18,8 +18,8 @@ if (!class_exists('\StarcatReview\Includes\Widget_Controller')) {
             $listing_widget_loader = new \StarcatReview\App\Widget_Makers\Review_Listing\Controller();
             $listing_widget_loader->load();
 
-            // $comparisonTable_widget_loader = new \StarcatReview\App\Widget_Makers\Comparison\Loader();
-            // $comparisonTable_widget_loader->load();
+            $comparisonTable_widget_loader = new \StarcatReview\App\Widget_Makers\Comparison\Loader();
+            $comparisonTable_widget_loader->load();
         }
     } // END CLASS
 

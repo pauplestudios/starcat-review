@@ -17,16 +17,20 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\Controller')) {
 
         public function get_view($post_ids = [])
         {
-            // error_log('$post_ids : ' . print_r($post_ids, true));
-            $post_ids = [40, 42, 47, 49];
+            error_log('$post_ids : ' . print_r($post_ids, true));
+            $post_ids = [176, 174, 147, 108];
 
             $args = array(
                 'post__in' => $post_ids,
                 'post_type' => SCR_POST_TYPE
             );
 
+
             $posts = get_posts($args);
 
+            // echo '<pre>';
+            // print_r($posts);
+            // echo '</pre>';
 
             $stats = $this->model->get($posts);
 
