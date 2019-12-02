@@ -9,11 +9,13 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
     class User_Reviews_Repo
     {
-        public function get($comment_id)
+        public function get($comment_id, $parent = 0)
         {
-            // $comments = get_comment($comment_id);
-            $comments = get_comment_meta($comment_id, 'scr_user_review_props');
-            return $comments;
+            if ($parent != 0) {
+                return get_comment(intval($comment_id));
+            }
+
+            return get_comment_meta($comment_id, 'scr_user_review_props');
         }
 
         public function insert($props)
@@ -25,31 +27,29 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                     $comment_author_IP = '127.0.0.1';
                 }
 
-                $time = current_time('mysql', true);
-
-                $user                 = get_user_by('id', get_current_user_id());
-                $comment_author       = $user->display_name;
+                $user = get_user_by('id', get_current_user_id());
+                $comment_author = $user->display_name;
                 $comment_author_email = $user->user_email;
-                $comment_author_url   = $user->user_url;
+                $comment_author_url = $user->user_url;
 
                 $commentdata = array(
-                    'comment_post_ID'      => $props['post_id'],
-                    'comment_author'       => $comment_author,
+                    'comment_post_ID' => $props['post_id'],
+                    'comment_author' => $comment_author,
                     'comment_author_email' => $comment_author_email,
-                    'comment_author_url'   => $comment_author_url,
-                    'comment_content'      => $props['description'],
-                    'comment_agent'        => 'StarcatReview',
-                    'comment_type'         => SCR_POST_TYPE,
-                    'comment_date'         => $time,
-                    'comment_parent'       => 0,
-                    'user_id'              => $user->ID,
-                    'comment_author_IP'    => $comment_author_IP,
-                    'comment_approved'     => 1,
+                    'comment_author_url' => $comment_author_url,
+                    'comment_content' => $props['description'],
+                    'comment_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36',
+                    'comment_type' => SCR_POST_TYPE,
+                    // 'comment_date' => current_time('timestamp', true),
+                    'comment_parent' => !isset($props['parent']) ? 0 : $props['parent'],
+                    'user_id' => $user->ID,
+                    'comment_author_IP' => $comment_author_IP,
+                    'comment_approved' => 1,
                 );
 
                 $comment_id = wp_new_comment($commentdata);
 
-                if (isset($comment_id) && !empty($comment_id)) {
+                if (isset($comment_id) && !empty($comment_id) && !isset($props['review_reply'])) {
                     add_comment_meta($comment_id, 'scr_user_review_props', $props);
                 }
 
@@ -81,7 +81,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             $props = [];
 
             if (isset($_POST['post_id']) && !empty($_POST['post_id'])) {
-                $props['post_id']  = $_POST['post_id'];
+                $props['post_id'] = $_POST['post_id'];
             }
 
             if (isset($_POST['title']) && !empty($_POST['title'])) {
@@ -105,6 +105,10 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 $props['stats'] = $this->get_stat($_POST['scores']);
             }
 
+            if (isset($_POST['parent']) && !empty($_POST['parent'])) {
+                $props['parent'] = $_POST['parent'];
+            }
+
             return $props;
         }
 
@@ -115,7 +119,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             if (isset($features) && !empty($features)) {
                 foreach ($features as $key => $value) {
                     $items[$key] = [
-                        'item' => $value
+                        'item' => $value,
                     ];
                 }
             }
@@ -148,7 +152,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 foreach ($scores as $key => $value) {
                     $stats[$key] = [
                         'stat_name' => $key,
-                        'rating' => $value
+                        'rating' => $value,
                     ];
                 }
             }

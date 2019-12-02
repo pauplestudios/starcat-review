@@ -1,18 +1,18 @@
-// Single Page Review Comment List
-.scr-collection.list.row.ui.comments {
+.scr_user_reviews.comments {
     max-width: inherit;
-    margin: 0 -1rem;
-    & .scr-review-card.comment {
-        padding: 1em;
-        width: 100%;
-        box-shadow: none;
-        border: solid 1px rgba(0, 0, 0, 0.1);
-        & .hrv-pros-cons.scr-container {
-            margin: 0 !important;
-            margin-top: 1rem !important;
-            & h4 {
-                font-weight: 500;
-            }
+    & .comment .content .actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .vote-summary {
+            margin-top: 0.3em;
+            font-style: italic;
         }
+    }
+
+    .user-review-reply {
+        margin-top: 1em;
+        display: none;
     }
 }

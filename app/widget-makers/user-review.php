@@ -1,6 +1,6 @@
 <?php
 
-namespace StarcatReview\App;
+namespace StarcatReview\App\Widget_Makers;
 
 use StarcatReview\Includes\Settings\SCR_Getter;
 
@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\StarcatReview\App\User_Review')) {
+if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
     class User_Review
     {
         public function __construct()
@@ -51,7 +51,7 @@ if (!class_exists('\StarcatReview\App\User_Review')) {
                 'form_title' => SCR_Getter::get('ur_form_title'),
                 'show_title' => SCR_Getter::get('ur_show_title'),
                 'show_stats' => SCR_Getter::get('ur_show_stats'),
-                'show_description' => SCR_Getter::get('ur_show_description')
+                'show_description' => SCR_Getter::get('ur_show_description'),
             ];
 
             $args = array_merge($stat_args, $args);
@@ -82,8 +82,6 @@ if (!class_exists('\StarcatReview\App\User_Review')) {
                 $items['comments-list'] = $comments;
             }
 
-
-
             return $items;
         }
 
@@ -91,7 +89,7 @@ if (!class_exists('\StarcatReview\App\User_Review')) {
         {
             $args = [
                 'post_id' => get_the_ID(),
-                'type' => SCR_POST_TYPE
+                'type' => SCR_POST_TYPE,
             ];
 
             $comments = get_comments($args);

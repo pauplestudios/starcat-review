@@ -1,5 +1,4 @@
 jQuery(document).ready(function($) {
-    console.clear();
     console.log("comparison table");
 
     function productsTable(element) {
@@ -122,7 +121,7 @@ jQuery(document).ready(function($) {
         //Add Search Product
         var search_data = {
             action: "scr_search_posts",
-            nonce: scr_ajax.ajax_nonce
+            nonce: scr_ajax.ajax_nonce,
         };
 
         $.post(scr_ajax.ajax_url, search_data, function(results) {
@@ -151,7 +150,7 @@ jQuery(document).ready(function($) {
                     //Clear search query
                     console.log("closed");
                 },
-                onResultsAdd: function(html) {}
+                onResultsAdd: function(html) {},
             });
         });
     };
@@ -626,7 +625,7 @@ jQuery(document).ready(function($) {
             "-webkit-transform": "translateX(" + value + "px)",
             "-ms-transform": "translateX(" + value + "px)",
             "-o-transform": "translateX(" + value + "px)",
-            transform: "translateX(" + value + "px)"
+            transform: "translateX(" + value + "px)",
         });
     }
 });
