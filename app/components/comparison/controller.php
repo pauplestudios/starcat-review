@@ -18,7 +18,7 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\Controller')) {
         public function get_view($post_ids = [])
         {
             error_log('$post_ids : ' . print_r($post_ids, true));
-            $post_ids = [176, 174, 147, 108];
+            $post_ids = [176, 174, 147];
 
             $args = array(
                 'post__in' => $post_ids,
@@ -28,12 +28,11 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\Controller')) {
 
             $posts = get_posts($args);
 
-            // echo '<pre>';
-            // print_r($posts);
-            // echo '</pre>';
-
             $stats = $this->model->get($posts);
 
+            // echo '<pre>';
+            // print_r($stats);
+            // echo '</pre>';
 
             return $this->view->get_html($stats);
         }

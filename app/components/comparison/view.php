@@ -106,7 +106,7 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\View')) {
             $html .= '<h3>' . $stats['title'] . '</h3>';
             $html .= '</div> <!-- .top-info -->';
 
-            $html .= $this->single_product_features($stats['stats'], $stat_cols);
+            $html .= $this->single_product_features($stats, $stat_cols);
             $html .= '</li> <!-- .product -->';
             //$html .= '<li class="product">';
             //$html .= '</li> ';
@@ -116,14 +116,21 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\View')) {
 
         public function single_product_features($stats, $stat_cols)
         {
+            $get_stats = $stats['stats'];
+            $get_overall_stats  = $stats['overall_stats'];
             $html = '';
 
             $html .= '<ul class="cd-features-list">';
 
             for ($ii = 0; $ii < sizeof($stat_cols); $ii++) {
                 $stat_name = $stat_cols[$ii];
-                $stat_value = isset($stats[$stat_name]) ? $stats[$stat_name] : 'X';
-                $html .= '<li data-stat="' . $stat_name . '">' . $stat_value . '</li>';
+                if ($stat_name == "scr-ratings") {
+                    $stat_value = $get_overall_stats['dom'];
+                    $html .= '<li data-stat="' . $stat_name . '">' . $stat_value . '</li>';
+                } else {
+                    $stat_value = isset($get_stats[$stat_name]) ? $get_stats[$stat_name] : 'X';
+                    $html .= '<li data-stat="' . $stat_name . '">' . $stat_value . '</li>';
+                }
             }
             // foreach ($stats as $key => $stat) {
             //     $html .= '<li>' . $stat . '</li>';

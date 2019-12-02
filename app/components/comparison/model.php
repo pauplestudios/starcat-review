@@ -42,14 +42,15 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\Model')) {
         {
             $stat_columns = [];
             $stats = [];
+            $stat_columns[] = "scr-ratings";
 
             foreach ($posts as $key => $post) {
                 $stats_list = $this->get_stats_list($post->ID);
                 $get_scr_get_user_reviews = scr_get_user_reviews($post->ID);
 
-                // echo '<pre>';
-                // print_r($get_scr_get_user_reviews);
-                // echo '</pre>';
+                $get_overall_stats = scr_get_overall_rating($post->ID);
+
+
                 $review_stats = array();
                 if (count($get_scr_get_user_reviews) > 0) {
                     foreach ($get_scr_get_user_reviews  as $user_reviews) {
@@ -79,10 +80,6 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\Model')) {
                 foreach ($review_stats as $key => $single_post_stat) {
                     $stat_name = $single_post_stat['stat_name'];
 
-                    // if (!isset($stats[$stat_name])) {
-                    //     $stats[$stat_name] = [];
-                    // }
-
                     $post_info['stats'][$stat_name] =  $single_post_stat['rating'];
 
                     if (!in_array($stat_name, $stat_columns)) {
@@ -90,10 +87,11 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\Model')) {
                     }
                     // $stats[$stat_name][$post->ID] = $single_post_stat['rating'];
                 }
+                $post_info['overall_stats'] = $get_overall_stats;
 
                 $stats[$post->ID] = $post_info;
             }
-
+            // error_log("stat_columns" . print_r($stat_columns, true));
             return [
                 'stats' => $stats,
                 'cols' => $stat_columns
