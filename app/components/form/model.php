@@ -16,7 +16,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
 
             $view_props = [
                 'collection' => $this->collection,
-                'items' => $this->items
+                'items' => $this->items,
             ];
 
             return $view_props;
@@ -24,7 +24,8 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
 
         protected function get_collectionProps($args)
         {
-            $collection =  [
+            $collection = [
+                'post_id' => $args['post_id'],
                 'show_form_title' => $args['show_form_title'],
                 'form_title' => $args['form_title'],
                 'show_title' => $args['show_title'],
@@ -33,7 +34,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
                 'show_description' => $args['show_description'],
                 'show_rating_label' => $args['show_rating_label'],
                 'singularity' => $args['singularity'],
-                'review_type' => $args['type'],   // Star, Bar, Circle
+                'review_type' => $args['type'], // Star, Bar, Circle
                 'source_type' => $args['source_type'], // icon or image
                 'icons' => $args['icons'],
                 'images' => $args['images'],
@@ -42,6 +43,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
                 'no_rated_message' => $args['no_rated_message'],
                 'animate' => false,
                 'can_user_review' => $args['can_user_review'],
+                'can_user_reply' => $args['can_user_reply'],
             ];
 
             $collection = $this->get_icons($collection);
@@ -94,7 +96,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
                     $proorcon = strtolower(preg_replace('/\s+/', '_', $item['item']));
                     $items[] = [
                         'item' => $item['item'],
-                        'unique' => $proorcon
+                        'unique' => $proorcon,
                     ];
                 }
             }
@@ -105,7 +107,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
         protected function get_icons($collection)
         {
             $image = SCR_URL . 'includes/assets/img/tomato.png';
-            $image_outline =  SCR_URL . 'includes/assets/img/tomato-outline.png';
+            $image_outline = SCR_URL . 'includes/assets/img/tomato-outline.png';
             $collection['icon'] = (isset($collection['images']['image']['thumbnail'])) ? $collection['images']['image']['thumbnail'] : $image;
             $collection['outline_icon'] = (isset($collection['images']['image-outline']['thumbnail'])) ? $collection['images']['image-outline']['thumbnail'] : $image_outline;
 

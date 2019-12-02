@@ -23,6 +23,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View_New')) {
             if (!isset($viewProps['items']) || empty($viewProps['items'])) {
                 return '';
             }
+            $this->collection = $viewProps['collection'];
 
             $html = '<div class="ui scr_user_reviews comments">';
             $html .= '<h3 class="ui dividing header"> User Reviews </h3>';
@@ -34,7 +35,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View_New')) {
                 }
             }
 
-            $html .= $this->get_reply_form($viewProps['collection']['post_id']);
+            $html .= $this->get_reply_form();
 
             $html .= '</div>';
 
@@ -81,7 +82,11 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View_New')) {
             $html .= '</div>';
 
             $html .= '<div class="actions">';
-            $html .= '<div><a class="reply_link"><i class="reply icon"></i> REPLY</a></div>';
+            $html .= '<div>';
+            if ($this->collection['can_reply']) {
+                $html .= '<a class="reply_link"><i class="reply icon"></i> REPLY</a>';
+            }
+            $html .= '</div>';
             $html .= $this->get_helpful();
             $html .= '</div>';
 
@@ -138,9 +143,9 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View_New')) {
             return $html;
         }
 
-        private function get_reply_form($post_id)
+        private function get_reply_form()
         {
-            $html = '<form class="ui user-review-reply form" action="scr_user_review_submission" method="post" data-post-id ="' . $post_id . '">';
+            $html = '<form class="ui user-review-reply form" action="scr_user_review_submission" method="post" data-post-id ="' . $this->collection['post_id'] . '">';
             $html .= '<div class="field">';
             $html .= '<textarea rows="2" name="description" placeholder="Reply to @them ..." ></textarea>';
             $html .= '</div>';
