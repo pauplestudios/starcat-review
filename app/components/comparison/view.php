@@ -126,7 +126,7 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\View')) {
                 $stat_name = $stat_cols[$ii];
                 if ($stat_name == "scr-ratings") {
                     $stat_value = $get_overall_stats['dom'];
-                    $html .= '<li data-stat="' . $stat_name . '">' . $stat_value . '</li>';
+                    $html .= '<li class="scr-ct-ratings" data-stat="' . $stat_name . '">' . $stat_value . '</li>';
                 } else {
                     $stat_value = isset($get_stats[$stat_name]) ? $get_stats[$stat_name] : 'X';
                     $html .= '<li data-stat="' . $stat_name . '">' . $stat_value . '</li>';

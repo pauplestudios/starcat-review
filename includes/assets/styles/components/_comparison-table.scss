@@ -747,3 +747,32 @@ No JS
         }
     }
 }
+.cd-features-list {
+    & .scr-ct-ratings {
+        height: 98%;
+        padding: 2px;
+    }
+    & ul.reviewed-list {
+        width: 100%;
+        & li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2px 15px;
+            height: 67px;
+            & .reviewed-item-stars {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                height: 100%;
+
+                & .stars-wrapper,
+                .stars-result {
+                    & .star {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
+}
