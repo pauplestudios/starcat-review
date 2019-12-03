@@ -100,6 +100,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             // Plugins Actions
             new \StarcatReview\Includes\Actions();
         }
+
         public function load_admin_hooks()
         {
             // $admin = new \StarcatReview\Includes\Admin($this->plugin_domain, $this->version);
@@ -116,6 +117,61 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
             // You Can Access these object from javascript
             wp_localize_script('starcat-review-script', 'SCROptions', ['enable_prosandcons' => SCR_Getter::get('enable-pros-cons')]);
+
+            // Additional Dashboard Column fields
+            $post_type = SCR_POST_TYPE;
+            add_filter("manage_{$post_type}_posts_columns", array($this, 'manage_cpt_custom_columns'), 10);
+            add_action("manage_{$post_type}_posts_custom_column", array($this, 'manage_cpt_custom_column'), 10, 2);
+            add_action("manage_edit-{$post_type}_sortable_columns", array($this, 'sort_posts_custom_column'), 10, 1);
+            // add_action('pre_get_posts', array($this, 'sort_cpt_custom_column_order'));
+        }
+
+        public function manage_cpt_custom_columns($columns)
+        {
+            $items = array(
+                'scr_rating' => __('Ratings', SCR_DOMAIN),
+                // Todo: 'scr_product_price'
+            );
+
+            // add before the category column.
+            return array_slice($columns, 0, -3, true) + $items + array_slice($columns, -3, null, true);
+
+        }
+
+        public function manage_cpt_custom_column($column, $id)
+        {
+
+            switch ($column) {
+                // Todo: 'scr_product_price'
+                case 'scr_rating':
+                    // Todo: save the rating as a temporary post meta which can be used in pre_get_posts
+                    $rating = scr_get_overall_rating($id);
+                    echo ($rating['overall']['rating'] == 0) ? 'Not Rated Yet' : $rating['dom'];
+                    break;
+            }
+        }
+        public function sort_posts_custom_column($columns)
+        {
+            $columns['scr_rating'] = 'scr_rating';
+            return $columns;
+        }
+
+        public function sort_cpt_custom_column_order($query)
+        {
+            error_log('query : ' . print_r($query, true));
+
+            if (!is_admin()) {
+                return;
+            }
+
+            $orderby = $query->get('orderby');
+
+            switch ($orderby) {
+                case 'scr_rating':
+                    $query->set('meta_key', '_scr_review_props');
+                    $query->set('orderby', 'meta_value_num');
+                    break;
+            }
         }
 
         public function load_ajax_handler()

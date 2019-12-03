@@ -14,8 +14,10 @@ if (!class_exists('\StarcatReview\Includes\Actions')) {
             add_action('pre_get_comments', [$this, 'exclude_from_comments']);
         }
 
-        // Comment Type of SCR_POST_TYPE is exclude from standard comments list Unless we call explicitly by get_comments($type = "starcat_review")
-
+        /*
+        Comment Type of SCR_POST_TYPE is exclude from standard comments list
+        Unless we call explicitly by get_comments($type = "starcat_review")
+         */
         public function exclude_from_comments(\WP_Comment_Query $query)
         {
             /* only allow SCR_POST_TYPE when is required explicitly */
@@ -27,5 +29,6 @@ if (!class_exists('\StarcatReview\Includes\Actions')) {
                 );
             }
         }
+
     }
 }
