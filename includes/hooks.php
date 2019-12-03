@@ -24,10 +24,8 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             $this->load_widgets();
 
             /* */
-            add_action('widgets_init', [$this, 'register_sidebar']);
+            // add_action('widgets_init', [$this, 'register_sidebar']);
 
-            /*  Reviews Activation Hook */
-            register_activation_hook(SCR__FILE__, array($this, 'reviews_activate'));
             /*  Reviews Admin Section Initialization Hook */
             add_action('admin_init', array($this, 'load_admin_hooks'));
             /*  Reviews Enqueing Script Action hook */
@@ -48,7 +46,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
 
 
-            $register_templates = new \StarcatReview\Includes\Register_Templates();
+            // $register_templates = new \StarcatReview\Includes\Register_Templates();
         }
 
         public function register_sidebar()
@@ -66,37 +64,6 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
                 )
             );
         }
-
-
-        public function reviews_activate()
-        {
-            /* Register Post Type and its taxonomy only for setup demo content on activation */
-            $cpt = new \StarcatReview\Includes\Cpt();
-            $cpt->register_scr_cpt();
-
-            $this->setup_data();
-        }
-
-        public function setup_data()
-        {
-            $post_data = [
-                'post_type' => SCR_POST_TYPE,
-                'taxonomy' => [
-                    SCR_CATEGORY => "Getting Started",
-                ],
-                'title' => "Yours First Reviews Question",
-                'content' => "Yours relevent questions answer."
-            ];
-
-            $create_pages = new \StarcatReview\Includes\Utils\Create_Pages();
-            $create_pages->setup_data($post_data);
-        }
-
-
-
-
-
-
 
         public function plugins_loaded_action()
         {

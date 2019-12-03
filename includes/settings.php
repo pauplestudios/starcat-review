@@ -36,6 +36,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
         public function wp_loaded()
         { }
+
         public function init()
         {
 
@@ -52,16 +53,23 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 // Set a unique slug-like ID
                 $prefix = SCR_OPTIONS; // scr_options
 
-                // Create options
-                \CSF::createOptions($prefix, array(
-                    'menu_title' => 'Settings',
+                $options =  array(
+                    'menu_title' => 'Starcat Settings',
                     'menu_parent' => 'edit.php?post_type=starcat_review',
-                    'menu_type' => 'submenu', // menu, submenu, options, theme, etc.
+                    'menu_type' => 'menu', // menu, submenu, options, theme, etc.
                     'menu_slug' => 'scr-settings',
-                    'framework_title' => 'Settings',
+                    'framework_title' => 'Starcat Settings',
                     'theme' => 'light',
                     'show_search' => false, // TODO: Enable once autofill password is fixed
-                ));
+                );
+
+                if (class_exists('\StarcatReviewCpt')) {
+                    // $options['menu_parent'] = null;
+                    // $options['menu_type'] = 'menu';
+                }
+
+                // Create options
+                \CSF::createOptions($prefix, $options);
 
                 $this->general_settings($prefix);
 

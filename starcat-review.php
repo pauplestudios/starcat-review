@@ -21,8 +21,6 @@ if (!defined('ABSPATH')) {
 
 define('SCR_VERSION', '0.2');
 define('SCR_DOMAIN', 'starcat-review');
-define('SCR_POST_TYPE', 'starcat_review');
-define('SCR_CATEGORY', 'scr_category');
 define('SCR__FILE__', __FILE__);
 define('SCR_PLUGIN_BASE', plugin_basename(SCR__FILE__));
 define('SCR_PATH', plugin_dir_path(SCR__FILE__));

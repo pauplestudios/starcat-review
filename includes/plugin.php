@@ -21,7 +21,7 @@ if (!class_exists('\Starcat_Review')) {
             require_once SCR_PATH . 'includes/functions.php';
 
             /*  Reviews Register Post types and its Taxonomies */
-            $this->register_cpt_and_taxonomy();
+            // $this->register_cpt_and_taxonomy();
 
             // Load Hooks
             $this->load_hooks();
