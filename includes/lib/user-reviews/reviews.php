@@ -1,47 +1,26 @@
 <?php
 
-/*
-Plugin Name: WP_List_Table Class Example
-Plugin URI: https://www.sitepoint.com/using-wp_list_table-to-create-wordpress-admin-tables/
-Description: Demo on how WP_List_Table Class works
-Version: 1.0
-Author: Collins Agbonghama
-Author URI:  https://w3guy.com
- */
-
 if (!class_exists('WP_List_Table')) {
     require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
 
-class Customers_List extends WP_List_Table
+class User_Reviews_List extends WP_List_Table
 {
-
-    /** Class constructor */
     public function __construct()
     {
-
         parent::__construct([
-            'singular' => __('Customer', 'sp'), //singular name of the listed records
-            'plural' => __('Customers', 'sp'), //plural name of the listed records
+            'singular' => __('User Review', SCR_DOMAIN), //singular name of the listed records
+            'plural' => __('User Reviews', SCR_DOMAIN), //plural name of the listed records
             'ajax' => false, //does this table support ajax?
         ]);
-
     }
 
-    /**
-     * Retrieve customers data from the database
-     *
-     * @param int $per_page
-     * @param int $page_number
-     *
-     * @return mixed
-     */
-    public static function get_customers($per_page = 5, $page_number = 1)
+    public static function get_user_reviews($per_page = 20, $page_number = 1)
     {
 
         global $wpdb;
 
-        $sql = "SELECT * FROM {$wpdb->prefix}customers";
+        $sql = "SELECT * FROM {$wpdb->prefix}comments WHERE comment_type='starcat_review'";
 
         if (!empty($_REQUEST['orderby'])) {
             $sql .= ' ORDER BY ' . esc_sql($_REQUEST['orderby']);
@@ -57,16 +36,16 @@ class Customers_List extends WP_List_Table
     }
 
     /**
-     * Delete a customer record.
+     * Delete a user_review record.
      *
-     * @param int $id customer ID
+     * @param int $id user_review ID
      */
-    public static function delete_customer($id)
+    public static function delete_user_review($id)
     {
         global $wpdb;
 
         $wpdb->delete(
-            "{$wpdb->prefix}customers",
+            "{$wpdb->prefix}user_reviews",
             ['ID' => $id],
             ['%d']
         );
@@ -81,15 +60,15 @@ class Customers_List extends WP_List_Table
     {
         global $wpdb;
 
-        $sql = "SELECT COUNT(*) FROM {$wpdb->prefix}customers";
+        $sql = "SELECT COUNT(*) FROM {$wpdb->prefix}comments WHERE comment_type='starcat_review'";
 
         return $wpdb->get_var($sql);
     }
 
-    /** Text displayed when no customer data is available */
+    /** Text displayed when no user_review data is available */
     public function no_items()
     {
-        _e('No customers avaliable.', 'sp');
+        echo __('No Reviews avaliable', SCR_DOMAIN);
     }
 
     /**
@@ -102,10 +81,24 @@ class Customers_List extends WP_List_Table
      */
     public function column_default($item, $column_name)
     {
+        // error_log('item : ' . print_r($item, true));
+
         switch ($column_name) {
-            case 'address':
-            case 'city':
-                return $item[$column_name];
+            case 'author':
+                return get_avatar($item['user_id'], 35) . ucfirst($item['comment_author']);
+                break;
+            case 'review':
+                return $item['comment_content'];
+                break;
+            case 'rating':
+                return $item['comment_approved'];
+                break;
+            case 'in_response_to':
+                return get_the_title($item['comment_post_ID']);
+                break;
+            case 'submitted_on':
+                return $item['comment_date'];
+                break;
             default:
                 return print_r($item, true); //Show the whole array for troubleshooting purposes
         }
@@ -135,12 +128,12 @@ class Customers_List extends WP_List_Table
     public function column_name($item)
     {
 
-        $delete_nonce = wp_create_nonce('sp_delete_customer');
+        $delete_nonce = wp_create_nonce('sp_delete_user_review');
 
         $title = '<strong>' . $item['name'] . '</strong>';
 
         $actions = [
-            'delete' => sprintf('<a href="?page=%s&action=%s&customer=%s&_wpnonce=%s">Delete</a>', esc_attr($_REQUEST['page']), 'delete', absint($item['ID']), $delete_nonce),
+            'delete' => sprintf('<a href="?page=%s&action=%s&user_review=%s&_wpnonce=%s">Delete</a>', esc_attr($_REQUEST['page']), 'delete', absint($item['ID']), $delete_nonce),
         ];
 
         return $title . $this->row_actions($actions);
@@ -155,9 +148,11 @@ class Customers_List extends WP_List_Table
     {
         $columns = [
             'cb' => '<input type="checkbox" />',
-            'name' => __('Name', 'sp'),
-            'address' => __('Address', 'sp'),
-            'city' => __('City', 'sp'),
+            'author' => __('Author', SCR_DOMAIN),
+            'review' => __('Review', SCR_DOMAIN),
+            'rating' => __('Rating', SCR_DOMAIN),
+            'in_response_to' => __('In Response To', SCR_DOMAIN),
+            'submitted_on' => __('Submitted On', SCR_DOMAIN),
         ];
 
         return $columns;
@@ -171,8 +166,11 @@ class Customers_List extends WP_List_Table
     public function get_sortable_columns()
     {
         $sortable_columns = array(
-            'name' => array('name', true),
-            'city' => array('city', false),
+            'author' => array('author', true),
+            'review' => array('review', false),
+            'rating' => array('rating', true),
+            'in_response_to' => array('in_response_to', true),
+            'submitted_on' => array('author', false),
         );
 
         return $sortable_columns;
@@ -203,7 +201,7 @@ class Customers_List extends WP_List_Table
         /** Process bulk action */
         $this->process_bulk_action();
 
-        $per_page = $this->get_items_per_page('customers_per_page', 5);
+        $per_page = $this->get_items_per_page('user_reviews_per_page', 20);
         $current_page = $this->get_pagenum();
         $total_items = self::record_count();
 
@@ -212,7 +210,7 @@ class Customers_List extends WP_List_Table
             'per_page' => $per_page, //WE have to determine how many items to show on a page
         ]);
 
-        $this->items = self::get_customers($per_page, $current_page);
+        $this->items = self::get_user_reviews($per_page, $current_page);
     }
 
     public function process_bulk_action()
@@ -224,10 +222,10 @@ class Customers_List extends WP_List_Table
             // In our file that handles the request, verify the nonce.
             $nonce = esc_attr($_REQUEST['_wpnonce']);
 
-            if (!wp_verify_nonce($nonce, 'sp_delete_customer')) {
+            if (!wp_verify_nonce($nonce, 'sp_delete_user_review')) {
                 die('Go get a life script kiddies');
             } else {
-                self::delete_customer(absint($_GET['customer']));
+                self::delete_user_review(absint($_GET['user_review']));
 
                 // esc_url_raw() is used to prevent converting ampersand in url to "#038;"
                 // add_query_arg() return the current url
@@ -246,7 +244,7 @@ class Customers_List extends WP_List_Table
 
             // loop over the array of record IDs and delete them
             foreach ($delete_ids as $id) {
-                self::delete_customer($id);
+                self::delete_user_review($id);
 
             }
 
@@ -265,8 +263,8 @@ class SP_Plugin
     // class instance
     static $instance;
 
-    // customer WP_List_Table object
-    public $customers_obj;
+    // user_review WP_List_Table object
+    public $user_reviews_obj;
 
     // class constructor
     public function __construct()
@@ -284,10 +282,10 @@ class SP_Plugin
     {
 
         $hook = add_menu_page(
-            'Sitepoint WP_List_Table Example',
-            'SP WP_List_Table',
+            'User Reviews',
+            'User Reviews',
             'manage_options',
-            'wp_list_table_class',
+            'user-reviews-wp-list-table',
             [$this, 'plugin_settings_page'],
             'dashicons-format-status',
             '35'
@@ -302,27 +300,26 @@ class SP_Plugin
      */
     public function plugin_settings_page()
     {
-        ?>
-		<div class="wrap">
-			<h2>WP_List_Table Class Example</h2>
+        $html = '<div class="wrap">';
+        $html .= '<h1 class="wp-heading-inline">User Reviews Table List </h1>';
+        $html .= '<hr class="wp-header-end">';
 
-			<div id="poststuff">
-				<div id="post-body" class="metabox-holder columns-2">
-					<div id="post-body-content">
-						<div class="meta-box-sortables ui-sortable">
-							<form method="post">
-								<?php
-$this->customers_obj->prepare_items();
-        $this->customers_obj->display();?>
-							</form>
-						</div>
-					</div>
-				</div>
-				<br class="clear">
-			</div>
-		</div>
-	<?php
-}
+        $html .= '<div id="poststuff">';
+        $html .= '<form method="post">';
+
+        ob_start();
+        $this->user_reviews_obj->prepare_items();
+        $this->user_reviews_obj->display();
+        $html .= ob_get_contents();
+        ob_end_clean();
+
+        $html .= '</form>';
+        $html .= '</div>';
+        $html .= '<br class="clear">';
+        $html .= '</div>';
+
+        echo $html;
+    }
 
     /**
      * Screen options
@@ -332,14 +329,14 @@ $this->customers_obj->prepare_items();
 
         $option = 'per_page';
         $args = [
-            'label' => 'Customers',
+            'label' => 'user_reviews',
             'default' => 5,
-            'option' => 'customers_per_page',
+            'option' => 'user_reviews_per_page',
         ];
 
         add_screen_option($option, $args);
 
-        $this->customers_obj = new Customers_List();
+        $this->user_reviews_obj = new User_Reviews_List();
     }
 
     /** Singleton instance */
