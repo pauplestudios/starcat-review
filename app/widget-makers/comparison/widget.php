@@ -28,9 +28,68 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Comparison\Widget')) {
         public function get_view()
         {
             $comparison_controller = new \StarcatReview\App\Components\Comparison\Controller();
-            $post_ids = [];
-            return $comparison_controller->get_view($post_ids);
+
+            $post_ids = [176, 174, 147];
+
+            $args = array(
+                'post__in' => $post_ids,
+                'post_type' => SCR_POST_TYPE,
+            );
+
+            $posts = get_posts($args);
+
+            $get_post_props = $this->get_default_post_props($posts);
+
+            //view type (its comes to static/dynamic)
+            $ct_args = array(
+                'posts' => count($get_post_props) ? $get_post_props : [],
+                'view_type' => 'static'
+            );
+
+            return $comparison_controller->get_view($ct_args);
         }
+
+        protected function get_default_post_props($args)
+        {
+            $default_props = array();
+            if (isset($args)) {
+                foreach ($args as $post) {
+                    $post_infos = array();
+                    $post_infos['ID'] = $post->ID;
+                    $post_infos['title'] = $post->post_title;
+                    $post_infos['featured_image_url'] = get_the_post_thumbnail_url($post->ID);
+
+                    // get review ratings from function.php
+                    $get_scr_get_user_reviews = scr_get_user_reviews($post->ID);
+
+                    // get post stat list 
+                    $get_stat_list  = $this->get_default_stat_list($get_scr_get_user_reviews);
+
+                    // get post overall reatings
+                    $get_overall_stats = scr_get_overall_rating($post->ID);
+                    $post_infos['stats'] = $get_stat_list;
+                    $post_infos['overall_ratings'] = $get_overall_stats;
+                    $default_props[$post->ID] = $post_infos;
+                }
+            }
+
+            return $default_props;
+        }
+
+        protected function get_default_stat_list($args)
+        {
+            $stats = array();
+            if (count($args) > 0) {
+                foreach ($args  as $post_review) {
+                    $reviews = isset($post_review->reviews) ? $post_review->reviews : [];
+                    if (isset($reviews) && count($reviews) > 0) {
+                        $stats = $reviews['stats'];
+                    }
+                }
+            }
+            return $stats;
+        }
+
 
         protected function get_collection_props($args)
         { }

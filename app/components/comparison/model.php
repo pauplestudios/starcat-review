@@ -38,64 +38,44 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\Model')) {
                 ],
             ];
         */
-        public function get($posts)
+        public function get($args)
         {
-            $stat_columns = [];
-            $stats = [];
-            $stat_columns[] = "scr-ratings";
-
-            foreach ($posts as $key => $post) {
-                $stats_list = $this->get_stats_list($post->ID);
-                $get_scr_get_user_reviews = scr_get_user_reviews($post->ID);
-
-                $get_overall_stats = scr_get_overall_rating($post->ID);
-
-
-                $review_stats = array();
-                if (count($get_scr_get_user_reviews) > 0) {
-                    foreach ($get_scr_get_user_reviews  as $user_reviews) {
-                        $reviews = isset($user_reviews->reviews) ? $user_reviews->reviews : [];
-                        if (isset($reviews) && count($reviews) > 0) {
-                            $review_stats = $reviews['stats'];
+            $stat_cols = array();
+            foreach ($args['posts'] as $key => $post) {
+                //$stats_list = $this->get_stats_list($post->ID);
+                $stat_column_list = $this->get_feature_columns($post['stats']);
+                // error_log("stat_column_list" . print_r($stat_column_list, true));
+                if (count($stat_column_list) > 0) {
+                    foreach ($stat_column_list as $stat_col) {
+                        if (!in_array($stat_col, $stat_cols)) {
+                            $stat_cols[] = $stat_col;
                         }
                     }
                 }
+                $args['posts'][$key]['cols'] = $stat_column_list;
+            }
+            // error_log("args" . print_r($args, true));
+            // $get_overall_stat_features = $this->get_overall_features($args['posts']);
+            $args['cols']   = count($stat_cols) > 0 ? $stat_cols : array();
 
-                /*if (count($review_stats) > 0) {
-                    //get stat features only
-                    $stats_columns = array_keys($review_stats);
-                } else {
-                    $stats_columns = array();
-                }*/
+            return $args;
+        }
 
-                // error_log('get_scr_get_user_reviews' . print_r($get_scr_get_user_reviews, true));
-                // error_log('stats_columns' . print_r($stats_columns, true));
-
-                $post_info = [];
-                $post_info['title'] = $post->post_title;
-                $post_info['featured_image_url'] = get_the_post_thumbnail_url($post->ID);
-                $post_info['stats']  = [];
-                // $post_info['stats'] = $stats_columns;
-
-                foreach ($review_stats as $key => $single_post_stat) {
-                    $stat_name = $single_post_stat['stat_name'];
-
-                    $post_info['stats'][$stat_name] =  $single_post_stat['rating'];
-
+        protected function get_feature_columns($args)
+        {
+            $stat_columns = array();
+            $stat_columns[] = "scr-ratings";
+            if (count($args) > 0) {
+                //get stat features only
+                $get_stat_columns = array_keys($args);
+                // error_log("get_stat_columns" . print_r($get_stat_columns, true));
+                foreach ($get_stat_columns as $stat_name) {
                     if (!in_array($stat_name, $stat_columns)) {
                         $stat_columns[] = $stat_name;
                     }
-                    // $stats[$stat_name][$post->ID] = $single_post_stat['rating'];
                 }
-                $post_info['overall_stats'] = $get_overall_stats;
-
-                $stats[$post->ID] = $post_info;
             }
-            // error_log("stat_columns" . print_r($stat_columns, true));
-            return [
-                'stats' => $stats,
-                'cols' => $stat_columns
-            ];
+            return $stat_columns;
         }
 
 

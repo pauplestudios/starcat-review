@@ -15,24 +15,11 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\Controller')) {
             $this->view = new \StarcatReview\App\Components\Comparison\View();
         }
 
-        public function get_view($post_ids = [])
+        public function get_view($args)
         {
-            error_log('$post_ids : ' . print_r($post_ids, true));
-            $post_ids = [176, 174, 147];
 
-            $args = array(
-                'post__in' => $post_ids,
-                'post_type' => SCR_POST_TYPE
-            );
-
-
-            $posts = get_posts($args);
-
-            $stats = $this->model->get($posts);
-
-            // echo '<pre>';
-            // print_r($stats);
-            // echo '</pre>';
+            $stats = $this->model->get($args);
+            error_log('ct controller : ' . print_r($stats, true));
 
             return $this->view->get_html($stats);
         }

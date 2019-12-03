@@ -18,14 +18,14 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\View')) {
             // $this->Comparison_Table = new \StarcatReview\App\Views\Blocks\Comparison_Table();
         }
 
-        public function get_html($stats = [])
+        public function get_html($args = [])
         {
             $html = '';
             $html .= '<section class="cd-products-comparison-table">';
             // $html .= $this->get_header();
             $html .= '<div class="cd-products-table">';
-            $html .= $this->features($stats['cols']);
-            $html .= $this->get_columns($stats['stats'], $stats['cols']);
+            $html .= $this->features($args['cols']);
+            $html .= $this->get_columns($args['posts'], $args['cols']);
             $html .= $this->navigation();
             $html .= '</div> <!-- .cd-products-table -->';
             $html .= '</section> <!-- .cd-products-comparison-table -->';
@@ -51,7 +51,7 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\View')) {
             return $html;
         }
 
-        public function features($stat_cols)
+        public function features($args)
         {
             $html = '';
             $html .= '<div class="features">';
@@ -59,8 +59,8 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\View')) {
             $html .= '<ul class="cd-features-list" id="scr-stats-list">';
 
             // error_log('$stat_cols : ' . print_r($stat_cols, true));
-            for ($ii = 0; $ii < sizeof($stat_cols); $ii++) {
-                $html .= '<li>' . $stat_cols[$ii] . '</li>';
+            for ($ii = 0; $ii < sizeof($args); $ii++) {
+                $html .= '<li>' . $args[$ii] . '</li>';
             }
 
             $html .= '</ul>';
@@ -69,22 +69,26 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\View')) {
             return $html;
         }
 
-        public function get_columns($stats, $stat_cols)
+        public function get_columns($args, $stat_cols)
         {
 
             $html = '';
             $html .= '<div class="cd-products-wrapper">';
             $html .= '<ul class="cd-products-columns" style="display:flex;">';
 
-            foreach ($stats as $key => $single_product_stats) {
+            foreach ($args as $key => $single_product_stats) {
+                // error_log("single_product_stats" . print_r($single_product_stats, true));
                 $html .= $this->single_product($single_product_stats, $stat_cols);
             }
 
-            if (count($stats) > 0) {
-                $html .= $this->search_filter_product();
-            } else if (count($stats) == 0) {
-                $html .= $this->search_filter_product();
+            if ($args['view_type'] == "dynamic") {
+                if (count($args) > 0) {
+                    $html .= $this->search_filter_product();
+                } else if (count($args) == 0) {
+                    $html .= $this->search_filter_product();
+                }
             }
+
             $html .= '</ul> <!-- .cd-products-columns -->';
             $html .= '</div> <!-- .cd-products-wrapper -->';
 
@@ -92,7 +96,7 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\View')) {
             return $html;
         }
 
-        public function single_product($stats, $stat_cols)
+        public function single_product($args, $stat_cols)
         {
             $html = '';
 
@@ -102,11 +106,11 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\View')) {
             $html .= '<i class="window close outline icon" style="font-size:25px;"></i>';
             $html .= '</div>';
             // $html .= '<div class="check"></div>';
-            $html .= '<img class="featured-image" src="' . $stats['featured_image_url'] . '" alt="product image">';
-            $html .= '<h3>' . $stats['title'] . '</h3>';
+            $html .= '<img class="featured-image" src="' . $args['featured_image_url'] . '" alt="product image">';
+            $html .= '<h3>' . $args['title'] . '</h3>';
             $html .= '</div> <!-- .top-info -->';
 
-            $html .= $this->single_product_features($stats, $stat_cols);
+            $html .= $this->single_product_features($args, $stat_cols);
             $html .= '</li> <!-- .product -->';
             //$html .= '<li class="product">';
             //$html .= '</li> ';
@@ -114,10 +118,11 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\View')) {
             return $html;
         }
 
-        public function single_product_features($stats, $stat_cols)
+        public function single_product_features($args, $stat_cols)
         {
-            $get_stats = $stats['stats'];
-            $get_overall_stats  = $stats['overall_stats'];
+            $get_stats = $args['stats'];
+
+            $get_overall_stats  = $args['overall_ratings'];
             $html = '';
 
             $html .= '<ul class="cd-features-list">';
@@ -128,7 +133,7 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\View')) {
                     $stat_value = $get_overall_stats['dom'];
                     $html .= '<li class="scr-ct-ratings" data-stat="' . $stat_name . '">' . $stat_value . '</li>';
                 } else {
-                    $stat_value = isset($get_stats[$stat_name]) ? $get_stats[$stat_name] : 'X';
+                    $stat_value = isset($get_stats[$stat_name]) ? $get_stats[$stat_name]['rating'] : 'X';
                     $html .= '<li data-stat="' . $stat_name . '">' . $stat_value . '</li>';
                 }
             }
