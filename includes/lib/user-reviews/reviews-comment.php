@@ -721,36 +721,36 @@ if ('top' === $which) {
             );
         }
 
-        if ('spam' !== $the_comment_status && 'trash' !== $the_comment_status) {
-            $actions['edit'] = sprintf(
-                '<a href="%s" aria-label="%s">%s</a>',
-                "comment.php?action=editcomment&amp;c={$comment->comment_ID}",
-                esc_attr__('Edit this comment'),
-                __('Edit')
-            );
+        // if ('spam' !== $the_comment_status && 'trash' !== $the_comment_status) {
+        //     $actions['edit'] = sprintf(
+        //         '<a href="%s" aria-label="%s">%s</a>',
+        //         "comment.php?action=editcomment&amp;c={$comment->comment_ID}",
+        //         esc_attr__('Edit this comment'),
+        //         __('Edit')
+        //     );
 
-            $format = '<button type="button" data-comment-id="%d" data-post-id="%d" data-action="%s" class="%s button-link" aria-expanded="false" aria-label="%s">%s</button>';
+        //     $format = '<button type="button" data-comment-id="%d" data-post-id="%d" data-action="%s" class="%s button-link" aria-expanded="false" aria-label="%s">%s</button>';
 
-            $actions['quickedit'] = sprintf(
-                $format,
-                $comment->comment_ID,
-                $comment->comment_post_ID,
-                'edit',
-                'vim-q comment-inline',
-                esc_attr__('Quick edit this comment inline'),
-                __('Quick&nbsp;Edit')
-            );
+        //     $actions['quickedit'] = sprintf(
+        //         $format,
+        //         $comment->comment_ID,
+        //         $comment->comment_post_ID,
+        //         'edit',
+        //         'vim-q comment-inline',
+        //         esc_attr__('Quick edit this comment inline'),
+        //         __('Quick&nbsp;Edit')
+        //     );
 
-            $actions['reply'] = sprintf(
-                $format,
-                $comment->comment_ID,
-                $comment->comment_post_ID,
-                'replyto',
-                'vim-r comment-inline',
-                esc_attr__('Reply to this comment'),
-                __('Reply')
-            );
-        }
+        //     $actions['reply'] = sprintf(
+        //         $format,
+        //         $comment->comment_ID,
+        //         $comment->comment_post_ID,
+        //         'replyto',
+        //         'vim-r comment-inline',
+        //         esc_attr__('Reply to this comment'),
+        //         __('Reply')
+        //     );
+        // }
 
         /** This filter is documented in wp-admin/includes/dashboard.php */
         $actions = apply_filters('comment_row_actions', array_filter($actions), $comment);
@@ -970,7 +970,7 @@ if ('top' === $which) {
     }
 }
 
-class SP_Plugin
+class User_Reviews
 {
 
     // class instance
@@ -1013,11 +1013,8 @@ class SP_Plugin
     public function plugin_settings_page()
     {
         $html = '<div class="wrap">';
-        $html .= '<h1 class="wp-heading-inline">User Reviews Table List </h1>';
+        $html .= '<h1 class="wp-heading-inline"> ' . __("User Reviews Table List", SCR_DOMAIN) . '</h1>';
         $html .= '<hr class="wp-header-end">';
-
-        $html .= '<div id="poststuff">';
-        $html .= '<form method="post">';
 
         ob_start();
         $this->user_reviews_obj->prepare_items();
@@ -1025,10 +1022,6 @@ class SP_Plugin
         $this->user_reviews_obj->display();
         $html .= ob_get_contents();
         ob_end_clean();
-
-        $html .= '</form>';
-        $html .= '</div>';
-        $html .= '<br class="clear">';
         $html .= '</div>';
 
         echo $html;
@@ -1041,8 +1034,9 @@ class SP_Plugin
     {
 
         $option = 'per_page';
+
         $args = [
-            'label' => 'Number of items per page:',
+            'label' => __("Number of items per page:", SCR_DOMAIN),
             'default' => 5,
             'option' => 'user_reviews_per_page',
         ];
@@ -1064,5 +1058,5 @@ class SP_Plugin
 }
 
 add_action('plugins_loaded', function () {
-    SP_Plugin::get_instance();
+    User_Reviews::get_instance();
 });
