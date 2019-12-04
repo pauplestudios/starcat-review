@@ -20,14 +20,11 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             /*  Reviews Init Hook */
             add_action('init', array($this, 'init_hook'));
 
-            /*  Reviews Widget */
-            $this->load_widgets();
+
 
             /* */
-            add_action('widgets_init', [$this, 'register_sidebar']);
+            // add_action('widgets_init', [$this, 'register_sidebar']);
 
-            /*  Reviews Activation Hook */
-            register_activation_hook(SCR__FILE__, array($this, 'reviews_activate'));
             /*  Reviews Admin Section Initialization Hook */
             add_action('admin_init', array($this, 'load_admin_hooks'));
             /*  Reviews Enqueing Script Action hook */
@@ -49,7 +46,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             /*  Reviews Ajax Hooks */
             $this->load_ajax_handler();
 
-            $register_templates = new \StarcatReview\Includes\Register_Templates();
+            // $register_templates = new \StarcatReview\Includes\Register_Templates();
         }
 
         public function register_sidebar()
@@ -68,30 +65,6 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             );
         }
 
-        public function reviews_activate()
-        {
-            /* Register Post Type and its taxonomy only for setup demo content on activation */
-            $cpt = new \StarcatReview\Includes\Cpt();
-            $cpt->register_scr_cpt();
-
-            $this->setup_data();
-        }
-
-        public function setup_data()
-        {
-            $post_data = [
-                'post_type' => SCR_POST_TYPE,
-                'taxonomy' => [
-                    SCR_CATEGORY => "Getting Started",
-                ],
-                'title' => "Yours First Reviews Question",
-                'content' => "Yours relevent questions answer.",
-            ];
-
-            $create_pages = new \StarcatReview\Includes\Utils\Create_Pages();
-            $create_pages->setup_data($post_data);
-        }
-
         public function plugins_loaded_action()
         {
             /*  Reviews Settings */
@@ -99,6 +72,12 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
             /*  Starcat Review Plugin Translation  */
             // load_plugin_textdomain('starcat-review', false, basename(dirname(__FILE__)) . '/languages/');
+            if (class_exists('\StarcatReviewCpt\Widgets\Review_Listing\Controller')) {
+                /*  Reviews Widget */
+                error_log('StarcatReview CPT Exists!');
+                $this->load_widgets();
+                $shortcodes = new \StarcatReview\Includes\Shortcodes();
+            }
 
             // Plugins Actions
             new \StarcatReview\Includes\Actions();
@@ -138,14 +117,13 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
             // add before the category column.
             return array_slice($columns, 0, -3, true) + $items + array_slice($columns, -3, null, true);
-
         }
 
         public function manage_cpt_custom_column($column, $id)
         {
 
             switch ($column) {
-                // Todo: 'scr_product_price'
+                    // Todo: 'scr_product_price'
                 case 'scr_rating':
                     // Todo: save the rating as a temporary post meta which can be used in pre_get_posts
                     $rating = scr_get_overall_rating($id);

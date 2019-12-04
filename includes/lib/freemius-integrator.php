@@ -18,10 +18,10 @@ if (!function_exists('scr_fs')) {
                 'premium_suffix'      => 'Pro',
                 // If your plugin is a serviceware, set this option to false.
                 'has_premium_version' => true,
-                'has_addons'          => false,
+                'has_addons'          => true,
                 'has_paid_plans'      => true,
                 'menu'                => array(
-                    'slug'           => 'edit.php?post_type=starcat_review',
+                    'slug'           => 'scr-settings',
                     'override_exact' => true,
                     'support'        => false,
                 ),
