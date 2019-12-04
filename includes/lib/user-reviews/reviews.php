@@ -82,7 +82,14 @@ class User_Reviews_List extends WP_List_Table
     public function column_default($item, $column_name)
     {
         // error_log('item : ' . print_r($item, true));
+        if ($item['comment_parent'] == 0) {
+            $props = get_comment_meta($item['comment_ID'], 'scr_user_review_props', true);
+            $title = $props['title'];
+            $rating = $props['rating'];
 
+            // $item['comment_content'] = 
+            // $rating = 
+        }
         switch ($column_name) {
             case 'author':
                 return get_avatar($item['user_id'], 35) . ucfirst($item['comment_author']);
@@ -91,10 +98,10 @@ class User_Reviews_List extends WP_List_Table
                 return $item['comment_content'];
                 break;
             case 'rating':
-                return $item['comment_approved'];
+                return (isset($rating)) ? $rating : '---';
                 break;
             case 'in_response_to':
-                return get_the_title($item['comment_post_ID']);
+                return '<a href="' . get_the_permalink($item['comment_post_ID']) . '" target="_blank">' . get_the_title($item['comment_post_ID']) . '</a>';
                 break;
             case 'submitted_on':
                 return $item['comment_date'];
@@ -114,7 +121,8 @@ class User_Reviews_List extends WP_List_Table
     public function column_cb($item)
     {
         return sprintf(
-            '<input type="checkbox" name="bulk-delete[]" value="%s" />', $item['ID']
+            '<input type="checkbox" name="bulk-delete[]" value="%s" />',
+            $item['ID']
         );
     }
 
@@ -232,7 +240,6 @@ class User_Reviews_List extends WP_List_Table
                 wp_redirect(esc_url_raw(add_query_arg()));
                 exit;
             }
-
         }
 
         // If the delete bulk action is triggered
@@ -245,7 +252,6 @@ class User_Reviews_List extends WP_List_Table
             // loop over the array of record IDs and delete them
             foreach ($delete_ids as $id) {
                 self::delete_user_review($id);
-
             }
 
             // esc_url_raw() is used to prevent converting ampersand in url to "#038;"
@@ -254,7 +260,6 @@ class User_Reviews_List extends WP_List_Table
             exit;
         }
     }
-
 }
 
 class SP_Plugin
@@ -292,7 +297,6 @@ class SP_Plugin
         );
 
         add_action("load-$hook", [$this, 'screen_option']);
-
     }
 
     /**
@@ -348,7 +352,6 @@ class SP_Plugin
 
         return self::$instance;
     }
-
 }
 
 add_action('plugins_loaded', function () {
