@@ -15,8 +15,13 @@
 }
 
 .reviews-comment-wrap {
-    & .fixed .column-author {
-        width: 20%;
+    .fixed {
+        .column-author {
+            width: 15%;
+        }
+        .column-rating {
+            width: 20%;
+        }
     }
 }
 

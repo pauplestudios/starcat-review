@@ -4,6 +4,8 @@ if (!class_exists('WP_List_Table')) {
     require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
 
+use StarcatReview\Includes\Settings\SCR_Getter;
+
 class UR_List_Table extends WP_List_Table
 {
 
@@ -522,7 +524,8 @@ if ('top' === $which) {
         }
 
         $columns['author'] = __('Author');
-        $columns['comment'] = _x('Comment', 'column name');
+        $columns['rating'] = _x('Rating', 'column name');
+        $columns['comment'] = _x('Review', 'column name');
 
         if (!$post_id) {
             /* translators: Column name or table row header. */
@@ -971,6 +974,28 @@ if ('top' === $which) {
     /**
      * @param WP_Comment $comment The comment object.
      */
+
+    public function column_rating($comment)
+    {
+        $rating = '---';
+        $props = get_comment_meta($comment->comment_ID, 'scr_user_review_props', true);
+        if (isset($props['rating']) && !empty($props['rating'])) {
+            $args = SCR_Getter::get_stat_default_args();
+            $args['items']['stats-list'] = $props['stats'];
+            // error_log('args : ' . print_r($args, true));
+            
+            $stat_controller = new \StarcatReview\App\Components\Stats\Controller($args);
+            $rating = $stat_controller->get_view();
+
+            // $rating = $props['rating'];
+        }
+
+        echo $rating;
+    }
+
+    /**
+     * @param WP_Comment $comment The comment object.
+     */
     public function column_response($comment)
     {
         $post = get_post();
@@ -1009,7 +1034,7 @@ if ('top' === $which) {
         $this->comments_bubble($post->ID, $pending_comments);
         $bubble = ob_get_contents();
         ob_end_clean();
-        echo str_replace('edit-comments.php?', 'admin.php?page=scr-reviews-comment&#038;', $bubble);        
+        echo str_replace('edit-comments.php?', 'admin.php?page=scr-reviews-comment&#038;', $bubble);
         echo '</span> ';
         echo '</div>';
     }
@@ -1030,7 +1055,7 @@ if ('top' === $which) {
          */
         do_action('manage_comments_custom_column', $column_name, $comment->comment_ID);
     }
-    
+
 }
 
 class UR_List_Table_Controller
