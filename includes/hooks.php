@@ -20,8 +20,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             /*  Reviews Init Hook */
             add_action('init', array($this, 'init_hook'));
 
-            /*  Reviews Widget */
-            $this->load_widgets();
+
 
             /* */
             // add_action('widgets_init', [$this, 'register_sidebar']);
@@ -72,6 +71,12 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
             /*  Starcat Review Plugin Translation  */
             // load_plugin_textdomain('starcat-review', false, basename(dirname(__FILE__)) . '/languages/');
+            if (class_exists('\StarcatReviewCpt\Widgets\Review_Listing\Controller')) {
+                /*  Reviews Widget */
+                error_log('StarcatReview CPT Exists!');
+                $this->load_widgets();
+                $shortcodes = new \StarcatReview\Includes\Shortcodes();
+            }
 
             // Plugins Actions 
             new \StarcatReview\Includes\Actions();

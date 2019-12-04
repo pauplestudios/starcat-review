@@ -59,7 +59,7 @@ if (!class_exists('\StarcatReview\App\Components\Listing\View')) {
 
         private function get_card_collection($viewProps)
         {
-            error_log('$viewProps : ' . print_r($viewProps, true));
+            // error_log('$viewProps : ' . print_r($viewProps, true));
             $posts = $viewProps['items']['posts'];
             $terms = $viewProps['items']['terms'];
 
