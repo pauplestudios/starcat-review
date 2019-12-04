@@ -45,7 +45,7 @@ class User_Reviews_List extends WP_List_Table
         global $wpdb;
 
         $wpdb->delete(
-            "{$wpdb->prefix}user_reviews",
+            "{$wpdb->prefix}comments",
             ['ID' => $id],
             ['%d']
         );
@@ -87,8 +87,8 @@ class User_Reviews_List extends WP_List_Table
             $title = $props['title'];
             $rating = $props['rating'];
 
-            // $item['comment_content'] = 
-            // $rating = 
+            // $item['comment_content'] =
+            // $rating =
         }
         switch ($column_name) {
             case 'author':
