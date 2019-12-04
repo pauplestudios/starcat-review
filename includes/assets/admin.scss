@@ -14,4 +14,10 @@
     }
 }
 
+.reviews-comment-wrap {
+    & .fixed .column-author {
+        width: 20%;
+    }
+}
+
 @import "styles/components/stats.scss";

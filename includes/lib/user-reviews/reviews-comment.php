@@ -212,7 +212,7 @@ class User_Reviews_List extends WP_List_Table
         global $post_id, $comment_status, $comment_type;
 
         $status_links = array();
-        $num_comments = ($post_id) ? wp_count_comments($post_id) : wp_count_comments();
+        $num_comments = ($post_id) ? $this->get_reviews_count($post_id) : $this->get_reviews_count();
 
         $stati = array(
             /* translators: %s: Number of comments. */
@@ -262,9 +262,9 @@ class User_Reviews_List extends WP_List_Table
             unset($stati['trash']);
         }
 
-        $link = admin_url('admin.php?page=user-reviews-wp-list-table');
+        $link = admin_url('admin.php?page=scr-reviews-comment');
         if (!empty($comment_type) && 'all' != $comment_type) {
-            $link = add_query_arg('comment_type', $comment_type, $link);
+            $link = add_query_arg('type', $comment_type, $link);
         }
 
         foreach ($stati as $status => $label) {
@@ -280,16 +280,20 @@ class User_Reviews_List extends WP_List_Table
                     array(
                         'post_id' => $post_id ? $post_id : 0,
                         'user_id' => $current_user_id,
+                        'type' => $comment_type,
                         'count' => true,
                     )
                 );
-                $link = add_query_arg('user_id', $current_user_id, $link);
+                $link = add_query_arg([
+                    'user_id' => $current_user_id,
+                    'type' => $comment_type,
+                ], $link);
             } else {
                 $link = remove_query_arg('user_id', $link);
             }
 
             if (!isset($num_comments->$status)) {
-                $num_comments->$status = 10;
+                $num_comments->$status = 0;
             }
             $link = add_query_arg('comment_status', $status, $link);
             if ($post_id) {
@@ -329,7 +333,61 @@ class User_Reviews_List extends WP_List_Table
         $html .= '</ul>';
 
         echo $html;
+    }
 
+    public function get_reviews_count($post_id = 0)
+    {
+        global $wpdb;
+
+        $post_id = (int) $post_id;
+        $where = $wpdb->prepare('WHERE comment_type= %s', SCR_COMMENT_TYPE);
+        if ($post_id > 0) {
+            $where = $wpdb->prepare('WHERE comment_type= %s AND comment_post_ID = %d', SCR_COMMENT_TYPE, $post_id);
+        }
+
+        $totals = (array) $wpdb->get_results("SELECT comment_approved, COUNT( * ) AS total
+        FROM {$wpdb->comments}
+        {$where}
+        GROUP BY comment_approved", ARRAY_A);
+
+        $comment_count = array(
+            'approved' => 0,
+            'awaiting_moderation' => 0,
+            'spam' => 0,
+            'trash' => 0,
+            'post-trashed' => 0,
+            'total_comments' => 0,
+            'all' => 0,
+        );
+
+        foreach ($totals as $row) {
+            switch ($row['comment_approved']) {
+                case 'trash':
+                    $comment_count['trash'] = $row['total'];
+                    break;
+                case 'post-trashed':
+                    $comment_count['post-trashed'] = $row['total'];
+                    break;
+                case 'spam':
+                    $comment_count['spam'] = $row['total'];
+                    $comment_count['total_comments'] += $row['total'];
+                    break;
+                case '1':
+                    $comment_count['approved'] = $row['total'];
+                    $comment_count['total_comments'] += $row['total'];
+                    $comment_count['all'] += $row['total'];
+                    break;
+                case '0':
+                    $comment_count['awaiting_moderation'] = $row['total'];
+                    $comment_count['total_comments'] += $row['total'];
+                    $comment_count['all'] += $row['total'];
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return (object) $comment_count;
     }
 
     /**
@@ -947,7 +1005,11 @@ if ('top' === $which) {
         $post_type_object = get_post_type_object($post->post_type);
         echo "<a href='" . get_permalink($post->ID) . "' class='comments-view-item-link'>" . $post_type_object->labels->view_item . '</a>';
         echo '<span class="post-com-count-wrapper post-com-count-', $post->ID, '">';
+        ob_start();
         $this->comments_bubble($post->ID, $pending_comments);
+        $bubble = ob_get_contents();
+        ob_end_clean();
+        echo str_replace('edit-comments.php?', 'admin.php?page=scr-reviews-comment&#038;', $bubble);        
         echo '</span> ';
         echo '</div>';
     }
@@ -968,6 +1030,7 @@ if ('top' === $which) {
          */
         do_action('manage_comments_custom_column', $column_name, $comment->comment_ID);
     }
+    
 }
 
 class User_Reviews
@@ -997,8 +1060,8 @@ class User_Reviews
         $hook = add_menu_page(
             __('User Reviews', SCR_DOMAIN),
             __('User Reviews', SCR_DOMAIN) . ' <span class="awaiting-mod count-1"><span class="pending-count" aria-hidden="true">1</span></span>',
-            'manage_options',
-            'user-reviews-wp-list-table',
+            'read',
+            'scr-reviews-comment',
             [$this, 'plugin_settings_page'],
             'dashicons-format-status',
             '35'
@@ -1012,8 +1075,8 @@ class User_Reviews
      */
     public function plugin_settings_page()
     {
-        $html = '<div class="wrap">';
-        $html .= '<h1 class="wp-heading-inline"> ' . __("User Reviews Table List", SCR_DOMAIN) . '</h1>';
+        $html = '<div class="wrap reviews-comment-wrap">';
+        $html .= '<h1 class="wp-heading-inline"> ' . __("User Reviews", SCR_DOMAIN) . '</h1>';
         $html .= '<hr class="wp-header-end">';
 
         ob_start();
