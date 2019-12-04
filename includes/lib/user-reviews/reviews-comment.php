@@ -77,7 +77,7 @@ class User_Reviews_List extends WP_List_Table
         }
 
         // $comment_type = !empty($_REQUEST['comment_type']) ? $_REQUEST['comment_type'] : '';
-        $comment_type = SCR_POST_TYPE;
+        $comment_type = SCR_COMMENT_TYPE;
 
         $search = (isset($_REQUEST['s'])) ? $_REQUEST['s'] : '';
 
@@ -176,7 +176,7 @@ class User_Reviews_List extends WP_List_Table
      */
     public function get_per_page($comment_status = 'all')
     {
-        $comments_per_page = $this->get_items_per_page('edit_comments_per_page');
+        $comments_per_page = $this->get_items_per_page('user_reviews_per_page');
         /**
          * Filters the number of comments listed per page in the comments list table.
          *
@@ -196,9 +196,9 @@ class User_Reviews_List extends WP_List_Table
         global $comment_status;
 
         if ('moderated' === $comment_status) {
-            _e('No comments awaiting moderation.');
+            _e('No reviews awaiting moderation.');
         } else {
-            _e('No comments found.');
+            _e('No reviews found.');
         }
     }
 
@@ -213,12 +213,6 @@ class User_Reviews_List extends WP_List_Table
 
         $status_links = array();
         $num_comments = ($post_id) ? wp_count_comments($post_id) : wp_count_comments();
-        // $num_comments = count(get_comments(array(
-        //     'post_id' => $post_id,
-        //     'type' => $comment_type,
-        // ));
-
-        error_log('num_comments : ' . print_r($num_comments, true));
 
         $stati = array(
             /* translators: %s: Number of comments. */
@@ -280,8 +274,6 @@ class User_Reviews_List extends WP_List_Table
                 $current_link_attributes = ' class="current" aria-current="page"';
             }
 
-            $link = add_query_arg('type', SCR_POST_TYPE, $link);
-
             if ('mine' === $status) {
                 $current_user_id = get_current_user_id();
                 $num_comments->mine = get_comments(
@@ -331,7 +323,7 @@ class User_Reviews_List extends WP_List_Table
         $html = '<ul class="subsubsub">';
         foreach ($html_links as $link => $value) {
             $html .= '<li class="' . $link . '">';
-            $html .= $value . ' |';
+            $html .= $value;
             $html .= '</li>';
         }
         $html .= '</ul>';
@@ -1050,7 +1042,7 @@ class SP_Plugin
 
         $option = 'per_page';
         $args = [
-            'label' => 'user_reviews',
+            'label' => 'Number of items per page:',
             'default' => 5,
             'option' => 'user_reviews_per_page',
         ];
