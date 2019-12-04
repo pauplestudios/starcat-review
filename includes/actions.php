@@ -22,10 +22,10 @@ if (!class_exists('\StarcatReview\Includes\Actions')) {
         {
             /* only allow SCR_POST_TYPE when is required explicitly */
 
-            if ($query->query_vars['type'] !== SCR_POST_TYPE) {
+            if ($query->query_vars['type'] !== SCR_COMMENT_TYPE) {
                 $query->query_vars['type__not_in'] = array_merge(
                     (array) $query->query_vars['type__not_in'],
-                    array(SCR_POST_TYPE)
+                    array(SCR_COMMENT_TYPE)
                 );
             }
         }

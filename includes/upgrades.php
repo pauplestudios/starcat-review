@@ -24,7 +24,7 @@ if (!class_exists('\StarcatReview\Includes\Upgrades')) {
                 'db_version' => get_option('SCR_VERSION'),
                 'file_version' => SCR_VERSION,
                 'version_option' => 'SCR_VERSION',
-                'slug' => SCR_POST_TYPE
+                'slug' => 'slug',
             ];
 
             $upgrades_list = new \StarcatReview\Includes\Upgrades_List();

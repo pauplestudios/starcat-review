@@ -27,7 +27,7 @@ function scr_get_user_reviews($post_id)
 {
     $args = [
         'post_id' => $post_id,
-        'type' => SCR_POST_TYPE,
+        'type' => SCR_COMMENT_TYPE,
     ];
 
     $comments = get_comments($args);
@@ -43,7 +43,7 @@ function scr_get_user_reviews_count($post_id)
 {
     $args = [
         'post_id' => $post_id,
-        'type' => SCR_POST_TYPE,
+        'type' => SCR_COMMENT_TYPE,
     ];
 
     $comments_count = count(get_comments($args));
@@ -58,7 +58,7 @@ function scr_get_trend_score($post_id)
 {
     $args = [
         'post_id' => $post_id,
-        'type' => SCR_POST_TYPE,
+        'type' => SCR_COMMENT_TYPE,
         'date_query' => array(
             'after' => '4 weeks ago',
             'before' => 'tomorrow',

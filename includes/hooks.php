@@ -20,8 +20,6 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             /*  Reviews Init Hook */
             add_action('init', array($this, 'init_hook'));
 
-
-
             /* */
             // add_action('widgets_init', [$this, 'register_sidebar']);
 
@@ -101,10 +99,15 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             wp_localize_script('starcat-review-script', 'SCROptions', ['enable_prosandcons' => SCR_Getter::get('enable-pros-cons')]);
 
             // Additional Dashboard Column fields
-            $post_type = SCR_POST_TYPE;
-            add_filter("manage_{$post_type}_posts_columns", array($this, 'manage_cpt_custom_columns'), 10);
-            add_action("manage_{$post_type}_posts_custom_column", array($this, 'manage_cpt_custom_column'), 10, 2);
-            add_action("manage_edit-{$post_type}_sortable_columns", array($this, 'sort_posts_custom_column'), 10, 1);
+
+            $post_types = SCR_Getter::get('review_enable_post-types');
+            foreach ($post_types as $post_type) {
+                add_filter("manage_{$post_type}_posts_columns", array($this, 'manage_cpt_custom_columns'), 10);
+                add_action("manage_{$post_type}_posts_custom_column", array($this, 'manage_cpt_custom_column'), 10, 2);
+                add_action("manage_edit-{$post_type}_sortable_columns", array($this, 'sort_posts_custom_column'), 10, 1);
+
+            }
+
             // add_action('pre_get_posts', array($this, 'sort_cpt_custom_column_order'));
         }
 
@@ -123,11 +126,11 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         {
 
             switch ($column) {
-                    // Todo: 'scr_product_price'
+                // Todo: 'scr_product_price'
                 case 'scr_rating':
                     // Todo: save the rating as a temporary post meta which can be used in pre_get_posts
                     $rating = scr_get_overall_rating($id);
-                    echo ($rating['overall']['rating'] == 0) ? 'Not Rated Yet' : $rating['dom'];
+                    echo ($rating['overall']['rating'] == 0) ? '---' : $rating['dom'];
                     break;
             }
         }
