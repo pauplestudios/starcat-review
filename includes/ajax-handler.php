@@ -146,7 +146,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                             $items[]  = $author_stat_item;
                         }
                     }
-
+                    $get_overall_stat = scr_get_overall_rating($post->ID);
                     $posts[] = array(
                         'id' => $post->ID,
                         'title' => $post->post_title,
@@ -155,8 +155,8 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                         // 'stats' => $temp_stats,
                         'image_url' => isset($image) ? $image[0] : "",
                         'author_stats'  => $items,
-                        'user_stats'    => $user_stats
-
+                        'user_stats'    => $user_stats,
+                        'get_overall_stat' => $get_overall_stat
                     );
                 }
             } else {

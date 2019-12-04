@@ -81,7 +81,7 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\Model')) {
 
         protected function get_stats_list($post_id)
         {
-            $review_post_meta =   get_post_meta($post_id, '_scr_post_options', true);
+            $review_post_meta =  get_post_meta($post_id, '_scr_post_options', true);
 
             // Return if empty
             if (!isset($review_post_meta['stats']) || empty($review_post_meta['stats'])) {

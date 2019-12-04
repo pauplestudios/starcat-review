@@ -25,7 +25,7 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\View')) {
             // $html .= $this->get_header();
             $html .= '<div class="cd-products-table">';
             $html .= $this->features($args['cols']);
-            $html .= $this->get_columns($args['posts'], $args['cols']);
+            $html .= $this->get_columns($args, $args['cols']);
             $html .= $this->navigation();
             $html .= '</div> <!-- .cd-products-table -->';
             $html .= '</section> <!-- .cd-products-comparison-table -->';
@@ -76,10 +76,11 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\View')) {
             $html .= '<div class="cd-products-wrapper">';
             $html .= '<ul class="cd-products-columns" style="display:flex;">';
 
-            foreach ($args as $key => $single_product_stats) {
+            foreach ($args['posts'] as $key => $single_product_stats) {
                 // error_log("single_product_stats" . print_r($single_product_stats, true));
                 $html .= $this->single_product($single_product_stats, $stat_cols);
             }
+
 
             if ($args['view_type'] == "dynamic") {
                 if (count($args) > 0) {
