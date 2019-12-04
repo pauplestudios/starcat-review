@@ -4,7 +4,7 @@ if (!class_exists('WP_List_Table')) {
     require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
 
-class User_Reviews_List extends WP_List_Table
+class UR_List_Table extends WP_List_Table
 {
 
     public $checkbox = true;
@@ -1033,14 +1033,14 @@ if ('top' === $which) {
     
 }
 
-class User_Reviews
+class UR_List_Table_Controller
 {
 
     // class instance
     static $instance;
 
     // user_review WP_List_Table object
-    public $user_reviews_obj;
+    public $ur_table;
 
     // class constructor
     public function __construct()
@@ -1080,9 +1080,9 @@ class User_Reviews
         $html .= '<hr class="wp-header-end">';
 
         ob_start();
-        $this->user_reviews_obj->prepare_items();
-        $this->user_reviews_obj->get_views();
-        $this->user_reviews_obj->display();
+        $this->ur_table->prepare_items();
+        $this->ur_table->get_views();
+        $this->ur_table->display();
         $html .= ob_get_contents();
         ob_end_clean();
         $html .= '</div>';
@@ -1106,7 +1106,7 @@ class User_Reviews
 
         add_screen_option($option, $args);
 
-        $this->user_reviews_obj = new User_Reviews_List();
+        $this->ur_table = new UR_List_Table();
     }
 
     /** Singleton instance */
@@ -1121,5 +1121,5 @@ class User_Reviews
 }
 
 add_action('plugins_loaded', function () {
-    User_Reviews::get_instance();
+    UR_List_Table_Controller::get_instance();
 });
