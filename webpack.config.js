@@ -14,26 +14,26 @@ const FileManagerPlugin = require("filemanager-webpack-plugin");
 const webpackConfig = {
     entry: {
         main: "./includes/assets/js/main.js",
-        admin: "./includes/assets/js/admin.js"
+        admin: "./includes/assets/js/admin.js",
     },
     output: {
         filename: "[name].bundle.js",
         path: path.resolve(__dirname, "includes/assets/bundle"),
-        publicPath: "./"
+        publicPath: "./",
     },
     externals: {
-        list: "list"
+        list: "list",
     },
     module: {
         rules: [
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                loaders: ["babel-loader"]
+                loaders: ["babel-loader"],
             },
             {
                 test: /\.css$/i,
-                use: [MiniCssExtractPlugin.loader, "css-loader"]
+                use: [MiniCssExtractPlugin.loader, "css-loader"],
             },
             {
                 test: /\.scss$/i,
@@ -42,19 +42,19 @@ const webpackConfig = {
                     MiniCssExtractPlugin.loader,
                     "css-loader",
                     "resolve-url-loader",
-                    "sass-loader"
-                ]
+                    "sass-loader",
+                ],
             },
             {
                 test: /\.(png|svg|jpg|gif)$/,
-                use: ["file-loader"]
-            }
-        ]
+                use: ["file-loader"],
+            },
+        ],
     },
     devtool: "source-map",
     plugins: [
         new webpack.DefinePlugin({
-            "process.env.NODE_ENV": "'development'"
+            "process.env.NODE_ENV": "'development'",
         }),
 
         /* TODO: Disabled temporaryly to fix test */
@@ -68,10 +68,10 @@ const webpackConfig = {
         // }),
         new MiniCssExtractPlugin({
             // disable: false,
-            filename: "[name].bundle.css"
+            filename: "[name].bundle.css",
             // allChunks: true
-        })
-    ]
+        }),
+    ],
 };
 
 if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
@@ -82,16 +82,16 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
             parallel: true,
             terserOptions: {
                 compress: {
-                    drop_console: true
+                    drop_console: true,
                 },
                 output: {
-                    comments: false
+                    comments: false,
                 },
                 ecma: 6,
-                mangle: true
+                mangle: true,
             },
             extractComments: false,
-            sourceMap: true
+            sourceMap: true,
         })
     );
 
@@ -102,7 +102,7 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
             [
                 {
                     from: path.resolve(__dirname, "app") + "/**",
-                    to: buildFolder
+                    to: buildFolder,
                 },
                 {
                     from: path.resolve(__dirname, "includes") + "/",
@@ -115,7 +115,7 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
                         "**/tests/**/*",
                         "**/sample/**/*",
                         "**/samples/**/*",
-                        "lib/freemius/**/*",
+                        // "lib/freemius/**/*",
                         "assets/js/**/*",
                         "assets/styles/**/*",
 
@@ -129,8 +129,8 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
                         "assets/vendors/semantic/bundle/semantic.js",
                         "assets/vendors/semantic/gulpfile.js",
 
-                        "assets/vendors/comparison-table/**/*"
-                    ]
+                        "assets/vendors/comparison-table/**/*",
+                    ],
                 },
 
                 // {
@@ -140,18 +140,18 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
 
                 {
                     from: path.resolve(__dirname, "*.php"),
-                    to: buildFolder
+                    to: buildFolder,
                 },
                 {
                     from: path.resolve(__dirname, "*.txt"),
-                    to: buildFolder
-                }
+                    to: buildFolder,
+                },
             ],
             {
                 // By default, we only copy modified files during
                 // a watch or webpack-dev-server build. Setting this
                 // to `true` copies all files.
-                copyUnmodified: true
+                copyUnmodified: true,
             }
         )
     );
@@ -162,10 +162,10 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
                 archive: [
                     {
                         source: "./test-artifacts/build",
-                        destination: "./starcat-review.zip"
-                    }
-                ]
-            }
+                        destination: "./starcat-review.zip",
+                    },
+                ],
+            },
         })
     );
 
