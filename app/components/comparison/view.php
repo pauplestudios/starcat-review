@@ -82,13 +82,13 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\View')) {
             }
 
 
-            if ($args['view_type'] == "dynamic") {
-                if (count($args) > 0) {
-                    $html .= $this->search_filter_product();
-                } else if (count($args) == 0) {
-                    $html .= $this->search_filter_product();
-                }
+            //if ($args['view_type'] == "dynamic") {
+            if (count($args) > 0) {
+                $html .= $this->search_filter_product();
+            } else if (count($args) == 0) {
+                $html .= $this->search_filter_product();
             }
+            //}
 
             $html .= '</ul> <!-- .cd-products-columns -->';
             $html .= '</div> <!-- .cd-products-wrapper -->';

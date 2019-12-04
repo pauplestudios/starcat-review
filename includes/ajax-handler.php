@@ -71,7 +71,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
 
         public function search_posts()
         {
-            $summary = new \StarcatReview\App\Summary();
+            // $summary = new \StarcatReview\App\Summary();
 
             $args = array(
                 'post_type' => array(SCR_POST_TYPE),
@@ -123,7 +123,8 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                     $get_comments = scr_get_user_reviews($post->ID);
 
                     $user_stats = array();
-
+                    //default view rating feature in CT 
+                    $user_stats[] = array('stat_name' => 'scr-ratings', 'rating' => 0);
                     if (isset($get_comments) && !empty($get_comments)) {
                         foreach ($get_comments as $comment) {
                             if (isset($comment->reviews)) {
@@ -138,12 +139,14 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                         }
                     }
 
-                    $items = [];
+                    $author_stats = [];
+                    //default view rating feature in CT
+                    $author_stats[] = array('stat_name' => 'scr-ratings', 'rating' => 0);
                     if (isset($author_stats['stats-list']) || !empty($author_stats['stats-list'])) {
                         // $items['stats-list'] = $author_stats['stats-list'];
                         $author_stats_lists = $author_stats['stats-list'];
                         foreach ($author_stats_lists as $author_stat_item) {
-                            $items[]  = $author_stat_item;
+                            $author_stats[]  = $author_stat_item;
                         }
                     }
                     $get_overall_stat = scr_get_overall_rating($post->ID);
@@ -154,7 +157,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                         // 'url' => $post->guid,
                         // 'stats' => $temp_stats,
                         'image_url' => isset($image) ? $image[0] : "",
-                        'author_stats'  => $items,
+                        'author_stats'  => $author_stats,
                         'user_stats'    => $user_stats,
                         'get_overall_stat' => $get_overall_stat
                     );

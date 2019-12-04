@@ -52,13 +52,16 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Comparison\Widget')) {
             //     'view_type' => 'dynamic'
             // );
             $comparison_controller = new \StarcatReview\App\Components\Comparison\Controller();
+            error_log($component_args);
             return $comparison_controller->get_view($component_args);
         }
 
         protected function get_interpreted_args($args)
         {
             $posts = !isset($args['posts']) ? $this->get_default_posts() : $args['posts'];
+            error_log("args" . print_r($args, true));
             $component_args['posts'] = $this->get_default_post_props($args, $posts);
+
             return $component_args;
         }
 
