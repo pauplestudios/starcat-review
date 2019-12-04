@@ -201,7 +201,6 @@ jQuery(document).ready(function($) {
         content += "<h3>" + args.title + "</h3></div>";
         content += '<ul class="cd-features-list">';
         content += self.createSCRProductStatList(args);
-        // content += self.createSCRProductStatList(args.author_stats);
         content += "</ul>";
         content += "</li>";
 
@@ -209,7 +208,7 @@ jQuery(document).ready(function($) {
     };
 
     productsTable.prototype.refreshProductTable = function() {
-        console.log("reloading product table");
+        console.log("reloading scr ct ");
         var self = this;
 
         var scr_stat_table_column = self.getSCRTableColumns();

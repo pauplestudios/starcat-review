@@ -28,7 +28,6 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Comparison\Widget')) {
         public function get_view($args)
         {
 
-
             $default_args = $this->get_default_args();
             $component_args = array_merge($default_args, $args);
             $component_args = $this->get_interpreted_args($component_args);
@@ -52,14 +51,14 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Comparison\Widget')) {
             //     'view_type' => 'dynamic'
             // );
             $comparison_controller = new \StarcatReview\App\Components\Comparison\Controller();
-            error_log($component_args);
+            // error_log($component_args);
             return $comparison_controller->get_view($component_args);
         }
 
         protected function get_interpreted_args($args)
         {
             $posts = !isset($args['posts']) ? $this->get_default_posts() : $args['posts'];
-            error_log("args" . print_r($args, true));
+            // error_log("args" . print_r($args, true));
             $component_args['posts'] = $this->get_default_post_props($args, $posts);
 
             return $component_args;
@@ -180,6 +179,8 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Comparison\Widget')) {
         public function get_fields()
         {
 
+            $get_src_posts_options = $this->get_src_posts(true);
+
             $fields = array(
                 'title' => [
                     'name' => 'title',
@@ -207,11 +208,41 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Comparison\Widget')) {
                         'dynamic' => __('Dynamic', 'starcat-review')
                     ),
                     'type' => 'select',
-                ]
+                ],
+                'post_ids' => [
+                    'name' => 'post_ids',
+                    'label' => __('Choose Values', 'starcat-review'),
+                    'default' => 'random',
+                    'options' => $get_src_posts_options,
+                    'type' => 'multi-select',
+                ],
             );
 
 
             return $fields;
+        }
+
+        public function get_src_posts()
+        {
+            $post_options = array();
+            $args = array(
+                'post_type' => array(SCR_POST_TYPE),
+                'post_status' => array('publish'),
+                'nopaging' => true,
+                'order' => 'ASC',
+                'orderby' => 'menu_order',
+            );
+            $results = new \WP_Query($args);
+
+            if ($results->have_posts()) {
+                $post_options['random'] = 'Random';
+                foreach ($results->posts as $post) {
+                    $post_options[$post->ID] = substr(wp_strip_all_tags($post->post_title), 0, 25) . '...';
+                    // $post_options[$post->ID] = $post->post_title;
+                }
+            }
+
+            return $post_options;
         }
 
         public function get_style_config()

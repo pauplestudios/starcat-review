@@ -152,7 +152,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                     $get_overall_stat = scr_get_overall_rating($post->ID);
                     $posts[] = array(
                         'id' => $post->ID,
-                        'title' => $post->post_title,
+                        'title' => substr(wp_strip_all_tags($post->post_title), 0, 25) . '...',
                         'description' => $post->post_content,
                         // 'url' => $post->guid,
                         // 'stats' => $temp_stats,
