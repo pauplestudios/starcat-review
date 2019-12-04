@@ -35,8 +35,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             add_filter('the_content', array($this, 'content_filter'));
             // add_filter('the_excerpt', array($this, 'content_filter'));
 
-            // require_once SCR_PATH . '/includes/lib/user-reviews/reviews.php';
-            require_once SCR_PATH . '/includes/lib/user-reviews/reviews-comment.php';
+            require_once SCR_PATH . '/app/components/user-reviews/table.php';
         }
 
         public function init_hook()
