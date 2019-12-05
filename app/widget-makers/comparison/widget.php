@@ -27,12 +27,11 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Comparison\Widget')) {
 
         public function get_view($args)
         {
-
+            error_log('shortcodes args' . print_r($args, true));
             $default_args = $this->get_default_args();
             $component_args = array_merge($default_args, $args);
             $component_args = $this->get_interpreted_args($component_args);
             $component_args = $this->boolean_conversion($component_args);
-
 
             // $post_ids = [176, 174, 147];
 
@@ -57,42 +56,51 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Comparison\Widget')) {
 
         protected function get_interpreted_args($args)
         {
-            $posts = !isset($args['posts']) ? $this->get_default_posts() : $args['posts'];
+            $posts = $this->get_default_posts($args);
             // error_log("args" . print_r($args, true));
             $component_args['posts'] = $this->get_default_post_props($args, $posts);
+            $component_args['title'] = $args['title'];
+            $component_args['max_num_of_items'] = $args['max_num_of_items'];
+            $component_args['show_type'] = $args['show_type'];
 
+            error_log('component_args' . print_r($component_args, true));
             return $component_args;
         }
 
-        protected function get_default_posts()
+        protected function get_default_posts($args)
         {
+            // error_log('defaultposts' . print_r($args, true));
             $posts = [];
-            // recently add 3 posts
-            // $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-            // $args = array(
-            //     'posts_per_page' => 3,
-            //     'post_type' => SCR_POST_TYPE,
-            //     'paged' => $paged,
-            // );
 
-            // $query = new \WP_Query($args);
+            $get_posts = explode(',', $args['posts']);
 
-            // if ($query->have_posts()) {
-            //     while ($query->have_posts()) {
-            //         // Optionally, pick parts of the post and create a custom collection.
-            //         $query->the_post();
-            //         $posts[] = get_post();
-            //     }
-            //     wp_reset_postdata();
-            // }
+            if (in_array('random', $get_posts)) {
 
-            $post_ids = [176, 174, 147];
+                $post_args = array(
+                    'post_type' => array(SCR_POST_TYPE),
+                    'post_status' => array('publish'),
+                    'nopaging' => true,
+                    'order' => 'ASC',
+                    'orderby' => 'menu_order',
+                    'posts_per_page' => $args['num_of_cols']
+                );
+                $results = new \WP_Query($post_args);
 
-            $args = array(
-                'post__in' => $post_ids,
-                'post_type' => SCR_POST_TYPE,
-            );
-            $posts = get_posts($args);
+                if ($results->have_posts()) {
+                    foreach ($results->posts as $post) {
+                        $posts[] = $post;
+                    }
+                }
+            } else {
+
+                $post_args = array(
+                    'post__in' => $get_posts,
+                    'post_type' => array(SCR_POST_TYPE),
+                    'posts_per_page' => $args['num_of_cols']
+                );
+
+                $posts = get_posts($post_args);
+            }
 
             return $posts;
         }
@@ -100,6 +108,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Comparison\Widget')) {
         protected function get_default_post_props($args, $posts)
         {
             $default_posts = array();
+
             if (isset($posts)) {
                 foreach ($posts as $post) {
                     $post_infos = array();
@@ -209,8 +218,8 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Comparison\Widget')) {
                     ),
                     'type' => 'select',
                 ],
-                'post_ids' => [
-                    'name' => 'post_ids',
+                'posts' => [
+                    'name' => 'posts',
                     'label' => __('Choose Values', 'starcat-review'),
                     'default' => 'random',
                     'options' => $get_src_posts_options,

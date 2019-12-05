@@ -139,14 +139,14 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                         }
                     }
 
-                    $author_stats = [];
+                    $items = [];
                     //default view rating feature in CT
-                    $author_stats[] = array('stat_name' => 'scr-ratings', 'rating' => 0);
+                    $items[] = array('stat_name' => 'scr-ratings', 'rating' => 0);
                     if (isset($author_stats['stats-list']) || !empty($author_stats['stats-list'])) {
                         // $items['stats-list'] = $author_stats['stats-list'];
                         $author_stats_lists = $author_stats['stats-list'];
                         foreach ($author_stats_lists as $author_stat_item) {
-                            $author_stats[]  = $author_stat_item;
+                            $items[]  = $author_stat_item;
                         }
                     }
                     $get_overall_stat = scr_get_overall_rating($post->ID);
@@ -157,7 +157,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                         // 'url' => $post->guid,
                         // 'stats' => $temp_stats,
                         'image_url' => isset($image) ? $image[0] : "",
-                        'author_stats'  => $author_stats,
+                        'author_stats'  => $items,
                         'user_stats'    => $user_stats,
                         'get_overall_stat' => $get_overall_stat
                     );
