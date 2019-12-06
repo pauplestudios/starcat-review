@@ -10,7 +10,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
     class Ajax_Handler
     {
         public function __construct()
-        {}
+        { }
 
         public function register_ajax_actions()
         {
@@ -75,7 +75,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
 
         public function search_posts()
         {
-            $summary = new \StarcatReview\App\Summary();
+            // $summary = new \StarcatReview\App\Summary();
 
             $args = array(
                 'post_type' => array(SCR_POST_TYPE),
@@ -90,33 +90,33 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
             if ($results->have_posts()) {
 
                 foreach ($results->posts as $post) {
-                    $temp_stats = [
-                        '0' => [
-                            'stat_name' => 'quality',
-                            'rating' => '2',
-                        ],
-                        '1' => [
-                            'stat_name' => 'battery performance',
-                            'rating' => '4.3',
-                        ],
-                        '2' => [
-                            'stat_name' => 'camera quality',
-                            'rating' => '4.2',
-                        ],
-                        '3' => [
-                            'stat_name' => 'extras_1',
-                            'rating' => '4.2',
-                        ],
-                        '4' => [
-                            'stat_name' => 'extras_2',
-                            'rating' => '4.2',
-                        ],
-                        '5' => [
-                            'stat_name' => 'extras_3',
-                            'rating' => '4.2',
-                        ],
+                    // $temp_stats = [
+                    //     '0' => [
+                    //         'stat_name' => 'quality',
+                    //         'rating' => '2',
+                    //     ],
+                    //     '1' => [
+                    //         'stat_name' => 'battery performance',
+                    //         'rating'    => '4.3'
+                    //     ],
+                    //     '2' => [
+                    //         'stat_name' => 'camera quality',
+                    //         'rating'    => '4.2'
+                    //     ],
+                    //     '3' => [
+                    //         'stat_name' => 'extras_1',
+                    //         'rating'    => '4.2'
+                    //     ],
+                    //     '4' => [
+                    //         'stat_name' => 'extras_2',
+                    //         'rating'    => '4.2'
+                    //     ],
+                    //     '5' => [
+                    //         'stat_name' => 'extras_3',
+                    //         'rating'    => '4.2'
+                    //     ],
 
-                    ];
+                    // ];
                     if (has_post_thumbnail($post->ID)) {
                         $image = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID));
                     }
@@ -124,7 +124,28 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                     $author_stats = get_post_meta($post->ID, '_scr_post_options', true);
                     // $default_args = $summary->get_default_args();
 
+                    $get_comments = scr_get_user_reviews($post->ID);
+
+                    $user_stats = array();
+                    //default view rating feature in CT 
+                    $user_stats[] = array('stat_name' => 'scr-ratings', 'rating' => 0);
+                    if (isset($get_comments) && !empty($get_comments)) {
+                        foreach ($get_comments as $comment) {
+                            if (isset($comment->reviews)) {
+                                $review = $comment->reviews;
+                                $stats = $review['stats'];
+                                if (count($stats) > 0) {
+                                    foreach ($stats as $stat) {
+                                        $user_stats[] = $stat;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     $items = [];
+                    //default view rating feature in CT
+                    $items[] = array('stat_name' => 'scr-ratings', 'rating' => 0);
                     if (isset($author_stats['stats-list']) || !empty($author_stats['stats-list'])) {
                         // $items['stats-list'] = $author_stats['stats-list'];
                         $author_stats_lists = $author_stats['stats-list'];
@@ -132,16 +153,17 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                             $items[] = $author_stat_item;
                         }
                     }
-
+                    $get_overall_stat = scr_get_overall_rating($post->ID);
                     $posts[] = array(
                         'id' => $post->ID,
-                        'title' => $post->post_title,
+                        'title' => substr(wp_strip_all_tags($post->post_title), 0, 25) . '...',
                         'description' => $post->post_content,
                         // 'url' => $post->guid,
-                        'stats' => $temp_stats,
+                        // 'stats' => $temp_stats,
                         'image_url' => isset($image) ? $image[0] : "",
-                        'author_stats' => $items,
-
+                        'author_stats'  => $items,
+                        'user_stats'    => $user_stats,
+                        'get_overall_stat' => $get_overall_stat
                     );
                 }
             } else {
