@@ -21,8 +21,8 @@ if (!class_exists('\StarcatReview\Includes\Widgets\Register_Elementor_Widgets'))
                 'title' => 'Review Listing',
                 'icon' => 'fa fa-th-list',
                 'categories' => ['general-elements'],
-                'model' =>  new \StarcatReview\App\Widget_Makers\Review_Listing\Controller(),
-                'view' => new \StarcatReview\App\Widget_Makers\Review_Listing\Controller(),
+                'model' =>  new \StarcatReviewCpt\Widgets\Review_Listing\Controller(),
+                'view' => new \StarcatReviewCpt\Widgets\Review_Listing\Controller(),
             );
 
 

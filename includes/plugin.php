@@ -21,7 +21,7 @@ if (!class_exists('\Starcat_Review')) {
             require_once SCR_PATH . 'includes/functions.php';
 
             /*  Reviews Register Post types and its Taxonomies */
-            $this->register_cpt_and_taxonomy();
+            // $this->register_cpt_and_taxonomy();
 
             // Load Hooks
             $this->load_hooks();
@@ -32,11 +32,11 @@ if (!class_exists('\Starcat_Review')) {
             $this->load_components();
         }
 
-        public function register_cpt_and_taxonomy()
-        {
-            $cpt = new \StarcatReview\Includes\Cpt();
-            $cpt->register();
-        }
+        // public function register_cpt_and_taxonomy()
+        // {
+        //     $cpt = new \StarcatReview\Includes\Cpt();
+        //     $cpt->register();
+        // }
 
         public function load_hooks()
         {
@@ -53,7 +53,8 @@ if (!class_exists('\Starcat_Review')) {
 
         public function load_components()
         {
-            $shortcodes = new \StarcatReview\Includes\Shortcodes();
+
+
             $settings = new \StarcatReview\Includes\Settings();
 
             /* Notifications */
@@ -62,10 +63,6 @@ if (!class_exists('\Starcat_Review')) {
             /* Upgrades */
             $Upgrades = new \StarcatReview\Includes\Upgrades();
             \StarcatReview\Includes\Upgrades::init();
-
-            /* Load Widgets */
-            $widgets = new \StarcatReview\Includes\Widget_Controller();
-            $widgets->load();
         }
 
         /**
