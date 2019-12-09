@@ -4,6 +4,8 @@ namespace StarcatReview\App\Widget_Makers;
 
 use StarcatReview\Includes\Settings\SCR_Getter;
 
+use function GuzzleHttp\json_encode;
+
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -27,6 +29,14 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             $view = $form_view . $reviews_list_view;
 
             return $view;
+        }
+
+        //for rich snippet product schema purpose
+        public function get_schema_reviews()
+        {
+            $post_meta = get_post_meta(get_the_ID(), '_scr_post_options', true);
+            $reviews = $this->get_comments_list();
+            return $reviews;
         }
 
         public function get_default_args()

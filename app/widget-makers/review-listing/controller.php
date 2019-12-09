@@ -21,7 +21,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Controller'))
         }
 
         public function load()
-        {}
+        { }
 
         public function get_view($args)
         {

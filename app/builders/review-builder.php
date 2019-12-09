@@ -24,7 +24,6 @@ if (!class_exists('\StarcatReview\App\Builders\Review_Builder')) {
             $user_review_enable_post_types = SCR_Getter::get('ur_enable_post-types');
 
             $html = '';
-
             // error_log("is_enable Review : " . $this->is_enable_post_type($post_type, $review_enable_post_types));
             if ($this->is_enable_post_type($post_type, $review_enable_post_types)) {
                 $html .= $this->summary->get_view();

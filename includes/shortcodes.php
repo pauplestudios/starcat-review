@@ -19,11 +19,14 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
             add_shortcode('starcat_review_comparison_table', array($this, 'comparison_table'));
         }
 
-        public function comparison_table()
+        public function comparison_table($atts)
         {
-            error_log('comparison_table : ');
+            // error_log("CT get default atts" . print_r($atts, true));
             $comparison_table_widget = new \StarcatReview\App\Widget_Makers\Comparison\Widget();
-            return $comparison_table_widget->get_view();
+            $dafaults = $comparison_table_widget->get_default_args();
+            $widget_args = shortcode_atts($dafaults, $atts);
+            // error_log(" CT widger props " . print_r($widget_args, true));
+            return $comparison_table_widget->get_view($widget_args);
         }
         public function reviews_list($atts)
         {

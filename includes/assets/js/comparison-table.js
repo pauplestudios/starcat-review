@@ -131,6 +131,7 @@ jQuery(document).ready(function($) {
                 onSelect: function(result) {
                     var that = self;
                     console.log("get product element");
+                    // debugger;
                     var productContent = self.productElement(result);
 
                     $(".scr-search-filter-wrapper").before(productContent);
@@ -156,33 +157,28 @@ jQuery(document).ready(function($) {
     };
 
     //create Product Items
-    productsTable.prototype.productElement = function(result) {
+    productsTable.prototype.productElement = function(args) {
         var self = this;
-        var scr_stat_table_column = self.getSCRTableColumns();
+
+        var scr_ct_feature_columns = self.getSCRTableColumns();
         //response data comes with extra stat data's
-        var product_extra_stat = [];
-        if (result.author_stats.length > 0) {
-            for (var incr = 0; incr < result.author_stats.length; incr++) {
-                if (
-                    $.inArray(
-                        result.author_stats[incr].stat_name,
-                        scr_stat_table_column
-                    ) != -1
-                ) {
-                    //found stat result
+        var ct_extra_feature_columns = [];
+        if (args.author_stats.length > 0) {
+            for (var incr = 0; incr < args.author_stats.length; incr++) {
+                review_stat = args.author_stats[incr].stat_name;
+                if ($.inArray(review_stat, scr_ct_feature_columns) != -1) {
+                    //found feature result
                 } else {
-                    product_extra_stat.push(
-                        result.author_stats[incr].stat_name
-                    );
+                    ct_extra_feature_columns.push(review_stat);
                 }
             }
         }
 
         //Add Extra Product Feature in compare table Column list
-        if (product_extra_stat.length > 0) {
-            for (var i = 0; i < product_extra_stat.length; i++) {
+        if (ct_extra_feature_columns.length > 0) {
+            for (var i = 0; i < ct_extra_feature_columns.length; i++) {
                 self.featureItems.append(
-                    "<li>" + product_extra_stat[i] + "</li>"
+                    "<li>" + ct_extra_feature_columns[i] + "</li>"
                 );
             }
         }
@@ -193,17 +189,17 @@ jQuery(document).ready(function($) {
         content +=
             '<i class="window close outline icon" style="font-size:25px;"></i></div>';
         content += '<div class="check"></div>';
-        if (result.image_url === "undefined" || result.image_url == null) {
+        if (args.image_url === "undefined" || args.image_url == null) {
             // Need to set default product image url
             // content += '<img class="featured-image" src="' + result.image_url + '">';
             content += "";
         } else {
             content +=
-                '<img class="featured-image" src="' + result.image_url + '">';
+                '<img class="featured-image" src="' + args.image_url + '">';
         }
-        content += "<h3>" + result.title + "</h3></div>";
+        content += "<h3>" + args.title + "</h3></div>";
         content += '<ul class="cd-features-list">';
-        content += self.createSCRProductStatList(result.author_stats);
+        content += self.createSCRProductStatList(args);
         content += "</ul>";
         content += "</li>";
 
@@ -211,7 +207,7 @@ jQuery(document).ready(function($) {
     };
 
     productsTable.prototype.refreshProductTable = function() {
-        console.log("reloading product table");
+        console.log("reloading scr ct ");
         var self = this;
 
         var scr_stat_table_column = self.getSCRTableColumns();
@@ -224,12 +220,16 @@ jQuery(document).ready(function($) {
                 var $parentElement = $(this).next();
                 var $parentProduct = $(this).closest(".product");
                 var singleProductStats = [];
-
                 $parentProduct.find("ul.cd-features-list li").each(function() {
-                    dataStat = $(this)
-                        .attr("data-stat")
-                        .trim();
-                    singleProductStats.push(dataStat);
+                    if (
+                        $(this).data("stat") !== undefined &&
+                        $(this).data("stat") !== "undefined"
+                    ) {
+                        dataStat = $(this)
+                            .attr("data-stat")
+                            .trim();
+                        singleProductStats.push(dataStat);
+                    }
                 });
 
                 for (var i = 0; i < scr_stat_table_column.length; i++) {
@@ -246,9 +246,12 @@ jQuery(document).ready(function($) {
         });
     };
 
-    productsTable.prototype.createSCRProductStatList = function(author_stats) {
+    productsTable.prototype.createSCRProductStatList = function(args) {
         var self = this;
         var content = "";
+        var author_stats = args.author_stats;
+        var overall_ratings = args.get_overall_stat;
+        review_dom_wrapper = overall_ratings.dom;
         var scr_stat_table_column = self.getSCRTableColumns();
         if (scr_stat_table_column.length > 0) {
             for (var i = 0; i < scr_stat_table_column.length; i++) {
@@ -267,36 +270,55 @@ jQuery(document).ready(function($) {
                     }
                 }
                 if (author_stat_is_found) {
-                    content +=
-                        "<li data-stat='" +
-                        stat_name +
-                        "'>" +
-                        stat_rating +
-                        "</li>";
+                    if (stat_name === "scr-ratings") {
+                        content +=
+                            "<li class='scr-ct-ratings' data-stat='" +
+                            stat_name +
+                            "'>" +
+                            review_dom_wrapper +
+                            "</li>";
+                    } else {
+                        content +=
+                            "<li data-stat='" +
+                            stat_name +
+                            "'>" +
+                            stat_rating +
+                            "</li>";
+                    }
                 } else {
-                    content +=
-                        "<li data-stat='" +
-                        scr_stat_table_column[i] +
-                        "'>X</li>";
+                    if (scr_stat_table_column[i] === "scr-ratings") {
+                        content +=
+                            "<li class='scr-ct-ratings' data-stat='" +
+                            scr_stat_table_column[i] +
+                            "'>" +
+                            review_dom_wrapper +
+                            "</li>";
+                    } else {
+                        content +=
+                            "<li data-stat='" +
+                            scr_stat_table_column[i] +
+                            "'>X</li>";
+                    }
                 }
             }
         }
         return content;
     };
-    //get table feature column
+
+    //get SCR CT feature columns
     productsTable.prototype.getSCRTableColumns = function() {
         var self = this;
-        var scr_table_columns = [];
+        var scr_ct_feature_columns = [];
         if (self.featureItems.find("li").length > 0) {
             self.featureItems.find("li").each(function() {
-                scr_table_columns.push(
+                scr_ct_feature_columns.push(
                     $(this)
                         .text()
                         .trim()
                 );
             });
         }
-        return scr_table_columns;
+        return scr_ct_feature_columns;
     };
 
     productsTable.prototype.upadteFilterBtn = function() {
