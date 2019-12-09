@@ -983,7 +983,6 @@ if ('top' === $which) {
             $args = SCR_Getter::get_stat_default_args();
             $args['items']['stats-list'] = $props['stats'];
             // error_log('args : ' . print_r($args, true));
-            
             $stat_controller = new \StarcatReview\App\Components\Stats\Controller($args);
             $rating = $stat_controller->get_view();
 
@@ -1084,7 +1083,7 @@ class UR_List_Table_Controller
 
         $hook = add_menu_page(
             __('User Reviews', SCR_DOMAIN),
-            __('User Reviews', SCR_DOMAIN) . ' <span class="awaiting-mod count-1"><span class="pending-count" aria-hidden="true">1</span></span>',
+            __('User Reviews', SCR_DOMAIN) . ' ' . $this->get_review_pending_count_html(),
             'read',
             'scr-reviews-comment',
             [$this, 'plugin_settings_page'],
@@ -1142,6 +1141,38 @@ class UR_List_Table_Controller
         }
 
         return self::$instance;
+    }
+
+    protected function get_review_pending_count_html()
+    {
+        $count = $this->get_review_pending_count();
+        $html = '';
+        if ($count !== 0) {
+            $html .= '<span class="awaiting-mod count-1">';
+            $html .= '<span class="pending-count" aria-hidden="true">';
+            $html .= $count;
+            $html .= '</span>';
+            $html .= '</span>';
+        }
+
+        return $html;
+    }
+
+    protected function get_review_pending_count()
+    {
+        global $wpdb;
+        $count = 0;
+        $where = $wpdb->prepare('WHERE comment_type= %s', SCR_COMMENT_TYPE);
+
+        $pending = $wpdb->get_results("SELECT comment_post_ID, COUNT(comment_ID) as num_comments FROM $wpdb->comments {$where} AND comment_approved = '0'", ARRAY_A);
+
+        // error_log('pending : ' . print_r($pending, true));
+
+        if (!empty($pending)) {
+            $count = absint($pending[0]['num_comments']);
+        }
+
+        return $count;
     }
 }
 

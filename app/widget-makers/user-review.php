@@ -46,7 +46,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
 
             $args = array_merge($stat_args, $args);
 
-            $args['can_user_review'] = $this->get_user_can_review($args);
+            $args['can_user_review'] = $this->get_user_can_review();
             $args['can_user_reply'] = $this->get_user_can_reply();
 
             return $args;
@@ -80,7 +80,8 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
         {
             $args = [
                 'post_id' => get_the_ID(),
-                'type' => SCR_POST_TYPE,
+                'type' => SCR_COMMENT_TYPE,
+                'status' => 'approve',
             ];
 
             $comments = get_comments($args);
@@ -92,16 +93,23 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             return $comments;
         }
 
-        protected function get_user_can_review($args)
+        protected function get_user_can_review()
         {
+            $args = [
+                'post_id' => get_the_ID(),
+                'type' => SCR_COMMENT_TYPE,
+            ];
+
+            $comments = get_comments($args);
+
             $user_can_review = false;
 
             if (is_user_logged_in()) {
                 $user_can_review = true;
             }
 
-            if (isset($args['items']['comments-list']) && !empty($args['items']['comments-list'])) {
-                foreach ($args['items']['comments-list'] as $comment) {
+            if (isset($comments) && !empty($comments)) {
+                foreach ($comments as $comment) {
 
                     if ($comment->user_id == get_current_user_id() && $comment->comment_parent == 0) {
                         $user_can_review = false;

@@ -56,7 +56,8 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Summary')) {
         {
             $args = [
                 'post_id' => get_the_ID(),
-                'type' => SCR_POST_TYPE,
+                'type' => SCR_COMMENT_TYPE,
+                'status' => 'approve',
                 'parent' => 0,
             ];
 
