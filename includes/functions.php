@@ -39,12 +39,17 @@ function scr_get_user_reviews($post_id)
     return $comments;
 }
 
-function scr_get_user_reviews_count($post_id)
+function scr_get_user_reviews_count($post_id, $parent = true)
 {
     $args = [
         'post_id' => $post_id,
         'type' => SCR_COMMENT_TYPE,
+        'status' => 'approve',
     ];
+
+    if ($parent) {
+        $args['parent'] = 0;
+    }
 
     $comments_count = count(get_comments($args));
 
