@@ -4,6 +4,7 @@
     "main": "index.js",
     "license": "MIT",
     "scripts": {
+        "build_semantic" : "cd includes/assets/vendors/semantic && gulp build && cd ../../../../",
         "build": "cross-env NODE_ENV=production ./node_modules/.bin/webpack --mode=production",
         "start": "./node_modules/.bin/webpack --mode=development --watch",
         "buildtest": "cross-env NODE_ENV=test ./node_modules/.bin/webpack",

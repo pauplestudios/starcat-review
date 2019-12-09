@@ -39,7 +39,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                     'comment_author_url' => $comment_author_url,
                     'comment_content' => $props['description'],
                     'comment_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36',
-                    'comment_type' => SCR_POST_TYPE,
+                    'comment_type' => SCR_COMMENT_TYPE,
                     // 'comment_date' => current_time('timestamp', true),
                     'comment_parent' => !isset($props['parent']) ? 0 : $props['parent'],
                     'user_id' => $user->ID,
@@ -49,6 +49,15 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
 
                 $comment_id = wp_new_comment($commentdata);
 
+                if (!current_user_can('manage_options')) {
+                    $commentarr = [
+                        'comment_ID' => $comment_id,
+                        'comment_approved' => 0,
+                    ];
+
+                    wp_update_comment($commentarr);
+                }
+
                 if (isset($comment_id) && !empty($comment_id) && !isset($props['review_reply'])) {
                     add_comment_meta($comment_id, 'scr_user_review_props', $props);
                 }
@@ -56,7 +65,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 return $comment_id;
             }
             // else{
-            //     $comment_author        = __('StarcatReview', SCR_POST_TYPE);
+            //     $comment_author        = 'StarcatReview';
             //     $comment_author_email  = 'starcatreview' . '@';
             //     $comment_author_email .= isset($_SERVER['HTTP_HOST']) ? str_replace('www.', '', sanitize_text_field(wp_unslash($_SERVER['HTTP_HOST']))) : 'noreply.com'; // WPCS: input var ok.
             //     $comment_author_email  = sanitize_email($comment_author_email);

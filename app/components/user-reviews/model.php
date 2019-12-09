@@ -11,7 +11,6 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
     {
         public function get_viewProps($args)
         {
-            // error_log("Comments List : " . print_r($args['items']['comments-list'], true));
             $viewProps = [
                 'collection' => $this->get_collectionProps($args),
                 'items' => $this->get_itemPorps($args),
@@ -34,6 +33,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
                     'verified' => false,
                 ],
                 'pagination' => true,
+                'can_reply' => $args['can_user_reply'],
             ];
         }
 

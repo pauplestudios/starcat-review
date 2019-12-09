@@ -166,7 +166,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Controller'))
         {
             $args = [
                 'post_id' => $post_id,
-                'type' => SCR_POST_TYPE,
+                'type' => SCR_COMMENT_TYPE,
             ];
 
             $comments = get_comments($args);

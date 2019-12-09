@@ -25,6 +25,11 @@ if (!class_exists('\StarcatReview\App\Components\Stats\Controller')) {
         {
             return $this->viewProps['items'] + ['dom' => $this->view->get()];
         }
+
+        public function get_column_rating()
+        {
+
+        }
     } // END CLASS
 
 }
