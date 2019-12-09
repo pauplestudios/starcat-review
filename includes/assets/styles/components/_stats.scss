@@ -54,8 +54,8 @@ $graylight: #e7e7e7;
         }
         i {
             // Google Rating Orange #e7711b, dark gray #504740, yellow #fcb600;
-            margin: 0px 5px;
-            font-size: 1.4em;
+            // margin: 0px 5px;
+            font-size: 1em;
             color: #e7711b;
             box-sizing: border-box;
         }
@@ -97,14 +97,14 @@ $graylight: #e7e7e7;
 }
 
 .woocommerce {
-    .review-list,
-    .reviewed-list {
-        .review-item,
-        .reviewed-item {
-            margin: 0px;
-            padding: 0px;
-        }
-    }
+    // .review-list,
+    // .reviewed-list {
+    // .review-item,
+    // .reviewed-item {
+    // margin: 0px;
+    // padding: 0px;
+    //     }
+    // }
     .woocommerce-scr-review-link {
         margin-bottom: 1em;
         display: inline-block;

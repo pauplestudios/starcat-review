@@ -21,12 +21,14 @@
                 display: flex;
             }
         }
-        & .review-item.field.error {
+        & .review-item.inline.field.error {
             background: #fff6f6;
             border-color: #e0b4b4;
             color: #9f3a38;
             border: 1px solid #e0b4b4;
-            border-radius: 2px;
+            margin-bottom: 0.3em;
+            padding: 0.3em;
+            border-radius: 3px;
         }
     }
 }
