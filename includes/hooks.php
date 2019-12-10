@@ -35,6 +35,13 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             add_filter('the_content', array($this, 'content_filter'));
             // add_filter('the_excerpt', array($this, 'content_filter'));
 
+            foreach (SCR_Getter::get('review_enable_post-types') as $post_type) {
+                if ($post_type == 'product') {
+                    add_filter('woocommerce_product_tabs', [$this, 'woo_new_product_tab']);
+                    add_action('woocommerce_single_product_summary', [$this, 'woocommerce_review_display_overall_rating'], 10);
+                }
+            }
+
             add_action('wp_head', array($this, 'scr_schema_reviews'));
             // add_filter('the_excerpt', array($this, 'content_filter'));
 
@@ -200,18 +207,63 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
         public function content_filter($content)
         {
+            $post_type = get_post_type(get_the_ID());
             // Add breadcrumbs for starcat post type only
-            if (get_post_type(get_the_ID()) == SCR_POST_TYPE) {
+            if ($post_type == SCR_POST_TYPE) {
                 $breadcrumb = new \StarcatReview\App\Components\Breadcrumbs\Controller();
                 $content = $breadcrumb->get_view() . $content;
             }
 
-            if (is_singular()) {
+            if (is_singular() && $post_type !== 'product') {
                 $review_content = $this->get_review_content();
                 $content = $content . $review_content;
             }
 
             return $content;
+        }
+
+        public function woo_new_product_tab($tabs)
+        {
+            $tabs['scr-reviews'] = array(
+                'title' => sprintf(__('Product Reviews (%d)', SCR_DOMAIN), scr_get_user_reviews_count(get_the_ID())),
+                'priority' => 50,
+                'callback' => [$this, 'woo_new_product_tab_content'],
+            );
+
+            return $tabs;
+
+        }
+        public function woo_new_product_tab_content()
+        {
+            $content = $this->get_review_content();
+            if (!isset($content) && empty($content)) {
+                $content = 'There are no reviews yet';
+            }
+
+            $html = '<div id="scr-reviews">';
+            $html .= $content;
+            $html .= '</div>';
+
+            echo $html;
+        }
+
+        public function woocommerce_review_display_overall_rating()
+        {
+            $html = '';
+            $post_id = get_the_ID();
+            $rating = scr_get_overall_rating($post_id);
+            $review_count = scr_get_user_reviews_count($post_id);
+
+            if (isset($rating['overall']['rating']) && $rating['overall']['rating'] !== 0) {
+
+                $html .= $rating['dom'];
+                $html .= '<a href="#scr-reviews" class="woocommerce-scr-review-link" rel="nofollow">(';
+                $html .= '<span class="count">' . esc_html($review_count) . '</span>';
+                $html .= __(' customer review', SCR_DOMAIN);
+                $html .= ')</a>';
+            }
+
+            echo $html;
         }
 
         /* Non-Hooked */

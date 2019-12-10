@@ -16,7 +16,12 @@ var UserReview = {
         console.log("User Review Form JS Loaded !!!");
     },
 
-    eventListener: function() {},
+    eventListener: function() {
+        jQuery("a.woocommerce-scr-review-link").click(function() {
+            jQuery(".scr-reviews_tab a").click();
+            return true;
+        });
+    },
 };
 
 module.exports = UserReview;

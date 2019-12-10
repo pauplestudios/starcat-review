@@ -95,3 +95,23 @@ $graylight: #e7e7e7;
         }
     }
 }
+
+.woocommerce {
+    .review-list,
+    .reviewed-list {
+        .review-item,
+        .reviewed-item {
+            margin: 0px;
+            padding: 0px;
+        }
+    }
+    .woocommerce-scr-review-link {
+        margin-bottom: 1em;
+        display: inline-block;
+        text-decoration: underline;
+        font-weight: 600;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}
