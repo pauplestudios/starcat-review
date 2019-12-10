@@ -24,13 +24,17 @@ function scr_get_overall_rating($post_id)
     return $rating;
 }
 
-function scr_get_user_reviews($post_id)
+function scr_get_user_reviews($post_id, $parent = true)
 {
     $args = [
         'post_id' => $post_id,
         'type' => SCR_COMMENT_TYPE,
         'status' => 'approve',
     ];
+
+    if ($parent) {
+        $args['parent'] = 0;
+    }
 
     $comments = get_comments($args);
 
