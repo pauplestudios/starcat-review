@@ -10,7 +10,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\Extras')) {
     class Extras
     {
         public function __construct()
-        { }
+        {}
 
         public function get_main_page_url()
         {
