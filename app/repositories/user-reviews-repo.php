@@ -58,7 +58,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                     wp_update_comment($commentarr);
                 }
 
-                if (isset($comment_id) && !empty($comment_id) && !isset($props['review_reply'])) {
+                if (isset($comment_id) && !empty($comment_id) && !isset($props['review_reply']) && $props['parent'] == 0) {
                     add_comment_meta($comment_id, 'scr_user_review_props', $props);
                 }
 
