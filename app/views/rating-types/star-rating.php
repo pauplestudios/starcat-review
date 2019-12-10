@@ -35,7 +35,7 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
 
         public function get_review_stat($key, $value, $score)
         {
-            $html = '<li class="review-item field">';
+            $html = '<li class="review-item inline field">';
 
             $html .= '<div class="review-item-label__text">' . $key . '</div>';
 

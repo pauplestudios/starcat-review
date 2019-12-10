@@ -35,7 +35,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             }
 
             if ($this->props['collection']['show_title']) {
-                $html .= '<div class="field">';
+                $html .= '<div class="inline field">';
                 // $html .= '<label>Review Title</label>';
                 $html .= '<input type="text" name="title" placeholder="Title" />';
                 $html .= '</div>';
@@ -81,7 +81,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
         protected function get_pros_field()
         {
             $html = '<div class="field review-pros-repeater">';
-            $html .= '<div class="ui segment">';
+            // $html .= '<div class="ui segment">';
             $html .= '<h5> Pros </h5>';
             $html .= '<div data-repeater-list="pros" >';
             $html .= '<div class="unstackable fields" data-repeater-item >';
@@ -96,7 +96,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             $html .= '</div>';
             $html .= '</div>';
             $html .= '<div data-repeater-create class="ui icon basic button"><i class="plus icon"></i></div>';
-            $html .= '</div>';
+            // $html .= '</div>';
             $html .= '</div>';
 
             return $html;
@@ -105,7 +105,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
         protected function get_cons_field()
         {
             $html = '<div class="field review-cons-repeater">';
-            $html .= '<div class="ui segment">';
+            // $html .= '<div class="ui segment">';
             $html .= '<h5> Cons </h5>';
             $html .= '<div data-repeater-list="cons" >';
             $html .= '<div class="unstackable fields" data-repeater-item >';
@@ -120,7 +120,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             $html .= '</div>';
             $html .= '</div>';
             $html .= '<div data-repeater-create class="ui icon basic button"><i class="plus icon"></i></div>';
-            $html .= '</div>';
+            // $html .= '</div>';
             $html .= '</div>';
 
             return $html;

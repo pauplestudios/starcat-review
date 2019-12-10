@@ -3,6 +3,7 @@ var Form = require("./user-review/form.js");
 var ProsAndCons = require("./user-review/pros-and-cons.js");
 var Reply = require("./user-review/reply.js");
 var Edit = require("./user-review/edit.js");
+var Voting = require("./user-review/voting.js");
 
 var UserReview = {
     init: function() {
@@ -11,6 +12,7 @@ var UserReview = {
         ProsAndCons.init();
         Reply.init();
         Edit.init();
+        // Voting.init();
 
         this.eventListener();
         console.log("User Review Form JS Loaded !!!");

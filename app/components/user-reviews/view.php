@@ -1,6 +1,5 @@
 <?php
 
-
 namespace StarcatReview\App\Components\User_Reviews;
 
 if (!defined('ABSPATH')) {
@@ -21,115 +20,92 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
 
         public function get($viewProps)
         {
-            $collectionProps = $viewProps['collection'];
-
             if (!isset($viewProps['items']) || empty($viewProps['items'])) {
                 return '';
             }
+            $this->collection = $viewProps['collection'];
 
-            $html = '<div id="scr-controlled-list">';
-            $html .= '<h3>' . $collectionProps['title'] . '</h3>';
+            $html = '<div class="ui scr_user_reviews comments">';
+            $html .= '<h3 class="ui dividing header"> User Reviews </h3>';
 
+            foreach ($viewProps['items'] as $comment) {
 
-            if ($collectionProps['show_controls']) {
-                $html .= $this->controls_builder->get_controls($collectionProps['show_controls']);
+                if ($comment['comment_parent'] == 0) {
+                    $html .= $this->get_comment_item($comment, $viewProps['items']);
+                }
             }
 
-
-            $html .= $this->get_card_collection($viewProps);
-
-            /* Pagination */
-            if ($collectionProps['pagination']) {
-                $html .= '<ul class="ui pagination scr-pagination menu"></ul>';
-                $html .= $this->get_pagination_html($viewProps);
-            }
-
-            $html .= '</div>';
-
-            // error_log('$html; : ' . $html );
-            return $html;
-        }
-
-        /* PRIVATE CLASS */
-
-        private function get_pagination_html($viewProps)
-        {
-            if (!isset($viewProps['collection']['total_pages']) || empty($viewProps['collection']['total_pages'])) {
-                return '';
-            }
-
-            $html = '';
-            $html .= '<ul class="ui pagination scr-pagination menu">';
-
-            for ($ii = 1; $ii <= $viewProps['collection']['total_pages']; $ii++) {
-                # code...
-                $html .= '<li class="active"><a class="page" href="">' . $ii . '</a></li>';
-            }
-
-            $html .= '</ul>';
-            return $html;
-        }
-
-        private function get_card_collection($viewProps)
-        {
-            $posts = $viewProps['items'];
-
-            $html = '';
-            // $html .= '<div class="">';
-            $html .= '<div id="scr-cat-collection" class="scr-collection list row ui comments">';
-
-            foreach ($posts as $key => $post) {
-
-                // Set initial $ii
-                if (!isset($ii)) $ii = 0;
-
-                // Assign card to html
-                $html .= $this->get_single_card($post, $ii, $viewProps);
-
-                // increment $ii
-                $ii++;
-            }
+            $html .= $this->get_reply_form();
 
             $html .= '</div>';
 
             return $html;
         }
 
-        private function get_single_card($post, $ii, $viewProps)
+        public function get_reply_comment($comment)
         {
-            // error_log('$post : ' . print_r($post, true));
-            $collectionProps = $viewProps['collection'];
-            $reviews = [2, 4, 7, 25, 50, 75, 100];
+            $html = '<div class="comment" id="' . $comment['comment_id'] . '" data-comment-parent-id ="' . $comment['comment_parent'] . '" >';
+            $html .= '<a class="avatar"> ' . $comment['commentor_avatar'] . '</a>';
+            $html .= '<div class="content">';
 
+            $html .= '<span class="author"> ' . $comment['comment_author'] . ' </span>';
+            $html .= '<div class="metadata">';
+            $html .= '<span class="date">' . $comment['comment_date'] . '</span>';
+            $html .= '<span class="time">AT ' . $comment['comment_time'] . '</span>';
+            $html .= '</div>';
+            $html .= '<div class="text"><p>' . $comment['content'] . '</p></div>';
 
-            // $excerpt = $this->get_excerpt($post->post_content);
-            $single_review = isset($reviews[$ii]) ? $reviews[$ii] : 1;
+            $html .= '</div>';
+            $html .= '</div>';
 
-            $stats_html = $this->get_stats_view($post);
-
-            $prosandcons_html = $this->get_prosandcons_view($post);
-            $item = [
-                'title' => $post['title'],
-                'content' => $post['content'],
-                'url' => '',
-                'reviews' => $single_review,
-                'date' => $post['comment_date'],
-                'avatar' => $post['commentor_avatar'],
-                'author' => $post['comment_author'],
-                'columns' => $collectionProps['columns'],
-                // 'items_display' => $collectionProps['items_display'],
-                'html_parts' => [
-                    'title',
-                    $stats_html,
-                    'content',
-                    $prosandcons_html,
-                ]
-            ];
-
-            return $this->card->get_view($item);
+            return $html;
         }
 
-        protected function get_stats_view($props)
+        protected function get_comment_item($comment, $items)
+        {
+            $html = '<div class="comment" id="' . $comment['comment_id'] . '">';
+            $html .= '<a class="avatar"> ' . $comment['commentor_avatar'] . '</a>';
+
+            $html .= '<div class="content">';
+
+            $html .= '<span class="author"> ' . $comment['comment_author'] . ' </span>';
+            $html .= '<div class="metadata">';
+            $html .= '<span class="date">' . $comment['comment_date'] . '</span>';
+            $html .= '<span class="time">AT ' . $comment['comment_time'] . '</span>';
+            $html .= '</div>';
+
+            $html .= '<div class="text">';
+            $html .= '<div class="title"> ' . $comment['title'] . ' </div>';
+            $html .= '<div class="stats"> ' . $this->get_stats_view($comment) . '</div>';
+            $html .= $this->get_prosandcons_view($comment);
+            $html .= '<div class="description">' . $comment['content'] . '</div>';
+            $html .= '</div>';
+
+            $html .= '<div class="actions">';
+            $html .= '<div>';
+            if ($this->collection['can_reply']) {
+                $html .= '<a class="reply_link"><i class="reply icon"></i> REPLY</a>';
+            }
+            $html .= '</div>';
+            // $html .= $this->get_helpful();
+            $html .= '</div>';
+
+            //1st level comment children
+            foreach ($items as $item) {
+                if ($item['comment_parent'] == $comment['comment_id']) {
+                    $html .= $this->get_reply_comment($item);
+                }
+            }
+
+            $html .= '</div>';
+
+            $html .= '</div>';
+
+            return $html;
+
+        }
+
+        private function get_stats_view($props)
         {
             $stats = new \StarcatReview\App\Components\Stats\Controller($props['args']);
             $view = $stats->get_view();
@@ -137,7 +113,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             return $view;
         }
 
-        protected function get_prosandcons_view($props)
+        private function get_prosandcons_view($props)
         {
             $view = '';
             if ($props['args']['enable_pros_cons']) {
@@ -148,6 +124,36 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             return $view;
         }
 
+        private function get_helpful()
+        {
+            $html = '<div class="ui user-review-helpful"> ';
+
+            $html .= '<div class="vote">';
+            $html .= 'Was this helpful to you ? ';
+            $html .= '<a><i class="green bordered thumbs up outline icon"></i></a>';
+            $html .= '<a><i class="red bordered thumbs down outline icon"></i></a>';
+            $html .= '</div>';
+
+            $html .= '<div class="vote-summary">';
+            $html .= '0 of 0 people found this review helpful';
+            $html .= '</div>';
+
+            $html .= '</div>';
+
+            return $html;
+        }
+
+        private function get_reply_form()
+        {
+            $html = '<form class="ui user-review-reply form" action="scr_user_review_submission" method="post" data-post-id ="' . $this->collection['post_id'] . '">';
+            $html .= '<div class="field">';
+            $html .= '<textarea rows="2" name="description" placeholder="Reply to @them ..." ></textarea>';
+            $html .= '</div>';
+            $html .= '<div class="ui mini icon basic submit button"><i class="plus circle icon"></i> REPLY</div>';
+            $html .= '</form>';
+
+            return $html;
+        }
 
         private function get_excerpt($content)
         {
