@@ -14,7 +14,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
         private static $options;
         private static $defaults;
 
-        public static function  get($option_name)
+        public static function get($option_name)
         {
 
             self::$defaults = self::default_settings();
@@ -45,7 +45,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 // General Settings Start
                 'template_source' => 'theme',
                 'enable-pros-cons' => true,
-                'review_enable_post-types' => [SCR_POST_TYPE],
+                'review_enable_post-types' => [],
                 'global_stats' => ['stat_name' => 'Feature'],
                 'stat-singularity' => 'single',
                 'stats-type' => 'star',
@@ -54,13 +54,13 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'stats-images' => [
                     'image' => [
                         'url' => SCR_URL . 'includes/assets/img/tomato.png',
-                        'thumbnail' => SCR_URL . 'includes/assets/img/tomato.png'
+                        'thumbnail' => SCR_URL . 'includes/assets/img/tomato.png',
                     ],
 
                     'image-outline' => [
                         'url' => SCR_URL . 'includes/assets/img/tomato-outline.png',
-                        'thumbnail' => SCR_URL . 'includes/assets/img/tomato-outline.png'
-                    ]
+                        'thumbnail' => SCR_URL . 'includes/assets/img/tomato-outline.png',
+                    ],
                 ],
                 'stats-show-rating-label' => true,
                 'stats-steps' => 'precise',
@@ -76,7 +76,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'mp_template_layout' => 'full-width',
                 'mp_components_order' => [
                     'mp_category_listing' => true,
-                    'mp_review_listing' => true
+                    'mp_review_listing' => true,
                 ],
                 'mp_cl_title' => 'Review Categories',
                 'mp_cl_description' => true,
@@ -86,7 +86,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'mp_rl_sortby' => 'recent',
                 'mp_rl_cols' => '3',
 
-                // Category Page Start 
+                // Category Page Start
                 'cp_template_layout' => 'left-sidebar',
                 'cp_controls' => true,
                 'cp_search' => true,
@@ -105,7 +105,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 // ],
                 'sp_template_layout' => 'left-sidebar',
                 // User Review Start
-                'ur_enable_post-types' => [SCR_POST_TYPE],
+                'ur_enable_post-types' => [],
                 'ur_show_controls' => true,
                 'ur_controls_subheading' => true,
                 'ur_show_search' => true,
@@ -136,9 +136,9 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'global_stats' => SCR_Getter::get('global_stats'),
                 'singularity' => SCR_Getter::get('stat-singularity'),
                 'type' => $type,
-                'source_type' =>  SCR_Getter::get('stats-source-type'),
+                'source_type' => SCR_Getter::get('stats-source-type'),
                 'show_rating_label' => SCR_Getter::get('stats-show-rating-label'),
-                'icons' =>  SCR_Getter::get('stats-icons'),
+                'icons' => SCR_Getter::get('stats-icons'),
                 'images' => SCR_Getter::get('stats-images'),
                 'steps' => SCR_Getter::get('stats-steps'),
                 'limit' => $limit,
