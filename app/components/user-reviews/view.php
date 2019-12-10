@@ -86,6 +86,13 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             if ($this->collection['can_reply']) {
                 $html .= '<a class="reply_link"><i class="reply icon"></i> REPLY</a>';
             }
+            if ($this->collection['can_reply']) {
+                $html .= '<a class="edit_link"><i class="edit icon"></i> EDIT</a>';
+            }
+            if ($this->collection['can_reply']) {
+                $html .= '<a class="delete_link"><i class="delete icon"></i> DELETE</a>';
+            }
+
             $html .= '</div>';
             // $html .= $this->get_helpful();
             $html .= '</div>';

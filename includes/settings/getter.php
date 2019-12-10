@@ -45,7 +45,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 // General Settings Start
                 'template_source' => 'theme',
                 'enable-pros-cons' => true,
-                'review_enable_post-types' => [],
+                'review_enable_post-types' => ['post'],
                 'global_stats' => ['stat_name' => 'Feature'],
                 'stat-singularity' => 'single',
                 'stats-type' => 'star',
@@ -105,7 +105,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 // ],
                 'sp_template_layout' => 'left-sidebar',
                 // User Review Start
-                'ur_enable_post-types' => [],
+                'ur_enable_post-types' => ['post'],
                 'ur_show_controls' => true,
                 'ur_controls_subheading' => true,
                 'ur_show_search' => true,
