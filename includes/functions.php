@@ -9,7 +9,8 @@ function scr_get_overall_rating($post_id)
         'combine_type' => 'overall',
     ];
 
-    $args['items'] = get_post_meta($post_id, '_scr_post_options', true);
+    $items = get_post_meta($post_id, '_scr_post_options', true);
+    $args['items'] = isset($items) && !empty($items) ? $items : [];
     $args['items']['comments-list'] = scr_get_user_reviews($post_id);
 
     $args = array_merge(SCR_Getter::get_stat_default_args(), $args);
@@ -28,6 +29,7 @@ function scr_get_user_reviews($post_id)
     $args = [
         'post_id' => $post_id,
         'type' => SCR_COMMENT_TYPE,
+        'status' => 'approve',
     ];
 
     $comments = get_comments($args);
