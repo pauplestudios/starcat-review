@@ -1,6 +1,6 @@
 var Stats = require("./stats.js");
 var Form = require("./form.js");
-// var ProsAndCons = require("./pros-and-cons.js");
+var ProsAndCons = require("./pros-and-cons.js");
 
 var selectors = {
     link: ".scr_user_reviews .comment .actions .edit_link",
@@ -20,7 +20,8 @@ var Edit = {
     showForm: function() {
         var thisModule = this;
         var links = jQuery(selectors.link);
-        var formClone = this.getFormClone();
+        var formClone = this.cloneForm();
+        // var duplicateItem = this.interpreateClonnedForm(formClone);
 
         links.click(function() {
             var link = jQuery(this);
@@ -43,10 +44,16 @@ var Edit = {
 
             thisModule.cancelBtn();
             // thisModule.formValidation();
-            Form.init();
-            // ProsAndCons.init();
             Stats.init();
+            ProsAndCons.init();
+            Form.init();
         });
+    },
+
+    interpreateClonnedForm: function(item) {
+        var interpretedItem = jQuery(item);
+        console.log(interpretedItem);
+        return interpretedItem.html();
     },
 
     formValidation: function() {
@@ -73,24 +80,18 @@ var Edit = {
         });
     },
 
-    getFormClone: function() {
+    cloneForm: function() {
         var form = jQuery(selectors.reviewForm);
-        var clone = form.clone();
-        clone.find("h2").remove();
-        clone
-            .addClass("tiny")
-            .find(".submit.button")
-            .addClass("tiny")
-            .text("Save")
-            .after('<button class="ui tiny cancel button">Cancel</button>');
-
-        clone
-            .wrap("<form class='mini'>")
+        var duplicateItem = form.clone();
+        duplicateItem.find("h2").remove();
+        var clone = duplicateItem
+            .clone()
+            .wrap("<form class='" + selectors.reviewForm + "''>")
             .css("display", "block")
             .parent()
             .html();
 
-        form.remove();
+        // form.remove();
 
         return clone;
     },
