@@ -30,7 +30,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
 
             foreach ($viewProps['items'] as $comment) {
 
-                if ($comment['comment_parent'] == 0) {
+                if ($this->is_can_view($comment) && $comment['comment_parent'] == 0) {
                     $html .= $this->get_comment_item($comment, $viewProps['items']);
                 }
             }
@@ -40,6 +40,17 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '</div>';
 
             return $html;
+        }
+
+        protected function is_can_view($comment)
+        {
+            $can = false;
+
+            if ($comment['comment_approved'] == 1 || $comment['user_id'] == $this->collection['current_user_id']) {
+                $can = true;
+            }
+
+            return $can;
         }
 
         public function get_reply_comment($comment)
@@ -53,10 +64,21 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '<span class="date">' . $comment['comment_date'] . '</span>';
             $html .= '<span class="time">AT ' . $comment['comment_time'] . '</span>';
             $html .= '</div>';
-            $html .= '<div class="text"><p>' . $comment['content'] . '</p></div>';
+            $html .= '<div class="text">' . $comment['content'] . '</div>';
+            $html .= $this->get_moderation_html($comment, 'Reply');
 
             $html .= '</div>';
             $html .= '</div>';
+
+            return $html;
+        }
+
+        protected function get_moderation_html($comment, $title = 'Review')
+        {
+            $html = '';
+            if ($comment['comment_approved'] == 0 && $comment['user_id'] == $this->collection['current_user_id']) {
+                $html .= '<div class="comment_in_moderation">' . $title . ' in Moderation !</div>';
+            }
 
             return $html;
         }
@@ -80,6 +102,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= $this->get_prosandcons_view($comment);
             $html .= '<div class="description">' . $comment['content'] . '</div>';
             $html .= '</div>';
+            $html .= $this->get_moderation_html($comment);
 
             $html .= '<div class="actions">';
             $html .= '<div>';
@@ -99,7 +122,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
 
             //1st level comment children
             foreach ($items as $item) {
-                if ($item['comment_parent'] == $comment['comment_id']) {
+                if ($item['comment_parent'] == $comment['comment_id'] && $this->is_can_view($item)) {
                     $html .= $this->get_reply_comment($item);
                 }
             }

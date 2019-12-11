@@ -16,6 +16,12 @@
         }
     }
 
+    .comment_in_moderation {
+        font-style: italic;
+        // padding: 0.5em;
+        color: #ddd;
+    }
+
     .user-review-reply {
         margin-top: 1em;
         display: none;

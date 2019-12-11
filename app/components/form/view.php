@@ -24,7 +24,6 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             // User Already Reviewed or Not Logged in User
             if (!$this->props['collection']['can_user_review']) {
                 $style = 'style="display: none"';
-
             }
 
             $html .= '<form class="ui form scr-user-review" action="scr_user_review_submission" method="post" post_id ="' . $this->props['collection']['post_id'] . '" ' . $style . '>';
