@@ -6,6 +6,7 @@ var Admin = {
         console.log("SCR Admin Js loaded !!!");
         this.iconsOptins();
         this.enableProsandCons();
+        this.animateStats();
     },
 
     iconsOptins: function() {
@@ -22,6 +23,26 @@ var Admin = {
             metaBoxOptions
                 .find("[data-section='_scr_post_options_3']")
                 .css({ display: "none" });
+        }
+    },
+
+    animateStats: function() {
+        // Animating Reviewed Stat
+        var reviewed = jQuery(".reviewed-list");
+        var animate = reviewed.attr("data-animate");
+
+        if (animate == "1") {
+            reviewed.find(".reviewed-item").each(function(i) {
+                var reviewedItem = jQuery(this);
+                var value = reviewedItem.find("input[name]").attr("value");
+
+                reviewedItem
+                    .find(".stars-result")
+                    .css({ transition: "width 1s", width: value + "%" });
+                reviewedItem
+                    .find(".bars-result")
+                    .css({ transition: "width 1s", width: value + "%" });
+            });
         }
     },
 };
