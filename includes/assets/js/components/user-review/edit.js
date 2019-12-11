@@ -102,8 +102,10 @@ var Edit = {
     getEditProps: function(content) {
         var item = jQuery(content).closest(".comment");
         var stats = [];
-        item.find(".stats input").each(function(i, item) {
-            var stat = jQuery(item);
+        var items = item.find(".stats input");
+        var jj = 0;
+        for (var i = 0; i < items.length; i++) {
+            var stat = jQuery(items[i]);
             var name = stat.attr("name");
             var value = stat.attr("value");
             var score = stat
@@ -111,13 +113,14 @@ var Edit = {
                 .siblings(".reviewed-item-label__score")
                 .text();
             if (name !== "scores[overall]") {
-                stats[i - 1] = {
+                stats[jj] = {
                     identifier: name,
                     value: value,
                     score: score,
                 };
+                jj++;
             }
-        });
+        }
 
         var props = {
             title: item
@@ -136,7 +139,7 @@ var Edit = {
             methodType: "update",
         };
 
-        // console.log(props);
+        console.log(props);
         return props;
     },
 
