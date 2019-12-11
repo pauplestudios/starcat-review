@@ -3,11 +3,11 @@ var Form = require("./form.js");
 var ProsAndCons = require("./pros-and-cons.js");
 
 var selectors = {
-    link: ".scr_user_reviews .comment .actions .edit_link",
-    links: ".scr_user_reviews .comment .actions",
     reviewForm: ".scr-user-review.form",
     replyForm: ".user-review-reply.form",
     submit: ".user-review-reply.form .submit",
+    links: ".scr_user_reviews .comment .actions .links",
+    editLink: ".scr_user_reviews .comment .actions .edit_link",
 };
 
 var Edit = {
@@ -19,14 +19,15 @@ var Edit = {
     },
     showForm: function() {
         var thisModule = this;
-        var links = jQuery(selectors.link);
-        var formClone = this.cloneForm();
+        var editlinks = jQuery(selectors.editLink);
+        var links = jQuery(selectors.links);
+        var editForm = this.getEditForm();
         // var duplicateItem = this.interpreateClonnedForm(formClone);
 
-        links.click(function() {
+        editlinks.click(function() {
             var link = jQuery(this);
 
-            links.parent().show();
+            links.show();
             link.parent().hide();
             jQuery(".comment .content .text").show();
             // console.log("some);
@@ -39,7 +40,7 @@ var Edit = {
             textContent.hide();
             textContent
                 .next()
-                .append(formClone)
+                .append(editForm)
                 .next(selectors.reviewForm);
 
             thisModule.cancelBtn();
@@ -74,17 +75,29 @@ var Edit = {
     },
 
     cancelBtn: function() {
+        var links = jQuery(selectors.links);
         jQuery(selectors.reviewForm + " button.cancel").click(function(e) {
             e.preventDefault();
+
+            links.show();
+            var cancelButton = jQuery(this);
+
+            cancelButton.closest("form.form").remove();
+
+            cancelButton
+                .closest(".comment .content")
+                .find(".text")
+                .show();
+
             console.log("@@@ something wrong with you  @@@");
         });
     },
 
-    cloneForm: function() {
+    getEditForm: function() {
         var form = jQuery(selectors.reviewForm);
-        var duplicateItem = form.clone();
-        duplicateItem.find("h2").remove();
-        var clone = duplicateItem
+        var duplicateForm = form.clone();
+        var editForm = this.modifyForm(duplicateForm);
+        var editFormHtml = editForm
             .clone()
             .wrap("<form class='" + selectors.reviewForm + "''>")
             .css("display", "block")
@@ -93,7 +106,22 @@ var Edit = {
 
         // form.remove();
 
-        return clone;
+        return editFormHtml;
+    },
+
+    modifyForm: function(form) {
+        form.find("h2").remove();
+        form.find("h5").addClass("ui tiny header");
+        form.find(".button").addClass("mini");
+        form.find(".dropdown").addClass("mini");
+        form.find(".submit.button")
+            .text("Save")
+            .after('<button class="ui cancel mini button">Cancel</button>');
+
+        form.addClass("mini");
+        // form.find("h2").remove();
+
+        return form;
     },
 };
 

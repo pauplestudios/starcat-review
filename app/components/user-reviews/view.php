@@ -105,7 +105,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= $this->get_moderation_html($comment);
 
             $html .= '<div class="actions">';
-            $html .= '<div>';
+            $html .= '<div class="links">';
             if ($this->collection['can_reply']) {
                 $html .= '<a class="reply_link"><i class="reply icon"></i> REPLY</a>';
             }
