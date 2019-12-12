@@ -10,7 +10,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
     class Ajax_Handler
     {
         public function __construct()
-        { }
+        {}
 
         public function register_ajax_actions()
         {
@@ -61,7 +61,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
             $user_review_repo = new \StarcatReview\App\Repositories\User_Reviews_Repo();
             $props = $user_review_repo->get_processed_data();
             $parent = isset($props['parent']) ? $props['parent'] : 0;
-            $comment_id = $user_review_repo->insert($props);
+            $comment_id = isset($props['methodType']) ? $user_review_repo->update($props) : $user_review_repo->insert($props);
             $review = $user_review_repo->get($comment_id, $parent);
 
             if ($parent !== 0) { // review_reply
@@ -127,7 +127,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                     $get_comments = scr_get_user_reviews($post->ID);
 
                     $user_stats = array();
-                    //default view rating feature in CT 
+                    //default view rating feature in CT
                     $user_stats[] = array('stat_name' => 'scr-ratings', 'rating' => 0);
                     if (isset($get_comments) && !empty($get_comments)) {
                         foreach ($get_comments as $comment) {
@@ -161,9 +161,9 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                         // 'url' => $post->guid,
                         // 'stats' => $temp_stats,
                         'image_url' => isset($image) ? $image[0] : "",
-                        'author_stats'  => $items,
-                        'user_stats'    => $user_stats,
-                        'get_overall_stat' => $get_overall_stat
+                        'author_stats' => $items,
+                        'user_stats' => $user_stats,
+                        'get_overall_stat' => $get_overall_stat,
                     );
                 }
             } else {

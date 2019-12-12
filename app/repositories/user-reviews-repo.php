@@ -73,11 +73,16 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             return 0;
         }
 
-        public function update($comment_id, $props)
+        public function update($props)
         {
-            $comment = array();
-            $comment['comment_ID'] = $comment_id;
-            $comment['comment_approved'] = 1;
+            error_log('props : ' . print_r($props, true));
+
+            $comment_id = $props['comment_id'];
+            $comment = array(
+                'comment_ID' => $props['comment_id'],
+                'comment_content' => $props['description'],
+            );
+
             $is_updated = wp_update_comment($comment);
             if ($is_updated) {
                 update_comment_meta($comment_id, 'scr_user_review_props', $props);
@@ -116,6 +121,14 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
 
             if (isset($_POST['parent']) && !empty($_POST['parent'])) {
                 $props['parent'] = $_POST['parent'];
+            }
+
+            if (isset($_POST['comment_id']) && !empty($_POST['comment_id'])) {
+                $props['comment_id'] = $_POST['comment_id'];
+            }
+
+            if (isset($_POST['methodType']) && !empty($_POST['methodType'])) {
+                $props['methodType'] = $_POST['methodType'];
             }
 
             return $props;

@@ -1,7 +1,7 @@
 var Stats = require("./stats.js");
 var Form = require("./form.js");
 var ProsAndCons = require("./pros-and-cons.js");
-
+var editFormSubmitted = false;
 var selectors = {
     reviewForm: ".scr-user-review.form",
     replyForm: ".user-review-reply.form",
@@ -62,14 +62,89 @@ var Edit = {
 
             thisModule.cancelBtn(reviewContent);
             // thisModule.formValidation();
+
             Stats.init();
-            ProsAndCons.init();
-            Form.init();
+            thisModule.editFormSubmit(reviewContent, reviewProps);
+            // Form.formValidation("", reviewContent.closest("form.form"));
+            // thisModule.get_ProsandCons(
+            //     ".review-pros-repeater",
+            //     "pros",
+            //     reviewContent,
+            //     editForm
+            // );
+            // thisModule.get_ProsandCons(
+            //     ".review-cons-repeater",
+            //     "cons",
+            //     reviewContent,
+            //     editForm
+            // );
         });
     },
 
+    editFormSubmit: function(reviewContent, reviewProps) {
+        thisModule = this;
+        var SCRForm = reviewContent.parent().find("form.form");
+
+        reviewContent
+            .parent()
+            .find("form.form")
+            .form({
+                fields: Form.getRules(),
+                onSuccess: function(event, fields) {
+                    event.preventDefault();
+                    if (editFormSubmitted) {
+                        return;
+                    }
+                    editFormSubmitted = true;
+
+                    setTimeout(function() {
+                        editFormSubmitted = false;
+                    }, 10000);
+
+                    var props = thisModule.getProps(SCRForm, fields);
+                    props.pros = reviewProps.pros;
+                    props.cons = reviewProps.cons;
+                    // console.log(props);
+                    jQuery
+                        .post(scr_ajax.ajax_url, props, function(results) {
+                            results = JSON.parse(results);
+                            console.log(results);
+
+                            //         // Reviewed item prepending to Reviews List
+                            //         // jQuery("#scr-cat-collection").prepend(
+                            //         //     Form.getReviewTemplate(props.title, props.description)
+                            //         // );
+
+                            //         // Reloading the page
+                            setInterval("window.location.reload()", 6000);
+                        })
+                        .fail(function(response) {
+                            // Fail Message
+
+                            SCRForm.html("Failed Updated");
+
+                            // Reloading the page
+                            setInterval("window.location.reload()", 6000);
+                        });
+                },
+            });
+    },
+
+    getProps: function(submittingForm, fields) {
+        fields.action = submittingForm.attr("action");
+        fields.type = submittingForm.attr("method");
+        fields.post_id = submittingForm.attr("post_id");
+        fields.comment_id = submittingForm.attr("data-comment-id");
+        fields.methodType = submittingForm.attr("data-method");
+
+        return fields;
+    },
+
     getElement: function(element, props) {
+        var thisModule = this;
         var form = jQuery(element);
+        form.attr("data-comment-id", props.comment_id);
+        form.attr("data-method", props.methodType);
 
         form.find("[name='title']").attr("value", props.title);
         form.find("[name='description']").text(props.description);
@@ -92,11 +167,33 @@ var Edit = {
                 .text(props.stats[i].score);
             // console.log(some);
         }
+
         element = form[0].outerHTML;
 
         // console.log(form);
 
         return element;
+    },
+
+    get_ProsandCons: function(selector, group, reviewContent, form) {
+        var list = jQuery(reviewContent)
+            .parent()
+            .find("form.form")
+            .find("[data-repeater-list=" + group + "]");
+
+        var duplicateItem = jQuery(form)
+            .find("[data-repeater-list=" + group + "] [data-repeater-item]")
+            .first()
+            .parent()
+            .html();
+
+        ProsAndCons.addItem(selector, list, group, duplicateItem);
+        ProsAndCons.deleteItem(selector, list, group);
+
+        // Already loaded element Pros and Cons Dropdown
+        jQuery(selector + " .ui.prosandcons.dropdown").dropdownX({
+            allowAdditions: true,
+        });
     },
 
     getEditProps: function(content) {
@@ -122,6 +219,22 @@ var Edit = {
             }
         }
 
+        var pros = [];
+        var prosArray = item.find(".pros li");
+        for (i = 0; i < prosArray.length; i++) {
+            pros[i] = jQuery(prosArray[i])
+                .text()
+                .toLowerCase();
+        }
+
+        var cons = [];
+        var consArray = item.find(".cons li");
+        for (i = 0; i < consArray.length; i++) {
+            cons[i] = jQuery(consArray[i])
+                .text()
+                .toLowerCase();
+        }
+
         var props = {
             title: item
                 .find(".title")
@@ -132,14 +245,14 @@ var Edit = {
                 .text()
                 .trim(),
             stats: stats,
-            pros: item.find(".pros li"),
-            cons: item.find(".cons li"),
+            pros: pros,
+            cons: cons,
             comment_id: item.attr("id"),
             comment_parent: 0,
-            methodType: "update",
+            methodType: "PUT",
         };
 
-        console.log(props);
+        // console.log(props);
         return props;
     },
 
@@ -209,7 +322,9 @@ var Edit = {
             .after('<button class="ui cancel mini button">Cancel</button>');
 
         form.addClass("mini");
-        // form.find("h2").remove();
+        form.find(".rating.fields")
+            .siblings(".two.fields")
+            .remove();
 
         return form;
     },
