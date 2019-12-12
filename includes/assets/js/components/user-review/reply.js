@@ -1,5 +1,5 @@
 var selectors = {
-    form: ".user-review-reply.form",
+    replyForm: ".user-review-reply.form",
     submit: ".user-review-reply.form .submit",
     userReviews: ".scr_user_reviews.comments",
     links: ".scr_user_reviews .comment .actions",
@@ -20,6 +20,7 @@ var Reply = {
         var thisModule = this;
         var links = jQuery(selectors.links);
         var replyLinks = jQuery(selectors.replyLink);
+        var editLinks = jQuery(selectors.editLink);
         var formClone = this.getFormClone();
 
         replyLinks.click(function() {
@@ -50,28 +51,94 @@ var Reply = {
             // console.log(link.closest(".comment").find.children().length);
             var placeholder = "Reply to @" + author + " ...";
 
-            jQuery(selectors.form).remove();
+            jQuery(selectors.replyForm).remove();
 
             /*  Append review reply form to comment content
                 set a placeholder and a data-comement-parent-id attributes  */
             replyLink
                 .closest(".comment .content .actions")
                 .after(formClone)
-                .next(selectors.form)
+                .next(selectors.replyForm)
                 .attr("data-comment-parent-id", parent)
                 .find('[name="description"]')
                 .attr("placeholder", placeholder);
 
             thisModule.formValidation();
-            thisModule.cancelBtn();
+            thisModule.cancelBtn("");
+        });
+
+        var editForm = thisModule.getEditForm(formClone);
+
+        editLinks.click(function() {
+            var editLink = jQuery(this);
+            var author = editLink
+                .closest(".content")
+                .find(".author")
+                .first()
+                .text()
+                .trim();
+
+            // Show all reviews list links
+            links.show();
+
+            // Remove all reviews list forms except clonned form
+            jQuery(selectors.userReviews)
+                .find("form.form")
+                .remove();
+
+            // Hide clicked review link
+            editLink
+                .parent()
+                .parent()
+                .hide();
+
+            jQuery(".comment .content .text").show();
+            // Clicked link closest review content
+            var reviewContent = editLink
+                .closest(".comment .content")
+                .find(".text")
+                .first();
+
+            // Hide clicked link of closest review content
+            reviewContent.hide();
+
+            var parent = editLink.closest(".comment").attr("id");
+
+            var placeholder = "Reply to @" + author + " ...";
+
+            jQuery(selectors.replyForm).remove();
+
+            var comment_id = reviewContent.closest(".comment").attr("id");
+            var description = reviewContent.text().trim();
+
+            // Append clonned edit form into closest review content of clicked edit link
+            reviewContent
+                .after(editForm)
+                .next(selectors.replyForm)
+                .attr("data-comment-parent-id", parent)
+                .attr("data-comment-id", comment_id)
+                .attr("data-method", "PUT")
+                .find('[name="description"]')
+                .attr("placeholder", placeholder)
+                .attr("value", description);
+
+            thisModule.formValidation();
+            thisModule.cancelBtn(reviewContent);
         });
     },
 
+    getEditForm: function(formClone) {
+        editForm = jQuery(formClone);
+        editForm.find(".submit.button").text("Save");
+
+        return editForm[0].outerHTML;
+    },
+
     getFormClone: function() {
-        var form = jQuery(selectors.form);
+        var form = jQuery(selectors.replyForm);
         var clone = form
             .clone()
-            .wrap("<form class='" + selectors.form + "''>")
+            .wrap("<form class='" + selectors.replyForm + "''>")
             .css("display", "block")
             .parent()
             .html();
@@ -83,7 +150,7 @@ var Reply = {
 
     formValidation: function() {
         var thisModule = this;
-        var replyForm = jQuery(selectors.form);
+        var replyForm = jQuery(selectors.replyForm);
         var placeholderContent = this.getPlaceholderContent();
 
         jQuery(replyForm).form({
@@ -98,11 +165,16 @@ var Reply = {
         });
     },
 
-    cancelBtn: function() {
+    cancelBtn: function(reviewContent) {
         var links = jQuery(selectors.links);
-        jQuery(selectors.form + " .button.cancel").click(function(e) {
+        jQuery(selectors.replyForm + " .button.cancel").click(function(e) {
             e.preventDefault();
             links.show();
+
+            if (reviewContent) {
+                reviewContent.show();
+            }
+
             jQuery(this)
                 .closest("form.form")
                 .remove();
