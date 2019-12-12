@@ -67,9 +67,8 @@ var Reply = {
             thisModule.cancelBtn("");
         });
 
-        var editForm = thisModule.getEditForm(formClone);
-
         editLinks.click(function() {
+            var editForm = thisModule.getEditForm(formClone);
             var editLink = jQuery(this);
             var author = editLink
                 .closest(".content")
