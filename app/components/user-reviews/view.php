@@ -66,6 +66,12 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '</div>';
             $html .= '<div class="text">' . $comment['content'] . '</div>';
             $html .= $this->get_moderation_html($comment, 'Reply');
+            $html .= '<div class="actions">';
+            $html .= '<div class="links">';
+            if ($this->collection['can_reply'] && $comment['can_edit']) {
+                $html .= '<a class="reply_edit_link"><i class="edit icon"></i> EDIT</a>';
+            }
+            $html .= '</div></div>';
 
             $html .= '</div>';
             $html .= '</div>';
@@ -109,12 +115,12 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             if ($this->collection['can_reply']) {
                 $html .= '<a class="reply_link"><i class="reply icon"></i> REPLY</a>';
             }
-            if ($this->collection['can_reply']) {
+            if ($this->collection['can_reply'] && $comment['can_edit']) {
                 $html .= '<a class="edit_link"><i class="edit icon"></i> EDIT</a>';
             }
-            if ($this->collection['can_reply']) {
-                $html .= '<a class="delete_link"><i class="delete icon"></i> DELETE</a>';
-            }
+            // if ($this->collection['can_reply']) {
+            //     $html .= '<a class="delete_link"><i class="delete icon"></i> DELETE</a>';
+            // }
 
             $html .= '</div>';
             // $html .= $this->get_helpful();

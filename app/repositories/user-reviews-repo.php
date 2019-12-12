@@ -75,8 +75,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
 
         public function update($props)
         {
-            error_log('props : ' . print_r($props, true));
-
+            // error_log('props : ' . print_r($props, true));
             $comment_id = $props['comment_id'];
             $comment = array(
                 'comment_ID' => $props['comment_id'],

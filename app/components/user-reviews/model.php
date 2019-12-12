@@ -11,8 +11,9 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
     {
         public function get_viewProps($args)
         {
+            $this->collection = $this->get_collectionProps($args);
             $viewProps = [
-                'collection' => $this->get_collectionProps($args),
+                'collection' => $this->collection,
                 'items' => $this->get_itemPorps($args),
             ];
 
@@ -68,6 +69,8 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
                 'comment_approved' => $comment->comment_approved,
                 'user_id' => $comment->user_id,
             ];
+
+            $comment_item['can_edit'] = ($comment->user_id == $this->collection['current_user_id']);
 
             if (isset($args)) {
                 $comment_item['args'] = $this->get_args($args, $comment);
