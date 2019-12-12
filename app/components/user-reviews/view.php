@@ -186,6 +186,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '<textarea rows="2" name="description" placeholder="Reply to @them ..." ></textarea>';
             $html .= '</div>';
             $html .= '<div class="ui mini icon basic submit button"><i class="plus circle icon"></i> REPLY</div>';
+            $html .= '<div class="ui mini icon basic cancel button">Cancel</div>';
             $html .= '</form>';
 
             return $html;

@@ -39,6 +39,7 @@ var Edit = {
             link.parent()
                 .parent()
                 .hide();
+
             jQuery(".comment .content .text").show();
 
             // Clicked link closest review content
@@ -55,13 +56,9 @@ var Edit = {
             var form = thisModule.getElement(editForm, reviewProps);
 
             // Append clonned edit form into closest review content of clicked edit link
-            reviewContent
-                .parent()
-                .append(form)
-                .next(selectors.reviewForm);
+            reviewContent.after(form).next(selectors.reviewForm);
 
             thisModule.cancelBtn(reviewContent);
-            // thisModule.formValidation();
 
             Stats.init();
             thisModule.editFormSubmit(reviewContent, reviewProps);
@@ -254,23 +251,6 @@ var Edit = {
 
         // console.log(props);
         return props;
-    },
-
-    formValidation: function() {
-        var thisModule = this;
-        var replyForm = jQuery(selectors.form);
-        var placeholderContent = this.getPlaceholderContent();
-
-        jQuery(replyForm).form({
-            fields: {
-                description: "empty",
-            },
-            onSuccess: function(e, fields) {
-                e.preventDefault();
-                replyForm.replaceWith(placeholderContent);
-                thisModule.submit(replyForm, fields);
-            },
-        });
     },
 
     cancelBtn: function(reviewContent) {

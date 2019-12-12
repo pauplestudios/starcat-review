@@ -1,7 +1,10 @@
 var selectors = {
-    link: ".scr_user_reviews .comment .actions .reply_link",
     form: ".user-review-reply.form",
     submit: ".user-review-reply.form .submit",
+    userReviews: ".scr_user_reviews.comments",
+    links: ".scr_user_reviews .comment .actions",
+    replyLink: ".scr_user_reviews .comment .actions .reply_link",
+    editLink: ".scr_user_reviews .comment .actions .reply_edit_link",
 };
 
 var Reply = {
@@ -15,29 +18,44 @@ var Reply = {
 
     showForm: function() {
         var thisModule = this;
-        var links = jQuery(selectors.link);
+        var links = jQuery(selectors.links);
+        var replyLinks = jQuery(selectors.replyLink);
         var formClone = this.getFormClone();
 
-        links.click(function() {
-            var link = jQuery(this);
-            var author = link
+        replyLinks.click(function() {
+            var replyLink = jQuery(this);
+            var author = replyLink
                 .closest(".content")
                 .find(".author")
                 .first()
                 .text()
                 .trim();
 
-            var parent = link.closest(".comment").attr("id");
+            // Show all reviews list links
+            links.show();
+
+            // Remove all reviews list forms except clonned form
+            jQuery(selectors.userReviews)
+                .find("form.form")
+                .remove();
+
+            jQuery(".comment .content .text").show();
+            // Hide clicked review link
+            replyLink
+                .parent()
+                .parent()
+                .hide();
+
+            var parent = replyLink.closest(".comment").attr("id");
             // console.log(link.closest(".comment").find.children().length);
             var placeholder = "Reply to @" + author + " ...";
 
-            links.show();
-            link.hide();
             jQuery(selectors.form).remove();
 
             /*  Append review reply form to comment content
                 set a placeholder and a data-comement-parent-id attributes  */
-            link.closest(".comment .content .actions")
+            replyLink
+                .closest(".comment .content .actions")
                 .after(formClone)
                 .next(selectors.form)
                 .attr("data-comment-parent-id", parent)
@@ -45,6 +63,7 @@ var Reply = {
                 .attr("placeholder", placeholder);
 
             thisModule.formValidation();
+            thisModule.cancelBtn();
         });
     },
 
@@ -76,6 +95,17 @@ var Reply = {
                 replyForm.replaceWith(placeholderContent);
                 thisModule.submit(replyForm, fields);
             },
+        });
+    },
+
+    cancelBtn: function() {
+        var links = jQuery(selectors.links);
+        jQuery(selectors.form + " .button.cancel").click(function(e) {
+            e.preventDefault();
+            links.show();
+            jQuery(this)
+                .closest("form.form")
+                .remove();
         });
     },
 
