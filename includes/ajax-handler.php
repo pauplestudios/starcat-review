@@ -64,7 +64,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
             $comment_id = isset($props['methodType']) ? $user_review_repo->update($props) : $user_review_repo->insert($props);
             $review = $user_review_repo->get($comment_id, $parent);
 
-            if ($parent !== 0) { // review_reply
+            if ($parent !== 0 && !isset($props['methodType'])) { // review_reply
                 $review_controller = new \StarcatReview\App\Components\User_Reviews\Controller();
                 $review = $review_controller->get_reply_review($review);
             }

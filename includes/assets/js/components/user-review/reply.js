@@ -102,27 +102,33 @@ var Reply = {
             // Hide clicked link of closest review content
             reviewContent.hide();
 
-            var parent = editLink.closest(".comment").attr("id");
+            var parent = editLink
+                .parent()
+                .closest(".comment")
+                .attr("data-comment-parent-id");
 
             var placeholder = "Reply to @" + author + " ...";
 
             jQuery(selectors.replyForm).remove();
 
-            var comment_id = reviewContent.closest(".comment").attr("id");
-            var description = reviewContent.text().trim();
-
+            var editProps = {
+                comment_id: reviewContent.closest(".comment").attr("id"),
+                description: reviewContent.text().trim(),
+                methodType: "PUT",
+                reviewContent: reviewContent,
+            };
             // Append clonned edit form into closest review content of clicked edit link
             reviewContent
                 .after(editForm)
                 .next(selectors.replyForm)
                 .attr("data-comment-parent-id", parent)
-                .attr("data-comment-id", comment_id)
+                .attr("data-comment-id", editProps.comment_id)
                 .attr("data-method", "PUT")
                 .find('[name="description"]')
                 .attr("placeholder", placeholder)
-                .attr("value", description);
+                .attr("value", editProps.description);
 
-            thisModule.formValidation();
+            thisModule.submitEditForm(editProps);
             thisModule.cancelBtn(reviewContent);
         });
     },
@@ -161,6 +167,51 @@ var Reply = {
                 e.preventDefault();
                 replyForm.replaceWith(placeholderContent);
                 thisModule.submit(replyForm, fields);
+            },
+        });
+    },
+
+    submitEditForm: function(editProps) {
+        var thisModule = this;
+        var replyForm = jQuery(selectors.replyForm);
+        var links = jQuery(selectors.links);
+        // var placeholderContent = this.getPlaceholderContent();
+
+        jQuery(replyForm).form({
+            fields: {
+                description: "empty",
+            },
+            onSuccess: function(e, fields) {
+                e.preventDefault();
+
+                var props = thisModule.getProps(replyForm, fields);
+                props.comment_id = editProps.comment_id;
+                props.methodType = editProps.methodType;
+                // console.log(props);
+                editProps.reviewContent.text(props.description);
+
+                links.show();
+                editProps.reviewContent.show();
+
+                jQuery(this)
+                    .closest("form.form")
+                    .remove();
+
+                jQuery
+                    .post(scr_ajax.ajax_url, props, function(results) {
+                        results = JSON.parse(results);
+                        // console.log(results);
+
+                        var editResult = jQuery("#" + results.comment_ID);
+                        editResult.find(".text").text(results.comment_content);
+                        editResult.transition("pulse");
+                    })
+                    .fail(function(response) {
+                        console.log("review_reply failed");
+                        console.log(response);
+                    });
+                // replyForm.replaceWith(placeholderContent);
+                // thisModule.submit(replyForm, fields);
             },
         });
     },
