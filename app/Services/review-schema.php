@@ -8,30 +8,27 @@ if (!defined('ABSPATH')) {
 
 // require __DIR__ . '/../../vendor/autoload.php';
 
-
 use Spatie\SchemaOrg\Schema;
-
 
 if (!class_exists('\StarcatReview\App\Services\Review_Schema')) {
     class Review_Schema
     {
         public function get_schema($args)
         {
-            $get_review_scripts =  $this->get_product_schema($args);
+            $get_review_scripts = $this->get_product_schema($args);
             return $get_review_scripts;
         }
 
-
         protected function get_product_schema($args)
         {
-            // generate product review 
+            // generate product review
             $post = $args['post'];
             $post_comments = isset($args['comments']) ? $args['comments'] : [];
             $post_ratings = isset($args['ratings']) ? $args['ratings'] : array();
             // $reviews_schema = $this->get_reviews_schema($post_comments);
-            $get_overall_ratings = count($post_ratings > 0) ? $post_ratings['overall']['rating'] : 0;
+            $get_overall_ratings = count($post_ratings) > 0 ? $post_ratings['overall']['rating'] : 0;
 
-            $get_overall_ratings_score = count($post_ratings > 0) ? $post_ratings['overall']['score'] : 0;
+            $get_overall_ratings_score = count($post_ratings) > 0 ? $post_ratings['overall']['score'] : 0;
 
             //get min and max ratings
             $rating = $this->get_ratings($post_comments);
@@ -49,24 +46,22 @@ if (!class_exists('\StarcatReview\App\Services\Review_Schema')) {
                 "image": "' . $args['featured_image_url'] . '"
                 }';
 
-
-
             /****
-             * 
+             *
              *  "review": {
-                    "@type": "Review",
-                    "reviewRating": {
-                        "@type": "Rating",
-                        "ratingValue": "' . $rating['max_value'] . '",
-                        "bestRating": "' . $rating['max_value'] . '",
-                        "worstRating": "' . $rating['min_value'] . '"
-                    },
-                    "author": {
-                        "@type": "Person",
-                        "name": "' . $args['author_name'] . '"
-                    }
-                }, 
-             * 
+            "@type": "Review",
+            "reviewRating": {
+            "@type": "Rating",
+            "ratingValue": "' . $rating['max_value'] . '",
+            "bestRating": "' . $rating['max_value'] . '",
+            "worstRating": "' . $rating['min_value'] . '"
+            },
+            "author": {
+            "@type": "Person",
+            "name": "' . $args['author_name'] . '"
+            }
+            },
+             *
              *
              *****/
 
@@ -182,12 +177,12 @@ if (!class_exists('\StarcatReview\App\Services\Review_Schema')) {
 
                 $rating_info = array(
                     'min_value' => min($ratings),
-                    'max_value' => max($ratings)
+                    'max_value' => max($ratings),
                 );
             } else {
                 $rating_info = array(
                     'min_value' => 0,
-                    'max_value' => 0
+                    'max_value' => 0,
                 );
             }
             return $rating_info;
@@ -195,7 +190,7 @@ if (!class_exists('\StarcatReview\App\Services\Review_Schema')) {
 
         protected function get_min_max_ratings($args)
         {
-            //get the min and max ratings 
+            //get the min and max ratings
             if (count($args) > 0) {
 
                 $ratings = array();
@@ -206,12 +201,12 @@ if (!class_exists('\StarcatReview\App\Services\Review_Schema')) {
                 $max_ratings = max($ratings);
                 return array(
                     'min_rating' => $min_ratings,
-                    'max_rating' => $max_ratings
+                    'max_rating' => $max_ratings,
                 );
             } else {
                 return array(
                     'min_rating' => 0,
-                    'max_rating' => 0
+                    'max_rating' => 0,
                 );
             }
         }
