@@ -81,6 +81,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 'comment_ID' => $props['comment_id'],
                 'comment_content' => $props['description'],
                 'comment_parent' => $props['parent'],
+                'comment_approved' => current_user_can('manage_options') ? 1 : 0,
             );
 
             $is_updated = wp_update_comment($comment);
