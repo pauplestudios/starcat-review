@@ -35,7 +35,10 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             add_filter('the_content', array($this, 'content_filter'));
             // add_filter('the_excerpt', array($this, 'content_filter'));
 
-            foreach (SCR_Getter::get('review_enable_post-types') as $post_type) {
+            $post_types = SCR_Getter::get('review_enable_post-types');
+            $post_types = is_string($post_types) ? [0 => $post_types] : $post_types;
+
+            foreach ($post_types as $post_type) {
                 if ($post_type == 'product') {
                     add_filter('woocommerce_product_tabs', [$this, 'woo_new_product_tab']);
                     add_action('woocommerce_single_product_summary', [$this, 'woocommerce_review_display_overall_rating'], 10);
@@ -132,6 +135,8 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             // Additional Dashboard Column fields
 
             $post_types = SCR_Getter::get('review_enable_post-types');
+            $post_types = is_string($post_types) ? [0 => $post_types] : $post_types;
+
             foreach ($post_types as $post_type) {
                 add_filter("manage_{$post_type}_posts_columns", array($this, 'manage_cpt_custom_columns'), 10);
                 add_action("manage_{$post_type}_posts_custom_column", array($this, 'manage_cpt_custom_column'), 10, 2);
