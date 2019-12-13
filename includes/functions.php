@@ -20,7 +20,7 @@ function scr_get_overall_rating($post_id)
     $rating = $controller->get_rating();
 
     // error_log('args : ' . print_r($args, true));
-    error_log('rating : ' . print_r($rating, true));
+    // error_log('rating : ' . print_r($rating, true));
 
     return $rating;
 }
