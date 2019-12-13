@@ -12,8 +12,9 @@ if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
         public function get_Props($args)
         {
             $props = $args;
-
-            $props['items']['author'] = $args['items'];
+            if ($args['enable-author-review']) {
+                $props['items']['author'] = $args['items'];
+            }
             $props['items']['user'] = $this->get_userItems($args);
 
             return $props;
@@ -70,7 +71,6 @@ if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
             return $items;
         }
 
-
         protected function get_user_stats($groups, $count)
         {
             $stats = [];
@@ -78,14 +78,14 @@ if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
             foreach ($groups as $key => $value) {
                 $stats[$key] = [
                     'stat_name' => $key,
-                    'rating' => round($value / $count, 1)
+                    'rating' => round($value / $count, 1),
                 ];
             }
 
             return $stats;
         }
 
-        //Todo:  Not Working Properly 
+        //Todo:  Not Working Properly
         protected function get_prosandcons($groups)
         {
             $items = [];

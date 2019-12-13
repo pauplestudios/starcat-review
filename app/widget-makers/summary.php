@@ -13,7 +13,10 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Summary')) {
     {
         public function get_view()
         {
-            $args = $this->get_default_args();
+            $args = [
+                'enable-author-review' => SCR_Getter::get('enable-author-review'),
+            ];
+            $args = array_merge($args, $this->get_default_args());
             $summary = new \StarcatReview\App\Components\Summary\Controller();
             $view = $summary->get_view($args);
 

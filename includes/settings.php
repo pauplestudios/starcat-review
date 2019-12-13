@@ -686,6 +686,13 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         ),
 
                         array(
+                            'id' => 'enable-author-review',
+                            'type' => 'switcher',
+                            'title' => 'Enable author review',
+                            'default' => true,
+                        ),
+
+                        array(
                             'id' => 'enable-pros-cons',
                             'type' => 'switcher',
                             'title' => 'Enable Pros and Cons',
@@ -889,7 +896,9 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 'theme' => 'light',
             ));
 
-            $this->single_post_features($prefix);
+            if (SCR_Getter::get('enable-author-review')) {
+                $this->single_post_features($prefix);
+            }
             $this->single_post_pros($prefix);
             $this->single_post_cons($prefix);
 
@@ -1024,7 +1033,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             if (isset($stats) && !empty($stats)) {
                 $stats_list[] = array(
                     'type' => 'submessage',
-                    'content' => 'Stats List',
+                    'content' => 'Author Review Stats List',
                 );
                 $count = 0;
                 foreach ($stats as $stat) {
