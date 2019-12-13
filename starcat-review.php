@@ -5,7 +5,7 @@ Plugin Name: Starcat Review
 Plugin URI: https://helpiewp.com/advanced-review-pro/
 Description: Adds Author and User Reviews to any post_type
 Author: HelpieWP
-Version: 0.1
+Version: 0.2
 Author URI: http://helpiewp.com
 Network: True
 Text Domain: starcat-review
