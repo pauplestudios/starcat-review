@@ -93,7 +93,10 @@ var Edit = {
                         return;
                     }
                     editFormSubmitted = true;
-
+                    reviewContent
+                        .parent()
+                        .find("form.form .submit.button")
+                        .addClass("loading");
                     setTimeout(function() {
                         editFormSubmitted = false;
                     }, 10000);
@@ -255,7 +258,7 @@ var Edit = {
 
     cancelBtn: function(reviewContent) {
         var links = jQuery(selectors.links);
-        jQuery(selectors.reviewForm + " button.cancel").click(function(e) {
+        jQuery(selectors.reviewForm + " .button.cancel").click(function(e) {
             e.preventDefault();
 
             links.show();
@@ -298,8 +301,9 @@ var Edit = {
         form.find(".button").addClass("mini");
         form.find(".dropdown").addClass("mini");
         form.find(".submit.button")
-            .text("Save")
-            .after('<button class="ui cancel mini button">Cancel</button>');
+            .after('<div class="ui cancel mini button">Cancel</div>')
+            .after('<div class="ui blue submit mini button">Save</div>')
+            .remove();
 
         form.addClass("mini");
         form.find(".rating.fields")

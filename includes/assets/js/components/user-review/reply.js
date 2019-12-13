@@ -134,7 +134,10 @@ var Reply = {
 
     getEditForm: function(formClone) {
         editForm = jQuery(formClone);
-        editForm.find(".submit.button").text("Save");
+        editForm
+            .find(".submit.button")
+            .addClass("blue")
+            .text("Save");
 
         return editForm[0].outerHTML;
     },

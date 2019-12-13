@@ -59,7 +59,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             }
 
             $html .= '<div class="field">';
-            $html .= '<button class="ui submit button"> Submit </button>';
+            $html .= '<button class="ui blue submit button"> Submit </button>';
             $html .= '</div>';
             $html .= '</form>';
 

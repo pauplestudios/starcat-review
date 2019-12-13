@@ -105,8 +105,8 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '<div class="text">';
             $html .= '<div class="title"> ' . $comment['title'] . ' </div>';
             $html .= '<div class="stats"> ' . $this->get_stats_view($comment) . '</div>';
+            $html .= '<div class="description"><p>' . $comment['content'] . '</p></div>';
             $html .= $this->get_prosandcons_view($comment);
-            $html .= '<div class="description">' . $comment['content'] . '</div>';
             $html .= '</div>';
             $html .= $this->get_moderation_html($comment);
 
@@ -185,8 +185,8 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '<div class="field">';
             $html .= '<textarea rows="2" name="description" placeholder="Reply to @them ..." ></textarea>';
             $html .= '</div>';
-            $html .= '<div class="ui mini icon basic submit button"><i class="plus circle icon"></i> REPLY</div>';
-            $html .= '<div class="ui mini icon basic cancel button">Cancel</div>';
+            $html .= '<div class="ui mini icon blue submit button"><i class="plus circle icon"></i> REPLY</div>';
+            $html .= '<div class="ui mini icon cancel button">Cancel</div>';
             $html .= '</form>';
 
             return $html;

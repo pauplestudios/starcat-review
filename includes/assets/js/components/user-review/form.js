@@ -22,13 +22,14 @@ var Form = {
                 formSubmitted = true;
 
                 Form.submission(SCRForm, fields);
-            }
+            },
         });
     },
 
     submission: function(SCRForm, fields) {
         var props = Form.getProps(SCRForm, fields);
         console.log(props);
+        SCRForm.find(".submit.button").addClass("loading");
         // Ajax Post Submiting
         jQuery
             .post(scr_ajax.ajax_url, props, function(results) {
@@ -40,7 +41,7 @@ var Form = {
                     type: "positive",
                     title: "Thanks for your Review.",
                     description:
-                        "You can see your review below. Also look at the user summary."
+                        "You can see your review below. Also look at the user summary.",
                 };
                 SCRForm.html(Form.getMessageTemplate(msgProps));
 
@@ -58,7 +59,7 @@ var Form = {
                     type: "negative",
                     title:
                         "This is a Bad request, Our development team processing it for while so we suggest you should Keep browsing!",
-                    description: "Thanks for your Review though."
+                    description: "Thanks for your Review though.",
                 };
                 SCRForm.html(Form.getMessageTemplate(msgProps));
 
@@ -82,18 +83,18 @@ var Form = {
                 rules: [
                     {
                         type: "empty",
-                        prompt: "Please enter your title"
-                    }
-                ]
+                        prompt: "Please enter your title",
+                    },
+                ],
             },
             description: {
                 identifier: "description",
                 rules: [
                     {
                         type: "empty",
-                        prompt: "Please enter your description"
-                    }
-                ]
+                        prompt: "Please enter your description",
+                    },
+                ],
             },
 
             pros0: {
@@ -101,9 +102,9 @@ var Form = {
                 rules: [
                     {
                         type: "empty",
-                        prompt: "Please select or type a pro"
-                    }
-                ]
+                        prompt: "Please select or type a pro",
+                    },
+                ],
             },
 
             cons0: {
@@ -111,10 +112,10 @@ var Form = {
                 rules: [
                     {
                         type: "empty",
-                        prompt: "Please select or type a con"
-                    }
-                ]
-            }
+                        prompt: "Please select or type a con",
+                    },
+                ],
+            },
         };
 
         rules = Form.ratingRules(rules);
@@ -131,13 +132,13 @@ var Form = {
                     rules: [
                         {
                             type: "empty",
-                            prompt: "Please rate " + item.stat_name
+                            prompt: "Please rate " + item.stat_name,
                         },
                         {
                             type: "regExp[/^[1-9]+[0-9]*$/]",
-                            prompt: "Please rate " + item.stat_name
-                        }
-                    ]
+                            prompt: "Please rate " + item.stat_name,
+                        },
+                    ],
                 };
             });
         }
@@ -164,7 +165,7 @@ var Form = {
         template += "</div></div>";
 
         return template;
-    }
+    },
 };
 
 module.exports = Form;

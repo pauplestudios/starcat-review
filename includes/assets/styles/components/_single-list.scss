@@ -16,6 +16,12 @@
         }
     }
 
+    & .comment .content .text {
+        .description p {
+            margin: 1em 0 1.6em 0;
+        }
+    }
+
     .comment_in_moderation {
         font-style: italic;
         // padding: 0.5em;
