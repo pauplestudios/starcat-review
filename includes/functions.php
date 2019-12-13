@@ -8,8 +8,9 @@ function scr_get_overall_rating($post_id)
         'post_id' => $post_id,
         'combine_type' => 'overall',
     ];
-
-    $items = get_post_meta($post_id, '_scr_post_options', true);
+    if (SCR_Getter::get('enable-author-review') == true) {
+        $items = get_post_meta($post_id, '_scr_post_options', true);
+    }
     $args['items'] = isset($items) && !empty($items) ? $items : [];
     $args['items']['comments-list'] = scr_get_user_reviews($post_id);
 
@@ -19,7 +20,7 @@ function scr_get_overall_rating($post_id)
     $rating = $controller->get_rating();
 
     // error_log('args : ' . print_r($args, true));
-    // error_log('rating : ' . print_r($rating, true));
+    error_log('rating : ' . print_r($rating, true));
 
     return $rating;
 }
