@@ -12,9 +12,9 @@ if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
         public function get_Props($args)
         {
             $props = $args;
-            if ($args['enable-author-review']) {
-                $props['items']['author'] = $args['items'];
-            }
+
+            $props['items']['author'] = ($args['enable-author-review']) ? $args['items'] : [];
+
             $props['items']['user'] = $this->get_userItems($args);
 
             return $props;
