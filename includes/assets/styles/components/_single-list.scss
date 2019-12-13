@@ -16,18 +16,23 @@
         }
     }
 
-    & .comment .content .text {
-        .title {
-            font-weight: 500;
+    & .comment .content {
+        .author {
+            font-weight: 400;
         }
-        .description p {
-            margin: 1em 0 1.6em 0;
+        .text {
+            .title {
+                font-weight: 600;
+                font-size: 1.1em;
+            }
+            .description p {
+                margin: 1em 0 1.6em 0;
+            }
         }
     }
 
     .comment_in_moderation {
         font-style: italic;
-        // padding: 0.5em;
         color: #ddd;
     }
 
