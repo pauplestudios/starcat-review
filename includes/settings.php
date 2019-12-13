@@ -898,9 +898,9 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
             if (SCR_Getter::get('enable-author-review')) {
                 $this->single_post_features($prefix);
+                $this->single_post_pros($prefix);
+                $this->single_post_cons($prefix);
             }
-            $this->single_post_pros($prefix);
-            $this->single_post_cons($prefix);
 
             // $this->single_details($prefix);
             // $this->single_rich_snippets($prefix);
