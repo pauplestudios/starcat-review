@@ -212,13 +212,6 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
         public function content_filter($content)
         {
-            $post_type = get_post_type(get_the_ID());
-            // Add breadcrumbs for starcat post type only
-            if ($post_type == SCR_POST_TYPE) {
-                $breadcrumb = new \StarcatReview\App\Components\Breadcrumbs\Controller();
-                $content = $breadcrumb->get_view() . $content;
-            }
-
             if (is_singular() && $post_type !== 'product') {
                 $review_content = $this->get_review_content();
                 $content = $content . $review_content;
