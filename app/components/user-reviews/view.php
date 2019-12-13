@@ -26,7 +26,9 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $this->collection = $viewProps['collection'];
 
             $html = '<div class="ui scr_user_reviews comments">';
-            $html .= '<h3 class="ui dividing header"> User Reviews </h3>';
+            if ($this->collection['show_list_title']) {
+                $html .= '<h3 class="ui dividing header"> ' . $this->collection['list_title'] . '</h3>';
+            }
 
             foreach ($viewProps['items'] as $comment) {
 

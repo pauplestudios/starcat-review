@@ -24,6 +24,8 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
         {
             return [
                 'post_id' => $args['post_id'],
+                'show_list_title' => $args['show_list_title'],
+                'list_title' => $args['list_title'],
                 'title' => 'Reviews',
                 'columns' => 1,
                 'items_display' => ['title', 'content'],

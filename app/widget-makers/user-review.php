@@ -45,6 +45,8 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
                 'post_id' => get_the_ID(),
                 'items' => $this->get_items(),
                 'enable_pros_cons' => SCR_Getter::get('enable-pros-cons'),
+                'show_list_title' => SCR_Getter::get('ur_show_list_title'),
+                'list_title' => SCR_Getter::get('ur_list_title'),
                 'show_form_title' => SCR_Getter::get('ur_show_form_title'),
                 'form_title' => SCR_Getter::get('ur_form_title'),
                 'show_title' => SCR_Getter::get('ur_show_title'),
