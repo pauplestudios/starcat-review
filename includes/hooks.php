@@ -21,7 +21,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             add_action('init', array($this, 'init_hook'));
 
             /* */
-            // add_action('widgets_init', [$this, 'register_sidebar']);
+            add_action('widgets_init', [$this, 'register_sidebar']);
 
             /*  Reviews Admin Section Initialization Hook */
             add_action('admin_init', array($this, 'load_admin_hooks'));
@@ -137,7 +137,6 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
                 add_filter("manage_{$post_type}_posts_columns", array($this, 'manage_cpt_custom_columns'), 10);
                 add_action("manage_{$post_type}_posts_custom_column", array($this, 'manage_cpt_custom_column'), 10, 2);
                 add_action("manage_edit-{$post_type}_sortable_columns", array($this, 'sort_posts_custom_column'), 10, 1);
-
             }
 
             // add_action('pre_get_posts', array($this, 'sort_cpt_custom_column_order'));
@@ -158,7 +157,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         {
 
             switch ($column) {
-                // Todo: 'scr_product_price'
+                    // Todo: 'scr_product_price'
                 case 'scr_rating':
                     // Todo: save the rating as a temporary post meta which can be used in pre_get_posts
                     $rating = scr_get_overall_rating($id);
@@ -225,7 +224,6 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             );
 
             return $tabs;
-
         }
         public function woo_new_product_tab_content()
         {
