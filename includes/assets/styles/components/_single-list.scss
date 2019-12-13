@@ -17,6 +17,9 @@
     }
 
     & .comment .content .text {
+        .title {
+            font-weight: 500;
+        }
         .description p {
             margin: 1em 0 1.6em 0;
         }
