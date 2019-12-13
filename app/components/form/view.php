@@ -20,13 +20,13 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
         public function get()
         {
             $html = '';
-
+            $style = 'style="display: block"';
             // User Already Reviewed or Not Logged in User
             if (!$this->props['collection']['can_user_review']) {
-                return $html;
+                $style = 'style="display: none"';
             }
 
-            $html .= '<form class="ui form scr-user-review" action="scr_user_review_submission" method="post" post_id ="' . $this->props['collection']['post_id'] . '">';
+            $html .= '<form class="ui form scr-user-review" action="scr_user_review_submission" method="post" post_id ="' . $this->props['collection']['post_id'] . '" ' . $style . '>';
 
             if ($this->props['collection']['show_form_title']) {
                 $html .= '<h2 class="ui header">';
@@ -59,7 +59,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             }
 
             $html .= '<div class="field">';
-            $html .= '<button class="ui submit button"> Submit </button>';
+            $html .= '<button class="ui blue submit button"> Submit </button>';
             $html .= '</div>';
             $html .= '</form>';
 

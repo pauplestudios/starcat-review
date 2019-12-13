@@ -4,8 +4,6 @@ namespace StarcatReview\App\Widget_Makers;
 
 use StarcatReview\Includes\Settings\SCR_Getter;
 
-use function GuzzleHttp\json_encode;
-
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -52,6 +50,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
                 'show_title' => SCR_Getter::get('ur_show_title'),
                 'show_stats' => SCR_Getter::get('ur_show_stats'),
                 'show_description' => SCR_Getter::get('ur_show_description'),
+                'current_user_id' => get_current_user_id(),
             ];
 
             $args = array_merge($stat_args, $args);
@@ -91,7 +90,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             $args = [
                 'post_id' => get_the_ID(),
                 'type' => SCR_COMMENT_TYPE,
-                'status' => 'approve',
+                // 'status' => 'approve',
             ];
 
             $comments = get_comments($args);

@@ -6,6 +6,8 @@ $graylight: #e7e7e7;
     padding: 0;
     list-style: none;
     border-radius: 5px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 
     .review-item,
     .reviewed-item {
@@ -19,8 +21,9 @@ $graylight: #e7e7e7;
             height: 35px;
 
             &__text {
-                text-transform: uppercase;
+                text-transform: capitalize;
                 flex-basis: 80px;
+                font-weight: 500;
             }
             &__divider {
                 margin: 0px 5px;

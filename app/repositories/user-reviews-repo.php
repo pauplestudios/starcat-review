@@ -58,7 +58,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                     wp_update_comment($commentarr);
                 }
 
-                if (isset($comment_id) && !empty($comment_id) && !isset($props['review_reply'])) {
+                if (isset($comment_id) && !empty($comment_id) && !isset($props['review_reply']) && $props['parent'] == 0) {
                     add_comment_meta($comment_id, 'scr_user_review_props', $props);
                 }
 
@@ -73,15 +73,22 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             return 0;
         }
 
-        public function update($comment_id, $props)
+        public function update($props)
         {
-            $comment = array();
-            $comment['comment_ID'] = $comment_id;
-            $comment['comment_approved'] = 1;
+            // error_log('props : ' . print_r($props, true));
+            $comment_id = $props['comment_id'];
+            $comment = array(
+                'comment_ID' => $props['comment_id'],
+                'comment_content' => $props['description'],
+                'comment_parent' => $props['parent'],
+                'comment_approved' => current_user_can('manage_options') ? 1 : 0,
+            );
+
             $is_updated = wp_update_comment($comment);
-            if ($is_updated) {
+            if ($is_updated && $props['parent'] == 0) {
                 update_comment_meta($comment_id, 'scr_user_review_props', $props);
             }
+
             return $comment_id;
         }
 
@@ -116,6 +123,14 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
 
             if (isset($_POST['parent']) && !empty($_POST['parent'])) {
                 $props['parent'] = $_POST['parent'];
+            }
+
+            if (isset($_POST['comment_id']) && !empty($_POST['comment_id'])) {
+                $props['comment_id'] = $_POST['comment_id'];
+            }
+
+            if (isset($_POST['methodType']) && !empty($_POST['methodType'])) {
+                $props['methodType'] = $_POST['methodType'];
             }
 
             return $props;

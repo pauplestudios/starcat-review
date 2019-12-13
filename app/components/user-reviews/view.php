@@ -30,7 +30,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
 
             foreach ($viewProps['items'] as $comment) {
 
-                if ($comment['comment_parent'] == 0) {
+                if ($this->is_can_view($comment) && $comment['comment_parent'] == 0) {
                     $html .= $this->get_comment_item($comment, $viewProps['items']);
                 }
             }
@@ -40,6 +40,17 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '</div>';
 
             return $html;
+        }
+
+        protected function is_can_view($comment)
+        {
+            $can = false;
+
+            if ($comment['comment_approved'] == 1 || $comment['user_id'] == $this->collection['current_user_id']) {
+                $can = true;
+            }
+
+            return $can;
         }
 
         public function get_reply_comment($comment)
@@ -53,10 +64,27 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '<span class="date">' . $comment['comment_date'] . '</span>';
             $html .= '<span class="time">AT ' . $comment['comment_time'] . '</span>';
             $html .= '</div>';
-            $html .= '<div class="text"><p>' . $comment['content'] . '</p></div>';
+            $html .= '<div class="text">' . $comment['content'] . '</div>';
+            $html .= $this->get_moderation_html($comment, 'Reply');
+            $html .= '<div class="actions">';
+            $html .= '<div class="links">';
+            if ($this->collection['can_reply'] && $comment['can_edit']) {
+                $html .= '<a class="reply_edit_link"><i class="edit icon"></i> EDIT</a>';
+            }
+            $html .= '</div></div>';
 
             $html .= '</div>';
             $html .= '</div>';
+
+            return $html;
+        }
+
+        protected function get_moderation_html($comment, $title = 'Review')
+        {
+            $html = '';
+            if ($comment['comment_approved'] == 0 && $comment['user_id'] == $this->collection['current_user_id']) {
+                $html .= '<div class="comment_in_moderation">' . $title . ' in Moderation !</div>';
+            }
 
             return $html;
         }
@@ -77,22 +105,30 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '<div class="text">';
             $html .= '<div class="title"> ' . $comment['title'] . ' </div>';
             $html .= '<div class="stats"> ' . $this->get_stats_view($comment) . '</div>';
+            $html .= '<div class="description"><p>' . $comment['content'] . '</p></div>';
             $html .= $this->get_prosandcons_view($comment);
-            $html .= '<div class="description">' . $comment['content'] . '</div>';
             $html .= '</div>';
+            $html .= $this->get_moderation_html($comment);
 
             $html .= '<div class="actions">';
-            $html .= '<div>';
+            $html .= '<div class="links">';
             if ($this->collection['can_reply']) {
                 $html .= '<a class="reply_link"><i class="reply icon"></i> REPLY</a>';
             }
+            if ($this->collection['can_reply'] && $comment['can_edit']) {
+                $html .= '<a class="edit_link"><i class="edit icon"></i> EDIT</a>';
+            }
+            // if ($this->collection['can_reply']) {
+            //     $html .= '<a class="delete_link"><i class="delete icon"></i> DELETE</a>';
+            // }
+
             $html .= '</div>';
             // $html .= $this->get_helpful();
             $html .= '</div>';
 
             //1st level comment children
             foreach ($items as $item) {
-                if ($item['comment_parent'] == $comment['comment_id']) {
+                if ($item['comment_parent'] == $comment['comment_id'] && $this->is_can_view($item)) {
                     $html .= $this->get_reply_comment($item);
                 }
             }
@@ -149,7 +185,8 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '<div class="field">';
             $html .= '<textarea rows="2" name="description" placeholder="Reply to @them ..." ></textarea>';
             $html .= '</div>';
-            $html .= '<div class="ui mini icon basic submit button"><i class="plus circle icon"></i> REPLY</div>';
+            $html .= '<div class="ui mini icon blue submit button"><i class="plus circle icon"></i> REPLY</div>';
+            $html .= '<div class="ui mini icon cancel button">Cancel</div>';
             $html .= '</form>';
 
             return $html;
