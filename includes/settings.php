@@ -65,7 +65,8 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
                 $this->general_settings($prefix);
 
-                if (class_exists('\StarcatReviewCpt')) {
+                if (in_array('starcat-review-cpt/starcat-review-cpt.php', apply_filters('active_plugins', get_option('active_plugins')))) {
+
                     // $options['menu_parent'] = null;
                     // $options['menu_type'] = 'menu';
                     $this->mainpage_settings($prefix);

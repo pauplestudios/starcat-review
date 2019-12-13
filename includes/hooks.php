@@ -106,7 +106,6 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             // load_plugin_textdomain('starcat-review', false, basename(dirname(__FILE__)) . '/languages/');
             if (class_exists('\StarcatReviewCpt\Widgets\Review_Listing\Controller')) {
                 /*  Reviews Widget */
-                error_log('StarcatReview CPT Exists!');
                 $this->load_widgets();
                 $shortcodes = new \StarcatReview\Includes\Shortcodes();
             }
