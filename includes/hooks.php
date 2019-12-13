@@ -35,10 +35,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             add_filter('the_content', array($this, 'content_filter'));
             // add_filter('the_excerpt', array($this, 'content_filter'));
 
-            $post_types = SCR_Getter::get('review_enable_post-types');
-            $post_types = is_string($post_types) ? [0 => $post_types] : $post_types;
-
-            foreach ($post_types as $post_type) {
+            foreach ($this->get_review_enabled_post_types() as $post_type) {
                 if ($post_type == 'product') {
                     add_filter('woocommerce_product_tabs', [$this, 'woo_new_product_tab']);
                     add_action('woocommerce_single_product_summary', [$this, 'woocommerce_review_display_overall_rating'], 10);
@@ -81,19 +78,22 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
             /* Checks for single template by post type */
 
-            if ($post->post_type == SCR_POST_TYPE && is_single()) {
+            foreach ($this->get_review_enabled_post_types() as $post_type) {
 
-                $schema_controller = new \StarcatReview\App\Components\Schema_Reviews\Controller();
-                $get_schema = $schema_controller->generate_schema();
-                $html = '';
-                if ($get_schema) {
-                    $check_schema = $get_schema;
-                    //error_log("schema check:" . $check_schema);
-                    $html .= '<!-- This site is optimized -->';
-                    // $html .= '<script type="application/ld+json">' . json_encode($get_schema) . '</script>';
-                    $html .= '<script type="application/ld+json">' . $get_schema . '</script>';
+                if ($post->post_type == $post_type && is_single()) {
+
+                    $schema_controller = new \StarcatReview\App\Components\Schema_Reviews\Controller();
+                    $get_schema = $schema_controller->generate_schema();
+                    $html = '';
+                    if ($get_schema) {
+                        $check_schema = $get_schema;
+                        //error_log("schema check:" . $check_schema);
+                        $html .= '<!-- This site is optimized -->';
+                        // $html .= '<script type="application/ld+json">' . json_encode($get_schema) . '</script>';
+                        $html .= '<script type="application/ld+json">' . $get_schema . '</script>';
+                    }
+                    echo $html;
                 }
-                echo $html;
             }
         }
 
@@ -133,10 +133,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
             // Additional Dashboard Column fields
 
-            $post_types = SCR_Getter::get('review_enable_post-types');
-            $post_types = is_string($post_types) ? [0 => $post_types] : $post_types;
-
-            foreach ($post_types as $post_type) {
+            foreach ($this->get_review_enabled_post_types() as $post_type) {
                 add_filter("manage_{$post_type}_posts_columns", array($this, 'manage_cpt_custom_columns'), 10);
                 add_action("manage_{$post_type}_posts_custom_column", array($this, 'manage_cpt_custom_column'), 10, 2);
                 add_action("manage_edit-{$post_type}_sortable_columns", array($this, 'sort_posts_custom_column'), 10, 1);
@@ -269,6 +266,14 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         {
             $reviews_builder = new \StarcatReview\App\Builders\Review_Builder();
             return $reviews_builder->get_reviews();
+        }
+
+        public function get_review_enabled_post_types()
+        {
+            $post_types = SCR_Getter::get('review_enable_post-types');
+            $enabled_post_types = is_string($post_types) ? [0 => $post_types] : $post_types;
+
+            return $enabled_post_types;
         }
 
         public function enqueue_scripts()
