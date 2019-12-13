@@ -157,7 +157,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         {
 
             switch ($column) {
-                    // Todo: 'scr_product_price'
+                // Todo: 'scr_product_price'
                 case 'scr_rating':
                     // Todo: save the rating as a temporary post meta which can be used in pre_get_posts
                     $rating = scr_get_overall_rating($id);
@@ -207,6 +207,8 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
         public function content_filter($content)
         {
+            $post_type = get_post_type(get_the_ID());
+
             if (is_singular() && $post_type !== 'product') {
                 $review_content = $this->get_review_content();
                 $content = $content . $review_content;
