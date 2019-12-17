@@ -6,6 +6,15 @@
         align-items: center;
         justify-content: space-between;
 
+        .vote.likes-and-dislikes {
+            .like.active {
+                color: green;
+            }
+            .dislike.active {
+                color: red;
+            }
+        }
+
         .vote-summary {
             margin-top: 0.3em;
             font-style: italic;

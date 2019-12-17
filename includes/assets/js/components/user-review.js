@@ -12,7 +12,7 @@ var UserReview = {
         ProsAndCons.init();
         Reply.init();
         Edit.init();
-        // Voting.init();
+        Voting.init();
 
         this.eventListener();
         console.log("User Review Form JS Loaded !!!");
