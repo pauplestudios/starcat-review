@@ -115,6 +115,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'ur_enable_approval' => true,
                 'ur_show_list_title' => true,
                 'ur_list_title' => 'User Reviews',
+                'ur_enable_voting' => true,
                 'ur_show_form_title' => true,
                 'ur_form_title' => 'Leave a Review',
                 'ur_show_title' => true,

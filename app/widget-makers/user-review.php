@@ -47,6 +47,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
                 'enable_pros_cons' => SCR_Getter::get('enable-pros-cons'),
                 'show_list_title' => SCR_Getter::get('ur_show_list_title'),
                 'list_title' => SCR_Getter::get('ur_list_title'),
+                'enable_voting' => SCR_Getter::get('ur_enable_voting'),
                 'show_form_title' => SCR_Getter::get('ur_show_form_title'),
                 'form_title' => SCR_Getter::get('ur_form_title'),
                 'show_title' => SCR_Getter::get('ur_show_title'),
