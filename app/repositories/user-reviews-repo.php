@@ -98,13 +98,24 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 $meta_props = get_comment_meta($props['comment_id'], 'scr_user_review_props', true);
 
                 if (isset($meta_props['votes']) && !empty($meta_props['votes'])) {
-                    if (!in_array($props['votes'], $meta_props['votes'])) {
-                        array_push($meta_props['votes'], $props['votes']);
+                    $is_current_user_voted = false;
+                    foreach ($meta_props['votes'] as &$vote) {
+                        if ($vote['user_id'] == $props['vote']['user_id']) {
+                            $vote['vote'] = $props['vote']['vote'];
+                            $is_current_user_voted = true;
+                        }
+                        // error_log('each vote : ' . print_r($vote, true));
                     }
+                    if ($is_current_user_voted == false) {
+                        array_push($meta_props['votes'], $props['vote']);
+                    }
+
                 } else {
-                    $vote_props = ['votes' => [$props['votes']]];
+                    $vote_props = ['votes' => [$props['vote']]];
                     $meta_props = array_merge($meta_props, $vote_props);
                 }
+
+                // error_log('$meta_props : ' . print_r($meta_props['votes'], true));
 
                 update_comment_meta($props['comment_id'], 'scr_user_review_props', $meta_props);
             }
@@ -161,8 +172,8 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 $data['comment_id'] = $_POST['comment_id'];
             }
 
-            if (isset($_POST['vote']) && !empty($_POST['vote'])) {
-                $data['votes'] = [
+            if (isset($_POST['vote'])) {
+                $data['vote'] = [
                     'user_id' => get_current_user_id(),
                     'vote' => $_POST['vote'],
                 ];

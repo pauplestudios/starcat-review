@@ -82,13 +82,12 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
         {
             $ur_repo = new \StarcatReview\App\Repositories\User_Reviews_Repo();
             $props = $ur_repo->get_processed_voting_data();
-
             // error_log('props : ' . print_r($props, true));
-
-            $vote = $ur_repo->store_vote($props);
+            $ur_repo->store_vote($props);
             $props = $ur_repo->get($props['comment_id']);
 
             echo json_encode($props);
+
             wp_die();
         }
 
