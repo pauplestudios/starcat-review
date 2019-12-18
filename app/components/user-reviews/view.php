@@ -164,18 +164,23 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             return $view;
         }
 
-        private function get_helpful($comment)
+        private function get_helpful($props)
         {
+            $vote_summary = $props['args']['items']['votes']['summary'];
+
+            $like_active = ($vote_summary['active'] === 'like') ? 'active' : '';
+            $dislike_active = ($vote_summary['active'] === 'dislike') ? 'active' : '';
+
             $html = '<div class="helpful"> ';
 
-            $html .= '<div class="vote likes-and-dislikes" data-comment-id="' . $comment['comment_id'] . '">';
+            $html .= '<div class="vote likes-and-dislikes" data-comment-id="' . $props['comment_id'] . '">';
             $html .= 'Was this helpful to you ? ';
-            $html .= '<a class="like"><i class="bordered thumbs up outline icon"></i><span class="likes">5</span></a>';
-            $html .= '<a class="dislike"><i class="bordered thumbs down outline icon"></i><span class="dislikes">15</span></a>';
+            $html .= '<a class="like ' . $like_active . '"><i class="bordered thumbs up outline icon"></i><span class="likes">' . $vote_summary['likes'] . '</span></a>';
+            $html .= '<a class="dislike ' . $dislike_active . '"><i class="bordered thumbs down outline icon"></i><span class="dislikes">' . $vote_summary['dislikes'] . '</span></a>';
             $html .= '</div>';
 
             $html .= '<div class="vote-summary">';
-            $html .= '<span class="helpful">0</span> of <span class="peoples">0</span> people found this review helpful';
+            $html .= '<span class="helpful">' . $vote_summary['likes'] . '</span> of <span class="people"> ' . $vote_summary['people'] . ' </span> people found this review helpful';
             $html .= '</div>';
 
             $html .= '</div>';

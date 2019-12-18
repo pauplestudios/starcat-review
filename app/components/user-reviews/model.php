@@ -106,12 +106,12 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
             }
 
             if (isset($comment->review['votes']) && !empty($comment->review['votes'])) {
-                $args['items']['votes'] = $comment->review['votes'];
+                $args['items']['votes'] = $this->get_votes($comment->review['votes']);
             }
 
-            if (isset($comment->review['helpful']) && !empty($comment->review['helpful'])) {
-                $args['items']['helpful'] = $comment->review['helpful'];
-            }
+            // if (isset($comment->review['helpful']) && !empty($comment->review['helpful'])) {
+            //     $args['items']['helpful'] = $comment->review['helpful'];
+            // }
 
             return $args;
         }
@@ -123,16 +123,61 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
             return apply_filters('get_comment_time', $date);
         }
 
-        protected function is_active($votes)
+        protected function get_votes($items)
         {
-            $is_active = '';
+            $votes = [
+                'total' => $items,
+                'summary' => $this->get_vote_summary($items),
+            ];
+
+            // error_log('Votes : ' . print_r($votes, true));
+            return $votes;
+        }
+
+        protected function get_vote_summary($votes)
+        {
+            $likes = 0;
+            $dislikes = 0;
+            $people = 0;
+
+            $summary = [
+                'likes' => $likes,
+                'dislikes' => $dislikes,
+                'active' => 0,
+                'people' => $people,
+            ];
+
             foreach ($votes as $vote) {
-                if ($this->collection['current_user_id'] == $vote->user_id) {
-                    $is_active = ($vote->vote) ? 'like' : 'dislike';
+
+                // Is active Like or DisLike or Not
+                if ($this->collection['current_user_id'] == $vote['user_id']) {
+                    if (($vote['vote'] == 1)) {
+                        $summary['active'] = 'like';
+                    } elseif (($vote['vote'] == -1)) {
+                        $summary['active'] = 'dislike';
+                    } else {
+                        $summary['active'] = 0;
+                    }
                 }
+
+                // Likes
+                if ($vote['vote'] == 1) {
+                    $likes++;
+                }
+
+                // Dislikes
+                if ($vote['vote'] == -1) {
+                    $dislikes++;
+                }
+                // poeple
+                $people++;
+
+                $summary['likes'] = $likes;
+                $summary['dislikes'] = $dislikes;
+                $summary['people'] = $people;
             }
 
-            return $is_active;
+            return $summary;
         }
     }
 }
