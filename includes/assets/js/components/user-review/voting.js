@@ -32,7 +32,21 @@ var Voting = {
                         value
                 );
 
-                console.log(event);
+                props = {
+                    action: "scr_user_review_vote",
+                    type: "post",
+                    comment_id: jQuery(this.element).attr("data-comment-id"),
+                    vote: value,
+                };
+
+                console.log(props);
+                // console.log(event);
+
+                jQuery.post(scr_ajax.ajax_url, props, function(results) {
+                    results = JSON.parse(results);
+                    console.log(results);
+                });
+
                 // jQuery.ajax({
                 //     url: "url",
                 //     type: "post",

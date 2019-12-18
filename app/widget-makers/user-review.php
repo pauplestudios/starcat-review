@@ -59,6 +59,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
 
             $args['can_user_review'] = $this->get_user_can_review();
             $args['can_user_reply'] = $this->get_user_can_reply();
+            $args['can_user_vote'] = is_user_logged_in();
 
             return $args;
         }

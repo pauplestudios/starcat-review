@@ -37,6 +37,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
                 ],
                 'pagination' => true,
                 'can_reply' => $args['can_user_reply'],
+                'can_vote' => $args['can_user_vote'],
                 'current_user_id' => $args['current_user_id'],
             ];
         }
@@ -104,6 +105,14 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
                 $args['items']['cons-list'] = $comment->review['cons'];
             }
 
+            if (isset($comment->review['votes']) && !empty($comment->review['votes'])) {
+                $args['items']['votes'] = $comment->review['votes'];
+            }
+
+            if (isset($comment->review['helpful']) && !empty($comment->review['helpful'])) {
+                $args['items']['helpful'] = $comment->review['helpful'];
+            }
+
             return $args;
         }
 
@@ -112,6 +121,18 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
             $date = mysql2date(get_option('time_format'), $date, true);
 
             return apply_filters('get_comment_time', $date);
+        }
+
+        protected function is_active($votes)
+        {
+            $is_active = '';
+            foreach ($votes as $vote) {
+                if ($this->collection['current_user_id'] == $vote->user_id) {
+                    $is_active = ($vote->vote) ? 'like' : 'dislike';
+                }
+            }
+
+            return $is_active;
         }
     }
 }

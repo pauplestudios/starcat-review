@@ -125,7 +125,9 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             // }
 
             $html .= '</div>';
-            $html .= $this->get_helpful();
+            if ($this->collection['can_vote']) {
+                $html .= $this->get_helpful($comment);
+            }
             $html .= '</div>';
 
             //1st level comment children
@@ -162,11 +164,11 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             return $view;
         }
 
-        private function get_helpful()
+        private function get_helpful($comment)
         {
-            $html = '<div class="ui user-review-helpful"> ';
+            $html = '<div class="helpful"> ';
 
-            $html .= '<div class="vote likes-and-dislikes">';
+            $html .= '<div class="vote likes-and-dislikes" data-comment-id="' . $comment['comment_id'] . '">';
             $html .= 'Was this helpful to you ? ';
             $html .= '<a class="like"><i class="bordered thumbs up outline icon"></i><span class="likes">5</span></a>';
             $html .= '<a class="dislike"><i class="bordered thumbs down outline icon"></i><span class="dislikes">15</span></a>';

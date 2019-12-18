@@ -92,6 +92,24 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             return $comment_id;
         }
 
+        public function store_vote($props)
+        {
+            if (metadata_exists('comment', $props['comment_id'], 'scr_user_review_props')) {
+                $meta_props = get_comment_meta($props['comment_id'], 'scr_user_review_props', true);
+
+                if (isset($meta_props['votes']) && !empty($meta_props['votes'])) {
+                    if (!in_array($props['votes'], $meta_props['votes'])) {
+                        array_push($meta_props['votes'], $props['votes']);
+                    }
+                } else {
+                    $vote_props = ['votes' => [$props['votes']]];
+                    $meta_props = array_merge($meta_props, $vote_props);
+                }
+
+                update_comment_meta($props['comment_id'], 'scr_user_review_props', $meta_props);
+            }
+        }
+
         public function get_processed_data()
         {
             $props = [];
@@ -134,6 +152,24 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             }
 
             return $props;
+        }
+
+        public function get_processed_voting_data()
+        {
+            $data = [];
+            if (isset($_POST['comment_id']) && !empty($_POST['comment_id'])) {
+                $data['comment_id'] = $_POST['comment_id'];
+            }
+
+            if (isset($_POST['vote']) && !empty($_POST['vote'])) {
+                $data['votes'] = [
+                    'user_id' => get_current_user_id(),
+                    'vote' => $_POST['vote'],
+                ];
+
+            }
+
+            return $data;
         }
 
         protected function get_prosandcons($features)
