@@ -85,7 +85,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             );
 
             $is_updated = wp_update_comment($comment);
-            if ($is_updated && $props['parent'] == 0) {
+            if ($is_updated || $props['parent'] == 0) {
                 update_comment_meta($comment_id, 'scr_user_review_props', $props);
             }
 
