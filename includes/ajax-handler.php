@@ -2,6 +2,9 @@
 
 namespace StarcatReview\Includes;
 
+use StarcatReview\Includes\Settings\SCR_Getter;
+
+
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -10,7 +13,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
     class Ajax_Handler
     {
         public function __construct()
-        {}
+        { }
 
         public function register_ajax_actions()
         {
@@ -77,93 +80,48 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
         {
             // $summary = new \StarcatReview\App\Summary();
 
+            // $summary = new \StarcatReview\App\Summary();
+            $get_post_types = SCR_Getter::get('review_enable_post-types');
             $args = array(
-                'post_type' => array(SCR_POST_TYPE),
+                'post_type' => $get_post_types,
                 'post_status' => array('publish'),
                 'nopaging' => true,
                 'order' => 'ASC',
                 'orderby' => 'menu_order',
             );
+            $get_global_stats = SCR_Getter::get('global_stats');
+            $global_stats = array();
+            if (count($get_global_stats) > 0) {
+                foreach ($get_global_stats as $stat) {
+                    $global_stats[] = strtoupper($stat['stat_name']);
+                }
+            }
+
 
             $results = new \WP_Query($args);
 
             if ($results->have_posts()) {
 
+                $posts = array();
                 foreach ($results->posts as $post) {
-                    // $temp_stats = [
-                    //     '0' => [
-                    //         'stat_name' => 'quality',
-                    //         'rating' => '2',
-                    //     ],
-                    //     '1' => [
-                    //         'stat_name' => 'battery performance',
-                    //         'rating'    => '4.3'
-                    //     ],
-                    //     '2' => [
-                    //         'stat_name' => 'camera quality',
-                    //         'rating'    => '4.2'
-                    //     ],
-                    //     '3' => [
-                    //         'stat_name' => 'extras_1',
-                    //         'rating'    => '4.2'
-                    //     ],
-                    //     '4' => [
-                    //         'stat_name' => 'extras_2',
-                    //         'rating'    => '4.2'
-                    //     ],
-                    //     '5' => [
-                    //         'stat_name' => 'extras_3',
-                    //         'rating'    => '4.2'
-                    //     ],
 
-                    // ];
                     if (has_post_thumbnail($post->ID)) {
                         $image = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID));
                     }
 
-                    $author_stats = get_post_meta($post->ID, '_scr_post_options', true);
-                    // $default_args = $summary->get_default_args();
-
-                    $get_comments = scr_get_user_reviews($post->ID);
-
-                    $user_stats = array();
-                    //default view rating feature in CT
-                    $user_stats[] = array('stat_name' => 'scr-ratings', 'rating' => 0);
-                    if (isset($get_comments) && !empty($get_comments)) {
-                        foreach ($get_comments as $comment) {
-                            if (isset($comment->reviews)) {
-                                $review = $comment->reviews;
-                                $stats = $review['stats'];
-                                if (count($stats) > 0) {
-                                    foreach ($stats as $stat) {
-                                        $user_stats[] = $stat;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    $items = [];
-                    //default view rating feature in CT
-                    $items[] = array('stat_name' => 'scr-ratings', 'rating' => 0);
-                    if (isset($author_stats['stats-list']) || !empty($author_stats['stats-list'])) {
-                        // $items['stats-list'] = $author_stats['stats-list'];
-                        $author_stats_lists = $author_stats['stats-list'];
-                        foreach ($author_stats_lists as $author_stat_item) {
-                            $items[] = $author_stat_item;
-                        }
-                    }
+                    $get_scr_user_reviews = scr_get_user_reviews($post->ID);
+                    $get_stat_review = $this->process_stat_review($get_scr_user_reviews, $global_stats);
+                    // error_log("post" . print_r($post, true));
                     $get_overall_stat = scr_get_overall_rating($post->ID);
                     $posts[] = array(
                         'id' => $post->ID,
                         'title' => substr(wp_strip_all_tags($post->post_title), 0, 25) . '...',
-                        'description' => $post->post_content,
+                        'description' => substr(wp_strip_all_tags($post->post_content), 0, 46) . '...',
                         // 'url' => $post->guid,
                         // 'stats' => $temp_stats,
                         'image_url' => isset($image) ? $image[0] : "",
-                        'author_stats' => $items,
-                        'user_stats' => $user_stats,
-                        'get_overall_stat' => $get_overall_stat,
+                        'user_stats'    => $get_stat_review,
+                        'get_overall_stat' => $get_overall_stat
                     );
                 }
             } else {
@@ -172,6 +130,68 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
 
             echo json_encode($posts);
             wp_die();
+        }
+
+        public function process_stat_review($args, $global_stats)
+        {
+            $stats = array();
+            if (count($args) > 0) {
+                foreach ($args as $post_review) {
+                    $reviews = isset($post_review->reviews) ? $post_review->reviews : [];
+                    if (isset($reviews) && count($reviews) > 0) {
+                        $stats['ratings'] = $reviews['rating'];
+                        $get_Stats = $reviews['stats'];
+
+                        error_log("get_Stats" . print_r($get_Stats, true));
+
+                        $stat_temp_array = array();
+                        $stat_temp_array['SCR_CT_RATINGS'] = array('stat_name' => 'scr_rating', 'value' => 0);
+                        if (count($get_Stats) > 0) {
+                            // error_log("global_stats" . print_r($global_stats, true));
+                            foreach ($get_Stats as $stat_index => $single_stat) {
+                                $stat_index   = strtoupper($stat_index);
+                                // error_log("single_stat" . print_r($single_stat, true));
+                                if (in_array($stat_index, $global_stats)) {
+                                    // error_log("stat_index" . $stat_index);
+                                    $stat_temp_array[$stat_index] = $single_stat;
+                                }
+                            }
+                        }
+                        if (count($stat_temp_array) > 0) {
+                            foreach ($global_stats as $global_stat) {
+                                $stat_name   = strtoupper($global_stat);
+
+                                if (array_key_exists($stat_name, $stat_temp_array)) {
+                                    // is found key
+                                } else {
+                                    $stat_temp_array[$stat_name] = array(
+                                        'stat_name' => $stat_name,
+                                        'rating'    => 0
+                                    );
+                                }
+                            }
+                        }
+                        $stats['review_stats'] = $stat_temp_array;
+                    }
+                }
+            } else {
+                if (count($global_stats) > 0) {
+                    $stats['rating']  = 0;
+                    $get_empty_stats = array();
+                    $get_empty_stats['SCR_CT_RATINGS'] = array('stat_name' => 'scr_rating', 'value' => 0);
+                    foreach ($global_stats as $global_stat) {
+                        $stat_name   = strtoupper($global_stat);
+
+                        $get_empty_stats[$stat_name] = array(
+                            'stat_name' => strtoupper($stat_name),
+                            'rating'    => 0
+                        );
+                    }
+                    $stats['review_stats'] = $get_empty_stats;
+                }
+            }
+
+            return $stats;
         }
 
         public function get_scr_results()
