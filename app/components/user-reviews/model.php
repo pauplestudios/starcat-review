@@ -124,28 +124,26 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
             return apply_filters('get_comment_time', $date);
         }
 
-        protected function get_votes($items)
+        // TODO: Move to own class?
+        public function get_votes($items)
         {
             $votes = [
                 'total' => $items,
                 'summary' => $this->get_vote_summary($items),
             ];
 
+            // error_log('items : ' . print_r($items, true));
             // error_log('Votes : ' . print_r($votes, true));
             return $votes;
         }
 
         protected function get_vote_summary($votes)
         {
-            $likes = 0;
-            $dislikes = 0;
-            $people = 0;
-
             $summary = [
-                'likes' => $likes,
-                'dislikes' => $dislikes,
+                'likes' => 0,
+                'dislikes' => 0,
                 'active' => 0,
-                'people' => $people,
+                'people' => 0,
             ];
 
             foreach ($votes as $vote) {
@@ -163,19 +161,15 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
 
                 // Likes
                 if ($vote['vote'] == 1) {
-                    $likes++;
+                    $summary['likes']++;
                 }
 
                 // Dislikes
                 if ($vote['vote'] == -1) {
-                    $dislikes++;
+                    $summary['dislikes']++;
                 }
                 // poeple
-                $people++;
-
-                $summary['likes'] = $likes;
-                $summary['dislikes'] = $dislikes;
-                $summary['people'] = $people;
+                $summary['people']++;
             }
 
             return $summary;
