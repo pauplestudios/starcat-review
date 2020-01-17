@@ -26,6 +26,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
                 'post_id' => $args['post_id'],
                 'show_list_title' => $args['show_list_title'],
                 'list_title' => $args['list_title'],
+                'enable_voting' => $args['enable_voting'],
                 'title' => 'Reviews',
                 'columns' => 1,
                 'items_display' => ['title', 'content'],
@@ -37,6 +38,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
                 ],
                 'pagination' => true,
                 'can_reply' => $args['can_user_reply'],
+                'can_vote' => $args['can_user_vote'],
                 'current_user_id' => $args['current_user_id'],
             ];
         }
@@ -104,6 +106,14 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
                 $args['items']['cons-list'] = $comment->review['cons'];
             }
 
+            if (isset($comment->review['votes']) && !empty($comment->review['votes'])) {
+                $args['items']['votes'] = $this->get_votes($comment->review['votes']);
+            }
+
+            // if (isset($comment->review['helpful']) && !empty($comment->review['helpful'])) {
+            //     $args['items']['helpful'] = $comment->review['helpful'];
+            // }
+
             return $args;
         }
 
@@ -112,6 +122,57 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
             $date = mysql2date(get_option('time_format'), $date, true);
 
             return apply_filters('get_comment_time', $date);
+        }
+
+        // TODO: Move to own class?
+        public function get_votes($items)
+        {
+            $votes = [
+                'total' => $items,
+                'summary' => $this->get_vote_summary($items),
+            ];
+
+            // error_log('items : ' . print_r($items, true));
+            // error_log('Votes : ' . print_r($votes, true));
+            return $votes;
+        }
+
+        protected function get_vote_summary($votes)
+        {
+            $summary = [
+                'likes' => 0,
+                'dislikes' => 0,
+                'active' => 0,
+                'people' => 0,
+            ];
+
+            foreach ($votes as $vote) {
+
+                // Is active Like or DisLike or Not
+                if ($this->collection['current_user_id'] == $vote['user_id']) {
+                    if (($vote['vote'] == 1)) {
+                        $summary['active'] = 'like';
+                    } elseif (($vote['vote'] == -1)) {
+                        $summary['active'] = 'dislike';
+                    } else {
+                        $summary['active'] = 0;
+                    }
+                }
+
+                // Likes
+                if ($vote['vote'] == 1) {
+                    $summary['likes']++;
+                }
+
+                // Dislikes
+                if ($vote['vote'] == -1) {
+                    $summary['dislikes']++;
+                }
+                // poeple
+                $summary['people']++;
+            }
+
+            return $summary;
         }
     }
 }

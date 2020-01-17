@@ -125,7 +125,9 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             // }
 
             $html .= '</div>';
-            // $html .= $this->get_helpful();
+            if ($this->collection['can_vote'] && $this->collection['enable_voting']) {
+                $html .= $this->get_helpful($comment);
+            }
             $html .= '</div>';
 
             //1st level comment children
@@ -162,18 +164,23 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             return $view;
         }
 
-        private function get_helpful()
+        private function get_helpful($props)
         {
-            $html = '<div class="ui user-review-helpful"> ';
+            $vote_summary = $props['args']['items']['votes']['summary'];
 
-            $html .= '<div class="vote">';
+            $like_active = ($vote_summary['active'] === 'like') ? 'active' : '';
+            $dislike_active = ($vote_summary['active'] === 'dislike') ? 'active' : '';
+
+            $html = '<div class="helpful"> ';
+
+            $html .= '<div class="vote likes-and-dislikes" data-comment-id="' . $props['comment_id'] . '">';
             $html .= 'Was this helpful to you ? ';
-            $html .= '<a><i class="green bordered thumbs up outline icon"></i></a>';
-            $html .= '<a><i class="red bordered thumbs down outline icon"></i></a>';
+            $html .= '<a class="like ' . $like_active . '"><i class="bordered thumbs up outline icon"></i><span class="likes">' . $vote_summary['likes'] . '</span></a>';
+            $html .= '<a class="dislike ' . $dislike_active . '"><i class="bordered thumbs down outline icon"></i><span class="dislikes">' . $vote_summary['dislikes'] . '</span></a>';
             $html .= '</div>';
 
             $html .= '<div class="vote-summary">';
-            $html .= '0 of 0 people found this review helpful';
+            $html .= '<span class="helpful">' . $vote_summary['likes'] . '</span> of <span class="people"> ' . $vote_summary['people'] . ' </span> people found this review helpful';
             $html .= '</div>';
 
             $html .= '</div>';

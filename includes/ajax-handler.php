@@ -29,6 +29,11 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
             // Ajax Hooks In compare table
             add_action('wp_ajax_nopriv_get_scr_results', [$this, 'get_scr_results']);
             add_action('wp_ajax_get_scr_results', [$this, 'get_scr_results']);
+
+            // Vote Submission ajax for User Review
+            add_action('wp_ajax_nopriv_scr_user_review_vote', [$this, 'vote_handler']);
+            add_action('wp_ajax_scr_user_review_vote', [$this, 'vote_handler']);
+
         }
 
         public function scr_listing_action()
@@ -70,6 +75,19 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
             }
 
             echo json_encode($review);
+            wp_die();
+        }
+
+        public function vote_handler()
+        {
+            $ur_repo = new \StarcatReview\App\Repositories\User_Reviews_Repo();
+            $props = $ur_repo->get_processed_voting_data();
+            // error_log('props : ' . print_r($props, true));
+            $ur_repo->store_vote($props);
+            $props = $ur_repo->get($props['comment_id']);
+
+            echo json_encode($props);
+
             wp_die();
         }
 
@@ -183,5 +201,6 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
             $scr_search_result_sets = $comparison_controller->get_scr_details($search_key);
             wp_die();
         }
+
     }
 }

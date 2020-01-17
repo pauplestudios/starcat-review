@@ -214,6 +214,13 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         ),
 
                         array(
+                            'id' => 'ur_enable_voting',
+                            'type' => 'switcher',
+                            'title' => __('Voting', SCR_DOMAIN),
+                            'default' => true,
+                        ),
+
+                        array(
                             'type' => 'subheading',
                             'content' => 'User Review Form',
                         ),
