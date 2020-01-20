@@ -39,6 +39,8 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
                 if ($post_type == 'product') {
                     add_filter('woocommerce_product_tabs', [$this, 'woo_new_product_tab']);
                     add_action('woocommerce_single_product_summary', [$this, 'woocommerce_review_display_overall_rating'], 10);
+                    // add_filter('woocommerce_product_get_rating_html', [$this, 'woocommerce_shop_display'], 10, 3);
+                    add_action('woocommerce_after_shop_loop_item_title', [$this, 'woocommerce_shop_display'], 11);
                 }
             }
 
@@ -46,6 +48,18 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             // add_filter('the_excerpt', array($this, 'content_filter'));
 
             require_once SCR_PATH . '/app/components/user-reviews/table.php';
+        }
+
+
+        public function woocommerce_shop_display()
+        {
+            global $product;
+            $product_id = $product->get_id();
+            $overall_ratings = scr_get_overall_rating($product_id);
+            error_log('$product_id : ' . $product_id);
+            // error_log('woocommerce_shop_display');
+            echo  $overall_ratings['dom'];
+            // echo "<span>Other Rating</span>";
         }
 
         public function init_hook()
@@ -157,7 +171,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         {
 
             switch ($column) {
-                // Todo: 'scr_product_price'
+                    // Todo: 'scr_product_price'
                 case 'scr_rating':
                     // Todo: save the rating as a temporary post meta which can be used in pre_get_posts
                     $rating = scr_get_overall_rating($id);
@@ -240,6 +254,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
             echo $html;
         }
+
 
         public function woocommerce_review_display_overall_rating()
         {
