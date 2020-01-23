@@ -75,7 +75,7 @@ const webpackConfig = {
 };
 
 if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
-    const buildFolder = path.resolve(__dirname, "test-artifacts/build");
+    const buildFolder = path.resolve(__dirname, "artifacts/dist");
     webpackConfig.plugins.push(
         new TerserJsPlugin({
             cache: true,
@@ -108,6 +108,7 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
                     from: path.resolve(__dirname, "includes") + "/",
                     to: buildFolder + "/includes",
                     ignore: [
+                        "*.zip",
                         "**/*.scss",
                         "**/*.md",
                         "**/*.yml",
@@ -161,7 +162,7 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
             onEnd: {
                 archive: [
                     {
-                        source: "./test-artifacts/build",
+                        source: "./artifacts/dist",
                         destination: "./starcat-review.zip",
                     },
                 ],
