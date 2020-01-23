@@ -19,8 +19,8 @@ class BasicCest
         $I->loginAsAdmin();
 
         /* Start Conditional */
-        $I->click("Remind me later");
-        $I->click("Update WordPress Database");
+        // $I->click("Remind me later");
+        // $I->click("Update WordPress Database");
         /* End Conditional */
 
         $I->amOnPluginsPage();
