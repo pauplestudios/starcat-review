@@ -56,10 +56,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             global $product;
             $product_id = $product->get_id();
             $overall_ratings = scr_get_overall_rating($product_id);
-            error_log('$product_id : ' . $product_id);
-            // error_log('woocommerce_shop_display');
             echo  $overall_ratings['dom'];
-            // echo "<span>Other Rating</span>";
         }
 
         public function init_hook()
