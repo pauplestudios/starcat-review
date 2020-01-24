@@ -7,7 +7,7 @@ dist
 *.bundle.css.map
 tmp
 starcat-review-build
-starcat-review.zip
+*.zip
 *.lock
 reports
 .scannerwork
@@ -15,6 +15,7 @@ reports
 test-artifacts/build/**
 artifacts/dist/**
 package-lock.json
+
 
 includes/assets/vendors/semantic/bundle/components/
 includes/assets/vendors/semantic/bundle/themes/basic/
