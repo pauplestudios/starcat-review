@@ -6,18 +6,6 @@ class SettingsPageCest
         // will be executed at the beginning of each test
         $I->loginAsAdmin();
         $I->am('administrator');
-        /* Start Conditional */
-        // $I->click("Remind me later");
-        // $I->click("Update WordPress Database");
-        /* End Conditional */
-        // $I->amOnPluginsPage();
-        // $I->activatePlugin('starcat-review');
-        // $I->amOnPagesPage();
-        // $I->amOnPluginsPage();
-        // $I->seePluginActivated('starcat-review');
-
-        // $I->fillField('fs_key',  'sk_vCJfhF&=jHs$om_:8g*h5dMzp9eVj');
-        // $I->click('Agree');
     }
 
     function add_plugin_admin_menu(AcceptanceTester $I)
