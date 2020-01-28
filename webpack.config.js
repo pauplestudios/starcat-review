@@ -165,6 +165,14 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
                         source: "./artifacts/dist",
                         destination: "./starcat-review.zip",
                     },
+                    {
+                        source: "./includes/lib/cpt-addon",
+                        destination: "./starcat-review-cpt.zip",
+                    },
+                    {
+                        source: "./includes/lib/ct-addon",
+                        destination: "./starcat-review-ct.zip",
+                    },
                 ],
             },
         })
