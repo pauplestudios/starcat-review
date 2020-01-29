@@ -33,7 +33,8 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         }
 
         public function wp_loaded()
-        {}
+        {
+        }
 
         public function init()
         {
@@ -511,9 +512,9 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'type' => 'content',
                             'content' => '<div class="button-container">'
-                            . '<span><b>Where is my main page?</b></span>'
-                            . '<br>'
-                            . $main_page_button . '<span>Save and Refresh Page if you changed it.</span></div>',
+                                . '<span><b>Where is my main page?</b></span>'
+                                . '<br>'
+                                . $main_page_button . '<span>Save and Refresh Page if you changed it.</span></div>',
                         ),
                         array(
                             'type' => 'subheading',
@@ -795,6 +796,24 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             // 'dependency' => array('stats-source-type|stats-type', '==|==', 'icon|star'),
                             'dependency' => array('stats-source-type', '==', 'icon'),
                             'default' => 'star',
+                        ),
+                        array(
+                            'id' => 'stats-icons-color',
+                            'type' => 'color',
+                            'title' => 'Icons Color',
+                            'dependency' => array('stats-source-type', '==', 'icon'),
+                            'output' => array('.review-list .review-item-stars i', '.review-list .reviewed-item-stars i', '.reviewed-list .review-item-stars i', '.reviewed-list .reviewed-item-stars i'),
+                            'output_mode' => 'color',
+                            'default' => '#e7711b',
+                        ),
+                        array(
+                            'id' => 'stats-icons-label-color',
+                            'type' => 'color',
+                            'title' => 'Icons Label Color',
+                            'dependency' => array('stats-source-type', '==', 'icon'),
+                            'output' => array('.review-list .reviewed-item .reviewed-item-label__score', '.review-list .reviewed-item .reviewed-item-label__score', '.reviewed-list .reviewed-item .reviewed-item-label__score', '.reviewed-list .reviewed-item .reviewed-item-label__score'),
+                            'output_mode' => 'color',
+                            'default' => '#0274be',
                         ),
 
                         array(
