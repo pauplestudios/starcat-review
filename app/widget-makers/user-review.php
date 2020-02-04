@@ -24,12 +24,12 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             $form_view = $this->form_controller->get_view($args);
             $reviews_list_view = $this->reviews_controller->get_view($args);
 
-            $wrapper_start_html = '<div id="scr-controlled-list" data-collectionprops="{<pagination<:true,<page<:9}">';
-            $this->controls_builder = new \StarcatReview\App\Builders\Controls_Builder();
+            $wrapper_start_html = '<div id="scr-controlled-list" data-collectionprops="{<pagination<:true,<page<:9,<type<:2}">';
+            $this->controls_builder = new \StarcatReview\App\Builders\Controls_Builder('user_review');
 
             $args = [
                 'search' => 1,
-                // 'sort' => 1
+                'sort' => 1,
             ];
             $controls_view = '';
             $controls_view = $this->controls_builder->get_controls($args);

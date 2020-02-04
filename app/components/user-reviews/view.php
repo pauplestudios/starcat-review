@@ -68,6 +68,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '</div>';
             $html .= '<div class="text">' . $comment['content'] . '</div>';
             $html .= $this->get_moderation_html($comment, 'Reply');
+
             $html .= '<div class="actions">';
             $html .= '<div class="links">';
             if ($this->collection['can_reply'] && $comment['can_edit']) {
@@ -93,6 +94,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
 
         protected function get_comment_item($comment, $items)
         {
+            error_log('$comment : ' . print_r($comment, true));
             $html = '<div class="comment" id="' . $comment['comment_id'] . '">';
             $html .= '<a class="avatar"> ' . $comment['commentor_avatar'] . '</a>';
 
@@ -102,6 +104,9 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '<div class="metadata">';
             $html .= '<span class="date">' . $comment['comment_date'] . '</span>';
             $html .= '<span class="time">AT ' . $comment['comment_time'] . '</span>';
+            $html .= '<span class="postDate" data-postDate="' . $comment['time_stamp'] . '"></span>'; // used by list-control.JS
+
+            $html .= '<span class="positiveScore" data-positiveScore="' . $comment['rating'] . '"></span>'; // used by list-control.JS
             $html .= '</div>';
 
             $html .= '<div class="text">';

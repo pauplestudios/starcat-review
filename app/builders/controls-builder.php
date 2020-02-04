@@ -12,8 +12,25 @@ if (!class_exists('\StarcatReview\App\Builders\Controls_Builder')) {
     class Controls_Builder
     {
 
-        public function __construct()
+        public function __construct($type = '')
         {
+            $sort_options =  [
+                'alphabet-asc' => 'Alphabetic Asc',
+                'alphabet-desc' => 'Alphabetic Desc',
+                'avg-rating' => 'Most Positive',
+                'trending' => 'Trending',
+                'review-count' => 'Number of Reviews',
+                'post-date' => 'Recent',
+                'post-modified' => 'Recently Updated',
+            ];
+            error_log('$type : ' . $type);
+            if ($type == 'user_review') {
+                error_log('$type : ' . $type);
+                $sort_options =  [
+                    'avg-rating' => 'Most Positive',
+                    'post-date' => 'Recent',
+                ];
+            }
             $this->controls = [
                 'search' => [
                     'type' => 'search',
@@ -23,17 +40,9 @@ if (!class_exists('\StarcatReview\App\Builders\Controls_Builder')) {
                 'sort' => [
                     'name' => 'sort',
                     'type' => 'dropdown',
-                    'default' => '',
+                    'default' => 'post-date',
                     'label' => 'SortBy',
-                    'options' => [
-                        'alphabet-asc' => 'Alphabetic Asc',
-                        'alphabet-desc' => 'Alphabetic Desc',
-                        'avg-rating' => 'Most Positive',
-                        'trending' => 'Trending',
-                        'review-count' => 'Number of Reviews',
-                        'post-date' => 'Recent',
-                        'post-modified' => 'Recently Updated',
-                    ],
+                    'options' => $sort_options,
                     'size' => 4
                 ],
                 // 'reviews' => [

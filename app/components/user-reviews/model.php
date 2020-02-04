@@ -66,6 +66,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
                 'comment_id' => $comment->comment_ID,
                 'comment_date' => get_comment_date('', $comment->comment_ID),
                 'comment_time' => $this->get_comment_time($comment->comment_date),
+                'time_stamp' => get_comment_date('U', $comment->comment_ID),
                 'comment_parent' => $comment->comment_parent,
                 'comment_author' => ucfirst($comment->comment_author),
                 'comment_author_email' => $comment->comment_author_email,
