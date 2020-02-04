@@ -25,10 +25,10 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             }
             $this->collection = $viewProps['collection'];
 
-            $html = '<div class="ui scr_user_reviews comments">';
-            if ($this->collection['show_list_title']) {
-                $html .= '<h3 class="ui dividing header"> ' . $this->collection['list_title'] . '</h3>';
-            }
+            $html = '<div class="ui scr_user_reviews list comments">';
+            // if ($this->collection['show_list_title']) {
+            //     $html .= '<h3 class="ui dividing header"> ' . $this->collection['list_title'] . '</h3>';
+            // }
 
             foreach ($viewProps['items'] as $comment) {
 
@@ -105,9 +105,9 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '</div>';
 
             $html .= '<div class="text">';
-            $html .= '<div class="title"> ' . $comment['title'] . ' </div>';
+            $html .= '<div class="title review-card__header"> ' . $comment['title'] . ' </div>';
             $html .= '<div class="stats"> ' . $this->get_stats_view($comment) . '</div>';
-            $html .= '<div class="description"><p>' . $comment['content'] . '</p></div>';
+            $html .= '<div class="description review-card__body"><p>' . $comment['content'] . '</p></div>';
             $html .= $this->get_prosandcons_view($comment);
             $html .= '</div>';
             $html .= $this->get_moderation_html($comment);
@@ -142,7 +142,6 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '</div>';
 
             return $html;
-
         }
 
         private function get_stats_view($props)

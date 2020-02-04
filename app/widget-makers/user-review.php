@@ -24,6 +24,48 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             $form_view = $this->form_controller->get_view($args);
             $reviews_list_view = $this->reviews_controller->get_view($args);
 
+            $wrapper_start_html = '<div id="scr-controlled-list" data-collectionprops="{<pagination<:true,<page<:9}">';
+            $this->controls_builder = new \StarcatReview\App\Builders\Controls_Builder();
+
+            $args = [
+                'search' => 1,
+                'sort' => 1
+            ];
+            $controls_view = '';
+            $controls_view = $this->controls_builder->get_controls($args);
+
+
+            $pagination_html = '';
+
+            $pagination_html .= $this->get_pagination_html();
+
+
+            $view = $form_view . $wrapper_start_html . $controls_view . $reviews_list_view . $pagination_html . '</div>';
+
+            return $view;
+        }
+
+        private function get_pagination_html()
+        {
+            $html = '';
+            $html .= '<ul class="ui pagination scr-pagination menu">';
+
+            for ($ii = 1; $ii <= 2; $ii++) {
+                # code...
+                $html .= '<li class="active"><a class="page" href="">' . $ii . '</a></li>';
+            }
+
+            $html .= '</ul>';
+            return $html;
+        }
+
+        public function get_view_old()
+        {
+
+            $args = $this->get_default_args();
+            $form_view = $this->form_controller->get_view($args);
+            $reviews_list_view = $this->reviews_controller->get_view($args);
+
             $view = $form_view . $reviews_list_view;
 
             return $view;
