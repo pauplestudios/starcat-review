@@ -29,7 +29,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
 
             $args = [
                 'search' => 1,
-                'sort' => 1
+                // 'sort' => 1
             ];
             $controls_view = '';
             $controls_view = $this->controls_builder->get_controls($args);
