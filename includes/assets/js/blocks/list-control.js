@@ -44,7 +44,7 @@ var UserReviewsList = {
         var thisModule = this;
 
         jQuery("#scr-controlled-list .ui.dropdown").dropdownX({
-            clearable: true,
+            // clearable: true,
         });
     },
 
