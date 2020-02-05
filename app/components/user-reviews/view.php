@@ -94,6 +94,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
 
         protected function get_comment_item($comment, $items)
         {
+            $vote_likes = $this->get_vote_likes($comment);
             // error_log('$comment : ' . print_r($comment, true));
             $html = '<div class="comment" id="' . $comment['comment_id'] . '">';
             $html .= '<a class="avatar"> ' . $comment['commentor_avatar'] . '</a>';
@@ -105,7 +106,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '<span class="date">' . $comment['comment_date'] . '</span>';
             $html .= '<span class="time">AT ' . $comment['comment_time'] . '</span>';
             $html .= '<span class="postDate" data-postDate="' . $comment['time_stamp'] . '"></span>'; // used by list-control.JS
-
+            $html .= '<span class="likes" data-likes="' . $vote_likes . '"></span>'; // used by list-control.JS
             $html .= '<span class="positiveScore" data-positiveScore="' . $comment['rating'] . '"></span>'; // used by list-control.JS
             $html .= '</div>';
 
@@ -166,6 +167,17 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             }
 
             return $view;
+        }
+
+        private function get_vote_likes($props)
+        {
+            $vote_summary = 0;
+
+            if (isset($props['args']['items']['votes']['summary']) && is_int($props['args']['items']['votes']['summary']['likes'])) {
+                $vote_summary = $props['args']['items']['votes']['summary']['likes'];
+            }
+
+            return $vote_summary;
         }
 
         private function get_helpful($props)

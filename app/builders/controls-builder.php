@@ -28,6 +28,7 @@ if (!class_exists('\StarcatReview\App\Builders\Controls_Builder')) {
                 $sort_options =  [
                     'post-date' => 'Recent',
                     'avg-rating' => 'Most Positive',
+                    'helpful' => 'Most Helpful'
                 ];
             }
             $this->controls = [
