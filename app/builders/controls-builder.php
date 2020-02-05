@@ -15,20 +15,20 @@ if (!class_exists('\StarcatReview\App\Builders\Controls_Builder')) {
         public function __construct($type = '')
         {
             $sort_options =  [
-                'alphabet-asc' => 'Alphabetic Asc',
-                'alphabet-desc' => 'Alphabetic Desc',
+                'post-date' => 'Recent',
                 'avg-rating' => 'Most Positive',
                 'trending' => 'Trending',
+                'alphabet-asc' => 'Alphabetic Asc',
+                'alphabet-desc' => 'Alphabetic Desc',
                 'review-count' => 'Number of Reviews',
-                'post-date' => 'Recent',
                 'post-modified' => 'Recently Updated',
             ];
             error_log('$type : ' . $type);
             if ($type == 'user_review') {
                 error_log('$type : ' . $type);
                 $sort_options =  [
-                    'avg-rating' => 'Most Positive',
                     'post-date' => 'Recent',
+                    'avg-rating' => 'Most Positive',
                 ];
             }
             $this->controls = [
