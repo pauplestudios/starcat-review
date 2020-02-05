@@ -94,7 +94,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
 
         protected function get_comment_item($comment, $items)
         {
-            error_log('$comment : ' . print_r($comment, true));
+            // error_log('$comment : ' . print_r($comment, true));
             $html = '<div class="comment" id="' . $comment['comment_id'] . '">';
             $html .= '<a class="avatar"> ' . $comment['commentor_avatar'] . '</a>';
 

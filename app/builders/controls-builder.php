@@ -23,9 +23,8 @@ if (!class_exists('\StarcatReview\App\Builders\Controls_Builder')) {
                 'review-count' => 'Number of Reviews',
                 'post-modified' => 'Recently Updated',
             ];
-            error_log('$type : ' . $type);
+
             if ($type == 'user_review') {
-                error_log('$type : ' . $type);
                 $sort_options =  [
                     'post-date' => 'Recent',
                     'avg-rating' => 'Most Positive',
@@ -85,10 +84,13 @@ if (!class_exists('\StarcatReview\App\Builders\Controls_Builder')) {
 
             foreach ($this->controls as $key => $control) {
 
+                // error_log('$key : ' . $key);
+                // error_log('$control : ' . print_r($control, true));
                 if (!$show_controls[$key]) continue; // skip iteration if false
 
                 $map = $this->get_map($control['type']);
                 $methodName = $map['methodName'];
+
 
                 $html .= '<div class="item col-xs-12 col-lg-' . $control['size'] . '">';
                 $html .= $map['class']->$methodName($control);
