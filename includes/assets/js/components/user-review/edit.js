@@ -138,7 +138,7 @@ var Edit = {
         fields.type = submittingForm.attr("method");
         fields.post_id = submittingForm.attr("post_id");
         fields.comment_id = submittingForm.attr("data-comment-id");
-        fields.captcha = submittingForm.find(".g-recaptcha").attr("value");
+        fields.captcha = submittingForm.find("#captcha").attr("value");
         fields.methodType = submittingForm.attr("data-method");
 
         return fields;

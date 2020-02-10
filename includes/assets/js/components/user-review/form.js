@@ -8,6 +8,19 @@ var Form = {
 
     eventListener: function() {
         this.formValidation();
+        this.reCaptcha();
+    },
+
+    reCaptcha: function() {
+        console.log("recAptcha () ");
+        jQuery("form.scr-user-review").removeClass("active");
+        jQuery("form.scr-user-review:visible").addClass("active");
+        jQuery(".edit_link").click(function() {
+            setTimeout(function() {
+                jQuery("form.scr-user-review").removeClass("active");
+                jQuery("form.scr-user-review:visible").addClass("active");
+            }, 1000);
+        });
     },
 
     formValidation: function(fields) {

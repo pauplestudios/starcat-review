@@ -21,24 +21,32 @@ if (!class_exists('\StarcatReview\Services\Recaptcha')) {
             $key = "6LdhPdYUAAAAAHEpw1Rz7G9kcHaL4A39bFyDgS2x";
 
             $html = '';
-            $html .= '<script>function onHuman(response) { console.log("response:"); console.log(response);document.getElementById("captcha").value = response;}</script>';
+            $html .= self::js_script();
             $html .= '<script src="https://www.google.com/recaptcha/api.js" async defer></script>';
-            $html .= '<div class="g-recaptcha" data-callback="onHuman" data-sitekey="' . $key . '"></div><br>';
+            $html .= '<div class="g-recaptcha" data-callback="starcat_recaptcha_callback" data-sitekey="' . $key . '"></div><br>';
             $html .= '<input type="hidden" id="captcha" name="captcha" value="">';
+            return $html;
+        }
+
+        public static function js_script()
+        {
+            $html = '';
+            $html .= '<script>function starcat_recaptcha_callback(response) { ';
+            $html .= 'console.log("response:"); console.log(response);';
+            $html .= 'jQuery("form.scr-user-review.active #captcha").val(response);';
+            $html .= '}</script>';
+
             return $html;
         }
 
         public static function verify()
         {
-            error_log('verify');
             $secret_key = '6LdhPdYUAAAAAHR08h7-uwDmcjoqqvwo6GSRDltj';
-            // $response = $_POST["g-recaptcha-response"];
-            // foreach ($_POST as $key => $value) {
-            //     error_log("Field " . htmlspecialchars($key) . " is " . htmlspecialchars($value) . "<br>");
-            // }
-
             $response = $_POST["captcha"];
-            error_log('$response : ' . $response);
+
+            // error_log('verify');
+            // error_log('$_POST : ' . print_r($_POST, true));
+            // error_log('$response : ' . $response);
             // error_log('$response : ' . print_r($response, true));
 
             $url = 'https://www.google.com/recaptcha/api/siteverify';
@@ -61,7 +69,7 @@ if (!class_exists('\StarcatReview\Services\Recaptcha')) {
             $verify = file_get_contents($url, false, $context);
             $captcha_success = json_decode($verify);
 
-            error_log(' $captcha_success: ' . print_r($captcha_success, true));
+            // error_log(' $captcha_success: ' . print_r($captcha_success, true));
             // error_log('$captcha_success : ' . $captcha_success);
 
             if ($captcha_success->success == false) {
