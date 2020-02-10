@@ -109,7 +109,6 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                     if ($is_current_user_voted == false) {
                         array_push($meta_props['votes'], $props['vote']);
                     }
-
                 } else {
                     $vote_props = ['votes' => [$props['vote']]];
                     $meta_props = array_merge($meta_props, $vote_props);
@@ -123,6 +122,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
 
         public function get_processed_data()
         {
+            error_log('$_POST : ' . $_POST);
             $props = [];
 
             if (isset($_POST['post_id']) && !empty($_POST['post_id'])) {
@@ -162,6 +162,10 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 $props['methodType'] = $_POST['methodType'];
             }
 
+            if (isset($_POST['captcha']) && !empty($_POST['captcha'])) {
+                $props['captcha'] = $_POST['captcha'];
+            }
+
             return $props;
         }
 
@@ -177,7 +181,6 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                     'user_id' => get_current_user_id(),
                     'vote' => $_POST['vote'],
                 ];
-
             }
 
             return $data;

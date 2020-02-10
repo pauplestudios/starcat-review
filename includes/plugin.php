@@ -63,6 +63,10 @@ if (!class_exists('\Starcat_Review')) {
             /* Upgrades */
             $Upgrades = new \StarcatReview\Includes\Upgrades();
             \StarcatReview\Includes\Upgrades::init();
+
+            /* Recaptcha */
+            require_once SCR_PATH . 'includes/settings/getter.php';
+            $recaptcha = new \StarcatReview\Services\Recaptcha();
         }
 
         /**

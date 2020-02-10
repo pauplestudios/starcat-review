@@ -1,4 +1,5 @@
 formSubmitted = false;
+
 var Form = {
     init: function() {
         this.eventListener();
@@ -28,12 +29,14 @@ var Form = {
 
     submission: function(SCRForm, fields) {
         var props = Form.getProps(SCRForm, fields);
+        console.log("props: ");
         console.log(props);
         SCRForm.find(".submit.button").addClass("loading");
         // Ajax Post Submiting
         jQuery
             .post(scr_ajax.ajax_url, props, function(results) {
                 results = JSON.parse(results);
+                console.log("results scr_user_review_submission: ");
                 console.log(results);
 
                 // Success Message
@@ -109,6 +112,16 @@ var Form = {
 
             cons0: {
                 identifier: "cons[0]",
+                rules: [
+                    {
+                        type: "empty",
+                        prompt: "Please select or type a con",
+                    },
+                ],
+            },
+
+            captcha: {
+                identifier: "captcha",
                 rules: [
                     {
                         type: "empty",
