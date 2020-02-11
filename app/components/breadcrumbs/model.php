@@ -90,9 +90,6 @@ if (!class_exists('\StarcatReview\App\Components\Breadcrumbs\Model')) {
 
             if (isset($primary_term) && !empty($primary_term)) {
                 $term = get_term_by('id', $primary_term, $taxonomy);
-                echo '<pre>';
-                print_r($term);
-                echo '</pre>';
                 $parent_term_info = $this->get_parent_of_term($term);
             }
 

@@ -13,24 +13,18 @@ if (!class_exists('\StarcatReview\App\Builders\Review_Builder')) {
     {
         public function __construct()
         {
-            $this->summary = new \StarcatReview\App\Summary();
-            $this->user_review = new \StarcatReview\App\User_Review();
+            $this->summary = new \StarcatReview\App\Widget_Makers\Summary();
+            $this->user_review = new \StarcatReview\App\Widget_Makers\User_Review();
         }
 
         public function get_reviews()
         {
             $post_type = get_post_type();
             $review_enable_post_types = SCR_Getter::get('review_enable_post-types');
-            $user_review_enable_post_types = SCR_Getter::get('ur_enable_post-types');
 
             $html = '';
-
-            // error_log("is_enable Review : " . $this->is_enable_post_type($post_type, $review_enable_post_types));
             if ($this->is_enable_post_type($post_type, $review_enable_post_types)) {
                 $html .= $this->summary->get_view();
-            }
-            // error_log("is_enable User Review : " . $this->is_enable_post_type($post_type, $user_review_enable_post_types));
-            if ($this->is_enable_post_type($post_type, $user_review_enable_post_types)) {
                 $html .= $this->user_review->get_view();
             }
 

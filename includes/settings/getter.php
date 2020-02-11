@@ -14,7 +14,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
         private static $options;
         private static $defaults;
 
-        public static function  get($option_name)
+        public static function get($option_name)
         {
 
             self::$defaults = self::default_settings();
@@ -23,6 +23,8 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
             if (!isset(self::$options) || empty(self::$options)) {
                 self::$options = get_option(SCR_OPTIONS); // unique id of the framework
             }
+
+            // error_log('self::$options : ' . print_r(self::$options, true));
 
             if (isset(self::$options[$option_name])) {
                 return self::$options[$option_name];
@@ -42,8 +44,9 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
 
                 // General Settings Start
                 'template_source' => 'theme',
+                'enable-author-review' => true,
                 'enable-pros-cons' => true,
-                'review_enable_post-types' => [SCR_POST_TYPE],
+                'review_enable_post-types' => ['post'],
                 'global_stats' => ['stat_name' => 'Feature'],
                 'stat-singularity' => 'single',
                 'stats-type' => 'star',
@@ -52,13 +55,13 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'stats-images' => [
                     'image' => [
                         'url' => SCR_URL . 'includes/assets/img/tomato.png',
-                        'thumbnail' => SCR_URL . 'includes/assets/img/tomato.png'
+                        'thumbnail' => SCR_URL . 'includes/assets/img/tomato.png',
                     ],
 
                     'image-outline' => [
                         'url' => SCR_URL . 'includes/assets/img/tomato-outline.png',
-                        'thumbnail' => SCR_URL . 'includes/assets/img/tomato-outline.png'
-                    ]
+                        'thumbnail' => SCR_URL . 'includes/assets/img/tomato-outline.png',
+                    ],
                 ],
                 'stats-show-rating-label' => true,
                 'stats-steps' => 'precise',
@@ -71,9 +74,10 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'mp_slug' => 'reviews',
                 'mp_meta_title' => 'Reviews',
                 'mp_meta_description' => 'These are your reviews',
+                'mp_template_layout' => 'full-width',
                 'mp_components_order' => [
                     'mp_category_listing' => true,
-                    'mp_review_listing' => true
+                    'mp_review_listing' => true,
                 ],
                 'mp_cl_title' => 'Review Categories',
                 'mp_cl_description' => true,
@@ -83,11 +87,13 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'mp_rl_sortby' => 'recent',
                 'mp_rl_cols' => '3',
 
-                // Category Page Start 
+                // Category Page Start
+                'cp_template_layout' => 'left-sidebar',
                 'cp_controls' => true,
                 'cp_search' => true,
                 'cp_sortBy' => true,
                 // 'cp_num_of_reviews_filter' => true,
+                'cp_posts_per_page' => '9',
                 'cp_default_sortBy' => 'recent',
                 'cp_num_of_cols' => '3',
 
@@ -98,15 +104,17 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 //     'enabled' => [],
                 //     'disabled' => []
                 // ],
-
+                'sp_template_layout' => 'left-sidebar',
                 // User Review Start
-                'ur_enable_post-types' => [SCR_POST_TYPE],
+                // 'ur_enable_post-types' => ['post'],
                 'ur_show_controls' => true,
                 'ur_controls_subheading' => true,
                 'ur_show_search' => true,
                 'ur_show_sortBy' => true,
                 'ur_enable_replies' => true,
                 'ur_enable_approval' => true,
+                'ur_show_list_title' => true,
+                'ur_list_title' => 'User Reviews',
                 'ur_show_form_title' => true,
                 'ur_form_title' => 'Leave a Review',
                 'ur_show_title' => true,
@@ -131,9 +139,9 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'global_stats' => SCR_Getter::get('global_stats'),
                 'singularity' => SCR_Getter::get('stat-singularity'),
                 'type' => $type,
-                'source_type' =>  SCR_Getter::get('stats-source-type'),
+                'source_type' => SCR_Getter::get('stats-source-type'),
                 'show_rating_label' => SCR_Getter::get('stats-show-rating-label'),
-                'icons' =>  SCR_Getter::get('stats-icons'),
+                'icons' => SCR_Getter::get('stats-icons'),
                 'images' => SCR_Getter::get('stats-images'),
                 'steps' => SCR_Getter::get('stats-steps'),
                 'limit' => $limit,

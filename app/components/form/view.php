@@ -20,13 +20,13 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
         public function get()
         {
             $html = '';
-
+            $style = 'style="display: block"';
             // User Already Reviewed or Not Logged in User
             if (!$this->props['collection']['can_user_review']) {
-                return $html;
+                $style = 'style="display: none"';
             }
 
-            $html .= '<form class="ui form scr-user-review" action="scr_user_review_submission" method="post" post_id ="' . get_the_ID() . '">';
+            $html .= '<form class="ui form scr-user-review" action="scr_user_review_submission" method="post" post_id ="' . $this->props['collection']['post_id'] . '" ' . $style . '>';
 
             if ($this->props['collection']['show_form_title']) {
                 $html .= '<h2 class="ui header">';
@@ -35,7 +35,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             }
 
             if ($this->props['collection']['show_title']) {
-                $html .= '<div class="field">';
+                $html .= '<div class="inline field">';
                 // $html .= '<label>Review Title</label>';
                 $html .= '<input type="text" name="title" placeholder="Title" />';
                 $html .= '</div>';
@@ -59,7 +59,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             }
 
             $html .= '<div class="field">';
-            $html .= '<button class="ui submit button"> Submit </button>';
+            $html .= '<button class="ui blue submit button"> Submit </button>';
             $html .= '</div>';
             $html .= '</form>';
 
@@ -81,12 +81,12 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
         protected function get_pros_field()
         {
             $html = '<div class="field review-pros-repeater">';
-            $html .= '<div class="ui segment">';
+            // $html .= '<div class="ui segment">';
             $html .= '<h5> Pros </h5>';
             $html .= '<div data-repeater-list="pros" >';
             $html .= '<div class="unstackable fields" data-repeater-item >';
             $html .= '<div class="fourteen wide field">';
-            $html .= '<select class="ui fluid search dropdown" name="pros[0]" data-pros="pros">';
+            $html .= '<select class="ui fluid search prosandcons dropdown" name="pros[0]" data-pros="pros">';
             $html .= $this->get_prosandcons_option('pros');
             $html .= '</select>';
             $html .= '</div>';
@@ -96,7 +96,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             $html .= '</div>';
             $html .= '</div>';
             $html .= '<div data-repeater-create class="ui icon basic button"><i class="plus icon"></i></div>';
-            $html .= '</div>';
+            // $html .= '</div>';
             $html .= '</div>';
 
             return $html;
@@ -105,12 +105,12 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
         protected function get_cons_field()
         {
             $html = '<div class="field review-cons-repeater">';
-            $html .= '<div class="ui segment">';
+            // $html .= '<div class="ui segment">';
             $html .= '<h5> Cons </h5>';
             $html .= '<div data-repeater-list="cons" >';
             $html .= '<div class="unstackable fields" data-repeater-item >';
             $html .= '<div class="fourteen wide field">';
-            $html .= '<select  class="ui fluid search dropdown" name="cons[0]" data-cons="cons" >';
+            $html .= '<select  class="ui fluid search prosandcons dropdown" name="cons[0]" data-cons="cons" >';
             $html .= $this->get_prosandcons_option('cons');
             $html .= '</select>';
             $html .= '</div>';
@@ -120,7 +120,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             $html .= '</div>';
             $html .= '</div>';
             $html .= '<div data-repeater-create class="ui icon basic button"><i class="plus icon"></i></div>';
-            $html .= '</div>';
+            // $html .= '</div>';
             $html .= '</div>';
 
             return $html;
@@ -140,14 +140,14 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
 
         protected function get_user_review()
         {
-            $html  = '';
+            $html = '';
             if (sizeof($this->props['items']['stats']) == 0) {
                 return $html;
             }
             // $html .= '<label>User Review</label>';
             $html .= '<ul class="review-list"
                 data-type="' . $this->props['collection']['review_type'] . '"
-                data-limit="' . $this->props['collection']['limit'] . '" 
+                data-limit="' . $this->props['collection']['limit'] . '"
                 data-steps="' . $this->props['collection']['steps'] . '"
                 data-no-rated-message ="' . $this->props['collection']['no_rated_message'] . '"
                 data-list="items"
@@ -189,9 +189,9 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
         {
             return '<div class="column">
                 <div> Feature </div>
-                <div class="ui left labeled input"> 
-                    <div class="ui basic label"> # </div>                  
-                    <input type="number" name="review_number" placeholder="Number" min="1" max="100" maxlength="2">                   
+                <div class="ui left labeled input">
+                    <div class="ui basic label"> # </div>
+                    <input type="number" name="review_number" placeholder="Number" min="1" max="100" maxlength="2">
                 </div>
             </div>';
         }

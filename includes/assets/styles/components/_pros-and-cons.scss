@@ -1,0 +1,16 @@
+.prosandcons {
+    // margin-top: 1em;
+    .items-container {
+        display: flex;
+    }
+    ul {
+        list-style: none;
+        li {
+            text-transform: capitalize;
+            margin-bottom: 0.6em;
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+}

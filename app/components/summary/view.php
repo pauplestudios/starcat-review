@@ -10,7 +10,7 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
     class View
     {
         public function __construct()
-        { }
+        {}
 
         public function get($props)
         {
@@ -41,7 +41,7 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
                 $html .= '</div>';
             }
 
-            // User Summary 
+            // User Summary
             if ($is_user_empty !== true) {
                 $html .= '<div class="column">';
                 $html .= '<h4 class="ui header"> User Rating ( ' . $props['items']['user']['review_count'] . ' )</h4>';
@@ -53,8 +53,10 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
                 $html .= '</div>';
             }
 
-            $author_prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller($author_args);
-            $html .= $author_prosandcons->get_view();
+            if ($author_args['enable-author-review']) {
+                $author_prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller($author_args);
+                $html .= $author_prosandcons->get_view();
+            }
 
             $html .= '</div></div>';
 

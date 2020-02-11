@@ -1,3 +1,52 @@
+/* Basic Structure */
+
+.scr-container {
+    max-width: 1240px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.scr-container #primary,
+.scr-container #secondary {
+    float: left;
+}
+
+.scr-container #primary {
+    width: 70%;
+}
+
+.scr-full-width.scr-container #primary {
+    width: 100%;
+}
+
+.scr-container #secondary {
+    padding-left: 60px;
+    width: 30%;
+}
+
+.scr-left-sidebar #secondary {
+    padding-right: 60px;
+}
+
+@media (max-width: 768px) {
+    .scr-left-sidebar.scr-container {
+        width: 100%;
+    }
+
+    .scr-container #primary,
+    .scr-container #secondary {
+        width: 100%;
+    }
+}
+
+/* Basic Style */
+body .scr-container #primary {
+    background: white;
+    padding: 40px !important;
+}
+
+/* Other */
 .scr-archive-description {
     margin: 0;
     // padding: 5em 6.67em 3.33333em;

@@ -16,7 +16,6 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
             $this->itemsProps = $viewProps['items'];
         }
 
-
         public function get_html()
         {
             // Return '' if pros and cons are empty
@@ -24,52 +23,44 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
                 return '';
             }
 
-            $html = "<div class='hrv-pros-cons scr-container '>";
+            $html = "<div class='prosandcons'>";
+            $html .= "<h6 class='ui header'>Pros & Cons</h6>";
+            $html .= "<div class='items-container'>";
             $html .= $this->get_pros_html($this->itemsProps['pros']);
             $html .= $this->get_cons_html($this->itemsProps['cons']);
             $html .= "</div>";
 
-            $this->html = $html;
-            return $this->html;
-        }
+            $html .= "</div>";
 
+            return $html;
+        }
 
         /* PRIVATE METHODS */
         private function get_pros_html($pros)
         {
-
-            $html = "<div class='column'>";
-            $html .= "<h4>Pros</h4>";
-            $html .= '<ol>';
+            $html = "<ul class='pros'>";
 
             for ($ii = 0; $ii < sizeof($pros); $ii++) {
                 if (!empty($pros[$ii])) {
-                    $html .= "<li>" . $pros[$ii] . "</li>";
+                    $html .= "<li><i class='green thumbs up icon'></i>" . $pros[$ii] . "</li>";
                 }
             }
 
-            // $html .= "<li>Pros here</li>";
-            $html .= "</ol>";
-            $html .= "</div>";
+            $html .= "</ul>";
 
             return $html;
         }
 
         private function get_cons_html($cons)
         {
-
-            $html = "<div class='column'>";
-            $html .= "<h4>Cons</h4>";
-            $html .= "<ol class='cons'>";
-
+            $html = "<ul class='cons'>";
             for ($ii = 0; $ii < sizeof($cons); $ii++) {
                 if (!empty($cons[$ii])) {
-                    $html .= "<li>" . $cons[$ii] . "</li>";
+                    $html .= "<li><i class='red thumbs down icon'></i>" . $cons[$ii] . "</li>";
                 }
             }
 
-            $html .= "</ol>";
-            $html .= "</div>";
+            $html .= "</ul>";
 
             return $html;
         }
@@ -85,8 +76,8 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
             $is_pros_empty = (!isset($this->itemsProps['pros']) || empty($this->itemsProps['pros']));
             $is_cons_empty = (!isset($this->itemsProps['cons']) || empty($this->itemsProps['cons']));
 
-            // Either should be NOT EMPTY 
-            if (!$is_pros_empty  || !$is_cons_empty) {
+            // Either should be NOT EMPTY
+            if (!$is_pros_empty || !$is_cons_empty) {
                 $is_empty = false;
             }
 

@@ -2,8 +2,6 @@
 
 namespace StarcatReview\Includes;
 
-use StarcatReview\Includes\Utils\Post;
-
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -12,7 +10,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
     class Ajax_Handler
     {
         public function __construct()
-        { }
+        {}
 
         public function register_ajax_actions()
         {
@@ -28,7 +26,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
             add_action('wp_ajax_nopriv_scr_search_posts', [$this, 'search_posts']);
             add_action('wp_ajax_scr_search_posts', [$this, 'search_posts']);
 
-            // Ajax Hooks In compare table            
+            // Ajax Hooks In compare table
             add_action('wp_ajax_nopriv_get_scr_results', [$this, 'get_scr_results']);
             add_action('wp_ajax_get_scr_results', [$this, 'get_scr_results']);
         }
@@ -41,10 +39,12 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
 
                 // Check the query variable is available
                 // If not, global it so it can be read from
-                if (!$wp_query) global $wp_query;
+                if (!$wp_query) {
+                    global $wp_query;
+                }
 
                 $query = array(
-                    'the_title' => $search_query
+                    'the_title' => $search_query,
                     // 'the_content' => $search_query
                 );
 
@@ -60,18 +60,22 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
         {
             $user_review_repo = new \StarcatReview\App\Repositories\User_Reviews_Repo();
             $props = $user_review_repo->get_processed_data();
+            $parent = isset($props['parent']) ? $props['parent'] : 0;
+            $comment_id = isset($props['methodType']) ? $user_review_repo->update($props) : $user_review_repo->insert($props);
+            $review = $user_review_repo->get($comment_id, $parent);
 
-            $comment_id = $user_review_repo->insert($props);
-            $review = $user_review_repo->get($comment_id);
+            if ($parent !== 0 && !isset($props['methodType'])) { // review_reply
+                $review_controller = new \StarcatReview\App\Components\User_Reviews\Controller();
+                $review = $review_controller->get_reply_review($review);
+            }
 
             echo json_encode($review);
-
             wp_die();
         }
 
         public function search_posts()
         {
-            $summary = new \StarcatReview\App\Summary();
+            // $summary = new \StarcatReview\App\Summary();
 
             $args = array(
                 'post_type' => array(SCR_POST_TYPE),
@@ -86,33 +90,33 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
             if ($results->have_posts()) {
 
                 foreach ($results->posts as $post) {
-                    $temp_stats = [
-                        '0' => [
-                            'stat_name' => 'quality',
-                            'rating' => '2',
-                        ],
-                        '1' => [
-                            'stat_name' => 'battery performance',
-                            'rating'    => '4.3'
-                        ],
-                        '2' => [
-                            'stat_name' => 'camera quality',
-                            'rating'    => '4.2'
-                        ],
-                        '3' => [
-                            'stat_name' => 'extras_1',
-                            'rating'    => '4.2'
-                        ],
-                        '4' => [
-                            'stat_name' => 'extras_2',
-                            'rating'    => '4.2'
-                        ],
-                        '5' => [
-                            'stat_name' => 'extras_3',
-                            'rating'    => '4.2'
-                        ],
+                    // $temp_stats = [
+                    //     '0' => [
+                    //         'stat_name' => 'quality',
+                    //         'rating' => '2',
+                    //     ],
+                    //     '1' => [
+                    //         'stat_name' => 'battery performance',
+                    //         'rating'    => '4.3'
+                    //     ],
+                    //     '2' => [
+                    //         'stat_name' => 'camera quality',
+                    //         'rating'    => '4.2'
+                    //     ],
+                    //     '3' => [
+                    //         'stat_name' => 'extras_1',
+                    //         'rating'    => '4.2'
+                    //     ],
+                    //     '4' => [
+                    //         'stat_name' => 'extras_2',
+                    //         'rating'    => '4.2'
+                    //     ],
+                    //     '5' => [
+                    //         'stat_name' => 'extras_3',
+                    //         'rating'    => '4.2'
+                    //     ],
 
-                    ];
+                    // ];
                     if (has_post_thumbnail($post->ID)) {
                         $image = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID));
                     }
@@ -120,24 +124,46 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                     $author_stats = get_post_meta($post->ID, '_scr_post_options', true);
                     // $default_args = $summary->get_default_args();
 
+                    $get_comments = scr_get_user_reviews($post->ID);
+
+                    $user_stats = array();
+                    //default view rating feature in CT
+                    $user_stats[] = array('stat_name' => 'scr-ratings', 'rating' => 0);
+                    if (isset($get_comments) && !empty($get_comments)) {
+                        foreach ($get_comments as $comment) {
+                            if (isset($comment->reviews)) {
+                                $review = $comment->reviews;
+                                $stats = $review['stats'];
+                                if (count($stats) > 0) {
+                                    foreach ($stats as $stat) {
+                                        $user_stats[] = $stat;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     $items = [];
+                    //default view rating feature in CT
+                    $items[] = array('stat_name' => 'scr-ratings', 'rating' => 0);
                     if (isset($author_stats['stats-list']) || !empty($author_stats['stats-list'])) {
                         // $items['stats-list'] = $author_stats['stats-list'];
                         $author_stats_lists = $author_stats['stats-list'];
                         foreach ($author_stats_lists as $author_stat_item) {
-                            $items[]  = $author_stat_item;
+                            $items[] = $author_stat_item;
                         }
                     }
-
+                    $get_overall_stat = scr_get_overall_rating($post->ID);
                     $posts[] = array(
                         'id' => $post->ID,
-                        'title' => $post->post_title,
+                        'title' => substr(wp_strip_all_tags($post->post_title), 0, 25) . '...',
                         'description' => $post->post_content,
                         // 'url' => $post->guid,
-                        'stats' => $temp_stats,
+                        // 'stats' => $temp_stats,
                         'image_url' => isset($image) ? $image[0] : "",
-                        'author_stats'  => $items
-
+                        'author_stats' => $items,
+                        'user_stats' => $user_stats,
+                        'get_overall_stat' => $get_overall_stat,
                     );
                 }
             } else {
@@ -148,10 +174,9 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
             wp_die();
         }
 
-
         public function get_scr_results()
         {
-            //get scr resultSets 
+            //get scr resultSets
             //echo "get scr resultSets";
             $search_key = $_REQUEST['search_key'];
             $comparison_controller = new \StarcatReview\App\Components\Comparison\Controller();

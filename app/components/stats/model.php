@@ -14,13 +14,13 @@ if (!class_exists('\StarcatReview\App\Components\Stats\Model')) {
             $this->collection = $this->get_collectionProps($args);
             $this->items = $this->get_itemsProps($args);
 
-            if (isset($args['combination']) && $args['combination'] == 'overall_combine') {
+            if (isset($args['combine_type']) && $args['combine_type'] == 'overall') {
                 $this->items = $this->get_combined_overall($this->items, $args);
             }
 
             $view_props = [
                 'collection' => $this->collection,
-                'items' => $this->items
+                'items' => $this->items,
             ];
 
             return $view_props;
@@ -30,20 +30,20 @@ if (!class_exists('\StarcatReview\App\Components\Stats\Model')) {
         {
             $collection = [
                 'singularity' => $args['singularity'], // single or multiple
-                'type' =>  $args['type'], // star, bar or circle                
+                'type' => $args['type'], // star, bar or circle
                 'show_stats' => ['all'],
-                'source_type' =>  $args['source_type'], // image or icon 
+                'source_type' => $args['source_type'], // image or icon
                 'icons' => $args['icons'],
                 'images' => $args['images'],
                 'animate' => $args['animate'],
                 'limit' => $args['limit'],
                 'show_rating_label' => $args['show_rating_label'],
-                'no_rated_message' =>  'Not Rated Yet !!!',
+                'no_rated_message' => 'Not Rated Yet !!!',
                 'steps' => $args['steps'], // full or half or progress
             ];
 
             $collection = $this->get_icons($collection);
-            $collection['combination'] = isset($args['combination']) ? $args['combination'] : '';
+            $collection['combine_type'] = isset($args['combine_type']) ? $args['combine_type'] : '';
 
             return $collection;
         }
@@ -67,15 +67,14 @@ if (!class_exists('\StarcatReview\App\Components\Stats\Model')) {
                     break;
                 }
 
-                $stat_overall_cumulative +=  $stat['rating'];
+                $stat_overall_cumulative += $stat['rating'];
                 $stat_value = $stat['rating'];
                 $stat_score = $this->get_stat_score($stat_value);
-
 
                 if ($this->is_stat_included('all', $this->collection)) {
                     $stats[$stat['stat_name']] = [
                         'rating' => $stat['rating'],
-                        'score' => $stat_score
+                        'score' => $stat_score,
                     ];
                 }
 
@@ -103,7 +102,7 @@ if (!class_exists('\StarcatReview\App\Components\Stats\Model')) {
             $count = 0;
             $combine = [
                 'user_overall' => 0,
-                'author_overall' => 0
+                'author_overall' => 0,
             ];
 
             foreach ($args['global_stats'] as $allowed_stat) {
@@ -127,14 +126,20 @@ if (!class_exists('\StarcatReview\App\Components\Stats\Model')) {
 
             $user_overall = $combine['user_overall'] / $count;
             $author_overall = $combine['author_overall'] / $count;
-            $overall_rating = ($author_overall + $user_overall) / 2;
+
+            if ($author_overall !== 0 && $user_overall !== 0) {
+                $overall_rating = ($author_overall + $user_overall) / 2;
+            } else {
+                $overall_rating = $author_overall + $user_overall;
+            }
+
             $overall_score = $this->get_stat_score($overall_rating);
 
             $combine = [
                 'overall' => [
                     'rating' => $overall_rating,
-                    'score' => $overall_score
-                ]
+                    'score' => $overall_score,
+                ],
             ];
 
             // error_log("combined : " . print_r($combine, true));
@@ -162,7 +167,6 @@ if (!class_exists('\StarcatReview\App\Components\Stats\Model')) {
                                     return strtolower($stat['stat_name']);
                                 }, $args['global_stats']);
                             }
-
 
                             if (in_array(strtolower($stat_key), $global_stats)) {
                                 if (!isset($groups['stats-list'][$stat_key])) {
@@ -192,7 +196,7 @@ if (!class_exists('\StarcatReview\App\Components\Stats\Model')) {
             foreach ($groups as $key => $value) {
                 $stats[$key] = [
                     'stat_name' => $key,
-                    'rating' => round($value / $count, 1)
+                    'rating' => round($value / $count, 1),
                 ];
             }
 
@@ -232,8 +236,8 @@ if (!class_exists('\StarcatReview\App\Components\Stats\Model')) {
             $overall_stat = [
                 'overall' => [
                     'rating' => $rating,
-                    'score' => $stat_score
-                ]
+                    'score' => $stat_score,
+                ],
             ];
 
             return $overall_stat;
@@ -243,7 +247,7 @@ if (!class_exists('\StarcatReview\App\Components\Stats\Model')) {
         {
             $image = SCR_URL . 'includes/assets/img/tomato.png';
 
-            $image_outline =  SCR_URL . 'includes/assets/img/tomato-outline.png';
+            $image_outline = SCR_URL . 'includes/assets/img/tomato-outline.png';
 
             $collection['icon'] = (isset($collection['images']['image']['thumbnail'])) ? $collection['images']['image']['thumbnail'] : $image;
 

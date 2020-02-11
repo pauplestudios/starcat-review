@@ -1,0 +1,47 @@
+.scr_user_reviews.comments {
+    max-width: inherit;
+    & .comment .content .actions {
+        display: flex;
+        margin: 1em 0;
+        align-items: center;
+        justify-content: space-between;
+
+        .vote-summary {
+            margin-top: 0.3em;
+            font-style: italic;
+        }
+
+        a {
+            font-weight: 600;
+        }
+    }
+
+    & .comment .content {
+        .author {
+            font-weight: 400;
+        }
+        .text {
+            .title {
+                font-weight: 600;
+                font-size: 1.1em;
+            }
+            .description p {
+                margin: 1em 0 1.6em 0;
+            }
+        }
+    }
+
+    .comment_in_moderation {
+        font-style: italic;
+        color: #ddd;
+    }
+
+    .comment .ui.form.scr-user-review {
+        margin: 0;
+    }
+
+    .user-review-reply {
+        margin-top: 1em;
+        display: none;
+    }
+}

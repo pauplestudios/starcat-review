@@ -10,9 +10,7 @@ if (!class_exists('\StarcatReview\App\Abstracts\Widget_Model')) {
     abstract class Widget_Model
     {
         public function __construct($fields_model)
-        {
-            $this->fields_model = $fields_model;
-        }
+        { }
 
         public function get_viewProps($args)
         {

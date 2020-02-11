@@ -21,12 +21,12 @@ if (!class_exists('\StarcatReview\Includes\Widgets\Register_Elementor_Widgets'))
                 'title' => 'Review Listing',
                 'icon' => 'fa fa-th-list',
                 'categories' => ['general-elements'],
-                'model' =>  new \StarcatReview\App\Components\Listing\Model(),
-                'view' => new \StarcatReview\App\Components\Listing\Controller(),
+                'model' =>  new \StarcatReviewCpt\Widgets\Review_Listing\Controller(),
+                'view' => new \StarcatReviewCpt\Widgets\Review_Listing\Controller(),
             );
 
 
-            require_once SCR_PATH . '/lib/widgetry/elementor-widget-factory.php';
+            require_once SCR_PATH . '/includes/lib/widgetry/elementor-widget-factory.php';
 
 
             \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new \Widgetry\Elementor_Widget_Factory([], $widget_args));

@@ -13,10 +13,9 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
     {
         public function __construct()
         {
-            // error_log('hooks __construct');
 
             /* settings getter */
-            require_once(SCR_PATH . 'includes/settings/getter.php');
+            require_once SCR_PATH . 'includes/settings/getter.php';
 
             /*  Reviews Init Hook */
             add_action('init', array($this, 'init_hook'));
@@ -24,8 +23,6 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             /* */
             add_action('widgets_init', [$this, 'register_sidebar']);
 
-            /*  Reviews Activation Hook */
-            register_activation_hook(SCR__FILE__, array($this, 'reviews_activate'));
             /*  Reviews Admin Section Initialization Hook */
             add_action('admin_init', array($this, 'load_admin_hooks'));
             /*  Reviews Enqueing Script Action hook */
@@ -36,7 +33,19 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             add_action('plugins_loaded', array($this, 'plugins_loaded_action'));
 
             add_filter('the_content', array($this, 'content_filter'));
-            // add_filter('the_excerpt', array($this, 'content_filter'));            
+            // add_filter('the_excerpt', array($this, 'content_filter'));
+
+            foreach ($this->get_review_enabled_post_types() as $post_type) {
+                if ($post_type == 'product') {
+                    add_filter('woocommerce_product_tabs', [$this, 'woo_new_product_tab']);
+                    add_action('woocommerce_single_product_summary', [$this, 'woocommerce_review_display_overall_rating'], 10);
+                }
+            }
+
+            add_action('wp_head', array($this, 'scr_schema_reviews'));
+            // add_filter('the_excerpt', array($this, 'content_filter'));
+
+            require_once SCR_PATH . '/app/components/user-reviews/table.php';
         }
 
         public function init_hook()
@@ -44,13 +53,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             /*  Reviews Ajax Hooks */
             $this->load_ajax_handler();
 
-            /*  Reviews Widget */
-            // $this->load_widgets();
-
-
-
-
-            $register_templates = new \StarcatReview\Includes\Register_Templates();
+            // $register_templates = new \StarcatReview\Includes\Register_Templates();
         }
 
         public function register_sidebar()
@@ -69,36 +72,32 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             );
         }
 
-
-        public function reviews_activate()
+        public function scr_schema_reviews()
         {
-            /* Register Post Type and its taxonomy only for setup demo content on activation */
-            $cpt = new \StarcatReview\Includes\Cpt();
-            $cpt->register_scr_cpt();
+            global $post;
 
-            $this->setup_data();
+            /* Checks for single template by post type */
+
+            if (isset($post) && !empty($post)) {
+                foreach ($this->get_review_enabled_post_types() as $post_type) {
+
+                    if ($post->post_type == $post_type && is_single()) {
+
+                        $schema_controller = new \StarcatReview\App\Components\Schema_Reviews\Controller();
+                        $get_schema = $schema_controller->generate_schema();
+                        $html = '';
+                        if ($get_schema) {
+                            $check_schema = $get_schema;
+                            //error_log("schema check:" . $check_schema);
+                            $html .= '<!-- This site is optimized -->';
+                            // $html .= '<script type="application/ld+json">' . json_encode($get_schema) . '</script>';
+                            $html .= '<script type="application/ld+json">' . $get_schema . '</script>';
+                        }
+                        echo $html;
+                    }
+                }
+            }
         }
-
-        public function setup_data()
-        {
-            $post_data = [
-                'post_type' => SCR_POST_TYPE,
-                'taxonomy' => [
-                    SCR_CATEGORY => "Getting Started",
-                ],
-                'title' => "Yours First Reviews Question",
-                'content' => "Yours relevent questions answer."
-            ];
-
-            $create_pages = new \StarcatReview\Includes\Utils\Create_Pages();
-            $create_pages->setup_data($post_data);
-        }
-
-
-
-
-
-
 
         public function plugins_loaded_action()
         {
@@ -107,10 +106,16 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
             /*  Starcat Review Plugin Translation  */
             // load_plugin_textdomain('starcat-review', false, basename(dirname(__FILE__)) . '/languages/');
+            if (class_exists('\StarcatReviewCpt\Widgets\Review_Listing\Controller')) {
+                /*  Reviews Widget */
+                $this->load_widgets();
+                $shortcodes = new \StarcatReview\Includes\Shortcodes();
+            }
 
-            // Plugins Actions 
+            // Plugins Actions
             new \StarcatReview\Includes\Actions();
         }
+
         public function load_admin_hooks()
         {
             // $admin = new \StarcatReview\Includes\Admin($this->plugin_domain, $this->version);
@@ -127,6 +132,63 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
             // You Can Access these object from javascript
             wp_localize_script('starcat-review-script', 'SCROptions', ['enable_prosandcons' => SCR_Getter::get('enable-pros-cons')]);
+
+            // Additional Dashboard Column fields
+
+            foreach ($this->get_review_enabled_post_types() as $post_type) {
+                add_filter("manage_{$post_type}_posts_columns", array($this, 'manage_cpt_custom_columns'), 10);
+                add_action("manage_{$post_type}_posts_custom_column", array($this, 'manage_cpt_custom_column'), 10, 2);
+                add_action("manage_edit-{$post_type}_sortable_columns", array($this, 'sort_posts_custom_column'), 10, 1);
+            }
+
+            // add_action('pre_get_posts', array($this, 'sort_cpt_custom_column_order'));
+        }
+
+        public function manage_cpt_custom_columns($columns)
+        {
+            $items = array(
+                'scr_rating' => __('Ratings', SCR_DOMAIN),
+                // Todo: 'scr_product_price'
+            );
+
+            // add before the category column.
+            return array_slice($columns, 0, -3, true) + $items + array_slice($columns, -3, null, true);
+        }
+
+        public function manage_cpt_custom_column($column, $id)
+        {
+
+            switch ($column) {
+                // Todo: 'scr_product_price'
+                case 'scr_rating':
+                    // Todo: save the rating as a temporary post meta which can be used in pre_get_posts
+                    $rating = scr_get_overall_rating($id);
+                    echo ($rating['overall']['rating'] == 0) ? '---' : $rating['dom'];
+                    break;
+            }
+        }
+        public function sort_posts_custom_column($columns)
+        {
+            $columns['scr_rating'] = 'scr_rating';
+            return $columns;
+        }
+
+        public function sort_cpt_custom_column_order($query)
+        {
+            error_log('query : ' . print_r($query, true));
+
+            if (!is_admin()) {
+                return;
+            }
+
+            $orderby = $query->get('orderby');
+
+            switch ($orderby) {
+                case 'scr_rating':
+                    $query->set('meta_key', '_scr_review_props');
+                    $query->set('orderby', 'meta_value_num');
+                    break;
+            }
         }
 
         public function load_ajax_handler()
@@ -137,6 +199,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
         public function load_widgets()
         {
+
             $widgets = new \StarcatReview\Includes\Widgets\Register_Widgets();
             $widgets->load();
 
@@ -146,16 +209,57 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
         public function content_filter($content)
         {
-            $review_content = $this->get_review_content();
-            $fullcontent = $content . $review_content;
+            $post_type = get_post_type(get_the_ID());
 
-            if (get_post_type(get_the_ID()) == SCR_POST_TYPE) {
-                $breadcrumb = new \StarcatReview\App\Components\Breadcrumbs\Controller();
-                $breadcrumbs = $breadcrumb->get_view();
-                $fullcontent = $breadcrumbs . $content . $review_content;
+            if (is_singular() && $post_type !== 'product') {
+                $review_content = $this->get_review_content();
+                $content = $content . $review_content;
             }
 
-            return $fullcontent;
+            return $content;
+        }
+
+        public function woo_new_product_tab($tabs)
+        {
+            $tabs['scr-reviews'] = array(
+                'title' => sprintf(__('Product Reviews (%d)', SCR_DOMAIN), scr_get_user_reviews_count(get_the_ID())),
+                'priority' => 50,
+                'callback' => [$this, 'woo_new_product_tab_content'],
+            );
+
+            return $tabs;
+        }
+        public function woo_new_product_tab_content()
+        {
+            $content = $this->get_review_content();
+            if (!isset($content) && empty($content)) {
+                $content = 'There are no reviews yet';
+            }
+
+            $html = '<div id="scr-reviews">';
+            $html .= $content;
+            $html .= '</div>';
+
+            echo $html;
+        }
+
+        public function woocommerce_review_display_overall_rating()
+        {
+            $html = '';
+            $post_id = get_the_ID();
+            $rating = scr_get_overall_rating($post_id);
+            $review_count = scr_get_user_reviews_count($post_id);
+
+            if (isset($rating['overall']['rating']) && $rating['overall']['rating'] !== 0) {
+
+                $html .= $rating['dom'];
+                $html .= '<a href="#scr-reviews" class="woocommerce-scr-review-link" rel="nofollow">(';
+                $html .= '<span class="count">' . esc_html($review_count) . '</span>';
+                $html .= __(' customer review', SCR_DOMAIN);
+                $html .= ')</a>';
+            }
+
+            echo $html;
         }
 
         /* Non-Hooked */
@@ -164,6 +268,14 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         {
             $reviews_builder = new \StarcatReview\App\Builders\Review_Builder();
             return $reviews_builder->get_reviews();
+        }
+
+        public function get_review_enabled_post_types()
+        {
+            $post_types = SCR_Getter::get('review_enable_post-types');
+            $enabled_post_types = is_string($post_types) ? [0 => $post_types] : $post_types;
+
+            return $enabled_post_types;
         }
 
         public function enqueue_scripts()
@@ -177,17 +289,17 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             /* Application */
             wp_register_script('starcat-review-script', SCR_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'));
             wp_localize_script('starcat-review-script', 'scr_ajax', array(
-                'ajax_url'  => admin_url('admin-ajax.php'),
-                'ajax_nonce' => wp_create_nonce('starcat-review-ajax-nonce')
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'ajax_nonce' => wp_create_nonce('starcat-review-ajax-nonce'),
             ));
             wp_enqueue_script('starcat-review-script', SCR_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'));
             wp_localize_script('starcat-review-script', 'scr_ajax', array(
-                'ajax_url'  => admin_url('admin-ajax.php'),
-                'ajax_nonce' => wp_create_nonce('starcat-review-ajax-nonce')
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'ajax_nonce' => wp_create_nonce('starcat-review-ajax-nonce'),
             ));
             // You Can Access these object from javascript
             wp_localize_script('starcat-review-script', 'SCROptions', [
-                'global_stats' => SCR_Getter::get('global_stats')
+                'global_stats' => SCR_Getter::get('global_stats'),
             ]);
             wp_enqueue_style('style-name', SCR_URL . "includes/assets/bundle/main.bundle.css");
         }

@@ -23,7 +23,7 @@ if (!class_exists('\StarcatReview\App\Components\Listing\View')) {
         {
             $collectionProps = $viewProps['collection'];
 
-            $html = '<div id="scr-controlled-list">';
+            $html = '<div id="scr-controlled-list" data-collectionProps="' . $this->get_js_config($collectionProps) . '">';
             $html .= '<h2>' . $collectionProps['title'] . '</h2>';
 
             if ($collectionProps['show_controls']) {
@@ -43,6 +43,18 @@ if (!class_exists('\StarcatReview\App\Components\Listing\View')) {
 
         /* PRIVATE CLASS */
 
+        private function get_js_config($collectionProps)
+        {
+            $js_config = [];
+            $js_config['pagination'] = $collectionProps['pagination'];
+            $js_config['page'] = $collectionProps['posts_per_page'];
+
+            $js_config = json_encode($js_config);
+
+            $js_config = str_replace('"', "<", $js_config);
+
+            return $js_config;
+        }
         private function get_pagination_html($viewProps)
         {
             $html = '';
@@ -59,30 +71,23 @@ if (!class_exists('\StarcatReview\App\Components\Listing\View')) {
 
         private function get_card_collection($viewProps)
         {
-            $posts = $viewProps['items']['posts'];
-            $terms = $viewProps['items']['terms'];
+            $itemsProps = $viewProps['items'];
 
             $html = '';
             $html .= '<div id="scr-cat-collection" class="scr-collection list row">';
 
-            foreach ($posts as $key => $post) {
-                // Set initial $ii
-                if (!isset($ii)) $ii = 0;
+            if (isset($itemsProps) && is_array($itemsProps) && sizeof($itemsProps) > 0) {
+                foreach ($itemsProps as $key => $item) {
+                    // Set initial $ii
+                    if (!isset($ii)) $ii = 0;
 
-                // Assign card to html
-                $html .= $this->get_single_card($post, $ii, $viewProps);
-                // increment $ii
-                $ii++;
-            }
-
-            foreach ($terms as $key => $term) {
-                // Set initial $ii
-                if (!isset($ii)) $ii = 0;
-
-                // Assign card to html
-                $html .= $this->get_single_term_card($term, $ii, $viewProps);
-                // increment $ii
-                $ii++;
+                    // Assign card to html
+                    $html .= $this->get_single_card($item, $ii);
+                    // increment $ii
+                    $ii++;
+                }
+            } else {
+                error_log('$terms is not set (or) not array (or) empty.');
             }
 
             $html .= '</div>';
@@ -90,42 +95,8 @@ if (!class_exists('\StarcatReview\App\Components\Listing\View')) {
             return $html;
         }
 
-        private function get_single_card($post, $ii, $viewProps)
+        private function get_single_card($item, $ii)
         {
-            $collectionProps = $viewProps['collection'];
-            $reviews = [2, 4, 7, 25, 50, 75, 100];
-
-            $excerpt = $this->get_excerpt($post->post_content);
-            $single_review = isset($reviews[$ii]) ? $reviews[$ii] : 1;
-
-
-            $item = [
-                'title' => $post->post_title,
-                'content' => $excerpt,
-                'stat_html' => $post->stat_html,
-                'url' => get_post_permalink($post->ID),
-                'reviews' => $single_review,
-                'post_date' => get_post_time('U', 'false', $post->ID),
-                'post_modified' => get_post_modified_time('U', 'false', $post->ID),
-                'columns' => $collectionProps['columns'],
-                'items_display' => $collectionProps['items_display'],
-            ];
-
-            return $this->card->get_view($item);
-        }
-
-        private function get_single_term_card($term, $ii, $viewProps)
-        {
-            $collectionProps = $viewProps['collection'];
-
-            $item = [
-                'title' => $term->name,
-                'content' => $term->description,
-                'url' => get_term_link($term),
-                'columns' => $collectionProps['columns'],
-                'items_display' => $collectionProps['items_display'],
-            ];
-
             return $this->card->get_view($item);
         }
 
