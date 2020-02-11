@@ -182,7 +182,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
 
         private function get_helpful($props)
         {
-            $vote_summary = $props['args']['items']['votes']['summary'];
+            $vote_summary = $this->get_vote_summary($props);
 
             $like_active = ($vote_summary['active'] === 'like') ? 'active' : '';
             $dislike_active = ($vote_summary['active'] === 'dislike') ? 'active' : '';
@@ -202,6 +202,23 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '</div>';
 
             return $html;
+        }
+
+        private function get_vote_summary($props)
+        {
+            // Default 
+            $vote_summary = [
+                'active' => '',
+                'likes' => 0,
+                'dislikes' => 0,
+                'people' => 0
+            ];
+
+            if (isset($props['args']['items']['votes'])) {
+                $vote_summary = $props['args']['items']['votes']['summary'];
+            }
+
+            return $vote_summary;
         }
 
         private function get_reply_form()
