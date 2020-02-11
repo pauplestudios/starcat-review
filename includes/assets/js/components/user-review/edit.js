@@ -311,7 +311,7 @@ var Edit = {
 
         form.addClass("mini");
         form.find(".rating.fields")
-            .siblings(".two.fields")
+            .siblings(".pros_and_cons_wrapper")
             .remove();
 
         return form;
