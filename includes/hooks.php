@@ -89,21 +89,23 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
             /* Checks for single template by post type */
 
-            foreach ($this->get_review_enabled_post_types() as $post_type) {
+            if (isset($post) && !empty($post)) {
+                foreach ($this->get_review_enabled_post_types() as $post_type) {
 
-                if ($post->post_type == $post_type && is_single()) {
+                    if ($post->post_type == $post_type && is_single()) {
 
-                    $schema_controller = new \StarcatReview\App\Components\Schema_Reviews\Controller();
-                    $get_schema = $schema_controller->generate_schema();
-                    $html = '';
-                    if ($get_schema) {
-                        $check_schema = $get_schema;
-                        //error_log("schema check:" . $check_schema);
-                        $html .= '<!-- This site is optimized -->';
-                        // $html .= '<script type="application/ld+json">' . json_encode($get_schema) . '</script>';
-                        $html .= '<script type="application/ld+json">' . $get_schema . '</script>';
+                        $schema_controller = new \StarcatReview\App\Components\Schema_Reviews\Controller();
+                        $get_schema = $schema_controller->generate_schema();
+                        $html = '';
+                        if ($get_schema) {
+                            $check_schema = $get_schema;
+                            //error_log("schema check:" . $check_schema);
+                            $html .= '<!-- This site is optimized -->';
+                            // $html .= '<script type="application/ld+json">' . json_encode($get_schema) . '</script>';
+                            $html .= '<script type="application/ld+json">' . $get_schema . '</script>';
+                        }
+                        echo $html;
                     }
-                    echo $html;
                 }
             }
         }

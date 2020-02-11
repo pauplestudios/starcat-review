@@ -10,24 +10,24 @@ if (!function_exists('scr_fs')) {
             require_once dirname(__FILE__) . '/freemius/start.php';
 
             $scr_fs = fs_dynamic_init(array(
-                'id'                  => '3980',
-                'slug'                => 'starcat-review',
-                'type'                => 'plugin',
-                'public_key'          => 'pk_ad2b6650d9ef2e5df3c203ea9046f',
-                'is_premium'          => true,
-                'premium_suffix'      => 'Pro',
+                'id' => '3980',
+                'slug' => 'starcat-review',
+                'type' => 'plugin',
+                'public_key' => 'pk_ad2b6650d9ef2e5df3c203ea9046f',
+                'is_premium' => true,
+                'premium_suffix' => 'Pro',
                 // If your plugin is a serviceware, set this option to false.
                 'has_premium_version' => true,
-                'has_addons'          => true,
-                'has_paid_plans'      => true,
-                'menu'                => array(
-                    'slug'           => 'scr-settings',
+                'has_addons' => true,
+                'has_paid_plans' => true,
+                'menu' => array(
+                    'slug' => 'scr-settings',
                     'override_exact' => true,
-                    'support'        => false,
+                    'support' => false,
                 ),
                 // Set the SDK to work in a sandbox mode (for development & testing).
                 // IMPORTANT: MAKE SURE TO REMOVE SECRET KEY BEFORE DEPLOYMENT.
-                'secret_key'          => 'sk_t=d7~:gkVF1Sw0SJeG!06F[J$dHQ;',
+                'secret_key' => 'sk_t=d7~:gkVF1Sw0SJeG!06F[J$dHQ;',
             ));
         }
 
