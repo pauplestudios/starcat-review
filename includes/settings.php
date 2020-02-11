@@ -264,8 +264,24 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'id' => 'ur_show_captcha',
                             'type' => 'switcher',
-                            'title' => __('Show ReCaptcha', SCR_DOMAIN),
+                            'title' => __('Show reCAPTCHA', SCR_DOMAIN),
                             'default' => true,
+                        ),
+
+                        array(
+                            'id' => 'recaptcha_site_key',
+                            'type' => 'text',
+                            'title' => __('reCAPTCHA Site Key', SCR_DOMAIN),
+                            'dependency' => array('ur_show_captcha', '==', 'true'),
+                        ),
+
+
+                        array(
+                            'id' => 'recaptcha_secret_key',
+                            'type' => 'text',
+                            'title' => __('reCAPTCHA Secret Key', SCR_DOMAIN),
+                            'default' => '',
+                            'dependency' => array('ur_show_captcha', '==', 'true'),
                         ),
 
                         // array(
