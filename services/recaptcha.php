@@ -69,9 +69,6 @@ if (!class_exists('\StarcatReview\Services\Recaptcha')) {
             $verify = file_get_contents($url, false, $context);
             $captcha_success = json_decode($verify);
 
-            // error_log(' $captcha_success: ' . print_r($captcha_success, true));
-            // error_log('$captcha_success : ' . $captcha_success);
-
             if ($captcha_success->success == false) {
                 // echo "<p>You are a bot! Go away!</p>";
                 $captcha_success = false;
