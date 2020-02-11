@@ -95,6 +95,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
                 'show_title' => SCR_Getter::get('ur_show_title'),
                 'show_stats' => SCR_Getter::get('ur_show_stats'),
                 'show_description' => SCR_Getter::get('ur_show_description'),
+                'show_captcha' => SCR_Getter::get('ur_show_captcha'),
                 'current_user_id' => get_current_user_id(),
             ];
 

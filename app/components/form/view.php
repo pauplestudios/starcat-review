@@ -2,6 +2,8 @@
 
 namespace StarcatReview\App\Components\Form;
 
+use \StarcatReview\Services\Recaptcha as Recaptcha;
+
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -26,6 +28,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
                 $style = 'style="display: none"';
             }
 
+            // $html .= '<script src="https://www.google.com/recaptcha/api.js" async defer></script>';
             $html .= '<form class="ui form scr-user-review" action="scr_user_review_submission" method="post" post_id ="' . $this->props['collection']['post_id'] . '" ' . $style . '>';
 
             if ($this->props['collection']['show_form_title']) {
@@ -56,6 +59,10 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
 
             if ($this->props['collection']['show_prosandcons']) {
                 $html .= $this->get_pros_and_cons();
+            }
+
+            if ($this->props['collection']['show_captcha']) {
+                $html .= Recaptcha::load_v2_html();
             }
 
             $html .= '<div class="field">';

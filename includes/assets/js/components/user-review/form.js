@@ -1,4 +1,5 @@
 formSubmitted = false;
+
 var Form = {
     init: function() {
         this.eventListener();
@@ -7,6 +8,19 @@ var Form = {
 
     eventListener: function() {
         this.formValidation();
+        this.reCaptcha();
+    },
+
+    reCaptcha: function() {
+        console.log("recAptcha () ");
+        jQuery("form.scr-user-review").removeClass("active");
+        jQuery("form.scr-user-review:visible").addClass("active");
+        jQuery(".edit_link").click(function() {
+            setTimeout(function() {
+                jQuery("form.scr-user-review").removeClass("active");
+                jQuery("form.scr-user-review:visible").addClass("active");
+            }, 1000);
+        });
     },
 
     formValidation: function(fields) {
@@ -28,12 +42,14 @@ var Form = {
 
     submission: function(SCRForm, fields) {
         var props = Form.getProps(SCRForm, fields);
+        console.log("props: ");
         console.log(props);
         SCRForm.find(".submit.button").addClass("loading");
         // Ajax Post Submiting
         jQuery
             .post(scr_ajax.ajax_url, props, function(results) {
                 results = JSON.parse(results);
+                console.log("results scr_user_review_submission: ");
                 console.log(results);
 
                 // Success Message
@@ -109,6 +125,16 @@ var Form = {
 
             cons0: {
                 identifier: "cons[0]",
+                rules: [
+                    {
+                        type: "empty",
+                        prompt: "Please select or type a con",
+                    },
+                ],
+            },
+
+            captcha: {
+                identifier: "captcha",
                 rules: [
                     {
                         type: "empty",
