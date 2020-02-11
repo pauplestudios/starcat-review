@@ -266,6 +266,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'type' => 'switcher',
                             'title' => __('Show reCAPTCHA', SCR_DOMAIN),
                             'default' => true,
+                            'desc' => 'Register at <a href="https://www.google.com/recaptcha">https://www.google.com/recaptcha</a> to get your site key and secret key. Make sure to add your domain name in the settings at the reCAPTCHA website. Read More at <a href="https://paupledocs.gitbook.io/starcat-documentation/">Starcat Reviews - Docs</a>.',
                         ),
 
                         array(
