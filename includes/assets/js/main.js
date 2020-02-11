@@ -8,8 +8,8 @@ var UserReviewsList = require("./components/user-reviews-list.js");
 var StarcatReview = {
     init: function() {
         UserReview.init();
-        // ListControl.init();
         ListBuilder.init();
+        // ListControl.init();
         // ComparisonTable.init();
     },
 

@@ -4,6 +4,15 @@ var ListBuilder = {
     init: function() {
         console.log("ListBuilder.init()");
         jQuery("#scr-controlled-list").each(function(index, value) {
+            if (
+                jQuery(this).find(".scr_user_reviews.comments .comment")
+                    .length == 0
+            ) {
+                console.log("no items");
+                jQuery(this).hide();
+                return;
+            }
+
             console.log(
                 "div" + index + ":" + jQuery(this).attr("data-collectionProps")
             );
