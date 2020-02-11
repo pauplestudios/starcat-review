@@ -3,6 +3,7 @@
 namespace StarcatReview\Includes;
 
 use \StarcatReview\Services\Recaptcha as Recaptcha;
+use StarcatReview\Includes\Settings\SCR_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -67,19 +68,17 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
         {
             error_log('user_review_submission');
             // $response = $_POST["captcha-response-manual"];
-
             // error_log('$response : ' . print_r($response, true));
-            $captcha_success = Recaptcha::verify();
-            if ($captcha_success == false) {
-                echo json_encode("BOT!");
-                wp_die();
+
+            if (SCR_Getter::get('ur_show_captcha')) {
+                $captcha_success = Recaptcha::verify();
+                if ($captcha_success == false) {
+                    echo json_encode("BOT!");
+                    wp_die();
+                }
+                error_log('captcha_success : ' . $captcha_success);
             }
 
-            if ($captcha_success == false) {
-                echo json_encode("HUMAN.");
-            }
-
-            error_log('captcha_success : ' . $captcha_success);
             $user_review_repo = new \StarcatReview\App\Repositories\User_Reviews_Repo();
             $props = $user_review_repo->get_processed_data();
 

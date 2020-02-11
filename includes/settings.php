@@ -263,6 +263,13 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'default' => true,
                         ),
 
+                        array(
+                            'id' => 'ur_show_captcha',
+                            'type' => 'switcher',
+                            'title' => __('Show ReCaptcha', SCR_DOMAIN),
+                            'default' => true,
+                        ),
+
                         // array(
                         //     'id' => 'ur_show_prosandcons',
                         //     'type' => 'switcher',

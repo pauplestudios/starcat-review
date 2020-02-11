@@ -121,6 +121,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'ur_show_title' => true,
                 'ur_show_stats' => true,
                 'ur_show_description' => true,
+                'ur_show_captcha' => true,
                 'ur_form_custom_fields' => [],
 
                 // Comparison Table Start
