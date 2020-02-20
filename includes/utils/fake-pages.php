@@ -13,7 +13,8 @@ class SCRFakePages
         $content = '<b>List of Review UI Components for Testing Purpose Only</b></br></br>';
 
         // Other components
-        $content .= '<div class="photos-review"></div>';
+        $photos_review = new \StarcatReview\App\Services\Photos_Review();
+        $content .= $photos_review->get_html();
 
         return $content;
     }
