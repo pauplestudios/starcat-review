@@ -13,7 +13,7 @@ class SCRFakePages
         $content = '<b>List of Review UI Components for Testing Purpose Only</b></br></br>';
 
         // Other components
-        $content .= 'Dragme throw';
+        $content .= '<div class="photos-review"></div>';
 
         return $content;
     }

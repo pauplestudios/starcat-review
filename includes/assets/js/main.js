@@ -6,21 +6,22 @@ var ComparisonTable = require("./comparison-table.js");
 var UserReviewsList = require("./components/user-reviews-list.js");
 
 var StarcatReview = {
-    init: function() {
+    init: function () {
         UserReview.init();
         ListBuilder.init();
         // ListControl.init();
-        // ComparisonTable.init();
+        // ComparisonTable.init();        
     },
 
-    eventHandlers: function() {
+    eventHandlers: function () {
         var thisModule = this;
     },
 };
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
     StarcatReview.init();
 });
 
 import "./../style.scss";
-import { format } from "url";
+import { format } from "url"; import { monitorEventLoopDelay } from "perf_hooks";
+
