@@ -65,9 +65,30 @@ var PhotosReview = {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
             },
-            thumbs: {
-                swiper: galleryThumbs
-            }
+
+            keyboard: {
+                enabled: true,
+            },
+
+            pagination: {
+                el: '.swiper-pagination',
+                type: 'custom',
+                clickable: true,
+                renderCustom: function (swiperObj, current, total) {
+                    var paginationHTML = '<div class="ui tiny images">';
+
+                    for (var index = 0; index < swiperObj.imagesToLoad.length; index++) {
+                        // console.log();
+                        var img = jQuery(swiperObj.imagesToLoad[index])[0].outerHTML;
+                        // console.log(swiperObj.imagesToLoad[index].innerHTML);
+                        paginationHTML += '<div class="ui image"> ' + img + '</div>';
+
+                    }
+                    paginationHTML += '</div>';
+
+                    return paginationHTML;
+                },
+            },
         });
     }
 };

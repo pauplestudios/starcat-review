@@ -42,12 +42,9 @@ if (!class_exists('\StarcatReview\App\Services\Photos_Review')) {
         {
             $html = '<div class="swiper-container gallery-top">';
             $html .= $this->get_slides('large');
-            // $html .= $this->get_pagination();
             $html .= $this->get_navigation_buttons();
+            $html .= $this->get_pagination();
             // $html .= $this->get_scrollbar();
-            $html .= '<div class="swiper-container gallery-thumbs">';
-            $html .= $this->get_slides('tiny');
-            $html .= '</div>';
 
             $html .= '</div>';
 
