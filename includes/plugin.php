@@ -43,17 +43,14 @@ if (!class_exists('\Starcat_Review')) {
             $hooks = new \StarcatReview\Includes\Hooks();
         }
 
-
         public function load_ajax_handler()
         {
             $ajax_handler = new \StarcatReview\Includes\Ajax_Handler();
             $ajax_handler->register_ajax_actions();
         }
 
-
         public function load_components()
         {
-
 
             $settings = new \StarcatReview\Includes\Settings();
 
@@ -67,6 +64,12 @@ if (!class_exists('\Starcat_Review')) {
             /* Recaptcha */
             require_once SCR_PATH . 'includes/settings/getter.php';
             $recaptcha = new \StarcatReview\Services\Recaptcha();
+
+            // Developement Purpose Only
+            if (file_exists(SCR_PATH . 'includes/utils/fake-pages.php')) {
+                require_once SCR_PATH . 'includes/utils/fake-pages.php';
+            }
+
         }
 
         /**
@@ -120,7 +123,6 @@ if (!class_exists('\Starcat_Review')) {
             require_once SCR_PATH . '/includes/autoloader.php';
             \StarcatReview\Autoloader::run();
         }
-
 
         /* Note: Nice Idea */
         public function load_view($view)
