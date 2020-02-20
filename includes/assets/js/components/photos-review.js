@@ -1,3 +1,4 @@
+var Swiper = require('swiper').default;
 
 var PhotosReview = {
     init: function () {
@@ -31,25 +32,42 @@ var PhotosReview = {
     },
 
     eventHandler: function () {
-        var Swiper = require('swiper');
         // console.log(Swiper);
-        var mySwiper = new Swiper.default('.swiper-container', {
-            loop: true,
-            // If we need pagination
-            pagination: {
-                el: '.swiper-pagination',
-            },
+        // var mySwiper = new Swiper.default('.swiper-container', {
+        //     loop: true,
+        //     // If we need pagination
+        //     pagination: {
+        //         el: '.swiper-pagination',
+        //     },
 
-            // Navigation arrows
+        //     // Navigation arrows
+        //     navigation: {
+        //         nextEl: '.swiper-button-next',
+        //         prevEl: '.swiper-button-prev',
+        //     },
+
+        //     // And if we need scrollbar
+        //     // scrollbar: {
+        //     //     el: '.swiper-scrollbar',
+        //     // },
+        // });
+
+        var galleryThumbs = new Swiper('.gallery-thumbs', {
+            spaceBetween: 15,
+            slidesPerView: 3,
+            freeMode: true,
+            // watchSlidesVisibility: true,
+            // watchSlidesProgress: true,
+        });
+        var galleryTop = new Swiper('.gallery-top', {
+            spaceBetween: 10,
             navigation: {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
             },
-
-            // And if we need scrollbar
-            // scrollbar: {
-            //     el: '.swiper-scrollbar',
-            // },
+            thumbs: {
+                swiper: galleryThumbs
+            }
         });
     }
 };

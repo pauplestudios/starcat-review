@@ -9,19 +9,52 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReview\App\Services\Photos_Review')) {
     class Photos_Review
     {
+        public function get_all_photos()
+        {
+            $photos_JSON = file_get_contents(SCR_PATH . 'includes/utils/photos.json');
+            $photos = json_decode($photos_JSON, true);
+
+            $html = '';
+            $html .= '<div class="ui tiny images">';
+            $photos_count = sizeof($photos['photos']);
+            for ($i = 0; $i < $photos_count; $i++) {
+
+                if ($i == 9) {
+                    break;
+                }
+
+                $src = $photos['photos'][$i]['src']['tiny'];
+                // $class = 'ui image';
+
+                $html .= '<div class="ui image">';
+                $html .= $this->get_img($src);
+                if ($i == 8) {
+                    $html .= '<span>+ ' . $photos_count . '</span>';
+                }
+                $html .= '</div>';
+            }
+
+            $html .= '</div>';
+
+            return $html;
+        }
         public function get_html()
         {
-            $html = '<div class="swiper-container">';
-            $html .= $this->get_slides();
-            $html .= $this->get_pagination();
+            $html = '<div class="swiper-container gallery-top">';
+            $html .= $this->get_slides('large');
+            // $html .= $this->get_pagination();
             $html .= $this->get_navigation_buttons();
             // $html .= $this->get_scrollbar();
+            $html .= '<div class="swiper-container gallery-thumbs">';
+            $html .= $this->get_slides('tiny');
+            $html .= '</div>';
+
             $html .= '</div>';
 
             return $html;
         }
 
-        public function get_slides()
+        protected function get_slides($size)
         {
             // Get the contents of the JSON file
             $photos_JSON = file_get_contents(SCR_PATH . 'includes/utils/photos.json');
@@ -34,17 +67,16 @@ if (!class_exists('\StarcatReview\App\Services\Photos_Review')) {
             $html .= '<div class="swiper-wrapper">';
 
             for ($i = 0; $i < sizeof($photos['photos']); $i++) {
-                if ($i == 15) {
+                if ($i == 10) {
                     break;
                 }
-                $src = $photos['photos'][$i]['src']['tiny'];
+                $src = $photos['photos'][$i]['src'][$size];
                 $html .= $this->get_slide($src);
             }
 
             $html .= '</div>';
 
             return $html;
-
         }
 
         protected function get_pagination()
@@ -53,7 +85,6 @@ if (!class_exists('\StarcatReview\App\Services\Photos_Review')) {
             $html .= '<div class="swiper-pagination"></div>';
 
             return $html;
-
         }
 
         protected function get_scrollbar()
@@ -63,7 +94,6 @@ if (!class_exists('\StarcatReview\App\Services\Photos_Review')) {
             $html .= '</div>';
 
             return $html;
-
         }
 
         protected function get_navigation_buttons()
@@ -77,7 +107,13 @@ if (!class_exists('\StarcatReview\App\Services\Photos_Review')) {
 
         private function get_slide($src)
         {
-            return '<div class="swiper-slide"><img src="' . $src . '" /></div>';
+            return '<div class="swiper-slide">' . $this->get_img($src) . '</div>';
+        }
+
+        private function get_img($src, $class = '')
+        {
+            $class = (!empty($class)) ? 'class="' . $class . '"' : '';
+            return '<img ' . $class . ' src="' . $src . '"/>';
         }
 
     }
