@@ -1,5 +1,19 @@
 var Swiper = require('swiper').default;
 
+var selectors = {
+    modal: "#photos-review-modal.",
+
+    slide: ".scr-photos-review .photos-review__slide",
+    wrapper: ".scr-photos-review .photos-review-wrapper",
+    btnPrev: ".scr-photos-review .photos-review__button-prev",
+    btnNext: ".scr-photos-review .photos-review__button-next",
+    galleryTop: ".photos-review-gallery-top",
+    galleryThumbs: ".photos-review-gallery-thumbs",
+
+    allPhotosList: ".scr-photos-review .all-photos-list",
+    reviewPhotosList: ".scr-photos-review .review-photos-list"
+};
+
 var PhotosReview = {
     init: function () {
         var thisModule = this;
@@ -32,6 +46,7 @@ var PhotosReview = {
     },
 
     eventHandler: function () {
+        var thisModule = this;
         // console.log(Swiper);
         // var mySwiper = new Swiper.default('.swiper-container', {
         //     loop: true,
@@ -52,7 +67,8 @@ var PhotosReview = {
         //     // },
         // });
 
-        var galleryThumbs = new Swiper('.gallery-thumbs', {
+
+        var galleryThumbsArgs = {
             spaceBetween: 10,
             centeredSlides: true,
             slidesPerView: "auto",
@@ -62,9 +78,10 @@ var PhotosReview = {
                 enabled: true,
                 onlyInViewport: false
             }
-        });
+        };
 
-        var galleryTop = new Swiper('.gallery-top', {
+
+        var galleryTopArgs = {
             spaceBetween: 10,
             navigation: {
                 nextEl: '.swiper-button-next',
@@ -74,32 +91,33 @@ var PhotosReview = {
             keyboard: {
                 enabled: true,
             },
+        };
 
-            // pagination: {
-            //     el: '.swiper-pagination',
-            //     type: 'custom',
-            //     clickable: true,
-            //     renderCustom: function (swiperObj, current, total) {
-            //         var paginationHTML = '<div class="ui tiny images">';
+        var swiperNamespaceClasses = thisModule.getSwiperNamespaceClasses();
+        galleryTopArgs = Object.assign(swiperNamespaceClasses, galleryTopArgs);
+        galleryThumbsArgs = Object.assign(swiperNamespaceClasses, galleryThumbsArgs);
 
-            //         for (var index = 0; index < swiperObj.imagesToLoad.length; index++) {
-            //             // console.log();
-            //             var img = jQuery(swiperObj.imagesToLoad[index])[0].outerHTML;
-            //             // console.log(swiperObj.imagesToLoad[index].innerHTML);
-            //             paginationHTML += '<div class="ui image"> ' + img + '</div>';
+        console.log(galleryTopArgs);
+        console.log(galleryThumbsArgs);
 
-            //         }
-            //         paginationHTML += '</div>';
-
-            //         return paginationHTML;
-            //     },
-            // },
-        });
+        var galleryThumbs = new Swiper(selectors.galleryThumbs, galleryThumbsArgs);
+        var galleryTop = new Swiper(selectors.galleryTop, galleryTopArgs);
 
         /* set conteoller  */
         galleryTop.controller.control = galleryThumbs;
         galleryThumbs.controller.control = galleryTop;
 
+    },
+
+    getSwiperNamespaceClasses: function () {
+        return {
+            containerModifierClass: "photos-review-container",
+            slideClass: "photos-review__slide",
+            slideActiveClass: "photos-review__slide-active",
+            slidePrevClass: "photos-review__slide-prev",
+            slideNextClass: "photos-review__slide-next",
+            wrapperClass: "photos-review-wrapper",
+        };
     }
 };
 

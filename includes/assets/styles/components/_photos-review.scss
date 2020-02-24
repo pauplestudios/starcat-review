@@ -29,13 +29,13 @@
     }
 }
 
-.starcat-photos-review{
+.scr-photos-review{
     box-sizing: border-box;
     background-color: #333333; 
     
-    & .gallery-thumbs{        
+    & .photos-review-gallery-thumbs{        
         padding: 10px;
-        & .swiper-slide {        
+        & .photos-review__slide {        
             width: 89px;        
             img{         
                 height: 89px;       
@@ -43,19 +43,19 @@
                 object-fit: cover;
             }
         }
-        & .swiper-slide-active{        
+        & .photos-review__slide-active{        
             border: 2px solid #f0f0f0;        
         }
     }
 
-    & .gallery-top {
+    & .photos-review-gallery-top {
         padding: 10px;
-        & .swiper-slide {
+        & .photos-review__slide {
             text-align: center;
         }
     }
 
-    & .swiper-button-prev, .swiper-button-next{
+    & .photos-review__button-prev, .photos-review__button-next{
         display: none;
         color: #f0f0f0;
         &:after, :before{
@@ -65,7 +65,7 @@
     }    
 
     &:hover{
-       & .swiper-button-prev, .swiper-button-next{
+       & .photos-review__button-prev, .photos-review__button-next{
             display: block;
         } 
     }
