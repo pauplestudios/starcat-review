@@ -15,7 +15,7 @@ if (!class_exists('\StarcatReview\App\Services\Photos_Review')) {
             $photos = json_decode($photos_JSON, true);
 
             $html = '';
-            $html .= '<div class="ui tiny images">';
+            $html .= '<div class="all-photos-list ui tiny images">';
             $photos_count = sizeof($photos['photos']);
             for ($i = 0; $i < $photos_count; $i++) {
 
@@ -35,33 +35,29 @@ if (!class_exists('\StarcatReview\App\Services\Photos_Review')) {
             }
 
             $html .= '</div>';
+            $html .= $this->get_modal();
 
             return $html;
         }
 
         public function get_modal()
         {
-            global $helpie_password_modal;
             $html = '';
 
-            if ($helpie_password_modal == 0) {
-                $html = "<div class='ui dimmer modals page' style='display: none;'>";
-                $html .= "<div id='photos-review-modal' class='ui modal small' style='display: none;'>";
-                $html .= "<div class='ui header'><i class='circular lock icon'></i> Password Protected</div>";
-                $html .= "<div class='item-content'>";
-                $html .= "<br /><label for='password_check'>Enter Password : </label>";
-                $html .= "<p><input type='password' id='password_check' name='password_check' class='password' value='' required></p>";
-                $html .= "</div>";
-                $html .= "<div class='actions'>";
-                $html .= "<div class='ui black deny button'>Nope</div>";
-                $html .= "<div class='ui positive right labeled icon button'>Yep, that's right!<i class='checkmark icon'></i></div>";
-                $html .= "</div>";
-                $html .= "<div class='clear'></div>";
-                $html .= "</div>";
-                $html .= "</div>";
-
-                $helpie_password_modal = 1;
-            }
+            $html = "<div class='ui dimmer modals page' style='display: none;'>";
+            $html .= "<div id='photos-review-modal' class='ui modal small' style='display: none;'>";
+            $html .= "<div class='ui header'><i class='circular lock icon'></i> Password Protected</div>";
+            $html .= "<div class='item-content'>";
+            $html .= "<br /><label for='password_check'>Enter Password : </label>";
+            $html .= "<p><input type='password' id='password_check' name='password_check' class='password' value='' required></p>";
+            $html .= "</div>";
+            $html .= "<div class='actions'>";
+            $html .= "<div class='ui black deny button'>Nope</div>";
+            $html .= "<div class='ui positive right labeled icon button'>Yep, that's right!<i class='checkmark icon'></i></div>";
+            $html .= "</div>";
+            $html .= "<div class='clear'></div>";
+            $html .= "</div>";
+            $html .= "</div>";
 
             return $html;
         }

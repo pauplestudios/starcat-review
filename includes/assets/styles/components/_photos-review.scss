@@ -2,7 +2,7 @@
 @import "../../node_modules/swiper/css/swiper.css";
 
 // All User Uploaded Photos 
-.ui.tiny.images .image {
+.all-photos-list.ui.tiny.images .image {
     height: 89px;
     width: 89px;    
     
@@ -31,7 +31,7 @@
 
 .scr-photos-review{
     box-sizing: border-box;
-    background-color: #1b1c1d ; 
+    background-color: #333 ; 
     
     & .photos-review-gallery-thumbs{        
         padding: 10px;
@@ -43,8 +43,16 @@
                 object-fit: cover;
             }
         }
-        & .photos-review__slide-active, .swiper-slide-active{        
+        & .photos-review__slide-active, .swiper-slide-active:after{        
+            content: '';
+            display: block;
+            position: absolute;
             border: 2px solid #f0f0f0;        
+            top: 0;
+            left: 0;
+            height: 100%;            
+            width: 100%;            
+            transition: opacity .2s ease-out;
         }       
     }
 
@@ -66,8 +74,7 @@
         
         &.swiper-button-disabled,.swiper-button-disabled {
             opacity: 0.35;
-            cursor: auto;
-            pointer-events: none;
+            cursor: not-allowed;            
         }
     } 
     & .photos-review__button-prev{

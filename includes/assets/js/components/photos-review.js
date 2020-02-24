@@ -1,8 +1,7 @@
+var Modal = require("../blocks/modal");
 var Swiper = require('swiper').default;
 
 var selectors = {
-    modal: "#photos-review-modal.",
-
     slide: ".scr-photos-review .photos-review__slide",
     wrapper: ".photos-review-wrapper",
     btnPrev: ".photos-review__button-prev",
@@ -10,8 +9,12 @@ var selectors = {
     galleryTop: ".photos-review-gallery-top",
     galleryThumbs: ".photos-review-gallery-thumbs",
 
-    allPhotosList: ".scr-photos-review .all-photos-list",
-    reviewPhotosList: ".scr-photos-review .review-photos-list"
+    allPhotosList: ".all-photos-list",
+    reviewPhotosList: ".scr-photos-review .review-photos-list",
+
+    modal: "#photos-review-modal",
+    modal_deny: "#photos-review-modal .actions .deny",
+    modal_submit: "#photos-review-modal .actions .positive",
 };
 
 var PhotosReview = {
@@ -32,7 +35,16 @@ var PhotosReview = {
         //     thisModule.addSlidewithSrc(response);
         // });
 
+        setTimeout(function () {
+            Modal.init(selectors.modal, selectors.modal_deny);
+        }, 300);
+
         this.eventHandler();
+
+        jQuery(selectors.allPhotosList + ' .image').click(function () {
+            console.log("I am being clicked");
+            Modal.show(selectors.modal);
+        });
     },
 
     addSlidewithSrc: function (data) {
@@ -43,6 +55,8 @@ var PhotosReview = {
             slidesHTML += '<div class="swiper-slide"><img src="' + src + '"/></div>';
         }
         jQuery('.swiper-container .swiper-wrapper').html(slidesHTML);
+
+
     },
 
     eventHandler: function () {
