@@ -38,13 +38,47 @@ if (!class_exists('\StarcatReview\App\Services\Photos_Review')) {
 
             return $html;
         }
+
+        public function get_modal()
+        {
+            global $helpie_password_modal;
+            $html = '';
+
+            if ($helpie_password_modal == 0) {
+                $html = "<div class='ui dimmer modals page' style='display: none;'>";
+                $html .= "<div id='helpie-password-modal' class='pauple_helpie ui modal small' style='display: none;'>";
+                $html .= "<div class='ui header'><i class='circular lock icon'></i> Password Protected</div>";
+                $html .= "<div class='item-content'>";
+                $html .= "<br /><label for='password_check'>Enter Password : </label>";
+                $html .= "<p><input type='password' id='password_check' name='password_check' class='password' value='' required></p>";
+                $html .= "</div>";
+                $html .= "<div class='actions'>";
+                $html .= "<div class='ui black deny button'>Nope</div>";
+                $html .= "<div class='ui positive right labeled icon button'>Yep, that's right!<i class='checkmark icon'></i></div>";
+                $html .= "</div>";
+                $html .= "<div class='clear'></div>";
+                $html .= "</div>";
+                $html .= "</div>";
+
+                $helpie_password_modal = 1;
+            }
+
+            return $html;
+        }
+
         public function get_html()
         {
-            $html = '<div class="swiper-container gallery-top">';
-            $html .= $this->get_slides('large');
+            $html = '<div class="starcat-photos-review">';
+            $html .= '<div class="swiper-container gallery-top">';
+            $html .= $this->get_slides('medium');
             $html .= $this->get_navigation_buttons();
             $html .= $this->get_pagination();
             // $html .= $this->get_scrollbar();
+            $html .= '</div>';
+
+            $html .= '<div class="swiper-container gallery-thumbs">';
+            $html .= $this->get_slides('small');
+            $html .= '</div>';
 
             $html .= '</div>';
 
@@ -64,7 +98,7 @@ if (!class_exists('\StarcatReview\App\Services\Photos_Review')) {
             $html .= '<div class="swiper-wrapper">';
 
             for ($i = 0; $i < sizeof($photos['photos']); $i++) {
-                if ($i == 10) {
+                if ($i == 5) {
                     break;
                 }
                 $src = $photos['photos'][$i]['src'][$size];

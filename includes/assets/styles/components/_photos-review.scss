@@ -1,31 +1,6 @@
 
 @import "../../node_modules/swiper/css/swiper.css";
 
-.gallery-thumbs{
-    box-sizing: border-box;
-    position: relative;
-    & .swiper-slide {
-        height: 5em;       
-        width: 8em;
-        // img{
-        //     height: 5em;       
-        //     width: 8em;
-        // }
-    }
-    
-}
-.gallery-top{      
-    box-sizing: border-box;
-    background-color: #333333;
-    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-    & .swiper-slide{
-        text-align: center;
-    }
-    // & img{
-    //     object-fit: cover; 
-    // }
-}
-
 // All User Uploaded Photos 
 .ui.tiny.images .image {
     height: 89px;
@@ -52,4 +27,47 @@
         font-size: 18px;
         font-weight: 500;     
     }
+}
+
+.starcat-photos-review{
+    box-sizing: border-box;
+    background-color: #333333; 
+    
+    & .gallery-thumbs{        
+        padding: 10px;
+        & .swiper-slide {        
+            width: 89px;        
+            img{         
+                height: 89px;       
+                width: 89px;   
+                object-fit: cover;
+            }
+        }
+        & .swiper-slide-active{        
+            border: 2px solid #f0f0f0;        
+        }
+    }
+
+    & .gallery-top {
+        padding: 10px;
+        & .swiper-slide {
+            text-align: center;
+        }
+    }
+
+    & .swiper-button-prev, .swiper-button-next{
+        display: none;
+        color: #f0f0f0;
+        &:after, :before{
+            font-size: 22px;
+            font-weight: bolder;
+        }
+    }    
+
+    &:hover{
+       & .swiper-button-prev, .swiper-button-next{
+            display: block;
+        } 
+    }
+    
 }

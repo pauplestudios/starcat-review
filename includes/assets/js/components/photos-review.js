@@ -53,12 +53,17 @@ var PhotosReview = {
         // });
 
         var galleryThumbs = new Swiper('.gallery-thumbs', {
-            spaceBetween: 15,
-            slidesPerView: 3,
-            freeMode: true,
-            // watchSlidesVisibility: true,
-            // watchSlidesProgress: true,
+            spaceBetween: 10,
+            centeredSlides: true,
+            slidesPerView: "auto",
+            touchRatio: 0.4,
+            slideToClickedSlide: true,
+            keyboard: {
+                enabled: true,
+                onlyInViewport: false
+            }
         });
+
         var galleryTop = new Swiper('.gallery-top', {
             spaceBetween: 10,
             navigation: {
@@ -70,26 +75,31 @@ var PhotosReview = {
                 enabled: true,
             },
 
-            pagination: {
-                el: '.swiper-pagination',
-                type: 'custom',
-                clickable: true,
-                renderCustom: function (swiperObj, current, total) {
-                    var paginationHTML = '<div class="ui tiny images">';
+            // pagination: {
+            //     el: '.swiper-pagination',
+            //     type: 'custom',
+            //     clickable: true,
+            //     renderCustom: function (swiperObj, current, total) {
+            //         var paginationHTML = '<div class="ui tiny images">';
 
-                    for (var index = 0; index < swiperObj.imagesToLoad.length; index++) {
-                        // console.log();
-                        var img = jQuery(swiperObj.imagesToLoad[index])[0].outerHTML;
-                        // console.log(swiperObj.imagesToLoad[index].innerHTML);
-                        paginationHTML += '<div class="ui image"> ' + img + '</div>';
+            //         for (var index = 0; index < swiperObj.imagesToLoad.length; index++) {
+            //             // console.log();
+            //             var img = jQuery(swiperObj.imagesToLoad[index])[0].outerHTML;
+            //             // console.log(swiperObj.imagesToLoad[index].innerHTML);
+            //             paginationHTML += '<div class="ui image"> ' + img + '</div>';
 
-                    }
-                    paginationHTML += '</div>';
+            //         }
+            //         paginationHTML += '</div>';
 
-                    return paginationHTML;
-                },
-            },
+            //         return paginationHTML;
+            //     },
+            // },
         });
+
+        /* set conteoller  */
+        galleryTop.controller.control = galleryThumbs;
+        galleryThumbs.controller.control = galleryTop;
+
     }
 };
 
