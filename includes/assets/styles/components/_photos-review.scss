@@ -12,7 +12,8 @@
         object-fit: cover;
     }
 
-    & span{
+    & span.show-all-photos-list{
+        cursor: pointer;
         position: absolute;
         display: flex;
         justify-content: center;
@@ -88,6 +89,26 @@
         & .photos-review__button-prev, .photos-review__button-next{
             display: flex;
         } 
-    }
-    
+    }    
 }
+
+.ui.dimmer.photos-review-modal{
+    background-color: rgba(0,0,0,.6);
+    position: fixed;
+
+    & .item-content{
+        padding: 10px;
+        border: none;
+        margin: 0;
+    }
+
+    & .all-photos-list-gallery{
+        box-sizing: border-box;
+        max-height: 600px;        
+        margin: -10px;
+        position: relative;        
+        overflow: hidden;
+        overflow-y: auto;
+    }
+}
+

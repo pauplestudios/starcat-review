@@ -14,8 +14,10 @@ class SCRFakePages
 
         // Other components
         $photos_review = new \StarcatReview\App\Services\Photos_Review();
-        $content .= $photos_review->get_all_photos();
 
+        // $content .= $photos_review->get_all_photos_gallery_list();
+        // $content .= '</br></br>';
+        $content .= $photos_review->get_all_photos();
         $content .= '</br></br>';
         $content .= $photos_review->get_html();
 
