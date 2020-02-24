@@ -16,7 +16,7 @@
         position: absolute;
         display: flex;
         justify-content: center;
-        background-color: #000;            
+        background-color: #1b1c1d ;            
         opacity: .6;
         align-items: center;
         top: 0;
@@ -31,11 +31,11 @@
 
 .scr-photos-review{
     box-sizing: border-box;
-    background-color: #333333; 
+    background-color: #1b1c1d ; 
     
     & .photos-review-gallery-thumbs{        
         padding: 10px;
-        & .photos-review__slide {        
+        & .photos-review__slide.swiper-slide{        
             width: 89px;        
             img{         
                 height: 89px;       
@@ -43,30 +43,43 @@
                 object-fit: cover;
             }
         }
-        & .photos-review__slide-active{        
+        & .photos-review__slide-active, .swiper-slide-active{        
             border: 2px solid #f0f0f0;        
-        }
+        }       
     }
 
     & .photos-review-gallery-top {
         padding: 10px;
-        & .photos-review__slide {
+        & .photos-review__slide.swiper-slide {
             text-align: center;
         }
     }
 
     & .photos-review__button-prev, .photos-review__button-next{
-        display: none;
-        color: #f0f0f0;
-        &:after, :before{
-            font-size: 22px;
-            font-weight: bolder;
+        display: none;        
+        position: absolute;        
+        top: 50%;
+        z-index: 10;        
+        cursor: pointer;        
+        align-items: center;
+        justify-content: center; 
+        
+        &.swiper-button-disabled,.swiper-button-disabled {
+            opacity: 0.35;
+            cursor: auto;
+            pointer-events: none;
         }
-    }    
+    } 
+    & .photos-review__button-prev{
+        left: 10px;
+    }
+    & .photos-review__button-next{
+        right: 10px;
+    }
 
     &:hover{
-       & .photos-review__button-prev, .photos-review__button-next{
-            display: block;
+        & .photos-review__button-prev, .photos-review__button-next{
+            display: flex;
         } 
     }
     

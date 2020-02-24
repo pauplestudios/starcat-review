@@ -4,9 +4,9 @@ var selectors = {
     modal: "#photos-review-modal.",
 
     slide: ".scr-photos-review .photos-review__slide",
-    wrapper: ".scr-photos-review .photos-review-wrapper",
-    btnPrev: ".scr-photos-review .photos-review__button-prev",
-    btnNext: ".scr-photos-review .photos-review__button-next",
+    wrapper: ".photos-review-wrapper",
+    btnPrev: ".photos-review__button-prev",
+    btnNext: ".photos-review__button-next",
     galleryTop: ".photos-review-gallery-top",
     galleryThumbs: ".photos-review-gallery-thumbs",
 
@@ -47,26 +47,6 @@ var PhotosReview = {
 
     eventHandler: function () {
         var thisModule = this;
-        // console.log(Swiper);
-        // var mySwiper = new Swiper.default('.swiper-container', {
-        //     loop: true,
-        //     // If we need pagination
-        //     pagination: {
-        //         el: '.swiper-pagination',
-        //     },
-
-        //     // Navigation arrows
-        //     navigation: {
-        //         nextEl: '.swiper-button-next',
-        //         prevEl: '.swiper-button-prev',
-        //     },
-
-        //     // And if we need scrollbar
-        //     // scrollbar: {
-        //     //     el: '.swiper-scrollbar',
-        //     // },
-        // });
-
 
         var galleryThumbsArgs = {
             spaceBetween: 10,
@@ -84,8 +64,8 @@ var PhotosReview = {
         var galleryTopArgs = {
             spaceBetween: 10,
             navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
+                nextEl: selectors.btnNext,
+                prevEl: selectors.btnPrev,
             },
 
             keyboard: {
@@ -93,12 +73,10 @@ var PhotosReview = {
             },
         };
 
-        var swiperNamespaceClasses = thisModule.getSwiperNamespaceClasses();
-        galleryTopArgs = Object.assign(swiperNamespaceClasses, galleryTopArgs);
-        galleryThumbsArgs = Object.assign(swiperNamespaceClasses, galleryThumbsArgs);
+        // var swiperNamespaceClasses = thisModule.getSwiperNamespaceClasses();
+        // galleryTopArgs = Object.assign(swiperNamespaceClasses, galleryTopArgs);
+        // galleryThumbsArgs = Object.assign(swiperNamespaceClasses, galleryThumbsArgs);
 
-        console.log(galleryTopArgs);
-        console.log(galleryThumbsArgs);
 
         var galleryThumbs = new Swiper(selectors.galleryThumbs, galleryThumbsArgs);
         var galleryTop = new Swiper(selectors.galleryTop, galleryTopArgs);
@@ -111,11 +89,14 @@ var PhotosReview = {
 
     getSwiperNamespaceClasses: function () {
         return {
-            containerModifierClass: "photos-review-container",
             slideClass: "photos-review__slide",
             slideActiveClass: "photos-review__slide-active",
+            slideDuplicateActiveClass: "photos-review__slide-duplicate-active",
             slidePrevClass: "photos-review__slide-prev",
+            slideDuplicatePrevClass: "photos-review__slide-duplicate-prev",
             slideNextClass: "photos-review__slide-next",
+            slideDuplicateNextClass: "photos-review__slide-duplicate-next",
+
             wrapperClass: "photos-review-wrapper",
         };
     }

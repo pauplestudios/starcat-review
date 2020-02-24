@@ -69,14 +69,14 @@ if (!class_exists('\StarcatReview\App\Services\Photos_Review')) {
         public function get_html()
         {
             $html = '<div class="scr-photos-review">';
-            $html .= '<div class="photos-review-gallery-top">';
+            $html .= '<div class="photos-review-gallery-top swiper-container">';
             $html .= $this->get_slides('medium');
             $html .= $this->get_navigation_buttons();
             // $html .= $this->get_pagination();
             // $html .= $this->get_scrollbar();
             $html .= '</div>';
 
-            $html .= '<div class="photos-review-gallery-thumbs">';
+            $html .= '<div class="photos-review-gallery-thumbs swiper-container">';
             $html .= $this->get_slides('small');
             $html .= '</div>';
 
@@ -95,7 +95,7 @@ if (!class_exists('\StarcatReview\App\Services\Photos_Review')) {
             // error_log('photos : ' . print_r($photos, true));
 
             $html = '';
-            $html .= '<div class="photos-review-wrapper">';
+            $html .= '<div class="photos-review-wrapper swiper-wrapper">';
 
             for ($i = 0; $i < sizeof($photos['photos']); $i++) {
                 if ($i == 5) {
@@ -113,7 +113,7 @@ if (!class_exists('\StarcatReview\App\Services\Photos_Review')) {
         protected function get_pagination()
         {
             $html = '';
-            $html .= '<div class="photos-review-pagination"></div>';
+            $html .= '<div class="photos-review-pagination swiper-pagination"></div>';
 
             return $html;
         }
@@ -121,7 +121,7 @@ if (!class_exists('\StarcatReview\App\Services\Photos_Review')) {
         protected function get_scrollbar()
         {
             $html = '';
-            $html .= '<div class="photos-review-scrollbar"></div>';
+            $html .= '<div class="photos-review-scrollbar swiper-scrollbar"></div>';
             $html .= '</div>';
 
             return $html;
@@ -130,15 +130,16 @@ if (!class_exists('\StarcatReview\App\Services\Photos_Review')) {
         protected function get_navigation_buttons()
         {
             $html = '';
-            $html .= '<div class="photos-review__button-prev"></div>';
-            $html .= '<div class="photos-review__button-next"></div>';
+
+            $html .= '<div class="photos-review__button-prev"><i class="circular inverted angle left icon"></i></div>';
+            $html .= '<div class="photos-review__button-next"><i class="circular inverted angle right icon"></i></div>';
 
             return $html;
         }
 
         private function get_slide($src)
         {
-            return '<div class="photos-review__slide">' . $this->get_img($src) . '</div>';
+            return '<div class="photos-review__slide swiper-slide">' . $this->get_img($src) . '</div>';
         }
 
         private function get_img($src, $class = '')
