@@ -39,7 +39,7 @@ if (!class_exists('\StarcatReview\App\Services\Photos_Review')) {
             // $html .= '<div class="all-photos-review-gallery swiper-container">';
             // $html .= $this->get_slides('medium');
             // $html .= $this->get_pagination();
-            $html .= '</div>';
+            // $html .= '</div>';
 
             return $html;
         }
@@ -89,14 +89,14 @@ if (!class_exists('\StarcatReview\App\Services\Photos_Review')) {
         {
             $html = '<div class="scr-photos-review">';
             $html .= '<div class="photos-review-gallery-top swiper-container">';
-            $html .= $this->get_slides('medium', 5);
+            $html .= $this->get_slides('medium', 7);
             $html .= $this->get_navigation_buttons();
             // $html .= $this->get_pagination();
             // $html .= $this->get_scrollbar();
             $html .= '</div>';
 
             $html .= '<div class="photos-review-gallery-thumbs swiper-container">';
-            $html .= $this->get_slides('small', 5);
+            $html .= $this->get_slides('small', 7);
             $html .= '</div>';
 
             $html .= '</div>';

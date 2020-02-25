@@ -47,11 +47,27 @@ var PhotosReview = {
     allPhotosList: function () {
         jQuery(selectors.showAllPhotosList).click(function () {
             Modal.show(selectors.modal);
+            console.log("Show PHotos reviews Modal");
         });
     },
 
     reviewPhotosList: function () {
         var thisModule = this;
+
+
+        var galleryThumbsArgs = {
+            spaceBetween: 10,
+            // centeredSlides: true,
+            slidesPerView: "auto",
+            touchRatio: 0.4,
+            slideToClickedSlide: true,
+            keyboard: {
+                enabled: true,
+                onlyInViewport: false
+            },
+        };
+
+        var galleryThumbs = new Swiper(selectors.galleryThumbs, galleryThumbsArgs);
 
         var galleryTopArgs = {
             spaceBetween: 10,
@@ -63,28 +79,12 @@ var PhotosReview = {
             keyboard: {
                 enabled: true,
             },
+            thumbs: {
+                swiper: galleryThumbs,
+            },
         };
 
-        var galleryThumbsArgs = {
-            spaceBetween: 10,
-            centeredSlides: true,
-            slidesPerView: "auto",
-            touchRatio: 0.4,
-            slideToClickedSlide: true,
-            keyboard: {
-                enabled: true,
-                onlyInViewport: false
-            }
-        };
-
-        var galleryThumbs = new Swiper(selectors.galleryThumbs, galleryThumbsArgs);
         var galleryTop = new Swiper(selectors.galleryTop, galleryTopArgs);
-
-        /* set conteoller  */
-        if (galleryTop.controller && galleryThumbs.controller) {
-            galleryTop.controller.control = galleryThumbs;
-            galleryThumbs.controller.control = galleryTop;
-        }
     },
 
 };

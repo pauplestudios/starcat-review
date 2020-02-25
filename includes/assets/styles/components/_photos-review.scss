@@ -30,21 +30,25 @@
     }
 }
 
-.scr-photos-review{
-    box-sizing: border-box;
+.scr-photos-review{    
     background-color: #333 ; 
-    
     & .photos-review-gallery-thumbs{        
         padding: 10px;
+        & .photos-review-wrapper.swiper-wrapper{
+            justify-content: center;
+        }
         & .photos-review__slide.swiper-slide{        
             width: 89px;        
+            box-sizing: border-box;
             img{         
                 height: 89px;       
                 width: 89px;   
                 object-fit: cover;
             }
         }
-        & .photos-review__slide-active, .swiper-slide-active:after{        
+        & .photos-review__slide-active:after, 
+        // .swiper-slide-active:after,
+        .swiper-slide-thumb-active:after{        
             content: '';
             display: block;
             position: absolute;
