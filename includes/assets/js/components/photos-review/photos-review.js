@@ -1,4 +1,4 @@
-var Modal = require("../blocks/modal");
+var Modal = require("./modal.js");
 var Swiper = require('swiper').default;
 
 var selectors = {
@@ -15,7 +15,7 @@ var selectors = {
     reviewPhotosList: ".scr-photos-review .review-photos-list",
 
     modal: "#photos-review-modal",
-    modal_deny: "#photos-review-modal .actions .deny",
+    modal_deny: "#photos-review-modal .close.icon",
     modal_submit: "#photos-review-modal .actions .positive",
 };
 
@@ -45,9 +45,30 @@ var PhotosReview = {
     },
 
     allPhotosList: function () {
+
         jQuery(selectors.showAllPhotosList).click(function () {
             Modal.show(selectors.modal);
+            jQuery('.all-photos-list-gallery .card img.image')
+                .visibility({
+                    type: 'image',
+                    transition: 'fade in',
+                    duration: 3000
+                });
             console.log("Show PHotos reviews Modal");
+        });
+
+        data = {
+            action: "get_all_photos"
+        };
+
+        jQuery(selectors.modal + ' .scrolling.content').scroll(function () {
+            //visible height + pixel scrolled = total height
+            if (this.offsetHeight + this.scrollTop == this.scrollHeight) {
+                // con
+                // jQuery.post(scr_ajax.ajax_url, data, function () {
+
+                // });
+            }
         });
     },
 

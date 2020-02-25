@@ -2,7 +2,7 @@ var UserReview = require("./components/user-review.js");
 var ListBuilder = require("./list-builder.js");
 // var ListControl = require("./blocks/list-control.js");
 var ReviewsList = require("./components/reviews-list.js");
-var PhotosReview = require("./components/photos-review.js");
+var PhotosReview = require("./components/photos-review/photos-review.js");
 var ComparisonTable = require("./comparison-table.js");
 var UserReviewsList = require("./components/user-reviews-list.js");
 

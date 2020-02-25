@@ -99,20 +99,27 @@
 .ui.dimmer.photos-review-modal{
     background-color: rgba(0,0,0,.6);
     position: fixed;
+    & .header{
+        padding: .5em 1em;
+    }
+    & p{
+        display: none;
+    }
 
     & .item-content{
         padding: 10px;
         border: none;
         margin: 0;
+        overflow-x: hidden;
     }
 
-    & .all-photos-list-gallery{
-        box-sizing: border-box;
-        max-height: 600px;        
-        margin: -10px;
-        position: relative;        
-        overflow: hidden;
-        overflow-y: auto;
-    }
+    // & .all-photos-list-gallery{
+    //     box-sizing: border-box;
+    //     max-height: 600px;        
+    //     margin: -10px;
+    //     position: relative;        
+    //     overflow: hidden;
+    //     overflow-y: auto;
+    // }
 }
 
