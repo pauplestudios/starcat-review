@@ -20,21 +20,24 @@
     "rtl": false,
     "components": [
         "button",
+        "card",
+        "comment",
+        "dimmer",
+        "dropdown",
+        "form",
+        "grid",
+        "header",
         "icon",
         "image",
         "input",
         "label",
+        "loader",
         "message",
+        "modal",
+        "placeholder",
         "segment",
-        "grid",
-        "table",
-        "card",
-        "dropdown",
         "search",
-        "transition",
-        "comment",
-        "form",
-        "placeholder"
+        "transition"
     ],
     "version": "2.4.2"
 }
