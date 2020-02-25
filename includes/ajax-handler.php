@@ -2,8 +2,8 @@
 
 namespace StarcatReview\Includes;
 
-use \StarcatReview\Services\Recaptcha as Recaptcha;
 use StarcatReview\Includes\Settings\SCR_Getter;
+use \StarcatReview\Services\Recaptcha as Recaptcha;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -37,6 +37,15 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
             // Vote Submission ajax for User Review
             add_action('wp_ajax_nopriv_scr_user_review_vote', [$this, 'vote_handler']);
             add_action('wp_ajax_scr_user_review_vote', [$this, 'vote_handler']);
+
+            // Vote Submission ajax for User Review
+            add_action('wp_ajax_nopriv_scr_phtos_review', [$this, 'get_photos_review']);
+            add_action('wp_ajax_scr_phtos_review', [$this, 'get_photos_review']);
+        }
+
+        public function get_photos_review()
+        {
+
         }
 
         public function scr_listing_action()

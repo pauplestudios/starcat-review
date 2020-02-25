@@ -5,21 +5,19 @@ class SCRFakePages
 
     public function __construct()
     {
+        require_once SCR_PATH . 'includes/lib/pt-addon/starcat-review-pt.php';
+
         add_filter('the_posts', array($this, 'fake_pages'));
     }
 
     public function get_page_content()
     {
         $content = '<b>List of Review UI Components for Testing Purpose Only</b></br></br>';
-
         // Other components
-        $photos_review = new \StarcatReview\App\Services\Photos_Review();
 
-        // $content .= $photos_review->get_all_photos_gallery_list();
-        // $content .= '</br></br>';
-        $content .= $photos_review->get_all_photos();
+        $content .= apply_filters('scr_photos_review/get_all_photos', array());
         $content .= '</br></br>';
-        $content .= $photos_review->get_html();
+        $content .= apply_filters('scr_photos_review/get_single_slider_photos', array());
 
         return $content;
     }
