@@ -17,18 +17,20 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Controller')) {
 
         public function load()
         {
-            // error_log("PHotos REview Controller");
-            add_filter('scr_photos_review/get_all_photos', [$this->view, 'get_all_photos']);
-            add_filter('scr_photos_review/get_single_slider_photos', [$this->view, 'get_html']);
+            add_filter('scr_photos_review/get_all_photos', [$this, 'get_all_photos']);
+            add_filter('scr_photos_review/get_single_photos', [$this, 'get_single_photos']);
         }
 
-        public function get_view($args)
+        public function get_all_photos($args)
         {
+            $props = $this->model->get_all_photos_viewProps($args);
+            return $this->view->get_all_photos($props);
+        }
 
-            // $stats = $this->model->get($args);
-            error_log('Pt controller : ' . print_r($stats, true));
-
-            // return $this->view->get_html($stats);
+        public function get_single_photos($args)
+        {
+            $props = $this->model->get_single_photos_viewProps($args);
+            return $this->view->get_single_photos($props);
         }
 
     } // END CLASS

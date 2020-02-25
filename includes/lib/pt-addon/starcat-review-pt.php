@@ -31,17 +31,17 @@ starcat_review_pt_run();
 
 function starcat_review_pt_run()
 {
-    // if (!version_compare(PHP_VERSION, '5.4', '>=')) {
-    //     add_action('admin_notices', 'starcat_review_pt_fail_php_version');
-    // } elseif (!version_compare(get_bloginfo('version'), '4.5', '>=')) {
-    //     add_action('admin_notices', 'starcat_review_pt_fail_wp_version');
-    // } else if (
-    //     !in_array('starcat-review/starcat-review.php', apply_filters('active_plugins', get_option('active_plugins')))
-    // ) {
-    //     add_action('admin_notices', 'starcat_review_pt_fail_dependency');
-    // } else {
-    require SCR_PT_PATH . 'includes/plugin.php';
-    // }
+    if (!version_compare(PHP_VERSION, '5.4', '>=')) {
+        add_action('admin_notices', 'starcat_review_pt_fail_php_version');
+    } elseif (!version_compare(get_bloginfo('version'), '4.5', '>=')) {
+        add_action('admin_notices', 'starcat_review_pt_fail_wp_version');
+    } else if (
+        !in_array('starcat-review/starcat-review.php', apply_filters('active_plugins', get_option('active_plugins')))
+    ) {
+        add_action('admin_notices', 'starcat_review_pt_fail_dependency');
+    } else {
+        require SCR_PT_PATH . 'includes/plugin.php';
+    }
 }
 
 function starcat_review_pt_activation()

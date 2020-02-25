@@ -38,7 +38,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
             add_action('wp_ajax_nopriv_scr_user_review_vote', [$this, 'vote_handler']);
             add_action('wp_ajax_scr_user_review_vote', [$this, 'vote_handler']);
 
-            // Vote Submission ajax for User Review
+            //Aajax for Photos Review
             add_action('wp_ajax_nopriv_scr_phtos_review', [$this, 'get_photos_review']);
             add_action('wp_ajax_scr_phtos_review', [$this, 'get_photos_review']);
         }

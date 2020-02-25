@@ -9,86 +9,63 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
     class View
     {
-        public function get_all_photos($args = [])
-        {error_log("All Phtoso filtoer");
-            $photos_JSON = file_get_contents(SCR_PATH . 'includes/utils/photos.json');
-            $photos = json_decode($photos_JSON, true);
-
-            $html = '';
-            $html .= '<div class="all-photos-list ui tiny images">';
-            $photos_count = sizeof($photos['photos']);
-            for ($i = 0; $i < $photos_count; $i++) {
-
-                if ($i == 9) {
-                    break;
-                }
-
-                $src = $photos['photos'][$i]['src']['tiny'];
-                // $class = 'ui image';
-
-                $html .= '<div class="ui image">';
-                $html .= $this->get_img($src);
-                if ($i == 8) {
-                    $html .= '<span class="show-all-photos-list">+ ' . $photos_count . '</span>';
-                }
-                $html .= '</div>';
-            }
-
-            $html .= '</div>';
-            $html .= $this->get_modal();
-            // $html .= '<div class="all-photos-review-gallery swiper-container">';
-            // $html .= $this->get_slides('medium');
-            // $html .= $this->get_pagination();
-            // $html .= '</div>';
-
-            return $html;
-        }
-
-        public function get_all_photos_gallery_list()
+        public function get_all_photos($props)
         {
-            $photos_JSON = file_get_contents(SCR_PATH . 'includes/utils/photos.json');
-            $photos = json_decode($photos_JSON, true);
 
             $html = '';
-            $html .= '<div class="ui six doubling cards all-photos-list-gallery">';
-            for ($i = 10; $i < sizeof($photos['photos']); $i++) {
-                if ($i == 35) {
-                    break;
+            $html .= '<div class="all-photos-gallery-preview ui tiny images">';
+
+            foreach ($props['items'] as $key => $image) {
+                $html .= '<div class="ui image">';
+                $html .= '<img src="' . $image . '"/>';
+                if (($props['collection']['limit'] - 1) == $key) {
+                    $html .= '<span class="show-all-photos-gallery" data-shown-count="' . $props['collection']['limit'] . '" data-total-count="' . $props['collection']['total_count'] . '">+ ' . $props['collection']['total_count'] . '</span>';
                 }
-                $html .= '<div class="card">';
-                $html .= '<img class="ui medium circular image" src="' . SCR_URL . 'includes/assets/img/square-image.png'
-                    . '" data-src="' . $photos['photos'][$i]['src']['portrait'] . '"/>';
                 $html .= '</div>';
             }
+
             $html .= '</div>';
+            $html .= $this->get_modal($props);
 
             return $html;
         }
 
-        public function get_modal()
+        public function get_modal($props)
         {
             $html = '';
 
             $html = "<div class='ui dimmer modals photos-review-modal' style='display: none;'>";
             $html .= "<div id='photos-review-modal' class='ui modal' style='display: none;'>";
             $html .= "<i class='circular inverted close icon'></i>";
+            $html .= "<div class='all-photos-section'>";
             $html .= "<div class='ui medium header'><i class='circular expand icon'></i> All User Review Images </div>";
 
             $html .= "<div class='scrolling content item-content'>";
-            $html .= $this->get_all_photos_gallery_list();
+            $html .= $this->get_all_photos_gallery($props);
             $html .= '</div>';
 
-            // $html .= "<div class='actions'>";
-            // $html .= "<div class='ui black deny button'>Close Modal</div>";
-            // $html .= "</div>";
-
+            $html .= '</div>';
             $html .= "</div>";
             $html .= "</div>";
 
             return $html;
         }
 
-        public function get_html()
+        public function get_all_photos_gallery($props)
+        {
+            $html = '';
+            $html .= '<div class="ui six doubling cards all-photos-gallery">';
+            foreach ($props['items'] as $key => $image) {
+                $html .= '<div class="card">';
+                $html .= '<img class="ui medium circular image" src="' . $props['collection']['placeholder_image'] . '" data-src="' . $image . '"/>';
+                $html .= '</div>';
+            }
+            $html .= '</div>';
+
+            return $html;
+        }
+
+        public function get_single_photos($props)
         {
             $html = '<div class="scr-photos-review">';
             $html .= '<div class="photos-review-gallery-top swiper-container">';

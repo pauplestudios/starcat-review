@@ -2,7 +2,7 @@
 @import "../../node_modules/swiper/css/swiper.css";
 
 // All User Uploaded Photos 
-.all-photos-list.ui.tiny.images .image {
+.all-photos-gallery-preview.ui.tiny.images .image {
     height: 89px;
     width: 89px;    
     
@@ -12,7 +12,7 @@
         object-fit: cover;
     }
 
-    & span.show-all-photos-list{
+    & span.show-all-photos-gallery{
         cursor: pointer;
         position: absolute;
         display: flex;
@@ -101,19 +101,20 @@
     position: fixed;
     & .header{
         padding: .5em 1em;
+        margin: 0;
+        border-bottom: 1px solid #e1e1e1;
     }
     & p{
         display: none;
     }
 
     & .item-content{
-        padding: 10px;
-        border: none;
-        margin: 0;
-        overflow-x: hidden;
+        padding: 1em;
+        max-height: calc(80vh - 10em);
+        overflow: auto;
     }
 
-    // & .all-photos-list-gallery{
+    // & .all-photos-gallery-preview-gallery{
     //     box-sizing: border-box;
     //     max-height: 600px;        
     //     margin: -10px;
