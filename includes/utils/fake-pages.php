@@ -16,8 +16,8 @@ class SCRFakePages
         // Other components
 
         $content .= apply_filters('scr_photos_review/get_all_photos', array());
-        $content .= '</br></br>';
-        $content .= apply_filters('scr_photos_review/get_single_photos', array());
+        // $content .= '</br></br>';
+        // $content .= apply_filters('scr_photos_review/get_single_photos', array());
 
         return $content;
     }

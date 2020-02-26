@@ -1,4 +1,5 @@
 var Modal = require("./modal.js");
+var Slider = require("./slider.js");
 var firedGalleryEvents = false;
 
 var selectors = {
@@ -59,6 +60,7 @@ var Gallery = {
                 results = JSON.parse(results);
                 thisModule.updateImageFromPlaceholder(results);
                 thisModule.addRestOfTheGalleryPhotos();
+                Slider.refreshSlider();
             });
         }
 
@@ -85,13 +87,13 @@ var Gallery = {
         var loopLimit = (sum >= data.limit) ? data.limit : sum;
         var cardHTML = '';
         for (var index = 0; index < loopLimit; index++) {
-            cardHTML += this.cardPlaceholderHtml();
+            cardHTML += this.cardPlaceholderHtml(data);
         }
         return cardHTML;
     },
 
-    cardPlaceholderHtml: function () {
-        var html = '<div class="card card-placeholder">';
+    cardPlaceholderHtml: function (data) {
+        var html = '<div class="card card-placeholder" data-set="' + data.shownCount + '">';
         html += '<div class="ui placeholder">';
         html += '<div class="square image"></div>';
         html += '</div>';

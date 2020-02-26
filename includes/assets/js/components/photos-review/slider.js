@@ -50,8 +50,41 @@ var Slider = {
         };
 
         var sliderTop = new Swiper(selectors.sliderTop, sliderTopArgs);
-        jQuery('.remove-all-slides').click(thisModule.removeSlides(sliderTop, sliderThumbs));
-        jQuery('.add-slides').click(thisModule.addSlides(sliderTop, sliderThumbs));
+        // jQuery('.remove-all-slides').click(thisModule.removeSlides(sliderTop, sliderThumbs));
+        // jQuery('.add-slides').click(thisModule.addSlides(sliderTop, sliderThumbs));
+        // setTimeout(function (sliderTop, sliderThumbs) {
+        // sliderTop.update();
+        // sliderThumbs.update();
+        // }, 5000);
+
+        jQuery('.all-photos-section').show();
+        jQuery('.slider-section').hide();
+
+        thisModule.galleryEvents(sliderTop, sliderThumbs);
+    },
+
+    refreshSlider: function () {
+        var sliderTop = document.querySelector(selectors.sliderTop).swiper;
+        var sliderThumbs = document.querySelector(selectors.sliderThumbs).swiper;
+
+        Slider.galleryEvents(sliderTop, sliderThumbs);
+    },
+
+    galleryEvents: function (sliderTop, sliderThumbs) {
+
+        var controls = {
+            allSectionEl: jQuery('.all-photos-section'),
+            sliderSectionEl: jQuery('.slider-section'),
+            sliderTop: sliderTop,
+            sliderThumbs: sliderThumbs
+        };
+
+        jQuery('.all-photos-gallery .card').click(this.addSlides(controls));
+
+        jQuery('.slider-section .header .arrow.left').click(function () {
+            controls.allSectionEl.show();
+            controls.sliderSectionEl.hide();
+        });
     },
 
     removeSlides: function (sliderTop, sliderThumbs) {
@@ -61,19 +94,25 @@ var Slider = {
         };
     },
 
-    addSlides: function (sliderTop, sliderThumbs) {
+    addSlides: function (controls) {
         return function () {
-            var preview = jQuery('.all-photos-gallery-preview');
-            console.log('addSlides');
+            var set = jQuery(this).data('set');
+            var photosGroup = jQuery(".all-photos-gallery .card[data-set=" + set + "]");
+            console.log(' photosGroup ');
+            console.log(photosGroup);
+            // Show Review Photos Slider
+            controls.allSectionEl.hide();
+            controls.sliderSectionEl.show();
 
-            sliderTop.removeAllSlides();
-            sliderThumbs.removeAllSlides();
+            // Remove Previous Slides
+            controls.sliderTop.removeAllSlides();
+            controls.sliderThumbs.removeAllSlides();
 
-            var images = preview.find('.image');
-            for (var index = 0; index < images.length; index++) {
-                var sliderHtml = '<div class="photos-review__slide swiper-slide">' + images[index].innerHTML + '</div>';
-                sliderTop.addSlide(index, sliderHtml);
-                sliderThumbs.addSlide(index, sliderHtml);
+            // var images = preview.find('.image');
+            for (var index = 0; index < photosGroup.length; index++) {
+                var sliderHtml = '<div class="photos-review__slide swiper-slide">' + photosGroup[index].innerHTML + '</div>';
+                controls.sliderTop.addSlide(index, sliderHtml);
+                controls.sliderThumbs.addSlide(index, sliderHtml);
             }
         };
     }

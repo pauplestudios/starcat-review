@@ -36,14 +36,34 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
             $html = "<div class='ui dimmer modals photos-review-modal' style='display: none;'>";
             $html .= "<div id='photos-review-modal' class='ui modal' style='display: none;'>";
             $html .= "<i class='circular inverted close icon'></i>";
+
+            // Section 1
             $html .= "<div class='all-photos-section'>";
             $html .= "<div class='ui medium header'><i class='circular expand icon'></i> All User Review Images </div>";
-
             $html .= "<div class='scrolling item-content'>";
             $html .= $this->get_all_photos_gallery($props);
             $html .= '</div>';
-
             $html .= '</div>';
+
+            // Start Section 2
+            $html .= "<div class='slider-section'>";
+            $html .= "<div class='ui medium header'><i class='circular arrow left icon'></i> Back to Gallery </div>";
+
+            // Slider Top
+            $html .= '<div class="scr-photos-review">';
+            $html .= '<div class="photos-review-gallery-top swiper-container">';
+            $html .= '<div class="photos-review-wrapper swiper-wrapper"></div>';
+            $html .= $this->get_navigation_buttons();
+            $html .= '</div>';
+
+            // Slider Thumbs
+            $html .= '<div class="photos-review-gallery-thumbs swiper-container">';
+            $html .= '<div class="photos-review-wrapper swiper-wrapper"></div>';
+            $html .= '</div>';
+            $html .= '</div>';
+
+            $html .= '</div>'; // End Section 2
+
             $html .= "</div>";
             $html .= "</div>";
 
@@ -53,9 +73,9 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
         public function get_all_photos_gallery($props)
         {
             $html = '';
-            $html .= '<div class="ui six doubling cards all-photos-gallery">';
+            $html .= '<div class="ui six doubling link cards all-photos-gallery">';
             foreach ($props['items'] as $key => $image) {
-                $html .= '<div class="card">';
+                $html .= '<div class="card" data-set="' . $props['collection']['from'] . '">';
                 $html .= '<img class="image" src="' . $image . '" />';
                 $html .= '</div>';
             }

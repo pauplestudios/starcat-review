@@ -32,9 +32,9 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Model')) {
             $photos = json_decode($photos_JSON, true);
 
             $collection = [
-                'limit' => '15',
+                'limit' => '7',
                 'from' => isset($args['from']) ? $args['from'] : 0,
-                'size' => 'portrait',
+                'size' => 'tiny',
                 'photos' => $photos['photos'],
                 'total_count' => sizeof($photos['photos']),
                 'placeholder_image' => SCR_URL . 'includes/assets/img/square-image.png',
