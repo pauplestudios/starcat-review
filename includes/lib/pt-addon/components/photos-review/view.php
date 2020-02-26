@@ -86,21 +86,33 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
 
         public function get_single_photos($props)
         {
-            $html = '<div class="scr-photos-review">';
-            $html .= '<div class="photos-review-gallery-top swiper-container">';
-            $html .= $this->get_slides('medium', 7);
-            $html .= $this->get_navigation_buttons();
-            // $html .= $this->get_pagination();
-            // $html .= $this->get_scrollbar();
+            $html = '';
+            $html .= '<div class="ui comments">';
+            foreach ($props as $key => $images) {
+                $html .= $this->get_single_comment($key, $images);
+            }
             $html .= '</div>';
 
-            $html .= '<div class="photos-review-gallery-thumbs swiper-container">';
-            $html .= $this->get_slides('small', 7);
+            return $html;
+        }
+
+        protected function get_single_comment($key, $images)
+        {
+            $html = '';
+            $html .= '<div class="comment">';
+            $html .= '<div class="content">';
+            $html .= '<a class="author">' . strtoupper($key) . '</a>';
+            $html .= '<div class="actions">';
+            $html .= '<div class="ui six doubling link cards reivew-photos-slider-preview">';
+            foreach ($images as $image) {
+                $html .= '<div class="card" data-set="' . $key . '">';
+                $html .= '<img class="image" src="' . $image . '" />';
+                $html .= '</div>';
+            }
+            $html .= '</div>';
             $html .= '</div>';
 
-            $html .= '<button class="ui button remove-all-slides"> remove-all-slides </button>';
-            $html .= '<button class="ui button add-slides">add-slides </button>';
-
+            $html .= '</div>';
             $html .= '</div>';
 
             return $html;

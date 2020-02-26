@@ -7,14 +7,20 @@ var selectors = {
     showGallery: ".show-all-photos-gallery",
     gallery: ".all-photos-gallery",
 
+    reviewSlider: ".reivew-photos-slider-preview .card",
+
     modal: "#photos-review-modal",
     modal_deny: "#photos-review-modal .close.icon",
+
+    sliderTop: ".photos-review-gallery-top",
+    sliderThumbs: ".photos-review-gallery-thumbs",
 };
 
 var Gallery = {
     init: function () {
         Modal.init(selectors.modal, selectors.modal_deny);
         this.eventHandler();
+        reviewPhotosPreview.init();
     },
 
     eventHandler: function () {
@@ -33,6 +39,7 @@ var Gallery = {
             firedGalleryEvents = true;
             thisModule.addRestOfTheGalleryPhotos();
         });
+
     },
 
 
@@ -100,8 +107,51 @@ var Gallery = {
         html += '</div>';
         return html;
     }
-
-
 };
 
+
+var reviewPhotosPreview = {
+    init: function () {
+
+        var sliderTop = document.querySelector(selectors.sliderTop).swiper;
+        var sliderThumbs = document.querySelector(selectors.sliderThumbs).swiper;
+
+        var controls = {
+            allSectionEl: jQuery('.all-photos-section'),
+            sliderSectionEl: jQuery('.slider-section'),
+            modal: selectors.modal,
+            sliderTop: sliderTop,
+            sliderThumbs: sliderThumbs
+        };
+
+        reviewPhotosPreview.addSlides(controls);
+
+
+        jQuery(selectors.reviewSlider).click(this.addSlides(controls));
+    },
+
+    addSlides: function (controls) {
+        return function () {
+            Modal.show(controls.modal);
+            var set = jQuery(this).data('set');
+            var photosGroup = jQuery(selectors.reviewSlider + "[data-set=" + set + "]");
+
+            // Show Review Photos Slider
+            controls.allSectionEl.hide();
+            controls.sliderSectionEl.show();
+            controls.sliderSectionEl.find('.header').hide();
+
+            // Remove Previous Slides
+            controls.sliderTop.removeAllSlides();
+            controls.sliderThumbs.removeAllSlides();
+
+            // var images = preview.find('.image');
+            for (var index = 0; index < photosGroup.length; index++) {
+                var sliderHtml = '<div class="photos-review__slide swiper-slide">' + photosGroup[index].innerHTML + '</div>';
+                controls.sliderTop.addSlide(index, sliderHtml);
+                controls.sliderThumbs.addSlide(index, sliderHtml);
+            }
+        };
+    }
+}
 module.exports = Gallery;
