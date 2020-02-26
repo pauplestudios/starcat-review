@@ -32,6 +32,8 @@ var Gallery = {
 
         jQuery(selectors.showGallery).click(function () {
             Modal.show(selectors.modal);
+            jQuery('.all-photos-section').show();
+            jQuery('.slider-section').hide();
 
             // Trigger only once Gallery events because we attach rest of the request into reponse of ajax request
             if (firedGalleryEvents)
