@@ -19,15 +19,15 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
                 $html .= '<div class="ui image">';
                 $html .= '<img src="' . $image . '"/>';
                 if (($props['collection']['limit'] - 1) == $key) {
-                    $html .= '<span class="show-all-photos-gallery" data-limit="'.$props['collection']['limit'].'" data-shown-count="' . $props['collection']['limit'] . '" data-total-count="' . $props['collection']['total_count'] . '">+ ' . $props['collection']['total_count'] . '</span>';
+                    $html .= '<span class="show-all-photos-gallery" data-limit="' . $props['collection']['limit'] . '" data-shown-count="' . $props['collection']['limit'] . '" data-total-count="' . $props['collection']['total_count'] . '">+ ' . $props['collection']['total_count'] . '</span>';
                 }
                 $html .= '</div>';
-            }            
+            }
             $html .= '</div>';
             $html .= $this->get_modal($props);
 
             return $html;
-        }        
+        }
 
         public function get_modal($props)
         {
@@ -39,7 +39,7 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
             $html .= "<div class='all-photos-section'>";
             $html .= "<div class='ui medium header'><i class='circular expand icon'></i> All User Review Images </div>";
 
-            $html .= "<div class='scrolling content item-content'>";
+            $html .= "<div class='scrolling item-content'>";
             $html .= $this->get_all_photos_gallery($props);
             $html .= '</div>';
 
@@ -56,22 +56,10 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
             $html .= '<div class="ui six doubling cards all-photos-gallery">';
             foreach ($props['items'] as $key => $image) {
                 $html .= '<div class="card">';
-                $html .= '<img class="ui medium circular image" src="' . $props['collection']['placeholder_image'] . '" data-src="' . $image . '" />';
+                $html .= '<img class="image" src="' . $image . '" />';
                 $html .= '</div>';
             }
-            // $html .= $this->get_image_placeholder();
             $html .= '</div>';
-
-            return $html;
-        }
-
-        protected function get_image_placeholder(){
-            
-            $html = '<div class="card">';            
-            $html .= '<div class="ui placeholder">';
-            $html .= '<div class="image"></div>';            
-            $html .= '</div>';   
-            $html .= '</div>';            
 
             return $html;
         }

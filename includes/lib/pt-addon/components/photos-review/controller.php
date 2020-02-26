@@ -19,6 +19,8 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Controller')) {
         {
             add_filter('scr_photos_review/get_all_photos', [$this, 'get_all_photos']);
             add_filter('scr_photos_review/get_single_photos', [$this, 'get_single_photos']);
+
+            add_filter('scr_photos_review/ajax', [$this, 'get_ajax_response']);
         }
 
         public function get_all_photos($args)
@@ -31,6 +33,12 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Controller')) {
         {
             $props = $this->model->get_single_photos_viewProps($args);
             return $this->view->get_single_photos($props);
+        }
+
+        public function get_ajax_response($request)
+        {
+            $response = $this->model->get_all_photos_viewProps($request);
+            return $response['items'];
         }
 
     } // END CLASS

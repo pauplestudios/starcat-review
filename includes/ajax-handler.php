@@ -39,13 +39,15 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
             add_action('wp_ajax_scr_user_review_vote', [$this, 'vote_handler']);
 
             //Aajax for Photos Review
-            add_action('wp_ajax_nopriv_scr_phtos_review', [$this, 'get_photos_review']);
-            add_action('wp_ajax_scr_phtos_review', [$this, 'get_photos_review']);
+            add_action('wp_ajax_nopriv_scr_phtos_review', [$this, 'photos_review']);
+            add_action('wp_ajax_scr_phtos_review', [$this, 'photos_review']);
         }
 
-        public function get_photos_review()
+        public function photos_review()
         {
-
+            $response = apply_filters('scr_photos_review/ajax', $_POST);
+            echo json_encode($response);
+            wp_die();
         }
 
         public function scr_listing_action()

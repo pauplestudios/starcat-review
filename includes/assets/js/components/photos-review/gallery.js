@@ -1,4 +1,6 @@
 var Modal = require("./modal.js");
+var firedGalleryEvents = false;
+
 var selectors = {
     preview: ".all-photos-gallery-preview",
     showGallery: ".show-all-photos-gallery",
@@ -23,55 +25,74 @@ var Gallery = {
 
         jQuery(selectors.showGallery).click(function () {
             Modal.show(selectors.modal);
-            jQuery('.all-photos-gallery .card img.image')
-                .visibility({
-                    type: 'image',
-                    transition: 'fade in',
-                    duration: 3000
-                });
 
-                thisModule.makePlaceholder();
-            // console.log("Show PHotos reviews Modal");
-        });
-
-        data = {
-            action: "get_all_photos"
-        };
-
-        jQuery(selectors.modal + ' .scrolling.content').scroll(function () {
-            if (this.offsetHeight + this.scrollTop == this.scrollHeight) {
-                // jQuery.post(scr_ajax.ajax_url, data, function () {
-
-                // });
-            }
+            // Trigger only once Gallery events because we attach rest of the request into reponse of ajax request
+            if (firedGalleryEvents)
+                return;
+            firedGalleryEvents = true;
+            thisModule.addRestOfTheGalleryPhotos();
         });
     },
-    makePlaceholder: function(){
-        var shownElement = jQuery(selectors.showGallery);
+
+
+    addRestOfTheGalleryPhotos: function () {
+        var thisModule = this;
+        var shownGallery = jQuery(selectors.showGallery);
         var gallery = jQuery(selectors.gallery);
 
-        var limit = shownElement.data("limit");
-        var shownCount = shownElement.data("shown-count");
-        var totalCount = shownElement.data("total-count");
+        var limit = shownGallery.data("limit");
+        var shownCount = shownGallery.data("shown-count");
+        var totalCount = shownGallery.data("total-count");
 
-        console.log('Shown Count : ' + shownCount);
-        console.log('Total Count : ' + totalCount);
-        console.log('limit : ' + limit);
-        var cardHTML = '';
-        for (var index = 0; index < limit; index++) {
-            cardHTML += this.cardPlaceholderHtml();
-            
+        var data = {
+            action: "scr_phtos_review",
+            limit: limit,
+            from: shownCount
+        };
+
+        if (shownCount !== totalCount) {
+            gallery.append(this.getCardPlaceholderHTML(data));
+
+            jQuery.post(scr_ajax.ajax_url, data, function (results) {
+                results = JSON.parse(results);
+                thisModule.updateImageFromPlaceholder(results);
+                thisModule.addRestOfTheGalleryPhotos();
+            });
         }
-        gallery.append(cardHTML);
+
 
     },
 
-    cardPlaceholderHtml: function(){
-        var html = '<div class="card">';            
-            html += '<div class="ui placeholder">';
-            html += '<div class="image"></div>';            
-            html += '</div>';   
-            html += '</div>';  
+    updateImageFromPlaceholder: function (images) {
+        var gallery = jQuery(selectors.gallery);
+        var shownGallery = jQuery(selectors.showGallery);
+        var cardPlaceholder = gallery.find(".card-placeholder");
+        var shownCount = shownGallery.data("shown-count");
+
+        for (var index = 0; index < images.length; index++) {
+            var card = jQuery(cardPlaceholder[index]);
+            card.removeClass('card-placeholder');
+            card.html("<img class='image' src='" + images[index] + "' />");
+        }
+
+        shownGallery.data("shown-count", shownCount + images.length);
+    },
+
+    getCardPlaceholderHTML: function (data) {
+
+        var cardHTML = '';
+        for (var index = 0; index < data.limit; index++) {
+            cardHTML += this.cardPlaceholderHtml();
+        }
+        return cardHTML;
+    },
+
+    cardPlaceholderHtml: function () {
+        var html = '<div class="card card-placeholder">';
+        html += '<div class="ui placeholder">';
+        html += '<div class="square image"></div>';
+        html += '</div>';
+        html += '</div>';
         return html;
     }
 

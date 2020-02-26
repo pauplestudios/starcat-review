@@ -11,14 +11,12 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Model')) {
     {
         public function get_all_photos_viewProps($args)
         {
-            $photos_JSON = file_get_contents(SCR_PT_PATH . 'includes/utils/photos.json');
-            $photos = json_decode($photos_JSON, true);
-
-            $collection = $this->get_collection($photos);
+            $collection = $this->get_collection($args);
             $viewProps = [
                 'collection' => $collection,
                 'items' => $this->get_items($collection),
             ];
+            // error_log('viewprops[items] : ' . print_r($this->get_items($collection), true));
 
             return $viewProps;
         }
@@ -30,11 +28,15 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Model')) {
 
         protected function get_collection($args)
         {
+            $photos_JSON = file_get_contents(SCR_PT_PATH . 'includes/utils/photos.json');
+            $photos = json_decode($photos_JSON, true);
+
             $collection = [
                 'limit' => '8',
+                'from' => isset($args['from']) ? $args['from'] : 0,
                 'size' => 'portrait',
-                'photos' => $args['photos'],
-                'total_count' => sizeof($args['photos']),
+                'photos' => $photos['photos'],
+                'total_count' => sizeof($photos['photos']),
                 'placeholder_image' => SCR_URL . 'includes/assets/img/square-image.png',
             ];
 
@@ -45,9 +47,9 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Model')) {
         {
             $items = [];
 
-            for ($i = 0; $i < sizeof($collection['photos']); $i++) {
+            for ($i = $collection['from']; $i < sizeof($collection['photos']); $i++) {
 
-                if ($i == $collection['limit']) {
+                if (($i % $collection['limit'] === 0) && ($i !== $collection['from'])) {
                     break;
                 }
 
