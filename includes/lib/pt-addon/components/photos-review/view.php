@@ -47,7 +47,7 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
 
             // Start Section 2
             $html .= "<div class='slider-section'>";
-            $html .= "<div class='ui medium header'><i class='circular arrow left icon'></i> Back to Gallery </div>";
+            $html .= "<div class='ui small header'><i class='circular arrow left icon'></i> Back to Gallery </div>";
 
             // Slider Top
             $html .= '<div class="scr-photos-review">';
