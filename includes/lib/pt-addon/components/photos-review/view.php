@@ -78,6 +78,9 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
             $html .= $this->get_slides('small', 7);
             $html .= '</div>';
 
+            $html .= '<button class="ui button remove-all-slides"> remove-all-slides </button>';
+            $html .= '<button class="ui button add-slides">add-slides </button>';
+
             $html .= '</div>';
 
             return $html;

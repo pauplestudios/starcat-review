@@ -9,7 +9,7 @@ var selectors = {
     btnNext: ".photos-review__button-next",
 };
 
-var PhotosReview = {
+var Slider = {
     init: function () {
         this.eventHandler();
     },
@@ -19,6 +19,7 @@ var PhotosReview = {
     },
 
     initSwiperSlider: function () {
+        var thisModule = this;
 
         var sliderThumbsArgs = {
             spaceBetween: 10,
@@ -48,9 +49,35 @@ var PhotosReview = {
             },
         };
 
-        new Swiper(selectors.sliderTop, sliderTopArgs);
+        var sliderTop = new Swiper(selectors.sliderTop, sliderTopArgs);
+        jQuery('.remove-all-slides').click(thisModule.removeSlides(sliderTop, sliderThumbs));
+        jQuery('.add-slides').click(thisModule.addSlides(sliderTop, sliderThumbs));
     },
+
+    removeSlides: function (sliderTop, sliderThumbs) {
+        return function () {
+            sliderTop.removeAllSlides();
+            sliderThumbs.removeAllSlides();
+        };
+    },
+
+    addSlides: function (sliderTop, sliderThumbs) {
+        return function () {
+            var preview = jQuery('.all-photos-gallery-preview');
+            console.log('addSlides');
+
+            sliderTop.removeAllSlides();
+            sliderThumbs.removeAllSlides();
+
+            var images = preview.find('.image');
+            for (var index = 0; index < images.length; index++) {
+                var sliderHtml = '<div class="photos-review__slide swiper-slide">' + images[index].innerHTML + '</div>';
+                sliderTop.addSlide(index, sliderHtml);
+                sliderThumbs.addSlide(index, sliderHtml);
+            }
+        };
+    }
 
 };
 
-module.exports = PhotosReview;
+module.exports = Slider;

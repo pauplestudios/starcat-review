@@ -32,7 +32,7 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Model')) {
             $photos = json_decode($photos_JSON, true);
 
             $collection = [
-                'limit' => '8',
+                'limit' => '15',
                 'from' => isset($args['from']) ? $args['from'] : 0,
                 'size' => 'portrait',
                 'photos' => $photos['photos'],

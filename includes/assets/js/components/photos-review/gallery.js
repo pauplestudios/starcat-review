@@ -47,7 +47,9 @@ var Gallery = {
         var data = {
             action: "scr_phtos_review",
             limit: limit,
-            from: shownCount
+            from: shownCount,
+            shownCount: shownCount,
+            totalCount: totalCount,
         };
 
         if (shownCount !== totalCount) {
@@ -79,9 +81,10 @@ var Gallery = {
     },
 
     getCardPlaceholderHTML: function (data) {
-
+        var sum = data.totalCount - data.shownCount;
+        var loopLimit = (sum >= data.limit) ? data.limit : sum;
         var cardHTML = '';
-        for (var index = 0; index < data.limit; index++) {
+        for (var index = 0; index < loopLimit; index++) {
             cardHTML += this.cardPlaceholderHtml();
         }
         return cardHTML;
