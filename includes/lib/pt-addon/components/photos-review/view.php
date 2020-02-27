@@ -61,7 +61,7 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
 
             // Section 1
             $html .= "<div class='gallery-section'>";
-            $html .= "<div class='ui medium header'><i class='circular expand icon'></i> All User Review Images </div>";
+            $html .= "<div class='ui small header'><i class='circular expand icon'></i> All User Review Images </div>";
             $html .= "<div class='scrolling item-content'>";
             $html .= $this->get_photos_gallery($props);
             $html .= '</div>';

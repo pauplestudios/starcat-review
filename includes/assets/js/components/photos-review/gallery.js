@@ -7,25 +7,33 @@ var selectors = {
     showGallery: ".show-gallery",
     gallery: ".photos-gallery",
 
-    galleryPhotos: ".photos-gallery .card",
-    reviewPhotos: ".review-photos .card",
+    singleGalleryPhotos: ".photos-gallery .card",
+    singleReviewPhotos: ".review-photos .card",
 
     modal: "#photos-review-modal",
-    modal_deny: "#photos-review-modal .close.icon",
+    modalClose: "#photos-review-modal .close.icon",
 
     sliderTop: ".photos-review-slider-top",
     sliderThumbs: ".photos-review-slider-thumbs",
+
+    gallerySection: ".gallery-section",
+    sliderSection: ".slider-section",
+
+    goBackToGallery: ".slider-section .header .arrow.left"
 };
 
 var Gallery = {
     init: function () {
-        Modal.init(selectors.modal, selectors.modal_deny);
         this.eventHandler();
-        reviewPhotosPreview.init();
     },
 
     eventHandler: function () {
         this.showGallery();
+        this.goBackToGallery();
+        this.onGalleryPhotosClick();
+        this.onReviewPhotosClick();
+
+        Modal.init(selectors.modal, selectors.modalClose);
     },
 
     showGallery: function () {
@@ -33,8 +41,8 @@ var Gallery = {
 
         jQuery(selectors.showGallery).click(function () {
             Modal.show(selectors.modal);
-            jQuery('.gallery-section').show();
-            jQuery('.slider-section').hide().find('.header').show();
+            jQuery(selectors.gallerySection).show();
+            jQuery(selectors.sliderSection).hide().find('.header').show();
 
             // Trigger once Gallery events because we attach the rest of the ajax request after succsessful response 
             if (triggerOnce)
@@ -46,6 +54,12 @@ var Gallery = {
 
     },
 
+    goBackToGallery: function () {
+        jQuery(selectors.goBackToGallery).click(function () {
+            jQuery(selectors.gallerySection).show();
+            jQuery(selectors.sliderSection).hide();
+        });
+    },
 
     addRestOfThePhotos: function () {
         var thisModule = this;
@@ -65,20 +79,48 @@ var Gallery = {
         };
 
         if (shownCount !== totalCount) {
-            gallery.append(this.getCardPlaceholderHTML(data));
+            var placeholdersHTML = this.getCardPlaceholders(data);
+            gallery.append(placeholdersHTML);
 
             jQuery.post(scr_ajax.ajax_url, data, function (results) {
                 results = JSON.parse(results);
-                thisModule.updateImageFromPlaceholder(results);
+                thisModule.setImagesFromPlaceholder(results);
                 thisModule.addRestOfThePhotos();
-                Slider.refreshSlider();
+                thisModule.onGalleryPhotosClick();
             });
         }
-
-
     },
 
-    updateImageFromPlaceholder: function (images) {
+    onGalleryPhotosClick: function () {
+        var singleGalleryPhotos = jQuery(selectors.singleGalleryPhotos);
+        singleGalleryPhotos.unbind();
+
+        singleGalleryPhotos.click(function () {
+            var currentPhotosGroup = jQuery(this).data('set');
+            var group = jQuery(selectors.singleGalleryPhotos + "[data-set=" + currentPhotosGroup + "]");
+
+            jQuery(selectors.gallerySection).hide();
+            jQuery(selectors.sliderSection).show();
+            Slider.addSlideControls(group);
+        });
+    },
+
+    onReviewPhotosClick: function () {
+        var singleReviewPhotos = jQuery(selectors.singleReviewPhotos);
+        singleReviewPhotos.unbind();
+
+        singleReviewPhotos.click(function () {
+            var currentPhotosGroup = jQuery(this).data('set');
+            var group = jQuery(selectors.singleReviewPhotos + "[data-set=" + currentPhotosGroup + "]");
+
+            Modal.show(selectors.modal);
+            jQuery(selectors.gallerySection).hide();
+            jQuery(selectors.sliderSection).show().find('.header').hide();
+            Slider.addSlideControls(group);
+        });
+    },
+
+    setImagesFromPlaceholder: function (images) {
         var gallery = jQuery(selectors.gallery);
         var shownGallery = jQuery(selectors.showGallery);
         var cardPlaceholder = gallery.find(".card-placeholder");
@@ -93,17 +135,17 @@ var Gallery = {
         shownGallery.data("shown-count", shownCount + images.length);
     },
 
-    getCardPlaceholderHTML: function (data) {
+    getCardPlaceholders: function (data) {
         var sum = data.totalCount - data.shownCount;
         var loopLimit = (sum >= data.limit) ? data.limit : sum;
         var cardHTML = '';
         for (var index = 0; index < loopLimit; index++) {
-            cardHTML += this.cardPlaceholderHtml(data);
+            cardHTML += this.getCardPlaceholderHtml(data);
         }
         return cardHTML;
     },
 
-    cardPlaceholderHtml: function (data) {
+    getCardPlaceholderHtml: function (data) {
         var html = '<div class="card card-placeholder" data-set="' + data.shownCount + '">';
         html += '<div class="ui placeholder">';
         html += '<div class="square image"></div>';
@@ -114,48 +156,4 @@ var Gallery = {
 };
 
 
-var reviewPhotosPreview = {
-    init: function () {
-
-        var sliderTop = document.querySelector(selectors.sliderTop).swiper;
-        var sliderThumbs = document.querySelector(selectors.sliderThumbs).swiper;
-
-        var controls = {
-            allSectionEl: jQuery('.gallery-section'),
-            sliderSectionEl: jQuery('.slider-section'),
-            modal: selectors.modal,
-            sliderTop: sliderTop,
-            sliderThumbs: sliderThumbs
-        };
-
-        reviewPhotosPreview.addSlides(controls);
-
-
-        jQuery(selectors.reviewPhotos).click(this.addSlides(controls));
-    },
-
-    addSlides: function (controls) {
-        return function () {
-            Modal.show(controls.modal);
-            var set = jQuery(this).data('set');
-            var photosGroup = jQuery(selectors.reviewPhotos + "[data-set=" + set + "]");
-
-            // Show Review Photos Slider
-            controls.allSectionEl.hide();
-            controls.sliderSectionEl.show();
-            controls.sliderSectionEl.find('.header').hide();
-
-            // Remove Previous Slides
-            controls.sliderTop.removeAllSlides();
-            controls.sliderThumbs.removeAllSlides();
-
-            // var images = preview.find('.image');
-            for (var index = 0; index < photosGroup.length; index++) {
-                var sliderHtml = '<div class="photos-review__slide swiper-slide">' + photosGroup[index].innerHTML + '</div>';
-                controls.sliderTop.addSlide(index, sliderHtml);
-                controls.sliderThumbs.addSlide(index, sliderHtml);
-            }
-        };
-    }
-}
 module.exports = Gallery;

@@ -11,10 +11,10 @@ var selectors = {
 
 var Slider = {
     init: function () {
-        this.initSlider();
+        this.initSwiperSliders();
     },
 
-    initSlider: function () {
+    initSwiperSliders: function () {
 
         var sliderThumbsArgs = {
             spaceBetween: 10,
@@ -44,58 +44,29 @@ var Slider = {
             },
         };
 
-        var sliderTop = new Swiper(selectors.sliderTop, sliderTopArgs);
-
-        jQuery('.gallery-section').show();
-        jQuery('.slider-section').hide();
-
-        this.galleryEvents(sliderTop, sliderThumbs);
+        new Swiper(selectors.sliderTop, sliderTopArgs);
     },
 
-    refreshSlider: function () {
-        var sliderTop = document.querySelector(selectors.sliderTop).swiper;
-        var sliderThumbs = document.querySelector(selectors.sliderThumbs).swiper;
-
-        Slider.galleryEvents(sliderTop, sliderThumbs);
-    },
-
-    galleryEvents: function (sliderTop, sliderThumbs) {
-
+    addSlideControls: function (slidesGroup) {
         var controls = {
-            allSectionEl: jQuery('.gallery-section'),
-            sliderSectionEl: jQuery('.slider-section'),
-            sliderTop: sliderTop,
-            sliderThumbs: sliderThumbs
+            slidesGroup: slidesGroup,
+            sliderTop: document.querySelector(selectors.sliderTop).swiper,
+            sliderThumbs: document.querySelector(selectors.sliderThumbs).swiper,
         };
 
-        jQuery('.photos-gallery .card').click(this.addSlides(controls));
-
-        jQuery('.slider-section .header .arrow.left').click(function () {
-            controls.allSectionEl.show();
-            controls.sliderSectionEl.hide();
-        });
+        Slider.addSlides(controls);
     },
 
     addSlides: function (controls) {
-        return function () {
-            var set = jQuery(this).data('set');
-            var photosGroup = jQuery(".photos-gallery .card[data-set=" + set + "]");
 
-            // Show Review Photos Slider
-            controls.allSectionEl.hide();
-            controls.sliderSectionEl.show();
+        controls.sliderTop.removeAllSlides();
+        controls.sliderThumbs.removeAllSlides();
 
-            // Remove Previous Slides
-            controls.sliderTop.removeAllSlides();
-            controls.sliderThumbs.removeAllSlides();
-
-            // var images = preview.find('.image');
-            for (var index = 0; index < photosGroup.length; index++) {
-                var sliderHtml = '<div class="photos-review__slide swiper-slide">' + photosGroup[index].innerHTML + '</div>';
-                controls.sliderTop.addSlide(index, sliderHtml);
-                controls.sliderThumbs.addSlide(index, sliderHtml);
-            }
-        };
+        for (var index = 0; index < controls.slidesGroup.length; index++) {
+            var sliderHtml = '<div class="photos-review__slide swiper-slide">' + controls.slidesGroup[index].innerHTML + '</div>';
+            controls.sliderTop.addSlide(index, sliderHtml);
+            controls.sliderThumbs.addSlide(index, sliderHtml);
+        }
     }
 
 };
