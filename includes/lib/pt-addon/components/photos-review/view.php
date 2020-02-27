@@ -12,10 +12,10 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
         public function get_all_photos($props)
         {
             $html = '';
-            $html .= '<div class="gallery-preview ui tiny images">';
+            $html .= '<div class="photos-gallery-preview ui tiny images">';
 
             foreach ($props['items'] as $key => $image) {
-                $html .= '<div class="ui image">';
+                $html .= '<div class="ui image" data-set="' . $props['collection']['from'] . '">';
                 $html .= '<img src="' . $image . '"/>';
                 if (($props['collection']['limit'] - 1) == $key) {
                     $html .= $this->get_clickable_image_box($props);

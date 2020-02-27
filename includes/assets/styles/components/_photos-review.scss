@@ -2,10 +2,11 @@
 @import "../../node_modules/swiper/css/swiper.css";
 
 // All User Uploaded Photos 
-.gallery-preview.ui.tiny.images .image {
+.photos-gallery-preview.ui.tiny.images .image {
     height: 89px;
     width: 89px;    
-    
+    cursor: pointer;
+
     & img{             
         height: 89px;
         width: 89px;
@@ -27,6 +28,7 @@
         color: #f0f0f0;
         font-size: 18px;
         font-weight: 500; 
+        z-index: 1;
         
         &:hover{
             opacity: 1;
