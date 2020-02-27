@@ -57,7 +57,7 @@ var Slider = {
         // sliderThumbs.update();
         // }, 5000);
 
-        jQuery('.all-photos-section').show();
+        jQuery('.gallery-section').show();
         jQuery('.slider-section').hide();
 
         thisModule.galleryEvents(sliderTop, sliderThumbs);
@@ -73,13 +73,13 @@ var Slider = {
     galleryEvents: function (sliderTop, sliderThumbs) {
 
         var controls = {
-            allSectionEl: jQuery('.all-photos-section'),
+            allSectionEl: jQuery('.gallery-section'),
             sliderSectionEl: jQuery('.slider-section'),
             sliderTop: sliderTop,
             sliderThumbs: sliderThumbs
         };
 
-        jQuery('.all-photos-gallery .card').click(this.addSlides(controls));
+        jQuery('.photos-gallery .card').click(this.addSlides(controls));
 
         jQuery('.slider-section .header .arrow.left').click(function () {
             controls.allSectionEl.show();
@@ -97,7 +97,7 @@ var Slider = {
     addSlides: function (controls) {
         return function () {
             var set = jQuery(this).data('set');
-            var photosGroup = jQuery(".all-photos-gallery .card[data-set=" + set + "]");
+            var photosGroup = jQuery(".photos-gallery .card[data-set=" + set + "]");
             console.log(' photosGroup ');
             console.log(photosGroup);
             // Show Review Photos Slider

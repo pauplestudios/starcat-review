@@ -2,7 +2,7 @@
 @import "../../node_modules/swiper/css/swiper.css";
 
 // All User Uploaded Photos 
-.all-photos-gallery-preview.ui.tiny.images .image {
+.gallery-preview.ui.tiny.images .image {
     height: 89px;
     width: 89px;    
     
@@ -12,7 +12,7 @@
         object-fit: cover;
     }
 
-    & span.show-all-photos-gallery{
+    & span.show-gallery{
         cursor: pointer;
         position: absolute;
         display: flex;
@@ -107,6 +107,11 @@
 .ui.dimmer.photos-review-modal{
     background-color: rgba(0,0,0,.6);
     position: fixed;
+    
+    & .close.icon{
+        z-index: 2;
+    }
+
     & .header{
         padding: .5em 1em;
         margin: 0;

@@ -3,11 +3,11 @@ var Slider = require("./slider.js");
 var firedGalleryEvents = false;
 
 var selectors = {
-    preview: ".all-photos-gallery-preview",
-    showGallery: ".show-all-photos-gallery",
-    gallery: ".all-photos-gallery",
+    preview: ".gallery-preview",
+    showGallery: ".show-gallery",
+    gallery: ".photos-gallery",
 
-    reviewSlider: ".reivew-photos-slider-preview .card",
+    reviewSlider: ".reivew-photos-preview .card",
 
     modal: "#photos-review-modal",
     modal_deny: "#photos-review-modal .close.icon",
@@ -32,7 +32,7 @@ var Gallery = {
 
         jQuery(selectors.showGallery).click(function () {
             Modal.show(selectors.modal);
-            jQuery('.all-photos-section').show();
+            jQuery('.gallery-section').show();
             jQuery('.slider-section').hide().find('.header').show();
 
             // Trigger once Gallery events because we attach rest of the request into reponse of ajax succsessful response after
@@ -119,7 +119,7 @@ var reviewPhotosPreview = {
         var sliderThumbs = document.querySelector(selectors.sliderThumbs).swiper;
 
         var controls = {
-            allSectionEl: jQuery('.all-photos-section'),
+            allSectionEl: jQuery('.gallery-section'),
             sliderSectionEl: jQuery('.slider-section'),
             modal: selectors.modal,
             sliderTop: sliderTop,
