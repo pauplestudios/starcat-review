@@ -16,14 +16,13 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Model')) {
                 'collection' => $collection,
                 'items' => $this->get_items($collection),
             ];
-            // error_log('viewprops[items] : ' . print_r($this->get_items($collection), true));
 
             return $viewProps;
         }
 
         public function get_single_photos_viewProps($args)
         {
-            $photos_JSON = file_get_contents(SCR_PATH . 'includes/utils/photos.json');
+            $photos_JSON = file_get_contents(SCR_PT_PATH . 'includes/utils/photos.json');
             $photos = json_decode($photos_JSON, true);
 
             $props = ['a' => [], 'b' => [], 'c' => [], 'd' => []];

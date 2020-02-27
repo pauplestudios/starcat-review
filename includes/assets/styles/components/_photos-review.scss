@@ -54,8 +54,7 @@
                 box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
             }
         }
-        & .photos-review__slide-active:after, 
-        // .swiper-slide-active:after,
+        & .photos-review__slide-active:after,         
         .swiper-slide-thumb-active:after{        
             content: '';
             display: block;
@@ -131,14 +130,5 @@
     & .placeholder{
         height: 100%;
     }
-
-    // & .all-photos-gallery-preview-gallery{
-    //     box-sizing: border-box;
-    //     max-height: 600px;        
-    //     margin: -10px;
-    //     position: relative;        
-    //     overflow: hidden;
-    //     overflow-y: auto;
-    // }
 }
 

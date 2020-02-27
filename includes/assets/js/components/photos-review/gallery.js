@@ -33,9 +33,9 @@ var Gallery = {
         jQuery(selectors.showGallery).click(function () {
             Modal.show(selectors.modal);
             jQuery('.all-photos-section').show();
-            jQuery('.slider-section').hide();
+            jQuery('.slider-section').hide().find('.header').show();
 
-            // Trigger only once Gallery events because we attach rest of the request into reponse of ajax request
+            // Trigger once Gallery events because we attach rest of the request into reponse of ajax succsessful response after
             if (firedGalleryEvents)
                 return;
             firedGalleryEvents = true;

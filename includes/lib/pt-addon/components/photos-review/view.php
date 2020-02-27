@@ -11,7 +11,6 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
     {
         public function get_all_photos($props)
         {
-
             $html = '';
             $html .= '<div class="all-photos-gallery-preview ui tiny images">';
 
@@ -19,7 +18,7 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
                 $html .= '<div class="ui image">';
                 $html .= '<img src="' . $image . '"/>';
                 if (($props['collection']['limit'] - 1) == $key) {
-                    $html .= '<span class="show-all-photos-gallery" data-limit="' . $props['collection']['limit'] . '" data-shown-count="' . $props['collection']['limit'] . '" data-total-count="' . $props['collection']['total_count'] . '">+ ' . $props['collection']['total_count'] . '</span>';
+                    $html .= $this->get_clickable_image_box($props);
                 }
                 $html .= '</div>';
             }
@@ -29,9 +28,32 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
             return $html;
         }
 
-        public function get_modal($props)
+        public function get_single_photos($props)
         {
-            $html = '';
+            $html = '<div class="ui comments">';
+            foreach ($props as $key => $images) {
+                $html .= $this->get_single_comment($key, $images);
+            }
+            $html .= '</div>';
+
+            return $html;
+        }
+
+        protected function get_clickable_image_box($props)
+        {
+            $html = '<span ';
+            $html .= 'class="show-all-photos-gallery" ';
+            $html .= 'data-limit="' . $props['collection']['limit'] . '" ';
+            $html .= 'data-shown-count="' . $props['collection']['limit'] . '" ';
+            $html .= 'data-total-count="' . $props['collection']['total_count'] . '">+ ';
+            $html .= $props['collection']['total_count'];
+            $html .= '</span>';
+
+            return $html;
+        }
+
+        protected function get_modal($props)
+        {
 
             $html = "<div class='ui dimmer modals photos-review-modal' style='display: none;'>";
             $html .= "<div id='photos-review-modal' class='ui modal' style='display: none;'>";
@@ -70,36 +92,9 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
             return $html;
         }
 
-        public function get_all_photos_gallery($props)
-        {
-            $html = '';
-            $html .= '<div class="ui six doubling link cards all-photos-gallery">';
-            foreach ($props['items'] as $key => $image) {
-                $html .= '<div class="card" data-set="' . $props['collection']['from'] . '">';
-                $html .= '<img class="image" src="' . $image . '" />';
-                $html .= '</div>';
-            }
-            $html .= '</div>';
-
-            return $html;
-        }
-
-        public function get_single_photos($props)
-        {
-            $html = '';
-            $html .= '<div class="ui comments">';
-            foreach ($props as $key => $images) {
-                $html .= $this->get_single_comment($key, $images);
-            }
-            $html .= '</div>';
-
-            return $html;
-        }
-
         protected function get_single_comment($key, $images)
         {
-            $html = '';
-            $html .= '<div class="comment">';
+            $html = '<div class="comment">';
             $html .= '<div class="content">';
             $html .= '<a class="author">' . strtoupper($key) . '</a>';
             $html .= '<div class="actions">';
@@ -118,17 +113,35 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
             return $html;
         }
 
+        private function get_all_photos_gallery($props)
+        {
+            $html = '<div class="ui six doubling link cards all-photos-gallery">';
+            foreach ($props['items'] as $key => $image) {
+                $html .= '<div class="card" data-set="' . $props['collection']['from'] . '">';
+                $html .= '<img class="image" src="' . $image . '" />';
+                $html .= '</div>';
+            }
+            $html .= '</div>';
+
+            return $html;
+        }
+
+        private function get_navigation_buttons()
+        {
+            $html = '<div class="photos-review__button-prev"><i class="circular inverted angle left icon"></i></div>';
+            $html .= '<div class="photos-review__button-next"><i class="circular inverted angle right icon"></i></div>';
+
+            return $html;
+        }
+
+        // Below methods all are not used
         protected function get_slides($size, $limit = '')
         {
             // Get the contents of the JSON file
             $photos_JSON = file_get_contents(SCR_PATH . 'includes/utils/photos.json');
-            // Convert to array
             $photos = json_decode($photos_JSON, true);
-            // var_dump($array);
-            // error_log('photos : ' . print_r($photos, true));
 
-            $html = '';
-            $html .= '<div class="photos-review-wrapper swiper-wrapper">';
+            $html = '<div class="photos-review-wrapper swiper-wrapper">';
 
             for ($i = 0; $i < sizeof($photos['photos']); $i++) {
                 if (!empty($limit) && $limit == $i) {
@@ -145,28 +158,13 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
 
         protected function get_pagination()
         {
-            $html = '';
-            $html .= '<div class="photos-review-pagination swiper-pagination"></div>';
-
+            $html = '<div class="photos-review-pagination swiper-pagination"></div>';
             return $html;
         }
 
         protected function get_scrollbar()
         {
-            $html = '';
-            $html .= '<div class="photos-review-scrollbar swiper-scrollbar"></div>';
-            $html .= '</div>';
-
-            return $html;
-        }
-
-        protected function get_navigation_buttons()
-        {
-            $html = '';
-
-            $html .= '<div class="photos-review__button-prev"><i class="circular inverted angle left icon"></i></div>';
-            $html .= '<div class="photos-review__button-next"><i class="circular inverted angle right icon"></i></div>';
-
+            $html = '<div class="photos-review-scrollbar swiper-scrollbar"></div>';
             return $html;
         }
 
