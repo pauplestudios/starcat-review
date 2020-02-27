@@ -36,7 +36,7 @@
 
 .scr-photos-review{    
     // background-color: #333; 
-    & .photos-review-gallery-thumbs{        
+    & .photos-review-slider-thumbs{        
         padding: 10px;
         & .photos-review-wrapper.swiper-wrapper{
             justify-content: center;
@@ -69,7 +69,7 @@
         }       
     }
 
-    & .photos-review-gallery-top {
+    & .photos-review-slider-top {
         padding: 10px;
         & .photos-review__slide.swiper-slide {
             text-align: center;

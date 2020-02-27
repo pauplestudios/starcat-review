@@ -1,8 +1,8 @@
 var Swiper = require('swiper').default;
 
 var selectors = {
-    sliderTop: ".photos-review-gallery-top",
-    sliderThumbs: ".photos-review-gallery-thumbs",
+    sliderTop: ".photos-review-slider-top",
+    sliderThumbs: ".photos-review-slider-thumbs",
 
     // Navigation
     btnPrev: ".photos-review__button-prev",
@@ -11,15 +11,10 @@ var selectors = {
 
 var Slider = {
     init: function () {
-        this.eventHandler();
+        this.initSlider();
     },
 
-    eventHandler: function () {
-        this.initSwiperSlider();
-    },
-
-    initSwiperSlider: function () {
-        var thisModule = this;
+    initSlider: function () {
 
         var sliderThumbsArgs = {
             spaceBetween: 10,
@@ -50,17 +45,11 @@ var Slider = {
         };
 
         var sliderTop = new Swiper(selectors.sliderTop, sliderTopArgs);
-        // jQuery('.remove-all-slides').click(thisModule.removeSlides(sliderTop, sliderThumbs));
-        // jQuery('.add-slides').click(thisModule.addSlides(sliderTop, sliderThumbs));
-        // setTimeout(function (sliderTop, sliderThumbs) {
-        // sliderTop.update();
-        // sliderThumbs.update();
-        // }, 5000);
 
         jQuery('.gallery-section').show();
         jQuery('.slider-section').hide();
 
-        thisModule.galleryEvents(sliderTop, sliderThumbs);
+        this.galleryEvents(sliderTop, sliderThumbs);
     },
 
     refreshSlider: function () {
@@ -87,19 +76,11 @@ var Slider = {
         });
     },
 
-    removeSlides: function (sliderTop, sliderThumbs) {
-        return function () {
-            sliderTop.removeAllSlides();
-            sliderThumbs.removeAllSlides();
-        };
-    },
-
     addSlides: function (controls) {
         return function () {
             var set = jQuery(this).data('set');
             var photosGroup = jQuery(".photos-gallery .card[data-set=" + set + "]");
-            console.log(' photosGroup ');
-            console.log(photosGroup);
+
             // Show Review Photos Slider
             controls.allSectionEl.hide();
             controls.sliderSectionEl.show();

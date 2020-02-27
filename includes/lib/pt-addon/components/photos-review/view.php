@@ -73,13 +73,13 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
 
             // Slider Top
             $html .= '<div class="scr-photos-review">';
-            $html .= '<div class="photos-review-gallery-top swiper-container">';
+            $html .= '<div class="photos-review-slider-top swiper-container">';
             $html .= '<div class="photos-review-wrapper swiper-wrapper"></div>';
             $html .= $this->get_navigation_buttons();
             $html .= '</div>';
 
             // Slider Thumbs
-            $html .= '<div class="photos-review-gallery-thumbs swiper-container">';
+            $html .= '<div class="photos-review-slider-thumbs swiper-container">';
             $html .= '<div class="photos-review-wrapper swiper-wrapper"></div>';
             $html .= '</div>';
             $html .= '</div>';
@@ -98,7 +98,7 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
             $html .= '<div class="content">';
             $html .= '<a class="author">' . strtoupper($key) . '</a>';
             $html .= '<div class="actions">';
-            $html .= '<div class="ui six doubling link cards reivew-photos-preview">';
+            $html .= '<div class="ui six doubling link cards review-photos">';
             foreach ($images as $image) {
                 $html .= '<div class="card" data-set="' . $key . '">';
                 $html .= '<img class="image" src="' . $image . '" />';

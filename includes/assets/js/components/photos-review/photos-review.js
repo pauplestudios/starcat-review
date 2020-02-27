@@ -1,6 +1,6 @@
 
-var Gallery = require("./gallery.js");
 var Slider = require("./slider.js");
+var Gallery = require("./gallery.js");
 
 var PhotosReview = {
     init: function () {
