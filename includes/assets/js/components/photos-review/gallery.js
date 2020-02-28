@@ -31,8 +31,8 @@ var Gallery = {
     eventHandler: function () {
         this.showGallery();
         this.goBackToGallery();
-        this.onReviewPhotosClick();
-        this.onGalleryPhotosClick();
+        // this.onReviewPhotosClick();
+        // this.onGalleryPhotosClick();
         this.onGalleryPhotosPreviewClick();
 
         Modal.init(selectors.modal, selectors.modalClose);
@@ -130,10 +130,16 @@ var Gallery = {
             var currentPhotosGroup = jQuery(this).data('review-id');
             var group = jQuery(selectors.singleGalleryPhotos + "[data-review-id=" + currentPhotosGroup + "]");
 
+            var slides = {
+                prev: group.first().prev().data('review-id'),
+                next: group.last().next().data('review-id'),
+                slides: group
+            };
+
             Modal.show(selectors.modal);
             jQuery(selectors.gallerySection).hide();
             jQuery(selectors.sliderSection).show().find('.header').hide();
-            Slider.addSlideControls(group);
+            Slider.addSlideControls(slides);
         });
     },
 

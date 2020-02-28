@@ -8,12 +8,43 @@ var selectors = {
     btnPrev: ".photos-review__button-prev",
     btnNext: ".photos-review__button-next",
 
-    btnDisable: "swiper-button-disabled"
+    btnDisable: "swiper-button-disabled",
+    galleryPhotos: ".photos-gallery .card"
 };
 
 var Slider = {
     init: function () {
         this.initSwiperSliders();
+        this.goToNextReviewSlides();
+        this.goToPrevReviewSlides();
+    },
+
+    goToNextReviewSlides: function () {
+        jQuery(selectors.btnNext).click(function () {
+            var currentPhotosGroup = jQuery(this).data('review-id');
+            var group = jQuery(selectors.galleryPhotos + "[data-review-id=" + currentPhotosGroup + "]");
+
+            var slides = {
+                prev: group.first().prev().data('review-id'),
+                next: group.last().next().data('review-id'),
+                slides: group
+            };
+            Slider.addSlideControls(slides);
+        });
+    },
+
+    goToPrevReviewSlides: function () {
+        jQuery(selectors.btnPrev).click(function () {
+            var currentPhotosGroup = jQuery(this).data('review-id');
+            var group = jQuery(selectors.galleryPhotos + "[data-review-id=" + currentPhotosGroup + "]");
+
+            var slides = {
+                prev: group.first().prev().data('review-id'),
+                next: group.last().next().data('review-id'),
+                slides: group
+            };
+            Slider.addSlideControls(slides);
+        });
     },
 
     initSwiperSliders: function () {
@@ -49,9 +80,12 @@ var Slider = {
         new Swiper(selectors.sliderTop, sliderTopArgs);
     },
 
-    addSlideControls: function (slidesGroup) {
+    addSlideControls: function (slides) {
         var controls = {
-            slidesGroup: slidesGroup,
+            prev: slides.prev,
+            slides: slides.slides,
+            next: slides.next,
+
             sliderTop: document.querySelector(selectors.sliderTop).swiper,
             sliderThumbs: document.querySelector(selectors.sliderThumbs).swiper,
         };
@@ -61,36 +95,60 @@ var Slider = {
 
     addSlides: function (controls) {
 
+
         controls.sliderTop.removeAllSlides();
         controls.sliderThumbs.removeAllSlides();
 
-        for (var index = 0; index < controls.slidesGroup.length; index++) {
-            var sliderHtml = '<div class="photos-review__slide swiper-slide">' + controls.slidesGroup[index].innerHTML + '</div>';
+        for (var index = 0; index < controls.slides.length; index++) {
+            var sliderHtml = '<div class="photos-review__slide swiper-slide">' + controls.slides[index].innerHTML + '</div>';
             controls.sliderTop.addSlide(index, sliderHtml);
             controls.sliderThumbs.addSlide(index, sliderHtml);
         }
 
-        controls.sliderTop.on("reachBeginning", function () {
-            console.log("reachBeginning");
-            var btnPrev = jQuery(selectors.btnPrev);
-            btnPrev.find("i").addClass("double");
-            btnPrev.attr("title", "Previous Review");
+        var btnPrev = jQuery(selectors.btnPrev);
+        var btnNext = jQuery(selectors.btnNext);
 
-            setTimeout(function () {
-                btnPrev.removeClass(selectors.btnDisable);
-            }, 5);
+        if (controls.prev) {
+            console.log(controls.prev);
+            controls.sliderTop.on("reachBeginning", function () {
+                console.log("reachBeginning");
+                btnPrev.find("i").addClass("double");
+                btnPrev.attr("title", "Previous Review");
+                btnPrev.attr("data-review-id", controls.prev);
+                setTimeout(function () {
+                    btnPrev.removeClass(selectors.btnDisable);
+                }, 5);
+            });
+        }
+
+        if (controls.next) {
+            console.log(controls.next);
+
+            controls.sliderTop.on("reachEnd", function () {
+                console.log("reachEnd");
+
+                btnNext.find("i").addClass("double");
+                btnNext.attr("title", "Next Review");
+                btnNext.attr("data-review-id", controls.next);
+
+                setTimeout(function () {
+                    btnNext.removeClass(selectors.btnDisable);
+                }, 5);
+            });
+        }
+
+        controls.sliderTop.on("slidePrevTransitionStart", function () {
+            btnNext.find("i").removeClass("double");
+            btnNext.removeAttr("title");
+            console.log("slidePrevTransitionStart");
         });
-        controls.sliderTop.on("reachEnd", function () {
-            console.log("reachEnd");
-            var btnNext = jQuery(selectors.btnNext);
-            btnNext.find("i").addClass("double");
-            btnNext.attr("title", "Next Review");
-            console.log("controls.slidesGroup");
-            console.log(controls.slidesGroup);
-            setTimeout(function () {
-                btnNext.removeClass(selectors.btnDisable);
-            }, 5);
+
+        controls.sliderTop.on("slideNextTransitionStart", function () {
+            btnPrev.find("i").removeClass("double");
+            btnPrev.removeAttr("title");
+            console.log("slideNextTransitionStart");
         });
+
     }
 
 };
