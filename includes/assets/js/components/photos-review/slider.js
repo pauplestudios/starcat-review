@@ -7,6 +7,8 @@ var selectors = {
     // Navigation
     btnPrev: ".photos-review__button-prev",
     btnNext: ".photos-review__button-next",
+
+    btnDisable: "swiper-button-disabled"
 };
 
 var Slider = {
@@ -67,6 +69,28 @@ var Slider = {
             controls.sliderTop.addSlide(index, sliderHtml);
             controls.sliderThumbs.addSlide(index, sliderHtml);
         }
+
+        controls.sliderTop.on("reachBeginning", function () {
+            console.log("reachBeginning");
+            var btnPrev = jQuery(selectors.btnPrev);
+            btnPrev.find("i").addClass("double");
+            btnPrev.attr("title", "Previous Review");
+
+            setTimeout(function () {
+                btnPrev.removeClass(selectors.btnDisable);
+            }, 5);
+        });
+        controls.sliderTop.on("reachEnd", function () {
+            console.log("reachEnd");
+            var btnNext = jQuery(selectors.btnNext);
+            btnNext.find("i").addClass("double");
+            btnNext.attr("title", "Next Review");
+            console.log("controls.slidesGroup");
+            console.log(controls.slidesGroup);
+            setTimeout(function () {
+                btnNext.removeClass(selectors.btnDisable);
+            }, 5);
+        });
     }
 
 };

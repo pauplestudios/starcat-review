@@ -27,7 +27,7 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Model')) {
 
             $props = ['a' => [], 'b' => [], 'c' => [], 'd' => []];
 
-            $start = 51;
+            $start = 50;
             foreach ($props as $key => $value) {
                 for ($i = $start; $i < sizeof($photos['photos']); $i++) {
                     if ($i % 3 === 0 && ($i !== $start)) {
@@ -47,11 +47,13 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Model')) {
             $photos = json_decode($photos_JSON, true);
 
             $collection = [
-                'limit' => '7',
                 'from' => isset($args['from']) ? $args['from'] : 0,
                 'size' => 'tiny',
                 'photos' => $photos['photos'],
                 'total_count' => sizeof($photos['photos']),
+                'preview_limit' => 7,
+                'photos_per_page' => 20,
+                'photos_per_review' => 4,
                 'placeholder_image' => SCR_URL . 'includes/assets/img/square-image.png',
             ];
 
@@ -62,13 +64,24 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Model')) {
         {
             $items = [];
 
+            $data_review_id = ($from !== 0) ? $collection['from'] / $collection['photos_per_review'] : 0; // Temporary review ID
+
             for ($i = $collection['from']; $i < sizeof($collection['photos']); $i++) {
 
-                if (($i % $collection['limit'] === 0) && ($i !== $collection['from'])) {
+                if (($i % $collection['photos_per_page'] === 0) && ($i !== $collection['from'])) {
                     break;
                 }
 
-                array_push($items, $collection['photos'][$i]['src'][$collection['size']]);
+                if ($i % $collection['photos_per_review'] === 0) {
+                    $data_review_id++;
+                }
+
+                $item = [
+                    'review_id' => $data_review_id,
+                    'image_src' => $collection['photos'][$i]['src'][$collection['size']],
+                ];
+
+                array_push($items, $item);
             }
 
             return $items;

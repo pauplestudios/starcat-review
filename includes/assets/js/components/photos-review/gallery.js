@@ -99,8 +99,8 @@ var Gallery = {
         singleReviewPhotos.unbind();
 
         singleReviewPhotos.click(function () {
-            var currentPhotosGroup = jQuery(this).data('set');
-            var group = jQuery(selectors.singleReviewPhotos + "[data-set=" + currentPhotosGroup + "]");
+            var currentPhotosGroup = jQuery(this).data('review-id');
+            var group = jQuery(selectors.singleReviewPhotos + "[data-review-id=" + currentPhotosGroup + "]");
 
             Modal.show(selectors.modal);
             jQuery(selectors.gallerySection).hide();
@@ -114,8 +114,8 @@ var Gallery = {
         singleGalleryPhotos.unbind();
 
         singleGalleryPhotos.click(function () {
-            var currentPhotosGroup = jQuery(this).data('set');
-            var group = jQuery(selectors.singleGalleryPhotos + "[data-set=" + currentPhotosGroup + "]");
+            var currentPhotosGroup = jQuery(this).data('review-id');
+            var group = jQuery(selectors.singleGalleryPhotos + "[data-review-id=" + currentPhotosGroup + "]");
 
             jQuery(selectors.gallerySection).hide();
             jQuery(selectors.sliderSection).show();
@@ -127,8 +127,8 @@ var Gallery = {
         var singleGalleryPhotosPreview = jQuery(selectors.singleGalleryPhotosPreview);
 
         singleGalleryPhotosPreview.click(function () {
-            var currentPhotosGroup = jQuery(this).data('set');
-            var group = jQuery(selectors.singleGalleryPhotos + "[data-set=" + currentPhotosGroup + "]");
+            var currentPhotosGroup = jQuery(this).data('review-id');
+            var group = jQuery(selectors.singleGalleryPhotos + "[data-review-id=" + currentPhotosGroup + "]");
 
             Modal.show(selectors.modal);
             jQuery(selectors.gallerySection).hide();
@@ -146,7 +146,8 @@ var Gallery = {
         for (var index = 0; index < images.length; index++) {
             var card = jQuery(cardPlaceholder[index]);
             card.removeClass('card-placeholder');
-            card.html("<img class='image' src='" + images[index] + "' />");
+            card.attr('data-review-id', images[index].review_id);
+            card.html("<img class='image' src='" + images[index].image_src + "' />");
         }
 
         shownGallery.data("shown-count", shownCount + images.length);
@@ -163,7 +164,7 @@ var Gallery = {
     },
 
     getCardPlaceholderHtml: function (data) {
-        var html = '<div class="card card-placeholder" data-set="' + data.shownCount + '">';
+        var html = '<div class="card card-placeholder" data-review-id="' + data.shownCount + '">';
         html += '<div class="ui placeholder">';
         html += '<div class="square image"></div>';
         html += '</div>';

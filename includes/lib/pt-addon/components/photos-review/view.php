@@ -11,14 +11,17 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
     {
         public function get_all_photos($props)
         {
+            $preview_limit = $props['collection']['preview_limit'];
+
             $html = '';
             $html .= '<div class="photos-gallery-preview ui tiny images">';
-
-            foreach ($props['items'] as $key => $image) {
-                $html .= '<div class="ui image" data-set="' . $props['collection']['from'] . '">';
-                $html .= '<img src="' . $image . '"/>';
-                if (($props['collection']['limit'] - 1) == $key) {
+            foreach ($props['items'] as $key => $item) {
+                $html .= '<div class="ui image" data-review-id="' . $item['review_id'] . '">';
+                $html .= '<img src="' . $item['image_src'] . '"/>';
+                if (($props['collection']['preview_limit'] - 1) == $key) {
                     $html .= $this->get_clickable_image_box($props);
+                    $html .= '</div>';
+                    break;
                 }
                 $html .= '</div>';
             }
@@ -43,8 +46,8 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
         {
             $html = '<span ';
             $html .= 'class="show-gallery" ';
-            $html .= 'data-limit="' . $props['collection']['limit'] . '" ';
-            $html .= 'data-shown-count="' . $props['collection']['limit'] . '" ';
+            $html .= 'data-limit="' . $props['collection']['photos_per_page'] . '" ';
+            $html .= 'data-shown-count="' . $props['collection']['photos_per_page'] . '" ';
             $html .= 'data-total-count="' . $props['collection']['total_count'] . '">+ ';
             $html .= $props['collection']['total_count'];
             $html .= '</span>';
@@ -100,7 +103,7 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
             $html .= '<div class="actions">';
             $html .= '<div class="ui six doubling link cards review-photos">';
             foreach ($images as $image) {
-                $html .= '<div class="card" data-set="' . $key . '">';
+                $html .= '<div class="card" data-review-id="' . $key . '">';
                 $html .= '<img class="image" src="' . $image . '" />';
                 $html .= '</div>';
             }
@@ -116,11 +119,13 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
         private function get_photos_gallery($props)
         {
             $html = '<div class="ui six doubling link cards photos-gallery">';
-            foreach ($props['items'] as $key => $image) {
-                $html .= '<div class="card" data-set="' . $props['collection']['from'] . '">';
-                $html .= '<img class="image" src="' . $image . '" />';
+
+            for ($i = 0; $i < sizeOf($props['items']); $i++) {
+                $html .= '<div class="card" data-review-id="' . $props['items'][$i]['review_id'] . '">';
+                $html .= '<img class="image" src="' . $props['items'][$i]['image_src'] . '" />';
                 $html .= '</div>';
             }
+
             $html .= '</div>';
 
             return $html;
