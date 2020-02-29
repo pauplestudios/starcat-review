@@ -15,26 +15,33 @@ var selectors = {
 var Slider = {
     init: function () {
         this.initSwiperSliders();
-        this.goToNextReviewSlides();
-        this.goToPrevReviewSlides();
+        // this.goToNextReviewSlides();
+        // this.goToPrevReviewSlides();
     },
 
-    goToNextReviewSlides: function () {
-        jQuery(selectors.btnNext).click(function () {
-            var currentPhotosGroup = jQuery(this).data('review-id');
-            var group = jQuery(selectors.galleryPhotos + "[data-review-id=" + currentPhotosGroup + "]");
-
+    goToNextReviewSlides: function (nextReviewSlides) {
+        // console.log("goToNextReviewSlides Method");
+        jQuery(selectors.btnNext+ '.next-review-slides').unbind();
+        jQuery(selectors.btnNext + '.next-review-slides').click(function (e) {
+            // console.log("goToNextReviewSlides");
+            e.preventDefault();
+            var nextSlidesGroup = (nextReviewSlides)? nextReviewSlides: jQuery(this).data('review-id');
+            console.log("Next slides pHotos Group review-id: " + nextSlidesGroup);
+            var group = jQuery(selectors.galleryPhotos + "[data-review-id=" + nextSlidesGroup + "]");
             var slides = {
                 prev: group.first().prev().data('review-id'),
                 next: group.last().next().data('review-id'),
                 slides: group
             };
+            console.log("!!! Next Slides Controls !!!");
+            console.log(slides);
             Slider.addSlideControls(slides);
         });
     },
 
     goToPrevReviewSlides: function () {
-        jQuery(selectors.btnPrev).click(function () {
+        jQuery(selectors.btnPrev + ' .double.icon').unbind();
+        jQuery(selectors.btnPrev + ' .double.icon').click(function () {
             var currentPhotosGroup = jQuery(this).data('review-id');
             var group = jQuery(selectors.galleryPhotos + "[data-review-id=" + currentPhotosGroup + "]");
 
@@ -88,13 +95,12 @@ var Slider = {
 
             sliderTop: document.querySelector(selectors.sliderTop).swiper,
             sliderThumbs: document.querySelector(selectors.sliderThumbs).swiper,
-        };
+        };        
 
         Slider.addSlides(controls);
     },
 
     addSlides: function (controls) {
-
 
         controls.sliderTop.removeAllSlides();
         controls.sliderThumbs.removeAllSlides();
@@ -109,9 +115,9 @@ var Slider = {
         var btnNext = jQuery(selectors.btnNext);
 
         if (controls.prev) {
-            console.log(controls.prev);
+            // console.log(controls.prev);
             controls.sliderTop.on("reachBeginning", function () {
-                console.log("reachBeginning");
+                // console.log("reachBeginning");
                 btnPrev.find("i").addClass("double");
                 btnPrev.attr("title", "Previous Review");
                 btnPrev.attr("data-review-id", controls.prev);
@@ -122,11 +128,11 @@ var Slider = {
         }
 
         if (controls.next) {
-            console.log(controls.next);
+            // console.log(controls.next);
 
             controls.sliderTop.on("reachEnd", function () {
-                console.log("reachEnd");
-
+                // console.log("reachEnd");
+                btnNext.addClass("next-review-slides")
                 btnNext.find("i").addClass("double");
                 btnNext.attr("title", "Next Review");
                 btnNext.attr("data-review-id", controls.next);
@@ -134,21 +140,26 @@ var Slider = {
                 setTimeout(function () {
                     btnNext.removeClass(selectors.btnDisable);
                 }, 5);
+
+                Slider.goToNextReviewSlides(controls.next);
             });
         }
 
         controls.sliderTop.on("slidePrevTransitionStart", function () {
+            btnNext.removeClass("next-review-slides");
             btnNext.find("i").removeClass("double");
             btnNext.removeAttr("title");
-            console.log("slidePrevTransitionStart");
+            // console.log("slidePrevTransitionStart");
         });
 
         controls.sliderTop.on("slideNextTransitionStart", function () {
             btnPrev.find("i").removeClass("double");
             btnPrev.removeAttr("title");
-            console.log("slideNextTransitionStart");
+            // console.log("slideNextTransitionStart");
         });
 
+        
+        // Slider.goToPrevReviewSlides();
     }
 
 };
