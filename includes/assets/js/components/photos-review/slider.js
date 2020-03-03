@@ -14,9 +14,9 @@ var selectors = {
 
 var Slider = {
     init: function () {
-        this.initSwiperSliders();
-        this.goToNextReviewSlides();
-        this.goToPrevReviewSlides();
+        // this.initSwiperSliders();
+        // this.goToNextReviewSlides();
+        // this.goToPrevReviewSlides();
     },
 
     goToNextReviewSlides: function () {
@@ -105,49 +105,35 @@ var Slider = {
             controls.sliderThumbs.addSlide(index, sliderHtml);
         }
 
-        var btnPrev = jQuery(selectors.btnPrev);
-        var btnNext = jQuery(selectors.btnNext);
+        // var next = (controls.next) ? controls.next : '';
 
-        if (controls.prev) {
-            console.log(controls.prev);
-            controls.sliderTop.on("reachBeginning", function () {
-                console.log("reachBeginning");
-                btnPrev.find("i").addClass("double");
-                btnPrev.attr("title", "Previous Review");
-                btnPrev.attr("data-review-id", controls.prev);
-                setTimeout(function () {
-                    btnPrev.removeClass(selectors.btnDisable);
-                }, 5);
-            });
-        }
 
-        if (controls.next) {
-            console.log(controls.next);
+        // controls.sliderTop.on("reachEnd", function () {
+        //     if (next) {
+        //         var photos = jQuery(selectors.galleryPhotos + "[data-review-id=" + next + "]");
+        //         var last = photos.last().next().data('review-id');
 
-            controls.sliderTop.on("reachEnd", function () {
-                console.log("reachEnd");
+        //         for (var index = 0; index < photos.length; index++) {
+        //             var sliderHtml = '<div class="photos-review__slide swiper-slide">' + photos[index].innerHTML + '</div>';
+        //             controls.sliderTop.appendSlide(sliderHtml);
+        //             controls.sliderThumbs.appendSlide(sliderHtml);
+        //         }
+        //         next = last;
+        //     }
+        //     console.log("reachEnd");
+        // });
 
-                btnNext.find("i").addClass("double");
-                btnNext.attr("title", "Next Review");
-                btnNext.attr("data-review-id", controls.next);
+        // controls.sliderTop.on("slidePrevTransitionStart", function () {
+        //     btnNext.find("i").removeClass("double");
+        //     btnNext.removeAttr("title");
+        //     console.log("slidePrevTransitionStart");
+        // });
 
-                setTimeout(function () {
-                    btnNext.removeClass(selectors.btnDisable);
-                }, 5);
-            });
-        }
-
-        controls.sliderTop.on("slidePrevTransitionStart", function () {
-            btnNext.find("i").removeClass("double");
-            btnNext.removeAttr("title");
-            console.log("slidePrevTransitionStart");
-        });
-
-        controls.sliderTop.on("slideNextTransitionStart", function () {
-            btnPrev.find("i").removeClass("double");
-            btnPrev.removeAttr("title");
-            console.log("slideNextTransitionStart");
-        });
+        // controls.sliderTop.on("slideNextTransitionStart", function () {
+        //     btnPrev.find("i").removeClass("double");
+        //     btnPrev.removeAttr("title");
+        //     console.log("slideNextTransitionStart");
+        // });
 
     }
 

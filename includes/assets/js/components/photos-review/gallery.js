@@ -139,14 +139,44 @@ var Gallery = {
                 next: photos.last().next().data('review-id'),
                 slides: photos
             };
+            var wrapper = ' .photos-review-wrapper.swiper-wrapper';
+            var sliderHtml = '';
+            for (var index = 0; index < photos.length; index++) {
+                sliderHtml += '<div class="photos-review__slide swiper-slide">' + photos[index].innerHTML + '</div>';
+            }
+
+            jQuery(selectors.sliderTop + wrapper).html(sliderHtml);
+            jQuery(selectors.sliderThumbs + wrapper).html(sliderHtml);
 
             Modal.show(selectors.modal);
             jQuery(selectors.gallerySection).hide();
             jQuery(selectors.sliderSection).show().find('.header').hide();
-            Slider.addSlideControls(slides);
+            // Slider.addSlideControls(slides);
+            Slider.initSwiperSliders();
 
+            Gallery.appendSlide(photos.last().next().data('review-id'));
             Gallery.addRestOfThePhotosOnce();
         });
+    },
+
+    appendSlide: function (next) {
+        var sliderTop = document.querySelector(selectors.sliderTop).swiper;
+        var sliderThumbs = document.querySelector(selectors.sliderThumbs).swiper;
+        if (next) {
+            sliderTop.on("reachEnd", function () {
+
+                var photos = jQuery(selectors.singleGalleryPhotos + "[data-review-id=" + next + "]");
+                var last = photos.last().next().data('review-id');
+
+                for (var index = 0; index < photos.length; index++) {
+                    var sliderHtml = '<div class="photos-review__slide swiper-slide">' + photos[index].innerHTML + '</div>';
+                    sliderTop.appendSlide(sliderHtml);
+                    sliderThumbs.appendSlide(sliderHtml);
+                }
+                next = last;
+                console.log("reachEnd");
+            });
+        }
     },
 
     setImagesFromPlaceholder: function (images) {
