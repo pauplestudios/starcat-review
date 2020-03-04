@@ -139,9 +139,7 @@ var Slider = {
 
         // Hide Slides excecpt Active Reviews
         swiper.sliderTop.on("slideChangeTransitionEnd", function () {
-            var activeSlide = jQuery(selectors.sliderTop + ' .swiper-slide.swiper-slide-active').data('review-id');
-            jQuery(selectors.sliderThumbs + ' .swiper-slide').hide();
-            jQuery(selectors.sliderThumbs + " [data-review-id=" + activeSlide + "]").show();
+            Slider.hidesReviewSlides();
         });
 
     },
@@ -216,6 +214,12 @@ var Slider = {
 
         btnNext.find("i").removeClass("double");
         btnNext.removeAttr("title");
+    },
+
+    hidesReviewSlides: function () {
+        var activeSlide = jQuery(selectors.sliderTop + ' .swiper-slide.swiper-slide-active').data('review-id');
+        jQuery(selectors.sliderThumbs + ' .swiper-slide').hide();
+        jQuery(selectors.sliderThumbs + " [data-review-id=" + activeSlide + "]").css('display', 'flex');
     }
 
 };
