@@ -31,8 +31,8 @@ var Gallery = {
     eventHandler: function () {
         this.showGallery();
         this.goBackToGallery();
-        // this.onReviewPhotosClick();
-        // this.onGalleryPhotosClick();
+        this.onReviewPhotosClick();
+        this.onGalleryPhotosClick();
         this.onGalleryPhotosPreviewClick();
 
         Modal.init(selectors.modal, selectors.modalClose);
@@ -103,13 +103,15 @@ var Gallery = {
         singleReviewPhotos.unbind();
 
         singleReviewPhotos.click(function () {
-            var currentPhotosGroup = jQuery(this).data('review-id');
-            var group = jQuery(selectors.singleReviewPhotos + "[data-review-id=" + currentPhotosGroup + "]");
 
+            // Show Modal
             Modal.show(selectors.modal);
             jQuery(selectors.gallerySection).hide();
             jQuery(selectors.sliderSection).show().find('.header').hide();
-            Slider.addSlideControls(group);
+
+            // Slider Controls                 
+            var reviewID = jQuery(this).data('review-id');
+            Slider.show(Slider.getProps(reviewID, 'review'));
         });
     },
 
@@ -118,12 +120,14 @@ var Gallery = {
         singleGalleryPhotos.unbind();
 
         singleGalleryPhotos.click(function () {
-            var currentPhotosGroup = jQuery(this).data('review-id');
-            var group = jQuery(selectors.singleGalleryPhotos + "[data-review-id=" + currentPhotosGroup + "]");
 
+            // Show Modal
             jQuery(selectors.gallerySection).hide();
             jQuery(selectors.sliderSection).show();
-            Slider.addSlideControls(group);
+
+            // Slider Controls          
+            var reviewID = jQuery(this).data('review-id');
+            Slider.show(Slider.getProps(reviewID, 'gallery'));
         });
     },
 
@@ -131,30 +135,15 @@ var Gallery = {
         var singleGalleryPhotosPreview = jQuery(selectors.singleGalleryPhotosPreview);
 
         singleGalleryPhotosPreview.click(function () {
-            var reviewID = jQuery(this).data('review-id');
-            var photos = jQuery(selectors.singleGalleryPhotos + "[data-review-id=" + reviewID + "]");
-
-            var slides = {
-                prev: photos.first().prev().data('review-id'),
-                next: photos.last().next().data('review-id'),
-                slides: photos
-            };
-            var wrapper = ' .photos-review-wrapper.swiper-wrapper';
-            var sliderHtml = '';
-            for (var index = 0; index < photos.length; index++) {
-                sliderHtml += '<div class="photos-review__slide swiper-slide" data-review-id="' + reviewID + '">' + photos[index].innerHTML + '</div>';
-            }
-
-            jQuery(selectors.sliderTop + wrapper).html(sliderHtml);
-            jQuery(selectors.sliderThumbs + wrapper).html(sliderHtml);
-
+            // Show modal
             Modal.show(selectors.modal);
             jQuery(selectors.gallerySection).hide();
             jQuery(selectors.sliderSection).show().find('.header').hide();
-            // Slider.addSlideControls(slides);
-            Slider.initSwiperSliders();
 
-            Gallery.appendSlide(photos.last().next().data('review-id'));
+            // Slider Controls
+            var reviewID = jQuery(this).data('review-id');
+            Slider.show(Slider.getProps(reviewID, 'gallery'));
+
             Gallery.addRestOfThePhotosOnce();
         });
     },
