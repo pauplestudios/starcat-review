@@ -142,7 +142,7 @@ var Gallery = {
             var wrapper = ' .photos-review-wrapper.swiper-wrapper';
             var sliderHtml = '';
             for (var index = 0; index < photos.length; index++) {
-                sliderHtml += '<div class="photos-review__slide swiper-slide">' + photos[index].innerHTML + '</div>';
+                sliderHtml += '<div class="photos-review__slide swiper-slide" data-review-id="' + reviewID + '">' + photos[index].innerHTML + '</div>';
             }
 
             jQuery(selectors.sliderTop + wrapper).html(sliderHtml);
@@ -169,14 +169,20 @@ var Gallery = {
                 var last = photos.last().next().data('review-id');
 
                 for (var index = 0; index < photos.length; index++) {
-                    var sliderHtml = '<div class="photos-review__slide swiper-slide">' + photos[index].innerHTML + '</div>';
+                    var sliderHtml = '<div class="photos-review__slide swiper-slide" data-review-id="' + next + '">' + photos[index].innerHTML + '</div>';
                     sliderTop.appendSlide(sliderHtml);
                     sliderThumbs.appendSlide(sliderHtml);
                 }
+                jQuery(selectors.sliderThumbs + " [data-review-id=" + next + "]").hide();
                 next = last;
-                console.log("reachEnd");
             });
         }
+
+        sliderTop.on("slideChangeTransitionEnd", function () {
+            var activeSlide = jQuery(selectors.sliderTop + ' .swiper-slide.swiper-slide-active').data('review-id');
+            jQuery(selectors.sliderThumbs + ' .swiper-slide').hide();
+            jQuery(selectors.sliderThumbs + " [data-review-id=" + activeSlide + "]").show();
+        });
     },
 
     setImagesFromPlaceholder: function (images) {
