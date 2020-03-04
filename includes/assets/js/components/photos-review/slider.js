@@ -91,6 +91,9 @@ var Slider = {
 
         // Re-Initiate swiper slider after destroyed
         Slider.initSwiperSlider();
+
+        // Remove Prevously added Double arrows
+        Slider.removeDoubleArrows();
     },
 
     swiperListeners: function (props) {
@@ -99,11 +102,20 @@ var Slider = {
         var nextSlidesReviewID = props.next;
 
 
-        // Available swiper instance
+        // swiper instances
         var swiper = {
             sliderTop: document.querySelector(selectors.sliderTop).swiper,
             sliderThumbs: document.querySelector(selectors.sliderThumbs).swiper
         };
+
+
+        // On Init
+        if (prevSlidesReviewID) {
+            prevSlidesReviewID = Slider.prependSlide(swiper, prevSlidesReviewID);
+        }
+        if (nextSlidesReviewID) {
+            nextSlidesReviewID = Slider.appendSlide(swiper, nextSlidesReviewID);
+        }
 
         swiper.sliderTop.on("reachBeginning", function () {
             if (prevSlidesReviewID) {
@@ -117,11 +129,22 @@ var Slider = {
             }
         });
 
+        // Hide Slides excecpt Active Reviews
         swiper.sliderTop.on("slideChangeTransitionEnd", function () {
             var activeSlide = jQuery(selectors.sliderTop + ' .swiper-slide.swiper-slide-active').data('review-id');
             jQuery(selectors.sliderThumbs + ' .swiper-slide').hide();
             jQuery(selectors.sliderThumbs + " [data-review-id=" + activeSlide + "]").show();
         });
+
+        // On Init
+        Slider.removeDoubleArrows();
+        Slider.addDoubleArrows();
+
+        swiper.sliderTop.on("transitionStart", function () {
+            Slider.removeDoubleArrows();
+            Slider.addDoubleArrows();
+        });
+
     },
 
     appendSlide: function (swiper, nextSlidesReviewID) {
@@ -160,12 +183,40 @@ var Slider = {
         jQuery(selectors.sliderThumbs + " [data-review-id=" + prevSlidesReviewID + "]").hide();
 
         // Go to active Slide
-        activeSlide = photos.length;
         setTimeout(function () {
-            swiper.sliderTop.slideTo(activeSlide);
+            swiper.sliderTop.slideTo(photos.length);
         }, 1);
 
         return prevReview;
+    },
+
+    // Add double arrow for Prev / Next Review navigation
+    addDoubleArrows: function () {
+        var activeSlide = jQuery(selectors.sliderTop + ' .swiper-slide.swiper-slide-active').data('review-id');
+        var photos = jQuery(selectors.sliderThumbs + " [data-review-id=" + activeSlide + "]");
+
+        var btnPrev = jQuery(selectors.btnPrev);
+        var btnNext = jQuery(selectors.btnNext);
+
+        if (photos.first().hasClass('swiper-slide-thumb-active')) {
+            btnPrev.find("i").addClass("double");
+            btnPrev.attr("title", "Previous Review");
+        }
+        if (photos.last().hasClass('swiper-slide-thumb-active')) {
+            btnNext.find("i").addClass("double");
+            btnNext.attr("title", "Next Review");
+        }
+    },
+
+    removeDoubleArrows: function () {
+        var btnPrev = jQuery(selectors.btnPrev);
+        var btnNext = jQuery(selectors.btnNext);
+
+        btnPrev.find("i").removeClass("double");
+        btnPrev.removeAttr("title");
+
+        btnNext.find("i").removeClass("double");
+        btnNext.removeAttr("title");
     }
 
 };
