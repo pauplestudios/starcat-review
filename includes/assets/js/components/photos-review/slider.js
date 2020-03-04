@@ -50,7 +50,7 @@ var Slider = {
         new Swiper(selectors.sliderTop, sliderTopArgs);
     },
 
-    show: function (props) {
+    showSlider: function (props) {
 
         Slider.addInitialSlides(props);
 
@@ -117,6 +117,14 @@ var Slider = {
             nextSlidesReviewID = Slider.appendSlide(swiper, nextSlidesReviewID);
         }
 
+        Slider.removeDoubleArrows();
+        Slider.addDoubleArrows();
+
+        swiper.sliderTop.on("transitionStart", function () {
+            Slider.removeDoubleArrows();
+            Slider.addDoubleArrows();
+        });
+
         swiper.sliderTop.on("reachBeginning", function () {
             if (prevSlidesReviewID) {
                 prevSlidesReviewID = Slider.prependSlide(swiper, prevSlidesReviewID);
@@ -134,15 +142,6 @@ var Slider = {
             var activeSlide = jQuery(selectors.sliderTop + ' .swiper-slide.swiper-slide-active').data('review-id');
             jQuery(selectors.sliderThumbs + ' .swiper-slide').hide();
             jQuery(selectors.sliderThumbs + " [data-review-id=" + activeSlide + "]").show();
-        });
-
-        // On Init
-        Slider.removeDoubleArrows();
-        Slider.addDoubleArrows();
-
-        swiper.sliderTop.on("transitionStart", function () {
-            Slider.removeDoubleArrows();
-            Slider.addDoubleArrows();
         });
 
     },

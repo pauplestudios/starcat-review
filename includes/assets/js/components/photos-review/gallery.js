@@ -111,7 +111,7 @@ var Gallery = {
 
             // Slider Controls                 
             var reviewID = jQuery(this).data('review-id');
-            Slider.show(Slider.getProps(reviewID, 'review'));
+            Slider.showSlider(Slider.getProps(reviewID, 'review'));
         });
     },
 
@@ -127,7 +127,7 @@ var Gallery = {
 
             // Slider Controls          
             var reviewID = jQuery(this).data('review-id');
-            Slider.show(Slider.getProps(reviewID, 'gallery'));
+            Slider.showSlider(Slider.getProps(reviewID, 'gallery'));
         });
     },
 
@@ -142,7 +142,7 @@ var Gallery = {
 
             // Slider Controls
             var reviewID = jQuery(this).data('review-id');
-            Slider.show(Slider.getProps(reviewID, 'gallery'));
+            Slider.showSlider(Slider.getProps(reviewID, 'gallery'));
 
             Gallery.addRestOfThePhotosOnce();
         });
