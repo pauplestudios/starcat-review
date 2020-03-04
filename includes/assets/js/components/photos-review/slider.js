@@ -8,46 +8,16 @@ var selectors = {
     btnPrev: ".photos-review__button-prev",
     btnNext: ".photos-review__button-next",
 
-    btnDisable: "swiper-button-disabled",
-    galleryPhotos: ".photos-gallery .card"
+    reviewPhotos: ".review-photos .card",
+    galleryPhotos: ".photos-gallery .card",
 };
 
 var Slider = {
     init: function () {
-        this.initSwiperSliders();
-        this.goToNextReviewSlides();
-        this.goToPrevReviewSlides();
+        this.initSwiperSlider();
     },
 
-    goToNextReviewSlides: function () {
-        jQuery(selectors.btnNext).click(function () {
-            var currentPhotosGroup = jQuery(this).data('review-id');
-            var group = jQuery(selectors.galleryPhotos + "[data-review-id=" + currentPhotosGroup + "]");
-
-            var slides = {
-                prev: group.first().prev().data('review-id'),
-                next: group.last().next().data('review-id'),
-                slides: group
-            };
-            Slider.addSlideControls(slides);
-        });
-    },
-
-    goToPrevReviewSlides: function () {
-        jQuery(selectors.btnPrev).click(function () {
-            var currentPhotosGroup = jQuery(this).data('review-id');
-            var group = jQuery(selectors.galleryPhotos + "[data-review-id=" + currentPhotosGroup + "]");
-
-            var slides = {
-                prev: group.first().prev().data('review-id'),
-                next: group.last().next().data('review-id'),
-                slides: group
-            };
-            Slider.addSlideControls(slides);
-        });
-    },
-
-    initSwiperSliders: function () {
+    initSwiperSlider: function () {
 
         var sliderThumbsArgs = {
             spaceBetween: 10,
@@ -80,75 +50,176 @@ var Slider = {
         new Swiper(selectors.sliderTop, sliderTopArgs);
     },
 
-    addSlideControls: function (slides) {
-        var controls = {
-            prev: slides.prev,
-            slides: slides.slides,
-            next: slides.next,
+    showSlider: function (props) {
 
-            sliderTop: document.querySelector(selectors.sliderTop).swiper,
-            sliderThumbs: document.querySelector(selectors.sliderThumbs).swiper,
-        };
+        Slider.addInitialSlides(props);
 
-        Slider.addSlides(controls);
+        if (props.type == 'gallery') {
+            Slider.swiperListeners(props);
+        }
     },
 
-    addSlides: function (controls) {
+    getProps: function (reviewID, type) {
+        var group = (type == 'review') ? selectors.reviewPhotos : selectors.galleryPhotos;
 
+        var photos = jQuery(group + "[data-review-id=" + reviewID + "]");
+        var props = {
+            type: type,
+            slides: photos,
+            reviewID: reviewID,
+            next: photos.last().next().data('review-id'),
+            prev: photos.first().prev().data('review-id'),
+        };
 
-        controls.sliderTop.removeAllSlides();
-        controls.sliderThumbs.removeAllSlides();
+        return props;
+    },
 
-        for (var index = 0; index < controls.slides.length; index++) {
-            var sliderHtml = '<div class="photos-review__slide swiper-slide">' + controls.slides[index].innerHTML + '</div>';
-            controls.sliderTop.addSlide(index, sliderHtml);
-            controls.sliderThumbs.addSlide(index, sliderHtml);
+    addInitialSlides: function (props) {
+
+        // Destroy previous slider instance
+        document.querySelector(selectors.sliderTop).swiper.destroy(true);
+        document.querySelector(selectors.sliderThumbs).swiper.destroy(true);
+
+        var sliderHTML = '';
+        var wrapper = ' .photos-review-wrapper.swiper-wrapper';
+        for (var index = 0; index < props.slides.length; index++) {
+            sliderHTML += '<div class="photos-review__slide swiper-slide"  data-review-id="' + props.reviewID + '">' + props.slides[index].innerHTML + '</div>';
         }
+
+        jQuery(selectors.sliderTop + wrapper).html(sliderHTML);
+        jQuery(selectors.sliderThumbs + wrapper).html(sliderHTML);
+
+        // Re-Initiate swiper slider after destroyed
+        Slider.initSwiperSlider();
+
+        // Remove Prevously added Double arrows
+        Slider.removeDoubleArrows();
+    },
+
+    swiperListeners: function (props) {
+
+        var prevSlidesReviewID = props.prev;
+        var nextSlidesReviewID = props.next;
+
+
+        // swiper instances
+        var swiper = {
+            sliderTop: document.querySelector(selectors.sliderTop).swiper,
+            sliderThumbs: document.querySelector(selectors.sliderThumbs).swiper
+        };
+
+
+        // On Init
+        if (prevSlidesReviewID) {
+            prevSlidesReviewID = Slider.prependSlide(swiper, prevSlidesReviewID);
+        }
+        if (nextSlidesReviewID) {
+            nextSlidesReviewID = Slider.appendSlide(swiper, nextSlidesReviewID);
+        }
+
+        Slider.removeDoubleArrows();
+        Slider.addDoubleArrows();
+
+        swiper.sliderTop.on("transitionStart", function () {
+            Slider.removeDoubleArrows();
+            Slider.addDoubleArrows();
+        });
+
+        swiper.sliderTop.on("reachBeginning", function () {
+            if (prevSlidesReviewID) {
+                prevSlidesReviewID = Slider.prependSlide(swiper, prevSlidesReviewID);
+            }
+        });
+
+        swiper.sliderTop.on("reachEnd", function () {
+            if (nextSlidesReviewID) {
+                nextSlidesReviewID = Slider.appendSlide(swiper, nextSlidesReviewID);
+            }
+        });
+
+        // Hide Slides excecpt Active Reviews
+        swiper.sliderTop.on("slideChangeTransitionEnd", function () {
+            Slider.hidesReviewSlides();
+        });
+
+    },
+
+    appendSlide: function (swiper, nextSlidesReviewID) {
+        var photos = jQuery(selectors.galleryPhotos + "[data-review-id=" + nextSlidesReviewID + "]");
+        var nextReview = photos.last().next().data('review-id');
+
+        for (var index = 0; index < photos.length; index++) {
+            var sliderHTML = '<div class="photos-review__slide swiper-slide" data-review-id="' + nextSlidesReviewID + '">' + photos[index].innerHTML + '</div>';
+
+            swiper.sliderTop.appendSlide(sliderHTML);
+            swiper.sliderThumbs.appendSlide(sliderHTML);
+        }
+
+        jQuery(selectors.sliderThumbs + " [data-review-id=" + nextSlidesReviewID + "]").hide();
+
+        return nextReview;
+    },
+
+    prependSlide: function (swiper, prevSlidesReviewID) {
+        // console.log("reachBeginning");
+        // console.log("prevSlidesReviewID : " + prevSlidesReviewID);
+
+        var photos = jQuery(selectors.galleryPhotos + "[data-review-id=" + prevSlidesReviewID + "]");
+        var prevReview = photos.first().prev().data('review-id');
+
+        // Slides are prepending in Left
+        photos = photos.get().reverse();
+
+        for (var index = 0; index < photos.length; index++) {
+            var sliderHTML = '<div class="photos-review__slide swiper-slide" data-review-id="' + prevSlidesReviewID + '">' + photos[index].innerHTML + '</div>';
+
+            swiper.sliderTop.prependSlide(sliderHTML);
+            swiper.sliderThumbs.prependSlide(sliderHTML);
+        }
+
+        jQuery(selectors.sliderThumbs + " [data-review-id=" + prevSlidesReviewID + "]").hide();
+
+        // Go to active Slide
+        setTimeout(function () {
+            swiper.sliderTop.slideTo(photos.length);
+        }, 1);
+
+        return prevReview;
+    },
+
+    // Add double arrow for Prev / Next Review navigation
+    addDoubleArrows: function () {
+        var activeSlide = jQuery(selectors.sliderTop + ' .swiper-slide.swiper-slide-active').data('review-id');
+        var photos = jQuery(selectors.sliderThumbs + " [data-review-id=" + activeSlide + "]");
 
         var btnPrev = jQuery(selectors.btnPrev);
         var btnNext = jQuery(selectors.btnNext);
 
-        if (controls.prev) {
-            console.log(controls.prev);
-            controls.sliderTop.on("reachBeginning", function () {
-                console.log("reachBeginning");
-                btnPrev.find("i").addClass("double");
-                btnPrev.attr("title", "Previous Review");
-                btnPrev.attr("data-review-id", controls.prev);
-                setTimeout(function () {
-                    btnPrev.removeClass(selectors.btnDisable);
-                }, 5);
-            });
+        if (photos.first().hasClass('swiper-slide-thumb-active')) {
+            btnPrev.find("i").addClass("double");
+            btnPrev.attr("title", "Previous Review");
         }
-
-        if (controls.next) {
-            console.log(controls.next);
-
-            controls.sliderTop.on("reachEnd", function () {
-                console.log("reachEnd");
-
-                btnNext.find("i").addClass("double");
-                btnNext.attr("title", "Next Review");
-                btnNext.attr("data-review-id", controls.next);
-
-                setTimeout(function () {
-                    btnNext.removeClass(selectors.btnDisable);
-                }, 5);
-            });
+        if (photos.last().hasClass('swiper-slide-thumb-active')) {
+            btnNext.find("i").addClass("double");
+            btnNext.attr("title", "Next Review");
         }
+    },
 
-        controls.sliderTop.on("slidePrevTransitionStart", function () {
-            btnNext.find("i").removeClass("double");
-            btnNext.removeAttr("title");
-            console.log("slidePrevTransitionStart");
-        });
+    removeDoubleArrows: function () {
+        var btnPrev = jQuery(selectors.btnPrev);
+        var btnNext = jQuery(selectors.btnNext);
 
-        controls.sliderTop.on("slideNextTransitionStart", function () {
-            btnPrev.find("i").removeClass("double");
-            btnPrev.removeAttr("title");
-            console.log("slideNextTransitionStart");
-        });
+        btnPrev.find("i").removeClass("double");
+        btnPrev.removeAttr("title");
 
+        btnNext.find("i").removeClass("double");
+        btnNext.removeAttr("title");
+    },
+
+    hidesReviewSlides: function () {
+        var activeSlide = jQuery(selectors.sliderTop + ' .swiper-slide.swiper-slide-active').data('review-id');
+        jQuery(selectors.sliderThumbs + ' .swiper-slide').hide();
+        jQuery(selectors.sliderThumbs + " [data-review-id=" + activeSlide + "]").css('display', 'flex');
     }
 
 };
