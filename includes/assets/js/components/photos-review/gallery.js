@@ -148,31 +148,6 @@ var Gallery = {
         });
     },
 
-    appendSlide: function (next) {
-        var sliderTop = document.querySelector(selectors.sliderTop).swiper;
-        var sliderThumbs = document.querySelector(selectors.sliderThumbs).swiper;
-        if (next) {
-            sliderTop.on("reachEnd", function () {
-
-                var photos = jQuery(selectors.singleGalleryPhotos + "[data-review-id=" + next + "]");
-                var last = photos.last().next().data('review-id');
-
-                for (var index = 0; index < photos.length; index++) {
-                    var sliderHtml = '<div class="photos-review__slide swiper-slide" data-review-id="' + next + '">' + photos[index].innerHTML + '</div>';
-                    sliderTop.appendSlide(sliderHtml);
-                    sliderThumbs.appendSlide(sliderHtml);
-                }
-                jQuery(selectors.sliderThumbs + " [data-review-id=" + next + "]").hide();
-                next = last;
-            });
-        }
-
-        sliderTop.on("slideChangeTransitionEnd", function () {
-            var activeSlide = jQuery(selectors.sliderTop + ' .swiper-slide.swiper-slide-active').data('review-id');
-            jQuery(selectors.sliderThumbs + ' .swiper-slide').hide();
-            jQuery(selectors.sliderThumbs + " [data-review-id=" + activeSlide + "]").show();
-        });
-    },
 
     setImagesFromPlaceholder: function (images) {
         var gallery = jQuery(selectors.gallery);

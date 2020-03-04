@@ -51,11 +51,11 @@ var Slider = {
     },
 
     show: function (props) {
-        console.log(props);
-        // Slider Controls
+
         Slider.addInitialSlides(props);
+
         if (props.type == 'gallery') {
-            Slider.appendSlides(props.next);
+            Slider.swiperListeners(props);
         }
     },
 
@@ -76,7 +76,7 @@ var Slider = {
 
     addInitialSlides: function (props) {
 
-        // Destroy Previous Slider
+        // Destroy previous slider instance
         document.querySelector(selectors.sliderTop).swiper.destroy(true);
         document.querySelector(selectors.sliderThumbs).swiper.destroy(true);
 
@@ -89,34 +89,83 @@ var Slider = {
         jQuery(selectors.sliderTop + wrapper).html(sliderHTML);
         jQuery(selectors.sliderThumbs + wrapper).html(sliderHTML);
 
+        // Re-Initiate swiper slider after destroyed
         Slider.initSwiperSlider();
     },
 
-    appendSlides: function (next) {
-        var sliderTop = document.querySelector(selectors.sliderTop).swiper;
-        var sliderThumbs = document.querySelector(selectors.sliderThumbs).swiper;
+    swiperListeners: function (props) {
 
-        if (next) {
-            sliderTop.on("reachEnd", function () {
+        var prevSlidesReviewID = props.prev;
+        var nextSlidesReviewID = props.next;
 
-                var photos = jQuery(selectors.galleryPhotos + "[data-review-id=" + next + "]");
-                var last = photos.last().next().data('review-id');
 
-                for (var index = 0; index < photos.length; index++) {
-                    var sliderHtml = '<div class="photos-review__slide swiper-slide" data-review-id="' + next + '">' + photos[index].innerHTML + '</div>';
-                    sliderTop.appendSlide(sliderHtml);
-                    sliderThumbs.appendSlide(sliderHtml);
-                }
-                jQuery(selectors.sliderThumbs + " [data-review-id=" + next + "]").hide();
-                next = last;
-            });
-        }
+        // Available swiper instance
+        var swiper = {
+            sliderTop: document.querySelector(selectors.sliderTop).swiper,
+            sliderThumbs: document.querySelector(selectors.sliderThumbs).swiper
+        };
 
-        sliderTop.on("slideChangeTransitionEnd", function () {
+        swiper.sliderTop.on("reachBeginning", function () {
+            if (prevSlidesReviewID) {
+                prevSlidesReviewID = Slider.prependSlide(swiper, prevSlidesReviewID);
+            }
+        });
+
+        swiper.sliderTop.on("reachEnd", function () {
+            if (nextSlidesReviewID) {
+                nextSlidesReviewID = Slider.appendSlide(swiper, nextSlidesReviewID);
+            }
+        });
+
+        swiper.sliderTop.on("slideChangeTransitionEnd", function () {
             var activeSlide = jQuery(selectors.sliderTop + ' .swiper-slide.swiper-slide-active').data('review-id');
             jQuery(selectors.sliderThumbs + ' .swiper-slide').hide();
             jQuery(selectors.sliderThumbs + " [data-review-id=" + activeSlide + "]").show();
         });
+    },
+
+    appendSlide: function (swiper, nextSlidesReviewID) {
+        var photos = jQuery(selectors.galleryPhotos + "[data-review-id=" + nextSlidesReviewID + "]");
+        var nextReview = photos.last().next().data('review-id');
+
+        for (var index = 0; index < photos.length; index++) {
+            var sliderHTML = '<div class="photos-review__slide swiper-slide" data-review-id="' + nextSlidesReviewID + '">' + photos[index].innerHTML + '</div>';
+
+            swiper.sliderTop.appendSlide(sliderHTML);
+            swiper.sliderThumbs.appendSlide(sliderHTML);
+        }
+
+        jQuery(selectors.sliderThumbs + " [data-review-id=" + nextSlidesReviewID + "]").hide();
+
+        return nextReview;
+    },
+
+    prependSlide: function (swiper, prevSlidesReviewID) {
+        // console.log("reachBeginning");
+        // console.log("prevSlidesReviewID : " + prevSlidesReviewID);
+
+        var photos = jQuery(selectors.galleryPhotos + "[data-review-id=" + prevSlidesReviewID + "]");
+        var prevReview = photos.first().prev().data('review-id');
+
+        // Slides are prepending in Left
+        photos = photos.get().reverse();
+
+        for (var index = 0; index < photos.length; index++) {
+            var sliderHTML = '<div class="photos-review__slide swiper-slide" data-review-id="' + prevSlidesReviewID + '">' + photos[index].innerHTML + '</div>';
+
+            swiper.sliderTop.prependSlide(sliderHTML);
+            swiper.sliderThumbs.prependSlide(sliderHTML);
+        }
+
+        jQuery(selectors.sliderThumbs + " [data-review-id=" + prevSlidesReviewID + "]").hide();
+
+        // Go to active Slide
+        activeSlide = photos.length;
+        setTimeout(function () {
+            swiper.sliderTop.slideTo(activeSlide);
+        }, 1);
+
+        return prevReview;
     }
 
 };
