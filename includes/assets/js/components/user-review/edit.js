@@ -12,19 +12,19 @@ var selectors = {
 };
 
 var Edit = {
-    init: function() {
+    init: function () {
         this.eventListener();
     },
-    eventListener: function() {
+    eventListener: function () {
         this.showForm();
     },
-    showForm: function() {
+
+    showForm: function () {
         var thisModule = this;
         var editlinks = jQuery(selectors.editLink);
         var links = jQuery(selectors.links);
-        var editForm = this.getEditForm();
 
-        editlinks.click(function() {
+        editlinks.click(function () {
             var link = jQuery(this);
 
             // Show all reviews list links
@@ -53,7 +53,7 @@ var Edit = {
 
             reviewProps = thisModule.getEditProps(reviewContent);
 
-            var form = thisModule.getElement(editForm, reviewProps);
+            var form = thisModule.getEditModifiedForm(reviewProps);
 
             // Append clonned edit form into closest review content of clicked edit link
             reviewContent.after(form).next(selectors.reviewForm);
@@ -61,146 +61,12 @@ var Edit = {
             thisModule.cancelBtn(reviewContent);
 
             Stats.init();
-            thisModule.editFormSubmit(reviewContent, reviewProps);
-            // Form.formValidation("", reviewContent.closest("form.form"));
-            // thisModule.get_ProsandCons(
-            //     ".review-pros-repeater",
-            //     "pros",
-            //     reviewContent,
-            //     editForm
-            // );
-            // thisModule.get_ProsandCons(
-            //     ".review-cons-repeater",
-            //     "cons",
-            //     reviewContent,
-            //     editForm
-            // );
+            // thisModule.editFormSubmit(reviewContent, reviewProps);
+
         });
     },
 
-    editFormSubmit: function(reviewContent, reviewProps) {
-        thisModule = this;
-        var SCRForm = reviewContent.parent().find("form.form");
-        console.log("editFormSubmit entry");
-        reviewContent
-            .parent()
-            .find("form.form")
-            .form({
-                fields: Form.getRules(),
-                onSuccess: function(event, fields) {
-                    console.log("editFormSubmit success");
-                    event.preventDefault();
-                    if (editFormSubmitted) {
-                        return;
-                    }
-                    editFormSubmitted = true;
-                    reviewContent
-                        .parent()
-                        .find("form.form .submit.button")
-                        .addClass("loading");
-                    setTimeout(function() {
-                        editFormSubmitted = false;
-                    }, 10000);
-
-                    var props = thisModule.getProps(SCRForm, fields);
-                    props.pros = reviewProps.pros;
-                    props.cons = reviewProps.cons;
-                    // console.log(props);
-                    jQuery
-                        .post(scr_ajax.ajax_url, props, function(results) {
-                            results = JSON.parse(results);
-                            console.log("results: ");
-                            console.log(results);
-
-                            //         // Reviewed item prepending to Reviews List
-                            //         // jQuery("#scr-cat-collection").prepend(
-                            //         //     Form.getReviewTemplate(props.title, props.description)
-                            //         // );
-
-                            //         // Reloading the page
-                            setInterval("window.location.reload()", 6000);
-                        })
-                        .fail(function(response) {
-                            // Fail Message
-                            console.log("editFormSubmit fail");
-                            console.log(response);
-                            SCRForm.html("Failed Updated");
-
-                            // Reloading the page
-                            setInterval("window.location.reload()", 6000);
-                        });
-                },
-            });
-    },
-
-    getProps: function(submittingForm, fields) {
-        fields.action = submittingForm.attr("action");
-        fields.type = submittingForm.attr("method");
-        fields.post_id = submittingForm.attr("post_id");
-        fields.comment_id = submittingForm.attr("data-comment-id");
-        fields.captcha = submittingForm.find("#captcha").attr("value");
-        fields.methodType = submittingForm.attr("data-method");
-
-        return fields;
-    },
-
-    getElement: function(element, props) {
-        var thisModule = this;
-        var form = jQuery(element);
-        form.attr("data-comment-id", props.comment_id);
-        form.attr("data-method", props.methodType);
-
-        form.find("[name='title']").attr("value", props.title);
-        form.find("[name='description']").text(props.description);
-
-        for (var i = 0; i < props.stats.length; i++) {
-            form.find("[name='" + props.stats[i].identifier + "']")
-                .siblings(".stars-result")
-                .css({
-                    width: props.stats[i].value + "%",
-                });
-
-            form.find("[name='" + props.stats[i].identifier + "']").attr(
-                "value",
-                props.stats[i].value
-            );
-
-            form.find("[name='" + props.stats[i].identifier + "']")
-                .parent()
-                .siblings(".review-item-label__score")
-                .text(props.stats[i].score);
-            // console.log(some);
-        }
-
-        element = form[0].outerHTML;
-
-        // console.log(form);
-
-        return element;
-    },
-
-    get_ProsandCons: function(selector, group, reviewContent, form) {
-        var list = jQuery(reviewContent)
-            .parent()
-            .find("form.form")
-            .find("[data-repeater-list=" + group + "]");
-
-        var duplicateItem = jQuery(form)
-            .find("[data-repeater-list=" + group + "] [data-repeater-item]")
-            .first()
-            .parent()
-            .html();
-
-        ProsAndCons.addItem(selector, list, group, duplicateItem);
-        ProsAndCons.deleteItem(selector, list, group);
-
-        // Already loaded element Pros and Cons Dropdown
-        jQuery(selector + " .ui.prosandcons.dropdown").dropdownX({
-            allowAdditions: true,
-        });
-    },
-
-    getEditProps: function(content) {
+    getEditProps: function (content) {
         var item = jQuery(content).closest(".comment");
         var stats = [];
         var items = item.find(".stats input");
@@ -260,46 +126,9 @@ var Edit = {
         return props;
     },
 
-    cancelBtn: function(reviewContent) {
-        var links = jQuery(selectors.links);
-        jQuery(selectors.reviewForm + " .button.cancel").click(function(e) {
-            e.preventDefault();
-
-            links.show();
-            reviewContent.show();
-
-            jQuery(this)
-                .closest("form.form")
-                .remove();
-
-            // var content = cancelButton;
-            // console.log("@@@ content @@@");
-            // console.log(content);
-
-            // .find(".text")
-            // .show();
-
-            // console.log("@@@ something wrong with you  @@@");
-        });
-    },
-
-    getEditForm: function() {
+    getEditModifiedForm: function (props) {
         var form = jQuery(selectors.reviewForm);
-        var duplicateForm = form.clone();
-        var editForm = this.modifyForm(duplicateForm);
-        var editFormHtml = editForm
-            .clone()
-            .wrap("<form class='" + selectors.reviewForm + "''>")
-            .css("display", "block")
-            .parent()
-            .html();
 
-        // form.remove();
-
-        return editFormHtml;
-    },
-
-    modifyForm: function(form) {
         form.find("h2").remove();
         form.find("h5").addClass("ui tiny header");
         form.find(".button").addClass("mini");
@@ -314,8 +143,110 @@ var Edit = {
             .siblings(".two.fields")
             .remove();
 
+        form.attr("data-comment-id", props.comment_id);
+        form.attr("data-method", props.methodType);
+
+        form.find("[name='title']").attr("value", props.title);
+        form.find("[name='description']").text(props.description);
+
+        for (var i = 0; i < props.stats.length; i++) {
+            form.find("[name='" + props.stats[i].identifier + "']")
+                .siblings(".stars-result")
+                .css({
+                    width: props.stats[i].value + "%",
+                });
+
+            form.find("[name='" + props.stats[i].identifier + "']").attr(
+                "value",
+                props.stats[i].value
+            );
+
+            form.find("[name='" + props.stats[i].identifier + "']")
+                .parent()
+                .siblings(".review-item-label__score")
+                .text(props.stats[i].score);
+        }
+
+        form.show();
+
         return form;
     },
+
+    cancelBtn: function (reviewContent) {
+        var links = jQuery(selectors.links);
+        jQuery(selectors.reviewForm + " .button.cancel").click(function (e) {
+            e.preventDefault();
+
+            links.show();
+            reviewContent.show();
+
+            jQuery(this)
+                .closest("form.form")
+                .remove();
+        });
+    },
+
+    editFormSubmit: function (reviewContent, reviewProps) {
+        thisModule = this;
+        var SCRForm = reviewContent.parent().find("form.form");
+        console.log("editFormSubmit entry");
+        reviewContent
+            .parent()
+            .find("form.form")
+            .form({
+                fields: Form.getRules(),
+                onSuccess: function (event, fields) {
+                    console.log("editFormSubmit success");
+                    event.preventDefault();
+                    if (editFormSubmitted) {
+                        return;
+                    }
+                    editFormSubmitted = true;
+                    reviewContent
+                        .parent()
+                        .find("form.form .submit.button")
+                        .addClass("loading");
+                    setTimeout(function () {
+                        editFormSubmitted = false;
+                    }, 10000);
+
+                    var props = thisModule.getProps(SCRForm, fields);
+                    props.pros = reviewProps.pros;
+                    props.cons = reviewProps.cons;
+                    // console.log(props);
+                    jQuery
+                        .post(scr_ajax.ajax_url, props, function (results) {
+                            results = JSON.parse(results);
+                            console.log("@@@@ Edit Form Results @@@");
+                            console.log(results);
+
+                            // Reloading the page
+                            setInterval("window.location.reload()", 6000);
+                        })
+                        .fail(function (response) {
+                            // Fail Message
+                            console.log("editFormSubmit fail");
+                            console.log(response);
+                            SCRForm.html("Failed Updated");
+
+                            // Reloading the page
+                            setInterval("window.location.reload()", 6000);
+                        });
+                },
+            });
+    },
+
+    getProps: function (submittingForm, fields) {
+        fields.action = submittingForm.attr("action");
+        fields.type = submittingForm.attr("method");
+        fields.post_id = submittingForm.attr("post_id");
+        fields.comment_id = submittingForm.attr("data-comment-id");
+        fields.captcha = submittingForm.find("#captcha").attr("value");
+        fields.methodType = submittingForm.attr("data-method");
+
+        return fields;
+    },
+
 };
 
 module.exports = Edit;

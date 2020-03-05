@@ -67,9 +67,6 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
             $stats = [];
             $stat_count = 0;
 
-            // if (!isset($args['items']['stats-list']) && empty($args['items']['stats-list'])) {
-            //     return $stats;
-            // }
             if (isset($args['global_stats']) && !empty($args['global_stats'])) {
                 foreach ($args['global_stats'] as $allowed_stat) {
 
