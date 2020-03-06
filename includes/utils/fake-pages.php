@@ -17,7 +17,7 @@ class SCRFakePages
 
         $content .= apply_filters('scr_photos_review/get_all_photos', array());
         $content .= '</br></br>';
-        $content .= apply_filters('scr_photos_review/get_single_photos', array());
+        $content .= apply_filters('scr_photos_review/get_single_review_photos', array());
 
         return $content;
     }
@@ -26,9 +26,9 @@ class SCRFakePages
      * Internally registers pages we want to fake. Array key is the slug under which it is being available from the frontend
      * @return mixed
      */
-    private static function get_fake_pages()
+    private function get_fake_pages()
     {
-        $content = self::get_page_content();
+        $content = $this->get_page_content();
         //http://example.com/helpie-components
         $fake_pages['review-ui-components'] = array(
             'title' => 'Review UI Components',
@@ -48,7 +48,7 @@ class SCRFakePages
     public function fake_pages($posts)
     {
         global $wp, $wp_query;
-        $fake_pages = self::get_fake_pages();
+        $fake_pages = $this->get_fake_pages();
         $fake_pages_slugs = array();
         foreach ($fake_pages as $slug => $fp) {
             $fake_pages_slugs[] = $slug;
@@ -64,7 +64,7 @@ class SCRFakePages
                 $fake_page = strtolower($wp->query_vars['page_id']);
             }
             $posts = null;
-            $posts[] = self::create_fake_page($fake_page, $fake_pages[$fake_page]);
+            $posts[] = $this->create_fake_page($fake_page, $fake_pages[$fake_page]);
             $wp_query->is_page = true;
             $wp_query->is_singular = true;
             $wp_query->is_home = false;
@@ -89,7 +89,7 @@ class SCRFakePages
      *
      * @return stdClass
      */
-    private static function create_fake_page($pagename, $page)
+    private function create_fake_page($pagename, $page)
     {
         $post = new stdClass;
         $post->post_author = 1;

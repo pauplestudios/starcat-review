@@ -20,7 +20,7 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Model')) {
             return $viewProps;
         }
 
-        public function get_single_photos_viewProps($args)
+        public function get_single_review_photos_viewProps($args)
         {
             $photos_JSON = file_get_contents(SCR_PT_PATH . 'includes/utils/photos.json');
             $photos = json_decode($photos_JSON, true);
@@ -29,13 +29,13 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Model')) {
 
             $start = 50;
             foreach ($props as $key => $value) {
-                for ($i = $start; $i < sizeof($photos['photos']); $i++) {
-                    if ($i % 3 === 0 && ($i !== $start)) {
+                for ($ii = $start; $ii < sizeof($photos['photos']); $ii++) {
+                    if ($ii % 3 === 0 && ($ii !== $start)) {
                         break;
                     }
-                    array_push($props[$key], $photos['photos'][$i]['src']['tiny']);
+                    array_push($props[$key], $photos['photos'][$ii]['src']['tiny']);
                 }
-                $start = $i;
+                $start = $ii;
             };
 
             return $props;
@@ -64,21 +64,21 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Model')) {
         {
             $items = [];
 
-            $data_review_id = ($from !== 0) ? $collection['from'] / $collection['photos_per_review'] : 0; // Temporary review ID
+            $data_review_id = ($collection['from'] !== 0) ? $collection['from'] / $collection['photos_per_review'] : 0; // Temporary review ID
 
-            for ($i = $collection['from']; $i < sizeof($collection['photos']); $i++) {
+            for ($ii = $collection['from']; $ii < sizeof($collection['photos']); $ii++) {
 
-                if (($i % $collection['photos_per_page'] === 0) && ($i !== $collection['from'])) {
+                if (($ii % $collection['photos_per_page'] === 0) && ($ii !== $collection['from'])) {
                     break;
                 }
 
-                if ($i % $collection['photos_per_review'] === 0) {
+                if ($ii % $collection['photos_per_review'] === 0) {
                     $data_review_id++;
                 }
 
                 $item = [
                     'review_id' => $data_review_id,
-                    'image_src' => $collection['photos'][$i]['src'][$collection['size']],
+                    'image_src' => $collection['photos'][$ii]['src'][$collection['size']],
                 ];
 
                 array_push($items, $item);

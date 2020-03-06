@@ -31,8 +31,8 @@ var Gallery = {
     eventHandler: function () {
         this.showGallery();
         this.goBackToGallery();
-        // this.onReviewPhotosClick();
-        // this.onGalleryPhotosClick();
+        this.onReviewPhotosClick();
+        this.onGalleryPhotosClick();
         this.onGalleryPhotosPreviewClick();
 
         Modal.init(selectors.modal, selectors.modalClose);
@@ -46,13 +46,7 @@ var Gallery = {
             Modal.show(selectors.modal);
             jQuery(selectors.gallerySection).show();
             jQuery(selectors.sliderSection).hide().find('.header').show();
-
-            // Trigger once Gallery events because we attach the rest of the ajax request after succsessful response 
-            if (triggerOnce)
-                return;
-            triggerOnce = true;
-
-            thisModule.addRestOfThePhotos();
+            thisModule.addRestOfThePhotosOnce();
         });
 
     },
@@ -64,7 +58,17 @@ var Gallery = {
         });
     },
 
+    addRestOfThePhotosOnce: function () {
+        // Trigger once Gallery events because we attach the rest of the ajax request after succsessful response 
+        if (triggerOnce)
+            return;
+        triggerOnce = true;
+
+        Gallery.addRestOfThePhotos();
+    },
+
     addRestOfThePhotos: function () {
+
         var thisModule = this;
         var shownGallery = jQuery(selectors.showGallery);
         var gallery = jQuery(selectors.gallery);
@@ -99,13 +103,15 @@ var Gallery = {
         singleReviewPhotos.unbind();
 
         singleReviewPhotos.click(function () {
-            var currentPhotosGroup = jQuery(this).data('review-id');
-            var group = jQuery(selectors.singleReviewPhotos + "[data-review-id=" + currentPhotosGroup + "]");
 
+            // Show Modal
             Modal.show(selectors.modal);
             jQuery(selectors.gallerySection).hide();
             jQuery(selectors.sliderSection).show().find('.header').hide();
-            Slider.addSlideControls(group);
+
+            // Slider Controls                 
+            var reviewID = jQuery(this).data('review-id');
+            Slider.showSlider(Slider.getProps(reviewID, 'review'));
         });
     },
 
@@ -114,12 +120,14 @@ var Gallery = {
         singleGalleryPhotos.unbind();
 
         singleGalleryPhotos.click(function () {
-            var currentPhotosGroup = jQuery(this).data('review-id');
-            var group = jQuery(selectors.singleGalleryPhotos + "[data-review-id=" + currentPhotosGroup + "]");
 
+            // Show Modal
             jQuery(selectors.gallerySection).hide();
             jQuery(selectors.sliderSection).show();
-            Slider.addSlideControls(group);
+
+            // Slider Controls          
+            var reviewID = jQuery(this).data('review-id');
+            Slider.showSlider(Slider.getProps(reviewID, 'gallery'));
         });
     },
 
@@ -127,21 +135,19 @@ var Gallery = {
         var singleGalleryPhotosPreview = jQuery(selectors.singleGalleryPhotosPreview);
 
         singleGalleryPhotosPreview.click(function () {
-            var currentPhotosGroup = jQuery(this).data('review-id');
-            var group = jQuery(selectors.singleGalleryPhotos + "[data-review-id=" + currentPhotosGroup + "]");
-
-            var slides = {
-                prev: group.first().prev().data('review-id'),
-                next: group.last().next().data('review-id'),
-                slides: group
-            };
-
+            // Show modal
             Modal.show(selectors.modal);
             jQuery(selectors.gallerySection).hide();
             jQuery(selectors.sliderSection).show().find('.header').hide();
-            Slider.addSlideControls(slides);
+
+            // Slider Controls
+            var reviewID = jQuery(this).data('review-id');
+            Slider.showSlider(Slider.getProps(reviewID, 'gallery'));
+
+            Gallery.addRestOfThePhotosOnce();
         });
     },
+
 
     setImagesFromPlaceholder: function (images) {
         var gallery = jQuery(selectors.gallery);
