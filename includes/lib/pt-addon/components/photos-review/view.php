@@ -31,7 +31,7 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
             return $html;
         }
 
-        public function get_single_photos($props)
+        public function get_single_review_photos($props)
         {
             $html = '<div class="ui comments">';
             foreach ($props as $key => $images) {

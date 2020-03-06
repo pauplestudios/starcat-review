@@ -20,7 +20,7 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Model')) {
             return $viewProps;
         }
 
-        public function get_single_photos_viewProps($args)
+        public function get_single_review_photos_viewProps($args)
         {
             $photos_JSON = file_get_contents(SCR_PT_PATH . 'includes/utils/photos.json');
             $photos = json_decode($photos_JSON, true);
