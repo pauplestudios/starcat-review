@@ -30,11 +30,6 @@ var Edit = {
             // Show all reviews list links
             links.show();
 
-            // Remove all reviews list forms except clonned form
-            jQuery(selectors.userReviews)
-                .find("form.form")
-                .remove();
-
             // Hide clicked review link
             link.parent()
                 .parent()
@@ -53,7 +48,9 @@ var Edit = {
 
             reviewProps = thisModule.getEditProps(reviewContent);
 
-            var form = thisModule.getEditModifiedForm(reviewProps);
+            // var form = thisModule.getEditModifiedForm(reviewProps);
+            var form = jQuery(selectors.userReviews);
+            form.attr("data-comment-id", props.comment_id);
 
             // Append clonned edit form into closest review content of clicked edit link
             reviewContent.after(form).next(selectors.reviewForm);
@@ -129,7 +126,6 @@ var Edit = {
     getEditModifiedForm: function (props) {
         var form = jQuery(selectors.reviewForm);
 
-        form.find("h2").remove();
         form.find("h5").addClass("ui tiny header");
         form.find(".button").addClass("mini");
         form.find(".dropdown").addClass("mini");
@@ -182,7 +178,7 @@ var Edit = {
 
             jQuery(this)
                 .closest("form.form")
-                .remove();
+                .hide();
         });
     },
 

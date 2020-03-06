@@ -22,14 +22,14 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
         public function get()
         {
             $html = '';
-            $style = 'style="display: block"';
+
             // User Already Reviewed or Not Logged in User
             if (!$this->props['collection']['can_user_review']) {
-                $style = 'style="display: none"';
+                $html .= $this->get_edit_form();
+                return $html;
             }
 
-            // $html .= '<script src="https://www.google.com/recaptcha/api.js" async defer></script>';
-            $html .= '<form class="ui form scr-user-review" action="scr_user_review_submission" method="post" post_id ="' . $this->props['collection']['post_id'] . '" ' . $style . '>';
+            $html .= '<form class="ui form scr-user-review" action="scr_user_review_submission" method="post" post_id ="' . $this->props['collection']['post_id'] . '">';
 
             if ($this->props['collection']['show_form_title']) {
                 $html .= '<h2 class="ui header">';
@@ -68,6 +68,63 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             $html .= '<div class="field">';
             $html .= '<button class="ui blue submit button"> Submit </button>';
             $html .= '</div>';
+            $html .= '</form>';
+
+            return $html;
+        }
+
+        public function get_edit_form()
+        {
+            error_log('this->props[current_user_review] : ' . print_r($this->props, true));
+
+            $method_type = 'PUT';
+            $review = $this->props['items']['data'];
+            $title = (isset($review['title'])) ? $review['title'] : '';
+            $description = (isset($review['description'])) ? $review['description'] : '';
+
+            // Edit form
+            $html .= '<form
+            class="ui form scr-user-review mini"
+            action="scr_user_review_submission"
+            method="post"
+            post_id ="' . $this->props['collection']['post_id'] . '"
+            style="display: none"
+            data-method="' . $method_type . '"
+            >';
+
+            if ($this->props['collection']['show_title']) {
+                $html .= '<div class="inline field">';
+                // $html .= '<label>Review Title</label>';
+                $html .= '<input type="text" name="title" placeholder="Title" value="' . $title . '"/>';
+                $html .= '</div>';
+            }
+
+            if ($this->props['collection']['show_stats']) {
+                $html .= '<div class="rating fields">';
+                $html .= $this->get_user_review();
+                $html .= '</div>';
+            }
+
+            if ($this->props['collection']['show_description']) {
+                $html .= '<div class="field">';
+                // $html .= '<label>Review Description</label>';
+                $html .= '<textarea rows="5" spellcheck="false" name="description" placeholder="Description">' . $description . '</textarea>';
+                $html .= '</div>';
+            }
+
+            if ($this->props['collection']['show_prosandcons']) {
+                $html .= $this->get_pros_and_cons();
+            }
+
+            // if ($this->props['collection']['show_captcha']) {
+            //     $html .= Recaptcha::load_v2_html();
+            // }
+
+            $html .= '<div class="field">';
+            $html .= '<div class="ui blue submit mini button"> Save </div>';
+            $html .= '<div class="ui cancel mini button"> Cancel </div>';
+            $html .= '</div>';
+
             $html .= '</form>';
 
             return $html;
@@ -137,7 +194,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
         protected function get_prosandcons_option($option)
         {
             $html = '<option value=""> Type a new one or select existing ' . $option . '</option>';
-            foreach ($this->props['items'][$option] as $value) {
+            foreach ($this->props['items']['ui'][$option] as $value) {
                 if (!empty($value['item'])) {
                     $html .= '<option value="' . $value['item'] . '"> ' . $value['item'] . '</option>';
                 }
@@ -149,10 +206,10 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
         protected function get_user_review()
         {
             $html = '';
-            if (sizeof($this->props['items']['stats']) == 0) {
+            if (sizeof($this->props['items']['ui']['stats']) == 0) {
                 return $html;
             }
-            // $html .= '<label>User Review</label>';
+
             $html .= '<ul class="review-list"
                 data-type="' . $this->props['collection']['review_type'] . '"
                 data-limit="' . $this->props['collection']['limit'] . '"
@@ -161,19 +218,16 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
                 data-list="items"
                 >';
 
-            foreach ($this->props['items']['stats'] as $key => $value) {
+            foreach ($this->props['items']['ui']['stats'] as $key => $value) {
                 switch ($this->props['collection']['review_type']) {
                     case "star":
                         $html .= $this->get_star_rating($key);
                         break;
-                    case "bar":
-                        $html .= $this->get_bar_rating($key);
-                        break;
-                    case "range":
-                        $html .= $this->get_range_rating_fallback($key);
-                        break;
+                    // case "bar":
+                    //     $html .= $this->get_bar_rating($key);
+                    //     break;
                     default:
-                        $html .= $this->get_text_rating_fallback($key);
+                        $html .= $this->get_star_rating($key);
                 }
             }
 
@@ -189,32 +243,32 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
 
         protected function get_bar_rating($key)
         {
-            return $this->bar_rating->get_review_stat($key, 0, 0);
+            return $this->bar_rating->get_review_stat($key, 5, 5);
         }
 
         //  Todo: Text Rating
-        protected function get_text_rating_fallback()
-        {
-            return '<div class="column">
-                <div> Feature </div>
-                <div class="ui left labeled input">
-                    <div class="ui basic label"> # </div>
-                    <input type="number" name="review_number" placeholder="Number" min="1" max="100" maxlength="2">
-                </div>
-            </div>';
-        }
+        // protected function get_text_rating_fallback()
+        // {
+        //     return '<div class="column">
+        //         <div> Feature </div>
+        //         <div class="ui left labeled input">
+        //             <div class="ui basic label"> # </div>
+        //             <input type="number" name="review_number" placeholder="Number" min="1" max="100" maxlength="2">
+        //         </div>
+        //     </div>';
+        // }
 
         //  Todo: Range Rating
-        protected function get_range_rating_fallback($value = 10, $min = 0, $max = 100)
-        {
-            $html = '<div class="scr-rating-wrapper"><hr class="scr-divider">';
+        // protected function get_range_rating_fallback($value = 10, $min = 0, $max = 100)
+        // {
+        //     $html = '<div class="scr-rating-wrapper"><hr class="scr-divider">';
 
-            $html .= '<div class="scr-user-review__rating">';
-            $html .= '<input type="range" min="' . $min . '" max="' . $max . '" value="' . $value . '" class="scr-user-review__range">';
-            $html .= '</div><span class="scr-user-review__value">' . $value . " / " . $max . "%" . '</span>';
-            $html .= '</div>';
+        //     $html .= '<div class="scr-user-review__rating">';
+        //     $html .= '<input type="range" min="' . $min . '" max="' . $max . '" value="' . $value . '" class="scr-user-review__range">';
+        //     $html .= '</div><span class="scr-user-review__value">' . $value . " / " . $max . "%" . '</span>';
+        //     $html .= '</div>';
 
-            return $html;
-        }
+        //     return $html;
+        // }
     } // END CLASS
 }

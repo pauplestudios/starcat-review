@@ -8,22 +8,22 @@ var selectors = {
 };
 
 var Reply = {
-    init: function() {
+    init: function () {
         this.eventListener();
     },
-    eventListener: function() {
+    eventListener: function () {
         this.showForm();
         this.formValidation();
     },
 
-    showForm: function() {
+    showForm: function () {
         var thisModule = this;
         var links = jQuery(selectors.links);
         var replyLinks = jQuery(selectors.replyLink);
         var editLinks = jQuery(selectors.editLink);
         var formClone = this.getFormClone();
 
-        replyLinks.click(function() {
+        replyLinks.click(function () {
             var replyLink = jQuery(this);
             var author = replyLink
                 .closest(".content")
@@ -34,11 +34,6 @@ var Reply = {
 
             // Show all reviews list links
             links.show();
-
-            // Remove all reviews list forms except clonned form
-            jQuery(selectors.userReviews)
-                .find("form.form")
-                .remove();
 
             jQuery(".comment .content .text").show();
             // Hide clicked review link
@@ -67,7 +62,7 @@ var Reply = {
             thisModule.cancelBtn("");
         });
 
-        editLinks.click(function() {
+        editLinks.click(function () {
             var editForm = thisModule.getEditForm(formClone);
             var editLink = jQuery(this);
             var author = editLink
@@ -132,7 +127,7 @@ var Reply = {
         });
     },
 
-    getEditForm: function(formClone) {
+    getEditForm: function (formClone) {
         editForm = jQuery(formClone);
         editForm
             .find(".submit.button")
@@ -142,7 +137,7 @@ var Reply = {
         return editForm[0].outerHTML;
     },
 
-    getFormClone: function() {
+    getFormClone: function () {
         var form = jQuery(selectors.replyForm);
         var clone = form
             .clone()
@@ -156,7 +151,7 @@ var Reply = {
         return clone;
     },
 
-    formValidation: function() {
+    formValidation: function () {
         var thisModule = this;
         var replyForm = jQuery(selectors.replyForm);
         var placeholderContent = this.getPlaceholderContent();
@@ -165,7 +160,7 @@ var Reply = {
             fields: {
                 description: "empty",
             },
-            onSuccess: function(e, fields) {
+            onSuccess: function (e, fields) {
                 e.preventDefault();
                 replyForm.replaceWith(placeholderContent);
                 thisModule.submit(replyForm, fields);
@@ -173,7 +168,7 @@ var Reply = {
         });
     },
 
-    submitEditForm: function(editProps) {
+    submitEditForm: function (editProps) {
         var thisModule = this;
         var replyForm = jQuery(selectors.replyForm);
         var links = jQuery(selectors.links);
@@ -183,7 +178,7 @@ var Reply = {
             fields: {
                 description: "empty",
             },
-            onSuccess: function(e, fields) {
+            onSuccess: function (e, fields) {
                 e.preventDefault();
 
                 var props = thisModule.getProps(replyForm, fields);
@@ -200,7 +195,7 @@ var Reply = {
                     .remove();
 
                 jQuery
-                    .post(scr_ajax.ajax_url, props, function(results) {
+                    .post(scr_ajax.ajax_url, props, function (results) {
                         results = JSON.parse(results);
                         // console.log(results);
 
@@ -208,7 +203,7 @@ var Reply = {
                         editResult.find(".text").text(results.comment_content);
                         editResult.transition("pulse");
                     })
-                    .fail(function(response) {
+                    .fail(function (response) {
                         console.log("review_reply failed");
                         console.log(response);
                     });
@@ -218,9 +213,9 @@ var Reply = {
         });
     },
 
-    cancelBtn: function(reviewContent) {
+    cancelBtn: function (reviewContent) {
         var links = jQuery(selectors.links);
-        jQuery(selectors.replyForm + " .button.cancel").click(function(e) {
+        jQuery(selectors.replyForm + " .button.cancel").click(function (e) {
             e.preventDefault();
             links.show();
 
@@ -234,12 +229,12 @@ var Reply = {
         });
     },
 
-    submit: function(form, fields) {
+    submit: function (form, fields) {
         var props = this.getProps(form, fields);
         // console.log(props);
 
         jQuery
-            .post(scr_ajax.ajax_url, props, function(results) {
+            .post(scr_ajax.ajax_url, props, function (results) {
                 results = JSON.parse(results);
                 // console.log(results);
                 jQuery("#" + results.props.comment_parent)
@@ -249,13 +244,13 @@ var Reply = {
 
                 jQuery("#" + results.props.comment_id).transition("pulse");
             })
-            .fail(function(response) {
+            .fail(function (response) {
                 console.log("review_reply failed");
                 console.log(response);
             });
     },
 
-    getProps: function(submittingForm, fields) {
+    getProps: function (submittingForm, fields) {
         fields.action = submittingForm.attr("action");
         fields.type = submittingForm.attr("method");
         fields.post_id = submittingForm.attr("data-post-id");
@@ -264,7 +259,7 @@ var Reply = {
         return fields;
     },
 
-    getPlaceholderContent: function() {
+    getPlaceholderContent: function () {
         var html = "";
         html += '<div class="ui review_reply placeholder" data-reply-token="">';
         html += '<div class="image header">';
