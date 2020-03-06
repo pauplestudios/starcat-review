@@ -80,6 +80,9 @@
         & .photos-review__slide.swiper-slide {
             text-align: center;
         }
+        & img{
+            display: inline;
+        }
     }
 
     & .photos-review__button-prev, .photos-review__button-next{
