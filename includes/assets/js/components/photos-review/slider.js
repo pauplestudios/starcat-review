@@ -45,6 +45,7 @@ var Slider = {
             thumbs: {
                 swiper: sliderThumbs,
             },
+            watchSlidesProgress: true,
         };
 
         new Swiper(selectors.sliderTop, sliderTopArgs);
@@ -140,6 +141,34 @@ var Slider = {
         // Hide Slides excecpt Active Reviews
         swiper.sliderTop.on("slideChangeTransitionEnd", function () {
             Slider.hidesReviewSlides();
+
+            // var activeSlide = jQuery(selectors.sliderTop + ' .swiper-slide.swiper-slide-active').data('review-id');
+            // var notShownSlideIndex = [];
+
+            // var activeReviewID = this.slides[this.realIndex].getAttribute('data-review-id');
+            // console.log(activeReviewID);
+            // console.log('swiper.realIndex' + this.realIndex);
+            // var activeElementSlide = '';
+            // for (var index = 0; index < this.slides.length; index++) {
+            //     if (this.slides[index].getAttribute('data-review-id') !== activeReviewID) {
+            //         notShownSlideIndex.push(index);
+            //     }
+            // }
+            // console.log(notShownSlideIndex);
+            // swiper.sliderTop.removeSlide(notShownSlideIndex);
+            // swiper.sliderThumbs.removeSlide(notShownSlideIndex);
+            // jQuery(selectors.sliderThumbs + ' .swiper-slide').hide();
+            // jQuery(selectors.sliderThumbs + " [data-review-id=" + activeSlide + "]").css('display', 'flex');
+        });
+
+
+        swiper.sliderThumbs.on("setTranslate", function (translate) {
+            var thisContext = this;
+            if (document.documentElement.clientWidth < 600) {
+                setTimeout(function () {
+                    thisContext.setTranslate(0);
+                }, 1);
+            }
         });
 
     },
