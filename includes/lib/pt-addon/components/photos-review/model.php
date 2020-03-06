@@ -64,7 +64,7 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Model')) {
         {
             $items = [];
 
-            $data_review_id = ($from !== 0) ? $collection['from'] / $collection['photos_per_review'] : 0; // Temporary review ID
+            $data_review_id = ($collection['from'] !== 0) ? $collection['from'] / $collection['photos_per_review'] : 0; // Temporary review ID
 
             for ($i = $collection['from']; $i < sizeof($collection['photos']); $i++) {
 
