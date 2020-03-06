@@ -1,6 +1,7 @@
 {
   "require": {
-    "ext-gd": "*"
+    "ext-gd": "*",
+    "spatie/schema-org": "^2.8"
   },
   "require-dev": {
     "lucatume/wp-browser": "~2.1.5",
