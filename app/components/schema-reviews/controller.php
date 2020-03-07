@@ -36,6 +36,28 @@ if (!class_exists('\StarcatReview\App\Components\Schema_Reviews\Controller')) {
             $schema_service = new \StarcatReview\App\Services\Review_Schema();
             $get_schema = $schema_service->get_schema($post_infos);
 
+            $image_url = SCR_URL . 'includes/assets/img/tomato.png';
+            $local_args = array(
+                'type' => 'LOCAL_BUSINESS',
+                'name'  => 'ABC Corp',
+                'telephone_no' => '1234567',
+                'url'   => 'https://search.google.com/structured-data/testing-tool',
+                'price_range' => '$$',
+                'image'     => $image_url,
+                'rating'    => array(
+                        'value' => 41,
+                        'count' => 12
+                    ),
+                'address'   => array(
+                    'locality' => 'srirangam',
+                    'region'    =>'trichy',
+                    'postal_code' => '620006',
+                    'street_address' => '123 vadikalal street'
+                )            
+            );
+            error_log("args".print_r($local_args,true));
+            $local_schema = $schema_service->get_schema($local_args);
+            error_log("local_business_schema".$local_schema);
             return $get_schema;
         }
     }
