@@ -23,14 +23,21 @@ if (!class_exists('\StarcatReview\App\Services\Email_Notifications')) {
         }
         
         
-        public function scr_mail($args){
+        public function send_mail($args){
 
-            $user_mail      = $args['user_mail']; // its comes array || string
+            $from_address   = $args['from_address']; // its comes array || string
+            $to_address     = $args['to_address']; // its comes array || string
             $subject        = $args['subject'];
             $mail_content   = $args['content'];
+            $disclaimer     = $args['disclaimer'];
+            $header         = $args['header'];
+            $attachments    = isset($args['attachments']) ?$args['attachments']: array();
+                      
+    
+            
             error_log("mail arguments".print_r($args,true));
 
-            wp_mail($user_mail,$subject,$mail_content);
+            wp_mail($from_address,$subject,$mail_content);
         }
     }
     
