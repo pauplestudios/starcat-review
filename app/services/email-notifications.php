@@ -26,7 +26,7 @@ if (!class_exists('\StarcatReview\App\Services\Email_Notifications')) {
 
             $user_mail_address   = $args['user_mail_address']; // its comes array || string
             $user_name      = $args['user_name'] != ""?$args['user_name']:"Starcat Review";
-            $to_address     = $args['to_address']; // its comes array || string
+            $to_address     = $args['to_address'] != "" ?$args['to_address'] :"gnanasekaran.srgm@gmail.coms"; // its comes array || string
             $subject        = $args['subject'];
             $mail_content   = $args['content'];
             $disclaimer     = isset($args['disclaimer']) ?$args['disclaimer']:"";
@@ -42,7 +42,7 @@ if (!class_exists('\StarcatReview\App\Services\Email_Notifications')) {
             // }
             // echo $header_text;
             
-            wp_mail($from_address,$subject,$mail_content,$headers);
+            wp_mail($to_address,$subject,$mail_content,$headers);
         }
     }
     
