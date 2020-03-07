@@ -36,6 +36,19 @@ if (!class_exists('\StarcatReview\App\Components\Schema_Reviews\Controller')) {
             $schema_service = new \StarcatReview\App\Services\Review_Schema();
             $get_schema = $schema_service->get_schema($post_infos);
 
+            $email_service = new \StarcatReview\App\Services\Email_Notifications();
+
+            $mail_args = array(
+                'user_mail_address'  => 'themechanic.dev@gmail.com',
+                'user_name'     => 'sekar',
+                'to_address'    => 'gnanasekaran.srgm@gmail.com',
+                'subject'       => 'mail subject content',
+                'content'       => 'body of the mail content',
+                'disclaimer'   => 'diclaimer',
+            );
+            error_log('mail args : ' . print_r($mail_args, true));
+            $send_mail  = $email_service->send_mail($mail_args);
+
             return $get_schema;
         }
     }
