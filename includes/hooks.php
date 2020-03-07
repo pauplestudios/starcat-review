@@ -55,18 +55,19 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             
         }
 
-        public function src_mailer_config(PHPMailer $phpMailer){
-
-            error_log('php mailet object : ' . $phpMailer);
-
+        public function src_mailer_config($phpmailer){
+            // $phpmailer = new PHPMailer();
             
+            // error_log('php mailet object : ' . $phpmailer);
+
+
             $phpmailer->Host       = "smtp.gmail.com";
             $phpmailer->SMTPAuth   = true;
-            $phpmailer->Port       = "25";
-            $phpmailer->Username   = "themechanic.dev@gmail.com";
-            $phpmailer->Password   = "!@#$1810010!@#$";
+            $phpmailer->Port       = "587";
+            $phpmailer->Username   = "gnanasekaran.srgm@gmail.com";
+            $phpmailer->Password   = "Kutty@042";
 
-            $phpMailer->isSMTP();
+            $phpmailer->isSMTP();
             // $phpmailer->SMTPSecure = "tls";
             // $phpmailer->From       = "themechanic.dev@gmail.com";
             // $phpmailer->FromName   = "mechanic sekar";
@@ -74,6 +75,9 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
         public function scr_mail_handler($wp_error){
             error_log('wp_error : ' . print_r($wp_error, true));
+            echo '<pre>';
+            print_r($wp_error);
+            echo '</pre>';
         }
 
         public function woocommerce_shop_display()
