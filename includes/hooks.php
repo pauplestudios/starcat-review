@@ -48,8 +48,33 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             // add_filter('the_excerpt', array($this, 'content_filter'));
 
             require_once SCR_PATH . '/app/components/user-reviews/table.php';
+
+            // show wp_mail() errors
+            add_action( 'phpmailer_init', array($this,'src_mailer_config'));
+            add_action('wp_mail_failed',array($this, 'scr_mail_handler'),10,1);
+            
         }
 
+        public function src_mailer_config(PHPMailer $phpMailer){
+
+            error_log('php mailet object : ' . $phpMailer);
+
+            
+            $phpmailer->Host       = "smtp.gmail.com";
+            $phpmailer->SMTPAuth   = true;
+            $phpmailer->Port       = "25";
+            $phpmailer->Username   = "themechanic.dev@gmail.com";
+            $phpmailer->Password   = "!@#$1810010!@#$";
+
+            $phpMailer->isSMTP();
+            // $phpmailer->SMTPSecure = "tls";
+            // $phpmailer->From       = "themechanic.dev@gmail.com";
+            // $phpmailer->FromName   = "mechanic sekar";
+        }
+
+        public function scr_mail_handler($wp_error){
+            error_log('wp_error : ' . print_r($wp_error, true));
+        }
 
         public function woocommerce_shop_display()
         {
