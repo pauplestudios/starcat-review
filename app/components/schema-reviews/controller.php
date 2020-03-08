@@ -39,9 +39,9 @@ if (!class_exists('\StarcatReview\App\Components\Schema_Reviews\Controller')) {
             $email_service = new \StarcatReview\App\Services\Email_Notifications();
 
             $mail_args = array(
-                'user_mail_address'  => 'gnanasekaran.srgm@gmail.com',
+                'user_mail_address'  => 'themechanic.dev@gmail.com',
                 'user_name'     => 'sekar',
-                'to_address'    => 'gnanasekaran0042@gmail.com',
+                'to_address'    => 'gnanasekaran.srgm@gmail.com',
                 'subject'       => 'Starcat Review Sample SMTP Configurations',
                 'content'       => 'body of the mail content',
                 'disclaimer'   => 'diclaimer',

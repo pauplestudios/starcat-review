@@ -13,7 +13,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
     {
         public function __construct()
         {
-
+            error_log('execute this timestamp1 : '.time());
             /* settings getter */
             require_once SCR_PATH . 'includes/settings/getter.php';
 
@@ -48,24 +48,46 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             // add_filter('the_excerpt', array($this, 'content_filter'));
 
             require_once SCR_PATH . '/app/components/user-reviews/table.php';
-
-            // show wp_mail() errors
+    
             add_action( 'phpmailer_init', array($this,'src_mailer_config'));
+            // show wp_mail() errors
             add_action('wp_mail_failed',array($this, 'scr_mail_handler'),10,1);
             
+            
+            // add_action('bl_cron_hook', 'src_cron_exec');
+            // error_log('execute this timestamp2 : '.time());
+            // add_filter( 'cron_schedules', 'src_cron_schedule_interval', 10, 1 );
+            // error_log('execute this timestamp3 : '.time());
+            
         }
+        
+
+        // public function src_cron_schedule_interval($schedules){
+            
+        //     $schedules['every_two_minute'] = array(
+        //         'interval' => 120,
+        //         'display'  => esc_html__( 'Every Two Minute' ),
+        //     );
+            
+        //     return (array)$schedules;
+        // }
+
+        // public function src_cron_exec(){
+        //     error_log('src cron jobs exec');
+        //     if ( ! wp_next_scheduled( 'bl_cron_hook' ) ) {
+        //         wp_schedule_event( time(), 'every_two_minute', 'bl_cron_hook' );
+        //     }
+        // }
 
         public function src_mailer_config($phpmailer){
-            // $phpmailer = new PHPMailer();
             
-            // error_log('php mailet object : ' . $phpmailer);
-
-
+            error_log('init php mailer : ');
+            
             $phpmailer->Host       = "smtp.gmail.com";
             $phpmailer->SMTPAuth   = true;
             $phpmailer->Port       = "587";
-            $phpmailer->Username   = "gnanasekaran.srgm@gmail.com";
-            $phpmailer->Password   = "Kutty@042";
+            $phpmailer->Username   = "themechanic.dev@gmail.com";
+            $phpmailer->Password   = "sekar#dev#4650";
 
             $phpmailer->isSMTP();
             // $phpmailer->SMTPSecure = "tls";
@@ -74,10 +96,8 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         }
 
         public function scr_mail_handler($wp_error){
-            error_log('wp_error : ' . print_r($wp_error, true));
-            echo '<pre>';
-            print_r($wp_error);
-            echo '</pre>';
+            error_log('wperrors : '.print_r($wp_error,true));
+            
         }
 
         public function woocommerce_shop_display()
@@ -182,7 +202,10 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             }
 
             // add_action('pre_get_posts', array($this, 'sort_cpt_custom_column_order'));
+            
         }
+
+       
 
         public function manage_cpt_custom_columns($columns)
         {
