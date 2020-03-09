@@ -19,7 +19,7 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
                 $html .= '<div class="ui image" data-review-id="' . $item['review_id'] . '">';
                 $html .= '<img src="' . $item['image_src'] . '"/>';
                 if (($props['collection']['preview_limit'] - 1) == $key) {
-                    $html .= $this->get_clickable_image_box($props);
+                    $html .= $this->get_gallery_preview_overlay_image_box($props);
                     $html .= '</div>';
                     break;
                 }
@@ -42,7 +42,7 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
             return $html;
         }
 
-        protected function get_clickable_image_box($props)
+        protected function get_gallery_preview_overlay_image_box($props)
         {
             $html = '<span ';
             $html .= 'class="show-gallery" ';
