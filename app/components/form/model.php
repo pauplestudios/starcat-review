@@ -57,12 +57,10 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
         public function get_itemsProps($args)
         {
             $items = [
-                'ui' => [
-                    'pros' => $this->get_filtered_prosorcons($args, 'pros-list'),
-                    'cons' => $this->get_filtered_prosorcons($args, 'cons-list'),
-                    'stats' => $this->get_filtered_stats($args),
-                ],
-                'data' => (isset($args['current_user_review'])) ? $args['current_user_review']->review : [],
+                'pros' => $this->get_filtered_prosorcons($args, 'pros-list'),
+                'cons' => $this->get_filtered_prosorcons($args, 'cons-list'),
+                'stats' => $this->get_filtered_stats($args),
+                'current_user_review' => (isset($args['current_user_review'])) ? $args['current_user_review']->review : [],
             ];
 
             return $items;

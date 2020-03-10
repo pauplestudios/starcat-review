@@ -9,15 +9,10 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
     class View
     {
-        private $html;
-
-        public function __construct($viewProps)
+        public function get($viewProps)
         {
             $this->items = $viewProps['items'];
-        }
 
-        public function get()
-        {
             // Return '' if pros and cons are empty
             if ($this->is_empty()) {
                 return '';
@@ -38,15 +33,17 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
         }
 
         // User review Form fields
-        public function get_fields()
+        public function get_fields($props)
         {
-            $data = [];
-            $options = [];
+            error_log('viewProps : ' . print_r($props, true));
+
+            // $data = [];
+            // $options = [];
 
             $html = '';
             // $html .= '<div class="two fields">';
             $html .= $this->get_field('pros', $options, $data);
-            $html .= $this->get_field('pros', $options, $data);
+            $html .= $this->get_field('cons', $options, $data);
             // $html .= '</div>';
 
             return $html;
@@ -54,7 +51,7 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
 
         protected function get_list($name, $items)
         {
-            $icon_class = ($name == 'pros') ? 'green thumbs up icon' : 'red thumbs down icon';
+            $icon_class = ($name === 'pros') ? 'green thumbs up icon' : 'red thumbs down icon';
 
             $html = "<ul class='" . $name . "'>";
 
@@ -98,7 +95,7 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
             // default option value or sometimes field placeholder
             $html = '<option value=""> Type a new one or select existing ' . $option . '</option>';
 
-            foreach ($this->props['items']['ui'][$option] as $value) {
+            foreach ($this->props['items'][$option] as $value) {
                 if (!empty($value['item'])) {
                     $html .= '<option value="' . $value['item'] . '"> ' . $value['item'] . '</option>';
                 }

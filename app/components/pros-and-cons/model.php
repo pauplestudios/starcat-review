@@ -11,43 +11,21 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\Model')) {
     {
         public function get_viewProps($args)
         {
+            $items = $this->get_items($args);
             $view_props = [
-                // 'collection' => $this->get_collection_props($args),
-                'items' => $this->get_items($args),
+                'items' => $items,
             ];
+
+            if (isset($args['current_user_review']->review) && !empty($args['current_user_review']->review)) {
+
+                $view_props['fields'] = [
+                    'pros' => $this->get_list($args['current_user_review']->review['pros']),
+                    'cons' => $this->get_list($args['current_user_review']->review['cons']),
+                ];
+                error_log('ProsAndCons args: ' . print_r($args, true));
+            }
 
             return $view_props;
-        }
-
-        protected function get_collection_props($args)
-        {
-            // $collectionProps = [
-            //     'display_pros_and_cons' => $args['']
-            // ];
-
-            return $args;
-        }
-
-        protected function get_collection()
-        {
-
-            $collection = [
-                'type' => $args['get_prosandcons_fields'],
-            ];
-
-            $items = [
-                'options' => [
-                    'pros' => '',
-                    'cons' => '',
-                ],
-
-                'field' => [
-                    'pros' => '',
-                    'cons' => '',
-                ],
-            ];
-
-            return $collection;
         }
 
         protected function get_items($args)

@@ -78,7 +78,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             // error_log('this->props[current_user_review] : ' . print_r($this->props, true));
 
             $method_type = 'PUT';
-            $review = $this->props['items']['data'];
+            $review = $this->props['items']['current_user_review'];
             $title = (isset($review['title'])) ? $review['title'] : '';
             $description = (isset($review['description'])) ? $review['description'] : '';
 
@@ -132,11 +132,13 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
 
         protected function get_pros_and_cons()
         {
-            $html = '';
-            // $html .= '<div class="two fields">';
+            $prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller();
+            $html = $prosandcons->get_fields($this->props);
+            // error_log('this->props : ' . print_r($this->props, true));
 
-            $html .= $this->get_pros_field();
-            $html .= $this->get_cons_field();
+            // $html = '<div class="two fields">';
+            // $html .= $this->get_pros_field();
+            // $html .= $this->get_cons_field();
 
             // $html .= '</div>';
 
@@ -194,7 +196,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
         protected function get_prosandcons_option($option)
         {
             $html = '<option value=""> Type a new one or select existing ' . $option . '</option>';
-            foreach ($this->props['items']['ui'][$option] as $value) {
+            foreach ($this->props['items'][$option] as $value) {
                 if (!empty($value['item'])) {
                     $html .= '<option value="' . $value['item'] . '"> ' . $value['item'] . '</option>';
                 }
@@ -206,7 +208,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
         protected function get_user_review()
         {
             $html = '';
-            if (sizeof($this->props['items']['ui']['stats']) == 0) {
+            if (sizeof($this->props['items']['stats']) == 0) {
                 return $html;
             }
 
@@ -218,7 +220,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
                 data-list="items"
                 >';
 
-            foreach ($this->props['items']['ui']['stats'] as $key => $value) {
+            foreach ($this->props['items']['stats'] as $key => $value) {
                 switch ($this->props['collection']['review_type']) {
                     case "star":
                         $html .= $this->get_star_rating($key);

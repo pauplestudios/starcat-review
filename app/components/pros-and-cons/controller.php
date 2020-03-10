@@ -9,25 +9,24 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReview\App\Components\ProsAndCons\Controller')) {
     class Controller
     {
-        public function __construct($args)
+        public function __construct()
         {
-            $model = new \StarcatReview\App\Components\ProsAndCons\Model();
-            $view_props = $model->get_viewProps($args);
+            $this->model = new \StarcatReview\App\Components\ProsAndCons\Model();
+            $this->view = new \StarcatReview\App\Components\ProsAndCons\View();
+        }
 
+        public function get_view($args)
+        {
+            $props = $this->model->get_viewProps($args);
+            return $this->view->get($props);
+        }
+
+        public function get_fields($args)
+        {
+            $props = $this->model->get_viewProps($args);
             // error_log('args : ' . print_r($args, true));
-            error_log('view_props : ' . print_r($view_props, true));
 
-            $this->view = new \StarcatReview\App\Components\ProsAndCons\View($view_props);
-        }
-
-        public function get_view()
-        {
-            return $this->view->get();
-        }
-
-        public function get_fields()
-        {
-            return $this->view->get_fields();
+            return $this->view->get_fields($props);
 
         }
     } // END CLASS
