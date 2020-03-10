@@ -13,10 +13,10 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
 
         public function __construct($viewProps)
         {
-            $this->itemsProps = $viewProps['items'];
+            $this->items = $viewProps['items'];
         }
 
-        public function get_html()
+        public function get()
         {
             // Return '' if pros and cons are empty
             if ($this->is_empty()) {
@@ -26,8 +26,10 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
             $html = "<div class='prosandcons'>";
             $html .= "<h6 class='ui header'>Pros & Cons</h6>";
             $html .= "<div class='items-container'>";
-            $html .= $this->get_pros_html($this->itemsProps['pros']);
-            $html .= $this->get_cons_html($this->itemsProps['cons']);
+
+            $html .= $this->get_list('pros', $this->items['pros']);
+            $html .= $this->get_list('cons', $this->items['cons']);
+
             $html .= "</div>";
 
             $html .= "</div>";
@@ -35,14 +37,30 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
             return $html;
         }
 
-        /* PRIVATE METHODS */
-        private function get_pros_html($pros)
+        // User review Form fields
+        public function get_fields()
         {
-            $html = "<ul class='pros'>";
+            $data = [];
+            $options = [];
 
-            for ($ii = 0; $ii < sizeof($pros); $ii++) {
-                if (!empty($pros[$ii])) {
-                    $html .= "<li><i class='green thumbs up icon'></i>" . $pros[$ii] . "</li>";
+            $html = '';
+            // $html .= '<div class="two fields">';
+            $html .= $this->get_field('pros', $options, $data);
+            $html .= $this->get_field('pros', $options, $data);
+            // $html .= '</div>';
+
+            return $html;
+        }
+
+        protected function get_list($name, $items)
+        {
+            $icon_class = ($name == 'pros') ? 'green thumbs up icon' : 'red thumbs down icon';
+
+            $html = "<ul class='" . $name . "'>";
+
+            for ($ii = 0; $ii < sizeof($items); $ii++) {
+                if (!empty($items[$ii])) {
+                    $html .= "<li><i class='" . $icon_class . "'></i>" . $items[$ii] . "</li>";
                 }
             }
 
@@ -51,16 +69,40 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
             return $html;
         }
 
-        private function get_cons_html($cons)
+        protected function get_field($name, $options, $data)
         {
-            $html = "<ul class='cons'>";
-            for ($ii = 0; $ii < sizeof($cons); $ii++) {
-                if (!empty($cons[$ii])) {
-                    $html .= "<li><i class='red thumbs down icon'></i>" . $cons[$ii] . "</li>";
+            $html = '<div class="field review-' . $name . '-repeater">';
+            // $html .= '<div class="ui segment">';
+            $html .= '<h5> ' . ucfirst($name) . ' </h5>';
+            $html .= '<div data-repeater-list="' . $name . '" >';
+            $html .= '<div class="unstackable fields" data-repeater-item >';
+            $html .= '<div class="fourteen wide field">';
+            $html .= '<select class="ui fluid search prosandcons dropdown" name="' . $name . '[0]" data-' . $name . '="' . $name . '">';
+            $html .= $this->get_options($name);
+            $html .= '</select>';
+            $html .= '</div>';
+            $html .= '<div class="two wide field">';
+            $html .= '<div class="ui icon basic button" data-repeater-delete><i class="minus icon"></i></div>';
+            $html .= '</div>';
+            $html .= '</div>';
+            $html .= '</div>';
+            $html .= '<div data-repeater-create class="ui icon basic button"><i class="plus icon"></i></div>';
+            // $html .= '</div>';
+            $html .= '</div>';
+
+            return $html;
+        }
+
+        private function get_options($option)
+        {
+            // default option value or sometimes field placeholder
+            $html = '<option value=""> Type a new one or select existing ' . $option . '</option>';
+
+            foreach ($this->props['items']['ui'][$option] as $value) {
+                if (!empty($value['item'])) {
+                    $html .= '<option value="' . $value['item'] . '"> ' . $value['item'] . '</option>';
                 }
             }
-
-            $html .= "</ul>";
 
             return $html;
         }
@@ -69,12 +111,12 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
         {
             $is_empty = true;
 
-            if (!isset($this->itemsProps) || empty($this->itemsProps)) {
+            if (!isset($this->items) || empty($this->items)) {
                 return $is_empty;
             }
 
-            $is_pros_empty = (!isset($this->itemsProps['pros']) || empty($this->itemsProps['pros']));
-            $is_cons_empty = (!isset($this->itemsProps['cons']) || empty($this->itemsProps['cons']));
+            $is_pros_empty = (!isset($this->items['pros']) || empty($this->items['pros']));
+            $is_cons_empty = (!isset($this->items['cons']) || empty($this->items['cons']));
 
             // Either should be NOT EMPTY
             if (!$is_pros_empty || !$is_cons_empty) {

@@ -75,7 +75,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
 
         public function get_edit_form()
         {
-            error_log('this->props[current_user_review] : ' . print_r($this->props, true));
+            // error_log('this->props[current_user_review] : ' . print_r($this->props, true));
 
             $method_type = 'PUT';
             $review = $this->props['items']['data'];
@@ -83,7 +83,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             $description = (isset($review['description'])) ? $review['description'] : '';
 
             // Edit form
-            $html .= '<form
+            $html = '<form
             class="ui form scr-user-review mini"
             action="scr_user_review_submission"
             method="post"

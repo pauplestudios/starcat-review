@@ -46,11 +46,11 @@ var Edit = {
             // Hide clicked link of closest review content
             reviewContent.hide();
 
-            reviewProps = thisModule.getEditProps(reviewContent);
-
-            // var form = thisModule.getEditModifiedForm(reviewProps);
-            var form = jQuery(selectors.userReviews);
+            // Forms attributes and show the form
+            var props = thisModule.getEditProps(reviewContent);
+            var form = jQuery(selectors.reviewForm);
             form.attr("data-comment-id", props.comment_id);
+            form.show();
 
             // Append clonned edit form into closest review content of clicked edit link
             reviewContent.after(form).next(selectors.reviewForm);
