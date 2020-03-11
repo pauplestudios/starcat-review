@@ -17,81 +17,37 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
 
             $this->star_rating = new \StarcatReview\App\Views\Rating_Types\Star_Rating($viewProps);
             $this->bar_rating = new \StarcatReview\App\Views\Rating_Types\Bar_Rating($viewProps);
-
-            $this->classSize = '';
         }
 
         public function get()
         {
-            $html = '';
+            $class = '';
+            $title = '';
+            $display = '';
+            $cancel_btn = '';
+            $description = '';
+            $method_type = 'POST';
+            $submit_btn_name = 'Submit';
 
             // User Already Reviewed or Not Logged in User
             if (!$this->props['collection']['can_user_review']) {
-                $html .= $this->get_edit_form();
-                return $html;
+                $class = 'mini';
+                $method_type = 'PUT';
+                $display = 'style="display: none"';
+                $review = $this->props['items']['current_user_review'];
+                $title = (isset($review['title'])) ? $review['title'] : '';
+                $description = (isset($review['description'])) ? $review['description'] : '';
+
+                $cancel_btn = '<div class="ui cancel ' . $class . ' button"> Cancel </div>';
+                $submit_btn_name = 'Save';
             }
 
-            $html .= '<form class="ui form scr-user-review" action="scr_user_review_submission" method="post" post_id ="' . $this->props['collection']['post_id'] . '">';
-
-            if ($this->props['collection']['show_form_title']) {
-                $html .= '<h2 class="ui header">';
-                $html .= $this->props['collection']['form_title'];
-                $html .= '</h2>';
-            }
-
-            if ($this->props['collection']['show_title']) {
-                $html .= '<div class="inline field">';
-                // $html .= '<label>Review Title</label>';
-                $html .= '<input type="text" name="title" placeholder="Title" />';
-                $html .= '</div>';
-            }
-
-            if ($this->props['collection']['show_stats']) {
-                $html .= '<div class="rating fields">';
-                $html .= $this->get_user_review();
-                $html .= '</div>';
-            }
-
-            if ($this->props['collection']['show_description']) {
-                $html .= '<div class="field">';
-                // $html .= '<label>Review Description</label>';
-                $html .= '<textarea rows="5" spellcheck="false" name="description" placeholder="Description"></textarea>';
-                $html .= '</div>';
-            }
-
-            if ($this->props['collection']['show_prosandcons']) {
-                $html .= $this->get_pros_and_cons();
-            }
-
-            if ($this->props['collection']['show_captcha']) {
-                $html .= Recaptcha::load_v2_html();
-            }
-
-            $html .= '<div class="field">';
-            $html .= '<button class="ui blue submit button"> Submit </button>';
-            $html .= '</div>';
-            $html .= '</form>';
-
-            return $html;
-        }
-
-        public function get_edit_form()
-        {
-            // error_log('this->props[current_user_review] : ' . print_r($this->props, true));
-
-            $method_type = 'PUT';
-            $this->classSize = 'mini';
-            $review = $this->props['items']['current_user_review'];
-            $title = (isset($review['title'])) ? $review['title'] : '';
-            $description = (isset($review['description'])) ? $review['description'] : '';
-
-            // Edit form
             $html = '<form
-            class="ui form scr-user-review mini"
+            class="ui form scr-user-review ' . $class . '"
             action="scr_user_review_submission"
             method="post"
             post_id ="' . $this->props['collection']['post_id'] . '"
-            style="display: none"
+            ' . $display . '
             data-method="' . $method_type . '"
             >';
 
@@ -119,13 +75,13 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
                 $html .= $this->get_pros_and_cons();
             }
 
-            // if ($this->props['collection']['show_captcha']) {
-            //     $html .= Recaptcha::load_v2_html();
-            // }
+            if ($this->props['collection']['show_captcha']) {
+                $html .= Recaptcha::load_v2_html();
+            }
 
             $html .= '<div class="field">';
-            $html .= '<div class="ui blue submit mini button"> Save </div>';
-            $html .= '<div class="ui cancel mini button"> Cancel </div>';
+            $html .= '<div class="ui blue submit ' . $class . ' button"> ' . $submit_btn_name . ' </div>';
+            $html .= $cancel_btn;
             $html .= '</div>';
 
             $html .= '</form>';
