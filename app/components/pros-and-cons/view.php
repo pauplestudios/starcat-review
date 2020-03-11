@@ -35,15 +35,12 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
         // User review Form fields
         public function get_fields($props)
         {
-            error_log('viewProps : ' . print_r($props, true));
-
-            // $data = [];
-            // $options = [];
+            // error_log('viewProps : ' . print_r($props, true));
 
             $html = '';
             // $html .= '<div class="two fields">';
-            $html .= $this->get_field('pros', $options, $data);
-            $html .= $this->get_field('cons', $options, $data);
+            $html .= $this->get_fields_of('pros', $props);
+            $html .= $this->get_fields_of('cons', $props);
             // $html .= '</div>';
 
             return $html;
@@ -66,42 +63,70 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
             return $html;
         }
 
-        protected function get_field($name, $options, $data)
+        protected function get_fields_of($name, $props)
         {
+            $options = isset($props['options']) && !empty($props['options']) ? $props['options'] : [];
+            $fields = isset($props['fields ']) && !empty($props['fields ']) ? $props['fields '] : [];
+
+            $optionsHTML = '';
+            $optionsHTML = $this->get_field($name, $props['items'], 0, '');
+            if (isset($fields[$name])) {
+                for ($ii = 0; $ii < sizeof($fields[$name]); $ii++) {
+                    $optionsHTML .= $this->get_field($name, $options, $ii, $fields[$name][$ii]);
+                }
+            }
+
             $html = '<div class="field review-' . $name . '-repeater">';
             // $html .= '<div class="ui segment">';
             $html .= '<h5> ' . ucfirst($name) . ' </h5>';
             $html .= '<div data-repeater-list="' . $name . '" >';
-            $html .= '<div class="unstackable fields" data-repeater-item >';
-            $html .= '<div class="fourteen wide field">';
-            $html .= '<select class="ui fluid search prosandcons dropdown" name="' . $name . '[0]" data-' . $name . '="' . $name . '">';
-            $html .= $this->get_options($name);
-            $html .= '</select>';
+            $html .= $optionsHTML;
             $html .= '</div>';
-            $html .= '<div class="two wide field">';
-            $html .= '<div class="ui icon basic button" data-repeater-delete><i class="minus icon"></i></div>';
-            $html .= '</div>';
-            $html .= '</div>';
-            $html .= '</div>';
-            $html .= '<div data-repeater-create class="ui icon basic button"><i class="plus icon"></i></div>';
+            $html .= '<div data-repeater-create class="ui icon basic button mini"><i class="plus icon"></i></div>';
             // $html .= '</div>';
             $html .= '</div>';
 
             return $html;
         }
 
-        private function get_options($option)
+        protected function get_field($name, $options, $ii, $value)
+        {
+            $html = '';
+            $html .= '<div class="unstackable fields" data-repeater-item >';
+            $html .= '<div class="fourteen wide field">';
+            $html .= '<select class="ui fluid search prosandcons dropdown mini" name="' . $name . '[' . $ii . ']" data-' . $name . '="' . $name . '">';
+            $html .= $this->get_options($name, $options, $value);
+            $html .= '</select>';
+            $html .= '</div>';
+            $html .= '<div class="two wide field">';
+            $html .= '<div class="ui icon basic button mini" data-repeater-delete><i class="minus icon"></i></div>';
+            $html .= '</div>';
+            $html .= '</div>';
+
+            return $html;
+        }
+
+        private function get_options($name, $options, $data)
         {
             // default option value or sometimes field placeholder
-            $html = '<option value=""> Type a new one or select existing ' . $option . '</option>';
+            $html = '<option value=""> Type a new one or select existing ' . $name . '</option>';
 
-            foreach ($this->props['items'][$option] as $value) {
-                if (!empty($value['item'])) {
-                    $html .= '<option value="' . $value['item'] . '"> ' . $value['item'] . '</option>';
+            if (!empty($data)) {
+                $html = $this->get_option($data);
+            }
+
+            foreach ($options[$name] as $option) {
+                if (!empty($option)) {
+                    $html .= $this->get_option($option);
                 }
             }
 
             return $html;
+        }
+
+        private function get_option($value)
+        {
+            return '<option value="' . strtolower(preg_replace('/\s+/', '_', $value)) . '"> ' . $value . '</option>';
         }
 
         private function is_empty()

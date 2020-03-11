@@ -57,8 +57,8 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
         public function get_itemsProps($args)
         {
             $items = [
-                'pros' => $this->get_filtered_prosorcons($args, 'pros-list'),
-                'cons' => $this->get_filtered_prosorcons($args, 'cons-list'),
+                'pros' => isset($args['items']['pros-list']) && !empty($args['items']['pros-list']) ? $args['items']['pros-list'] : [],
+                'cons' => isset($args['items']['cons-list']) && !empty($args['items']['cons-list']) ? $args['items']['cons-list'] : [],
                 'stats' => $this->get_filtered_stats($args),
                 'current_user_review' => (isset($args['current_user_review'])) ? $args['current_user_review']->review : [],
             ];
@@ -89,22 +89,22 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
             return $stats;
         }
 
-        protected function get_filtered_prosorcons($args, $prosorcons)
-        {
-            $items = [];
+        // protected function get_filtered_prosorcons($args, $prosorcons)
+        // {
+        //     $items = [];
 
-            if (isset($args['items'][$prosorcons]) && !empty($args['items'][$prosorcons])) {
-                foreach ($args['items'][$prosorcons] as $key => $item) {
-                    $proorcon = strtolower(preg_replace('/\s+/', '_', $item['item']));
-                    $items[] = [
-                        'item' => $item['item'],
-                        'unique' => $proorcon,
-                    ];
-                }
-            }
+        //     if (isset($args['items'][$prosorcons]) && !empty($args['items'][$prosorcons])) {
+        //         foreach ($args['items'][$prosorcons] as $key => $item) {
+        //             $proorcon = strtolower(preg_replace('/\s+/', '_', $item['item']));
+        //             $items[] = [
+        //                 'item' => $item['item'],
+        //                 'unique' => $proorcon,
+        //             ];
+        //         }
+        //     }
 
-            return $items;
-        }
+        //     return $items;
+        // }
 
         protected function get_icons($collection)
         {

@@ -16,14 +16,20 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\Model')) {
                 'items' => $items,
             ];
 
-            if (isset($args['current_user_review']->review) && !empty($args['current_user_review']->review)) {
+            if (isset($args['items']['current_user_review']) && !empty($args['items']['current_user_review'])) {
+
+                $view_props['options'] = [
+                    'pros' => $this->get_list($args['items']['pros']),
+                    'cons' => $this->get_list($args['items']['cons']),
+                ];
 
                 $view_props['fields'] = [
-                    'pros' => $this->get_list($args['current_user_review']->review['pros']),
-                    'cons' => $this->get_list($args['current_user_review']->review['cons']),
+                    'pros' => $this->get_list($args['items']['current_user_review']['pros']),
+                    'cons' => $this->get_list($args['items']['current_user_review']['cons']),
                 ];
-                error_log('ProsAndCons args: ' . print_r($args, true));
+                // error_log('view_props args: ' . print_r($view_props, true));
             }
+            // error_log('prosandcons args: ' . print_r($args, true));
 
             return $view_props;
         }
@@ -36,8 +42,8 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\Model')) {
             }
 
             $itemsProps = [
-                'pros' => $this->get_list($args['items']['pros-list']),
-                'cons' => $this->get_list($args['items']['cons-list']),
+                'pros' => $this->get_list($args['items']['pros']),
+                'cons' => $this->get_list($args['items']['cons']),
             ];
 
             return $itemsProps;
@@ -68,8 +74,8 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\Model')) {
             //     return $is_empty;
             // }
 
-            $is_pros_empty = (!isset($items['pros-list']) || empty($items['pros-list']));
-            $is_cons_empty = (!isset($items['cons-list']) || empty($items['cons-list']));
+            $is_pros_empty = (!isset($items['pros']) || empty($items['pros']));
+            $is_cons_empty = (!isset($items['cons']) || empty($items['con']));
 
             // Either should be NOT EMPTY
             if (!$is_pros_empty || !$is_cons_empty) {
