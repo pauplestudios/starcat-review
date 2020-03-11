@@ -17,6 +17,8 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
 
             $this->star_rating = new \StarcatReview\App\Views\Rating_Types\Star_Rating($viewProps);
             $this->bar_rating = new \StarcatReview\App\Views\Rating_Types\Bar_Rating($viewProps);
+
+            $this->classSize = '';
         }
 
         public function get()
@@ -78,6 +80,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             // error_log('this->props[current_user_review] : ' . print_r($this->props, true));
 
             $method_type = 'PUT';
+            $this->classSize = 'mini';
             $review = $this->props['items']['current_user_review'];
             $title = (isset($review['title'])) ? $review['title'] : '';
             $description = (isset($review['description'])) ? $review['description'] : '';
@@ -133,76 +136,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
         protected function get_pros_and_cons()
         {
             $prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller();
-            $html = $prosandcons->get_fields($this->props);
-            // error_log('this->props : ' . print_r($this->props, true));
-
-            // $html = '<div class="two fields">';
-            // $html .= $this->get_pros_field();
-            // $html .= $this->get_cons_field();
-
-            // $html .= '</div>';
-
-            return $html;
-        }
-
-        protected function get_pros_field()
-        {
-            $html = '<div class="field review-pros-repeater">';
-            // $html .= '<div class="ui segment">';
-            $html .= '<h5> Pros </h5>';
-            $html .= '<div data-repeater-list="pros" >';
-            $html .= '<div class="unstackable fields" data-repeater-item >';
-            $html .= '<div class="fourteen wide field">';
-            $html .= '<select class="ui fluid search prosandcons dropdown" name="pros[0]" data-pros="pros">';
-            $html .= $this->get_prosandcons_option('pros');
-            $html .= '</select>';
-            $html .= '</div>';
-            $html .= '<div class="two wide field">';
-            $html .= '<div class="ui icon basic button" data-repeater-delete><i class="minus icon"></i></div>';
-            $html .= '</div>';
-            $html .= '</div>';
-            $html .= '</div>';
-            $html .= '<div data-repeater-create class="ui icon basic button"><i class="plus icon"></i></div>';
-            // $html .= '</div>';
-            $html .= '</div>';
-
-            return $html;
-        }
-
-        protected function get_cons_field()
-        {
-            $html = '<div class="field review-cons-repeater">';
-            // $html .= '<div class="ui segment">';
-            $html .= '<h5> Cons </h5>';
-            $html .= '<div data-repeater-list="cons" >';
-            $html .= '<div class="unstackable fields" data-repeater-item >';
-            $html .= '<div class="fourteen wide field">';
-            $html .= '<select  class="ui fluid search prosandcons dropdown" name="cons[0]" data-cons="cons" >';
-            $html .= $this->get_prosandcons_option('cons');
-            $html .= '</select>';
-            $html .= '</div>';
-            $html .= '<div class="two wide field">';
-            $html .= '<div data-repeater-delete class="ui icon basic button"><i class="minus icon"></i></div>';
-            $html .= '</div>';
-            $html .= '</div>';
-            $html .= '</div>';
-            $html .= '<div data-repeater-create class="ui icon basic button"><i class="plus icon"></i></div>';
-            // $html .= '</div>';
-            $html .= '</div>';
-
-            return $html;
-        }
-
-        protected function get_prosandcons_option($option)
-        {
-            $html = '<option value=""> Type a new one or select existing ' . $option . '</option>';
-            foreach ($this->props['items'][$option] as $value) {
-                if (!empty($value['item'])) {
-                    $html .= '<option value="' . $value['item'] . '"> ' . $value['item'] . '</option>';
-                }
-            }
-
-            return $html;
+            return $prosandcons->get_fields($this->props);
         }
 
         protected function get_user_review()
@@ -240,7 +174,15 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
 
         protected function get_star_rating($key)
         {
-            return $this->star_rating->get_review_stat($key, 0, 0);
+            $score = 0;
+            $rating = 0;
+
+            if (isset($this->props['items']['current_user_review']['stats']) && !empty($this->props['items']['current_user_review']['stats'])) {
+                $rating = $this->props['items']['current_user_review']['stats'][$key]['rating'];
+                $score = $rating / (100 / $this->props['collection']['limit']);
+            }
+
+            return $this->star_rating->get_review_stat($key, $rating, $score);
         }
 
         protected function get_bar_rating($key)

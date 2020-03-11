@@ -63,12 +63,12 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
 
         protected function get_fields_of($name, $props)
         {
-            $options = isset($props['options']) && !empty($props['options']) ? $props['options'] : [];
-            $fields = isset($props['fields ']) && !empty($props['fields ']) ? $props['fields '] : [];
+            $options = isset($props['items']) && !empty($props['items']) ? $props['items'] : [];
+            $fields = isset($props['fields']) && !empty($props['fields']) ? $props['fields'] : [];
 
-            $optionsHTML = '';
             $optionsHTML = $this->get_field($name, $props['items'], 0, '');
-            if (isset($fields[$name])) {
+            if (isset($fields[$name]) && !empty($fields[$name])) {
+                $optionsHTML = '';
                 for ($ii = 0; $ii < sizeof($fields[$name]); $ii++) {
                     $optionsHTML .= $this->get_field($name, $options, $ii, $fields[$name][$ii]);
                 }
@@ -107,7 +107,7 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
         private function get_options($name, $options, $data)
         {
             // default option value or sometimes field placeholder
-            $html = '<option value=""> Type a new one or select existing ' . $name . '</option>';
+            $html = '<option value=""> Type new or select existing one ' . $name . '</option>';
 
             if (!empty($data)) {
                 $html = $this->get_option($data);
