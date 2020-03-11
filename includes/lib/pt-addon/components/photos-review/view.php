@@ -19,7 +19,7 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
                 $html .= '<div class="ui image" data-review-id="' . $item['review_id'] . '">';
                 $html .= '<img src="' . $item['image_src'] . '"/>';
                 if (($props['collection']['preview_limit'] - 1) == $key) {
-                    $html .= $this->get_clickable_image_box($props);
+                    $html .= $this->get_gallery_preview_overlay_image_box($props);
                     $html .= '</div>';
                     break;
                 }
@@ -31,7 +31,7 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
             return $html;
         }
 
-        public function get_single_photos($props)
+        public function get_single_review_photos($props)
         {
             $html = '<div class="ui comments">';
             foreach ($props as $key => $images) {
@@ -42,7 +42,7 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
             return $html;
         }
 
-        protected function get_clickable_image_box($props)
+        protected function get_gallery_preview_overlay_image_box($props)
         {
             $html = '<span ';
             $html .= 'class="show-gallery" ';
@@ -120,9 +120,9 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
         {
             $html = '<div class="ui six doubling link cards photos-gallery">';
 
-            for ($i = 0; $i < sizeOf($props['items']); $i++) {
-                $html .= '<div class="card" data-review-id="' . $props['items'][$i]['review_id'] . '">';
-                $html .= '<img class="image" src="' . $props['items'][$i]['image_src'] . '" />';
+            for ($ii = 0; $ii < sizeOf($props['items']); $ii++) {
+                $html .= '<div class="card" data-review-id="' . $props['items'][$ii]['review_id'] . '">';
+                $html .= '<img class="image" src="' . $props['items'][$ii]['image_src'] . '" />';
                 $html .= '</div>';
             }
 
@@ -148,11 +148,11 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
 
             $html = '<div class="photos-review-wrapper swiper-wrapper">';
 
-            for ($i = 0; $i < sizeof($photos['photos']); $i++) {
-                if (!empty($limit) && $limit == $i) {
+            for ($ii = 0; $ii < sizeof($photos['photos']); $ii++) {
+                if (!empty($limit) && $limit == $ii) {
                     break;
                 }
-                $src = $photos['photos'][$i]['src'][$size];
+                $src = $photos['photos'][$ii]['src'][$size];
                 $html .= $this->get_slide($src);
             }
 
