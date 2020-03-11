@@ -27,9 +27,7 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\Model')) {
                     'pros' => $this->get_list($args['items']['current_user_review']['pros']),
                     'cons' => $this->get_list($args['items']['current_user_review']['cons']),
                 ];
-                // error_log('view_props args: ' . print_r($view_props, true));
             }
-            // error_log('prosandcons args: ' . print_r($args, true));
 
             return $view_props;
         }

@@ -35,8 +35,6 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
         // User review Form fields
         public function get_fields($props)
         {
-            // error_log('viewProps : ' . print_r($props, true));
-
             $html = '';
             // $html .= '<div class="two fields">';
             $html .= $this->get_fields_of('pros', $props);

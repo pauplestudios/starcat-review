@@ -19,8 +19,6 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
                 'items' => $this->items,
             ];
 
-            // error_log('view_props : ' . print_r($view_props, true));
-
             return $view_props;
         }
 
@@ -88,23 +86,6 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
 
             return $stats;
         }
-
-        // protected function get_filtered_prosorcons($args, $prosorcons)
-        // {
-        //     $items = [];
-
-        //     if (isset($args['items'][$prosorcons]) && !empty($args['items'][$prosorcons])) {
-        //         foreach ($args['items'][$prosorcons] as $key => $item) {
-        //             $proorcon = strtolower(preg_replace('/\s+/', '_', $item['item']));
-        //             $items[] = [
-        //                 'item' => $item['item'],
-        //                 'unique' => $proorcon,
-        //             ];
-        //         }
-        //     }
-
-        //     return $items;
-        // }
 
         protected function get_icons($collection)
         {
