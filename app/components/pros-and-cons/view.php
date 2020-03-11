@@ -9,15 +9,10 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
     class View
     {
-        private $html;
-
-        public function __construct($viewProps)
+        public function get($viewProps)
         {
-            $this->itemsProps = $viewProps['items'];
-        }
+            $this->items = $viewProps['items'];
 
-        public function get_html()
-        {
             // Return '' if pros and cons are empty
             if ($this->is_empty()) {
                 return '';
@@ -26,8 +21,10 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
             $html = "<div class='prosandcons'>";
             $html .= "<h6 class='ui header'>Pros & Cons</h6>";
             $html .= "<div class='items-container'>";
-            $html .= $this->get_pros_html($this->itemsProps['pros']);
-            $html .= $this->get_cons_html($this->itemsProps['cons']);
+
+            $html .= $this->get_list('pros', $this->items['pros']);
+            $html .= $this->get_list('cons', $this->items['cons']);
+
             $html .= "</div>";
 
             $html .= "</div>";
@@ -35,14 +32,27 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
             return $html;
         }
 
-        /* PRIVATE METHODS */
-        private function get_pros_html($pros)
+        // User review Form fields
+        public function get_fields($props)
         {
-            $html = "<ul class='pros'>";
+            $html = '';
+            // $html .= '<div class="two fields">';
+            $html .= $this->get_fields_of('pros', $props);
+            $html .= $this->get_fields_of('cons', $props);
+            // $html .= '</div>';
 
-            for ($ii = 0; $ii < sizeof($pros); $ii++) {
-                if (!empty($pros[$ii])) {
-                    $html .= "<li><i class='green thumbs up icon'></i>" . $pros[$ii] . "</li>";
+            return $html;
+        }
+
+        protected function get_list($name, $items)
+        {
+            $icon_class = ($name === 'pros') ? 'green thumbs up icon' : 'red thumbs down icon';
+
+            $html = "<ul class='" . $name . "'>";
+
+            for ($ii = 0; $ii < sizeof($items); $ii++) {
+                if (!empty($items[$ii])) {
+                    $html .= "<li><i class='" . $icon_class . "'></i>" . $items[$ii] . "</li>";
                 }
             }
 
@@ -51,30 +61,82 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
             return $html;
         }
 
-        private function get_cons_html($cons)
+        protected function get_fields_of($name, $props)
         {
-            $html = "<ul class='cons'>";
-            for ($ii = 0; $ii < sizeof($cons); $ii++) {
-                if (!empty($cons[$ii])) {
-                    $html .= "<li><i class='red thumbs down icon'></i>" . $cons[$ii] . "</li>";
+            $options = isset($props['items']) && !empty($props['items']) ? $props['items'] : [];
+            $fields = isset($props['fields']) && !empty($props['fields']) ? $props['fields'] : [];
+
+            $optionsHTML = $this->get_field($name, $props['items'], 0, '');
+            if (isset($fields[$name]) && !empty($fields[$name])) {
+                $optionsHTML = '';
+                for ($ii = 0; $ii < sizeof($fields[$name]); $ii++) {
+                    $optionsHTML .= $this->get_field($name, $options, $ii, $fields[$name][$ii]);
                 }
             }
 
-            $html .= "</ul>";
+            $html = '<div class="field review-' . $name . '-repeater">';
+            // $html .= '<div class="ui segment">';
+            $html .= '<h5> ' . ucfirst($name) . ' </h5>';
+            $html .= '<div data-repeater-list="' . $name . '" >';
+            $html .= $optionsHTML;
+            $html .= '</div>';
+            $html .= '<div data-repeater-create class="ui icon basic button mini"><i class="plus icon"></i></div>';
+            // $html .= '</div>';
+            $html .= '</div>';
 
             return $html;
+        }
+
+        protected function get_field($name, $options, $ii, $value)
+        {
+            $html = '';
+            $html .= '<div class="unstackable fields" data-repeater-item >';
+            $html .= '<div class="fourteen wide field">';
+            $html .= '<select class="ui fluid search prosandcons dropdown mini" name="' . $name . '[' . $ii . ']" data-' . $name . '="' . $name . '">';
+            $html .= $this->get_options($name, $options, $value);
+            $html .= '</select>';
+            $html .= '</div>';
+            $html .= '<div class="two wide field">';
+            $html .= '<div class="ui icon basic button mini" data-repeater-delete><i class="minus icon"></i></div>';
+            $html .= '</div>';
+            $html .= '</div>';
+
+            return $html;
+        }
+
+        private function get_options($name, $options, $data)
+        {
+            // default option value or sometimes field placeholder
+            $html = '<option value=""> Type new or select existing one ' . $name . '</option>';
+
+            if (!empty($data)) {
+                $html = $this->get_option($data);
+            }
+
+            if (isset($options[$name]) && !empty($options[$name])) {
+                foreach ($options[$name] as $option) {
+                    $html .= $this->get_option($option);
+                }
+            }
+
+            return $html;
+        }
+
+        private function get_option($value)
+        {
+            return '<option value="' . strtolower(preg_replace('/\s+/', '_', $value)) . '"> ' . $value . '</option>';
         }
 
         private function is_empty()
         {
             $is_empty = true;
 
-            if (!isset($this->itemsProps) || empty($this->itemsProps)) {
+            if (!isset($this->items) || empty($this->items)) {
                 return $is_empty;
             }
 
-            $is_pros_empty = (!isset($this->itemsProps['pros']) || empty($this->itemsProps['pros']));
-            $is_cons_empty = (!isset($this->itemsProps['cons']) || empty($this->itemsProps['cons']));
+            $is_pros_empty = (!isset($this->items['pros']) || empty($this->items['pros']));
+            $is_cons_empty = (!isset($this->items['cons']) || empty($this->items['cons']));
 
             // Either should be NOT EMPTY
             if (!$is_pros_empty || !$is_cons_empty) {

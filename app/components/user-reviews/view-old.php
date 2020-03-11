@@ -139,8 +139,8 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View_Old')) {
         {
             $view = '';
             if ($props['args']['enable_pros_cons']) {
-                $prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller($props['args']);
-                $view = $prosandcons->get_view();
+                $prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller();
+                $view = $prosandcons->get_view($props['args']);
             }
 
             return $view;
