@@ -42,7 +42,8 @@ var ProsAndCons = {
     getDuplicateItem: function (list) {
         var item = list
             .find("[data-repeater-item]")
-            .first()[0].outerHTML;
+            .first()[0];
+        item = (item) ? item.outerHTML : '';
         var placeholderText = '<option value="">Type new or select a existing one</option>';
         item = item.replace(new RegExp('<option[^>]*>.*?<\/option>'), placeholderText);
 

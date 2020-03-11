@@ -113,8 +113,8 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
                 $html = $this->get_option($data);
             }
 
-            foreach ($options[$name] as $option) {
-                if (!empty($option)) {
+            if (isset($options[$name]) && !empty($options[$name])) {
+                foreach ($options[$name] as $option) {
                     $html .= $this->get_option($option);
                 }
             }
