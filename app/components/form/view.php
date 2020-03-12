@@ -75,6 +75,8 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
                 $html .= $this->get_pros_and_cons();
             }
 
+            $html .= apply_filters('scr_photos_review/get_single_review_photos_field', '');
+
             if ($this->props['collection']['show_captcha']) {
                 $html .= Recaptcha::load_v2_html();
             }

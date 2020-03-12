@@ -42,6 +42,17 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
             return $html;
         }
 
+        public function get_field()
+        {
+            $html = '<div class="scp-comment-form-images">';
+            $html .= '<label for="scr_image_upload">Choose pictures (maxsize: 2000 kB, max files: 2)</label>';
+            $html .= '<input type="file" name="scr_image_upload[]" id="scr_image_upload" class="scr_image_upload field" multiple="" accept=".jpg, .jpeg, .png, .bmp, .gif">';
+            $html .= '<input type="hidden" id="scr_max_files" name="max_files" value="2">';
+            $html .= '</div></br>';
+
+            return $html;
+        }
+
         protected function get_gallery_preview_overlay_image_box($props)
         {
             $html = '<span ';

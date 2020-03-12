@@ -41,6 +41,18 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Model')) {
             return $props;
         }
 
+        public function get_field_viewProps()
+        {
+            $collection = $this->get_collection($args);
+            $viewProps = [
+                'collection' => $collection,
+                'items' => $this->get_items($collection),
+            ];
+
+            return $viewProps;
+
+        }
+
         protected function get_collection($args)
         {
             $photos_JSON = file_get_contents(SCR_PT_PATH . 'includes/utils/photos.json');
