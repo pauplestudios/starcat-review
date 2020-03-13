@@ -12,8 +12,25 @@ if (!class_exists('\StarcatReview\App\Builders\Controls_Builder')) {
     class Controls_Builder
     {
 
-        public function __construct()
+        public function __construct($type = '')
         {
+            $sort_options =  [
+                'post-date' => 'Recent',
+                'avg-rating' => 'Most Positive',
+                'trending' => 'Trending',
+                'alphabet-asc' => 'Alphabetic Asc',
+                'alphabet-desc' => 'Alphabetic Desc',
+                'review-count' => 'Number of Reviews',
+                'post-modified' => 'Recently Updated',
+            ];
+
+            if ($type == 'user_review') {
+                $sort_options =  [
+                    'post-date' => 'Recent',
+                    'avg-rating' => 'Most Positive',
+                    'helpful' => 'Most Helpful'
+                ];
+            }
             $this->controls = [
                 'search' => [
                     'type' => 'search',
@@ -23,17 +40,9 @@ if (!class_exists('\StarcatReview\App\Builders\Controls_Builder')) {
                 'sort' => [
                     'name' => 'sort',
                     'type' => 'dropdown',
-                    'default' => '',
+                    'default' => 'post-date',
                     'label' => 'SortBy',
-                    'options' => [
-                        'alphabet-asc' => 'Alphabetic Asc',
-                        'alphabet-desc' => 'Alphabetic Desc',
-                        'avg-rating' => 'Most Positive',
-                        'trending' => 'Trending',
-                        'review-count' => 'Number of Reviews',
-                        'post-date' => 'Recent',
-                        'post-modified' => 'Recently Updated',
-                    ],
+                    'options' => $sort_options,
                     'size' => 4
                 ],
                 // 'reviews' => [
@@ -76,10 +85,13 @@ if (!class_exists('\StarcatReview\App\Builders\Controls_Builder')) {
 
             foreach ($this->controls as $key => $control) {
 
+                // error_log('$key : ' . $key);
+                // error_log('$control : ' . print_r($control, true));
                 if (!$show_controls[$key]) continue; // skip iteration if false
 
                 $map = $this->get_map($control['type']);
                 $methodName = $map['methodName'];
+
 
                 $html .= '<div class="item col-xs-12 col-lg-' . $control['size'] . '">';
                 $html .= $map['class']->$methodName($control);

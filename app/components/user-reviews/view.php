@@ -25,10 +25,10 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             }
             $this->collection = $viewProps['collection'];
 
-            $html = '<div class="ui scr_user_reviews comments">';
-            if ($this->collection['show_list_title']) {
-                $html .= '<h3 class="ui dividing header"> ' . $this->collection['list_title'] . '</h3>';
-            }
+            $html = '<div class="ui scr_user_reviews list comments">';
+            // if ($this->collection['show_list_title']) {
+            //     $html .= '<h3 class="ui dividing header"> ' . $this->collection['list_title'] . '</h3>';
+            // }
 
             foreach ($viewProps['items'] as $comment) {
 
@@ -68,6 +68,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '</div>';
             $html .= '<div class="text">' . $comment['content'] . '</div>';
             $html .= $this->get_moderation_html($comment, 'Reply');
+
             $html .= '<div class="actions">';
             $html .= '<div class="links">';
             if ($this->collection['can_reply'] && $comment['can_edit']) {
@@ -93,6 +94,8 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
 
         protected function get_comment_item($comment, $items)
         {
+            $vote_likes = $this->get_vote_likes($comment);
+            // error_log('$comment : ' . print_r($comment, true));
             $html = '<div class="comment" id="' . $comment['comment_id'] . '">';
             $html .= '<a class="avatar"> ' . $comment['commentor_avatar'] . '</a>';
 
@@ -102,12 +105,15 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '<div class="metadata">';
             $html .= '<span class="date">' . $comment['comment_date'] . '</span>';
             $html .= '<span class="time">AT ' . $comment['comment_time'] . '</span>';
+            $html .= '<span class="postDate" data-postDate="' . $comment['time_stamp'] . '"></span>'; // used by list-control.JS
+            $html .= '<span class="likes" data-likes="' . $vote_likes . '"></span>'; // used by list-control.JS
+            $html .= '<span class="positiveScore" data-positiveScore="' . $comment['rating'] . '"></span>'; // used by list-control.JS
             $html .= '</div>';
 
             $html .= '<div class="text">';
-            $html .= '<div class="title"> ' . $comment['title'] . ' </div>';
+            $html .= '<div class="title review-card__header"> ' . $comment['title'] . ' </div>';
             $html .= '<div class="stats"> ' . $this->get_stats_view($comment) . '</div>';
-            $html .= '<div class="description"><p>' . $comment['content'] . '</p></div>';
+            $html .= '<div class="description review-card__body"><p>' . $comment['content'] . '</p></div>';
             $html .= $this->get_prosandcons_view($comment);
             $html .= '</div>';
             $html .= $this->get_moderation_html($comment);
@@ -125,7 +131,9 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             // }
 
             $html .= '</div>';
-            // $html .= $this->get_helpful();
+            if ($this->collection['can_vote'] && $this->collection['enable_voting']) {
+                $html .= $this->get_helpful($comment);
+            }
             $html .= '</div>';
 
             //1st level comment children
@@ -140,7 +148,6 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '</div>';
 
             return $html;
-
         }
 
         private function get_stats_view($props)
@@ -162,23 +169,56 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             return $view;
         }
 
-        private function get_helpful()
+        private function get_vote_likes($props)
         {
-            $html = '<div class="ui user-review-helpful"> ';
+            $vote_summary = 0;
 
-            $html .= '<div class="vote">';
+            if (isset($props['args']['items']['votes']['summary']) && is_int($props['args']['items']['votes']['summary']['likes'])) {
+                $vote_summary = $props['args']['items']['votes']['summary']['likes'];
+            }
+
+            return $vote_summary;
+        }
+
+        private function get_helpful($props)
+        {
+            $vote_summary = $this->get_vote_summary($props);
+
+            $like_active = ($vote_summary['active'] === 'like') ? 'active' : '';
+            $dislike_active = ($vote_summary['active'] === 'dislike') ? 'active' : '';
+
+            $html = '<div class="helpful"> ';
+
+            $html .= '<div class="vote likes-and-dislikes" data-comment-id="' . $props['comment_id'] . '">';
             $html .= 'Was this helpful to you ? ';
-            $html .= '<a><i class="green bordered thumbs up outline icon"></i></a>';
-            $html .= '<a><i class="red bordered thumbs down outline icon"></i></a>';
+            $html .= '<a class="like ' . $like_active . '"><i class="bordered thumbs up outline icon"></i><span class="likes">' . $vote_summary['likes'] . '</span></a>';
+            $html .= '<a class="dislike ' . $dislike_active . '"><i class="bordered thumbs down outline icon"></i><span class="dislikes">' . $vote_summary['dislikes'] . '</span></a>';
             $html .= '</div>';
 
             $html .= '<div class="vote-summary">';
-            $html .= '0 of 0 people found this review helpful';
+            $html .= '<span class="helpful">' . $vote_summary['likes'] . '</span> of <span class="people"> ' . $vote_summary['people'] . ' </span> people found this review helpful';
             $html .= '</div>';
 
             $html .= '</div>';
 
             return $html;
+        }
+
+        private function get_vote_summary($props)
+        {
+            // Default 
+            $vote_summary = [
+                'active' => '',
+                'likes' => 0,
+                'dislikes' => 0,
+                'people' => 0
+            ];
+
+            if (isset($props['args']['items']['votes'])) {
+                $vote_summary = $props['args']['items']['votes']['summary'];
+            }
+
+            return $vote_summary;
         }
 
         private function get_reply_form()

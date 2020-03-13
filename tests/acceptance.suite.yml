@@ -13,18 +13,18 @@ modules:
         - \Helper\Acceptance
     config:
         WPDb:
-            dsn: 'mysql:host=%DB_HOST%;dbname=%DB_NAME%'
-            user: '%DB_USER%'
-            password: '%DB_PASSWORD%'
-            dump: 'tests/_data/dump.sql'
+            dsn: "mysql:host=%DB_HOST%;dbname=%DB_NAME%"
+            user: "%DB_USER%"
+            password: "%DB_PASSWORD%"
+            dump: "artifacts/fresh.sql"
             populate: true #import the dump before the tests
             cleanup: true #import the dump between tests
             waitlock: 0
-            url: '%WP_URL%'
+            url: "%WP_URL%"
             urlReplacement: true #replace the hardcoded dump URL with the one above
-            tablePrefix: '%TABLE_PREFIX%'
+            tablePrefix: "%TABLE_PREFIX%"
         WPBrowser:
-            url: '%WP_URL%'
-            adminUsername: '%ADMIN_USERNAME%'
-            adminPassword: '%ADMIN_PASSWORD%'
-            adminPath: '%WP_ADMIN_PATH%'
+            url: "%WP_URL%"
+            adminUsername: "%ADMIN_USERNAME%"
+            adminPassword: "%ADMIN_PASSWORD%"
+            adminPath: "%WP_ADMIN_PATH%"

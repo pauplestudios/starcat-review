@@ -17,27 +17,28 @@ class ReviewPostTest extends \Codeception\TestCase\WPTestCase
         parent::tearDown();
     }
 
-    public function test_review_setup()
-    {
-        $review_data_json = file_get_contents(SCR_PATH . "/tests/_data/review-data.json");
-        $review_data = json_decode($review_data_json, true);
-        $post_data = $review_data[0];
-        error_log('$post_data : ' . print_r($post_data, true));
-        $post_id = $this->insert_post($post_data);
-        $wp_review_post = get_post($post_id);
-        $comment_id = $this->insert_comment($post_id, $post_data);
+    // TODO: Move to Reviews CPT Addon (or) ActivatePlugin
+    // public function test_review_setup()
+    // {
+    //     $review_data_json = file_get_contents(SCR_PATH . "/tests/_data/review-data.json");
+    //     $review_data = json_decode($review_data_json, true);
+    //     $post_data = $review_data[0];
+    //     error_log('$post_data : ' . print_r($post_data, true));
+    //     $post_id = $this->insert_post($post_data);
+    //     $wp_review_post = get_post($post_id);
+    //     $comment_id = $this->insert_comment($post_id, $post_data);
 
-        $review_post = new \StarcatReview\App\Models\Review_Post($wp_review_post);
+    //     $review_post = new \StarcatReview\App\Models\Review_Post($wp_review_post);
 
-        $this->assertEquals($post_id, $review_post->id);
-        $this->assertEquals($post_data['content'], $review_post->content);
-        $this->assertEquals($post_data['stats'], $review_post->stats);
+    //     $this->assertEquals($post_id, $review_post->id);
+    //     $this->assertEquals($post_data['content'], $review_post->content);
+    //     $this->assertEquals($post_data['stats'], $review_post->stats);
 
-        /* Comments */
-        $user_reviews = $review_post->user_reviews;
-        $this->assertEquals(1, sizeof($user_reviews, 0));
-        $this->assertEquals($post_data['stats'], $user_reviews[0]->stats);
-    }
+    //     /* Comments */
+    //     $user_reviews = $review_post->user_reviews;
+    //     $this->assertEquals(1, sizeof($user_reviews, 0));
+    //     $this->assertEquals($post_data['stats'], $user_reviews[0]->stats);
+    // }
 
     public function insert_comment($post_id, $post_data)
     {

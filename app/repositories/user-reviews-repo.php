@@ -94,8 +94,37 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             return $comment_id;
         }
 
+        public function store_vote($props)
+        {
+            if (metadata_exists('comment', $props['comment_id'], 'scr_user_review_props')) {
+                $meta_props = get_comment_meta($props['comment_id'], 'scr_user_review_props', true);
+
+                if (isset($meta_props['votes']) && !empty($meta_props['votes'])) {
+                    $is_current_user_voted = false;
+                    foreach ($meta_props['votes'] as &$vote) {
+                        if ($vote['user_id'] == $props['vote']['user_id']) {
+                            $vote['vote'] = $props['vote']['vote'];
+                            $is_current_user_voted = true;
+                        }
+                        // error_log('each vote : ' . print_r($vote, true));
+                    }
+                    if ($is_current_user_voted == false) {
+                        array_push($meta_props['votes'], $props['vote']);
+                    }
+                } else {
+                    $vote_props = ['votes' => [$props['vote']]];
+                    $meta_props = array_merge($meta_props, $vote_props);
+                }
+
+                // error_log('$meta_props : ' . print_r($meta_props['votes'], true));
+
+                update_comment_meta($props['comment_id'], 'scr_user_review_props', $meta_props);
+            }
+        }
+
         public function get_processed_data()
         {
+            error_log('$_POST : ' . $_POST);
             $props = [];
 
             if (isset($_POST['post_id']) && !empty($_POST['post_id'])) {
@@ -135,7 +164,28 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 $props['methodType'] = $_POST['methodType'];
             }
 
+            if (isset($_POST['captcha']) && !empty($_POST['captcha'])) {
+                $props['captcha'] = $_POST['captcha'];
+            }
+
             return $props;
+        }
+
+        public function get_processed_voting_data()
+        {
+            $data = [];
+            if (isset($_POST['comment_id']) && !empty($_POST['comment_id'])) {
+                $data['comment_id'] = $_POST['comment_id'];
+            }
+
+            if (isset($_POST['vote'])) {
+                $data['vote'] = [
+                    'user_id' => get_current_user_id(),
+                    'vote' => $_POST['vote'],
+                ];
+            }
+
+            return $data;
         }
 
         protected function get_prosandcons($features)

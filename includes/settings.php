@@ -33,7 +33,8 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         }
 
         public function wp_loaded()
-        {}
+        {
+        }
 
         public function init()
         {
@@ -64,9 +65,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 \CSF::createOptions($prefix, $options);
 
                 $this->general_settings($prefix);
-
-                if (in_array('starcat-review-cpt/starcat-review-cpt.php', apply_filters('active_plugins', get_option('active_plugins')))) {
-
+                if (is_plugin_active('starcat-review-cpt/starcat-review-cpt.php')) {
                     // $options['menu_parent'] = null;
                     // $options['menu_type'] = 'menu';
                     $this->mainpage_settings($prefix);
@@ -214,6 +213,13 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         ),
 
                         array(
+                            'id' => 'ur_enable_voting',
+                            'type' => 'switcher',
+                            'title' => __('Voting', SCR_DOMAIN),
+                            'default' => true,
+                        ),
+
+                        array(
                             'type' => 'subheading',
                             'content' => 'User Review Form',
                         ),
@@ -252,6 +258,13 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'id' => 'ur_show_description',
                             'type' => 'switcher',
                             'title' => __('Show Description', SCR_DOMAIN),
+                            'default' => true,
+                        ),
+
+                        array(
+                            'id' => 'ur_show_captcha',
+                            'type' => 'switcher',
+                            'title' => __('Show ReCaptcha', SCR_DOMAIN),
                             'default' => true,
                         ),
 
@@ -504,9 +517,9 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'type' => 'content',
                             'content' => '<div class="button-container">'
-                            . '<span><b>Where is my main page?</b></span>'
-                            . '<br>'
-                            . $main_page_button . '<span>Save and Refresh Page if you changed it.</span></div>',
+                                . '<span><b>Where is my main page?</b></span>'
+                                . '<br>'
+                                . $main_page_button . '<span>Save and Refresh Page if you changed it.</span></div>',
                         ),
                         array(
                             'type' => 'subheading',
@@ -788,6 +801,24 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             // 'dependency' => array('stats-source-type|stats-type', '==|==', 'icon|star'),
                             'dependency' => array('stats-source-type', '==', 'icon'),
                             'default' => 'star',
+                        ),
+                        array(
+                            'id' => 'stats-icons-color',
+                            'type' => 'color',
+                            'title' => 'Icons Color',
+                            'dependency' => array('stats-source-type', '==', 'icon'),
+                            'output' => array('.review-list .review-item-stars i', '.review-list .reviewed-item-stars i', '.reviewed-list .review-item-stars i', '.reviewed-list .reviewed-item-stars i'),
+                            'output_mode' => 'color',
+                            'default' => '#e7711b',
+                        ),
+                        array(
+                            'id' => 'stats-icons-label-color',
+                            'type' => 'color',
+                            'title' => 'Icons Label Color',
+                            'dependency' => array('stats-source-type', '==', 'icon'),
+                            'output' => array('.review-list .reviewed-item .reviewed-item-label__score', '.review-list .reviewed-item .reviewed-item-label__score', '.reviewed-list .reviewed-item .reviewed-item-label__score', '.reviewed-list .reviewed-item .reviewed-item-label__score'),
+                            'output_mode' => 'color',
+                            'default' => '#0274be',
                         ),
 
                         array(
