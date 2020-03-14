@@ -75,13 +75,13 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
 
         protected function get_pros_and_cons()
         {
-            $html = '';
-            // $html .= '<div class="two fields">';
+            $html = ''; //  two fields
+            $html .= '<div class="pros_and_cons_wrapper">';
 
             $html .= $this->get_pros_field();
             $html .= $this->get_cons_field();
 
-            // $html .= '</div>';
+            $html .= '</div>';
 
             return $html;
         }

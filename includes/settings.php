@@ -264,8 +264,28 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'id' => 'ur_show_captcha',
                             'type' => 'switcher',
-                            'title' => __('Show ReCaptcha', SCR_DOMAIN),
-                            'default' => true,
+                            'title' => __('Show reCAPTCHA (v2 checkbox)', SCR_DOMAIN),
+                            'default' => false,
+                            'desc' => 'Register for reCAPTCHA v2 at <a href="https://www.google.com/recaptcha">https://www.google.com/recaptcha</a> to get your site key and secret key.' .
+                                ' Make sure to add your domain name in the settings at the reCAPTCHA website. ' .
+                                'Read More at <a href="https://paupledocs.gitbook.io/starcat-documentation/">Starcat Reviews - Docs</a>.' .
+                                ' Note: reCAPTCHA v3 will not work, just v2. v3 will be added soon.',
+                        ),
+
+                        array(
+                            'id' => 'recaptcha_site_key',
+                            'type' => 'text',
+                            'title' => __('reCAPTCHA Site Key', SCR_DOMAIN),
+                            'dependency' => array('ur_show_captcha', '==', 'true'),
+                        ),
+
+
+                        array(
+                            'id' => 'recaptcha_secret_key',
+                            'type' => 'text',
+                            'title' => __('reCAPTCHA Secret Key', SCR_DOMAIN),
+                            'default' => '',
+                            'dependency' => array('ur_show_captcha', '==', 'true'),
                         ),
 
                         // array(
