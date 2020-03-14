@@ -16,10 +16,16 @@ if (!class_exists('\Starcat_Review_Notification')) {
             $this->setup_autoload();
             $this->plugin_domain = SCR_NOTIFICATION_PLUGIN_BASE;
             $this->version = SCR_NOTIFICATION_VERSION;
-
+            $this->init_notifications();
         }
-
-         /**
+    
+        public function init_notifications(){
+            $service = new \StarcatReviewNotifications\Services\Notification();
+            $service->load();
+        }
+         
+        
+        /**
          * Throw error on object clone
          *
          * The whole idea of the singleton design pattern is that there is a single
