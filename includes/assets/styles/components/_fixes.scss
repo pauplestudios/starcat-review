@@ -1,0 +1,38 @@
+/* Start of StoreFront Fix */
+// TODO: Fix icons to make them work in text-align:center
+// If done, this entire fix can be removed
+
+body[class*="storefront"] ul.products li.product {
+    .review-list .review-item-stars,
+    .review-list .reviewed-item-stars,
+    .reviewed-list .review-item-stars,
+    .reviewed-list .reviewed-item-stars {
+        text-align: left;
+    }
+
+    /* Extra */
+    .review-list,
+    .reviewed-list {
+        width: auto;
+        text-align: center;
+    }
+
+    .review-list .review-item-stars,
+    .review-list .reviewed-item-stars,
+    .reviewed-list .review-item-stars,
+    .reviewed-list .reviewed-item-stars {
+        float: left;
+    }
+
+    .review-list .review-item,
+    .review-list .reviewed-item,
+    .reviewed-list .review-item,
+    .reviewed-list .reviewed-item {
+        display: inline-block;
+    }
+
+    .reviewed-item-label__score {
+        display: inline;
+    }
+}
+/* End of StoreFront Fix */

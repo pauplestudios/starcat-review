@@ -11,6 +11,7 @@ class LibraryTest extends \Codeception\TestCase\WPTestCase
         $upgrader_test->test_upgrader_dummy($this);
 
         /* Test 2 */
+        require_once SCR_PATH . 'includes/upgrades-list.php';
         $upgrader_list = new \StarcatReview\Includes\Upgrades_List();
         $upgrader_test->test_init($this, $upgrader_list);
     }

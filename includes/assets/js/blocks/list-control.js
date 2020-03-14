@@ -18,6 +18,7 @@ var UserReviewsList = {
                 { name: "postModified", attr: "data-postModified" },
                 { name: "trendScore", attr: "data-trendScore" },
                 { name: "positiveScore", attr: "data-positiveScore" },
+                { name: "likes", attr: "data-likes" },
             ],
 
             page: list_config.page ? list_config.page : 10,
@@ -31,7 +32,7 @@ var UserReviewsList = {
             },
         };
 
-        console.log(options);
+        // console.log(options);
 
         this.featureList = new List("scr-controlled-list", options);
         this.eventHandlers();
@@ -44,7 +45,7 @@ var UserReviewsList = {
         var thisModule = this;
 
         jQuery("#scr-controlled-list .ui.dropdown").dropdownX({
-            clearable: true,
+            // clearable: true,
         });
     },
 
@@ -122,6 +123,10 @@ var UserReviewsList = {
                     });
                 } else if (value == "avg-rating") {
                     thisModule.featureList.sort("positiveScore", {
+                        order: "desc",
+                    });
+                } else if (value == "helpful") {
+                    thisModule.featureList.sort("likes", {
                         order: "desc",
                     });
                 }

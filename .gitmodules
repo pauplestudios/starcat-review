@@ -4,3 +4,9 @@
 [submodule "includes/lib/widgetry"]
 	path = includes/lib/widgetry
 	url = https://essekia@bitbucket.org/pauple/widgetry.git
+[submodule "includes/lib/cpt-addon"]
+	path = includes/lib/cpt-addon
+	url = https://essekia@bitbucket.org/pauple/starcat-review-cpt.git
+[submodule "includes/lib/ct-addon"]
+	path = includes/lib/ct-addon
+	url = https://essekia@bitbucket.org/pauple/starcat-review-comparison-table.git

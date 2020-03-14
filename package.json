@@ -1,6 +1,6 @@
 {
     "name": "starcat-review",
-    "version": "0.2.2",
+    "version": "0.3",
     "main": "index.js",
     "license": "MIT",
     "scripts": {
@@ -9,12 +9,13 @@
         "start": "./node_modules/.bin/webpack --mode=development --watch",
         "buildtest": "cross-env NODE_ENV=test ./node_modules/.bin/webpack",
         "lint": "esw webpack.config.* src tools --color",
-        "acceptance": "vendor/bin/codecept run acceptance -vvv",
+        "runtest": "yarn build && docker-compose down && docker-compose up -d && sleep 10 && yarn acceptance",
+        "acceptance": "vendor/bin/codecept run acceptance --steps",
+        "acceptance_spec": "vendor/bin/codecept run acceptance tests/acceptance/BasicCest.php:comparisonTableAddonActivation --steps",
+        "unittest": "yarn build && docker-compose down && docker-compose up -d && sleep 10 && yarn wpunit_spec",
         "wpunit": "vendor/bin/codecept run wpunit --steps",
         "wpunit_spec": "vendor/bin/codecept run wpunit tests/wpunit/LibraryTest.php --steps",
-        "runtest": "yarn build && docker-compose down && docker-compose up -d && sleep 10 && yarn acceptance",
         "runtest2": "yarn build && docker-compose down && docker-compose up -d && sleep 10 && yarn codeceptjs",
-        "unittest": "yarn build && docker-compose down && docker-compose up -d && sleep 10 && yarn wpunit_spec",
         "analyse": "vendor/bin/churn run includes features utils && vendor/bin/phpcpd includes features utils"
     },
     "devDependencies": {

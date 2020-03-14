@@ -2,6 +2,9 @@
 
 namespace StarcatReview\Includes;
 
+use \StarcatReview\Services\Recaptcha as Recaptcha;
+use StarcatReview\Includes\Settings\SCR_Getter;
+
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -10,7 +13,8 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
     class Ajax_Handler
     {
         public function __construct()
-        {}
+        {
+        }
 
         public function register_ajax_actions()
         {
@@ -29,6 +33,10 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
             // Ajax Hooks In compare table
             add_action('wp_ajax_nopriv_get_scr_results', [$this, 'get_scr_results']);
             add_action('wp_ajax_get_scr_results', [$this, 'get_scr_results']);
+
+            // Vote Submission ajax for User Review
+            add_action('wp_ajax_nopriv_scr_user_review_vote', [$this, 'vote_handler']);
+            add_action('wp_ajax_scr_user_review_vote', [$this, 'vote_handler']);
         }
 
         public function scr_listing_action()
@@ -58,8 +66,23 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
 
         public function user_review_submission()
         {
+            error_log('user_review_submission');
+            // $response = $_POST["captcha-response-manual"];
+            // error_log('$response : ' . print_r($response, true));
+
+            if (SCR_Getter::get('ur_show_captcha')) {
+                $captcha_success = Recaptcha::verify();
+                if ($captcha_success == false) {
+                    echo json_encode("BOT!");
+                    wp_die();
+                }
+                error_log('captcha_success : ' . $captcha_success);
+            }
+
             $user_review_repo = new \StarcatReview\App\Repositories\User_Reviews_Repo();
             $props = $user_review_repo->get_processed_data();
+
+            // error_log('$props : ' . print_r($props, true));
             $parent = isset($props['parent']) ? $props['parent'] : 0;
             $comment_id = isset($props['methodType']) ? $user_review_repo->update($props) : $user_review_repo->insert($props);
             $review = $user_review_repo->get($comment_id, $parent);
@@ -70,6 +93,19 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
             }
 
             echo json_encode($review);
+            wp_die();
+        }
+
+        public function vote_handler()
+        {
+            $ur_repo = new \StarcatReview\App\Repositories\User_Reviews_Repo();
+            $props = $ur_repo->get_processed_voting_data();
+            // error_log('props : ' . print_r($props, true));
+            $ur_repo->store_vote($props);
+            $props = $ur_repo->get($props['comment_id']);
+
+            echo json_encode($props);
+
             wp_die();
         }
 

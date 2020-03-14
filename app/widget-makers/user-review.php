@@ -24,6 +24,48 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             $form_view = $this->form_controller->get_view($args);
             $reviews_list_view = $this->reviews_controller->get_view($args);
 
+            $wrapper_start_html = '<div id="scr-controlled-list" data-collectionprops="{<pagination<:true,<page<:9,<type<:2}">';
+            $this->controls_builder = new \StarcatReview\App\Builders\Controls_Builder('user_review');
+
+            $args = [
+                'search' => 1,
+                'sort' => 1,
+            ];
+            $controls_view = '';
+            $controls_view = $this->controls_builder->get_controls($args);
+
+
+            $pagination_html = '';
+
+            $pagination_html .= $this->get_pagination_html();
+
+
+            $view = $form_view . $wrapper_start_html . $controls_view . $reviews_list_view . $pagination_html . '</div>';
+
+            return $view;
+        }
+
+        private function get_pagination_html()
+        {
+            $html = '';
+            $html .= '<ul class="ui pagination scr-pagination menu">';
+
+            for ($ii = 1; $ii <= 2; $ii++) {
+                # code...
+                $html .= '<li class="active"><a class="page" href="">' . $ii . '</a></li>';
+            }
+
+            $html .= '</ul>';
+            return $html;
+        }
+
+        public function get_view_old()
+        {
+
+            $args = $this->get_default_args();
+            $form_view = $this->form_controller->get_view($args);
+            $reviews_list_view = $this->reviews_controller->get_view($args);
+
             $view = $form_view . $reviews_list_view;
 
             return $view;
@@ -47,11 +89,13 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
                 'enable_pros_cons' => SCR_Getter::get('enable-pros-cons'),
                 'show_list_title' => SCR_Getter::get('ur_show_list_title'),
                 'list_title' => SCR_Getter::get('ur_list_title'),
+                'enable_voting' => SCR_Getter::get('ur_enable_voting'),
                 'show_form_title' => SCR_Getter::get('ur_show_form_title'),
                 'form_title' => SCR_Getter::get('ur_form_title'),
                 'show_title' => SCR_Getter::get('ur_show_title'),
                 'show_stats' => SCR_Getter::get('ur_show_stats'),
                 'show_description' => SCR_Getter::get('ur_show_description'),
+                'show_captcha' => SCR_Getter::get('ur_show_captcha'),
                 'current_user_id' => get_current_user_id(),
             ];
 
@@ -59,6 +103,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
 
             $args['can_user_review'] = $this->get_user_can_review();
             $args['can_user_reply'] = $this->get_user_can_reply();
+            $args['can_user_vote'] = is_user_logged_in();
 
             return $args;
         }

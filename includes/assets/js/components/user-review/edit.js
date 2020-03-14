@@ -81,13 +81,14 @@ var Edit = {
     editFormSubmit: function(reviewContent, reviewProps) {
         thisModule = this;
         var SCRForm = reviewContent.parent().find("form.form");
-
+        console.log("editFormSubmit entry");
         reviewContent
             .parent()
             .find("form.form")
             .form({
                 fields: Form.getRules(),
                 onSuccess: function(event, fields) {
+                    console.log("editFormSubmit success");
                     event.preventDefault();
                     if (editFormSubmitted) {
                         return;
@@ -108,6 +109,7 @@ var Edit = {
                     jQuery
                         .post(scr_ajax.ajax_url, props, function(results) {
                             results = JSON.parse(results);
+                            console.log("results: ");
                             console.log(results);
 
                             //         // Reviewed item prepending to Reviews List
@@ -120,7 +122,8 @@ var Edit = {
                         })
                         .fail(function(response) {
                             // Fail Message
-
+                            console.log("editFormSubmit fail");
+                            console.log(response);
                             SCRForm.html("Failed Updated");
 
                             // Reloading the page
@@ -135,6 +138,7 @@ var Edit = {
         fields.type = submittingForm.attr("method");
         fields.post_id = submittingForm.attr("post_id");
         fields.comment_id = submittingForm.attr("data-comment-id");
+        fields.captcha = submittingForm.find("#captcha").attr("value");
         fields.methodType = submittingForm.attr("data-method");
 
         return fields;
@@ -307,7 +311,7 @@ var Edit = {
 
         form.addClass("mini");
         form.find(".rating.fields")
-            .siblings(".two.fields")
+            .siblings(".pros_and_cons_wrapper")
             .remove();
 
         return form;

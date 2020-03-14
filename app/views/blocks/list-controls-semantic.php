@@ -11,7 +11,8 @@ if (!class_exists('\StarcatReview\App\Views\Blocks\List_Controls_Semantic')) {
     {
 
         public function __construct()
-        { }
+        {
+        }
 
         /* HTML for List_Controls */
         public function get_view()
@@ -40,8 +41,9 @@ if (!class_exists('\StarcatReview\App\Views\Blocks\List_Controls_Semantic')) {
         public function dropdown($props)
         {
 
+            // error_log('$props : ' . print_r($props, true));
             $html = '<div class="ui fluid selection dropdown ' . $props['name'] . '">';
-            $html .= '<input type="hidden" name="' . $props['name'] . '">';
+            $html .= '<input type="hidden" name="' . $props['default'] . '" value="' . $props['default'] . '">';
             $html .= '<i class="dropdown icon"></i>';
             $html .= '<div class="default text">' . $props['label'] . '</div>';
             $html .= '<div class="menu">';

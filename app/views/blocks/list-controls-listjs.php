@@ -11,7 +11,8 @@ if (!class_exists('\StarcatReview\App\Views\Blocks\List_Controls_Listjs')) {
     {
 
         public function __construct()
-        { }
+        {
+        }
 
         /* HTML for List_Controls */
         public function get_view()

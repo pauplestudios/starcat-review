@@ -14,10 +14,21 @@ services:
             WORDPRESS_DEBUG: 1
             WP_DEBUG_DISPLAY: 0
             WP_DEBUG_LOG: 1
+            WORDPRESS_CONFIG_EXTRA: |
+                /* Freemius Dev Mode */
+                /* Set Freemius into development mode */
+                define( 'WP_FS__DEV_MODE', true );
+                define( 'WP_FS__starcat-review-free_SECRET_KEY', 'sk_t=d7~:gkVF1Sw0SJeG!06F[J$dHQ;' );
+                /* Skip email activation when a user with the same email already opted-in */
+                define( 'WP_FS__SKIP_EMAIL_ACTIVATION', true );
+                /* If Freemius was not setup */
+                define( 'WP_FS__SIMULATE_FREEMIUS_OFF', true );
         links:
             - db
         volumes: # Mount relative path source folder on host to absolute path destination folder on docker container
             - ./artifacts/dist:/var/www/html/wp-content/plugins/starcat-review
+            - ./includes/lib/cpt-addon:/var/www/html/wp-content/plugins/starcat-review-cpt
+            - ./includes/lib/ct-addon:/var/www/html/wp-content/plugins/starcat-review-ct
 
     db:
         image: mysql:5.7
@@ -37,7 +48,7 @@ services:
             MYSQL_ROOT_PASSWORD: root
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
-        container_name: phpmyadmin
+        # container_name: phpmyadmin
         depends_on:
             - db
         restart: always
