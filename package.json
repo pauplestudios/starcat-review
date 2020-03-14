@@ -1,10 +1,6 @@
 {
     "name": "starcat-review",
-<<<<<<< HEAD
-    "version": "0.2",
-=======
-    "version": "0.2.1",
->>>>>>> remotes/origin/release/0.2.1
+    "version": "0.2.2",
     "main": "index.js",
     "license": "MIT",
     "scripts": {
