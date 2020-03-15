@@ -68,10 +68,13 @@ if (!class_exists('\Starcat_Review')) {
             require_once SCR_PATH . 'includes/settings/getter.php';
             $recaptcha = new \StarcatReview\Services\Recaptcha();
 
-
+            
+            // Notification only works on post_type has 'Product' only
+            // if ($post_type == 'product') {
             /* Notification */
             if (file_exists(SCR_PATH . 'includes/utils/notification.php')) {
-                require_once SCR_PATH . 'includes/utils/notification.php';
+                // require_once SCR_PATH . 'includes/utils/notification.php';
+                require_once SCR_PATH . '/includes/utils/notification.php';
             }
             
         }

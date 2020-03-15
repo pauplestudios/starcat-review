@@ -44,6 +44,8 @@ if (!class_exists('\StarcatReview\App\Services\Email_Notifications')) {
             
           //  wp_mail($to_address,$subject,$mail_content,$headers);
         }
+
+        
     }
     
 }

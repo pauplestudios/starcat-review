@@ -47,8 +47,8 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             add_action('wp_head', array($this, 'scr_schema_reviews'));
             // add_filter('the_excerpt', array($this, 'content_filter'));
 
-            require_once SCR_PATH . '/app/components/user-reviews/table.php';
-    
+            require_once SCR_PATH . '/app/components/user-reviews/table.php';          
+
             add_action( 'phpmailer_init', array($this,'src_mailer_config'));
             // show wp_mail() errors
             add_action('wp_mail_failed',array($this, 'scr_mail_handler'),10,1);
