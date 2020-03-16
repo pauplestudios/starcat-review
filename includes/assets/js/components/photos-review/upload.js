@@ -20,8 +20,9 @@ var Upload = {
             for (var index = 0; index < e.target.files.length; index++) {
                 var src = URL.createObjectURL(e.target.files[index]);
                 imagesGroup.append(Upload.getImageHTML(src));
-                Upload.removeImg();
             }
+
+            Upload.removeImage();
         });
     },
 
@@ -34,10 +35,8 @@ var Upload = {
         return html;
     },
 
-    removeImg: function () {
-        jQuery('.images .image a').click(function () {
-            console.log("this Image");
-            console.log(this);
+    removeImage: function () {
+        jQuery(Selectors.removeImgesLink).click(function () {
             jQuery(this).parent().remove();
         });
     },
