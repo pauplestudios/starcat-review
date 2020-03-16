@@ -176,6 +176,10 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 $props['captcha'] = $_POST['captcha'];
             }
 
+            if (isset($_POST['photos']) && !empty($_POST['photos'])) {
+                $props['photos'] = $_POST['photos'];
+            }
+
             return $props;
         }
 

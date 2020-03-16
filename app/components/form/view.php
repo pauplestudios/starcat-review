@@ -46,6 +46,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             class="ui form scr-user-review ' . $class . '"
             action="scr_user_review_submission"
             method="post"
+            enctype="multipart/form-data"
             post_id ="' . $this->props['collection']['post_id'] . '"
             ' . $display . '
             data-method="' . $method_type . '"

@@ -35,52 +35,70 @@ var Form = {
                 }
                 formSubmitted = true;
 
+
                 Form.submission(SCRForm, fields);
+                // Form.submission2(SCRForm, fields);
             },
         });
     },
 
     submission: function (SCRForm, fields) {
         var props = Form.getProps(SCRForm, fields);
-
-        SCRForm.find(".submit.button").addClass("loading");
-        // Ajax Post Submiting
-        jQuery
-            .post(scr_ajax.ajax_url, props, function (results) {
-                results = JSON.parse(results);
-
-                // Success Message
-                var msgProps = {
-                    type: "positive",
-                    title: "Thanks for your Review.",
-                    description:
-                        "You can see your review below. Also look at the user summary.",
-                };
-
-                SCRForm.html(Form.getMessageTemplate(msgProps));
-
-                // Reviewed item prepending to Reviews List
-                // jQuery("#scr-cat-collection").prepend(
-                //     Form.getReviewTemplate(props.title, props.description)
-                // );
-
-                // Reloading the page
-                setInterval("window.location.reload()", 5000);
-            })
-            .fail(function (response) {
-                // Fail Message
-                var msgProps = {
-                    type: "negative",
-                    title:
-                        "This is a Bad request, Our development team processing it for while so we suggest you should Keep browsing!",
-                    description: "Thanks for your Review though.",
-                };
-                SCRForm.html(Form.getMessageTemplate(msgProps));
-
-                // Reloading the page
-                setInterval("window.location.reload()", 5000);
-            });
+        jQuery.ajax({
+            url: scr_ajax.url,
+            action: props.action,
+            type: props.type,
+            data: props,
+            dataType: "json",
+            processData: false, // Preventing default data parse behavior            
+            success: function (results) {
+                console.log("results");
+                console.log(results);
+            }
+        });
     },
+
+    // submission: function (SCRForm, fields) {
+    //     var props = Form.getProps(SCRForm, fields);
+
+    //     // SCRForm.find(".submit.button").addClass("loading");
+    //     // Ajax Post Submiting
+    //     jQuery
+    //         .post(scr_ajax.ajax_url, props, function (results) {
+    //             results = JSON.parse(results);
+
+    //             // Success Message
+    //             var msgProps = {
+    //                 type: "positive",
+    //                 title: "Thanks for your Review.",
+    //                 description:
+    //                     "You can see your review below. Also look at the user summary.",
+    //             };
+
+    //             // SCRForm.html(Form.getMessageTemplate(msgProps));
+
+    //             // Reviewed item prepending to Reviews List
+    //             // jQuery("#scr-cat-collection").prepend(
+    //             //     Form.getReviewTemplate(props.title, props.description)
+    //             // );
+
+    //             // Reloading the page
+    //             // setInterval("window.location.reload()", 5000);
+    //         })
+    //         .fail(function (response) {
+    //             // Fail Message
+    //             var msgProps = {
+    //                 type: "negative",
+    //                 title:
+    //                     "This is a Bad request, Our development team processing it for while so we suggest you should Keep browsing!",
+    //                 description: "Thanks for your Review though.",
+    //             };
+    //             SCRForm.html(Form.getMessageTemplate(msgProps));
+
+    //             // Reloading the page
+    //             setInterval("window.location.reload()", 5000);
+    //         }, JSON);
+    // },
 
     getProps: function (submittingForm, fields) {
         fields.action = submittingForm.attr("action");
@@ -88,6 +106,21 @@ var Form = {
         fields.post_id = submittingForm.attr("post_id");
         fields.comment_id = submittingForm.attr("data-comment-id");
         fields.methodType = submittingForm.attr("data-method");
+
+        var data = new FormData();
+        var fileList = document.getElementById("photo_review_image_upload");
+        // fields.photo_review_image_upload = document.getElementById("photo_review_image_upload").files;
+        if (fileList.files.length !== 0) {
+            fields.photos = fileList.files;
+            for (var ii = 0; ii < fileList.files.length; ii++) {
+                data.append(fileList.files[ii]);
+
+            }
+        }
+        console.log('data');
+        console.log(data);
+        console.log('fields');
+        console.log(fields);
 
         return fields;
     },
