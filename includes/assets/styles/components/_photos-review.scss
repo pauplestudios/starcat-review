@@ -146,3 +146,16 @@
     }
 }
 
+
+.ui.tiny.images.scr_pr_uploaded_image_group{
+  padding-top: 5px !important;
+  img{
+    object-fit: contain;
+    height: 80px;
+    
+  }
+  .image{
+    border: 1px solid rgba(0,0,0,.1);
+    width: 80px;
+  }
+}

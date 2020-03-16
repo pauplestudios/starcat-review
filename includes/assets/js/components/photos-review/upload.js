@@ -1,9 +1,48 @@
 var Selectors = {
-
+    upload: "#scr_pr_image_upload",
+    uploadedImagesGroup: ".scr_pr_uploaded_image_group",
+    removeImgesLink: ".scr_pr_uploaded_image_group .image a"
 };
 
 var Upload = {
+
     init: function () {
+        this.eventHandlers();
+    },
+
+    eventHandlers: function () {
+        jQuery(Selectors.upload).change(function (e) {
+
+            var imagesGroup = jQuery(Selectors.uploadedImagesGroup);
+
+            imagesGroup.html(""); // Emptied on every Upload
+
+            for (var index = 0; index < e.target.files.length; index++) {
+                var src = URL.createObjectURL(e.target.files[index]);
+                imagesGroup.append(Upload.getImageHTML(src));
+                Upload.removeImg();
+            }
+        });
+    },
+
+    getImageHTML: function (src) {
+        var html = "<div class='ui tiny fluid image'>";
+        html += "<a class='ui right corner label'><i class='delete icon'></i></a>";
+        html += "<img src='" + src + "' />";
+        html += "</div>";
+
+        return html;
+    },
+
+    removeImg: function () {
+        jQuery('.images .image a').click(function () {
+            console.log("this Image");
+            console.log(this);
+            jQuery(this).parent().remove();
+        });
+    },
+
+    backendUpload: function () {
         // Set all variables to be used in scope
         var frame,
             metaBox = $('#wcpr-comment-photos'), // Your meta box id here

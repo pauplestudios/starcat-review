@@ -114,7 +114,6 @@ var Form = {
             fields.photos = fileList.files;
             for (var ii = 0; ii < fileList.files.length; ii++) {
                 data.append(fileList.files[ii]);
-
             }
         }
         console.log('data');
