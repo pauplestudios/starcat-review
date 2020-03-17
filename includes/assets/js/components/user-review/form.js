@@ -44,13 +44,15 @@ var Form = {
 
     submission: function (SCRForm, fields) {
         var props = Form.getProps(SCRForm, fields);
+        console.log("ajaxurl : " + scr_ajax.ajax_url);
         jQuery.ajax({
-            url: scr_ajax.url,
-            action: props.action,
-            type: props.type,
+            type: 'POST',
+            // dataType: "json",
+            // url: scr_ajax.ajax_url,
+            url: "admin-ajax.php?action=scr_user_review_submission",
             data: props,
-            dataType: "json",
-            processData: false, // Preventing default data parse behavior            
+            processData: false, // Preventing default data parse behavior                        
+            // contentType: false,
             success: function (results) {
                 console.log("results");
                 console.log(results);
@@ -107,17 +109,23 @@ var Form = {
         fields.comment_id = submittingForm.attr("data-comment-id");
         fields.methodType = submittingForm.attr("data-method");
 
-        var data = new FormData();
-        var fileList = document.getElementById("photo_review_image_upload");
-        // fields.photo_review_image_upload = document.getElementById("photo_review_image_upload").files;
-        if (fileList.files.length !== 0) {
-            fields.photos = fileList.files;
-            for (var ii = 0; ii < fileList.files.length; ii++) {
-                data.append(fileList.files[ii]);
+        var fileList = document.getElementById("scr_pr_image_upload").files;
+
+        // var images = jQuery(".scr_pr_uploaded_image_group .fluid.image");
+        // console.log('@@@ images @@@');
+        // console.log(images);
+        if (fileList.length !== 0) {
+            fields.scr_pr_image_upload = [];
+            for (var ii = 0; ii < fileList.length; ii++) {
+                fields.scr_pr_image_upload.push(fileList[ii]);
+
             }
         }
-        console.log('data');
-        console.log(data);
+        // if (fileList.files.length !== 0) {
+        //     fields.scr_pr_image_upload = fileList.files;
+        // }
+        // console.log('data');
+        // console.log(data);
         console.log('fields');
         console.log(fields);
 

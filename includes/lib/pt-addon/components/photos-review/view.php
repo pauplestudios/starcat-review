@@ -44,19 +44,10 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
 
         public function get_field()
         {
-            // $html = '<div class="field">';
-            // $html .= '<label for="scr_pr_image_upload">Choose pictures (maxsize: 2000 kB, max files: 2)</label>';
-            // $html .= '<input type="file" name="scr_pr_image_upload[]" id="scr_pr_image_upload" class="scr_pr_image_upload" multiple="" accept=".jpg, .jpeg, .png, .bmp, .gif" style="display:none">';
-            // $html .= '<input type="hidden" id="scr_pr_max_files" name="photo_review_max_files" value="2">';
-            // $html .= '<div class="ui tiny images scr_pr_uploaded_image_group"></div>';
-            // $html .= '</div>';
-
             $html = '<div class="field">';
-
-            $html .= '<label for="scr_pr_image_upload">Choose pictures (maxsize: 2000 kB, max files: 2)</label>';
-
+            // $html .= '<label for="scr_pr_image_upload">Choose pictures (maxsize: 2000 kB, max files: 2)</label>';
             $html .= '<div class="ui tiny images scr_pr_uploaded_image_group">';
-            $html .= '<div class="ui tiny fluid image add-photos" for="scr_pr_image_upload">';
+            $html .= '<div class="ui image add-photos" for="scr_pr_image_upload">';
             $html .= '<i class="big icons">';
             $html .= '<i class="cloud upload alternate icon"></i>';
             $html .= '<i class="bottom right corner add icon"></i>';
@@ -65,6 +56,7 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
             $html .= '</div>';
 
             $html .= '<input type="file" name="scr_pr_image_upload[]" id="scr_pr_image_upload" class="scr_pr_image_upload" multiple="" accept=".jpg, .jpeg, .png, .bmp, .gif" style="display:none">';
+            $html .= '<input type="hidden" id="scr_pr_max_files" name="scr_pr_max_files" value="5">';
 
             $html .= '</div>';
 

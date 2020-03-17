@@ -78,7 +78,8 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
         public function user_review_submission()
         {
             // $response = $_POST["captcha-response-manual"];
-            error_log('_POST : ' . print_r($_POST, true));
+            error_log('$_POST : ' . print_r($_POST, true));
+            error_log('$_FILES : ' . print_r($_FILES, true));
 
             if (SCR_Getter::get('ur_show_captcha')) {
                 $captcha_success = Recaptcha::verify();

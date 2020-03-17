@@ -166,11 +166,10 @@
         height: 82px;
         display: inline-flex;
         align-items: center;
-        justify-content: center;                
+        justify-content: center;        
         cursor: pointer;
         &:hover{
             box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-            background-color: #fff;
         }
     }
 }

@@ -1,7 +1,9 @@
-var Selectors = {
+var selectors = {
     upload: "#scr_pr_image_upload",
+    maxFiles: "#scr_pr_max_files",
     uploadedImagesGroup: ".scr_pr_uploaded_image_group",
-    removeImgesLink: ".scr_pr_uploaded_image_group .image a"
+    removeImgesLink: ".scr_pr_uploaded_image_group .image a",
+    openUploadWindow: ".add-photos"
 };
 
 var Upload = {
@@ -9,28 +11,32 @@ var Upload = {
     init: function () {
         this.eventHandlers();
         // this.backendUpload();
-        // this.something();
+        this.openUploadWindow();
     },
 
-    something: function () {
-        jQuery('input:text, .ui.button', '.ui.action.input').on('click', function (e) {
-            jQuery('input:file', jQuery(e.target).parents()).click();
+    openUploadWindow: function () {
+        jQuery(selectors.openUploadWindow).on('click', function (e) {
+            // console.log();
+            jQuery('#' + jQuery(this).attr("for")).click();
         });
 
-        jQuery('input:file', '.ui.action.input').on('change', function (e) {
-            var name = e.target.files[0].name;
-            jQuery('input:text', jQuery(e.target).parent()).val(name);
-        });
+        // jQuery('input:file', '.ui.action.input').on('change', function (e) {
+        //     var name = e.target.files[0].name;
+        //     jQuery('input:text', jQuery(e.target).parent()).val(name);
+        // });
     },
 
     eventHandlers: function () {
-        jQuery(Selectors.upload).change(function (e) {
+        jQuery(selectors.upload).change(function (e) {
 
-            var imagesGroup = jQuery(Selectors.uploadedImagesGroup);
-
+            var imagesGroup = jQuery(selectors.uploadedImagesGroup);
+            var maxFiles = jQuery(selectors.maxFiles).val();
             // imagesGroup.html(""); // Emptied on every Upload
 
             for (var index = 0; index < e.target.files.length; index++) {
+                // if (index == maxFiles) {
+                //     break;
+                // }
                 var src = URL.createObjectURL(e.target.files[index]);
                 imagesGroup.prepend(Upload.getImageHTML(src));
             }
@@ -49,7 +55,7 @@ var Upload = {
     },
 
     removeImage: function () {
-        jQuery(Selectors.removeImgesLink).click(function () {
+        jQuery(selectors.removeImgesLink).click(function () {
             jQuery(this).parent().remove();
         });
     },
@@ -57,8 +63,8 @@ var Upload = {
     backendUpload: function () {
         // Set all variables to be used in scope
         var frame,
-            addImgLink = jQuery(Selectors.upload),
-            imgContainer = jQuery(Selectors.uploadedImagesGroup);
+            addImgLink = jQuery(selectors.upload),
+            imgContainer = jQuery(selectors.uploadedImagesGroup);
 
         // ADD IMAGE LINK
         addImgLink.on('click', function (event) {

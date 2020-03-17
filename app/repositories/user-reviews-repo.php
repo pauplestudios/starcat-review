@@ -132,7 +132,8 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
 
         public function get_processed_data()
         {
-            // error_log('$_POST : ' . print_r($_POST, true));
+            error_log('$_POST : ' . print_r($_POST, true));
+
             $props = ['parent' => 0];
 
             if (isset($_POST['post_id']) && !empty($_POST['post_id'])) {
@@ -176,9 +177,9 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 $props['captcha'] = $_POST['captcha'];
             }
 
-            if (isset($_POST['photos']) && !empty($_POST['photos'])) {
-                $props['photos'] = $_POST['photos'];
-            }
+            // if (isset($_POST['photos']) && !empty($_POST['photos'])) {
+            //     $props['photos'] = $_POST['photos'];
+            // }
 
             return $props;
         }
