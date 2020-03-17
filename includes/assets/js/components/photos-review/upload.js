@@ -8,6 +8,19 @@ var Upload = {
 
     init: function () {
         this.eventHandlers();
+        // this.backendUpload();
+        // this.something();
+    },
+
+    something: function () {
+        jQuery('input:text, .ui.button', '.ui.action.input').on('click', function (e) {
+            jQuery('input:file', jQuery(e.target).parents()).click();
+        });
+
+        jQuery('input:file', '.ui.action.input').on('change', function (e) {
+            var name = e.target.files[0].name;
+            jQuery('input:text', jQuery(e.target).parent()).val(name);
+        });
     },
 
     eventHandlers: function () {
@@ -15,11 +28,11 @@ var Upload = {
 
             var imagesGroup = jQuery(Selectors.uploadedImagesGroup);
 
-            imagesGroup.html(""); // Emptied on every Upload
+            // imagesGroup.html(""); // Emptied on every Upload
 
             for (var index = 0; index < e.target.files.length; index++) {
                 var src = URL.createObjectURL(e.target.files[index]);
-                imagesGroup.append(Upload.getImageHTML(src));
+                imagesGroup.prepend(Upload.getImageHTML(src));
             }
 
             Upload.removeImage();
@@ -44,9 +57,8 @@ var Upload = {
     backendUpload: function () {
         // Set all variables to be used in scope
         var frame,
-            metaBox = $('#wcpr-comment-photos'), // Your meta box id here
-            addImgLink = metaBox.find('.wcpr-upload-custom-img'),
-            imgContainer = metaBox.find('#wcpr-new-image');
+            addImgLink = jQuery(Selectors.upload),
+            imgContainer = jQuery(Selectors.uploadedImagesGroup);
 
         // ADD IMAGE LINK
         addImgLink.on('click', function (event) {
@@ -86,7 +98,7 @@ var Upload = {
                             attachment_url = attachment[i].url;
                         }
                         // Send the attachment[i] URL to our custom image input field.
-                        imgContainer.append('<div class="wcpr-review-image-container"><a href="' + attachment_url + '" data-lightbox="photo-reviews-' + $('#comment_ID').val() + '" data-img_post_id="' + attachment[i].id + '"><img style="border: 1px solid;" class="review-images" src="' + attachment_url + '"/></a><input class="photo-reviews-id" name="photo-reviews-id[]" type="hidden" value="' + attachment[i].id + '"/><a href="#" class="wcpr-remove-image">Remove</a></div>');
+                        imgContainer.append('<div class="wcpr-review-image-container"><a href="' + attachment_url + '" data-lightbox="photo-reviews-' + jQuery('#comment_ID').val() + '" data-img_post_id="' + attachment[i].id + '"><img style="border: 1px solid;" class="review-images" src="' + attachment_url + '"/></a><input class="photo-reviews-id" name="photo-reviews-id[]" type="hidden" value="' + attachment[i].id + '"/><a href="#" class="wcpr-remove-image">Remove</a></div>');
                     }
                 }
             });
