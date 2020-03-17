@@ -2,8 +2,8 @@
 
 namespace StarcatReview\Includes;
 
-use \StarcatReview\Services\Recaptcha as Recaptcha;
 use StarcatReview\Includes\Settings\SCR_Getter;
+use \StarcatReview\Services\Recaptcha as Recaptcha;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -66,9 +66,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
 
         public function user_review_submission()
         {
-            error_log('user_review_submission');
             // $response = $_POST["captcha-response-manual"];
-            // error_log('$response : ' . print_r($response, true));
 
             if (SCR_Getter::get('ur_show_captcha')) {
                 $captcha_success = Recaptcha::verify();
@@ -82,12 +80,10 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
             $user_review_repo = new \StarcatReview\App\Repositories\User_Reviews_Repo();
             $props = $user_review_repo->get_processed_data();
 
-            // error_log('$props : ' . print_r($props, true));
-            $parent = isset($props['parent']) ? $props['parent'] : 0;
-            $comment_id = isset($props['methodType']) ? $user_review_repo->update($props) : $user_review_repo->insert($props);
-            $review = $user_review_repo->get($comment_id, $parent);
+            $comment_id = (isset($props['methodType']) && $props['methodType'] === 'PUT') ? $user_review_repo->update($props) : $user_review_repo->insert($props);
+            $review = $user_review_repo->get($comment_id, $props['parent']);
 
-            if ($parent !== 0 && !isset($props['methodType'])) { // review_reply
+            if ($props['parent'] !== 0 && !isset($props['methodType'])) { // review_reply
                 $review_controller = new \StarcatReview\App\Components\User_Reviews\Controller();
                 $review = $review_controller->get_reply_review($review);
             }

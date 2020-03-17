@@ -88,6 +88,14 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
 
             // review only not reply update
             if ($props['parent'] == 0) {
+
+                $data = get_comment_meta($comment_id, 'scr_user_review_props', true);
+                $votes = isset($data['votes']) && !empty($data['votes']) ? $data['votes'] : [];
+                $props['votes'] = $votes;
+
+                unset($props['parent']);
+                unset($props['methodType']);
+
                 update_comment_meta($comment_id, 'scr_user_review_props', $props);
             }
 
@@ -124,8 +132,8 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
 
         public function get_processed_data()
         {
-            error_log('$_POST : ' . $_POST);
-            $props = [];
+            // error_log('$_POST : ' . print_r($_POST, true));
+            $props = ['parent' => 0];
 
             if (isset($_POST['post_id']) && !empty($_POST['post_id'])) {
                 $props['post_id'] = $_POST['post_id'];

@@ -54,10 +54,12 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
 
         public function get_itemsProps($args)
         {
-            $items = [];
-            $items['pros'] = $this->get_filtered_prosorcons($args, 'pros-list');
-            $items['cons'] = $this->get_filtered_prosorcons($args, 'cons-list');
-            $items['stats'] = $this->get_filtered_stats($args);
+            $items = [
+                'pros' => isset($args['items']['pros-list']) && !empty($args['items']['pros-list']) ? $args['items']['pros-list'] : [],
+                'cons' => isset($args['items']['cons-list']) && !empty($args['items']['cons-list']) ? $args['items']['cons-list'] : [],
+                'stats' => $this->get_filtered_stats($args),
+                'current_user_review' => (isset($args['current_user_review'])) ? $args['current_user_review']->review : [],
+            ];
 
             return $items;
         }
@@ -67,9 +69,6 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
             $stats = [];
             $stat_count = 0;
 
-            // if (!isset($args['items']['stats-list']) && empty($args['items']['stats-list'])) {
-            //     return $stats;
-            // }
             if (isset($args['global_stats']) && !empty($args['global_stats'])) {
                 foreach ($args['global_stats'] as $allowed_stat) {
 
@@ -86,23 +85,6 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
             }
 
             return $stats;
-        }
-
-        protected function get_filtered_prosorcons($args, $prosorcons)
-        {
-            $items = [];
-
-            if (isset($args['items'][$prosorcons]) && !empty($args['items'][$prosorcons])) {
-                foreach ($args['items'][$prosorcons] as $key => $item) {
-                    $proorcon = strtolower(preg_replace('/\s+/', '_', $item['item']));
-                    $items[] = [
-                        'item' => $item['item'],
-                        'unique' => $proorcon,
-                    ];
-                }
-            }
-
-            return $items;
         }
 
         protected function get_icons($collection)
