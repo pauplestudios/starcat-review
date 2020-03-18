@@ -2,16 +2,19 @@
 @import "../../node_modules/swiper/css/swiper.css";
 
 // All User Uploaded Photos 
-.photos-gallery-preview.ui.tiny.images .image {
+.photos-gallery-preview.ui.tiny.images .image, .ui.tiny.images.review-photos .image{
     height: 89px;
     width: 89px;    
     cursor: pointer;
-
+    overflow: hidden;    
+    border-radius: .5em;
+    border: 1px solid rgba(0,0,0,.1);        
+    
     & img{             
         height: 89px;
         width: 89px;
         object-fit: cover;
-    }
+    }   
 
     & span.show-gallery{
         cursor: pointer;
@@ -33,6 +36,11 @@
         &:hover{
             opacity: 1;
         }
+    }
+
+    &:hover{
+        opacity: .9;
+        border: 1px solid rgba(0,0,0,.2);   
     }
 }
 

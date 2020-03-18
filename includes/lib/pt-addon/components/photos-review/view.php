@@ -33,11 +33,24 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
 
         public function get_single_review_photos($props)
         {
-            $html = '<div class="ui comments">';
-            foreach ($props as $key => $images) {
-                $html .= $this->get_single_comment($key, $images);
+            // $html = '<div class="ui comments">';
+            // foreach ($props as $key => $images) {
+            // $html .= $this->get_single_comment($key, $images);
+            // }
+            // $html .= '</div>';
+            // error_log('Photos props : ' . print_r($props, true));
+
+            $html = '';
+
+            if (!empty($props)) {
+                $html .= '<div class="ui tiny images review-photos">';
+                foreach ($props as $attachement) {
+                    $html .= '<div class="ui image" data-review-id="' . $attachement['review_id'] . '" data-attachement-id="' . $attachement['id'] . '">';
+                    $html .= '<img src="' . $attachement['url'] . '" />';
+                    $html .= '</div>';
+                }
+                $html .= '</div>';
             }
-            $html .= '</div>';
 
             return $html;
         }

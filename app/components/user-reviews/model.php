@@ -111,9 +111,9 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
                 $args['items']['votes'] = $this->get_votes($comment->review['votes']);
             }
 
-            // if (isset($comment->review['helpful']) && !empty($comment->review['helpful'])) {
-            //     $args['items']['helpful'] = $comment->review['helpful'];
-            // }
+            if (isset($comment->review['attachements']) && !empty($comment->review['attachements'])) {
+                $args['items']['attachements'] = $this->get_attachments_with_src($comment);
+            }
 
             return $args;
         }
@@ -174,6 +174,20 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
             }
 
             return $summary;
+        }
+
+        protected function get_attachments_with_src($comment)
+        {
+            $photos = [];
+            for ($ii = 0; $ii < sizeof($comment->review['attachements']); $ii++) {
+                $photos[$ii] = [
+                    'id' => $comment->review['attachements'][$ii],
+                    'review_id' => $comment->comment_ID,
+                    'url' => wp_get_attachment_image_src($comment->review['attachements'][$ii], 'medium')[0],
+                ];
+            }
+
+            return $photos;
         }
     }
 }

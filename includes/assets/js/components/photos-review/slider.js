@@ -8,7 +8,7 @@ var selectors = {
     btnPrev: ".photos-review__button-prev",
     btnNext: ".photos-review__button-next",
 
-    reviewPhotos: ".review-photos .card",
+    reviewPhotos: ".review-photos .image",
     galleryPhotos: ".photos-gallery .card",
 };
 

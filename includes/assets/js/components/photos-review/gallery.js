@@ -7,7 +7,7 @@ var selectors = {
     showGallery: ".show-gallery",
     gallery: ".photos-gallery",
 
-    singleReviewPhotos: ".review-photos .card",
+    singleReviewPhotos: ".review-photos .image",
     singleGalleryPhotos: ".photos-gallery .card",
     singleGalleryPhotosPreview: ".photos-gallery-preview .image",
 

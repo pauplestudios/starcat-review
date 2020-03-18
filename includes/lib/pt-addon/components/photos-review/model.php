@@ -22,21 +22,27 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Model')) {
 
         public function get_single_review_photos_viewProps($args)
         {
-            $photos_JSON = file_get_contents(SCR_PT_PATH . 'includes/utils/photos.json');
-            $photos = json_decode($photos_JSON, true);
+            $props = [];
 
-            $props = ['a' => [], 'b' => [], 'c' => [], 'd' => []];
+            if (isset($args['args']['items']['attachements']) && !empty($args['args']['items']['attachements'])) {
+                return $args['args']['items']['attachements'];
+            }
 
-            $start = 50;
-            foreach ($props as $key => $value) {
-                for ($ii = $start; $ii < sizeof($photos['photos']); $ii++) {
-                    if ($ii % 3 === 0 && ($ii !== $start)) {
-                        break;
-                    }
-                    array_push($props[$key], $photos['photos'][$ii]['src']['tiny']);
-                }
-                $start = $ii;
-            };
+            // $photos_JSON = file_get_contents(SCR_PT_PATH . 'includes/utils/photos.json');
+            // $photos = json_decode($photos_JSON, true);
+
+            // $props = ['a' => [], 'b' => [], 'c' => [], 'd' => []];
+
+            // $start = 50;
+            // foreach ($props as $key => $value) {
+            //     for ($ii = $start; $ii < sizeof($photos['photos']); $ii++) {
+            //         if ($ii % 3 === 0 && ($ii !== $start)) {
+            //             break;
+            //         }
+            //         array_push($props[$key], $photos['photos'][$ii]['src']['tiny']);
+            //     }
+            //     $start = $ii;
+            // };
 
             return $props;
         }
