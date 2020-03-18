@@ -35,7 +35,6 @@ var Form = {
                 }
                 formSubmitted = true;
 
-
                 Form.submission(SCRForm, fields);
                 // Form.submission2(SCRForm, fields);
             },
@@ -43,64 +42,54 @@ var Form = {
     },
 
     submission: function (SCRForm, fields) {
-        var props = Form.getProps(SCRForm, fields);
-        console.log("ajaxurl : " + scr_ajax.ajax_url);
+        var form_data = Form.getProps(SCRForm, fields);
+
+        SCRForm.find(".submit.button").addClass("loading");
+        // Ajax Post Submiting        
         jQuery.ajax({
-            type: 'POST',
-            // dataType: "json",
-            // url: scr_ajax.ajax_url,
-            url: "admin-ajax.php?action=scr_user_review_submission",
-            data: props,
+            type: "post",
+            url: scr_ajax.ajax_url,
+            cache: false,
+            data: form_data,
             processData: false, // Preventing default data parse behavior                        
-            // contentType: false,
+            contentType: false,
             success: function (results) {
-                console.log("results");
-                console.log(results);
+                results = JSON.parse(results);
+
+                // Success Message
+                var msgProps = {
+                    type: "positive",
+                    title: "Thanks for your Review.",
+                    description:
+                        "You can see your review below. Also look at the user summary.",
+                };
+
+                SCRForm.html(Form.getMessageTemplate(msgProps));
+
+                // Reviewed item prepending to Reviews List
+                // jQuery("#scr-cat-collection").prepend(
+                //     Form.getReviewTemplate(props.title, props.description)
+                // );
+
+                // Reloading the page
+                setInterval("window.location.reload()", 5000);
             }
-        });
+        }).fail(function (response) {
+            console.log("!!! Submision Failed !!!");
+            console.log(response);
+            // Fail Message
+            var msgProps = {
+                type: "negative",
+                title:
+                    "This is a Bad request, Our development team processing it for while so we suggest you should Keep browsing!",
+                description: "Thanks for your Review though.",
+            };
+            SCRForm.html(Form.getMessageTemplate(msgProps));
+
+            // Reloading the page
+            setInterval("window.location.reload()", 5000);
+        }, JSON);
     },
-
-    // submission: function (SCRForm, fields) {
-    //     var props = Form.getProps(SCRForm, fields);
-
-    //     // SCRForm.find(".submit.button").addClass("loading");
-    //     // Ajax Post Submiting
-    //     jQuery
-    //         .post(scr_ajax.ajax_url, props, function (results) {
-    //             results = JSON.parse(results);
-
-    //             // Success Message
-    //             var msgProps = {
-    //                 type: "positive",
-    //                 title: "Thanks for your Review.",
-    //                 description:
-    //                     "You can see your review below. Also look at the user summary.",
-    //             };
-
-    //             // SCRForm.html(Form.getMessageTemplate(msgProps));
-
-    //             // Reviewed item prepending to Reviews List
-    //             // jQuery("#scr-cat-collection").prepend(
-    //             //     Form.getReviewTemplate(props.title, props.description)
-    //             // );
-
-    //             // Reloading the page
-    //             // setInterval("window.location.reload()", 5000);
-    //         })
-    //         .fail(function (response) {
-    //             // Fail Message
-    //             var msgProps = {
-    //                 type: "negative",
-    //                 title:
-    //                     "This is a Bad request, Our development team processing it for while so we suggest you should Keep browsing!",
-    //                 description: "Thanks for your Review though.",
-    //             };
-    //             SCRForm.html(Form.getMessageTemplate(msgProps));
-
-    //             // Reloading the page
-    //             setInterval("window.location.reload()", 5000);
-    //         }, JSON);
-    // },
 
     getProps: function (submittingForm, fields) {
         fields.action = submittingForm.attr("action");
@@ -109,27 +98,20 @@ var Form = {
         fields.comment_id = submittingForm.attr("data-comment-id");
         fields.methodType = submittingForm.attr("data-method");
 
-        var fileList = document.getElementById("scr_pr_image_upload").files;
+        var form_data = new FormData();
+        var files = document.getElementById('scr_pr_image_upload').files;
 
-        // var images = jQuery(".scr_pr_uploaded_image_group .fluid.image");
-        // console.log('@@@ images @@@');
-        // console.log(images);
-        if (fileList.length !== 0) {
-            fields.scr_pr_image_upload = [];
-            for (var ii = 0; ii < fileList.length; ii++) {
-                fields.scr_pr_image_upload.push(fileList[ii]);
-
-            }
+        // Appending Uploaded Image form Datas
+        for (var x = 0; x < files.length; x++) {
+            form_data.append("files[]", files[x]);
         }
-        // if (fileList.files.length !== 0) {
-        //     fields.scr_pr_image_upload = fileList.files;
-        // }
-        // console.log('data');
-        // console.log(data);
-        console.log('fields');
-        console.log(fields);
 
-        return fields;
+        // Appending Semantic Validated fields into form Data
+        for (var key in fields) {
+            form_data.append(key, fields[key]);
+        }
+
+        return form_data;
     },
 
     getRules: function () {

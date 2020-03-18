@@ -62,6 +62,8 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                     add_comment_meta($comment_id, 'scr_user_review_props', $props);
                 }
 
+                do_action('scr_photos_review/add_attachements', $comment_id);
+
                 return $comment_id;
             }
             // else{
@@ -132,8 +134,6 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
 
         public function get_processed_data()
         {
-            error_log('$_POST : ' . print_r($_POST, true));
-
             $props = ['parent' => 0];
 
             if (isset($_POST['post_id']) && !empty($_POST['post_id'])) {
@@ -177,8 +177,10 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 $props['captcha'] = $_POST['captcha'];
             }
 
-            // if (isset($_POST['photos']) && !empty($_POST['photos'])) {
-            //     $props['photos'] = $_POST['photos'];
+            // if (isset($_FILES) && !empty($_FILES)) {
+            // do_action('scr_photos_review/add_attachements', $props);
+
+            // $props['attachements'] = apply_filters('scr_photos_review/get_attachements', $_FILES);
             // }
 
             return $props;

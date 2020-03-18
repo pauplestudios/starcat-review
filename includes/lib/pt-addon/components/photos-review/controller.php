@@ -13,6 +13,8 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Controller')) {
         {
             $this->model = new \StarcatReviewPt\Components\Photos_Review\Model();
             $this->view = new \StarcatReviewPt\Components\Photos_Review\View();
+            $this->repo = new \StarcatReviewPt\Repository\Photos_Repo();
+
         }
 
         public function load()
@@ -22,6 +24,8 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Controller')) {
             add_filter('scr_photos_review/get_single_review_photos_field', [$this, 'get_single_review_photos_field']);
 
             add_filter('scr_photos_review/ajax', [$this, 'get_ajax_response']);
+
+            add_action('scr_photos_review/add_attachements', [$this->repo, 'add_review_image']);
         }
 
         public function get_all_photos($args)
