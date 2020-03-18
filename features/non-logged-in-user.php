@@ -17,6 +17,14 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
             add_action('init', array($this, 'init_hook'));
         }
 
+        public function get_settings(){
+            $settings = [
+                'who_can_review' => 'everyone'
+            ];
+
+            return $settings;
+        }
+
         public function init_hook(){
 
             $current_user = new \StarcatReview\App\Services\User();
@@ -28,6 +36,22 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
             add_filter('scr_user_form_start', [$this, 'form_modification']);
             add_filter('scr_form_process_data', [$this, 'process_form']);
             add_filter('scr_user_review_pre_interpreted_args', [$this, 'user_review_args']);
+            add_filter('scr_get_comment_item', [$this, 'get_comment_item'], 10, 2);
+        }
+
+        public function get_comment_item($comment_item, $comment){
+            
+        
+          // If user is logged_in, this method should not be called at all.
+            $Current_User = new \StarcatReview\App\Services\User();
+            $current_user_IP = $Current_User->get_user_IP();
+            $settings = $this->get_settings();
+            
+            if($settings['who_can_review'] == 'everyone' && !isset($comment->user_id)  && $comment->comment_author_IP == $current_user_IP){
+                $comment_item['can_edit'] = true;
+            } 
+
+             return $comment_item;
         }
 
         public function process_form($props=[]){
@@ -52,6 +76,8 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
 
             if($who_can_review == 'everyone'){
                 $args['can_user_review'] = true;
+              
+                $args['can_user_reply'] = true;
             }
 
             return $args;

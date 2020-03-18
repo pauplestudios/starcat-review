@@ -130,6 +130,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
                     if ($comment->user_id == get_current_user_id() && $comment->comment_parent == 0) {
                         $args['can_user_review'] = false;
                         $args['current_user_review'] = $comment;
+                        
                     }
                 }
 

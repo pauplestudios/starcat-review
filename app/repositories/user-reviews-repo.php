@@ -59,15 +59,13 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
         }
 
         public function build_and_get_comment_data($user, $props){
-
+            $Current_User = new \StarcatReview\App\Services\User();
+            $is_user_logged_in = $Current_User->is_loggedin();
+            
             $comment_data = [];
-
-            if (!empty($_SERVER['REMOTE_ADDR']) && rest_is_ip_address(wp_unslash($_SERVER['REMOTE_ADDR']))) { // WPCS: input var ok, sanitization ok.
-                $comment_data['comment_author_IP'] = wp_unslash($_SERVER['REMOTE_ADDR']); // WPCS: input var ok.
-            } else {
-                $comment_data['comment_author_IP'] = '127.0.0.1';
-            }
-
+          
+            // General Properties
+            $comment_data['comment_author_IP'] = $Current_User->get_user_IP();
             $comment_data['comment_post_ID'] = $props['post_id'];
             $comment_data['comment_content'] = $props['description'];
             $comment_data['comment_agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36';
@@ -77,9 +75,9 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             $comment_data['comment_approved'] = 1;
             
 
+            // Properties which change for different user types (logged_in and non_logged_in)
             if($is_user_logged_in){
                 $user = get_user_by('id', get_current_user_id());
-    
                 $comment_data['comment_author'] = $user->display_name;
                 $comment_data['comment_author_email'] = $user->user_email;
                 $comment_data['comment_author_url'] = $user->user_url;
