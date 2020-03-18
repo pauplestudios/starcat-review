@@ -72,10 +72,13 @@ if (!class_exists('\Starcat_Review')) {
             // Notification only works on post_type has 'Product' only
             // if ($post_type == 'product') {
             /* Notification */
-            if (file_exists(SCR_PATH . 'includes/utils/notification.php')) {
-                // require_once SCR_PATH . 'includes/utils/notification.php';
-                require_once SCR_PATH . '/includes/utils/notification.php';
-            }
+            // if (file_exists(SCR_PATH . 'includes/utils/notification.php')) {
+            //     // require_once SCR_PATH . 'includes/utils/notification.php';
+            //     require_once SCR_PATH . '/includes/utils/notification.php';
+            // }
+
+            $Notification = new \StarcatReview\Includes\Utils\Notification();
+            
             
         }
 
