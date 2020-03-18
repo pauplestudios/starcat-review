@@ -2,7 +2,7 @@
 
 namespace StarcatReview\Features;
 
-use \StarcatReview\Services\Recaptcha as Recaptcha;
+use StarcatReview\Includes\Settings\SCR_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -18,10 +18,10 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
         }
 
         public function get_settings(){
-            $settings = [
-                'who_can_review' => 'everyone'
-            ];
 
+            $settings = [
+                'who_can_review' => SCR_Getter::get('ur_who_can_review')
+            ];
             return $settings;
         }
 
@@ -72,7 +72,8 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
 
 
         public function user_review_args($args = []){
-            $who_can_review = 'everyone'; // Settings
+            $settings = $this->get_settings();
+            $who_can_review = $settings['who_can_review']; // Settings
 
             if($who_can_review == 'everyone'){
                 $args['can_user_review'] = true;
