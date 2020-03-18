@@ -47,13 +47,13 @@ if (!class_exists('\StarcatReview\App\Components\Schema_Reviews\Controller')) {
                 'disclaimer'   => 'diclaimer',
             );
             // error_log('mail args : ' . print_r($mail_args, true));
-            $send_mail  = $email_service->send_mail($mail_args);
+            // $send_mail  = $email_service->send_mail($mail_args);
 
-            $notification = new \StarcatReview\Includes\Utils\Notification();
+            // $notification = new \StarcatReview\Includes\Utils\Notification();
 
-            $setting = $notification->get_setting();
-            $schedule = $notification->get_schedule();
-            $time_schedule = $notification->get_schdeule_intervals();
+            // $setting = $notification->get_setting();
+            // $schedule = $notification->get_schedule();
+            // $time_schedule = $notification->get_schdeule_intervals();
 
             // error_log('notification setting : ' . print_r($setting, true));
             // error_log('notify schedule: '.print_r($schedule,true));

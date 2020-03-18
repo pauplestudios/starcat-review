@@ -49,9 +49,9 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
             require_once SCR_PATH . '/app/components/user-reviews/table.php';          
 
-            add_action( 'phpmailer_init', array($this,'src_mailer_config'));
+            // add_action( 'phpmailer_init', array($this,'src_mailer_config'));
             // show wp_mail() errors
-            add_action('wp_mail_failed',array($this, 'scr_mail_handler'),10,1);
+            // add_action('wp_mail_failed',array($this, 'scr_mail_handler'),10,1);
             
             
             // add_action('bl_cron_hook', 'src_cron_exec');
