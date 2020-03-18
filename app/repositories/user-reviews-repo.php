@@ -99,6 +99,8 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 unset($props['methodType']);
 
                 update_comment_meta($comment_id, 'scr_user_review_props', $props);
+
+                do_action('scr_photos_review/add_attachements', $comment_id);
             }
 
             return $comment_id;
