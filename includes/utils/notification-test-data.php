@@ -42,7 +42,8 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification_Test_Data')) {
 
         private $order_test_data = [
             '12' => '1584246839', // 17th March 2020 11am
-            '14' =>  '1584506039' // 18th March 2020 10am
+            '14' =>  '1584506039', // 18th March 2020 10am
+            '15' => '1583900019', // 11th March 2020 9 43am
         ];
 
         private  $schedule = [
@@ -65,19 +66,40 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification_Test_Data')) {
                         'attempts' =>  0
                     ]
                 ]
+            ],
+            '15'  => [ // order_id
+                'emails' => [
+                    0 => [
+                        'status' => 'SUCCESS',
+                        'attempts' =>  2
+                    ],
+                    1 => [
+                        'status' => 'FAILED',
+                        'attempts' =>  3
+                    ],
+                    2 => [
+                        'status' => 'LATER',
+                        'attempts' =>  2
+                    ],
+                    
+
+                ]
             ]
         ];
 
+        public function save_schedule($schedule){
+            $this->schedule = $schedule;
+        }
         public function get_schedule(){
-            return $this->get_schedule();
+            return $this->schedule;
         }
 
         public function get_settings(){
             return $this->settings;
         }
 
-        public function get_order_data(){
-            return $this->order_test_data;
+        public function get_order_data($order_id){
+            return $this->order_test_data[$order_id];
         }
     } // END CLASS
 }

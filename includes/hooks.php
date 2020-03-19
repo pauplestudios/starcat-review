@@ -13,7 +13,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
     {
         public function __construct()
         {
-            error_log('execute this timestamp1 : '.time());
+            // error_log('execute this timestamp1 : '.time());
             /* settings getter */
             require_once SCR_PATH . 'includes/settings/getter.php';
 
