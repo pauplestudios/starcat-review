@@ -1,13 +1,13 @@
 <?php
 
-namespace StarcatReview\Includes\Utils;
+namespace StarcatReview\Includes\Utils\Notification;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
 
-if (!class_exists('\StarcatReview\Includes\Utils\Notification_Test_Data')) {
+if (!class_exists('\StarcatReview\Includes\Utils\Notification\Notification_Test_Data')) {
     class Notification_Test_Data{
 
         private $status = [

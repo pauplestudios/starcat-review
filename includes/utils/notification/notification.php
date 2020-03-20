@@ -1,19 +1,20 @@
 <?php
 
-namespace StarcatReview\Includes\Utils;
+namespace StarcatReview\Includes\Utils\Notification;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
 
-if (!class_exists('\StarcatReview\Includes\Utils\Notification')) {
+if (!class_exists('\StarcatReview\Includes\Utils\Notification\Notification')) {
     class Notification{
 
         public function __construct()
         {
             // error_log('Notification->__construct');
-            $this->Data = new \StarcatReview\Includes\Utils\Notification_Test_Data();
+            // TODO: Change Data to real data (data.php)
+            $this->Data = new \StarcatReview\Includes\Utils\Notification\Notification_Test_Data();
 
             add_action( 'init', [$this, 'schedule_executer'] ); // on load
             add_action( 'woocommerce_order_status_completed', [$this,'add_order_to_schedule'], 10, 1 ); // on purchase
@@ -39,7 +40,7 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification')) {
            // 3. Save new schedule to DB
            $this->save_schedule_to_db($schedule);
 
-           error_log('schedule : ' . print_r($schedule, true));
+           $this->scheduler_log('schedule at the end of add_order_to_schedule');
         }
 
     
@@ -70,31 +71,28 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification')) {
             } // closes $schedule loop
 
             // 3. Save new schedule to DB
-            $schedule = $this->save_schedule_to_db($schedule);
+            $this->save_schedule_to_db($schedule);
 
             return $schedule; 
         }
 
          /* Top Level Method */
         public function schedule_executer($schedule = []){
-            // error_log('Notification->schedule_executer()');
-              // 1. Get schedule which is updated with new STATUS based on timestamp of Schedule Settings
+            // 1. Get schedule which is updated with new STATUS based on timestamp of Schedule Settings
             $schedule = $this->get_updated_schedule();
-            error_log('get_updated_schedule : ' . print_r($schedule, true));
+            // error_log('get_updated_schedule : ' . print_r($schedule, true));
             
-
+            
             // 2. Loop through all orders and send PENDING emails
             foreach ($schedule as $order_id => $order) {
                 $emails = $order['emails'];
+                $ii = sizeof($emails) - 1; // most recent email
 
-                for ($ii = 0; $ii < sizeof($emails) ; $ii++) { 
-                    if($emails[$ii]['status'] == 'PENDING'){
-
-                        // 3. Send Email
-                        $this->send_email($order_id, $emails[$ii], $ii);
-                    
-                    }
-                } // closes $emails loop
+                 // 3. Send Email if status is PENDING
+                if($emails[$ii]['status'] == 'PENDING'){
+                    $this->send_email($order_id, $emails[$ii], $ii);
+                }
+              
             } // closes $schedule loop
 
             $this->scheduler_log('schedule at the end of schedule_executer');
@@ -119,44 +117,43 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification')) {
             $ii = sizeof($emails) - 1; // most recent email
             // for ($ii=0; $ii < sizeof($emails) ; $ii++) { 
                 
-                if($emails[$ii]['status'] == 'PENDING' && $email_result == 0){
-                    // $emails['status'] == 'SUCCESS';
-                    $emails[$ii]['attempts']++;
-                }
+            if($emails[$ii]['status'] == 'PENDING' && $email_result == 0){
+                $emails[$ii]['attempts']++;
+            }
 
-                // SUCCESS condition
-                if($emails[$ii]['status'] == 'PENDING' && $email_result == 1){
-                   $emails[$ii]['status'] = 'SUCCESS';
-                   $emails[$ii]['attempts']++;
-                }
+            // SUCCESS condition
+            if($emails[$ii]['status'] == 'PENDING' && $email_result == 1){
+                $emails[$ii]['status'] = 'SUCCESS';
+                $emails[$ii]['attempts']++;
+            }
 
-                // FAILED condition
-                if($emails[$ii]['status'] == 'PENDING' && $email_result == 0 && $emails[$ii]['attempts'] == 2){
-                    $emails[$ii]['status'] = 'FAILED';
-                }
+            // FAILED condition
+            if($emails[$ii]['status'] == 'PENDING' && $email_result == 0 && $emails[$ii]['attempts'] == 2){
+                $emails[$ii]['status'] = 'FAILED';
+            }
+            
+            /* ACTIONS for SUCCESS/FAILED conditions */
                 
-                /* ACTIONS for SUCCESS/FAILED conditions */
-                 
-                $current_email_number = $ii + 1;
-                $is_last_email = $this->is_last_email($current_email_number);
-               
+            $current_email_number = $ii + 1;
+            $is_last_email = $this->is_last_email($current_email_number);
+            
 
-                // Check if email is successful or failed and last email
-                if(($emails[$ii]['status'] == 'SUCCESS' || $emails[$ii]['status'] == 'FAILED') && $is_last_email){
-                    $completed_order_notifications = true;
-                }
+            // Check if email is successful or failed and last email
+            if(($emails[$ii]['status'] == 'SUCCESS' || $emails[$ii]['status'] == 'FAILED') && $is_last_email){
+                $completed_order_notifications = true;
+            }
 
-                 // Check if email is successful or failed and not last email
-                if(($emails[$ii]['status'] == 'SUCCESS' || $emails[$ii]['status'] == 'FAILED') && !$is_last_email){
-                    error_log('last_email: status -  ' . $emails[$ii]['status'] . " !is_last_email: " . !$is_last_email );
-                    error_log('is_last_email: ' . $is_last_email);
-                    error_log('order_id: ' . $order_id);
+                // Check if email is successful or failed and not last email
+            if(($emails[$ii]['status'] == 'SUCCESS' || $emails[$ii]['status'] == 'FAILED') && !$is_last_email){
+                // error_log('last_email: status -  ' . $emails[$ii]['status'] . " !is_last_email: " . !$is_last_email );
+                // error_log('is_last_email: ' . $is_last_email);
+                // error_log('order_id: ' . $order_id);
 
-                    $emails[] =  [
-                        'status' => 'LATER',
-                        'attempts' =>  0
-                    ];
-                }
+                $emails[] =  [
+                    'status' => 'LATER',
+                    'attempts' =>  0
+                ];
+            }
 
 
             // } // closes $emails loop
@@ -171,32 +168,16 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification')) {
             return $schedule;
         }
 
-         // TODO: replace with actual db saving code
         public function save_schedule_to_db($schedule){
             $this->Data->save_schedule($schedule);
             return $schedule;
         }
 
-        public function save_schedule_to_db_actual($schedule){
-            update_option( 'scr_notification_schedule', $schedule);
-        }
-
-         // TODO: replace with actual db code
+ 
         public function get_schedule_from_db(){
             return $this->Data->get_schedule(); 
         }
 
-        public function get_schedule_from_db_actual(){
-            $schedule = get_option('scr_notification_schedule');
-
-            if(!isset($schedule) || empty($schedule)){
-                $schedule = [];
-            }
-
-            return $schedule; 
-        }
-
-        // TODO: Replace with actual data
         public function get_order_timestamp($order_id){
             return $this->Data->get_order_data($order_id);
         }
@@ -220,6 +201,7 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification')) {
         }
 
 
+        // TODO: Get vales from settings
         public function send_email($order_id, $email_info, $email_number){
             // error_log('Notification->send_email()');
             $to = 'sendto@example.com';
@@ -257,11 +239,6 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification')) {
             // return $this->settings;
         }
 
-          // TODO: Make it into actual schedule
-        // public function get_schedule(){
-        //     return $this->Data->get_schedule();
-        //     // return Notification::$schedule;
-        // }
     }  // END CLASS
 }
 

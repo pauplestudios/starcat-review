@@ -77,7 +77,7 @@ if (!class_exists('\Starcat_Review')) {
             //     require_once SCR_PATH . '/includes/utils/notification.php';
             // }
 
-            $Notification = new \StarcatReview\Includes\Utils\Notification();
+            $Notification = new \StarcatReview\Includes\Utils\Notification\Notification();
             
             
         }
