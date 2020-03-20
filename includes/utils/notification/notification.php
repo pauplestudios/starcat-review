@@ -109,8 +109,6 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification\Notification')) {
         }
 
         /* 2nd Level Methods */
-
-
         public function update_schedule($order_id, $email_result){
             $schedule = $this->get_schedule_from_db();
 
@@ -119,8 +117,7 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification\Notification')) {
             $completed_order_notifications = false; // Completed all the emails for this order
 
             $ii = sizeof($emails) - 1; // most recent email
-            // for ($ii=0; $ii < sizeof($emails) ; $ii++) { 
-                
+
             if($emails[$ii]['status'] == 'PENDING' && $email_result == 0){
                 $emails[$ii]['attempts']++;
             }
@@ -149,18 +146,11 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification\Notification')) {
 
                 // Check if email is successful or failed and not last email
             if(($emails[$ii]['status'] == 'SUCCESS' || $emails[$ii]['status'] == 'FAILED') && !$is_last_email){
-                // error_log('last_email: status -  ' . $emails[$ii]['status'] . " !is_last_email: " . !$is_last_email );
-                // error_log('is_last_email: ' . $is_last_email);
-                // error_log('order_id: ' . $order_id);
-
                 $emails[] =  [
                     'status' => 'LATER',
                     'attempts' =>  0
                 ];
             }
-
-
-            // } // closes $emails loop
 
             $schedule[$order_id]['emails'] = $emails; // update $schdule from temporary variable $emails 
 
@@ -190,7 +180,6 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification\Notification')) {
         public function get_email_schedule_time($order_id, $email_number){
             $order_timestamp = $this->get_order_timestamp($order_id);
             $time_schedule_settings = $this->get_time_schedule_settings();
-            // error_log('$order_timestamp ' . $order_timestamp );
             $schedule_interval = $time_schedule_settings[$email_number-1];
             $email_schedule_timestamp = 0;
             if($schedule_interval['unit'] == 'hours'){
@@ -240,10 +229,6 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification\Notification')) {
 
         public function get_email_settings($order_id){
             $email_settings = $this->Data->get_email_settings($order_id);
-            error_log('email_settings : ' . print_r($email_settings, true));
-
-            // $email_settings = $this->Data->get_email_settings($order_id);
-
             return $email_settings;
         }
 
