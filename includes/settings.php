@@ -65,22 +65,113 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 \CSF::createOptions($prefix, $options);
 
                 $this->general_settings($prefix);
-                if (is_plugin_active('starcat-review-cpt/starcat-review-cpt.php')) {
+                // if (is_plugin_active('starcat-review-cpt/starcat-review-cpt.php')) {
                     // $options['menu_parent'] = null;
                     // $options['menu_type'] = 'menu';
                     $this->mainpage_settings($prefix);
                     $this->category_page_settings($prefix);
                     $this->single_page_settings($prefix);
                     $this->category_meta_fields();
-                }
+              //  }
 
                 $this->user_review_settings($prefix);
                 // $this->comparison_table_settings($prefix);
+                $this->notification_settings($prefix);
 
                 $this->single_post_meta_fields();
             }
         }
 
+
+        public function notification_settings($prefix){
+            $admin_email = get_option('admin_email');
+            \CSF::createSection(
+                $prefix,
+                array(
+                    'id' => 'notification_settings',
+                    'title' => 'Notification',
+                    'icon' => 'fa fa-table',
+                    'fields' => array(
+                       
+                        array(
+                            'id' => 'ns_from_address', // ns: notification_settings
+                            'type' => 'text',
+                            'title' => 'Enter From Address',
+                            'placeholder' => $admin_email,
+                            'default' => $admin_email,
+                            'desc' => 'Make sure this is a valid email address. Invalid emails maybe marked as spam',
+                        ),
+                        array(
+                            'id' => 'ns_subject', // ns: notification_settings
+                            'type' => 'text',
+                            'title' => 'Subject',
+                            'placeholder' => 'Subject of the Email',
+                            'default' => 'Thank you for Purchasing from {{Sitename}}',
+                            'desc' => 'Use {{sitename}} to use the name of your website dynamically. This improves your anti-spam score.',
+                        ),
+                        array(
+                            'id' => 'ns_content', // ns: notification_settings
+                            'type' => 'textarea',
+                            'title' => 'Content',
+                            'placeholder' => 'Content of the email',
+                            'default' => 'Thank you for purchasing from Starcat Dev.
+
+                            If you liked your product, please leave a review.
+                            
+                            {{product_review_link}}',
+                            'desc' => '<strong>The main body of the email.</strong>',
+                        ),
+                        array(
+                            'id' => 'ns_disclaimer', // ns: notification_settings
+                            'type' => 'textarea',
+                            'title' => 'Disclaimer',
+                            'placeholder' => 'Disclaimers',
+                            'desc' => '<strong>Shown at the footer of the email</strong>',
+                        ),
+                        array(
+                            'id'     => 'ns_time_schedule', // ns: notification_settings
+                            'type'   => 'repeater',
+                            'title'  => 'Time Schedule',
+                            'fields' => array(
+                          
+                              array(
+                                'id'    => 'value',
+                                'type'  => 'text',
+                                'title' => 'Time Value'
+                              ),
+                              array(
+                                'id'          => 'unit',
+                                'type'        => 'select',
+                                'title'       => 'Time Unit',
+                                'placeholder' => 'Select an option',
+                                'options'     => array(
+                                  'hours'  => 'Hours',
+                                  'days'  => 'Days',
+                                ),
+                                'default'     => 'days'
+                              ),
+                          
+                            ),
+                            'default'   => array(
+                                array(
+                                  'value' => '12',
+                                  'unit' => 'hours',
+                                ),
+                                array(
+                                  'value' => '1',
+                                  'unit' => 'days' 
+                                ),
+                                array(
+                                    'value' => '3',
+                                    'unit' => 'days' 
+                                )
+                            )
+                        ),
+
+                     )
+                )
+            );
+        }
         public function category_meta_fields()
         {
             // taxonomy-prefix

@@ -123,6 +123,20 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'ur_show_description' => true,
                 'ur_show_captcha' => true,
                 'ur_form_custom_fields' => [],
+                // Notification
+                'ns_from_address' => get_option('admin_email'),
+                'ns_subject' => 'Thanks for Puchasing from {{Sitename}}' ,
+                'ns_content' => 'Thank you for purchasing from Starcat Dev.
+
+                If you liked your product, please leave a review.
+                
+                {{product_review_link}}',
+                'ns_disclaimer' => '',
+                'ns_time_schedule' => [
+                    ['value' => '12', 'unit' => 'hours'], 
+                    ['value' => '1', 'unit' => 'days'], 
+                    ['value' => '3', 'unit' => 'days'], 
+                ]
 
                 // Comparison Table Start
                 // 'ct_page' => ''

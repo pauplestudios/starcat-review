@@ -15,6 +15,7 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification\Notification')) {
             // error_log('Notification->__construct');
             // TODO: Change Data to real data (data.php)
             $this->Data = new \StarcatReview\Includes\Utils\Notification\Notification_Test_Data();
+            $this->Actual_Data = new \StarcatReview\Includes\Utils\Notification\Data();
 
             add_action( 'init', [$this, 'schedule_executer'] ); // on load
             add_action( 'woocommerce_order_status_completed', [$this,'add_order_to_schedule'], 10, 1 ); // on purchase
@@ -78,6 +79,8 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification\Notification')) {
 
          /* Top Level Method */
         public function schedule_executer($schedule = []){
+           
+        
             // 1. Get schedule which is updated with new STATUS based on timestamp of Schedule Settings
             $schedule = $this->get_updated_schedule();
             // error_log('get_updated_schedule : ' . print_r($schedule, true));
@@ -185,9 +188,9 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification\Notification')) {
 
         public function get_email_schedule_time($order_id, $email_number){
             $order_timestamp = $this->get_order_timestamp($order_id);
-            $settings = $this->get_settings();
+            $time_schedule_settings = $this->get_time_schedule_settings();
             // error_log('$order_timestamp ' . $order_timestamp );
-            $schedule_interval = $settings['time_schedule'][$email_number-1];
+            $schedule_interval = $time_schedule_settings[$email_number-1];
             $email_schedule_timestamp = 0;
             if($schedule_interval['unit'] == 'hours'){
                 $email_schedule_timestamp = $order_timestamp + ($schedule_interval['value'] * (60 * 60));
@@ -203,10 +206,12 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification\Notification')) {
 
         // TODO: Get vales from settings
         public function send_email($order_id, $email_info, $email_number){
-            // error_log('Notification->send_email()');
-            $to = 'sendto@example.com';
-            $subject = 'The subject';
-            $body = 'The email body content of order_id: ' . $order_id . " - attempt_no:  " .  ++$email_info['attempts'] . " email_number: " . ++$email_number;
+            $email_settings = $this->get_email_settings($order_id);
+            
+            $to = $email_settings['to'];
+            $subject = $email_settings['subject'];
+            $body =  $email_settings['content'];
+            // $body = 'The email body content of order_id: ' . $order_id . " - attempt_no:  " .  ++$email_info['attempts'] . " email_number: " . ++$email_number;
             $headers = array('Content-Type: text/html; charset=UTF-8');
             
             // 1. Send Email
@@ -222,8 +227,8 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification\Notification')) {
         public function is_last_email($current_email_number){
             $is_last_email = false;
 
-            $settings = $this->get_settings();
-            $number_of_emails_configured = sizeof($settings['time_schedule']);
+            $time_schedule_settings = $this->get_time_schedule_settings();
+            $number_of_emails_configured = sizeof($time_schedule_settings);
 
             if($current_email_number >= $number_of_emails_configured){
                 $is_last_email = true;
@@ -233,11 +238,20 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification\Notification')) {
 
         }
 
-        // TODO: Make it into actual settings
-        public function get_settings(){
-            return $this->Data->get_settings();
-            // return $this->settings;
+        public function get_email_settings($order_id){
+            $email_settings = $this->Actual_Data->get_email_settings($order_id);
+            error_log('email_settings : ' . print_r($email_settings, true));
+
+            // $email_settings = $this->Data->get_email_settings($order_id);
+
+            return $email_settings;
         }
+
+        public function get_time_schedule_settings(){
+            return $this->Data->get_time_schedule_settings();
+        }
+
+   
 
     }  // END CLASS
 }

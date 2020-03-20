@@ -90,11 +90,21 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification\Notification_Test_
         public function save_schedule($schedule){
             $this->schedule = $schedule;
         }
+
+        public function get_time_schedule_settings(){
+            return $this->settings['time_schedule'];
+        }
+
+        public function get_email_settings($order_id){
+            return $this->settings['email'];
+        }
+
         public function get_schedule(){
             return $this->schedule;
         }
 
-        public function get_settings(){
+        // DO NOT USE DIRECTLY
+        private function get_settings(){
             return $this->settings;
         }
 
