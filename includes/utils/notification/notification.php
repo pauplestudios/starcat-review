@@ -13,18 +13,17 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification\Notification')) {
         public function __construct()
         {
             // error_log('Notification->__construct');
-            // TODO: Change Data to real data (data.php)
-            $this->Data = new \StarcatReview\Includes\Utils\Notification\Notification_Test_Data();
-            $this->Actual_Data = new \StarcatReview\Includes\Utils\Notification\Data();
+            // $this->Data = new \StarcatReview\Includes\Utils\Notification\Notification_Test_Data();
+            $this->Data = new \StarcatReview\Includes\Utils\Notification\Data();
 
-            add_action( 'init', [$this, 'schedule_executer'] ); // on load
+            add_action( 'woocommerce_after_register_post_type', [$this, 'schedule_executer'], 11, 1 ); // on load
             add_action( 'woocommerce_order_status_completed', [$this,'add_order_to_schedule'], 10, 1 ); // on purchase
         }
     
 
         /* Top Level Method */
         public function add_order_to_schedule($order_id){
-            // error_log('add_order_to_schedule $order_id: ' . $order_id);
+            error_log('add_order_to_schedule $order_id: ' . $order_id);
             // 1. Get schedule which is updated with new STATUS based on timestamp of Schedule Settings
             $schedule = $this->get_updated_schedule();
 
@@ -37,6 +36,8 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification\Notification')) {
                     ]
                 ]
             ];
+
+            error_log('Notification->add_order_to_schedule schedule() : ' . print_r($schedule, true));
 
            // 3. Save new schedule to DB
            $this->save_schedule_to_db($schedule);
@@ -80,7 +81,7 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification\Notification')) {
          /* Top Level Method */
         public function schedule_executer($schedule = []){
            
-        
+            error_log('scheduler_called');
             // 1. Get schedule which is updated with new STATUS based on timestamp of Schedule Settings
             $schedule = $this->get_updated_schedule();
             // error_log('get_updated_schedule : ' . print_r($schedule, true));
@@ -204,7 +205,6 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification\Notification')) {
         }
 
 
-        // TODO: Get vales from settings
         public function send_email($order_id, $email_info, $email_number){
             $email_settings = $this->get_email_settings($order_id);
             
@@ -239,7 +239,7 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification\Notification')) {
         }
 
         public function get_email_settings($order_id){
-            $email_settings = $this->Actual_Data->get_email_settings($order_id);
+            $email_settings = $this->Data->get_email_settings($order_id);
             error_log('email_settings : ' . print_r($email_settings, true));
 
             // $email_settings = $this->Data->get_email_settings($order_id);

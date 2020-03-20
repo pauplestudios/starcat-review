@@ -11,19 +11,21 @@ use StarcatReview\Includes\Settings\SCR_Getter;
 if (!class_exists('\StarcatReview\Includes\Utils\Notification\Data')) {
     class Data {
 
-        // TODO: TEST THIS
         public function save_schedule($schedule){
+            // error_log('Data->save_schedule schedule() : ' . print_r($schedule, true));
             $result = update_option( 'scr_notification_schedule', $schedule);
             return $result;
         }
 
-        // TODO: TEST THIS
         public function get_schedule(){
             $schedule = get_option('scr_notification_schedule');
 
+            // error_log('Data->get_schedule() schedule : ' . print_r($schedule, true));
             if(!isset($schedule) || empty($schedule)){
                 $schedule = [];
             }
+
+            // error_log('Data->get_schedule() after check schedule : ' . print_r($schedule, true));
 
             return $schedule; 
         }
@@ -42,9 +44,8 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification\Data')) {
             $disclaimer = SCR_Getter::get('ns_disclaimer');
             $sitename = get_bloginfo( 'name' ); 
 
-            // $order_id = 59;
             $order = wc_get_order( $order_id );
-            error_log('$order :' . $order);
+            // error_log('$order :' . $order);
            
 
             // Implement Dynamic Variables
@@ -96,9 +97,13 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification\Data')) {
             return str_replace($original, $replacement, $string);
         }
 
-        // TODO: Replace with actual data
         public function get_order_data($order_id){
-            return $this->order_test_data[$order_id];
+            $order = wc_get_order( $order_id );
+            // error_log('order: ' . print_r($order, true));
+            $order_completed_timestamp = strtotime($order->get_date_created());
+
+            return $order_completed_timestamp;
+           //  return $this->order_test_data[$order_id];
         }
     } // END CLASS
 }
