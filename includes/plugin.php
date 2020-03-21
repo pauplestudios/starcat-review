@@ -57,8 +57,6 @@ if (!class_exists('\Starcat_Review')) {
 
             $settings = new \StarcatReview\Includes\Settings();
 
-            /* Notifications */
-            // new \StarcatReview\Includes\Notifications();
 
             /* Upgrades */
             $Upgrades = new \StarcatReview\Includes\Upgrades();
@@ -69,15 +67,10 @@ if (!class_exists('\Starcat_Review')) {
             $recaptcha = new \StarcatReview\Services\Recaptcha();
 
             
-            // Notification only works on post_type has 'Product' only
-            // if ($post_type == 'product') {
             /* Notification */
-            // if (file_exists(SCR_PATH . 'includes/utils/notification.php')) {
-            //     // require_once SCR_PATH . 'includes/utils/notification.php';
-            //     require_once SCR_PATH . '/includes/utils/notification.php';
-            // }
-
-            $Notification = new \StarcatReview\Includes\Utils\Notification\Notification();
+            // $Notification_Data = new \StarcatReview\Includes\Utils\Notification\Notification_Test_Data();
+            $Notification_Data = new \StarcatReview\Includes\Utils\Notification\Data();
+            $Notification = new \StarcatReview\Includes\Utils\Notification\Notification($Notification_Data);
             
             
         }

@@ -89,6 +89,11 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification\Notification_Test_
 
         public function save_schedule($schedule){
             $this->schedule = $schedule;
+          
+        }
+
+        public function add_order_timestamp($order_timestamp, $order_id){
+            $this->order_test_data[$order_id] = $order_timestamp;
         }
 
         public function get_time_schedule_settings(){

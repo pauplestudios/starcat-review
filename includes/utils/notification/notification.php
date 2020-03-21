@@ -10,12 +10,10 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReview\Includes\Utils\Notification\Notification')) {
     class Notification{
 
-        public function __construct()
+        public function __construct($Data)
         {
             // error_log('Notification->__construct');
-            // $this->Data = new \StarcatReview\Includes\Utils\Notification\Notification_Test_Data();
-            $this->Data = new \StarcatReview\Includes\Utils\Notification\Data();
-
+            $this->Data = $Data;
             add_action( 'woocommerce_after_register_post_type', [$this, 'schedule_executer'], 11, 1 ); // on load
             add_action( 'woocommerce_order_status_completed', [$this,'add_order_to_schedule'], 10, 1 ); // on purchase
         }
