@@ -36,7 +36,7 @@ services:
         volumes:
             - ./tests/_data/dump.sql:/docker-entrypoint-initdb.d/dump.sql
         ports: # Set up ports exposed for other containers to connect to
-            - "127.0.0.1:3306:3306"
+            - "127.0.0.1:3307:3306"
         command:
             - "--wait_timeout=28800"
             - "--interactive_timeout=28800"
