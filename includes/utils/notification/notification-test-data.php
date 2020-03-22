@@ -34,6 +34,7 @@ if (!class_exists('\StarcatReview\Includes\Utils\Notification\Notification_Test_
             ],
             'email'    => [
                 'from_address' => 'themechanic.dev@gmail.com',
+                'to' => 'buyer@gmail.com',
                 'subject'   => 'Starcat Mail Subject Content',
                 'content'   => 'Mail Body Content',
                 'disclaimer' => 'Footer (or) disclaimer content'

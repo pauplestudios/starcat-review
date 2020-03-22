@@ -33,4 +33,22 @@ class NotificationTest extends \Codeception\TestCase\WPTestCase
         $this->assertEquals(true, $has_no_dupes);
     }
 
+    public function test_run_schedule(){
+        $this->Data =  new \StarcatReview\Includes\Utils\Notification\Notification_Test_Data();
+        $Notification = new \StarcatReview\Includes\Utils\Notification\Notification($this->Data);
+
+        $Notification->run_schedule();
+
+         /* Add new order to schedule */
+         $new_schedule = $Notification->get_schedule_from_db();
+         $this->assertEquals('SUCCESS', $new_schedule[12]['emails'][0]['status']);
+         $this->assertEquals(2, $new_schedule[12]['emails'][0]['attempts']);
+         $this->assertEquals('SUCCESS', $new_schedule[14]['emails'][1]['status']);
+         // $this->assertEquals('LATER', $new_schedule[15]['emails'][2]['status']);
+
+         // Completed order deleted
+         $this->assertArrayNotHasKey(15, $new_schedule);
+         
+    }
+
 } // END TEST CLASS
