@@ -33,7 +33,7 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
                 return;
             }
 
-            add_filter('scr_user_form_start', [$this, 'form_modification']);
+            add_filter('scr_user_form_start', [$this, 'form_modification'], 10, 2);
             add_filter('scr_form_process_data', [$this, 'process_form']);
             add_filter('scr_user_review_pre_interpreted_args', [$this, 'user_review_args']);
             add_filter('scr_get_comment_item', [$this, 'get_comment_item'], 10, 2);
@@ -85,21 +85,24 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
         }
 
 
-        public function form_modification($html = ''){
-            
+        public function form_modification($html = '', $review = []){
+            $user_email = (isset($review['user_email'])) ? $review['user_email'] : '';
+            $first_name = (isset($review['first_name'])) ? $review['first_name'] : '';
+            $last_name = (isset($review['last_name'])) ? $review['last_name'] : '';
+
             $html .= '<div class="inline field">';
             // $html .= '<label>Review Title</label>';
-            $html .= '<input type="text" name="user_email" placeholder="Title" value="Email"/>';
+            $html .= '<input type="text" name="user_email" placeholder="me@mycompany.com" value="'.$user_email.'"/>';
             $html .= '</div>';
 
             $html .= '<div class="inline field">';
             // $html .= '<label>Review Title</label>';
-            $html .= '<input type="text" name="first_name" placeholder="John" value="First Name"/>';
+            $html .= '<input type="text" name="first_name" placeholder="John" value="'.$first_name.'"/>';
             $html .= '</div>';
 
             $html .= '<div class="inline field">';
             // $html .= '<label>Review Title</label>';
-            $html .= '<input type="text" name="last_name" placeholder="Doe  " value="Last Name"/>';
+            $html .= '<input type="text" name="last_name" placeholder="Doe  " value="'.$last_name.'"/>';
             $html .= '</div>';
 
             error_log('html: ' . $html);

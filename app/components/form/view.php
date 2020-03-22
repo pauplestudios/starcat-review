@@ -53,7 +53,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             data-method="' . $method_type . '"
             >';
 
-            $html .= apply_filters('scr_user_form_start', $html);
+            $html .= apply_filters('scr_user_form_start', $html, $review);
 
             if ($this->props['collection']['show_title']) {
                 $html .= '<div class="inline field">';
