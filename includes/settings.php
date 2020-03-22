@@ -112,14 +112,10 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'id' => 'ns_content', // ns: notification_settings
                             'type' => 'textarea',
-                            'title' => 'Content',
-                            'placeholder' => 'Content of the email',
-                            'default' => 'Thank you for purchasing from Starcat Dev.
-
-                            If you liked your product, please leave a review.
-                            
-                            {{product_review_link}}',
-                            'desc' => '<strong>The main body of the email.</strong>',
+                            'title' => 'Body of the Email',
+                            'placeholder' => 'Body of the email',
+                            'default' => 'Thank you for purchasing from Starcat Dev. If you liked your product, please leave a review: {{product_review_link}}',
+                            'desc' => 'Use {{product_review_link}} to add links to purchased product pages.',
                         ),
                         array(
                             'id' => 'ns_disclaimer', // ns: notification_settings
