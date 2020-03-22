@@ -30,6 +30,9 @@ if (!class_exists('\Starcat_Review')) {
 
             // These components will handle the hooks internally, no need to call this in a hook
             $this->load_components();
+
+            /* New Features */
+            $Non_Logged_In_User = new \StarcatReview\Features\Non_Logged_In_User();
         }
 
         // public function register_cpt_and_taxonomy()
