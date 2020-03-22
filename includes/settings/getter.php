@@ -126,11 +126,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 // Notification
                 'ns_from_address' => get_option('admin_email'),
                 'ns_subject' => 'Thanks for Puchasing from {{Sitename}}' ,
-                'ns_content' => 'Thank you for purchasing from Starcat Dev.
-
-                If you liked your product, please leave a review.
-                
-                {{product_review_link}}',
+                'ns_content' => 'Thank you for purchasing from Starcat Dev. If you liked your product, please leave a review: {{product_review_link}}',
                 'ns_disclaimer' => '',
                 'ns_time_schedule' => [
                     ['value' => '12', 'unit' => 'hours'], 

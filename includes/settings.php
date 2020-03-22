@@ -90,7 +90,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 array(
                     'id' => 'notification_settings',
                     'title' => 'Notification',
-                    'icon' => 'fa fa-table',
+                    'icon' => 'fa fa-bell',
                     'fields' => array(
                        
                         array(
