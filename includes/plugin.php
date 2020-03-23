@@ -69,8 +69,8 @@ if (!class_exists('\Starcat_Review')) {
             
             /* Notification */
             // $Notification_Data = new \StarcatReview\Includes\Utils\Notification\Notification_Test_Data();
-            $Notification_Data = new \StarcatReview\Includes\Utils\Notification\Data();
-            $Notification = new \StarcatReview\Includes\Utils\Notification\Notification($Notification_Data);
+            // $Notification_Data = new \StarcatReview\Includes\Utils\Notification\Data();
+            // $Notification = new \StarcatReview\Includes\Utils\Notification\Notification($Notification_Data);
             
             
         }
