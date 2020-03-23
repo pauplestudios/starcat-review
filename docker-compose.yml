@@ -29,6 +29,7 @@ services:
             - ./artifacts/dist:/var/www/html/wp-content/plugins/starcat-review
             - ./includes/lib/cpt-addon:/var/www/html/wp-content/plugins/starcat-review-cpt
             - ./includes/lib/ct-addon:/var/www/html/wp-content/plugins/starcat-review-ct
+            - ./includes/lib/starcat-review-woo-notify:/var/www/html/wp-content/plugins/starcat-review-woo-notify
 
     db:
         image: mysql:5.7
