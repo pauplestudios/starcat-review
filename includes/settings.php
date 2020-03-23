@@ -65,14 +65,14 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 \CSF::createOptions($prefix, $options);
 
                 $this->general_settings($prefix);
-                // if (is_plugin_active('starcat-review-cpt/starcat-review-cpt.php')) {
+                if (is_plugin_active('starcat-review-cpt/starcat-review-cpt.php')) {
                     // $options['menu_parent'] = null;
                     // $options['menu_type'] = 'menu';
                     $this->mainpage_settings($prefix);
                     $this->category_page_settings($prefix);
                     $this->single_page_settings($prefix);
                     $this->category_meta_fields();
-              //  }
+               }
 
                 $this->user_review_settings($prefix);
                 // $this->comparison_table_settings($prefix);
