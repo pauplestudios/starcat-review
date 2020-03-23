@@ -2,6 +2,8 @@
 
 namespace StarcatReview\Services;
 
+use StarcatReview\Includes\Settings\SCR_Getter;
+
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -18,12 +20,12 @@ if (!class_exists('\StarcatReview\Services\Recaptcha')) {
 
         public static function load_v2_html()
         {
-            $key = "6LdhPdYUAAAAAHEpw1Rz7G9kcHaL4A39bFyDgS2x";
+            $site_key = SCR_Getter::get('recaptcha_site_key');
 
             $html = '';
             $html .= self::js_script();
             $html .= '<script src="https://www.google.com/recaptcha/api.js" async defer></script>';
-            $html .= '<div class="g-recaptcha" data-callback="starcat_recaptcha_callback" data-sitekey="' . $key . '"></div><br>';
+            $html .= '<div class="g-recaptcha" data-callback="starcat_recaptcha_callback" data-sitekey="' . $site_key . '"></div><br>';
             $html .= '<input type="hidden" id="captcha" name="captcha" value="">';
             return $html;
         }
@@ -41,7 +43,7 @@ if (!class_exists('\StarcatReview\Services\Recaptcha')) {
 
         public static function verify()
         {
-            $secret_key = '6LdhPdYUAAAAAHR08h7-uwDmcjoqqvwo6GSRDltj';
+            $secret_key = SCR_Getter::get('recaptcha_secret_key');
             $response = $_POST["captcha"];
 
             // error_log('verify');

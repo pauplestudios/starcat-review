@@ -121,10 +121,14 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
 
             $html .= '<div class="actions">';
             $html .= '<div class="links">';
-            if ($this->collection['can_reply']) {
+
+            $can_reply = $this->collection['can_reply'];
+            $can_edit_comment = $this->collection['can_reply'] && $comment['can_edit'];
+
+            if ($can_reply) {
                 $html .= '<a class="reply_link"><i class="reply icon"></i> REPLY</a>';
             }
-            if ($this->collection['can_reply'] && $comment['can_edit']) {
+            if ($can_edit_comment) {
                 $html .= '<a class="edit_link"><i class="edit icon"></i> EDIT</a>';
             }
             // if ($this->collection['can_reply']) {

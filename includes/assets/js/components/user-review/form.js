@@ -125,6 +125,33 @@ var Form = {
                     },
                 ],
             },
+            first_name: {
+                identifier: "first_name",
+                rules: [
+                    {
+                        type: "empty",
+                        prompt: "Please enter your First Name",
+                    },
+                ],
+            },
+            last_name: {
+                identifier: "last_name",
+                rules: [
+                    {
+                        type: "empty",
+                        prompt: "Please enter your Last Name",
+                    },
+                ],
+            },
+            user_email: {
+                identifier: "user_email",
+                rules: [
+                    {
+                        type   : 'email',
+                        prompt: "Please enter your title",
+                    },
+                ],
+            },
             description: {
                 identifier: "description",
                 rules: [

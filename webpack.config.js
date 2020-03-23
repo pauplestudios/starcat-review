@@ -105,6 +105,10 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
                     to: buildFolder,
                 },
                 {
+                    from: path.resolve(__dirname, "services") + "/**",
+                    to: buildFolder,
+                },
+                {
                     from: path.resolve(__dirname, "includes") + "/",
                     to: buildFolder + "/includes",
                     ignore: [

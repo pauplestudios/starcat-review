@@ -18,5 +18,5 @@ modules:
             domain: "%WP_DOMAIN%"
             adminEmail: "%ADMIN_EMAIL%"
             title: "Test"
-            plugins: ["starcat-review/starcat-review.php"]
-            activatePlugins: ["starcat-review/starcat-review.php"]
+            plugins: ["starcat-review/starcat-review.php", "starcat-review-woo-notify/starcat-review-woo-notify.php"]
+            activatePlugins: ["starcat-review/starcat-review.php", "starcat-review-woo-notify/starcat-review-woo-notify.php"]
