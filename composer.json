@@ -1,6 +1,7 @@
 {
   "require": {
-    "ext-gd": "*"
+    "ext-gd": "*",
+    "phpmailer/phpmailer": "^6.1"
   },
   "require-dev": {
     "lucatume/wp-browser": "~2.1.5",

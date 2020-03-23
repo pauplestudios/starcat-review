@@ -17,11 +17,9 @@ artifacts/dist/**
 package-lock.json
 
 
-
 includes/assets/vendors/semantic/bundle/components/
 includes/assets/vendors/semantic/bundle/themes/basic/
 includes/assets/vendors/semantic/bundle/themes/github/
 includes/assets/vendors/semantic/bundle/themes/material/
 includes/assets/vendors/semantic/bundle/semantic.css
 includes/assets/vendors/semantic/bundle/semantic.js
-.gitmodules

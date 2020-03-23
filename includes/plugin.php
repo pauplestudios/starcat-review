@@ -57,8 +57,6 @@ if (!class_exists('\Starcat_Review')) {
 
             $settings = new \StarcatReview\Includes\Settings();
 
-            /* Notifications */
-            // new \StarcatReview\Includes\Notifications();
 
             /* Upgrades */
             $Upgrades = new \StarcatReview\Includes\Upgrades();
@@ -67,6 +65,14 @@ if (!class_exists('\Starcat_Review')) {
             /* Recaptcha */
             require_once SCR_PATH . 'includes/settings/getter.php';
             $recaptcha = new \StarcatReview\Services\Recaptcha();
+
+            
+            /* Notification */
+            // $Notification_Data = new \StarcatReview\Includes\Utils\Notification\Notification_Test_Data();
+            // $Notification_Data = new \StarcatReview\Includes\Utils\Notification\Data();
+            // $Notification = new \StarcatReview\Includes\Utils\Notification\Notification($Notification_Data);
+            
+            
         }
 
         /**
