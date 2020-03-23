@@ -23,6 +23,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
         {
             $class = '';
             $title = '';
+            $review = '';
             $display = '';
             $cancel_btn = '';
             $description = '';
@@ -31,7 +32,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
 
             // User Already Reviewed or Not Logged in User
             $hide_form = !$this->props['collection']['can_user_review'];
-            
+
             if (!$this->props['collection']['can_user_review']) {
                 $class = 'mini';
                 $method_type = 'PUT';
