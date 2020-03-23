@@ -285,6 +285,18 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         // ),
 
                         array(
+                            'id'    => 'ur_who_can_review',
+                            'type'  => 'select',
+                            'desc' => 'Selecting Everyone will let even Non Logged-in Users add reviews',
+                            'title' => 'Who Can Review',
+                            'options' => array(
+                                'logged_in' => 'Logged In Users',
+                                'everyone' => 'Everyone',
+                               
+                            )
+                        ),
+
+                        array(
                             'id' => 'ur_show_list_title',
                             'type' => 'switcher',
                             'title' => __('Show User Reviews List Title', SCR_DOMAIN),
