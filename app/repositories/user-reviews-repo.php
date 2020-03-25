@@ -20,6 +20,80 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
 
         public function insert($props)
         {
+
+            error_log('props : ' . print_r($props, true));
+            $Current_User = new \StarcatReview\App\Services\User();
+
+            $user_can_review = $Current_User->can_review();
+            $user_review_needs_approval = $Current_User->can_user_directly_publish_reviews();
+
+            // 1. Check if current_user can add review
+            if($user_can_review == false){
+               // return 'Failed: User cannot submit reviews';
+               return 0;
+            }
+
+            // 2. Proceed only in $user_can_review == true . Store new comment.
+            $user = get_user_by('id', get_current_user_id());
+            $comment_data = $this->build_and_get_comment_data($user, $props);
+            $comment_id = wp_new_comment($comment_data);
+    
+            // 3. Check if we need to manually approve this review
+            if($user_review_needs_approval){
+                $comment_modifier = [
+                    'comment_ID' => $comment_id,
+                    'comment_approved' => 0,
+                ];
+
+                wp_update_comment($comment_modifier);
+            }
+
+            // 4. Does this review have comment_meta to be updated
+            $should_update_comment_meta = (isset($comment_id) && !empty($comment_id) && !isset($props['review_reply']) && $props['parent'] == 0);
+            if ($should_update_comment_meta){
+                add_comment_meta($comment_id, 'scr_user_review_props', $props);
+            }
+
+            return $comment_id;
+
+        }
+
+        public function build_and_get_comment_data($user, $props){
+            $Current_User = new \StarcatReview\App\Services\User();
+            $is_user_logged_in = $Current_User->is_loggedin();
+            
+            $comment_data = [];
+          
+            // General Properties
+            $comment_data['comment_author_IP'] = $Current_User->get_user_IP();
+            $comment_data['comment_post_ID'] = $props['post_id'];
+            $comment_data['comment_content'] = $props['description'];
+            $comment_data['comment_agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36';
+            $comment_data['comment_type'] = SCR_COMMENT_TYPE;
+            // $comment_data['comment_date'] = current_time('timestamp', true);
+            $comment_data['comment_parent'] = !isset($props['parent']) ? 0 : $props['parent'];
+            $comment_data['comment_approved'] = 1;
+            
+
+            // Properties which change for different user types (logged_in and non_logged_in)
+            if($is_user_logged_in){
+                $user = get_user_by('id', get_current_user_id());
+                $comment_data['comment_author'] = $user->display_name;
+                $comment_data['comment_author_email'] = $user->user_email;
+                $comment_data['comment_author_url'] = $user->user_url;
+                $comment_data['user_id'] = $user->ID;
+            } else{
+                $comment_data['comment_author'] = $props['first_name'] . ' ' . $props['last_name'];
+                $comment_data['comment_author_email'] = $props['user_email'];
+                $comment_data['comment_author_url'] = '';
+                $comment_data['user_id'] = '';
+            }
+
+            return $comment_data;
+        }
+
+        public function insert_old($props)
+        {
             if (is_user_logged_in()) {
                 if (!empty($_SERVER['REMOTE_ADDR']) && rest_is_ip_address(wp_unslash($_SERVER['REMOTE_ADDR']))) { // WPCS: input var ok, sanitization ok.
                     $comment_author_IP = wp_unslash($_SERVER['REMOTE_ADDR']); // WPCS: input var ok.
@@ -175,6 +249,8 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             if (isset($_POST['captcha']) && !empty($_POST['captcha'])) {
                 $props['captcha'] = $_POST['captcha'];
             }
+
+            $props = apply_filters('scr_form_process_data', $props);
 
             return $props;
         }

@@ -30,6 +30,8 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             $submit_btn_name = 'Submit';
 
             // User Already Reviewed or Not Logged in User
+            $hide_form = !$this->props['collection']['can_user_review'];
+            
             if (!$this->props['collection']['can_user_review']) {
                 $class = 'mini';
                 $method_type = 'PUT';
@@ -50,6 +52,8 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             ' . $display . '
             data-method="' . $method_type . '"
             >';
+
+            $html .= apply_filters('scr_user_form_start', $html, $review);
 
             if ($this->props['collection']['show_title']) {
                 $html .= '<div class="inline field">';
