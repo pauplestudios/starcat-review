@@ -76,7 +76,11 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
                 $this->user_review_settings($prefix);
                 // $this->comparison_table_settings($prefix);
-                $this->notification_settings($prefix);
+                $active_plugins = get_option('active_plugins');
+                error_log('$active_plugins : ' . print_r($active_plugins, true));
+                if (is_plugin_active('starcat-review-woo-notify/starcat-review-woo-notify.php')) {
+                    $this->notification_settings($prefix);
+                }
 
                 $this->single_post_meta_fields();
             }
@@ -89,10 +93,13 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 $prefix,
                 array(
                     'id' => 'notification_settings',
-                    'title' => 'Notification',
+                    'title' => 'Woocommerce Notification',
                     'icon' => 'fa fa-bell',
                     'fields' => array(
-                       
+                        array(
+                            'type'    => 'heading',
+                            'content' => 'Woocommerce Notification Settings to notify users after they complete their orders',
+                        ),
                         array(
                             'id' => 'ns_from_address', // ns: notification_settings
                             'type' => 'text',
@@ -127,7 +134,8 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'id'     => 'ns_time_schedule', // ns: notification_settings
                             'type'   => 'repeater',
-                            'title'  => 'Time Schedule',
+                            'title'  => 'Notification Time Schedule',
+                            'desc' => '<strong> Notification Schedule: Hours/Days from the time of order completion. You can create multiple remainders (example: 24 hours, 3 days, 7 days from purchase)',
                             'fields' => array(
                           
                               array(
@@ -150,7 +158,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             ),
                             'default'   => array(
                                 array(
-                                  'value' => '12',
+                                  'value' => '24',
                                   'unit' => 'hours',
                                 ),
                                 array(

@@ -1,9 +1,9 @@
 === Starcat Review - WordPress Reviews & Rating Plugin ===
 Donate link: http://helpiewp.com/
 Tags: helpdesk, support, knowledge base, customer, helpie, documentation
-Requires at least: 5.0
-Tested up to: 5.2.1
-Stable tag: 0.3
+Requires at least: 5.2
+Tested up to: 5.3.2
+Stable tag: 0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,6 +18,10 @@ Create Review Posts, add reviews to existing post types and enable user reviews.
 4. Done. You can now go to Helpie KB Wiki -> Helpie Settings and check out the settings or learn more at https://helpiewp.com/docs/
 
 == Change Log ==
+
+= 0.4 =
+* Feature: Non-logged in user reviews
+* Feature: Support for Notification addon (sold via Bundle)
 
 = 0.3 =
 * Feature: Sorting and Search for Woocommerce and other CPT User Reviews
