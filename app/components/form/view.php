@@ -23,6 +23,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
         {
             $class = '';
             $title = '';
+            $review = '';
             $display = '';
             $cancel_btn = '';
             $description = '';
@@ -31,7 +32,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
 
             // User Already Reviewed or Not Logged in User
             $hide_form = !$this->props['collection']['can_user_review'];
-            
+
             if (!$this->props['collection']['can_user_review']) {
                 $class = 'mini';
                 $method_type = 'PUT';
@@ -54,6 +55,12 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             >';
 
             $html .= apply_filters('scr_user_form_start', $html, $review);
+
+            if ($this->props['collection']['show_form_title']) {
+                $html .= '<h2 class="ui header">';
+                $html .= $this->props['collection']['form_title'];
+                $html .= '</h2>';
+            }
 
             if ($this->props['collection']['show_title']) {
                 $html .= '<div class="inline field">';
