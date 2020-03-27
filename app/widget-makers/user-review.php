@@ -24,7 +24,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             $form_view = $this->form_controller->get_view($args);
             $reviews_list_view = $this->reviews_controller->get_view($args);
 
-            $wrapper_start_html = '<div id="scr-controlled-list" data-collectionprops="{<pagination<:true,<page<:9,<type<:2}">';
+            $wrapper_start_html = '<div id="scr-controlled-list" class="scr-user-controlled-list" data-collectionprops="{<pagination<:true,<page<:9,<type<:2}">';
             $this->controls_builder = new \StarcatReview\App\Builders\Controls_Builder('user_review');
 
             $args = [
