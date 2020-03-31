@@ -5,7 +5,7 @@ services:
         image: wordpress:php7.1-apache
         restart: always
         ports:
-            - 80:80
+            - 81:80
         environment:
             WORDPRESS_DB_HOST: db
             WORDPRESS_DB_USER: wordpress
@@ -26,6 +26,7 @@ services:
         links:
             - db
         volumes: # Mount relative path source folder on host to absolute path destination folder on docker container
+            - ./artifacts/woocommerce:/var/www/html/wp-content/plugins/woocommerce
             - ./artifacts/dist:/var/www/html/wp-content/plugins/starcat-review
             - ./includes/lib/cpt-addon:/var/www/html/wp-content/plugins/starcat-review-cpt
             - ./includes/lib/ct-addon:/var/www/html/wp-content/plugins/starcat-review-ct
@@ -35,7 +36,7 @@ services:
         image: mysql:5.7
         restart: always
         volumes:
-            - ./tests/_data/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+            - ./tests/_data/dump-80.sql:/docker-entrypoint-initdb.d/dump.sql
         ports: # Set up ports exposed for other containers to connect to
             - "127.0.0.1:3307:3306"
         command:
@@ -57,6 +58,6 @@ services:
             - "8090:80"
         environment:
             PMA_HOST: db
-            PMA_PORT: 3306
+            PMA_PORT: 3307
             PMA_USER: wordpress
             PMA_PASSWORD: wordpress
