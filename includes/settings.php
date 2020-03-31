@@ -72,15 +72,102 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                     $this->category_page_settings($prefix);
                     $this->single_page_settings($prefix);
                     $this->category_meta_fields();
-                }
+               }
 
                 $this->user_review_settings($prefix);
                 // $this->comparison_table_settings($prefix);
+                $this->notification_settings($prefix);
 
                 $this->single_post_meta_fields();
             }
         }
 
+
+        public function notification_settings($prefix){
+            $admin_email = get_option('admin_email');
+            \CSF::createSection(
+                $prefix,
+                array(
+                    'id' => 'notification_settings',
+                    'title' => 'Notification',
+                    'icon' => 'fa fa-bell',
+                    'fields' => array(
+                       
+                        array(
+                            'id' => 'ns_from_address', // ns: notification_settings
+                            'type' => 'text',
+                            'title' => 'Enter From Address',
+                            'placeholder' => $admin_email,
+                            'default' => $admin_email,
+                            'desc' => 'Make sure this is a valid email address. Invalid emails maybe marked as spam',
+                        ),
+                        array(
+                            'id' => 'ns_subject', // ns: notification_settings
+                            'type' => 'text',
+                            'title' => 'Subject',
+                            'placeholder' => 'Subject of the Email',
+                            'default' => 'Thank you for Purchasing from {{Sitename}}',
+                            'desc' => 'Use {{sitename}} to use the name of your website dynamically. This improves your anti-spam score.',
+                        ),
+                        array(
+                            'id' => 'ns_content', // ns: notification_settings
+                            'type' => 'textarea',
+                            'title' => 'Body of the Email',
+                            'placeholder' => 'Body of the email',
+                            'default' => 'Thank you for purchasing from Starcat Dev. If you liked your product, please leave a review: {{product_review_link}}',
+                            'desc' => 'Use {{product_review_link}} to add links to purchased product pages.',
+                        ),
+                        array(
+                            'id' => 'ns_disclaimer', // ns: notification_settings
+                            'type' => 'textarea',
+                            'title' => 'Disclaimer',
+                            'placeholder' => 'Disclaimers',
+                            'desc' => '<strong>Shown at the footer of the email</strong>',
+                        ),
+                        array(
+                            'id'     => 'ns_time_schedule', // ns: notification_settings
+                            'type'   => 'repeater',
+                            'title'  => 'Time Schedule',
+                            'fields' => array(
+                          
+                              array(
+                                'id'    => 'value',
+                                'type'  => 'text',
+                                'title' => 'Time Value'
+                              ),
+                              array(
+                                'id'          => 'unit',
+                                'type'        => 'select',
+                                'title'       => 'Time Unit',
+                                'placeholder' => 'Select an option',
+                                'options'     => array(
+                                  'hours'  => 'Hours',
+                                  'days'  => 'Days',
+                                ),
+                                'default'     => 'days'
+                              ),
+                          
+                            ),
+                            'default'   => array(
+                                array(
+                                  'value' => '12',
+                                  'unit' => 'hours',
+                                ),
+                                array(
+                                  'value' => '1',
+                                  'unit' => 'days' 
+                                ),
+                                array(
+                                    'value' => '3',
+                                    'unit' => 'days' 
+                                )
+                            )
+                        ),
+
+                     )
+                )
+            );
+        }
         public function category_meta_fields()
         {
             // taxonomy-prefix
@@ -198,6 +285,18 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         // ),
 
                         array(
+                            'id'    => 'ur_who_can_review',
+                            'type'  => 'select',
+                            'desc' => 'Selecting Everyone will let even Non Logged-in Users add reviews',
+                            'title' => 'Who Can Review',
+                            'options' => array(
+                                'logged_in' => 'Logged In Users',
+                                'everyone' => 'Everyone',
+                               
+                            )
+                        ),
+
+                        array(
                             'id' => 'ur_show_list_title',
                             'type' => 'switcher',
                             'title' => __('Show User Reviews List Title', SCR_DOMAIN),
@@ -264,8 +363,28 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'id' => 'ur_show_captcha',
                             'type' => 'switcher',
-                            'title' => __('Show ReCaptcha', SCR_DOMAIN),
-                            'default' => true,
+                            'title' => __('Show reCAPTCHA (v2 checkbox)', SCR_DOMAIN),
+                            'default' => false,
+                            'desc' => 'Register for reCAPTCHA v2 at <a href="https://www.google.com/recaptcha">https://www.google.com/recaptcha</a> to get your site key and secret key.' .
+                                ' Make sure to add your domain name in the settings at the reCAPTCHA website. ' .
+                                'Read More at <a href="https://paupledocs.gitbook.io/starcat-documentation/">Starcat Reviews - Docs</a>.' .
+                                ' Note: reCAPTCHA v3 will not work, just v2. v3 will be added soon.',
+                        ),
+
+                        array(
+                            'id' => 'recaptcha_site_key',
+                            'type' => 'text',
+                            'title' => __('reCAPTCHA Site Key', SCR_DOMAIN),
+                            'dependency' => array('ur_show_captcha', '==', 'true'),
+                        ),
+
+
+                        array(
+                            'id' => 'recaptcha_secret_key',
+                            'type' => 'text',
+                            'title' => __('reCAPTCHA Secret Key', SCR_DOMAIN),
+                            'default' => '',
+                            'dependency' => array('ur_show_captcha', '==', 'true'),
                         ),
 
                         // array(
