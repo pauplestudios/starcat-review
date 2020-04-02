@@ -1,0 +1,16 @@
+h3{
+    font-size: 1.2rem !important;    
+}
+
+.cd-products-columns .product{
+    width: 300px !important;
+}
+.cd-products-table {
+    &.top-info {
+        padding: 2rem !important;
+
+        & h3{
+            font-size: 1.2rem !important;
+        }
+    }
+}

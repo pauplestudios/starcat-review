@@ -776,3 +776,64 @@ No JS
         }
     }
 }
+
+
+/*** Compare Table Custome Styles **/
+// Desktop HD
+@media (min-width: 1281px) {
+    .cd-products-table {
+        & .top-info {
+            width: 250px;
+            height: 220px;
+            padding: 0.8em;
+
+            & h3.scr-ct-title {
+                margin-bottom: 3px;
+                font-size: 1.0rem !important;                
+            }
+       }
+    }
+}
+
+// laptops & desktop
+@media (min-width: 1025px) and (max-width: 1280px) {
+    .cd-products-table {
+        & .top-info {
+            width: 220px;
+            padding: 0.8em;
+
+            & h3.scr-ct-title {
+                margin-bottom: 3px;
+                font-size: 0.8rem !important;
+            }
+       }
+    }
+}
+
+// Tablets & ipods
+@media (min-width: 768px) and (max-width: 1024px) {
+    .cd-products-table {
+        & .top-info {
+            width: 230px;
+            padding: 0.8em;
+
+            & h3.scr-ct-title {
+                font-size: 0.8rem !important;        
+                margin-bottom: 3px;
+            }
+        }        
+    }
+}
+// Tablets, Ipads (landscape)
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  
+}
+// Tablets, Mobiles (Landscape)
+@media (min-width: 481px) and (max-width: 767px) {
+
+}
+//Smartphones Mobiles 
+@media (min-width: 320px) and (max-width: 480px) {
+
+}
+  
