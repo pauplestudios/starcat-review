@@ -164,11 +164,11 @@ jQuery(document).ready(function($) {
         var content = "";
         content += "<div class='product'>";
         content += "<div class='top-info'>";
-        //content += "<div class='close-product'>";
-        //content +=
-        //    "<i class='window close outline icon' style='font-size:25px;'></i>";
-        //content += "</div>";
-        //content += "<div class='check'></div>";
+        content += "<div class='close-product'>";
+        content +=
+           "<i class='window close outline icon' style='font-size:25px;'></i>";
+        content += "</div>";
+        content += "<div class='check'></div>";
         if (args.image_url === "undefined" || args.image_url == null) {
             content += "";
         } else {
