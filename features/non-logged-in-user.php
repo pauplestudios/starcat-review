@@ -108,7 +108,7 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
             $html .= '<input type="text" name="last_name" placeholder="Doe  " value="' . $last_name . '"/>';
             $html .= '</div>';
 
-            error_log('html: ' . $html);
+            // error_log('html: ' . $html);
             return $html;
         }
     } // END CLASS
