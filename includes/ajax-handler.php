@@ -107,9 +107,6 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
 
         public function search_posts()
         {
-            // $summary = new \StarcatReview\App\Summary();
-
-            // $summary = new \StarcatReview\App\Summary();
             $get_post_types = SCR_Getter::get('review_enable_post-types');
             $args = array(
                 'post_type' => $get_post_types,
@@ -128,99 +125,95 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
 
 
             $results = new \WP_Query($args);
-
+            $posts = array();
             if ($results->have_posts()) {
-
-                $posts = array();
+                
                 foreach ($results->posts as $post) {
 
                     if (has_post_thumbnail($post->ID)) {
                         $image = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID));
                     }
 
-                    $get_scr_user_reviews = scr_get_user_reviews($post->ID);
-                    $get_stat_review = $this->process_stat_review($get_scr_user_reviews, $global_stats);
+                    $scr_get_user_reviews = scr_get_user_reviews($post->ID);
+                    $src_user_review_process = $this->process_user_stat_review($scr_get_user_reviews, $global_stats);
+                    
                     // error_log("post" . print_r($post, true));
-                    $get_overall_stat = scr_get_overall_rating($post->ID);
+                    $scr_get_overall_rating = scr_get_overall_rating($post->ID);
                     $posts[] = array(
                         'id' => $post->ID,
                         'title' => substr(wp_strip_all_tags($post->post_title), 0, 25) . '...',
                         'description' => substr(wp_strip_all_tags($post->post_content), 0, 46) . '...',
                         // 'url' => $post->guid,
-                        // 'stats' => $temp_stats,
                         'image_url' => isset($image) ? $image[0] : "",
-                        'user_stats'    => $get_stat_review,
-                        'get_overall_stat' => $get_overall_stat
+                        'user_stats'    => $src_user_review_process,
+                        'get_overall_stat' => $scr_get_overall_rating
                     );
                 }
-            } else {
-                $posts = [];
             }
 
             echo json_encode($posts);
             wp_die();
         }
 
-        public function process_stat_review($args, $global_stats)
+        public function process_user_stat_review($args, $global_stats)
         {
             $stats = array();
             if (count($args) > 0) {
-                foreach ($args as $post_review) {
-                    $reviews = isset($post_review->reviews) ? $post_review->reviews : [];
+                foreach ($args as $post_user_reviews) {
+                    $reviews = isset($post_user_reviews->reviews) ? $post_user_reviews->reviews : [];
                     if (isset($reviews) && count($reviews) > 0) {
                         $stats['ratings'] = $reviews['rating'];
-                        $get_Stats = $reviews['stats'];
+                        $user_stats = $reviews['stats'];
 
-                        error_log("get_Stats" . print_r($get_Stats, true));
-
-                        $stat_temp_array = array();
-                        $stat_temp_array['SCR_CT_RATINGS'] = array('stat_name' => 'scr_rating', 'value' => 0);
-                        if (count($get_Stats) > 0) {
-                            // error_log("global_stats" . print_r($global_stats, true));
-                            foreach ($get_Stats as $stat_index => $single_stat) {
+                        $active_user_review_stats = array();
+                        $active_user_review_stats['SCR_CT_RATINGS'] = array('stat_name' => 'scr_rating', 'value' => 0);
+                        if (count($user_stats) > 0) {
+                            foreach ($user_stats as $stat_index => $single_stat) {
                                 $stat_index   = strtoupper($stat_index);
-                                // error_log("single_stat" . print_r($single_stat, true));
                                 if (in_array($stat_index, $global_stats)) {
-                                    // error_log("stat_index" . $stat_index);
-                                    $stat_temp_array[$stat_index] = $single_stat;
+                                    $active_user_review_stats[$stat_index] = $single_stat;
                                 }
                             }
                         }
-                        if (count($stat_temp_array) > 0) {
+                        if (count($active_user_review_stats) > 0) {
                             foreach ($global_stats as $global_stat) {
                                 $stat_name   = strtoupper($global_stat);
 
-                                if (array_key_exists($stat_name, $stat_temp_array)) {
+                                if (array_key_exists($stat_name, $active_user_review_stats)) {
                                     // is found key
                                 } else {
-                                    $stat_temp_array[$stat_name] = array(
+                                    $active_user_review_stats[$stat_name] = array(
                                         'stat_name' => $stat_name,
                                         'rating'    => 0
                                     );
                                 }
                             }
                         }
-                        $stats['review_stats'] = $stat_temp_array;
+                        $stats['review_stats'] = $active_user_review_stats;
                     }
                 }
             } else {
                 if (count($global_stats) > 0) {
+                    $get_not_found_user_reviews = $this->not_found_user_reviews($global_stats);
                     $stats['rating']  = 0;
-                    $get_empty_stats = array();
-                    $get_empty_stats['SCR_CT_RATINGS'] = array('stat_name' => 'scr_rating', 'value' => 0);
-                    foreach ($global_stats as $global_stat) {
-                        $stat_name   = strtoupper($global_stat);
-
-                        $get_empty_stats[$stat_name] = array(
-                            'stat_name' => strtoupper($stat_name),
-                            'rating'    => 0
-                        );
-                    }
-                    $stats['review_stats'] = $get_empty_stats;
+                    $stats['review_stats'] = $get_not_found_user_reviews;
                 }
             }
 
             return $stats;
+        }
+
+        public function not_found_user_reviews($global_stats){
+            $stat_args = array();
+            $stat_args['SCR_CT_RATINGS'] = array('stat_name' => 'scr_rating', 'value' => 0);
+            foreach ($global_stats as $global_stat) {
+                $stat_name   = strtoupper($global_stat);
+                $stat_args[$stat_name] = array(
+                    'stat_name' => strtoupper($stat_name),
+                    'rating'    => 0
+                );
+            }
+            return $stat_args;
         }
 
         public function get_scr_results()
