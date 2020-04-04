@@ -162,7 +162,7 @@ jQuery(document).ready(function($) {
         var self = this;
 
         var content = "";
-        content += "<div class='product'>";
+        content += "<div class='product scr-ct-products'>";
         content += "<div class='top-info'>";
         content += "<div class='close-product'>";
         content +=
@@ -173,10 +173,10 @@ jQuery(document).ready(function($) {
             content += "";
         } else {
             content +=
-                '<img class="featured-image" src="' + args.image_url + '">';
+                '<img class="featured-image scr-ct-product-img" src="' + args.image_url + '">';
         }
-        content += "<h3>" + args.title + "</h3></div>";
-        content += '<ul class="cd-features-list">';
+        content += '<h3 class="scr-ct-title">' + args.title + '</h3></div>';
+        content += '<ul class="cd-features-list scr-ct-product-stats">';
         content += self.createSCRProductStatList(args);
         content += "</ul>";
         // content += "</li>";
