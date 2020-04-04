@@ -158,19 +158,20 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
         public function process_user_stat_reviews($args, $global_stats)
         {
             $stats = array();
+            error_log('ajax args : ' . print_r($args, true));
             // 1. $args equals or less than 0, finally return $args
-            if (empty($args) == 0 && count($global_stats) > 0) {            
+            if (count($args) == 0 && count($global_stats) > 0) {            
                 
                 $get_not_found_user_reviews = $this->not_found_user_reviews($global_stats);
                 $stats['rating']  = 0;
-                $stats['review_stats'] = $not_found_user_reviews;
+                $stats['review_stats'] = $get_not_found_user_reviews;
 
             }else{
                 // 2. foreach for the $args greater than zero condition
                 foreach ($args as $post_user_reviews) {
                     $reviews = isset($post_user_reviews->reviews) ? $post_user_reviews->reviews : [];
                     // 2.1 If $reviews not set, the continue
-                    if (!isset($reviews) || count($reviews) == 0) {
+                    if (count($reviews) == 0) {
                         continue;
                     }else{                    
                         $stats['ratings'] = $reviews['rating'];
