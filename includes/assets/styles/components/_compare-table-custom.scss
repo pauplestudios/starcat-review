@@ -1,4 +1,69 @@
 
+.scr-ct-container{
+    & .scr-ct-stat-features{
+        width: 230px;
+        & ul.scr-ct-stats{
+            list-style: none;
+            padding: 0px;            
+            margin: 0px;
+            & li{
+                margin: 0px;
+                border: 1px solid #e6e6e6;
+                padding: 20px 10px 10px 10px;
+                height: 70px;
+                word-break: break-word;
+                font-size: 0.8rem;
+            }
+        }
+    }
+}
+
+.scr-ct-products-wrapper{
+    & .scr-ct-products-columns{
+        list-style: none;
+        margin-left: 230px;
+        padding: 0px;                
+        & .scr-ct-products{
+            margin: 0px;
+            & .top-info h3.scr-ct-title{
+                margin: 5px 0px 0px 0px;
+                padding: 3px 0px;
+                font-size: 0.8rem;
+                word-break: break-word;
+            }
+            & ul.scr-ct-product-stats{
+                list-style: none;
+                padding: 0px;
+                margin: 0px;
+                & li:not(.scr-ct-ratings){
+                    height: 70px;
+                    margin: 0px;
+                    padding: 20px 10px 10px 10px;                    
+                    font-size: 1rem;
+                    border: 1px solid #e6e6e6;
+                }
+                & .scr-ct-ratings{
+                    padding: 0px;
+                    margin: 0px;
+                    & ul.reviewed-list{
+                        list-style: none;
+                        padding: 0px;
+                        margin: 0px;
+                        & .reviewed-item{
+                            padding: 5px 15px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    & .scr-search-filter-wrapper{
+        margin: 0px;
+        border: 1px solid #e6e6e6;
+
+    }
+}
+
 .cd-products-columns{
     margin-top: 0px;
     margin-bottom: 0px;
@@ -96,7 +161,7 @@
 
             & h3.scr-ct-title {
                 margin-bottom: 3px;
-                font-size: 1.0rem !important;                
+                font-size: 1.0rem;                
             }
        }
     }
@@ -104,53 +169,158 @@
 
 // laptops & desktop
 @media (min-width: 1025px) and (max-width: 1280px) {
-    .cd-products-table {
-        & .top-info {
-            width: 220px;
-            padding: 0.8em;
-
-            & h3.scr-ct-title {
-                margin-bottom: 3px;
-                font-size: 0.8rem !important;
-            }
-       }
-    }
 }
 
 // Tablets & ipods
 @media (min-width: 768px) and (max-width: 1024px) {
-    .cd-products-table {
-        & .top-info {
-            width: 230px;
-            padding: 0.8em;
 
-            & h3.scr-ct-title {
-                font-size: 0.8rem !important;        
-                margin-bottom: 3px;
-            }
-        }        
-    }
-}
-// Tablets, Ipads (landscape)
-@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-  
-}
-// Tablets, Mobiles (Landscape)
-@media (min-width: 481px) and (max-width: 767px) {
 
-}
-//Smartphones Mobiles 
-@media (min-width: 320px) and (max-width: 480px) {
-    .cd-products-columns{
-        & li.product{
-            width: 230px;
-            & .top-info{
-                width: 230px;
-            }
-            & ul.cd-features-list{
-                width: 230px;
+    .scr-ct-container{
+        & .scr-ct-stat-features{
+            width: 150px;
+            & ul.scr-ct-stats{
+                padding: 0px;            
+                margin: 0px;
+                & li{
+                    margin: 0px;
+                    padding: 10px;
+                    height: 50px;
+                    word-break: break-word;
+                    font-size: 0.8rem;
+                }
             }
         }
     }
+
+}
+@media all and (min-width: 768px) and (max-width: 1024px) { 
+    .scr-ct-container{
+        & .scr-ct-stat-features{
+            width: 230px;
+            & ul.scr-ct-stats{
+                & li{
+                    padding: 10px;
+                    height: 60px;
+                    font-size: 0.6rem;
+                }
+            }
+        }
+    }
+
+    .scr-ct-products-wrapper{
+        & .scr-ct-products-columns{
+            margin-left: 230px;
+            & .scr-ct-products{
+                & .top-info {
+                    padding: 5px;
+                    & h3.scr-ct-title{
+                        font-size: 0.6rem;                    
+                    }
+                }                
+                & ul.scr-ct-product-stats{
+                    & li:not(.scr-ct-ratings){
+                        height: 60px;
+                    }
+                    & .scr-ct-ratings{
+                        & ul.reviewed-list{
+                            & .reviewed-item{
+                                padding: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}  
+
+// Tablets, Mobiles
+@media all and (min-width: 480px) and (max-width: 768px) { 
+    .scr-ct-container{
+        & .scr-ct-stat-features{
+            width: 150px;
+            & ul.scr-ct-stats{
+                & li{
+                    padding: 10px;
+                    height: 50px;
+                    font-size: 0.6rem;
+                }
+            }
+        }
+    }
+
+    .scr-ct-products-wrapper{
+        & .scr-ct-products-columns{
+            margin-left: 150px;
+            & .scr-ct-products{
+                & .top-info {
+                    padding: 5px;
+                    & h3.scr-ct-title{
+                        font-size: 0.6rem;                    
+                    }
+                }                
+                & ul.scr-ct-product-stats{
+                    & li:not(.scr-ct-ratings){
+                        height: 70px;
+                    }
+                    & .scr-ct-ratings{
+                        & ul.reviewed-list{
+                            & .reviewed-item{
+                                padding: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+//Smartphones Mobiles 
+@media all and (max-width: 480px) { 
+    .scr-ct-container{
+        & .scr-ct-stat-features{
+            width: 120px;
+            & ul.scr-ct-stats{
+                & li{
+                    padding: 10px;
+                    height: 50px;
+                    font-size: 0.6rem;
+                }
+            }
+        }
+    }
+
+  
+    .scr-ct-products-wrapper{
+        & .scr-ct-products-columns{
+            margin-left: 120px;
+            padding: 0px;                
+            & .scr-ct-products{
+                & .top-info {
+                    padding: 5px;
+                    & h3.scr-ct-title{
+                        font-size: 0.6rem;                    
+                    }
+                }                
+                & ul.scr-ct-product-stats{
+                    & li:not(.scr-ct-ratings){
+                        height: 50px;
+                        padding: 10px;                    
+                        font-size: 1rem;
+                    }
+                    & .scr-ct-ratings{
+                        & ul.reviewed-list{
+                            & .reviewed-item{
+                                padding: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
 }
   
