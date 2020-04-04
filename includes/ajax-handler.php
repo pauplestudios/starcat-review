@@ -107,9 +107,9 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
 
         public function search_posts()
         {
-            $get_post_types = SCR_Getter::get('review_enable_post-types');
+            $scr_enabled_post_types = SCR_Getter::get('review_enable_post-types');
             $args = array(
-                'post_type' => $get_post_types,
+                'post_type' => $scr_enabled_post_types,
                 'post_status' => array('publish'),
                 'nopaging' => true,
                 'order' => 'ASC',
@@ -134,19 +134,19 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                         $image = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID));
                     }
 
-                    $scr_get_user_reviews = scr_get_user_reviews($post->ID);
-                    $src_user_review_process = $this->process_user_stat_review($scr_get_user_reviews, $global_stats);
+                    $get_scr_user_reviews = scr_get_user_reviews($post->ID);
+                    $process_src_user_reviews = $this->process_user_stat_reviews($get_scr_user_reviews, $global_stats);
                     
                     // error_log("post" . print_r($post, true));
-                    $scr_get_overall_rating = scr_get_overall_rating($post->ID);
+                    $get_scr_overall_rating = scr_get_overall_rating($post->ID);
                     $posts[] = array(
                         'id' => $post->ID,
                         'title' => substr(wp_strip_all_tags($post->post_title), 0, 25) . '...',
                         'description' => substr(wp_strip_all_tags($post->post_content), 0, 46) . '...',
                         // 'url' => $post->guid,
                         'image_url' => isset($image) ? $image[0] : "",
-                        'user_stats'    => $src_user_review_process,
-                        'get_overall_stat' => $scr_get_overall_rating
+                        'user_stats'    => $process_src_user_reviews,
+                        'get_overall_stat' => $get_scr_overall_rating
                     );
                 }
             }
@@ -155,19 +155,34 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
             wp_die();
         }
 
-        public function process_user_stat_review($args, $global_stats)
+        public function process_user_stat_reviews($args, $global_stats)
         {
             $stats = array();
-            if (count($args) > 0) {
+            // 1. $args equals or less than 0, finally return $args
+            if (empty($args) == 0 && count($global_stats) > 0) {            
+                
+                $get_not_found_user_reviews = $this->not_found_user_reviews($global_stats);
+                $stats['rating']  = 0;
+                $stats['review_stats'] = $not_found_user_reviews;
+
+            }else{
+                // 2. foreach for the $args greater than zero condition
                 foreach ($args as $post_user_reviews) {
                     $reviews = isset($post_user_reviews->reviews) ? $post_user_reviews->reviews : [];
-                    if (isset($reviews) && count($reviews) > 0) {
+                    // 2.1 If $reviews not set, the continue
+                    if (!isset($reviews) || count($reviews) == 0) {
+                        continue;
+                    }else{                    
                         $stats['ratings'] = $reviews['rating'];
                         $user_stats = $reviews['stats'];
 
                         $active_user_review_stats = array();
                         $active_user_review_stats['SCR_CT_RATINGS'] = array('stat_name' => 'scr_rating', 'value' => 0);
+
                         if (count($user_stats) > 0) {
+                            /***
+                             * get user stats it only found in global stats, else then cant get that user stat
+                             * */ 
                             foreach ($user_stats as $stat_index => $single_stat) {
                                 $stat_index   = strtoupper($stat_index);
                                 if (in_array($stat_index, $global_stats)) {
@@ -175,7 +190,13 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                                 }
                             }
                         }
+
+
                         if (count($active_user_review_stats) > 0) {
+                            /**
+                             *  global stats founds some new stats, but not found in user post reviews.
+                             *  because user's not rate those stat's , that stat's are get and assign the rate as 0 
+                             */
                             foreach ($global_stats as $global_stat) {
                                 $stat_name   = strtoupper($global_stat);
 
@@ -189,25 +210,20 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                                 }
                             }
                         }
+
                         $stats['review_stats'] = $active_user_review_stats;
                     }
                 }
-            } else {
-                if (count($global_stats) > 0) {
-                    $get_not_found_user_reviews = $this->not_found_user_reviews($global_stats);
-                    $stats['rating']  = 0;
-                    $stats['review_stats'] = $get_not_found_user_reviews;
-                }
             }
-
+            
             return $stats;
         }
 
         public function not_found_user_reviews($global_stats){
             $stat_args = array();
             $stat_args['SCR_CT_RATINGS'] = array('stat_name' => 'scr_rating', 'value' => 0);
-            foreach ($global_stats as $global_stat) {
-                $stat_name   = strtoupper($global_stat);
+            foreach ($global_stats as $stat_name) {
+                $stat_name   = strtoupper($stat_name);
                 $stat_args[$stat_name] = array(
                     'stat_name' => strtoupper($stat_name),
                     'rating'    => 0
