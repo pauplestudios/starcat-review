@@ -170,6 +170,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                 // 2. foreach for the $args greater than zero condition
                 foreach ($args as $post_user_reviews) {
                     $reviews = isset($post_user_reviews->reviews) ? $post_user_reviews->reviews : [];
+                    
                     // 2.1 If $reviews not set, the continue
                     if (count($reviews) == 0) {
                         continue;
@@ -178,7 +179,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                         $user_stats = $reviews['stats'];
 
                         $active_user_review_stats = array();
-                        $active_user_review_stats['SCR_CT_RATINGS'] = array('stat_name' => 'scr_rating', 'value' => 0);
+                        $active_user_review_stats['scr_ct_ratings'] = array('stat_name' => 'scr_rating', 'value' => 0);
 
                         if (count($user_stats) > 0) {
                             /***
@@ -222,7 +223,8 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
 
         public function not_found_user_reviews($global_stats){
             $stat_args = array();
-            $stat_args['SCR_CT_RATINGS'] = array('stat_name' => 'scr_rating', 'value' => 0);
+            
+            $stat_args['scr_ct_ratings'] = array('stat_name' => 'scr_rating', 'value' => 0);
             foreach ($global_stats as $stat_name) {
                 $stat_name   = strtoupper($stat_name);
                 $stat_args[$stat_name] = array(

@@ -236,7 +236,7 @@ jQuery(document).ready(function($) {
         var content = "";
         for (let key in stat_list) {
             if (stat_list.hasOwnProperty(key)) {
-                if (key === "SCR_CT_RATINGS") {
+                if (key === "scr_ct_ratings") {
                     content += "<li class='scr-ct-ratings'>";
                     content += rating_view;
                     content += "</li>";
