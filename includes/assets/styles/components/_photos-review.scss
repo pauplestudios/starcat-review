@@ -2,6 +2,9 @@
 @import "../../node_modules/swiper/css/swiper.css";
 
 // All User Uploaded Photos 
+#scr-reviews .photos-gallery-preview.ui.tiny.images{
+    width: 100%;
+}
 .photos-gallery-preview.ui.tiny.images .image, .ui.tiny.images.review-photos .image{
     height: 89px;
     width: 89px;    
@@ -155,10 +158,10 @@
 }
 
 
-.ui.tiny.images.scr_pr_uploaded_image_group
+.scr-user-review div.ui.tiny.images.scr_pr_uploaded_image_group
 {
     padding-top: 5px !important;
-
+    width: 100%;
     img{
         object-fit: contain;
         height: 80px;
@@ -181,4 +184,5 @@
         }
     }
 }
+
 
