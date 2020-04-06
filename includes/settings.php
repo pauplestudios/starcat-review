@@ -471,7 +471,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'id' => 'pr_photo_size',
                             'type' => 'text',
                             'title' => __('Maximum photo size', SCR_DOMAIN),
-                            'default' => '2000',
+                            'default' => 2000,
                             'desc' => 'kB (Max 307200kB).',
                             'dependency' => array('pr_enable', '==', 'true'),
                         ),

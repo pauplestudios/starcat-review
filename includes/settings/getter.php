@@ -105,6 +105,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 //     'disabled' => []
                 // ],
                 'sp_template_layout' => 'left-sidebar',
+
                 // User Review Start
                 // 'ur_enable_post-types' => ['post'],
                 'ur_show_controls' => true,
@@ -124,15 +125,23 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'ur_show_description' => true,
                 'ur_show_captcha' => true,
                 'ur_form_custom_fields' => [],
+
+                // Photos Review start
+                'pr_enable' => true,
+                'pr_require_photos' => true,
+                'pr_photos_order' => 'oldest',
+                'pr_photo_size' => 2000,
+                'pr_photo_quantity' => 5,
+
                 // Notification
                 'ns_from_address' => get_option('admin_email'),
-                'ns_subject' => 'Thanks for Puchasing from {{Sitename}}' ,
+                'ns_subject' => 'Thanks for Puchasing from {{Sitename}}',
                 'ns_content' => 'Thank you for purchasing from Starcat Dev. If you liked your product, please leave a review: {{product_review_link}}',
                 'ns_disclaimer' => '',
                 'ns_time_schedule' => [
-                    ['value' => '12', 'unit' => 'hours'], 
-                    ['value' => '1', 'unit' => 'days'], 
-                    ['value' => '3', 'unit' => 'days'], 
+                    ['value' => '12', 'unit' => 'hours'],
+                    ['value' => '1', 'unit' => 'days'],
+                    ['value' => '3', 'unit' => 'days'],
                 ]
 
                 // Comparison Table Start
