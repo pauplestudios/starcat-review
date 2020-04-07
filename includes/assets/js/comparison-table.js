@@ -5,12 +5,14 @@ jQuery(document).ready(function($) {
         this.element = element;
         this.table = this.element.children(".cd-products-table");
         this.features = this.table.find(".features");
+        this.featuresWidth = this.features.width();
         this.featureItems = this.features.find("#scr-stats-list");
         this.tableHeight = this.table.height();
         this.productsWrapper = this.table.children(".cd-products-wrapper");
         this.tableColumns = this.productsWrapper.children(
             ".cd-products-columns"
         );
+        this.tableColumns.css('margin-left',this.featuresWidth+'px');
         this.products = this.tableColumns.children(".product");
         this.productsNumber = this.products.length;
         this.productWidth = this.products.eq(0).width();
