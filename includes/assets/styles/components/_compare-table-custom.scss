@@ -1,7 +1,7 @@
 
 .scr-ct-container{
     & .scr-ct-stat-features{
-        width: 310px;
+        width: auto;
         & ul.scr-ct-stats{
             list-style: none;
             padding: 0px;            
@@ -10,7 +10,7 @@
                 margin: 0px;
                 border: 1px solid #e6e6e6;
                 padding: 20px 10px 10px 10px;
-                height: 70px;
+                height: 60px;
                 word-break: break-word;
                 font-size: 0.8rem;
             }
@@ -28,7 +28,7 @@
         border: 1px solid #e6e6e6;
         & .scr-ct-products{
             margin: 0px;
-            width: 310px;
+            width: auto;
             & .top-info h3.scr-ct-title{
                 margin: 5px 0px 0px 0px;
                 padding: 3px 0px;
@@ -40,7 +40,7 @@
                 padding: 0px;
                 margin: 0px;
                 & li:not(.scr-ct-ratings){
-                    height: 70px;
+                    height: 60px;
                     margin: 0px;
                     padding: 20px 10px 10px 10px;                    
                     font-size: 1rem;
@@ -49,7 +49,7 @@
                 & .scr-ct-ratings{
                     padding: 0px;
                     margin: 0px;
-                    height: 70px;
+                    height: 60px;
                     & ul.reviewed-list{
                         width: 100%;
                         list-style: none;
@@ -60,7 +60,7 @@
                             align-items: center;
                             justify-content: space-between;
                             padding: 2px 15px;
-                            height: 70px;
+                            height: 60px;
                             border: 1px solid #e6e6ee;   
                             & .reviewed-item-stars {
                                 display: flex;
@@ -133,7 +133,7 @@
 
     .scr-ct-container{
         & .scr-ct-stat-features{
-            width: 250px;
+            width: auto;
             & ul.scr-ct-stats{
                 & li{
                     padding: 10px;
@@ -151,7 +151,7 @@
             margin-top: 0px;
             margin-bottom: 0px;
             & .scr-ct-products{
-                width: 250px;
+                width: auto;
                 & .top-info {
                     padding: 5px;
                     & h3.scr-ct-title{
@@ -182,7 +182,7 @@
 @media all and (min-width: 768px) and (max-width: 1024px) { 
     .scr-ct-container{
         & .scr-ct-stat-features{
-            width: 230px;
+            width: auto;
             & ul.scr-ct-stats{
                 & li{
                     padding: 10px;
@@ -199,7 +199,7 @@
             margin-top: 0px;
             margin-bottom: 0px;
             & .scr-ct-products{
-                width: 230px;
+                width: auto;
                 & .top-info {
                     padding: 5px;
                     & h3.scr-ct-title{
@@ -230,11 +230,11 @@
 @media all and (min-width: 480px) and (max-width: 768px) { 
     .scr-ct-container{
         & .scr-ct-stat-features{
-            width: 150px;
+            width: auto;
             & ul.scr-ct-stats{
                 & li{
                     padding: 10px;
-                    height: 50px;
+                    height: 60px;
                     font-size: 0.6rem;
                 }
             }
@@ -247,7 +247,7 @@
             margin-top: 0px;
             margin-bottom: 0px;
             & .scr-ct-products{
-                width: 150px;
+                width: auto;
                 & .top-info {
                     padding: 5px;
                     & h3.scr-ct-title{
@@ -256,9 +256,10 @@
                 }                
                 & ul.scr-ct-product-stats{
                     & li:not(.scr-ct-ratings){
-                        height: 70px;
+                        height: 60px;
                     }
                     & .scr-ct-ratings{
+                        height: 60px;
                         & ul.reviewed-list{
                             & .reviewed-item{
                                 padding: 5px;
@@ -275,11 +276,11 @@
 @media all and (max-width: 480px) { 
     .scr-ct-container{
         & .scr-ct-stat-features{
-            width: 150px;
+            width: auto;
             & ul.scr-ct-stats{
                 & li{
                     padding: 10px;
-                    height: 50px;
+                    height: 60px;
                     font-size: 0.6rem;
                 }
             }
@@ -294,7 +295,7 @@
             margin-top: 0px;
             padding: 0px;                
             & .scr-ct-products{
-                width: 150px;
+                width: auto;
                 & .top-info {
                     padding: 5px;
                     & h3.scr-ct-title{
@@ -303,15 +304,15 @@
                 }                
                 & ul.scr-ct-product-stats{
                     & li:not(.scr-ct-ratings){
-                        height: 50px;
+                        height: 60px;
                         padding: 10px;                    
                         font-size: 1rem;
                     }
                     & .scr-ct-ratings{
-                        height: 50px;
+                        height: 60px;
                         & ul.reviewed-list{
                             & .reviewed-item{
-                                height: 50px;
+                                height: 60px;
                                 padding: 5px;
                             }
                         }
