@@ -2,9 +2,11 @@
 @import "../../node_modules/swiper/css/swiper.css";
 
 // All User Uploaded Photos and Single Users Photos
-
-#scr-reviews .photos-gallery-preview.ui.tiny.images, #scr-reviews .ui.tiny.images.review-photos{
+.photos-gallery-preview.ui.tiny.images, 
+.ui.tiny.images.review-photos{
     width: 100%;
+    float: none;
+    
     .image{
         height: 89px;
         width: 89px;    
@@ -45,7 +47,14 @@
             opacity: .9;
             border: 1px solid rgba(0,0,0,.2);   
         }
-   }
+    }
+}
+
+// Storefront Fix
+#scr-reviews .photos-gallery-preview.ui.tiny.images, 
+#scr-reviews .review-photos.ui.tiny.images{
+    width: 100%;
+    float: none;
 }
     
     .scr-photos-review{    
