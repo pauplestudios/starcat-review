@@ -1,59 +1,60 @@
 
 @import "../../node_modules/swiper/css/swiper.css";
 
-// All User Uploaded Photos 
-#scr-reviews .photos-gallery-preview.ui.tiny.images{
-    width: 100%;
-}
-.photos-gallery-preview.ui.tiny.images .image, .ui.tiny.images.review-photos .image{
-    height: 89px;
-    width: 89px;    
-    cursor: pointer;
-    overflow: hidden;    
-    border-radius: .5em;
-    border: 1px solid rgba(0,0,0,.1);        
-    
-    & img{             
-        height: 89px;
-        width: 89px;
-        object-fit: cover;
-    }   
+// All User Uploaded Photos and Single Users Photos
 
-    & span.show-gallery{
+#scr-reviews .photos-gallery-preview.ui.tiny.images, #scr-reviews .ui.tiny.images.review-photos{
+    width: 100%;
+    .image{
+        height: 89px;
+        width: 89px;    
         cursor: pointer;
-        position: absolute;
-        display: flex;
-        justify-content: center;
-        background-color: #1b1c1d ;            
-        opacity: .6;
-        align-items: center;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        color: #f0f0f0;
-        font-size: 18px;
-        font-weight: 500; 
-        z-index: 1;
+        overflow: hidden;    
+        border-radius: .5em;
+        border: 1px solid rgba(0,0,0,.1);        
+        
+        & img{             
+            height: 89px;
+            width: 89px;
+            object-fit: cover;
+        }   
+        
+        & span.show-gallery{
+            cursor: pointer;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            background-color: #1b1c1d ;            
+            opacity: .6;
+            align-items: center;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            color: #f0f0f0;
+            font-size: 18px;
+            font-weight: 500; 
+            z-index: 1;
+            
+            &:hover{
+                opacity: 1;
+            }
+        }
         
         &:hover{
-            opacity: 1;
+            opacity: .9;
+            border: 1px solid rgba(0,0,0,.2);   
         }
-    }
-
-    &:hover{
-        opacity: .9;
-        border: 1px solid rgba(0,0,0,.2);   
-    }
+   }
 }
-
-.scr-photos-review{    
-    // background-color: #333; 
-    & .photos-review-slider-thumbs{        
-        padding: 10px;
-        & .photos-review-wrapper.swiper-wrapper{
-            justify-content: center;
-        }
+    
+    .scr-photos-review{    
+        // background-color: #333; 
+        & .photos-review-slider-thumbs{        
+            padding: 10px;
+            & .photos-review-wrapper.swiper-wrapper{
+                justify-content: center;
+            }
         & .photos-review__slide.swiper-slide{        
             width: 89px;        
             box-sizing: border-box;
