@@ -25,7 +25,7 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Controller')) {
 
             add_filter('scr_photos_review/ajax', [$this, 'get_ajax_response']);
 
-            add_action('scr_photos_review/add_attachements', [$this->repo, 'add_review_image']);
+            add_action('scr_photos_review/add_attachements', [$this->repo, 'check_review_image']);
         }
 
         public function get_all_photos($args)
