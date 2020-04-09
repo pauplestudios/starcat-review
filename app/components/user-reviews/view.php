@@ -145,7 +145,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
 
             //1st level comment children
             foreach ($items as $item) {
-                if ($item['comment_parent'] == $comment['comment_id'] && $this->is_can_view($item)) {
+                if ($item['comment_parent'] == $comment['comment_id'] && $this->can_view_comment($item)) {
                     $html .= $this->get_reply_comment($item);
                 }
             }
