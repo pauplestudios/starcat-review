@@ -29,11 +29,15 @@
         & .scr-ct-products{
             margin: 0px;
             width: auto;
-            & .top-info h3.scr-ct-title{
-                margin: 5px 0px 0px 0px;
-                padding: 3px 0px;
-                font-size: 1rem;
-                word-break: break-word;
+            & .top-info {
+                padding : 1.25em;
+            
+                & h3.scr-ct-title{
+                    margin: 5px 0px 0px 0px;
+                    padding: 3px 0px;
+                    font-size: 1rem;
+                    word-break: break-word;
+                }
             }
             & ul.scr-ct-product-stats{
                 list-style: none;
@@ -58,7 +62,7 @@
                         & li {
                             display: flex;
                             align-items: center;
-                            justify-content: space-between;
+                            justify-content: center;
                             padding: 2px 15px;
                             height: 60px;
                             border: 1px solid #e6e6ee;   
