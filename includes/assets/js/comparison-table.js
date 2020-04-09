@@ -16,7 +16,7 @@ jQuery(document).ready(function($) {
         this.products = this.tableColumns.children(".product");
         this.productsNumber = this.products.length;
         this.productWidth = this.products.eq(0).width();
-        this.productsTopInfo = this.table.find(".top-info");
+        this.productsTopInfo = this.table.find(".top-info");        
         this.singleProductTopInfo = this.products.find(".top-info");
         this.productCloseBtn = this.singleProductTopInfo.find(".close-product");
         // this.searchContainer = this.productsTopInfo.find(".ui.search");
@@ -33,6 +33,9 @@ jQuery(document).ready(function($) {
         (this.filtering = false), (this.selectedproductsNumber = 0);
         this.filterActive = false;
         this.navigation = this.table.children(".cd-table-navigation");
+        this.productsTopHeights = this.table.find('.top-info').map(function(){ return $(this).outerHeight(true); }).get();
+        this.productsMaxHeight = Math.max.apply(null,this.productsTopHeights);
+        this.productsTopInfo.css('height',this.productsMaxHeight+'px');
         // bind table events
         this.bindEvents();
     }
