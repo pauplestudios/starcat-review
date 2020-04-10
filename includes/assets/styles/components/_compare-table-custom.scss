@@ -7,7 +7,7 @@
             padding: 0px;            
             margin: 0px;
             & li{
-                margin: 0px;
+                margin: 0px 0px 0px 1px;
                 border: 1px solid #e6e6e6;
                 padding: 20px 10px 10px 10px;
                 height: 60px;
@@ -15,6 +15,17 @@
                 font-size: 0.8rem;
             }
         }
+    }
+    & .scr-ct-navigations {
+        & li a{
+            height: 50px;
+            width: 30px;
+            top: 15px;
+        }
+        & li a.prev{
+            left: 10px;
+        }
+                   
     }
 }
 
@@ -25,13 +36,14 @@
         padding: 0px;    
         margin-top: 0px;
         margin-bottom: 0px;        
-        border: 1px solid #e6e6e6;
+        // border: 1px solid #e6e6e6;
         & .scr-ct-products{
             margin: 0px;
-            width: auto;
+            // width: auto;
             & .top-info {
                 padding : 1.25em;
-            
+                border: 1px solid #e6e6e6;
+                margin: 0px 1px 0px 0px;
                 & h3.scr-ct-title{
                     margin: 5px 0px 0px 0px;
                     padding: 3px 0px;
@@ -45,7 +57,7 @@
                 margin: 0px;
                 & li:not(.scr-ct-ratings){
                     height: 60px;
-                    margin: 0px;
+                    margin: 0px 1px 0px 0px;
                     padding: 20px 10px 10px 10px;                    
                     font-size: 1rem;
                     border: 1px solid #e6e6e6;
@@ -79,6 +91,9 @@
                                     }
                                 }
                             }
+                            & .reviewed-item-label__score{
+                                padding-top: 2px;
+                            }
                         }
                         & .reviewed-item{
                             padding: 5px 15px;
@@ -87,29 +102,34 @@
                 }
             }
         }
+        
     }
-    & .scr-search-filter-wrapper{
-        margin: 0px;
-        padding: 0px;        
-        width: 310px;
-        & .top-info {
-            padding: 15px 5px !important;
+}
 
-            & h4{
-                margin-top: 10px;
-                margin-bottom: 10px;
-            }
-            & .scr-product-search {
-                & .ui.input {
-                    & .scr-search {
-                        width: 100%;
-                    }
+.scr-search-filter-wrapper{
+    margin: 0px;
+    padding: 0px;        
+    & .top-info {
+        padding: 15px 5px !important;
+        border-bottom: 1px solid #e6e6ee;
+        & h4{
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        & .scr-product-search {
+            & .ui.input {
+                & .scr-search {
+                    width: 100%;
                 }
             }
         }
     }
+    & ul.cd-features-list{ 
+        margin: 0px;
+        height: auto;
+        border-right: 1px solid #e6e6e6;
+    }
 }
-
 
 
 /*** Compare Table Custome Styles **/
@@ -155,11 +175,11 @@
             margin-top: 0px;
             margin-bottom: 0px;
             & .scr-ct-products{
-                width: auto;
+                // width: auto;
                 & .top-info {
                     padding: 5px;
                     & h3.scr-ct-title{
-                        font-size: 0.6rem;                    
+                        font-size: 1rem;                    
                     }
                 }                
                 & ul.scr-ct-product-stats{
@@ -203,11 +223,11 @@
             margin-top: 0px;
             margin-bottom: 0px;
             & .scr-ct-products{
-                width: auto;
+                // width: auto;
                 & .top-info {
                     padding: 5px;
                     & h3.scr-ct-title{
-                        font-size: 0.6rem;                    
+                        font-size: 1rem;                    
                     }
                 }                
                 & ul.scr-ct-product-stats{
@@ -231,51 +251,51 @@
 }  
 
 // Tablets, Mobiles
-@media all and (min-width: 480px) and (max-width: 768px) { 
-    .scr-ct-container{
-        & .scr-ct-stat-features{
-            width: auto;
-            & ul.scr-ct-stats{
-                & li{
-                    padding: 10px;
-                    height: 60px;
-                    font-size: 0.6rem;
-                }
-            }
-        }
-    }
+// @media all and (min-width: 480px) and (max-width: 768px) { 
+//     .scr-ct-container{
+//         & .scr-ct-stat-features{
+//             width: auto;
+//             & ul.scr-ct-stats{
+//                 & li{
+//                     padding: 10px;
+//                     height: 60px;
+//                     font-size: 0.6rem;
+//                 }
+//             }
+//         }
+//     }
 
-    .scr-ct-products-wrapper{
-        & .scr-ct-products-columns{
-            // margin-left: 150px;
-            margin-top: 0px;
-            margin-bottom: 0px;
-            & .scr-ct-products{
-                width: auto;
-                & .top-info {
-                    padding: 5px;
-                    & h3.scr-ct-title{
-                        font-size: 0.6rem;                    
-                    }
-                }                
-                & ul.scr-ct-product-stats{
-                    & li:not(.scr-ct-ratings){
-                        height: 60px;
-                    }
-                    & .scr-ct-ratings{
-                        height: 60px;
-                        & ul.reviewed-list{
-                            & .reviewed-item{
-                                padding: 5px;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+//     .scr-ct-products-wrapper{
+//         & .scr-ct-products-columns{
+//             // margin-left: 150px;
+//             margin-top: 0px;
+//             margin-bottom: 0px;
+//             & .scr-ct-products{
+//                 // width: auto;
+//                 & .top-info {
+//                     padding: 5px;
+//                     & h3.scr-ct-title{
+//                         font-size: 1rem;                    
+//                     }
+//                 }                
+//                 & ul.scr-ct-product-stats{
+//                     & li:not(.scr-ct-ratings){
+//                         height: 60px;
+//                     }
+//                     & .scr-ct-ratings{
+//                         height: 60px;
+//                         & ul.reviewed-list{
+//                             & .reviewed-item{
+//                                 padding: 5px;
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
 
-}
+// }
 //Smartphones Mobiles 
 @media all and (max-width: 480px) { 
     .scr-ct-container{
@@ -289,6 +309,17 @@
                 }
             }
         }
+
+        & .scr-ct-navigations {
+            & li a{
+                height: 30px;
+                width: 25px;
+                background-size: 17px;
+            }
+            & li a.prev{
+                left: 10px;
+            }
+        }
     }
 
   
@@ -299,11 +330,15 @@
             margin-top: 0px;
             padding: 0px;                
             & .scr-ct-products{
-                width: auto;
+                // width: auto;
                 & .top-info {
                     padding: 5px;
+                    & .close-product{
+                        right: 0px;
+                        top: 0px;
+                    }
                     & h3.scr-ct-title{
-                        font-size: 0.6rem;                    
+                        font-size: 1rem;                    
                     }
                 }                
                 & ul.scr-ct-product-stats{
