@@ -138,10 +138,14 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                     $process_src_user_reviews = $this->process_user_stat_reviews($get_scr_user_reviews, $global_stats);
                     
                     // error_log("post" . print_r($post, true));
+                    $post_tilte = wp_strip_all_tags($post->post_title);
+                    if(strlen($post_tilte) > 60){
+                        $post_tilte = substr($post->post_title, 0, 60) . '...';
+                    }
                     $get_scr_overall_rating = scr_get_overall_rating($post->ID);
                     $posts[] = array(
                         'id' => $post->ID,
-                        'title' => substr(wp_strip_all_tags($post->post_title), 0, 25) . '...',
+                        'title' => $post_tilte,
                         'description' => substr(wp_strip_all_tags($post->post_content), 0, 46) . '...',
                         // 'url' => $post->guid,
                         'image_url' => isset($image) ? $image[0] : "",
