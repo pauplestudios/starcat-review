@@ -35,7 +35,11 @@ jQuery(document).ready(function($) {
         this.navigation = this.table.children(".cd-table-navigation");
         this.productsTopHeights = this.table.find('.top-info').map(function(){ return $(this).outerHeight(true); }).get();
         this.productsMaxHeight = Math.max.apply(null,this.productsTopHeights);
-        this.productsTopInfo.css('height',this.productsMaxHeight+'px');
+        this.productsTopInfo.css('minHeight',this.productsMaxHeight+'px');
+        this.productsSearchContainer = this.tableColumns.find('.scr-search-filter-wrapper');
+        if(this.productsSearchContainer.length > 0){
+            this.productsSearchContainer.find('.cd-features-list').css('minHeight',this.featuresColumn.outerHeight(true)+'px');
+        }
         // bind table events
         this.bindEvents();
     }
@@ -149,15 +153,22 @@ jQuery(document).ready(function($) {
                     self.productsNumber = noOfProducts;
                     self.productWidth = self.products.eq(0).width();
                     self.productsTopInfo = self.table.find(".top-info");
-                    that.bindEvents();
+                     that.bindEvents();
                     self.updateProductTable();
+                    
                 },
                 onResultsClose: function() {
                     //Select After callback function
                     //Clear search query
                     console.log("closed");
+                    // $(".ui.search").search("set value", "");
+                    setTimeout (function(){ 
+                        $(".ui.search.scr-product-search").search("set value", "");
+                        $(".ui.search.scr-product-search").search("query");
+                    }, 500);
+                    
                 },
-                onResultsAdd: function(html) {},
+                // onResultsAdd: function(html) {},
             });
         });
     };
@@ -168,7 +179,7 @@ jQuery(document).ready(function($) {
 
         var content = "";
         content += "<div class='product scr-ct-products'>";
-        content += "<div class='top-info'>";
+        content += "<div class='top-info' style='min-height:"+ self.productsMaxHeight +"px;'>";
         content += "<div class='close-product'>";
         content +=
            "<i class='window close outline icon' style='font-size:25px;'></i>";
