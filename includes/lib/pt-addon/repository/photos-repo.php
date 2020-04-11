@@ -11,131 +11,119 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReviewPt\Repository\Photos_Repo')) {
     class Photos_Repo
     {
-        public function check_review_image($comment)
+        public function check_review_image($comment_id)
         {
-            $size_of_the_photos = SCR_Getter::get('pr_photo_size');
-            $quantity_of_the_photos = SCR_Getter::get('pr_photo_quantity');
+            $maxsize_allowed = SCR_Getter::get('pr_photo_size');
+            $max_file_up = SCR_Getter::get('pr_photo_quantity');
+            $is_photo_required = SCR_Getter::get('pr_require_photos');
 
-            // $maxsize_allowed = $this->settings->get_params('photo', 'maxsize');
-            // $max_file_up = $this->settings->get_params('photo', 'maxfiles');
+            error_log('size_of_the_photos : ' . $maxsize_allowed);
+            error_log('quantity_of_the_photos : ' . $max_file_up);
 
-            $maxsize_allowed = $size_of_the_photos;
-            $max_file_up = $quantity_of_the_photos;
+            $alerts = [
+                'required' => 'Photo is required',
+                'max_files' => 'Maximum number of files allowed is: ',
+                'large_file' => 'File\'s too large!',
+                'max_size' => 'Max size allowed: ',
+                'allowed_types' => 'Only JPG, JPEG, BMP, PNG and GIF are allowed.',
+            ];
 
-            error_log('size_of_the_photos : ' . $size_of_the_photos);
-            error_log('quantity_of_the_photos : ' . $quantity_of_the_photos);
-            error_log('Files of Photos : ' . print_r($_FILES['files'], true));
+            $files = isset($_FILES['files']) ? $_FILES['files'] : array();
+            error_log('Files of Photos : ' . print_r($files, true));
 
-            $im = isset($_FILES['files']) ? $_FILES['files'] : array();
-            // if (!isset($_POST['wcpr_image_upload_nonce'], $_FILES['files']) || !wp_verify_nonce($_POST['wcpr_image_upload_nonce'], 'files')) {
-            //     return $comment;
-            // } else {
-            // if (('on' == $this->settings->get_params('photo', 'gdpr')) && (!isset($_POST['wcpr_gdpr_checkbox']) || !$_POST['wcpr_gdpr_checkbox'])) {
-            //     wp_die('Please agree with the GDPR policy!');
-            // }
-            if (is_array($im['name'][0])) {
-                if ($im['name'][0][0] == '') {
-
-                    if (true == SCR_Getter::get('pr_require_photos')) {
+            if (is_array($files['name'][0])) {
+                if ($files['name'][0][0] == '') {
+                    if ($is_photo_required) {
                         error_log('!!! Photo is required. !!!');
-
-                        wp_die('Photo is required.');
+                        wp_send_json(['alert' => $alerts['required']]);
                     }
                 } else {
-                    if (count($im['name']) > $max_file_up) {
+                    if (count($files['name']) > $max_file_up) {
 
                         error_log('!!! Maximum number of files allowed is: !!!' . $max_file_up);
-                        wp_die("Maximum number of files allowed is: $max_file_up.");
-                    }
-                    foreach ($im['size'] as $k => $size) {
-                        if (!$size[0]) {
-                            if ($this->settings->get_params('image_caption_enable')) {
-                                continue;
-                            } else {
-                                error_log('!!! File\'s too large! !!!');
 
-                                wp_die("File's too large!");
-                            }
+                        wp_send_json(['alert' => $alerts['max_files'] . $max_file_up . '.']);
+                    }
+                    foreach ($files['size'] as $k => $size) {
+                        if (!$size[0]) {
+                            // if ($this->settings->get_params('image_caption_enable')) {
+                            //     continue;
+                            // } else {
+                            error_log('!!! File\'s too large! !!!');
+
+                            wp_send_json(['alert' => $alerts['large_file']]);
+                            // }
                         }
                         if ($size[0] > ($maxsize_allowed * 1024)) {
                             error_log("Max size allowed: $maxsize_allowed kB.");
-
-                            wp_die("Max size allowed: $maxsize_allowed kB.");
+                            wp_send_json(['alert' => $alerts['max_size'] . $maxsize_allowed . ' kb.']);
                         }
                     }
-                    foreach ($im['type'] as $type_k => $type) {
+                    foreach ($files['type'] as $type_k => $type) {
                         if ($type[0] != "image/jpg" && $type[0] != "image/jpeg" && $type[0] != "image/bmp" && $type[0] != "image/png" && $type[0] != "image/gif") {
-                            if ($this->settings->get_params('image_caption_enable')) {
-                                continue;
-                            } else {
-                                error_log('!!! Only JPG, JPEG, BMP, PNG and GIF are allowed. !!!');
-
-                                wp_die("Only JPG, JPEG, BMP, PNG and GIF are allowed.");
-                            }
+                            // if ($this->settings->get_params('image_caption_enable')) {
+                            //     continue;
+                            // } else {
+                            error_log('!!! Only JPG, JPEG, BMP, PNG and GIF are allowed. !!!');
+                            wp_send_json(['alert' => $alerts['allowed_types']]);
+                            // }
                         }
                     }
-                    error_log('!!! IF First Add review Image !!!');
 
-                    $this->add_review_image($comment);
-                    // add_action('comment_post', array($this, 'add_review_image'));
-                    // if ('on' == $this->settings->get_params('coupon', 'require')['photo'] && 'yes' == get_option('woocommerce_enable_coupons') && 'on' == $this->settings->get_params('coupon', 'enable')) {
-                    //     add_action('comment_post', array($this, 'send_coupon_after_reviews'), 10, 2);
-                    // }
+                    $this->add_review_image($comment_id);
                 }
             } else {
-                foreach ($im['name'] as $im_name_k => $im_name_v) {
+                error_log('!!! Else add Review alerts Conditions !!!');
+
+                foreach ($files['name'] as $im_name_k => $im_name_v) {
                     if (!$im_name_v) {
                         foreach ($im as $im_k => $im_v) {
-                            unset($im[$im_k][$im_name_k]);
+                            unset($files[$im_k][$im_name_k]);
                         }
                     }
                 }
 
-                if (!count($im['name'])) {
+                if (!count($files['name'])) {
                     if (SCR_Getter::get('pr_require_photos') == true) {
-                        wp_die('Photo is required.');
+                        error_log('!!! Photo is required. !!!');
+                        wp_send_json(['alert' => $alerts['required']]);
                     }
                 } else {
-                    if (count($im['name']) > $max_file_up) {
-
-                        wp_die("Maximum number of files allowed is: $max_file_up.");
+                    if (count($files['name']) > $max_file_up) {
+                        error_log("Maximum number of files allowed is: $max_file_up.");
+                        wp_send_json(['alert' => $alerts['max_files'] . $max_file_up . '.']);
                     }
-                    foreach ($im['size'] as $k => $size) {
+                    foreach ($files['size'] as $k => $size) {
                         if (!$size) {
-                            if ($this->settings->get_params('image_caption_enable')) {
-                                continue;
-                            } else {
-                                wp_die("File's too large!");
-                            }
+                            // if ($this->settings->get_params('image_caption_enable')) {
+                            //     continue;
+                            // } else {
+                            error_log('!!! File\'s too large! !!!');
+                            wp_send_json(['alert' => $alerts['large_file']]);
+                            // }
                         }
-                        error_log('maxize_allowed : ' . $maxize_allowed * 1024);
 
                         if ($size > ($maxsize_allowed * 1024)) {
-                            wp_die("Max size allowed: $maxsize_allowed kilobytes.");
+                            error_log("Max size allowed: $maxsize_allowed kB.");
+                            wp_send_json(['alert' => $alerts['max_size'] . $maxsize_allowed . ' kb.']);
                         }
                     }
-                    foreach ($im['type'] as $type) {
+                    foreach ($files['type'] as $type) {
 
                         if ($type != "image/jpg" && $type != "image/jpeg" && $type != "image/bmp" && $type != "image/png" && $type != "image/gif") {
-                            if ($this->settings->get_params('image_caption_enable')) {
-                                continue;
-                            } else {
-                                wp_die("Only JPG, JPEG, BMP, PNG and GIF are allowed.");
+                            // if ($this->settings->get_params('image_caption_enable')) {
+                            //     continue;
+                            // } else {
+                            error_log('!!! Only JPG, JPEG, BMP, PNG and GIF are allowed. !!!');
+                            wp_send_json(['alert' => $alerts['allowed_types']]);
 
-                            }
+                            // }
                         }
                     }
-                    // add_action('comment_post', array($this, 'add_review_image'));
-                    error_log('!!! Else Add review Image !!!');
 
-                    $this->add_review_image($comment);
-                    // if ('on' == $this->settings->get_params('coupon', 'require')['photo'] && 'yes' == get_option('woocommerce_enable_coupons') && 'on' == $this->settings->get_params('coupon', 'enable')) {
-                    //     add_action('comment_post', array($this, 'send_coupon_after_reviews'), 10, 2);
-                    // }
+                    $this->add_review_image($comment_id);
                 }
             }
-
-            // }
 
             return $comment;
         }
@@ -216,7 +204,7 @@ if (!class_exists('\StarcatReviewPt\Repository\Photos_Repo')) {
         {
             $reduce_array = apply_filters('scr_photos_review_reduce_array', array(
                 'thumbnail',
-                'scr-photos-review',
+                'scr-photos',
                 'medium',
             ));
             foreach ($sizes as $k => $size) {

@@ -54,7 +54,14 @@ var Form = {
             processData: false, // Preventing default data parse behavior                        
             contentType: false,
             success: function (results) {
+
+                if (results.alert) {
+                    alert(results.alert);
+                    // Reloading the page
+                    window.location.reload();
+                }
                 results = JSON.parse(results);
+
 
                 // Success Message
                 var msgProps = {
@@ -72,7 +79,7 @@ var Form = {
                 // );
 
                 // Reloading the page
-                setInterval("window.location.reload()", 5000);
+                // setInterval("window.location.reload()", 5000);
             }
         }).fail(function (response) {
             console.log("!!! Submision Failed !!!");
@@ -87,7 +94,7 @@ var Form = {
             SCRForm.html(Form.getMessageTemplate(msgProps));
 
             // Reloading the page
-            setInterval("window.location.reload()", 5000);
+            // setInterval("window.location.reload()", 5000);
         }, JSON);
     },
 
@@ -147,7 +154,7 @@ var Form = {
                 identifier: "user_email",
                 rules: [
                     {
-                        type   : 'email',
+                        type: 'email',
                         prompt: "Please enter your title",
                     },
                 ],
