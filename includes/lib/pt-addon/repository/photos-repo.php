@@ -28,6 +28,7 @@ if (!class_exists('\StarcatReviewPt\Repository\Photos_Repo')) {
                 'allowed_types' => 'Only JPG, JPEG, BMP, PNG and GIF are allowed.',
             ];
 
+            error_log('Before Files of Photos : ' . sizeof($_FILES['files']));
             $files = isset($_FILES['files']) ? $_FILES['files'] : array();
             error_log('Files of Photos : ' . print_r($files, true));
 
@@ -39,20 +40,13 @@ if (!class_exists('\StarcatReviewPt\Repository\Photos_Repo')) {
                     }
                 } else {
                     if (count($files['name']) > $max_file_up) {
-
                         error_log('!!! Maximum number of files allowed is: !!!' . $max_file_up);
-
                         wp_send_json(['alert' => $alerts['max_files'] . $max_file_up . '.']);
                     }
                     foreach ($files['size'] as $k => $size) {
                         if (!$size[0]) {
-                            // if ($this->settings->get_params('image_caption_enable')) {
-                            //     continue;
-                            // } else {
                             error_log('!!! File\'s too large! !!!');
-
                             wp_send_json(['alert' => $alerts['large_file']]);
-                            // }
                         }
                         if ($size[0] > ($maxsize_allowed * 1024)) {
                             error_log("Max size allowed: $maxsize_allowed kB.");
@@ -61,12 +55,8 @@ if (!class_exists('\StarcatReviewPt\Repository\Photos_Repo')) {
                     }
                     foreach ($files['type'] as $type_k => $type) {
                         if ($type[0] != "image/jpg" && $type[0] != "image/jpeg" && $type[0] != "image/bmp" && $type[0] != "image/png" && $type[0] != "image/gif") {
-                            // if ($this->settings->get_params('image_caption_enable')) {
-                            //     continue;
-                            // } else {
                             error_log('!!! Only JPG, JPEG, BMP, PNG and GIF are allowed. !!!');
                             wp_send_json(['alert' => $alerts['allowed_types']]);
-                            // }
                         }
                     }
 
@@ -83,8 +73,8 @@ if (!class_exists('\StarcatReviewPt\Repository\Photos_Repo')) {
                     }
                 }
 
-                if (!count($files['name'])) {
-                    if (SCR_Getter::get('pr_require_photos') == true) {
+                if (!count($files['name']) && $files['name'] !== '404.php') {
+                    if (SCR_Getter::get('pr_require_photos')) {
                         error_log('!!! Photo is required. !!!');
                         wp_send_json(['alert' => $alerts['required']]);
                     }
@@ -95,12 +85,8 @@ if (!class_exists('\StarcatReviewPt\Repository\Photos_Repo')) {
                     }
                     foreach ($files['size'] as $k => $size) {
                         if (!$size) {
-                            // if ($this->settings->get_params('image_caption_enable')) {
-                            //     continue;
-                            // } else {
                             error_log('!!! File\'s too large! !!!');
                             wp_send_json(['alert' => $alerts['large_file']]);
-                            // }
                         }
 
                         if ($size > ($maxsize_allowed * 1024)) {
@@ -109,15 +95,9 @@ if (!class_exists('\StarcatReviewPt\Repository\Photos_Repo')) {
                         }
                     }
                     foreach ($files['type'] as $type) {
-
                         if ($type != "image/jpg" && $type != "image/jpeg" && $type != "image/bmp" && $type != "image/png" && $type != "image/gif") {
-                            // if ($this->settings->get_params('image_caption_enable')) {
-                            //     continue;
-                            // } else {
                             error_log('!!! Only JPG, JPEG, BMP, PNG and GIF are allowed. !!!');
                             wp_send_json(['alert' => $alerts['allowed_types']]);
-
-                            // }
                         }
                     }
 

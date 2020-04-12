@@ -42,8 +42,8 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Controller')) {
 
         public function get_single_review_photos_field($args)
         {
-            // $props = $this->model->get_field_viewProps($args);
-            return $this->view->get_field();
+            $props = $this->model->get_field_viewProps($args);
+            return $this->view->get_field($props);
         }
 
         public function get_ajax_response($request)

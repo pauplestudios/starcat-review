@@ -47,15 +47,26 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Model')) {
             return $props;
         }
 
-        public function get_field_viewProps()
+        public function get_field_viewProps($args)
         {
-            $collection = $this->get_collection($args);
-            $viewProps = [
-                'collection' => $collection,
-                'items' => $this->get_items($collection),
-            ];
+            $props = [];
+            if (isset($args['attachements']) && !empty($args['attachements'])) {
+                foreach ($args['attachements'] as $attachement) {
+                    error_log('attachment : ' . $attachement);
+                    array_push($props, [
+                        'url' => wp_get_attachment_image_src($attachement)[0],
+                    ]);
+                }
+            }
+            // error_log('props : ' . print_r($props, true));
 
-            return $viewProps;
+            // $collection = $this->get_collection($args);
+
+            // 'collection' => $collection,
+            // 'items' => $this->get_items($collection),
+            // ];
+
+            return $props;
 
         }
 

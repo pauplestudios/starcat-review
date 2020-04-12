@@ -55,11 +55,18 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
             return $html;
         }
 
-        public function get_field()
+        public function get_field($props)
         {
+            // error_log('Field props : ' . print_r($props, true));
+
             $html = '<div class="field">';
             // $html .= '<label for="scr_pr_image_upload">Choose pictures (maxsize: 2000 kB, max files: 2)</label>';
             $html .= '<div class="ui tiny images scr_pr_uploaded_image_group">';
+
+            foreach ($props as $photo) {
+                $html .= $this->get_removeable_photos($photo['url']);
+            }
+
             $html .= '<div class="ui image add-photos" for="scr_pr_image_upload">';
             $html .= '<i class="big icons">';
             $html .= '<i class="cloud upload alternate icon"></i>';
@@ -72,6 +79,16 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
             $html .= '<input type="hidden" id="scr_pr_max_files" name="scr_pr_max_files" value="5">';
 
             $html .= '</div>';
+
+            return $html;
+        }
+
+        protected function get_removeable_photos($src)
+        {
+            $html = "<div class='ui tiny deleteable image'>";
+            $html .= "<a class='ui right corner red label'><i class='delete icon'></i></a>";
+            $html .= "<img src='" . $src . "' />";
+            $html .= "</div>";
 
             return $html;
         }

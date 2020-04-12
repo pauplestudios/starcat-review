@@ -108,6 +108,9 @@ var Form = {
         var form_data = new FormData();
         var files = document.getElementById('scr_pr_image_upload').files;
 
+        console.log("Files Length : ");
+        console.log(files.length);
+
         // Appending Uploaded Image form Datas
         for (var x = 0; x < files.length; x++) {
             form_data.append("files[]", files[x]);

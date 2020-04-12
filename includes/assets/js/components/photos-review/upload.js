@@ -32,11 +32,8 @@ var Upload = {
             var imagesGroup = jQuery(selectors.uploadedImagesGroup);
             var maxFiles = jQuery(selectors.maxFiles).val();
             // imagesGroup.html(""); // Emptied on every Upload
-
+            imagesGroup.find(".ui.tiny.fluid.image").remove();
             for (var index = 0; index < e.target.files.length; index++) {
-                // if (index == maxFiles) {
-                //     break;
-                // }
                 var src = URL.createObjectURL(e.target.files[index]);
                 imagesGroup.prepend(Upload.getImageHTML(src));
             }
@@ -47,7 +44,7 @@ var Upload = {
 
     getImageHTML: function (src) {
         var html = "<div class='ui tiny fluid image'>";
-        html += "<a class='ui right corner label'><i class='delete icon'></i></a>";
+        // html += "<a class='ui right corner label'><i class='delete icon'></i></a>";
         html += "<img src='" + src + "' />";
         html += "</div>";
 

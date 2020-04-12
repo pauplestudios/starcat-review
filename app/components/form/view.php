@@ -31,8 +31,6 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             $submit_btn_name = 'Submit';
 
             // User Already Reviewed or Not Logged in User
-            $hide_form = !$this->props['collection']['can_user_review'];
-
             if (!$this->props['collection']['can_user_review']) {
                 $class = 'mini';
                 $method_type = 'PUT';
@@ -81,7 +79,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
                 $html .= $this->get_pros_and_cons();
             }
 
-            $html .= apply_filters('scr_photos_review/get_single_review_photos_field', '');
+            $html .= apply_filters('scr_photos_review/get_single_review_photos_field', $review);
 
             if ($this->props['collection']['show_captcha']) {
                 $html .= Recaptcha::load_v2_html();
