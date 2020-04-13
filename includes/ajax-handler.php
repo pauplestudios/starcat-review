@@ -122,7 +122,6 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
         {
             $pr_repo = new \StarcatReviewPt\Repository\Photos_Repo();
             $props = $pr_repo->get_processing_attachment_data();
-            error_log('get_processing_attachment_data : ' . print_r($props, true));
             $pr_repo->delete_attachment($props);
 
             wp_send_json($props);

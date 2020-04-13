@@ -201,29 +201,21 @@ if (!class_exists('\StarcatReviewPt\Repository\Photos_Repo')) {
         {
             if (metadata_exists('comment', $props['review_id'], 'scr_user_review_props')) {
                 $meta_props = get_comment_meta($props['review_id'], 'scr_user_review_props', true);
-
-                if (isset($meta_props['attachment']) && !empty($meta_props['votes'])) {
-                    $is_current_user_voted = false;
-                    foreach ($meta_props['votes'] as &$vote) {
-                        if ($vote['user_id'] == $props['vote']['user_id']) {
-                            $vote['vote'] = $props['vote']['vote'];
-                            $is_current_user_voted = true;
+                if (isset($meta_props['attachments']) && !empty($meta_props['attachments'])) {
+                    $attachments = [];
+                    foreach ($meta_props['attachments'] as $attachment) {
+                        if ($attachment == $props['attachment_id']) {
+                            wp_delete_attachment($attachment, true);
+                            continue;
                         }
-                        // error_log('each vote : ' . print_r($vote, true));
+                        array_push($attachments, $attachment);
                     }
-                    if ($is_current_user_voted == false) {
-                        array_push($meta_props['votes'], $props['vote']);
-                    }
-                } else {
-                    $vote_props = ['votes' => [$props['vote']]];
-                    $meta_props = array_merge($meta_props, $vote_props);
+                    $meta_props['attachments'] = $attachments;
+                    error_log('meta_props : ' . print_r($meta_props, true));
+
+                    update_comment_meta($props['review_id'], 'scr_user_review_props', $meta_props);
                 }
-
-                // error_log('$meta_props : ' . print_r($meta_props['votes'], true));
-
-                update_comment_meta($props['comment_id'], 'scr_user_review_props', $meta_props);
             }
-
         }
 
         public function get_processing_attachment_data()
@@ -234,7 +226,7 @@ if (!class_exists('\StarcatReviewPt\Repository\Photos_Repo')) {
             }
 
             if (isset($_POST['attachment_id']) && !empty($_POST['attachment_id'])) {
-                $data['vote'] = $_POST['attachment_id'];
+                $data['attachment_id'] = $_POST['attachment_id'];
             }
 
             return $data;

@@ -57,8 +57,22 @@ var Upload = {
                 var attachment = jQuery(this);
                 console.log('Review ID : ' + attachment.parent().data('review-id'));
                 console.log('Attachment ID : ' + attachment.parent().data('attachment-id'));
+
+                props = {
+                    action: "pr_delete_attachment",
+                    review_id: attachment.parent().data('review-id'),
+                    attachment_id: attachment.parent().data('attachment-id'),
+                };
+
+                console.log("@@@ Deleting Attachment Props @@@");
+                console.log(props);
+
+                jQuery.post(scr_ajax.ajax_url, props, function (results) {
+                    attachment.parent().fadeOut(300, function () {
+                        jQuery(this).remove();
+                    });
+                });
             }
-            // jQuery(this).parent().remove();
         });
     },
 
