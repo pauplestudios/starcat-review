@@ -38,9 +38,13 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
             add_action('wp_ajax_nopriv_scr_user_review_vote', [$this, 'vote_handler']);
             add_action('wp_ajax_scr_user_review_vote', [$this, 'vote_handler']);
 
-            //Aajax for Photos Review
-            add_action('wp_ajax_nopriv_scr_phtos_review', [$this, 'photos_review']);
-            add_action('wp_ajax_scr_phtos_review', [$this, 'photos_review']);
+            // Delete a single attachment from a photos review
+            add_action('wp_ajax_nopriv_pr_delete_attachment', [$this, 'delete_review_attachment']);
+            add_action('wp_ajax_pr_delete_attachment', [$this, 'delete_review_attachment']);
+
+            // Aajax for Photos Review
+            add_action('wp_ajax_nopriv_scr_photos_review', [$this, 'photos_review']);
+            add_action('wp_ajax_scr_photos_review', [$this, 'photos_review']);
         }
 
         public function photos_review()
@@ -112,6 +116,16 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
             echo json_encode($props);
 
             wp_die();
+        }
+
+        public function delete_review_attachment()
+        {
+            $pr_repo = new \StarcatReviewPt\Repository\Photos_Repo();
+            $props = $pr_repo->get_processing_attachment_data();
+            error_log('get_processing_attachment_data : ' . print_r($props, true));
+            $pr_repo->delete_attachment($props);
+
+            wp_send_json($props);
         }
 
         public function search_posts()

@@ -2,7 +2,7 @@ var selectors = {
     upload: "#scr_pr_image_upload",
     maxFiles: "#scr_pr_max_files",
     uploadedImagesGroup: ".scr_pr_uploaded_image_group",
-    removeImgesLink: ".scr_pr_uploaded_image_group .image a",
+    removeImgesLink: ".scr_pr_uploaded_image_group .deleteable.image a",
     openUploadWindow: ".add-photos"
 };
 
@@ -38,8 +38,8 @@ var Upload = {
                 imagesGroup.prepend(Upload.getImageHTML(src));
             }
 
-            Upload.removeImage();
         });
+        Upload.removeImage();
     },
 
     getImageHTML: function (src) {
@@ -53,7 +53,12 @@ var Upload = {
 
     removeImage: function () {
         jQuery(selectors.removeImgesLink).click(function () {
-            jQuery(this).parent().remove();
+            if (confirm("Are you sure want to delete this attachment from the review ?")) {
+                var attachement = jQuery(this);
+                console.log('Review ID : ' + attachement.parent().data('review-id'));
+                console.log('Attachment ID : ' + attachement.parent().data('attachment-id'));
+            }
+            // jQuery(this).parent().remove();
         });
     },
 

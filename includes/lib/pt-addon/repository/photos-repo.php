@@ -197,6 +197,16 @@ if (!class_exists('\StarcatReviewPt\Repository\Photos_Repo')) {
             return $sizes;
         }
 
+        public function delete_attachment()
+        {
+
+        }
+
+        public function get_processing_attachment_data()
+        {
+
+        }
+
     } // END CLASS
 
 }

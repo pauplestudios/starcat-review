@@ -78,7 +78,7 @@ var Gallery = {
         var totalCount = shownGallery.data("total-count");
 
         var data = {
-            action: "scr_phtos_review",
+            action: "scr_photos_review",
             limit: limit,
             from: shownCount,
             shownCount: shownCount,

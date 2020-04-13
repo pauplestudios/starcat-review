@@ -50,10 +50,12 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Model')) {
         public function get_field_viewProps($args)
         {
             $props = [];
+
             if (isset($args['attachements']) && !empty($args['attachements'])) {
                 foreach ($args['attachements'] as $attachement) {
-                    error_log('attachment : ' . $attachement);
                     array_push($props, [
+                        'id' => $attachement,
+                        'review_id' => $args['comment_id'],
                         'url' => wp_get_attachment_image_src($attachement)[0],
                     ]);
                 }

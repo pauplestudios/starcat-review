@@ -63,8 +63,8 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
             // $html .= '<label for="scr_pr_image_upload">Choose pictures (maxsize: 2000 kB, max files: 2)</label>';
             $html .= '<div class="ui tiny images scr_pr_uploaded_image_group">';
 
-            foreach ($props as $photo) {
-                $html .= $this->get_removeable_photos($photo['url']);
+            foreach ($props as $attachement) {
+                $html .= $this->get_removeable_photos($attachement);
             }
 
             $html .= '<div class="ui image add-photos" for="scr_pr_image_upload">';
@@ -83,11 +83,11 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
             return $html;
         }
 
-        protected function get_removeable_photos($src)
+        protected function get_removeable_photos($attachement)
         {
-            $html = "<div class='ui tiny deleteable image'>";
+            $html = "<div class='ui tiny deleteable image' data-review-id='" . $attachement["review_id"] . "' data-attachement-id='" . $attachement["id"] . "'>";
             $html .= "<a class='ui right corner red label'><i class='delete icon'></i></a>";
-            $html .= "<img src='" . $src . "' />";
+            $html .= "<img src='" . $attachement['url'] . "' />";
             $html .= "</div>";
 
             return $html;
