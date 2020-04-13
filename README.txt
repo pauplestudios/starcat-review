@@ -3,7 +3,7 @@ Donate link: http://helpiewp.com/
 Tags: helpdesk, support, knowledge base, customer, helpie, documentation
 Requires at least: 5.2
 Tested up to: 5.4
-Stable tag: 0.4.1
+Stable tag: 0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,8 +19,13 @@ Create Review Posts, add reviews to existing post types and enable user reviews.
 
 == Change Log ==
 
-= 0.4 =
-Fix: Fixed an issue with non-logged-in user reviews
+= 0.5 =
+* Feature: Comparison Table Addon (sold also as a Bundle)
+* Fix: Multisite issues
+
+= 0.4.1 =
+* Fix: Fixed an issue with non-logged-in user reviews
+
 = 0.4 =
 * Feature: Non-logged in user reviews
 * Feature: Support for Notification addon (sold via Bundle)

@@ -1,6 +1,6 @@
 {
     "name": "starcat-review",
-    "version": "0.3",
+    "version": "0.5",
     "main": "index.js",
     "license": "MIT",
     "scripts": {
