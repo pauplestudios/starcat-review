@@ -24,8 +24,8 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Model')) {
         {
             $props = [];
 
-            if (isset($args['args']['items']['attachements']) && !empty($args['args']['items']['attachements'])) {
-                return $args['args']['items']['attachements'];
+            if (isset($args['args']['items']['attachments']) && !empty($args['args']['items']['attachments'])) {
+                return $args['args']['items']['attachments'];
             }
 
             // $photos_JSON = file_get_contents(SCR_PT_PATH . 'includes/utils/photos.json');
@@ -51,12 +51,12 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Model')) {
         {
             $props = [];
 
-            if (isset($args['attachements']) && !empty($args['attachements'])) {
-                foreach ($args['attachements'] as $attachement) {
+            if (isset($args['attachments']) && !empty($args['attachments'])) {
+                foreach ($args['attachments'] as $attachment) {
                     array_push($props, [
-                        'id' => $attachement,
+                        'id' => $attachment,
                         'review_id' => $args['comment_id'],
-                        'url' => wp_get_attachment_image_src($attachement)[0],
+                        'url' => wp_get_attachment_image_src($attachment)[0],
                     ]);
                 }
             }

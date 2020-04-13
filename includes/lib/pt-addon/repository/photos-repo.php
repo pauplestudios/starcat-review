@@ -174,7 +174,7 @@ if (!class_exists('\StarcatReviewPt\Repository\Photos_Repo')) {
             if (count($img_id)) {
                 update_comment_meta($comment_id, 'reviews-images', $img_id);
                 $meta = get_comment_meta($comment_id, 'scr_user_review_props', true);
-                $meta['attachements'] = $img_id;
+                $meta['attachments'] = $img_id;
                 update_comment_meta($comment_id, 'scr_user_review_props', $meta);
 
             }
@@ -197,13 +197,47 @@ if (!class_exists('\StarcatReviewPt\Repository\Photos_Repo')) {
             return $sizes;
         }
 
-        public function delete_attachment()
+        public function delete_attachment($props)
         {
+            if (metadata_exists('comment', $props['review_id'], 'scr_user_review_props')) {
+                $meta_props = get_comment_meta($props['review_id'], 'scr_user_review_props', true);
+
+                if (isset($meta_props['attachment']) && !empty($meta_props['votes'])) {
+                    $is_current_user_voted = false;
+                    foreach ($meta_props['votes'] as &$vote) {
+                        if ($vote['user_id'] == $props['vote']['user_id']) {
+                            $vote['vote'] = $props['vote']['vote'];
+                            $is_current_user_voted = true;
+                        }
+                        // error_log('each vote : ' . print_r($vote, true));
+                    }
+                    if ($is_current_user_voted == false) {
+                        array_push($meta_props['votes'], $props['vote']);
+                    }
+                } else {
+                    $vote_props = ['votes' => [$props['vote']]];
+                    $meta_props = array_merge($meta_props, $vote_props);
+                }
+
+                // error_log('$meta_props : ' . print_r($meta_props['votes'], true));
+
+                update_comment_meta($props['comment_id'], 'scr_user_review_props', $meta_props);
+            }
 
         }
 
         public function get_processing_attachment_data()
         {
+            $data = [];
+            if (isset($_POST['review_id']) && !empty($_POST['review_id'])) {
+                $data['review_id'] = $_POST['review_id'];
+            }
+
+            if (isset($_POST['attachment_id']) && !empty($_POST['attachment_id'])) {
+                $data['vote'] = $_POST['attachment_id'];
+            }
+
+            return $data;
 
         }
 

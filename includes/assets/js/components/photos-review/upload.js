@@ -54,9 +54,9 @@ var Upload = {
     removeImage: function () {
         jQuery(selectors.removeImgesLink).click(function () {
             if (confirm("Are you sure want to delete this attachment from the review ?")) {
-                var attachement = jQuery(this);
-                console.log('Review ID : ' + attachement.parent().data('review-id'));
-                console.log('Attachment ID : ' + attachement.parent().data('attachment-id'));
+                var attachment = jQuery(this);
+                console.log('Review ID : ' + attachment.parent().data('review-id'));
+                console.log('Attachment ID : ' + attachment.parent().data('attachment-id'));
             }
             // jQuery(this).parent().remove();
         });

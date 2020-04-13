@@ -44,9 +44,9 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
 
             if (!empty($props)) {
                 $html .= '<div class="ui tiny images review-photos">';
-                foreach ($props as $attachement) {
-                    $html .= '<div class="ui image" data-review-id="' . $attachement['review_id'] . '" data-attachement-id="' . $attachement['id'] . '">';
-                    $html .= '<img src="' . $attachement['url'] . '" />';
+                foreach ($props as $attachment) {
+                    $html .= '<div class="ui image" data-review-id="' . $attachment['review_id'] . '" data-attachment-id="' . $attachment['id'] . '">';
+                    $html .= '<img src="' . $attachment['url'] . '" />';
                     $html .= '</div>';
                 }
                 $html .= '</div>';
@@ -63,8 +63,8 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
             // $html .= '<label for="scr_pr_image_upload">Choose pictures (maxsize: 2000 kB, max files: 2)</label>';
             $html .= '<div class="ui tiny images scr_pr_uploaded_image_group">';
 
-            foreach ($props as $attachement) {
-                $html .= $this->get_removeable_photos($attachement);
+            foreach ($props as $attachment) {
+                $html .= $this->get_removeable_photos($attachment);
             }
 
             $html .= '<div class="ui image add-photos" for="scr_pr_image_upload">';
@@ -83,11 +83,11 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\View')) {
             return $html;
         }
 
-        protected function get_removeable_photos($attachement)
+        protected function get_removeable_photos($attachment)
         {
-            $html = "<div class='ui tiny deleteable image' data-review-id='" . $attachement["review_id"] . "' data-attachement-id='" . $attachement["id"] . "'>";
+            $html = "<div class='ui tiny deleteable image' data-review-id='" . $attachment["review_id"] . "' data-attachment-id='" . $attachment["id"] . "'>";
             $html .= "<a class='ui right corner red label'><i class='delete icon'></i></a>";
-            $html .= "<img src='" . $attachement['url'] . "' />";
+            $html .= "<img src='" . $attachment['url'] . "' />";
             $html .= "</div>";
 
             return $html;

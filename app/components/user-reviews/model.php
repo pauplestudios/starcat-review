@@ -76,7 +76,6 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
             ];
 
             $comment_item['can_edit'] = ($comment->user_id == $this->collection['current_user_id']);
-         
 
             if (isset($args)) {
                 $comment_item['args'] = $this->get_args($args, $comment);
@@ -85,7 +84,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
             if (isset($comment->review) && !empty($comment->review)) {
                 $comment_item['title'] = $comment->review['title'];
                 $comment_item['rating'] = $comment->review['rating'];
-            }   
+            }
 
             // Used by non-logged-in-user
             $comment_item = apply_filters('scr_get_comment_item', $comment_item, $comment);
@@ -115,8 +114,8 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
                 $args['items']['votes'] = $this->get_votes($comment->review['votes']);
             }
 
-            if (isset($comment->review['attachements']) && !empty($comment->review['attachements'])) {
-                $args['items']['attachements'] = $this->get_attachments_with_src($comment);
+            if (isset($comment->review['attachments']) && !empty($comment->review['attachments'])) {
+                $args['items']['attachments'] = $this->get_attachments_with_src($comment);
             }
 
             return $args;
@@ -183,11 +182,11 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
         protected function get_attachments_with_src($comment)
         {
             $photos = [];
-            for ($ii = 0; $ii < sizeof($comment->review['attachements']); $ii++) {
+            for ($ii = 0; $ii < sizeof($comment->review['attachments']); $ii++) {
                 $photos[$ii] = [
-                    'id' => $comment->review['attachements'][$ii],
+                    'id' => $comment->review['attachments'][$ii],
                     'review_id' => $comment->comment_ID,
-                    'url' => wp_get_attachment_image_src($comment->review['attachements'][$ii], 'medium')[0],
+                    'url' => wp_get_attachment_image_src($comment->review['attachments'][$ii], 'medium')[0],
                 ];
             }
 
