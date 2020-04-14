@@ -40,6 +40,12 @@ jQuery(document).ready(function($) {
         if(this.productsSearchContainer.length > 0){
             this.productsSearchContainer.find('.cd-features-list').css('minHeight',this.featuresColumn.outerHeight(true)+'px');
         }
+        this.featuresHeight = this.featureItems.outerHeight(true);
+        this.notFoundProducts = this.tableColumns.children(".product.not-found-item");
+        if(this.notFoundProducts.length > 0){
+            this.notFoundProducts.find('.scr-ct-product-stats').css('minHeight',this.featuresHeight+'px');
+        }
+        
         // bind table events
         this.bindEvents();
     }
