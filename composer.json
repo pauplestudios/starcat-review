@@ -7,9 +7,14 @@
     {
         "type":"composer",
         "url":"https://wpackagist.org"
-    }
+    },
+    {
+      "type": "vcs",
+      "url" : "https://essekia@bitbucket.org/pauple/starcat-review-cpt.git"
+  }
 ],
   "require-dev": {
+    "pauple/starcat-reviews-ct": "dev-develop",
     "lucatume/wp-browser": "~2.1.5",
     "bmitch/churn-php": "^1.0",
     "sebastian/phpcpd": "^4.1",
