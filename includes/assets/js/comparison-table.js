@@ -148,6 +148,10 @@ jQuery(document).ready(function($) {
                     console.log("get product element");
                     // debugger;
                     console.log(result);
+                    if(self.notFoundProducts.length > 0){
+                        self.tableColumns.children('.product.not-found-item').remove();
+                        self.notFoundProducts = [];
+                    }
                     var productContent = self.productElement(result);
 
                     $(".scr-search-filter-wrapper").before(productContent);
