@@ -11,6 +11,8 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Model')) {
     {
         public function get_all_photos_viewProps($args)
         {
+            // error_log('all photos args : ' . print_r($args, true));
+
             $collection = $this->get_collection($args);
             $viewProps = [
                 'collection' => $collection,
@@ -74,14 +76,14 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Model')) {
 
         protected function get_collection($args)
         {
-            $photos_JSON = file_get_contents(SCR_PT_PATH . 'includes/utils/photos.json');
-            $photos = json_decode($photos_JSON, true);
+            // $photos_JSON = file_get_contents(SCR_PT_PATH . 'includes/utils/photos.json');
+            // $photos = json_decode($photos_JSON, true);
 
             $collection = [
                 'from' => isset($args['from']) ? $args['from'] : 0,
                 'size' => 'tiny',
-                'photos' => $photos['photos'],
-                'total_count' => sizeof($photos['photos']),
+                'photos' => $args,
+                'total_count' => sizeof($args),
                 'preview_limit' => 7,
                 'photos_per_page' => 20,
                 'photos_per_review' => 4,
@@ -95,7 +97,7 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Model')) {
         {
             $items = [];
 
-            $data_review_id = ($collection['from'] !== 0) ? $collection['from'] / $collection['photos_per_review'] : 0; // Temporary review ID
+            // $data_review_id = ($collection['from'] !== 0) ? $collection['from'] / $collection['photos_per_review'] : 0; // Temporary review ID
 
             for ($ii = $collection['from']; $ii < sizeof($collection['photos']); $ii++) {
 
@@ -108,8 +110,8 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Model')) {
                 }
 
                 $item = [
-                    'review_id' => $data_review_id,
-                    'image_src' => $collection['photos'][$ii]['src'][$collection['size']],
+                    'review_id' => $collection['photos'][$ii]['review_id'],
+                    'image_src' => $collection['photos'][$ii]['url'],
                 ];
 
                 array_push($items, $item);

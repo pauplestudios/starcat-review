@@ -28,6 +28,7 @@ if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
             // $groups['pros-list'] = array();
             // $groups['cons-list'] = array();
             $groups['stats-list'] = array();
+            $groups['attachments'] = array();
 
             $count = 0;
             if (isset($args['items']['comments-list']) || !empty($args['items']['comments-list'])) {
@@ -54,6 +55,10 @@ if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
                         }
                     }
                     $count++;
+
+                    if (isset($comment->reviews['attachments']) && !empty($comment->reviews['attachments'])) {
+                        $groups['attachments'] = array_merge($groups['attachments'], $comment->reviews['attachments']);
+                    }
                 }
             }
             $items['review_count'] = $count;
@@ -61,6 +66,13 @@ if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
             if (!empty($groups['stats-list'])) {
                 $items['stats-list'] = $this->get_user_stats($groups['stats-list'], $count);
             }
+
+            if (!empty($groups['attachments'])) {
+                $items['attachments'] = $groups['attachments'];
+                // error_log('groups : ' . print_r($groups, true));
+
+            }
+
             // if (!empty($groups['pros-list'])) {
             //     $items['pros-list'] = $this->get_prosandcons($groups['pros-list']);
             // }

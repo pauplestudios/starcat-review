@@ -68,9 +68,27 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Summary')) {
 
             foreach ($comments as $comment) {
                 $comment->reviews = get_comment_meta($comment->comment_ID, 'scr_user_review_props', true);
+                if (isset($comment->reviews['attachments']) && !empty($comment->reviews['attachments'])) {
+                    $comment->reviews['attachments'] = $this->get_attachments_with_src($comment);
+                }
+
             }
 
             return $comments;
+        }
+
+        protected function get_attachments_with_src($comment)
+        {
+            $photos = [];
+            for ($ii = 0; $ii < sizeof($comment->reviews['attachments']); $ii++) {
+                $photos[$ii] = [
+                    'id' => $comment->reviews['attachments'][$ii],
+                    'review_id' => $comment->comment_ID,
+                    'url' => wp_get_attachment_image_src($comment->reviews['attachments'][$ii], 'medium')[0],
+                ];
+            }
+
+            return $photos;
         }
     }
 }
