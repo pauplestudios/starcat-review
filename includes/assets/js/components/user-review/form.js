@@ -36,7 +36,6 @@ var Form = {
                 formSubmitted = true;
 
                 Form.submission(SCRForm, fields);
-                // Form.submission2(SCRForm, fields);
             },
         });
     },
@@ -79,7 +78,7 @@ var Form = {
                 // );
 
                 // Reloading the page
-                // setInterval("window.location.reload()", 5000);
+                setInterval("window.location.reload()", 5000);
             }
         }).fail(function (response) {
             console.log("!!! Submision Failed !!!");
@@ -94,7 +93,7 @@ var Form = {
             SCRForm.html(Form.getMessageTemplate(msgProps));
 
             // Reloading the page
-            // setInterval("window.location.reload()", 5000);
+            setInterval("window.location.reload()", 5000);
         }, JSON);
     },
 
