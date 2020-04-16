@@ -32,8 +32,8 @@ if (!class_exists('\StarcatReview\Includes\Widgets\Register_Widgets')) {
                     'id' => 'scr-comparison-table',
                     'name' => 'Comparison Table',
                     'description' => 'Comparison Table Widget',
-                    'model' =>  new \StarcatReview\App\Widget_Makers\Comparison\Widget(),
-                    'view' => new \StarcatReview\App\Widget_Makers\Comparison\Widget(),
+                    'model' =>  new \StarcatReviewCt\Widgets\Comparison\Widget(),
+                    'view' => new \StarcatReviewCt\Widgets\Comparison\Widget(),
                 );
 
                 $url = SCR_PATH . '/includes/lib/widgetry/widget-factory.php';
