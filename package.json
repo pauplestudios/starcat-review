@@ -1,6 +1,6 @@
 {
     "name": "starcat-review",
-    "version": "0.3",
+    "version": "0.5",
     "main": "index.js",
     "license": "MIT",
     "scripts": {
@@ -9,9 +9,9 @@
         "start": "./node_modules/.bin/webpack --mode=development --watch",
         "buildtest": "cross-env NODE_ENV=test ./node_modules/.bin/webpack",
         "lint": "esw webpack.config.* src tools --color",
-        "runtest": "yarn build && docker-compose down && docker-compose up -d && sleep 10 && yarn acceptance",
+        "runtest": "docker-compose down && docker-compose up -d && sleep 20 && yarn acceptance_spec",
         "acceptance": "vendor/bin/codecept run acceptance --steps",
-        "acceptance_spec": "vendor/bin/codecept run acceptance tests/acceptance/BasicCest.php:comparisonTableAddonActivation --steps",
+        "acceptance_spec": "vendor/bin/codecept run acceptance tests/acceptance/NonLoggedInUserCest.php --steps",
         "unittest": "yarn build && docker-compose down && docker-compose up -d && sleep 10 && yarn wpunit_spec",
         "wpunit": "vendor/bin/codecept run wpunit --steps",
         "wpunit_spec": "vendor/bin/codecept run wpunit tests/wpunit/NotificationTest.php -vvv",

@@ -3,9 +3,16 @@
     "ext-gd": "*",
     "phpmailer/phpmailer": "^6.1"
   },
+  "repositories":[
+    {
+        "type":"composer",
+        "url":"https://wpackagist.org"
+    }
+],
   "require-dev": {
     "lucatume/wp-browser": "~2.1.5",
     "bmitch/churn-php": "^1.0",
-    "sebastian/phpcpd": "^4.1"
+    "sebastian/phpcpd": "^4.1",
+    "wpackagist-plugin/woocommerce":"4.0.1"
   }
 }
