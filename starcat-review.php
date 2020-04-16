@@ -36,6 +36,9 @@ define('SCR_CUSTOMIZE_OPTIONS', 'scr_customize_options');
 
 starcat_review_activation();
 
+// This should be final step
+do_action('scr_plugin_loaded');
+
 function starcat_review_activation()
 {
     if (!version_compare(PHP_VERSION, '5.4', '>=')) {
