@@ -15,11 +15,11 @@
     },
     {
       "type": "vcs",
-      "url" : "https://essekia@bitbucket.org/pauple/starcat-review-cpt.git"
+      "url" : "https://bitbucket.org/pauple/starcat-review-cpt.git"
   },
   {
     "type": "vcs",
-    "url" : "https://essekia@bitbucket.org/pauple/starcat-review-comparison-table.git"
+    "url" : "https://bitbucket.org/pauple/starcat-review-comparison-table.git"
 
   }
 ],
