@@ -1,6 +1,8 @@
 vendor
 node_modules
 dist
+artifacts/addons
+artifacts/plugins
 *.bundle.js
 *.bundle.js.map
 *.bundle.css
