@@ -3,6 +3,11 @@
     "ext-gd": "*",
     "phpmailer/phpmailer": "^6.1"
   },
+  "extra": {
+    "installer-paths": {
+        "artifacts/plugins/{$name}/": ["type:wordpress-plugin"]
+    }
+},
   "repositories":[
     {
         "type":"composer",
@@ -11,10 +16,16 @@
     {
       "type": "vcs",
       "url" : "https://essekia@bitbucket.org/pauple/starcat-review-cpt.git"
+  },
+  {
+    "type": "vcs",
+    "url" : "https://essekia@bitbucket.org/pauple/starcat-review-comparison-table.git"
+
   }
 ],
   "require-dev": {
     "pauple/starcat-review-cpt": "dev-develop",
+    "pauple/starcat-review-ct": "dev-version-1.0",
     "lucatume/wp-browser": "~2.1.5",
     "bmitch/churn-php": "^1.0",
     "sebastian/phpcpd": "^4.1",

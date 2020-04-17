@@ -13,7 +13,7 @@
         "lint": "esw webpack.config.* src tools --color",
         "runtest": "docker-compose down && docker-compose up -d && sleep 20 && yarn acceptance_spec",
         "acceptance": "vendor/bin/codecept run acceptance --steps",
-        "acceptance_spec": "vendor/bin/codecept run acceptance tests/acceptance/BasicCest.php:cptAddonActivation --steps",
+        "acceptance_spec": "vendor/bin/codecept run acceptance tests/acceptance/BasicCest.php:comparisonTableAddonActivation --steps",
         "unittest": "yarn build && docker-compose down && docker-compose up -d && sleep 10 && yarn wpunit_spec",
         "wpunit": "vendor/bin/codecept run wpunit --steps",
         "wpunit_spec": "vendor/bin/codecept run wpunit tests/wpunit/NotificationTest.php -vvv",

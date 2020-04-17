@@ -26,10 +26,10 @@ services:
         links:
             - db
         volumes: # Mount relative path source folder on host to absolute path destination folder on docker container
-            - ./artifacts/woocommerce:/var/www/html/wp-content/plugins/woocommerce
+            - ./artifacts/plugins/woocommerce:/var/www/html/wp-content/plugins/woocommerce
             - ./artifacts/dist:/var/www/html/wp-content/plugins/starcat-review
             - ./artifacts/addons/starcat-review-cpt:/var/www/html/wp-content/plugins/starcat-review-cpt
-            - ./includes/lib/ct-addon:/var/www/html/wp-content/plugins/starcat-review-ct
+            - ./artifacts/addons/starcat-review-ct:/var/www/html/wp-content/plugins/starcat-review-ct
             - ./includes/lib/starcat-review-woo-notify:/var/www/html/wp-content/plugins/starcat-review-woo-notify
 
     db:
