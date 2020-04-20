@@ -49,7 +49,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
 
         public function photos_review()
         {
-            $response = apply_filters('scr_photos_review/ajax', $_POST);
+            $response = apply_filters('scr_photo_reviews/ajax', $_POST);
             echo json_encode($response);
             wp_die();
         }
@@ -120,7 +120,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
 
         public function delete_review_attachment()
         {
-            $pr_repo = new \StarcatReviewPt\Repository\Photos_Repo();
+            $pr_repo = new \StarcatReviewPhotoReviews\Includes\Repository();
             $props = $pr_repo->get_processing_attachment_data();
             $pr_repo->delete_attachment($props);
 

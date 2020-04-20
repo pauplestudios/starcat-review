@@ -13,17 +13,17 @@ if (!class_exists('\StarcatReviewPt\Components\Photos_Review\Controller')) {
         {
             $this->model = new \StarcatReviewPt\Components\Photos_Review\Model();
             $this->view = new \StarcatReviewPt\Components\Photos_Review\View();
-            $this->repo = new \StarcatReviewPt\Repository\Photos_Repo();
+            $this->repo = new \StarcatReviewPhotoReviews\Includes\Repository();
 
         }
 
         public function load()
         {
-            add_filter('scr_photos_review/get_all_photos', [$this, 'get_all_photos']);
-            add_filter('scr_photos_review/get_single_review_photos', [$this, 'get_single_review_photos']);
-            add_filter('scr_photos_review/get_single_review_photos_field', [$this, 'get_single_review_photos_field']);
+            add_filter('scr_photo_reviews/get_all_photos', [$this, 'get_all_photos']);
+            add_filter('scr_photo_reviews/get_single_review_photos', [$this, 'get_single_review_photos']);
+            add_filter('scr_photo_reviews/get_single_review_photos_field', [$this, 'get_single_review_photos_field']);
 
-            add_filter('scr_photos_review/ajax', [$this, 'get_ajax_response']);
+            add_filter('scr_photo_reviews/ajax', [$this, 'get_ajax_response']);
 
             add_action('scr_photos_review/add_attachments', [$this->repo, 'check_review_image']);
         }

@@ -40,7 +40,7 @@ function starcat_review_pt_run()
     ) {
         add_action('admin_notices', 'starcat_review_pt_fail_dependency');
     } else {
-        require SCR_PT_PATH . 'includes/plugin.php';
+        // require SCR_PT_PATH . 'includes/plugin.php';
     }
 }
 

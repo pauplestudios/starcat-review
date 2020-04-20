@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\StarcatReviewPt\Repository\Photos_Repo')) {
+if (!class_exists('\StarcatReviewPhotoReviews\Includes\Repository')) {
     class Photos_Repo
     {
         public function check_review_image($comment_id)
