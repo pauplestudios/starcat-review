@@ -2,11 +2,8 @@
 
 class SCRFakePages
 {
-
     public function __construct()
     {
-        require_once SCR_PATH . 'includes/lib/pt-addon/starcat-review-pt.php';
-
         add_filter('the_posts', array($this, 'fake_pages'));
     }
 
