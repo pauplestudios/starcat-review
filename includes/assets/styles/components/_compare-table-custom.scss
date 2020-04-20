@@ -1,0 +1,365 @@
+
+.scr-ct-container{
+    & .scr-ct-stat-features{
+        width: auto;
+        & ul.scr-ct-stats{
+            list-style: none;
+            padding: 0px;            
+            margin: 0px;
+            & li{
+                margin: 0px 0px 0px 1px;
+                border: 1px solid #e6e6e6;
+                padding: 20px 10px 10px 10px;
+                height: 60px;
+                word-break: break-word;
+                font-size: 0.8rem;
+            }
+        }
+    }
+    & .scr-ct-navigations {
+        & li a{
+            height: 50px;
+            width: 30px;
+            top: 15px;
+        }
+        & li a.prev{
+            left: 10px;
+        }
+                   
+    }
+}
+
+.scr-ct-products-wrapper{
+    & .scr-ct-products-columns{
+        list-style: none;
+        // margin-left: 310px;
+        padding: 0px;    
+        margin-top: 0px;
+        margin-bottom: 0px;        
+        // border: 1px solid #e6e6e6;
+        & .scr-ct-products{
+            margin: 0px;
+            // width: auto;
+            & .top-info {
+                padding : 1.25em;
+                border: 1px solid #e6e6e6;
+                margin: 0px 1px 0px 0px;
+                & h3.scr-ct-title{
+                    margin: 5px 0px 0px 0px;
+                    padding: 3px 0px;
+                    font-size: 1rem;
+                    word-break: break-word;
+                }
+            }
+            & ul.scr-ct-product-stats{
+                list-style: none;
+                padding: 0px;
+                margin: 0px;
+                & li:not(.scr-ct-ratings){
+                    height: 60px;
+                    margin: 0px 1px 0px 0px;
+                    padding: 20px 10px 10px 10px;                    
+                    font-size: 1rem;
+                    border: 1px solid #e6e6e6;
+                }
+                & .scr-ct-ratings{
+                    padding: 0px;
+                    margin: 0px;
+                    height: 60px;
+                    & ul.reviewed-list{
+                        width: 100%;
+                        list-style: none;
+                        padding: 0px;
+                        margin: 0px;
+                        & li {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            padding: 2px 15px;
+                            height: 60px;
+                            border: 1px solid #e6e6ee;   
+                            & .reviewed-item-stars {
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                height: 100%;
+                
+                                & .stars-wrapper,
+                                .stars-result {
+                                    & .star {
+                                        font-size: 14px;
+                                    }
+                                }
+                            }
+                            & .reviewed-item-label__score{
+                                padding-top: 2px;
+                            }
+                        }
+                        & .reviewed-item{
+                            padding: 5px 15px;
+                        }
+                    }
+                }
+            }
+        }
+        
+    }
+}
+
+.scr-search-filter-wrapper{
+    margin: 0px;
+    padding: 0px;        
+    & .top-info {
+        padding: 15px 5px !important;
+        border-bottom: 1px solid #e6e6ee;
+        & h4{
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        & .scr-product-search {
+            & .ui.input {
+                & .scr-search {
+                    width: 100%;
+                }
+            }
+        }
+    }
+    & ul.cd-features-list{ 
+        margin: 0px;
+        height: auto;
+        border-right: 1px solid #e6e6e6;
+    }
+}
+
+
+/*** Compare Table Custome Styles **/
+// Desktop HD
+@media (min-width: 1281px) {
+    // .cd-products-table {
+    //     & .top-info {
+    //         width: auto;
+    //         padding: 0.8em;
+    //         & h3.scr-ct-title {
+    //             margin-bottom: 3px;
+    //             font-size: 1.0rem;                
+    //         }
+    //    }
+    // }
+}
+@media only screen and (min-width: 1170px) {
+    .cd-products-columns .product {
+        width: 310px;
+    }
+}
+
+// laptops & desktop
+@media all and (min-width: 1024px) and (max-width: 1280px) { 
+
+    .scr-ct-container{
+        & .scr-ct-stat-features{
+            width: auto;
+            & ul.scr-ct-stats{
+                & li{
+                    padding: 10px;
+                    height: 50px;
+                    font-size: 0.6rem;
+                }
+            }
+        }
+    }
+
+
+    .scr-ct-products-wrapper{
+        & .scr-ct-products-columns{
+            // margin-left: 250px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            & .scr-ct-products{
+                // width: auto;
+                & .top-info {
+                    padding: 5px;
+                    & h3.scr-ct-title{
+                        font-size: 1rem;                    
+                    }
+                }                
+                & ul.scr-ct-product-stats{
+                    & li:not(.scr-ct-ratings){
+                        height: 60px;
+                    }
+                    & .scr-ct-ratings{
+                        height: 60px;
+                        & ul.reviewed-list{
+                            & .reviewed-item{
+                                height: 60px;
+                                padding: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+
+@media all and (min-width: 768px) and (max-width: 1024px) { 
+    .scr-ct-container{
+        & .scr-ct-stat-features{
+            width: auto;
+            & ul.scr-ct-stats{
+                & li{
+                    padding: 10px;
+                    height: 60px;
+                    font-size: 0.6rem;
+                }
+            }
+        }
+    }
+
+    .scr-ct-products-wrapper{
+        & .scr-ct-products-columns{
+            // margin-left: 230px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            & .scr-ct-products{
+                // width: auto;
+                & .top-info {
+                    padding: 5px;
+                    & h3.scr-ct-title{
+                        font-size: 1rem;                    
+                    }
+                }                
+                & ul.scr-ct-product-stats{
+                    & li:not(.scr-ct-ratings){
+                        height: 60px;
+                    }
+                    & .scr-ct-ratings{
+                        height: 60px;
+                        & ul.reviewed-list{
+                            & .reviewed-item{
+                                height: 60px;
+                                padding: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}  
+
+// Tablets, Mobiles
+// @media all and (min-width: 480px) and (max-width: 768px) { 
+//     .scr-ct-container{
+//         & .scr-ct-stat-features{
+//             width: auto;
+//             & ul.scr-ct-stats{
+//                 & li{
+//                     padding: 10px;
+//                     height: 60px;
+//                     font-size: 0.6rem;
+//                 }
+//             }
+//         }
+//     }
+
+//     .scr-ct-products-wrapper{
+//         & .scr-ct-products-columns{
+//             // margin-left: 150px;
+//             margin-top: 0px;
+//             margin-bottom: 0px;
+//             & .scr-ct-products{
+//                 // width: auto;
+//                 & .top-info {
+//                     padding: 5px;
+//                     & h3.scr-ct-title{
+//                         font-size: 1rem;                    
+//                     }
+//                 }                
+//                 & ul.scr-ct-product-stats{
+//                     & li:not(.scr-ct-ratings){
+//                         height: 60px;
+//                     }
+//                     & .scr-ct-ratings{
+//                         height: 60px;
+//                         & ul.reviewed-list{
+//                             & .reviewed-item{
+//                                 padding: 5px;
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+
+// }
+//Smartphones Mobiles 
+@media all and (max-width: 480px) { 
+    .scr-ct-container{
+        & .scr-ct-stat-features{
+            width: auto;
+            & ul.scr-ct-stats{
+                & li{
+                    padding: 10px;
+                    height: 60px;
+                    font-size: 0.6rem;
+                }
+            }
+        }
+
+        & .scr-ct-navigations {
+            & li a{
+                height: 30px;
+                width: 25px;
+                background-size: 17px;
+            }
+            & li a.prev{
+                left: 10px;
+            }
+        }
+    }
+
+  
+    .scr-ct-products-wrapper{
+        & .scr-ct-products-columns{
+            // margin-left: 150px;
+            margin-bottom: 0px;
+            margin-top: 0px;
+            padding: 0px;                
+            & .scr-ct-products{
+                // width: auto;
+                & .top-info {
+                    padding: 5px;
+                    & .close-product{
+                        right: 0px;
+                        top: 0px;
+                    }
+                    & h3.scr-ct-title{
+                        font-size: 1rem;                    
+                    }
+                }                
+                & ul.scr-ct-product-stats{
+                    & li:not(.scr-ct-ratings){
+                        height: 60px;
+                        padding: 10px;                    
+                        font-size: 1rem;
+                    }
+                    & .scr-ct-ratings{
+                        height: 60px;
+                        & ul.reviewed-list{
+                            & .reviewed-item{
+                                height: 60px;
+                                padding: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+}
+  
