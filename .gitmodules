@@ -10,6 +10,3 @@
 [submodule "includes/lib/ct-addon"]
 	path = includes/lib/ct-addon
 	url = https://santhoshoutright@bitbucket.org/pauple/starcat-review-comparison-table.git
-[submodule "includes/lib/photo-reviews-addon"]
-	path = includes/lib/photo-reviews-addon
-	url = https://santhoshoutright@bitbucket.org/pauple/starcat-reviews-photo-reviews.git
