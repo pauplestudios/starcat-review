@@ -13,7 +13,7 @@ pipelines:
               caches:
                   - composer
               script:
-                  - rm -r node_modules
+                  # - rm -r node_modules
                   - npm install
                   - apt-get update && apt-get install -y unzip
                     ## NEEDED TO INSTALL GD EXTENTSION FOR COMPOSER DEPENDENCIES
