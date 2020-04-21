@@ -13,6 +13,7 @@ pipelines:
                   - composer
                   - node
               script:
+                  - npm install
                   - apt-get update && apt-get install -y unzip
                     ## NEEDED TO INSTALL GD EXTENTSION FOR COMPOSER DEPENDENCIES
                     # Installing first the libraries necessary to configure and install gd
@@ -22,5 +23,5 @@ pipelines:
                   # - docker-php-ext-install -j$(nproc) gd
                   - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
                   - composer install
-                  - npm install
+                  
                   - vendor/bin/codecept run wpunit --steps
