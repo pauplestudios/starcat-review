@@ -4,7 +4,8 @@
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
 # image: php:7.1.29
-image: misterio92/ci-php-node
+# image: misterio92/ci-php-node
+image: thecodingmachine/php:7.4-v3-apache-node10
 
 pipelines:
     default:
