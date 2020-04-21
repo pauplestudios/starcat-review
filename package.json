@@ -13,7 +13,7 @@
         "runtest": "docker-compose down && docker-compose up -d && sleep 20 && yarn acceptance",
         "acceptance": "vendor/bin/codecept run acceptance --steps",
         "acceptance_spec": "vendor/bin/codecept run acceptance tests/acceptance/BasicCest.php:comparisonTableAddonActivation --steps",
-        "unittest": "yarn build && docker-compose down && docker-compose up -d && sleep 10 && yarn wpunit_spec",
+        "unittest": "yarn build && docker-compose down && docker-compose up",
         "wpunit": "vendor/bin/codecept run wpunit --steps",
         "wpunit_spec": "vendor/bin/codecept run wpunit tests/wpunit/NotificationTest.php -vvv",
         "runtest2": "yarn build && docker-compose down && docker-compose up -d && sleep 10 && yarn codeceptjs",
