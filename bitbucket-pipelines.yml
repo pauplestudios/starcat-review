@@ -12,7 +12,6 @@ pipelines:
         - step:
               caches:
                   - composer
-                  - node
               script:
                   - rm -r node_modules
                   - npm install
