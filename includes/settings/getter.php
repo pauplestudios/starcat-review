@@ -128,8 +128,8 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
 
                 // Photos Review start
                 'pr_enable' => true,
-                'pr_require_photos' => true,
-                'pr_photos_order' => 'oldest',
+                'pr_require_photo' => true,
+                'pr_photo_order' => 'oldest',
                 'pr_photo_size' => 2000,
                 'pr_photo_quantity' => 5,
 
