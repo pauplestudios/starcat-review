@@ -56,8 +56,11 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
             if ($author_args['enable-author-review']) {
                 $author_prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller();
                 $html .= $author_prosandcons->get_view($author_args);
-            }
-            $html .= apply_filters('scr_photo_reviews/get_all_photos', $user_args['items']['attachments']);
+            }            
+
+            $attachements = (isset($user_args['items']['attachments']) && !empty($user_args['items']['attachments'])) ? $user_args['items']['attachments'] : [];
+            $html .= apply_filters('scr_photo_reviews/get_all_photos', $attachements);
+            
             $html .= '</div></div>';
 
             return $html;
