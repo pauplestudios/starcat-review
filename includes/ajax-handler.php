@@ -43,8 +43,8 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
             add_action('wp_ajax_pr_delete_attachment', [$this, 'delete_review_attachment']);
 
             // Aajax for Photos Review
-            add_action('wp_ajax_nopriv_scr_photos_review', [$this, 'photos_review']);
-            add_action('wp_ajax_scr_photos_review', [$this, 'photos_review']);
+            add_action('wp_ajax_nopriv_scr_photo_reviews', [$this, 'photos_review']);
+            add_action('wp_ajax_scr_photo_reviews', [$this, 'photos_review']);
         }
 
         public function photos_review()

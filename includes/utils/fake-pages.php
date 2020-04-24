@@ -5,7 +5,7 @@ class SCRFakePages
 
     public function __construct()
     {
-        // require_once SCR_PATH . 'includes/lib/photo-reviews-addon/starcat-review-photo-reviews.php';
+        require_once SCR_PATH . 'includes/lib/photo-reviews-addon/starcat-review-photo-reviews.php';
 
         add_filter('the_posts', array($this, 'fake_pages'));
     }

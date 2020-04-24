@@ -54,8 +54,8 @@ var Form = {
             contentType: false,
             success: function (results) {
 
-                if (results.alert) {
-                    alert(results.alert);
+                if (results.alert) {                    
+                    alert(results.alert);                                                            
                     // Reloading the page
                     window.location.reload();
                 }
