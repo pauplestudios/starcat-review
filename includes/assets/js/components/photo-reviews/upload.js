@@ -59,7 +59,7 @@ var Upload = {
                 console.log('Attachment ID : ' + attachment.parent().data('attachment-id'));
 
                 props = {
-                    action: "pr_delete_attachment",
+                    action: "scr_pr_delete_attachment",
                     review_id: attachment.parent().data('review-id'),
                     attachment_id: attachment.parent().data('attachment-id'),
                 };
