@@ -16,8 +16,7 @@ pipelines:
     - parallel:
       - step:
           name: WP Unit Tests ( Latest )
-          image:
-            - docker-php
+          image: docker-php
           caches:
             - docker-php
           script:
