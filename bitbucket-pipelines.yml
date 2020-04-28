@@ -20,5 +20,5 @@ pipelines:
           caches:
             - docker
           script:
-            - ./bin/setup-pipeline.sh
+            - ./bin/config/setup-pipeline.sh
             - npm run-script test-wpunit -- --xml test-reports/wpunit.xml
