@@ -17,8 +17,6 @@ pipelines:
       - step:
           name: WP Unit Tests ( Latest )
           image: docker-php
-          caches:
-            - docker-php
           script:
             - chmod +x ./bin/setup-pipeline.sh
             - ./bin/setup-pipeline.sh
