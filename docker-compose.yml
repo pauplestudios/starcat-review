@@ -2,7 +2,10 @@ version: "3.1"
 
 services:
     wordpress:
-        image: wordpress
+        build:
+            context: ./tests
+            args:
+              WP_TAG: wordpress:${WP_TAG}
         restart: always
         ports:
             - 81:80

@@ -16,7 +16,10 @@ pipelines:
     - parallel:
       - step:
           name: WP Unit Tests ( Latest )
-          image: docker-php
+          services:
+            - docker
+          caches:
+            - docker
           script:
             - chmod +x ./bin/setup-pipeline.sh
             - ./bin/setup-pipeline.sh
