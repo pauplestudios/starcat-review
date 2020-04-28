@@ -76,13 +76,14 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
                 $this->user_review_settings($prefix);
                 // $this->comparison_table_settings($prefix);
-                $active_plugins = get_option('active_plugins');
-                error_log('$active_plugins : ' . print_r($active_plugins, true));
-                if (is_plugin_active('starcat-review-woo-notify/starcat-review-woo-notify.php')) {
+                // $active_plugins = get_option('active_plugins');
+                // error_log('$active_plugins : ' . print_r($active_plugins, true));
+                if (class_exists('starcat_review_woo_notify')) {
                     $this->notification_settings($prefix);
                 }
 
-                if (is_plugin_active('starcat-review-ct/starcat-review-ct.php')) {
+
+                if (class_exists('Starcat_Review_Ct')) {
                     $this->ct_settings($prefix);
                 }
 
