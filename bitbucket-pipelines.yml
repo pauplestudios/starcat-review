@@ -10,6 +10,7 @@ pipelines:
           - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
           - composer install --ignore-platform-reqs
           - cp .env codeception.env
+          - php -v
         artifacts:
           - '**'
     - parallel:
@@ -22,5 +23,6 @@ pipelines:
           script:
             - chmod +x ./bin/setup-pipeline.sh
             - ./bin/setup-pipeline.sh
+            - php -v
             - sleep 20
             - vendor/bin/codecept run wpunit --steps
