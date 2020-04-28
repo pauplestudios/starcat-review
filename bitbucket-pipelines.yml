@@ -22,4 +22,4 @@ pipelines:
           script:
             - chmod +x ./bin/setup-pipeline.sh
             - ./bin/setup-pipeline.sh
-            - npm run-script test-wpunit -- --xml test-reports/wpunit.xml
+            - vendor/bin/codecept run wpunit --steps
