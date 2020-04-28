@@ -22,4 +22,5 @@ pipelines:
           script:
             - chmod +x ./bin/setup-pipeline.sh
             - ./bin/setup-pipeline.sh
+            - sleep 20
             - vendor/bin/codecept run wpunit --steps
