@@ -23,6 +23,7 @@ pipelines:
           script:
             - chmod +x ./bin/setup-pipeline.sh
             - ./bin/setup-pipeline.sh
+            - ls /usr/local/include/php
             - php -v
             - sleep 20
             - vendor/bin/codecept run wpunit --steps
