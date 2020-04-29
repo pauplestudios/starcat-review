@@ -105,7 +105,8 @@ var Form = {
         fields.methodType = submittingForm.attr("data-method");
 
         var form_data = new FormData();
-        var files = document.getElementById('scr_pr_image_upload').files;
+        var uploadField = document.getElementById('scr_pr_image_upload');
+        var files = (uploadField)? uploadField.files : [];
 
         console.log("Files Length : ");
         console.log(files.length);
