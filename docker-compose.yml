@@ -26,7 +26,7 @@ services:
                 define( 'WP_FS__SKIP_EMAIL_ACTIVATION', true );
                 /* If Freemius was not setup */
                 define( 'WP_FS__SIMULATE_FREEMIUS_OFF', true );
-        links:
+        depends_on:
             - db
         volumes: # Mount relative path source folder on host to absolute path destination folder on docker container
             - ./artifacts/plugins/woocommerce:/var/www/html/wp-content/plugins/woocommerce
@@ -51,16 +51,3 @@ services:
             MYSQL_USER: wordpress
             MYSQL_PASSWORD: wordpress
             MYSQL_ROOT_PASSWORD: root
-    phpmyadmin:
-        image: phpmyadmin/phpmyadmin
-        # container_name: phpmyadmin
-        depends_on:
-            - db
-        restart: always
-        ports:
-            - "8090:80"
-        environment:
-            PMA_HOST: db
-            PMA_PORT: 3307
-            PMA_USER: wordpress
-            PMA_PASSWORD: wordpress
