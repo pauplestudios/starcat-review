@@ -18,7 +18,8 @@
         "wpunit_spec": "vendor/bin/codecept run wpunit tests/wpunit/NotificationTest.php -vvv",
         "runtest2": "yarn build && docker-compose down && docker-compose up -d && sleep 10 && yarn codeceptjs",
         "analyse": "vendor/bin/churn run includes features utils && vendor/bin/phpcpd includes features utils",
-        "rename_old" : "renamer --find artifacts/addons/dist --replace starcat-review-cpt --dry-run"
+        "rename_old" : "renamer --find artifacts/addons/dist --replace starcat-review-cpt --dry-run",
+        "test-wpunit": "docker-compose exec ./vendor/bin/codecept run wpunit"
     },
     "devDependencies": {
         "@babel/core": "^7.5.5",

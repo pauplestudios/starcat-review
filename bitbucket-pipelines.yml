@@ -2,7 +2,7 @@ pipelines:
   default:
     - step:
         name: Build
-        image: php:7.3
+        image: docker-php:7.3
         caches:
           - composer
         script:
@@ -26,4 +26,4 @@ pipelines:
             # - ls /usr/local/include/php
             # - php -v
             # - sleep 20
-            - vendor/bin/codecept run wpunit --steps
+            - npm run-script test-wpunit
