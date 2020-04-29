@@ -59,7 +59,10 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
             }            
 
             $attachements = (isset($user_args['items']['attachments']) && !empty($user_args['items']['attachments'])) ? $user_args['items']['attachments'] : [];
-            $html .= apply_filters('scr_photo_reviews/get_all_photos', $attachements);
+            $all_photos = apply_filters('scr_photo_reviews/get_all_photos', $attachements);
+            $all_photos_html = is_string($all_photos) ? $all_photos : '';
+
+            $html .= $all_photos_html;
             
             $html .= '</div></div>';
 

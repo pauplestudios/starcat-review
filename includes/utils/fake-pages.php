@@ -15,9 +15,14 @@ class SCRFakePages
         $content = '<b>List of Review UI Components for Testing Purpose Only</b></br></br>';
         // Other components
 
-        $content .= apply_filters('scr_photo_reviews/get_all_photos', array());
+        $all_photos = apply_filters('scr_photo_reviews/get_all_photos', array());
+        $all_photos_content = is_string($all_photos) ? $all_photos : '';
+        $review_photos = apply_filters('scr_photo_reviews/get_single_review_photos', array());
+        $review_photos_content = is_string($review_photos) ? $review_photos : '';
+        
+        $content .= $all_photos_content;
         $content .= '</br></br>';
-        $content .= apply_filters('scr_photo_reviews/get_single_review_photos', array());
+        $content .= $review_photos_content;
 
         return $content;
     }
