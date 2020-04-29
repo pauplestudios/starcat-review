@@ -8,46 +8,25 @@ services:
               WP_TAG: wordpress:${WP_TAG}
         restart: always
         ports:
-            - 81:80
-        environment:
+            - ${WP_PORT}:80
+          environment:
             WORDPRESS_DB_HOST: db
-            WORDPRESS_DB_USER: wordpress
-            WORDPRESS_DB_PASSWORD: wordpress
-            WORDPRESS_DB_NAME: scr_test
-            WORDPRESS_DEBUG: 1
-            WP_DEBUG_DISPLAY: 0
-            WP_DEBUG_LOG: 1
-            WORDPRESS_CONFIG_EXTRA: |
-                /* Freemius Dev Mode */
-                /* Set Freemius into development mode */
-                define( 'WP_FS__DEV_MODE', true );
-                define( 'WP_FS__starcat-review-free_SECRET_KEY', 'sk_t=d7~:gkVF1Sw0SJeG!06F[J$dHQ;' );
-                /* Skip email activation when a user with the same email already opted-in */
-                define( 'WP_FS__SKIP_EMAIL_ACTIVATION', true );
-                /* If Freemius was not setup */
-                define( 'WP_FS__SIMULATE_FREEMIUS_OFF', true );
-        depends_on:
-            - db
-        volumes: # Mount relative path source folder on host to absolute path destination folder on docker container
-            - ./artifacts/plugins/woocommerce:/var/www/html/wp-content/plugins/woocommerce
+            WORDPRESS_DB_NAME: wp
+            WORDPRESS_DB_USER: wp
+            WORDPRESS_DB_PASSWORD: pass
+            WORDPRESS_SKIP_INSTALL: 'yes'
+          volumes:
             - ./:/var/www/html/wp-content/plugins/starcat-review
-            - ./artifacts/addons/starcat-review-cpt:/var/www/html/wp-content/plugins/starcat-review-cpt
-            - ./artifacts/addons/starcat-review-ct:/var/www/html/wp-content/plugins/starcat-review-ct
-            - ./includes/lib/starcat-review-woo-notify:/var/www/html/wp-content/plugins/starcat-review-woo-notify
+          depends_on:
+            - db
 
-    db:
-        image: mysql:5.7
-        restart: always
-        volumes:
-            - ./tests/_data/dump-80.sql:/docker-entrypoint-initdb.d/dump.sql
-        ports: # Set up ports exposed for other containers to connect to
-            - "3306:3306"
-        command:
-            - "--wait_timeout=28800"
-            - "--interactive_timeout=28800"
-            - "--max_allowed_packet=16M"
-        environment:
-            MYSQL_DATABASE: scr_test
-            MYSQL_USER: wordpress
-            MYSQL_PASSWORD: wordpress
-            MYSQL_ROOT_PASSWORD: root
+        db:
+            image: mysql:5.7
+            restart: always
+            ports:
+              - ${DB_PORT}:3306
+            environment:
+              MYSQL_DATABASE: wp
+              MYSQL_USER: wp
+              MYSQL_PASSWORD: pass
+              MYSQL_RANDOM_ROOT_PASSWORD: '1'
