@@ -27,5 +27,5 @@ pipelines:
             # - php -v
             # - sleep 20
             # - npm run-script test-wpunit
-            - docker-compose exec -T wordpress  bash -c "cd /var/www/html && ls"
+            - docker-compose exec -T wordpress  bash -c "cd /var/www/html/wp-content/plugins/starcat-review && ls"
             - docker-compose exec -T -w /var/www/html/wp-content/plugins/starcat-review wordpress ./vendor/bin/codecept run wpunit
