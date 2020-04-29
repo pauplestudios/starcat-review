@@ -2,7 +2,7 @@ pipelines:
   default:
     - step:
         name: Build
-        image: docker-php:7.3
+        image: php:7.3
         caches:
           - composer
         script:
