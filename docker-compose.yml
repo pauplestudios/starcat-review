@@ -38,14 +38,14 @@ services:
     db:
         image: mysql:5.7
         restart: always
-        # volumes:
-        #     - ./tests/_data/dump-80.sql:/docker-entrypoint-initdb.d/dump.sql
+        volumes:
+            - ./tests/_data/dump-80.sql:/docker-entrypoint-initdb.d/dump.sql
         ports: # Set up ports exposed for other containers to connect to
-            - "3307:3306"
-        # command:
-        #     - "--wait_timeout=28800"
-        #     - "--interactive_timeout=28800"
-        #     - "--max_allowed_packet=16M"
+            - "3306:3306"
+        command:
+            - "--wait_timeout=28800"
+            - "--interactive_timeout=28800"
+            - "--max_allowed_packet=16M"
         environment:
             MYSQL_DATABASE: scr_test
             MYSQL_USER: wordpress
