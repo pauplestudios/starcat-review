@@ -16,5 +16,5 @@ ADMIN_EMAIL="admin@localhost"
 ADMIN_USERNAME="admin"
 ADMIN_PASSWORD="admin"
 DB_PORT=9119
-WP_PORT=81
+WP_PORT=7253
 WP_TAG=latest
