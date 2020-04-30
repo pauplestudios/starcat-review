@@ -36,6 +36,7 @@ pipelines:
           caches:
             - docker
           script:
+            - chmod +x ./bin/setup-pipeline.sh
             - ./bin/setup-pipeline.sh
             - npm run-script test-build
             - docker-compose exec -T -w /var/www/html/wp-content/plugins/starcat-review wordpress ./vendor/bin/codecept build
