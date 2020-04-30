@@ -12,7 +12,7 @@ pipelines:
           - composer install --ignore-platform-reqs
           - cp -r vendor/pauple/starcat-review-cpt artifacts/addons
           - cp -r vendor/pauple/starcat-review-ct artifacts/addons
-          - ls artifacts/addons/starcat-review-cpt
+          - ls artifacts/addons
           - ls artifacts/addons/starcat-review-ct
           - cp .env codeception.env
           - php -v
