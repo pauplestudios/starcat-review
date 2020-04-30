@@ -17,7 +17,7 @@ services:
         volumes:
             - ./:/var/www/html/wp-content/plugins/starcat-review
             - ./artifacts/addons/starcat-review-cpt:/var/www/html/wp-content/plugins/starcat-review-cpt
-            - ./artifacts/addons/starcat-review-ct:/var/www/html/wp-content/plugins/starcat-review-ct
+            # - ./artifacts/addons/starcat-review-ct:/var/www/html/wp-content/plugins/starcat-review-ct
         depends_on:
             - db
     db:
