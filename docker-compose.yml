@@ -23,8 +23,11 @@ services:
         restart: always
         ports:
             - ${DB_PORT}:3306
+        volumes:
+            - ./artifacts/dump.sql:/docker-entrypoint-initdb.d/dump.sql
         environment:
             MYSQL_DATABASE: wp
             MYSQL_USER: wp
             MYSQL_PASSWORD: pass
             MYSQL_RANDOM_ROOT_PASSWORD: '1'
+            

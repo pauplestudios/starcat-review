@@ -14,8 +14,18 @@ class BasicCest
     {
     }
 
+    private function updateDatabase($I){
+        $I->amOnAdminPage('/upgrade.php?_wp_http_referer=%2Fwp-admin%2F');
+        $I->see('Database Update Required');
+        $I->click('.button-primary');
+        $I->see('Update Complete');
+        $I->click('Continue');
+    }
+
     public function websiteLoads(\AcceptanceTester $I)
     {
+        // $this->updateDatabase($I);
+        // $I->see('Username');
         $I->loginAsAdmin();
 
         /* Start Conditional */
