@@ -1,3 +1,12 @@
+// {
+//     "http-basic": {
+//         "bitbucket.org": {
+//             "username": "essekia",
+//             "password": "1991alpha~"
+//         }
+//     }
+// }
+
 {
     "http-basic": {
         "bitbucket.org": {
