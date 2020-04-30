@@ -14,11 +14,11 @@
         "url":"https://wpackagist.org"
     },
     {
-      "type": "vcs",
+      "type": "git",
       "url" : "https://bitbucket.org/pauple/starcat-review-cpt.git"
   },
   {
-    "type": "vcs",
+    "type": "git",
     "url" : "https://bitbucket.org/pauple/starcat-review-comparison-table.git"
 
   }
