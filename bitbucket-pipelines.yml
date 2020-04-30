@@ -14,21 +14,21 @@ pipelines:
         artifacts:
           - '**'
     - parallel:
-      - step:
-          name: WP Unit Tests ( Latest )
-          services:
-            - docker
-          caches:
-            - docker
-          script:
-            - chmod +x ./bin/setup-pipeline.sh
-            - ./bin/setup-pipeline.sh
-            # - ls /usr/local/include/php
-            # - php -v
-            # - sleep 20
-            # - npm run-script test-wpunit
-            - docker-compose exec -T wordpress  bash -c "cd /var/www/html/wp-content/plugins && ls"
-            - docker-compose exec -T -w /var/www/html/wp-content/plugins/starcat-review wordpress ./vendor/bin/codecept run wpunit
+      # - step:
+      #     name: WP Unit Tests ( Latest )
+      #     services:
+      #       - docker
+      #     caches:
+      #       - docker
+      #     script:
+      #       - chmod +x ./bin/setup-pipeline.sh
+      #       - ./bin/setup-pipeline.sh
+      #       # - ls /usr/local/include/php
+      #       # - php -v
+      #       # - sleep 20
+      #       # - npm run-script test-wpunit
+      #       - docker-compose exec -T wordpress  bash -c "cd /var/www/html/wp-content/plugins && ls"
+      #       - docker-compose exec -T -w /var/www/html/wp-content/plugins/starcat-review wordpress ./vendor/bin/codecept run wpunit
       - step:
           name: Acceptance Tests ( Latest )
           services:
@@ -38,6 +38,6 @@ pipelines:
           script:
             - chmod +x ./bin/setup-pipeline.sh
             - ./bin/setup-pipeline.sh
-            - npm run-script test-build
+            # - npm run-script test-build
             - docker-compose exec -T -w /var/www/html/wp-content/plugins/starcat-review wordpress ./vendor/bin/codecept build
             - docker-compose exec -T -w /var/www/html/wp-content/plugins/starcat-review wordpress ./vendor/bin/codecept run acceptance
