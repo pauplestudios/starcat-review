@@ -40,5 +40,7 @@ pipelines:
             - chmod +x ./bin/setup-pipeline.sh
             - ./bin/setup-pipeline.sh
             # - npm run-script test-build
+            - cp -r vendor/pauple/starcat-review-cpt artifacts/addons
+            - cp -r vendor/pauple/starcat-review-ct artifacts/addons
             - docker-compose exec -T -w /var/www/html/wp-content/plugins/starcat-review wordpress ./vendor/bin/codecept build
             - docker-compose exec -T -w /var/www/html/wp-content/plugins/starcat-review wordpress ./vendor/bin/codecept run acceptance
