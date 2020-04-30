@@ -14,7 +14,7 @@ pipelines:
           - ls artifacts/addons
           - cp -r vendor/pauple/starcat-review-cpt artifacts/addons
           - cp -r vendor/pauple/starcat-review-ct artifacts/addons
-          - rm -v artifacts/addons/*.zip
+          - rm -v artifacts/addons/**/*.zip
           - ls artifacts/addons
           - ls artifacts/addons/starcat-review-ct
           - cp .env codeception.env
