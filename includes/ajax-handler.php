@@ -39,15 +39,15 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
             add_action('wp_ajax_scr_user_review_vote', [$this, 'vote_handler']);
 
             // Delete a single attachment from a photos review
-            add_action('wp_ajax_nopriv_pr_delete_attachment', [$this, 'delete_review_attachment']);
-            add_action('wp_ajax_pr_delete_attachment', [$this, 'delete_review_attachment']);
+            add_action('wp_ajax_nopriv_scr_pr_delete_attachment', [$this, 'delete_review_attachment']);
+            add_action('wp_ajax_scr_pr_delete_attachment', [$this, 'delete_review_attachment']);
 
             // Aajax for Photos Review
-            add_action('wp_ajax_nopriv_scr_photos_review', [$this, 'photos_review']);
-            add_action('wp_ajax_scr_photos_review', [$this, 'photos_review']);
+            add_action('wp_ajax_nopriv_scr_photo_reviews', [$this, 'photo_reviews']);
+            add_action('wp_ajax_scr_photo_reviews', [$this, 'photo_reviews']);
         }
 
-        public function photos_review()
+        public function photo_reviews()
         {
             $response = apply_filters('scr_photo_reviews/ajax', $_POST);
             echo json_encode($response);

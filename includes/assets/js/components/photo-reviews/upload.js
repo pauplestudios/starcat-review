@@ -1,65 +1,54 @@
 var selectors = {
-    upload: "#scr_pr_image_upload",
-    maxFiles: "#scr_pr_max_files",
-    uploadedImagesGroup: ".scr_pr_uploaded_image_group",
-    removeImgesLink: ".scr_pr_uploaded_image_group .deleteable.image a",
-    openUploadWindow: ".add-photos"
+    photos: ".scr_pr_uploaded_image_group .deleteable.image",
+    addPhotos: ".add-photos",
+    maxFilesField: "#scr_pr_max_files",
+    removePhotoLink: ".scr_pr_uploaded_image_group .deleteable.image a",
+    uploadHiddenField: "#scr_pr_image_upload",
+    photosPreviewGroup: ".scr_pr_uploaded_image_group",
 };
 
 var Upload = {
 
     init: function () {
         this.eventHandlers();
-        // this.backendUpload();
-        this.openUploadWindow();
+    },
+    
+    eventHandlers: function () {        
+        Upload.addPhotos();
+        Upload.photoPreview();
+        Upload.removePhoto();
     },
 
-    openUploadWindow: function () {
-        jQuery(selectors.openUploadWindow).on('click', function (e) {
-            // console.log();
+    addPhotos: function () {
+        jQuery(selectors.addPhotos).on('click', function (e) {            
             jQuery('#' + jQuery(this).attr("for")).click();
         });
 
-        // jQuery('input:file', '.ui.action.input').on('change', function (e) {
-        //     var name = e.target.files[0].name;
-        //     jQuery('input:text', jQuery(e.target).parent()).val(name);
-        // });
+        Upload._showOrHideAddPhotosField();
     },
 
-    eventHandlers: function () {
-        jQuery(selectors.upload).change(function (e) {
+    photoPreview: function(){
+        jQuery(selectors.uploadHiddenField).change(function (e) {
 
-            var imagesGroup = jQuery(selectors.uploadedImagesGroup);
-            var maxFiles = jQuery(selectors.maxFiles).val();
-            // imagesGroup.html(""); // Emptied on every Upload
-            imagesGroup.find(".ui.tiny.fluid.image").remove();
+            var previewGroup = jQuery(selectors.photosPreviewGroup);
+            previewGroup.find(".ui.tiny.fluid.image").remove();
             for (var index = 0; index < e.target.files.length; index++) {
                 var src = URL.createObjectURL(e.target.files[index]);
-                imagesGroup.prepend(Upload.getImageHTML(src));
+                previewGroup.prepend(Upload._getImageHTML(src));
             }
 
         });
-        Upload.removeImage();
-    },
+    },   
 
-    getImageHTML: function (src) {
-        var html = "<div class='ui tiny fluid image'>";
-        // html += "<a class='ui right corner label'><i class='delete icon'></i></a>";
-        html += "<img src='" + src + "' />";
-        html += "</div>";
-
-        return html;
-    },
-
-    removeImage: function () {
-        jQuery(selectors.removeImgesLink).click(function () {
+    removePhoto: function () {
+        jQuery(selectors.removePhotoLink).click(function () {
             if (confirm("Are you sure want to delete this attachment from the review ?")) {
                 var attachment = jQuery(this);
                 console.log('Review ID : ' + attachment.parent().data('review-id'));
                 console.log('Attachment ID : ' + attachment.parent().data('attachment-id'));
 
                 props = {
-                    action: "pr_delete_attachment",
+                    action: "scr_pr_delete_attachment",
                     review_id: attachment.parent().data('review-id'),
                     attachment_id: attachment.parent().data('attachment-id'),
                 };
@@ -70,11 +59,34 @@ var Upload = {
                 jQuery.post(scr_ajax.ajax_url, props, function (results) {
                     attachment.parent().fadeOut(300, function () {
                         jQuery(this).remove();
+                        Upload._showOrHideAddPhotosField();
                     });
                 });
             }
         });
     },
+
+    _getImageHTML: function (src) {
+        var html = "<div class='ui tiny fluid image'>";
+        // html += "<a class='ui right corner label'><i class='delete icon'></i></a>";
+        html += "<img src='" + src + "' />";
+        html += "</div>";
+
+        return html;
+    },
+    
+    _showOrHideAddPhotosField: function(){
+        var addPhotos = jQuery(selectors.addPhotos);
+        var maxFiles = jQuery(selectors.maxFilesField).val();
+        var photos = jQuery(selectors.photos).length;
+        console.log('maxFiles : ' + maxFiles);
+        console.log('attachments : ' + photos);
+
+        addPhotos.show();
+        if(photos >= maxFiles){
+            addPhotos.hide();
+        }        
+    },       
 
     backendUpload: function () {
         // Set all variables to be used in scope

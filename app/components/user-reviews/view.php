@@ -115,7 +115,12 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '<div class="stats"> ' . $this->get_stats_view($comment) . '</div>';
             $html .= '<div class="description review-card__body"><p>' . $comment['content'] . '</p></div>';
             $html .= $this->get_prosandcons_view($comment);
-            $html .= apply_filters('scr_photo_reviews/get_single_review_photos', $comment);
+            
+            $review_photos = apply_filters('scr_photo_reviews/get_single_review_photos', $comment);
+            $review_photos_html = is_string($review_photos) ? $review_photos : '';
+
+            $html .= $review_photos_html;
+            
             $html .= '</div>';
             $html .= $this->get_moderation_html($comment);
 

@@ -76,7 +76,9 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
                 $this->user_review_settings($prefix);
 
-                $this->photos_review_settings($prefix);
+                if (is_plugin_active('starcat-review-photo-reviews/starcat-review-photo-reviews.php')) {
+                    $this->photo_reviews_settings($prefix);
+                }
 
                 // $this->comparison_table_settings($prefix);
                 $this->notification_settings($prefix);
@@ -428,24 +430,24 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             );
         }
 
-        public function photos_review_settings($prefix)
+        public function photo_reviews_settings($prefix)
         {
             \CSF::createSection(
                 $prefix,
                 array(
-                    'id' => 'photos_review_settings',
-                    'title' => 'Photos Review',
+                    'id' => 'photo_reviews_settings',
+                    'title' => 'Photo Reviews',
                     'icon' => 'fa fa-image',
                     'fields' => array(
                         array(
                             'id' => 'pr_enable',
                             'type' => 'switcher',
-                            'title' => __('Enable Photos Review', SCR_DOMAIN),
+                            'title' => __('Enable Photo Reviews', SCR_DOMAIN),
                             'default' => true,
                         ),
 
                         array(
-                            'id' => 'pr_require_photos',
+                            'id' => 'pr_require_photo',
                             'type' => 'switcher',
                             'title' => __('Photo required', SCR_DOMAIN),
                             'default' => true,
@@ -453,19 +455,19 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'dependency' => array('pr_enable', '==', 'true'),
                         ),
 
-                        array(
-                            'id' => 'pr_photos_order',
-                            'type' => 'select',
-                            'chosen' => true,
-                            'title' => __('Showing Photos Order', SCR_DOMAIN),
-                            'placeholder' => __('Select an option', SCR_DOMAIN),
-                            'options' => array(
-                                'newest' => 'Newest First',
-                                'oldest' => 'Oldest First',
-                            ),
-                            'default' => 'oldest',
-                            'dependency' => array('pr_enable', '==', 'true'),
-                        ),
+                        // array(
+                        //     'id' => 'pr_photo_order',
+                        //     'type' => 'select',
+                        //     'chosen' => true,
+                        //     'title' => __('Showing Photo Order', SCR_DOMAIN),
+                        //     'placeholder' => __('Select an option', SCR_DOMAIN),
+                        //     'options' => array(
+                        //         'newest' => 'Newest First',
+                        //         'oldest' => 'Oldest First',
+                        //     ),
+                        //     'default' => 'oldest',
+                        //     'dependency' => array('pr_enable', '==', 'true'),
+                        // ),
 
                         array(
                             'id' => 'pr_photo_size',

@@ -54,7 +54,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 add_comment_meta($comment_id, 'scr_user_review_props', $props);
             }
 
-            do_action('scr_photos_review/add_attachments', $comment_id);
+            do_action('scr_photo_reviews/add_attachments', $comment_id);
 
             return $comment_id;
 
@@ -168,15 +168,19 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             if ($props['parent'] == 0) {
 
                 $data = get_comment_meta($comment_id, 'scr_user_review_props', true);
+
                 $votes = isset($data['votes']) && !empty($data['votes']) ? $data['votes'] : [];
                 $props['votes'] = $votes;
-
+                
+                $attachments = isset($data['attachments']) && !empty($data['attachments']) ? $data['attachments'] : [];
+                $props['attachments'] = $attachments;
+                
                 unset($props['parent']);
-                unset($props['methodType']);
-
+                unset($props['methodType']);                
+                
                 update_comment_meta($comment_id, 'scr_user_review_props', $props);
 
-                do_action('scr_photos_review/add_attachments', $comment_id);
+                do_action('scr_photo_reviews/add_attachments', $comment_id);
             }
 
             return $comment_id;
@@ -253,6 +257,10 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
 
             if (isset($_POST['captcha']) && !empty($_POST['captcha'])) {
                 $props['captcha'] = $_POST['captcha'];
+            }
+
+            if (isset($_POST['attachments']) && !empty($_POST['attachments'])) {
+                $props['attachments'] = $_POST['attachments'];
             }
 
             $props = apply_filters('scr_form_process_data', $props);
