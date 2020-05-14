@@ -178,8 +178,8 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
                         destination: "./starcat-review-ct.zip",
                     },
                     {
-                        source: "./includes/lib/photo-reviwes-addon",
-                        destination: "./starcat-review-photo-reviwes.zip",
+                        source: "./includes/lib/photo-reviews-addon",
+                        destination: "./starcat-review-photo-reviews.zip",
                     }
                 ],
             },
