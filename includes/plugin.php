@@ -46,20 +46,16 @@ if (!class_exists('\Starcat_Review')) {
             $hooks = new \StarcatReview\Includes\Hooks();
         }
 
-
         public function load_ajax_handler()
         {
             $ajax_handler = new \StarcatReview\Includes\Ajax_Handler();
             $ajax_handler->register_ajax_actions();
         }
 
-
         public function load_components()
         {
 
-
             $settings = new \StarcatReview\Includes\Settings();
-
 
             /* Upgrades */
             $Upgrades = new \StarcatReview\Includes\Upgrades();
@@ -69,13 +65,15 @@ if (!class_exists('\Starcat_Review')) {
             require_once SCR_PATH . 'includes/settings/getter.php';
             $recaptcha = new \StarcatReview\Services\Recaptcha();
 
-            
+            /* Core WooCommerce Review Integration */
+            $core_woo_review = new \StarcatReview\features\woocommerce\Controller();
+            $core_woo_review->run_hooks();
+
             /* Notification */
             // $Notification_Data = new \StarcatReview\Includes\Utils\Notification\Notification_Test_Data();
             // $Notification_Data = new \StarcatReview\Includes\Utils\Notification\Data();
             // $Notification = new \StarcatReview\Includes\Utils\Notification\Notification($Notification_Data);
-            
-            
+
         }
 
         /**
@@ -129,7 +127,6 @@ if (!class_exists('\Starcat_Review')) {
             require_once SCR_PATH . '/includes/autoloader.php';
             \StarcatReview\Autoloader::run();
         }
-
 
         /* Note: Nice Idea */
         public function load_view($view)
