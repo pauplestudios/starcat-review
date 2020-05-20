@@ -9,18 +9,29 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReview\App\Components\ProsAndCons\Controller')) {
     class Controller
     {
-        public function __construct($args)
+        public function __construct()
         {
-            $model = new \StarcatReview\App\Components\ProsAndCons\Model();
-            $view_props = $model->get_viewProps($args);
-
-            $this->view = new \StarcatReview\App\Components\ProsAndCons\View($view_props);
+            $this->model = new \StarcatReview\App\Components\ProsAndCons\Model();
+            $this->view = new \StarcatReview\App\Components\ProsAndCons\View();
         }
 
-        public function get_view()
+        public function get_view($args)
         {
-            return $this->view->get_html();
+            $props = $this->model->get_viewProps($args);
+            return $this->view->get($props);
+        }
+
+        public function get_fields($args)
+        {
+            $props = $this->model->get_viewProps($args);
+            // error_log('args : ' . print_r($args, true));
+
+            return $this->view->get_fields($props);
+
         }
     } // END CLASS
 
 }
+
+// options
+// data

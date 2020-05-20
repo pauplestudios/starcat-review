@@ -54,8 +54,8 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
             }
 
             if ($author_args['enable-author-review']) {
-                $author_prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller($author_args);
-                $html .= $author_prosandcons->get_view();
+                $author_prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller();
+                $html .= $author_prosandcons->get_view($author_args);
             }
 
             $html .= '</div></div>';

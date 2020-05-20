@@ -3,7 +3,7 @@ var ListControl = require("./blocks/list-control.js");
 var ListBuilder = {
     init: function() {
         console.log("ListBuilder.init()");
-        jQuery("#scr-controlled-list").each(function(index, value) {
+        jQuery("#scr-controlled-list.scr-user-controlled-list").each(function(index, value) {
             if (
                 jQuery(this).find(".scr_user_reviews.comments .comment")
                     .length == 0

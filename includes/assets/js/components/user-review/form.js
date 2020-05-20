@@ -1,34 +1,34 @@
 formSubmitted = false;
 
 var Form = {
-    init: function() {
+    init: function () {
         this.eventListener();
         console.log("Submission JS Loaded !!!");
     },
 
-    eventListener: function() {
+    eventListener: function () {
         this.formValidation();
         this.reCaptcha();
     },
 
-    reCaptcha: function() {
+    reCaptcha: function () {
         console.log("recAptcha () ");
         jQuery("form.scr-user-review").removeClass("active");
         jQuery("form.scr-user-review:visible").addClass("active");
-        jQuery(".edit_link").click(function() {
-            setTimeout(function() {
+        jQuery(".edit_link").click(function () {
+            setTimeout(function () {
                 jQuery("form.scr-user-review").removeClass("active");
                 jQuery("form.scr-user-review:visible").addClass("active");
             }, 1000);
         });
     },
 
-    formValidation: function(fields) {
+    formValidation: function (fields) {
         var SCRForm = jQuery(".scr-user-review");
         var formFields = fields ? fields : Form.getRules();
         SCRForm.form({
             fields: formFields,
-            onSuccess: function(event, fields) {
+            onSuccess: function (event, fields) {
                 event.preventDefault();
                 if (formSubmitted) {
                     return;
@@ -40,17 +40,14 @@ var Form = {
         });
     },
 
-    submission: function(SCRForm, fields) {
+    submission: function (SCRForm, fields) {
         var props = Form.getProps(SCRForm, fields);
-        console.log("props: ");
-        console.log(props);
+
         SCRForm.find(".submit.button").addClass("loading");
         // Ajax Post Submiting
         jQuery
-            .post(scr_ajax.ajax_url, props, function(results) {
+            .post(scr_ajax.ajax_url, props, function (results) {
                 results = JSON.parse(results);
-                console.log("results scr_user_review_submission: ");
-                console.log(results);
 
                 // Success Message
                 var msgProps = {
@@ -59,6 +56,7 @@ var Form = {
                     description:
                         "You can see your review below. Also look at the user summary.",
                 };
+
                 SCRForm.html(Form.getMessageTemplate(msgProps));
 
                 // Reviewed item prepending to Reviews List
@@ -67,9 +65,9 @@ var Form = {
                 // );
 
                 // Reloading the page
-                setInterval("window.location.reload()", 6000);
+                setInterval("window.location.reload()", 5000);
             })
-            .fail(function(response) {
+            .fail(function (response) {
                 // Fail Message
                 var msgProps = {
                     type: "negative",
@@ -80,25 +78,54 @@ var Form = {
                 SCRForm.html(Form.getMessageTemplate(msgProps));
 
                 // Reloading the page
-                setInterval("window.location.reload()", 6000);
+                setInterval("window.location.reload()", 5000);
             });
     },
 
-    getProps: function(submittingForm, fields) {
+    getProps: function (submittingForm, fields) {
         fields.action = submittingForm.attr("action");
         fields.type = submittingForm.attr("method");
         fields.post_id = submittingForm.attr("post_id");
+        fields.comment_id = submittingForm.attr("data-comment-id");
+        fields.methodType = submittingForm.attr("data-method");
 
         return fields;
     },
 
-    getRules: function() {
+    getRules: function () {
         var rules = {
             title: {
                 identifier: "title",
                 rules: [
                     {
                         type: "empty",
+                        prompt: "Please enter your title",
+                    },
+                ],
+            },
+            first_name: {
+                identifier: "first_name",
+                rules: [
+                    {
+                        type: "empty",
+                        prompt: "Please enter your First Name",
+                    },
+                ],
+            },
+            last_name: {
+                identifier: "last_name",
+                rules: [
+                    {
+                        type: "empty",
+                        prompt: "Please enter your Last Name",
+                    },
+                ],
+            },
+            user_email: {
+                identifier: "user_email",
+                rules: [
+                    {
+                        type   : 'email',
                         prompt: "Please enter your title",
                     },
                 ],
@@ -149,9 +176,9 @@ var Form = {
         return rules;
     },
 
-    ratingRules: function(rules) {
+    ratingRules: function (rules) {
         if (SCROptions.global_stats) {
-            jQuery(SCROptions.global_stats).each(function(index, item) {
+            jQuery(SCROptions.global_stats).each(function (index, item) {
                 var identifier = "scores[" + item.stat_name.toLowerCase() + "]";
                 rules[identifier] = {
                     identifier: identifier,
@@ -171,7 +198,7 @@ var Form = {
         return rules;
     },
 
-    getMessageTemplate: function(props) {
+    getMessageTemplate: function (props) {
         var message = '<div class="ui ' + props.type + ' message transition">';
         message += '<div class="header">';
         message += props.title;
@@ -182,7 +209,7 @@ var Form = {
         return message;
     },
 
-    getReviewTemplate: function(title, description) {
+    getReviewTemplate: function (title, description) {
         var template =
             '<div class="scr-collection__col item col-xs-12 col-lg-12">';
         template += '< div class="scr-review-card" > ';
