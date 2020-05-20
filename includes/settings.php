@@ -76,12 +76,45 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
                 $this->user_review_settings($prefix);
                 // $this->comparison_table_settings($prefix);
-                $this->notification_settings($prefix);
+                // $active_plugins = get_option('active_plugins');
+                // error_log('$active_plugins : ' . print_r($active_plugins, true));
+                if (class_exists('starcat_review_woo_notify')) {
+                    $this->notification_settings($prefix);
+                }
+
+
+                if (class_exists('Starcat_Review_Ct')) {
+                    $this->ct_settings($prefix);
+                }
 
                 $this->single_post_meta_fields();
             }
         }
 
+        public function ct_settings($prefix) {
+            // error_log('CT Settings');
+            \CSF::createSection(
+                $prefix,
+                array(
+                    'id' => 'comparison_table_settings',
+                    'title' => 'Comparison Table',
+                    'icon' => 'fa fa-bell',
+                    'fields' => array(
+                        array(
+                            'type' => 'submessage',
+                            'style' => 'success',
+                            'content' => 'You can use Comparison Tables via [starcat_review_comparison_table] shortcode with args post_type and posts(post_id) ',
+                        ),
+                        array(
+                            'type' => 'submessage',
+                            'style' => 'success',
+                            'content' => 'Example: [starcat_review_comparison_table post_type="product" posts="213,245,256"]',
+                        ),
+                    )
+                )
+            );
+
+        }
 
         public function notification_settings($prefix){
             $admin_email = get_option('admin_email');
@@ -89,10 +122,13 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 $prefix,
                 array(
                     'id' => 'notification_settings',
-                    'title' => 'Notification',
+                    'title' => 'Woocommerce Notification',
                     'icon' => 'fa fa-bell',
                     'fields' => array(
-                       
+                        array(
+                            'type'    => 'heading',
+                            'content' => 'Woocommerce Notification Settings to notify users after they complete their orders',
+                        ),
                         array(
                             'id' => 'ns_from_address', // ns: notification_settings
                             'type' => 'text',
@@ -127,7 +163,8 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'id'     => 'ns_time_schedule', // ns: notification_settings
                             'type'   => 'repeater',
-                            'title'  => 'Time Schedule',
+                            'title'  => 'Notification Time Schedule',
+                            'desc' => '<strong> Notification Schedule: Hours/Days from the time of order completion. You can create multiple remainders (example: 24 hours, 3 days, 7 days from purchase)',
                             'fields' => array(
                           
                               array(
@@ -150,7 +187,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             ),
                             'default'   => array(
                                 array(
-                                  'value' => '12',
+                                  'value' => '24',
                                   'unit' => 'hours',
                                 ),
                                 array(
