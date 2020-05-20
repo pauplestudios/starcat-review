@@ -43,9 +43,10 @@ class BasicCest
     public function cptAddonActivation(\AcceptanceTester $I)
     {
         $I->loginAsAdmin();
-
+        $I->loginAsAdmin();
         // 1. When Parent plugin is deactivated
         $I->amOnPluginsPage();
+        $I->see('Starcat Review');
         $I->deactivatePlugin('starcat-review');
         $I->amOnPagesPage();
         $I->amOnPluginsPage();

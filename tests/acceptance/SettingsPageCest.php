@@ -19,9 +19,9 @@ class SettingsPageCest
         $I->see('User Review');
 
         /* Check Addon Menus */
-        $I->dontSee('Main Page');
-        $I->dontSee('Category Page');
-        $I->dontSee('Single Page');
+        $I->see('Main Page');
+        $I->see('Category Page');
+        $I->see('Single Page');
     }
 
     // function add_action_link(AcceptanceTester $I)

@@ -1,2 +1,2 @@
-tests/acceptance/BasicCest.php:cptAddonActivation
-tests/acceptance/BasicCest.php:comparisonTableAddonActivation
+tests\acceptance\BasicCest.php:comparisonTableAddonActivation
+tests\acceptance\NonLoggedInUserCest.php:non_logged_in_user
