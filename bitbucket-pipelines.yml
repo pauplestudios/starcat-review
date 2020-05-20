@@ -18,7 +18,7 @@ pipelines:
           - ls artifacts/addons
           - ls artifacts/addons/starcat-review-cpt
           - ls artifacts/addons/starcat-review-ct
-          - cp bitbucket.env codeception.env
+          - cp bitbucket.env .env
           - php -v
         artifacts:
           - '**'
