@@ -1,25 +1,12 @@
-# This is a sample build configuration for PHP.
-# Check our guides at https://confluence.atlassian.com/x/e8YWN for more examples.
-# Only use spaces to indent your .yml configuration.
-# -----
-# You can specify a custom docker image from Docker Hub as your build environment.
-image: php:7.1.29
-
 pipelines:
-    default:
-        - step:
-              caches:
-                  - composer
-                  - node
-              script:
-                  - apt-get update && apt-get install -y unzip
-                    ## NEEDED TO INSTALL GD EXTENTSION FOR COMPOSER DEPENDENCIES
-                    # Installing first the libraries necessary to configure and install gd
-                  - apt-get update && apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev
-                    # Now we can configure and install the extension
-                  - docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
-                  - docker-php-ext-install -j$(nproc) gd
-                  - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-                  - composer install
-                  - npm install
-                  - phpunit
+  branches:
+    develop:
+      - step:
+          services:
+            - docker
+          caches:
+            - docker
+          script:
+            - curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-Linux-x86_64 -o /usr/local/bin/docker-compose
+            - chmod +x /usr/local/bin/docker-compose
+            - docker-compose --file $BITBUCKET_CLONE_DIR/docker-compose.yml run --rm wpbrowser

@@ -5,7 +5,7 @@ Plugin Name: Starcat Review
 Plugin URI: https://starcatwp.com/
 Description: Adds Author and User Reviews to any post_type
 Author: HelpieWP
-Version: 0.4.1
+Version: 0.5
 Author URI: https://starcatwp.com/
 Network: True
 Text Domain: starcat-review
@@ -19,7 +19,7 @@ if (!defined('ABSPATH')) {
 
 require_once plugin_dir_path(__FILE__) . "/includes/lib/freemius-integrator.php";
 
-define('SCR_VERSION', '0.4.1');
+define('SCR_VERSION', '0.5');
 define('SCR_DOMAIN', 'starcat-review');
 define('SCR_COMMENT_TYPE', 'starcat_review');
 define('SCR__FILE__', __FILE__);
@@ -35,6 +35,9 @@ define('SCR_OPTIONS', 'scr_options');
 define('SCR_CUSTOMIZE_OPTIONS', 'scr_customize_options');
 
 starcat_review_activation();
+
+// This should be final step
+do_action('scr_plugin_loaded');
 
 function starcat_review_activation()
 {
