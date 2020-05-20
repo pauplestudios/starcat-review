@@ -32,7 +32,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
 
             foreach ($viewProps['items'] as $comment) {
 
-                if ($this->is_can_view($comment) && $comment['comment_parent'] == 0) {
+                if ($this->can_view_comment($comment) && $comment['comment_parent'] == 0) {
                     $html .= $this->get_comment_item($comment, $viewProps['items']);
                 }
             }
@@ -44,13 +44,16 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             return $html;
         }
 
-        protected function is_can_view($comment)
+        protected function can_view_comment($comment)
         {
             $can = false;
 
             if ($comment['comment_approved'] == 1 || $comment['user_id'] == $this->collection['current_user_id']) {
                 $can = true;
             }
+
+             // Used by non-logged-in-user
+            $can = apply_filters('scr_can_view_comment', $can, $comment);
 
             return $can;
         }
@@ -142,7 +145,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
 
             //1st level comment children
             foreach ($items as $item) {
-                if ($item['comment_parent'] == $comment['comment_id'] && $this->is_can_view($item)) {
+                if ($item['comment_parent'] == $comment['comment_id'] && $this->can_view_comment($item)) {
                     $html .= $this->get_reply_comment($item);
                 }
             }

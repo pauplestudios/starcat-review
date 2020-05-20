@@ -127,7 +127,9 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
                     $comment->review = get_comment_meta($comment->comment_ID, 'scr_user_review_props', true);
 
                     // Current user already reviewed
-                    if ($comment->user_id == get_current_user_id() && $comment->comment_parent == 0) {
+                    $has_current_user_already_reviewed = ($comment->user_id == get_current_user_id() && $comment->comment_parent == 0);
+                    $has_current_user_already_reviewed = apply_filters( 'scr_has_current_user_already_reviewed', $has_current_user_already_reviewed, $comment );
+                    if ($has_current_user_already_reviewed) {
                         $args['can_user_review'] = false;
                         $args['current_user_review'] = $comment;
                         
