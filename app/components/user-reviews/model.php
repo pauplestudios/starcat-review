@@ -73,6 +73,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
                 'commentor_avatar' => get_avatar($comment->user_id),
                 'comment_approved' => $comment->comment_approved,
                 'user_id' => $comment->user_id,
+                'comment_author_IP' => $comment->comment_author_IP,
             ];
 
             $comment_item['can_edit'] = ($comment->user_id == $this->collection['current_user_id']);
