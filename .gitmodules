@@ -9,4 +9,3 @@
 	url = https://theMechanicSekar@bitbucket.org/pauple/starcat-review-cpt.git
 [submodule "includes/lib/ct-addon"]
 	path = includes/lib/ct-addon
-	url = https://theMechanicSekar@bitbucket.org/pauple/starcat-review-comparison-table.git

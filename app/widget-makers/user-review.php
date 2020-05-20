@@ -24,7 +24,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             $form_view = $this->form_controller->get_view($args);
             $reviews_list_view = $this->reviews_controller->get_view($args);
 
-            $wrapper_start_html = '<div id="scr-controlled-list" data-collectionprops="{<pagination<:true,<page<:9,<type<:2}">';
+            $wrapper_start_html = '<div id="scr-controlled-list" class="scr-user-controlled-list" data-collectionprops="{<pagination<:true,<page<:9,<type<:2}">';
             $this->controls_builder = new \StarcatReview\App\Builders\Controls_Builder('user_review');
 
             $args = [
@@ -127,7 +127,9 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
                     $comment->review = get_comment_meta($comment->comment_ID, 'scr_user_review_props', true);
 
                     // Current user already reviewed
-                    if ($comment->user_id == get_current_user_id() && $comment->comment_parent == 0) {
+                    $has_current_user_already_reviewed = ($comment->user_id == get_current_user_id() && $comment->comment_parent == 0);
+                    $has_current_user_already_reviewed = apply_filters( 'scr_has_current_user_already_reviewed', $has_current_user_already_reviewed, $comment );
+                    if ($has_current_user_already_reviewed) {
                         $args['can_user_review'] = false;
                         $args['current_user_review'] = $comment;
                         
