@@ -47,7 +47,7 @@ pipelines:
           script:
             - chmod +x ./bin/setup-pipeline.sh
             - ./bin/setup-pipeline.sh
-            - docker-compose exec -T -w /var/www/html/wp-content/plugins/starcat-review wordpress wp search-replace 'http://127.0.0.1' 'http://localhost'
+            # - docker-compose exec -T -w /var/www/html/wp-content/plugins/starcat-review wordpress wp search-replace 'http://127.0.0.1' 'http://localhost'
             # - npm run-script test-build
             - docker-compose exec -T -w /var/www/html/wp-content/plugins/starcat-review wordpress ./vendor/bin/codecept build
             - docker-compose exec -T -w /var/www/html/wp-content/plugins/starcat-review wordpress ./vendor/bin/codecept run acceptance -vvv
