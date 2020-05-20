@@ -1,22 +1,24 @@
 <?php
 
-namespace StarcatReview\features\woocommerce;
+namespace StarcatReview\Features\Woocommerce;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\StarcatReview\features\woocommerce\Controller')) {
+if (!class_exists('\StarcatReview\Features\Woocommerce\Controller')) {
     class Controller
     {
         public function __construct()
         {
-            // $this->model = new \StarcatReview\features\woocommerce\Model();
-            error_log('!!! WooCommerce !!!');
+            // $this->model = new \StarcatReview\Features\Woocommerce\Model();
+            error_log('!!! Woocommerce !!!');
         }
 
         public function run_hooks()
         {
+            error_log('!!! WooCommerce Controller run_hooks !!!');
+
             add_action('comment_form_logged_in_after', [$this, 'add_review_title_field_on_comment_form']);
             add_action('comment_form_after_fields', [$this, 'add_review_title_field_on_comment_form']);
 
@@ -78,7 +80,7 @@ if (!class_exists('\StarcatReview\features\woocommerce\Controller')) {
         public function get_view($args)
         {
             // $viewProps = $this->model->get_viewProps($args);
-            // $view = new \StarcatReview\features\woocommerce\View($viewProps);
+            // $view = new \StarcatReview\Features\Woocommerce\View($viewProps);
             // return $view->get();
         }
     } // END CLASS
