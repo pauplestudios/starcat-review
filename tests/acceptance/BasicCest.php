@@ -88,10 +88,10 @@ class BasicCest
         $I->activatePlugin($data_slug);
         $I->amOnPagesPage();
         $I->amOnPluginsPage();
-        $I->seePluginActivated($data_slug);
+        // $I->seePluginActivated($data_slug);
         $I->seeElement('.error');
         
-        // 2. When Parent plugin is
+        // 2. When Parent plugin is activated
         $I->amOnPluginsPage();
         $I->activatePlugin('starcat-review');
         $I->activatePlugin($data_slug);
