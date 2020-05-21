@@ -88,9 +88,11 @@ class BasicCest
         $I->amOnPagesPage();
         $I->amOnPluginsPage();
         $I->seePluginActivated($data_slug);
-        $I->seeElement('.error.src-error.missing-parent');
-
+        $I->seeElement('.error');
+        
+        // 2. When Parent plugin is
         $I->amOnPluginsPage();
+        $I->activatePlugin('starcat-review');
         $I->activatePlugin($data_slug);
         $I->amOnPagesPage();
         $I->amOnPluginsPage();
