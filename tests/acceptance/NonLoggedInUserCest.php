@@ -7,11 +7,14 @@ class NonLoggedInUserCest
         $I->loginAsAdmin();
         $I->am('administrator');
         $I->amOnPluginsPage();
+        $I->activatePlugin(['woocommerce']);
+        $I->seePluginActivated('woocommerce');
         // $I->activatePlugin(['hello-dolly','woocommerce']);
     }
 
     function non_logged_in_user(AcceptanceTester $I)
     {
+       
         $this->settings_non_loggedin($I);
 
         $I->amOnPage('/product/album/');

@@ -3,6 +3,8 @@ node_modules
 dist
 artifacts/addons
 artifacts/plugins
+artifacts/dist/**
+artifacts/uploads
 *.bundle.js
 *.bundle.js.map
 *.bundle.css
