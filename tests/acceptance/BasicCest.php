@@ -42,6 +42,7 @@ class BasicCest
 
     public function cptAddonActivation(\AcceptanceTester $I)
     {
+        $data_slug = 'starcat-review-cpt-addon';
         $I->loginAsAdmin();
         $I->loginAsAdmin();
         // 1. When Parent plugin is deactivated
@@ -51,19 +52,19 @@ class BasicCest
         $I->amOnPagesPage();
         $I->amOnPluginsPage();
         $I->seePluginDeactivated('starcat-review');
-        $I->activatePlugin('starcat-review-cpt-addon');
+        $I->activatePlugin($data_slug);
         $I->amOnPagesPage();
         $I->amOnPluginsPage();
-        $I->seePluginActivated('starcat-review-cpt-addon');
+        $I->seePluginActivated($data_slug);
         $I->seeElement('.error.src-error.missing-parent');
 
         // 2. When Parent is activated
         $I->amOnPluginsPage();
         $I->activatePlugin('starcat-review');
-        $I->activatePlugin('starcat-review-cpt-addon');
+        $I->activatePlugin($data_slug);
         $I->amOnPagesPage();
         $I->amOnPluginsPage();
-        $I->seePluginActivated('starcat-review-cpt-addon');
+        $I->seePluginActivated($data_slug);
         $I->dontSeeElement('.error.src-error.missing-parent');
 
         /* Settings Page */
