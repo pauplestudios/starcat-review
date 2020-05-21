@@ -101,5 +101,9 @@ class BasicCest
         /* Settings Page */
         $I->amOnPage('/wp-admin/admin.php?page=scr-settings#tab=1');
         $I->see('Where to include reviews?');
+
+        /* Check Available Menus */
+        $I->see('General Settings');
+        $I->see('User Review');
     }
 }
