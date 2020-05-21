@@ -1,6 +1,3 @@
-[submodule "includes/lib/upgrader"]
-	path = includes/lib/upgrader
-	url = https://essekia@bitbucket.org/essekia/upgrader.git
 [submodule "includes/lib/widgetry"]
 	path = includes/lib/widgetry
 	url = https://theMechanicSekar@bitbucket.org/pauple/widgetry.git

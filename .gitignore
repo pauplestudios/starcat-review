@@ -3,6 +3,8 @@ node_modules
 dist
 artifacts/addons
 artifacts/plugins
+artifacts/dist/**
+artifacts/uploads
 *.bundle.js
 *.bundle.js.map
 *.bundle.css
@@ -15,7 +17,7 @@ reports
 .scannerwork
 .vscode
 test-artifacts/build/**
-tests/_output
+tests/_output/**
 artifacts/dist/**
 package-lock.json
 
