@@ -13,7 +13,16 @@ services:
             WORDPRESS_DB_NAME: wp
             WORDPRESS_DB_USER: wp
             WORDPRESS_DB_PASSWORD: pass
-            WORDPRESS_SKIP_INSTALL: 'yes'
+            WORDPRESS_SKIP_INSTALL: 1
+            WORDPRESS_CONFIG_EXTRA: |
+                /* Freemius Dev Mode */
+                /* Set Freemius into development mode */
+                define( 'WP_FS__DEV_MODE', true );
+                define( 'WP_FS__starcat-review_SECRET_KEY', "sk_t=d7~:gkVF1Sw0SJeG!06F[J$dHQ;" );
+                /* Skip email activation when a user with the same email already opted-in */
+                define( 'WP_FS__SKIP_EMAIL_ACTIVATION', true );
+                /* If Freemius was not setup */
+                /* define( 'WP_FS__SIMULATE_FREEMIUS_OFF', true ); */
         volumes:
             - ./:/var/www/html/wp-content/plugins/starcat-review
             - ./artifacts/addons/starcat-review-cpt:/var/www/html/wp-content/plugins/starcat-review-cpt
@@ -21,6 +30,7 @@ services:
             - ./artifacts/plugins/woocommerce:/var/www/html/wp-content/plugins/woocommerce
             - ./artifacts/plugins/wp-migrate-db:/var/www/html/wp-content/plugins/wp-migrate-db
             - ./config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+            # - ./config/wp-config.php:/var/www/html/wp-config.php
             - ./artifacts/uploads:/var/www/html/wp-content/uploads
         depends_on:
             - db
