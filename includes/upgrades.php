@@ -29,8 +29,13 @@ if (!class_exists('\StarcatReview\Includes\Upgrades')) {
 
             $upgrades_list = new \StarcatReview\Includes\Upgrades_List();
             include_once SCR_PATH . 'includes/lib/upgrader/upgrader.php';
-            $upgrader = new \Upgrader\Upgrader($args, $upgrades_list);
-            $upgrader::add_actions();
+            if(class_exists('\Upgrader\Upgrader')){
+                $upgrader = new \Upgrader\Upgrader($args, $upgrades_list);
+                $upgrader::add_actions();
+            } else{
+                error_log('Upgrader Does not Exist');
+            }
+           
         }
     } // END CLASS
 }
