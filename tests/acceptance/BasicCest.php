@@ -61,7 +61,7 @@ class BasicCest
         // 2. When Parent is activated
         $I->amOnPluginsPage();
         $I->activatePlugin('starcat-review');
-        // $I->activatePlugin($data_slug);
+        // $I->activatePlugin($data_slug); // TODO: This fails in Bitbucket Pipelines, find WHY. Maybe because its already active
         $I->amOnPagesPage();
         $I->amOnPluginsPage();
         $I->seePluginActivated($data_slug);
