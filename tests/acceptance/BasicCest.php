@@ -77,7 +77,7 @@ class BasicCest
         $I->amOnPagesPage();
         $I->amOnPluginsPage();
         $I->seePluginActivated($data_slug);
-        $I->seeElement('.error.src-error.missing-parent');
+        $I->seeElement('.error');
 
         $I->amOnPluginsPage();
         $I->activatePlugin($data_slug);

@@ -15,6 +15,7 @@ reports
 .scannerwork
 .vscode
 test-artifacts/build/**
+tests/_output
 artifacts/dist/**
 package-lock.json
 
