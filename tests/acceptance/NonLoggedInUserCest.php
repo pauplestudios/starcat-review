@@ -7,11 +7,14 @@ class NonLoggedInUserCest
         $I->loginAsAdmin();
         $I->am('administrator');
         $I->amOnPluginsPage();
+        $I->activatePlugin(['woocommerce']);
+        $I->seePluginActivated('woocommerce');
         // $I->activatePlugin(['hello-dolly','woocommerce']);
     }
 
     function non_logged_in_user(AcceptanceTester $I)
     {
+       
         $this->settings_non_loggedin($I);
 
         $I->amOnPage('/product/album/');
@@ -64,14 +67,16 @@ class NonLoggedInUserCest
         $comment_data['comment_author_url'] = '';
         $comment_data['user_id'] = '';
 
-        $comment_id = wp_new_comment($comment_data);
+        // $comment_id = wp_new_comment($comment_data);
 
-        $comment_modifier = [
-            'comment_ID' => $comment_id,
-            'comment_approved' => 0,
-        ];
+        // $comment_modifier = [
+        //     'comment_ID' => $comment_id,
+        //     'comment_approved' => 0,
+        // ];
 
-        wp_update_comment($comment_modifier);    
+        $postId = $comment_data['comment_post_ID'];
+        $I->haveCommentInDatabase($postId, $comment_data);
+        // wp_update_comment($comment_modifier);    
     }
 
 
