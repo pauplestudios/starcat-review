@@ -5,7 +5,8 @@
   },
   "extra": {
     "installer-paths": {
-        "artifacts/plugins/{$name}/": ["type:wordpress-plugin"]
+        "artifacts/plugins/{$name}/": ["type:wordpress-plugin"],
+        "includes/lib/{$name}/": ["vendor/pauple/package"]
     }
 },
   "repositories":[
@@ -13,6 +14,10 @@
         "type":"composer",
         "url":"https://wpackagist.org"
     },
+    {
+      "type": "git",
+      "url" : "https://essekia@bitbucket.org/essekia/upgrader.git"
+  },
     {
       "type": "git",
       "url" : "https://bitbucket.org/pauple/starcat-review-cpt.git"
@@ -24,6 +29,7 @@
   }
 ],
   "require-dev": {
+    "pauple/upgrader": "dev-master",
     "pauple/starcat-review-cpt": "dev-develop",
     "pauple/starcat-review-ct": "dev-release/0.1",
     "lucatume/wp-browser": "~2.1.5",
