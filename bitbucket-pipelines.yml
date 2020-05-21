@@ -15,6 +15,7 @@ pipelines:
           - cp -r vendor/pauple/starcat-review-cpt artifacts/addons
           - cp -r vendor/pauple/starcat-review-ct artifacts/addons
           - cp -r vendor/pauple/upgrader/*.php includes/lib/upgrader
+          - cp -r vendor/pauple/starcat-review-woo-notify includes/lib
           - rm -v artifacts/addons/**/*.zip
           - ls artifacts/addons
           - ls artifacts/addons/starcat-review-cpt

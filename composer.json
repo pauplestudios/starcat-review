@@ -16,6 +16,10 @@
     },
     {
       "type": "git",
+      "url" : "https://bitbucket.org/pauple/starcat-review-woo-notification.git"
+  },
+    {
+      "type": "git",
       "url" : "https://bitbucket.org/pauple/upgrader.git"
   },
     {
@@ -30,6 +34,7 @@
 ],
   "require-dev": {
     "pauple/upgrader": "dev-master",
+    "pauple/starcat-review-woo-notify": "dev-master",
     "pauple/starcat-review-cpt": "dev-develop",
     "pauple/starcat-review-ct": "dev-release/0.1",
     "lucatume/wp-browser": "~2.1.5",
