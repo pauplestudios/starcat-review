@@ -12,11 +12,12 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration\Review')) {
         public function __construct()
         {
             error_log('!!! Review !!!');
+            add_filter('woocommerce_product_review_comment_form_args', [$this, 'add_fields']);
         }
 
-        public function add_fields()
+        public function add_fields($args)
         {
-
+            return $this->get_form_fields($args);
         }
 
         public function save_fields()
@@ -28,5 +29,16 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration\Review')) {
         {
 
         }
+
+        protected function get_form_fields($args)
+        {
+            $user_review = new \StarcatReview\App\Widget_Makers\User_Review();
+
+            $args['comment_field'] = $user_review->get_form_fields();
+            // $args['class_form'] = 'comment-form ui form scr-user-review';
+
+            return $args;
+        }
+
     }
 }
