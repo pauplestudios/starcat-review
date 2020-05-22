@@ -105,7 +105,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             $html = '';
             if ($this->props['collection']['show_title']) {
                 $html .= '<div class="inline field">';
-                $html .= '<input type="text" name="title" placeholder="Your title" value=""/>';
+                $html .= '<input type="text" name="title" placeholder="Your title" value="" required/>';
                 $html .= '</div>';
             }
 
@@ -117,7 +117,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
 
             if ($this->props['collection']['show_description']) {
                 $html .= '<div class="field">';
-                $html .= '<textarea rows="4" spellcheck="false" name="description" placeholder="Your review"></textarea>';
+                $html .= '<textarea rows="4" spellcheck="true" name="comment" placeholder="Your review" required></textarea>';
                 $html .= '</div>';
             }
 
