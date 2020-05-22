@@ -41,6 +41,7 @@ services:
             - ${DB_PORT}:3306
         volumes:
             - ./artifacts/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+        # user: "1000:50"
         environment:
             MYSQL_DATABASE: wp
             MYSQL_USER: wp
