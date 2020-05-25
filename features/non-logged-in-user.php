@@ -13,23 +13,25 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
     {
         public function __construct()
         {
-            error_log('\StarcatReview\Features\Non_Logged_In_User');
+            // error_log('\StarcatReview\Features\Non_Logged_In_User');
             add_action('init', array($this, 'init_hook'));
         }
 
-        public function get_settings(){
+        public function get_settings()
+        {
 
             $settings = [
-                'who_can_review' => SCR_Getter::get('ur_who_can_review')
+                'who_can_review' => SCR_Getter::get('ur_who_can_review'),
             ];
             return $settings;
         }
 
-        public function init_hook(){
+        public function init_hook()
+        {
 
             $current_user = new \StarcatReview\App\Services\User();
 
-            if($current_user->is_loggedin()){
+            if ($current_user->is_loggedin()) {
                 return;
             }
 
@@ -60,7 +62,7 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
                 $comment_item['can_edit'] = false;
             }
 
-             return $comment_item;
+            return $comment_item;
         }
 
         public function can_view_comment($can_view, $comment){
@@ -149,25 +151,25 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
             return $args;
         }
 
-
-        public function form_modification($html = '', $review = []){
+        public function form_modification($html = '', $review = [])
+        {
             $user_email = (isset($review['user_email'])) ? $review['user_email'] : '';
             $first_name = (isset($review['first_name'])) ? $review['first_name'] : '';
             $last_name = (isset($review['last_name'])) ? $review['last_name'] : '';
 
             $html .= '<div class="inline field">';
             // $html .= '<label>Review Title</label>';
-            $html .= '<input type="text" name="user_email" placeholder="me@mycompany.com" value="'.$user_email.'"/>';
+            $html .= '<input type="text" name="user_email" placeholder="me@mycompany.com" value="' . $user_email . '"/>';
             $html .= '</div>';
 
             $html .= '<div class="inline field">';
             // $html .= '<label>Review Title</label>';
-            $html .= '<input type="text" name="first_name" placeholder="John" value="'.$first_name.'"/>';
+            $html .= '<input type="text" name="first_name" placeholder="John" value="' . $first_name . '"/>';
             $html .= '</div>';
 
             $html .= '<div class="inline field">';
             // $html .= '<label>Review Title</label>';
-            $html .= '<input type="text" name="last_name" placeholder="Doe  " value="'.$last_name.'"/>';
+            $html .= '<input type="text" name="last_name" placeholder="Doe  " value="' . $last_name . '"/>';
             $html .= '</div>';
 
            // error_log('html: ' . $html);

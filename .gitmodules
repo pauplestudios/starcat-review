@@ -1,8 +1,8 @@
 [submodule "includes/lib/widgetry"]
 	path = includes/lib/widgetry
-	url = https://theMechanicSekar@bitbucket.org/pauple/widgetry.git
+	url = https://santhoshoutright@bitbucket.org/pauple/widgetry.git
 [submodule "includes/lib/cpt-addon"]
 	path = includes/lib/cpt-addon
-	url = https://theMechanicSekar@bitbucket.org/pauple/starcat-review-cpt.git
+	url = https://santhoshoutright@bitbucket.org/pauple/starcat-review-cpt.git
 [submodule "includes/lib/ct-addon"]
 	path = includes/lib/ct-addon
