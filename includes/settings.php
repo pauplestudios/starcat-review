@@ -72,9 +72,14 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                     $this->category_page_settings($prefix);
                     $this->single_page_settings($prefix);
                     $this->category_meta_fields();
-               }
+                }
 
                 $this->user_review_settings($prefix);
+
+                if (is_plugin_active('starcat-review-photo-reviews/starcat-review-photo-reviews.php')) {
+                    $this->photo_reviews_settings($prefix);
+                }
+
                 // $this->comparison_table_settings($prefix);
                 $this->notification_settings($prefix);
 
@@ -82,8 +87,8 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             }
         }
 
-
-        public function notification_settings($prefix){
+        public function notification_settings($prefix)
+        {
             $admin_email = get_option('admin_email');
             \CSF::createSection(
                 $prefix,
@@ -92,7 +97,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                     'title' => 'Notification',
                     'icon' => 'fa fa-bell',
                     'fields' => array(
-                       
+
                         array(
                             'id' => 'ns_from_address', // ns: notification_settings
                             'type' => 'text',
@@ -125,46 +130,46 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'desc' => '<strong>Shown at the footer of the email</strong>',
                         ),
                         array(
-                            'id'     => 'ns_time_schedule', // ns: notification_settings
-                            'type'   => 'repeater',
-                            'title'  => 'Time Schedule',
+                            'id' => 'ns_time_schedule', // ns: notification_settings
+                            'type' => 'repeater',
+                            'title' => 'Time Schedule',
                             'fields' => array(
-                          
-                              array(
-                                'id'    => 'value',
-                                'type'  => 'text',
-                                'title' => 'Time Value'
-                              ),
-                              array(
-                                'id'          => 'unit',
-                                'type'        => 'select',
-                                'title'       => 'Time Unit',
-                                'placeholder' => 'Select an option',
-                                'options'     => array(
-                                  'hours'  => 'Hours',
-                                  'days'  => 'Days',
+
+                                array(
+                                    'id' => 'value',
+                                    'type' => 'text',
+                                    'title' => 'Time Value',
                                 ),
-                                'default'     => 'days'
-                              ),
-                          
+                                array(
+                                    'id' => 'unit',
+                                    'type' => 'select',
+                                    'title' => 'Time Unit',
+                                    'placeholder' => 'Select an option',
+                                    'options' => array(
+                                        'hours' => 'Hours',
+                                        'days' => 'Days',
+                                    ),
+                                    'default' => 'days',
+                                ),
+
                             ),
-                            'default'   => array(
+                            'default' => array(
                                 array(
-                                  'value' => '12',
-                                  'unit' => 'hours',
+                                    'value' => '12',
+                                    'unit' => 'hours',
                                 ),
                                 array(
-                                  'value' => '1',
-                                  'unit' => 'days' 
+                                    'value' => '1',
+                                    'unit' => 'days',
                                 ),
                                 array(
                                     'value' => '3',
-                                    'unit' => 'days' 
-                                )
-                            )
+                                    'unit' => 'days',
+                                ),
+                            ),
                         ),
 
-                     )
+                    ),
                 )
             );
         }
@@ -285,15 +290,15 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         // ),
 
                         array(
-                            'id'    => 'ur_who_can_review',
-                            'type'  => 'select',
+                            'id' => 'ur_who_can_review',
+                            'type' => 'select',
                             'desc' => 'Selecting Everyone will let even Non Logged-in Users add reviews',
                             'title' => 'Who Can Review',
                             'options' => array(
                                 'logged_in' => 'Logged In Users',
                                 'everyone' => 'Everyone',
-                               
-                            )
+
+                            ),
                         ),
 
                         array(
@@ -366,9 +371,9 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'title' => __('Show reCAPTCHA (v2 checkbox)', SCR_DOMAIN),
                             'default' => false,
                             'desc' => 'Register for reCAPTCHA v2 at <a href="https://www.google.com/recaptcha">https://www.google.com/recaptcha</a> to get your site key and secret key.' .
-                                ' Make sure to add your domain name in the settings at the reCAPTCHA website. ' .
-                                'Read More at <a href="https://paupledocs.gitbook.io/starcat-documentation/">Starcat Reviews - Docs</a>.' .
-                                ' Note: reCAPTCHA v3 will not work, just v2. v3 will be added soon.',
+                            ' Make sure to add your domain name in the settings at the reCAPTCHA website. ' .
+                            'Read More at <a href="https://paupledocs.gitbook.io/starcat-documentation/">Starcat Reviews - Docs</a>.' .
+                            ' Note: reCAPTCHA v3 will not work, just v2. v3 will be added soon.',
                         ),
 
                         array(
@@ -377,7 +382,6 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'title' => __('reCAPTCHA Site Key', SCR_DOMAIN),
                             'dependency' => array('ur_show_captcha', '==', 'true'),
                         ),
-
 
                         array(
                             'id' => 'recaptcha_secret_key',
@@ -421,6 +425,70 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         //     ),
                         // ),
 
+                    ),
+                )
+            );
+        }
+
+        public function photo_reviews_settings($prefix)
+        {
+            \CSF::createSection(
+                $prefix,
+                array(
+                    'id' => 'photo_reviews_settings',
+                    'title' => 'Photo Reviews',
+                    'icon' => 'fa fa-image',
+                    'fields' => array(
+                        array(
+                            'id' => 'pr_enable',
+                            'type' => 'switcher',
+                            'title' => __('Enable Photo Reviews', SCR_DOMAIN),
+                            'default' => true,
+                        ),
+
+                        array(
+                            'id' => 'pr_require_photo',
+                            'type' => 'switcher',
+                            'title' => __('Photo required', SCR_DOMAIN),
+                            'default' => true,
+                            'desc' => 'On Reviews must include photo to be uploaded.',
+                            'dependency' => array('pr_enable', '==', 'true'),
+                        ),
+
+                        // array(
+                        //     'id' => 'pr_photo_order',
+                        //     'type' => 'select',
+                        //     'chosen' => true,
+                        //     'title' => __('Showing Photo Order', SCR_DOMAIN),
+                        //     'placeholder' => __('Select an option', SCR_DOMAIN),
+                        //     'options' => array(
+                        //         'newest' => 'Newest First',
+                        //         'oldest' => 'Oldest First',
+                        //     ),
+                        //     'default' => 'oldest',
+                        //     'dependency' => array('pr_enable', '==', 'true'),
+                        // ),
+
+                        array(
+                            'id' => 'pr_photo_size',
+                            'type' => 'text',
+                            'title' => __('Maximum photo size', SCR_DOMAIN),
+                            'default' => 2000,
+                            'desc' => 'kB (Max 307200kB).',
+                            'dependency' => array('pr_enable', '==', 'true'),
+                        ),
+                        array(
+                            'id' => 'pr_photo_quantity',
+                            'title' => 'Maximum photo quantity',
+                            'type' => 'slider',
+                            'min' => 1,
+                            'max' => 20,
+                            'step' => 1,
+                            'unit' => '#',
+                            'default' => 5,
+                            'desc' => 'Maximum value: 20',
+                            'dependency' => array('pr_enable', '==', 'true'),
+                        ),
                     ),
                 )
             );
@@ -636,9 +704,9 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'type' => 'content',
                             'content' => '<div class="button-container">'
-                                . '<span><b>Where is my main page?</b></span>'
-                                . '<br>'
-                                . $main_page_button . '<span>Save and Refresh Page if you changed it.</span></div>',
+                            . '<span><b>Where is my main page?</b></span>'
+                            . '<br>'
+                            . $main_page_button . '<span>Save and Refresh Page if you changed it.</span></div>',
                         ),
                         array(
                             'type' => 'subheading',

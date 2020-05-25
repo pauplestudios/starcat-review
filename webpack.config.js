@@ -177,6 +177,10 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
                         source: "./includes/lib/ct-addon",
                         destination: "./starcat-review-ct.zip",
                     },
+                    {
+                        source: "./includes/lib/photo-reviews-addon",
+                        destination: "./starcat-review-photo-reviews.zip",
+                    }
                 ],
             },
         })

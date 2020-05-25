@@ -23,6 +23,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
         {
             $class = '';
             $title = '';
+            $review = '';
             $display = '';
             $cancel_btn = '';
             $description = '';
@@ -30,8 +31,6 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             $submit_btn_name = 'Submit';
 
             // User Already Reviewed or Not Logged in User
-            $hide_form = !$this->props['collection']['can_user_review'];
-            
             if (!$this->props['collection']['can_user_review']) {
                 $class = 'mini';
                 $method_type = 'PUT';
@@ -48,6 +47,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             class="ui form scr-user-review ' . $class . '"
             action="scr_user_review_submission"
             method="post"
+            enctype="multipart/form-data"
             post_id ="' . $this->props['collection']['post_id'] . '"
             ' . $display . '
             data-method="' . $method_type . '"
@@ -79,6 +79,11 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
                 $html .= $this->get_pros_and_cons();
             }
 
+            $upload_photos_field = apply_filters('scr_photo_reviews/get_single_review_upload_photos_field', $review);
+            $upload_photos_field_html = is_string($upload_photos_field) ? $upload_photos_field : '';
+
+            $html .= $upload_photos_field_html;
+            
             if ($this->props['collection']['show_captcha']) {
                 $html .= Recaptcha::load_v2_html();
             }

@@ -16,10 +16,16 @@
 @import "styles/components/summary.scss";
 @import "styles/components/form.scss";
 @import "styles/components/listing.scss";
+@import "styles/components/photos-review.scss";
 @import "styles/components/stats.scss";
 @import "styles/components/pros-and-cons.scss";
 
 @import "styles/components/fixes.scss";
+
+/*
+    Custom comparison-table Styles
+*/
+@import "styles/components/compare-table-custom.scss";
 
 /* Overrides for Dev Environment Only */
 // @import "styles/dev.scss";

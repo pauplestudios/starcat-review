@@ -1,12 +1,15 @@
 [submodule "includes/lib/upgrader"]
 	path = includes/lib/upgrader
-	url = https://essekia@bitbucket.org/essekia/upgrader.git
+	url = https://santhoshoutright@bitbucket.org/essekia/upgrader.git
 [submodule "includes/lib/widgetry"]
 	path = includes/lib/widgetry
-	url = https://theMechanicSekar@bitbucket.org/pauple/widgetry.git
+	url = https://santhoshoutright@bitbucket.org/pauple/widgetry.git
 [submodule "includes/lib/cpt-addon"]
 	path = includes/lib/cpt-addon
-	url = https://theMechanicSekar@bitbucket.org/pauple/starcat-review-cpt.git
+	url = https://santhoshoutright@bitbucket.org/pauple/starcat-review-cpt.git
 [submodule "includes/lib/ct-addon"]
 	path = includes/lib/ct-addon
-	url = https://theMechanicSekar@bitbucket.org/pauple/starcat-review-comparison-table.git
+	url = https://santhoshoutright@bitbucket.org/pauple/starcat-review-comparison-table.git
+[submodule "includes/lib/photo-reviews-addon"]
+	path = includes/lib/photo-reviews-addon
+	url = https://bitbucket.org/pauple/starcat-reviews-photo-reviews.git

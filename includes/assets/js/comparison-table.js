@@ -5,16 +5,18 @@ jQuery(document).ready(function($) {
         this.element = element;
         this.table = this.element.children(".cd-products-table");
         this.features = this.table.find(".features");
+        this.featuresWidth = this.features.width();
         this.featureItems = this.features.find("#scr-stats-list");
         this.tableHeight = this.table.height();
         this.productsWrapper = this.table.children(".cd-products-wrapper");
         this.tableColumns = this.productsWrapper.children(
             ".cd-products-columns"
         );
+        this.tableColumns.css('margin-left',this.featuresWidth+'px');
         this.products = this.tableColumns.children(".product");
         this.productsNumber = this.products.length;
         this.productWidth = this.products.eq(0).width();
-        this.productsTopInfo = this.table.find(".top-info");
+        this.productsTopInfo = this.table.find(".top-info");        
         this.singleProductTopInfo = this.products.find(".top-info");
         this.productCloseBtn = this.singleProductTopInfo.find(".close-product");
         // this.searchContainer = this.productsTopInfo.find(".ui.search");
@@ -31,6 +33,13 @@ jQuery(document).ready(function($) {
         (this.filtering = false), (this.selectedproductsNumber = 0);
         this.filterActive = false;
         this.navigation = this.table.children(".cd-table-navigation");
+        this.productsTopHeights = this.table.find('.top-info').map(function(){ return $(this).outerHeight(true); }).get();
+        this.productsMaxHeight = Math.max.apply(null,this.productsTopHeights);
+        this.productsTopInfo.css('minHeight',this.productsMaxHeight+'px');
+        this.productsSearchContainer = this.tableColumns.find('.scr-search-filter-wrapper');
+        if(this.productsSearchContainer.length > 0){
+            this.productsSearchContainer.find('.cd-features-list').css('minHeight',this.featuresColumn.outerHeight(true)+'px');
+        }
         // bind table events
         this.bindEvents();
     }
@@ -132,10 +141,11 @@ jQuery(document).ready(function($) {
                     var that = self;
                     console.log("get product element");
                     // debugger;
+                    console.log(result);
                     var productContent = self.productElement(result);
 
                     $(".scr-search-filter-wrapper").before(productContent);
-                    self.refreshProductTable();
+                    // self.refreshProductTable();
                     var products = self.tableColumns.children(".product");
                     self.products = [];
                     self.products = products;
@@ -143,15 +153,22 @@ jQuery(document).ready(function($) {
                     self.productsNumber = noOfProducts;
                     self.productWidth = self.products.eq(0).width();
                     self.productsTopInfo = self.table.find(".top-info");
-                    that.bindEvents();
+                     that.bindEvents();
                     self.updateProductTable();
+                    
                 },
                 onResultsClose: function() {
                     //Select After callback function
                     //Clear search query
                     console.log("closed");
+                    // $(".ui.search").search("set value", "");
+                    setTimeout (function(){ 
+                        $(".ui.search.scr-product-search").search("set value", "");
+                        $(".ui.search.scr-product-search").search("query");
+                    }, 500);
+                    
                 },
-                onResultsAdd: function(html) {},
+                // onResultsAdd: function(html) {},
             });
         });
     };
@@ -160,48 +177,27 @@ jQuery(document).ready(function($) {
     productsTable.prototype.productElement = function(args) {
         var self = this;
 
-        var scr_ct_feature_columns = self.getSCRTableColumns();
-        //response data comes with extra stat data's
-        var ct_extra_feature_columns = [];
-        if (args.author_stats.length > 0) {
-            for (var incr = 0; incr < args.author_stats.length; incr++) {
-                review_stat = args.author_stats[incr].stat_name;
-                if ($.inArray(review_stat, scr_ct_feature_columns) != -1) {
-                    //found feature result
-                } else {
-                    ct_extra_feature_columns.push(review_stat);
-                }
-            }
-        }
-
-        //Add Extra Product Feature in compare table Column list
-        if (ct_extra_feature_columns.length > 0) {
-            for (var i = 0; i < ct_extra_feature_columns.length; i++) {
-                self.featureItems.append(
-                    "<li>" + ct_extra_feature_columns[i] + "</li>"
-                );
-            }
-        }
-
         var content = "";
-        content = '<li class="product">';
-        content += '<div class="top-info"><div class="close-product">';
+        content += "<div class='product scr-ct-products'>";
+        content += "<div class='top-info' style='min-height:"+ self.productsMaxHeight +"px;'>";
+        content += "<div class='close-product'>";
         content +=
-            '<i class="window close outline icon" style="font-size:25px;"></i></div>';
-        content += '<div class="check"></div>';
+           "<i class='window close outline icon' style='font-size:25px;'></i>";
+        content += "</div>";
+        content += "<div class='check'></div>";
         if (args.image_url === "undefined" || args.image_url == null) {
-            // Need to set default product image url
-            // content += '<img class="featured-image" src="' + result.image_url + '">';
             content += "";
         } else {
             content +=
-                '<img class="featured-image" src="' + args.image_url + '">';
+                '<img class="featured-image scr-ct-product-img" src="' + args.image_url + '">';
         }
-        content += "<h3>" + args.title + "</h3></div>";
-        content += '<ul class="cd-features-list">';
+        content += '<h3 class="scr-ct-title">' + args.title + '</h3></div>';
+        content += '<ul class="cd-features-list scr-ct-product-stats">';
         content += self.createSCRProductStatList(args);
         content += "</ul>";
-        content += "</li>";
+        // content += "</li>";
+
+        content += "</div>";
 
         return content;
     };
@@ -248,57 +244,25 @@ jQuery(document).ready(function($) {
 
     productsTable.prototype.createSCRProductStatList = function(args) {
         var self = this;
+        console.log("this stat list ");
+        get_user_stats = args.user_stats;
+        overall_stat = args.get_overall_stat;
+        rating_view = overall_stat.dom;
+        stat_list = get_user_stats.review_stats;
         var content = "";
-        var author_stats = args.author_stats;
-        var overall_ratings = args.get_overall_stat;
-        review_dom_wrapper = overall_ratings.dom;
-        var scr_stat_table_column = self.getSCRTableColumns();
-        if (scr_stat_table_column.length > 0) {
-            for (var i = 0; i < scr_stat_table_column.length; i++) {
-                author_stat_is_found = 0;
-                feature_stat = scr_stat_table_column[i];
-                if (author_stats.length > 0) {
-                    for (var ii = 0; ii < author_stats.length; ii++) {
-                        stat_name = author_stats[ii].stat_name;
-                        stat_rating = author_stats[ii].rating;
-                        if (stat_name === feature_stat) {
-                            author_stat_is_found = 1;
-                            break;
-                        } else {
-                            author_stat_is_found = 0;
-                        }
-                    }
-                }
-                if (author_stat_is_found) {
-                    if (stat_name === "scr-ratings") {
-                        content +=
-                            "<li class='scr-ct-ratings' data-stat='" +
-                            stat_name +
-                            "'>" +
-                            review_dom_wrapper +
-                            "</li>";
-                    } else {
-                        content +=
-                            "<li data-stat='" +
-                            stat_name +
-                            "'>" +
-                            stat_rating +
-                            "</li>";
-                    }
+        for (let key in stat_list) {
+            if (stat_list.hasOwnProperty(key)) {
+                if (key === "scr_ct_ratings") {
+                    content += "<li class='scr-ct-ratings'>";
+                    content += rating_view;
+                    content += "</li>";
                 } else {
-                    if (scr_stat_table_column[i] === "scr-ratings") {
-                        content +=
-                            "<li class='scr-ct-ratings' data-stat='" +
-                            scr_stat_table_column[i] +
-                            "'>" +
-                            review_dom_wrapper +
-                            "</li>";
-                    } else {
-                        content +=
-                            "<li data-stat='" +
-                            scr_stat_table_column[i] +
-                            "'>X</li>";
-                    }
+                    content += "<li>";
+                    content +=
+                        stat_list[key].rating == 0
+                            ? "X"
+                            : stat_list[key].rating;
+                    content += "</li>";
                 }
             }
         }
