@@ -69,6 +69,11 @@ if (!class_exists('\Starcat_Review')) {
             require_once SCR_PATH . 'includes/settings/getter.php';
             $recaptcha = new \StarcatReview\Services\Recaptcha();
 
+            // Developement Purpose Only
+            // if (file_exists(SCR_PATH . 'includes/utils/fake-pages.php')) {
+            //     require_once SCR_PATH . 'includes/utils/fake-pages.php';
+            // }
+
             /* Notification */
             // $Notification_Data = new \StarcatReview\Includes\Utils\Notification\Notification_Test_Data();
             // $Notification_Data = new \StarcatReview\Includes\Utils\Notification\Data();

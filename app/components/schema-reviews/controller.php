@@ -28,10 +28,9 @@ if (!class_exists('\StarcatReview\App\Components\Schema_Reviews\Controller')) {
                 'post'  => $post,
                 'comments' => $get_comments,
                 'ratings'   => $get_overall_ratings,
-                'author_name' => get_author_name($post->post_author),
+                'author_name' => get_the_author_meta('display_name',$post->post_author),
                 'featured_image_url' => isset($post_image_url) ? $post_image_url : $default_image
             );
-
 
             $schema_service = new \StarcatReview\App\Services\Review_Schema();
             $get_schema = $schema_service->get_schema($post_infos);
