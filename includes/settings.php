@@ -451,7 +451,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'type' => 'switcher',
                             'title' => __('Photo required', SCR_DOMAIN),
                             'default' => true,
-                            'desc' => 'On Reviews must include photo to be uploaded.',
+                            'desc' => 'Make this a required field',
                             'dependency' => array('pr_enable', '==', 'true'),
                         ),
 
