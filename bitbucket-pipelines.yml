@@ -21,6 +21,7 @@ pipelines:
           - ls artifacts/addons/starcat-review-cpt
           - ls artifacts/addons/starcat-review-ct
           - cp bitbucket.env .env
+          - cp artifacts/bitbucket-dump.sql artifacts/dump.sql
           - php -v
         artifacts:
           - '**'
