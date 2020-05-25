@@ -28,18 +28,18 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             $user_review_needs_approval = $Current_User->can_user_directly_publish_reviews();
 
             // 1. Check if current_user can add review
-            if($user_can_review == false){
-               // return 'Failed: User cannot submit reviews';
-               return 0;
+            if ($user_can_review == false) {
+                // return 'Failed: User cannot submit reviews';
+                return 0;
             }
 
             // 2. Proceed only in $user_can_review == true . Store new comment.
             $user = get_user_by('id', get_current_user_id());
             $comment_data = $this->build_and_get_comment_data($user, $props);
             $comment_id = wp_new_comment($comment_data);
-    
+
             // 3. Check if we need to manually approve this review
-            if($user_review_needs_approval){
+            if ($user_review_needs_approval) {
                 $comment_modifier = [
                     'comment_ID' => $comment_id,
                     'comment_approved' => 0,
@@ -50,20 +50,23 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
 
             // 4. Does this review have comment_meta to be updated
             $should_update_comment_meta = (isset($comment_id) && !empty($comment_id) && !isset($props['review_reply']) && $props['parent'] == 0);
-            if ($should_update_comment_meta){
+            if ($should_update_comment_meta) {
                 add_comment_meta($comment_id, 'scr_user_review_props', $props);
             }
+
+            do_action('scr_photo_reviews/add_attachments', $comment_id);
 
             return $comment_id;
 
         }
 
-        public function build_and_get_comment_data($user, $props){
+        public function build_and_get_comment_data($user, $props)
+        {
             $Current_User = new \StarcatReview\App\Services\User();
             $is_user_logged_in = $Current_User->is_loggedin();
-            
+
             $comment_data = [];
-          
+
             // General Properties
             $comment_data['comment_author_IP'] = $Current_User->get_user_IP();
             $comment_data['comment_post_ID'] = $props['post_id'];
@@ -73,16 +76,15 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             // $comment_data['comment_date'] = current_time('timestamp', true);
             $comment_data['comment_parent'] = !isset($props['parent']) ? 0 : $props['parent'];
             $comment_data['comment_approved'] = 1;
-            
 
             // Properties which change for different user types (logged_in and non_logged_in)
-            if($is_user_logged_in){
+            if ($is_user_logged_in) {
                 $user = get_user_by('id', get_current_user_id());
                 $comment_data['comment_author'] = $user->display_name;
                 $comment_data['comment_author_email'] = $user->user_email;
                 $comment_data['comment_author_url'] = $user->user_url;
                 $comment_data['user_id'] = $user->ID;
-            } else{
+            } else {
                 $comment_data['comment_author'] = $props['first_name'] . ' ' . $props['last_name'];
                 $comment_data['comment_author_email'] = $props['user_email'];
                 $comment_data['comment_author_url'] = '';
@@ -136,6 +138,8 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                     add_comment_meta($comment_id, 'scr_user_review_props', $props);
                 }
 
+                // do_action('scr_photos_review/add_attachments', $comment_id);
+
                 return $comment_id;
             }
             // else{
@@ -164,13 +168,19 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             if ($props['parent'] == 0) {
 
                 $data = get_comment_meta($comment_id, 'scr_user_review_props', true);
+
                 $votes = isset($data['votes']) && !empty($data['votes']) ? $data['votes'] : [];
                 $props['votes'] = $votes;
-
+                
+                $attachments = isset($data['attachments']) && !empty($data['attachments']) ? $data['attachments'] : [];
+                $props['attachments'] = $attachments;
+                
                 unset($props['parent']);
-                unset($props['methodType']);
-
+                unset($props['methodType']);                
+                
                 update_comment_meta($comment_id, 'scr_user_review_props', $props);
+
+                do_action('scr_photo_reviews/add_attachments', $comment_id);
             }
 
             return $comment_id;
@@ -206,7 +216,6 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
 
         public function get_processed_data()
         {
-            // error_log('$_POST : ' . print_r($_POST, true));
             $props = ['parent' => 0];
 
             if (isset($_POST['post_id']) && !empty($_POST['post_id'])) {
@@ -248,6 +257,10 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
 
             if (isset($_POST['captcha']) && !empty($_POST['captcha'])) {
                 $props['captcha'] = $_POST['captcha'];
+            }
+
+            if (isset($_POST['attachments']) && !empty($_POST['attachments'])) {
+                $props['attachments'] = $_POST['attachments'];
             }
 
             $props = apply_filters('scr_form_process_data', $props);

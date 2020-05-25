@@ -37,6 +37,21 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
             // Vote Submission ajax for User Review
             add_action('wp_ajax_nopriv_scr_user_review_vote', [$this, 'vote_handler']);
             add_action('wp_ajax_scr_user_review_vote', [$this, 'vote_handler']);
+
+            // Delete a single attachment from a photos review
+            add_action('wp_ajax_nopriv_scr_pr_delete_attachment', [$this, 'delete_review_attachment']);
+            add_action('wp_ajax_scr_pr_delete_attachment', [$this, 'delete_review_attachment']);
+
+            // Aajax for Photos Review
+            add_action('wp_ajax_nopriv_scr_photo_reviews', [$this, 'photo_reviews']);
+            add_action('wp_ajax_scr_photo_reviews', [$this, 'photo_reviews']);
+        }
+
+        public function photo_reviews()
+        {
+            $response = apply_filters('scr_photo_reviews/ajax', $_POST);
+            echo json_encode($response);
+            wp_die();
         }
 
         public function scr_listing_action()
@@ -66,8 +81,6 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
 
         public function user_review_submission()
         {
-            // $response = $_POST["captcha-response-manual"];
-
             if (SCR_Getter::get('ur_show_captcha')) {
                 $captcha_success = Recaptcha::verify();
                 if ($captcha_success == false) {
@@ -88,7 +101,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                 $review = $review_controller->get_reply_review($review);
             }
 
-            echo json_encode($review);
+            echo json_encode($props);
             wp_die();
         }
 
@@ -103,6 +116,15 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
             echo json_encode($props);
 
             wp_die();
+        }
+
+        public function delete_review_attachment()
+        {
+            $pr_repo = new \StarcatReviewPhotoReviews\Includes\Repository();
+            $props = $pr_repo->get_processing_attachment_data();
+            $pr_repo->delete_attachment($props);
+
+            wp_send_json($props);
         }
 
         public function search_posts()
