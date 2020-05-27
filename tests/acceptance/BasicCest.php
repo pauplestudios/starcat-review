@@ -76,7 +76,7 @@ class BasicCest
 
     public function comparisonTableAddonActivation(\AcceptanceTester $I)
     {
-        $data_slug = 'starcat-review-comparison-table';
+        $data_slug = 'starcat-review-comparison-table-addon';
         $I->loginAsAdmin();
 
         // 1. When Parent plugin is deactivated
@@ -86,8 +86,8 @@ class BasicCest
         $I->amOnPluginsPage();
         $I->seePluginDeactivated('starcat-review');
         $I->activatePlugin($data_slug);
-        $I->amOnPagesPage();
-        $I->amOnPluginsPage();
+        // $I->amOnPagesPage();
+        // $I->amOnPluginsPage();
         // $I->seePluginActivated($data_slug);
         $I->seeElement('.error');
         
