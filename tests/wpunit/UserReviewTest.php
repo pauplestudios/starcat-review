@@ -1,6 +1,6 @@
 <?php
 
-class UserReviewsTest extends \Codeception\TestCase\WPTestCase
+class UserReviewTest extends \Codeception\TestCase\WPTestCase
 {
 
     /**
@@ -28,11 +28,11 @@ class UserReviewsTest extends \Codeception\TestCase\WPTestCase
         $items = [
             [
                 'user_id' => 1,
-                'vote' => 1
+                'vote' => 1,
             ],
             [
                 'user_id' => 2,
-                'vote' => 1
+                'vote' => 1,
             ],
         ];
 
