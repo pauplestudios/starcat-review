@@ -14,7 +14,6 @@ if (!class_exists('\StarcatReview\Includes\Utils\Test_Helpers')) {
         {
             $this->users = new \StarcatReview\Includes\Utils\Users();
             $this->post = new \StarcatReview\Includes\Utils\Post();
-            error_log('!!! Test Helpers !!!');
         }
 
         /* Execute Private / Protected methods */
