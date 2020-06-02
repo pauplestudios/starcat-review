@@ -1162,7 +1162,7 @@ class UR_List_Table_Controller
     {
         global $wpdb;
         $count = 0;
-        $where = $wpdb->prepare('WHERE comment_type= %s', SCR_COMMENT_TYPE);
+        $where = $wpdb->prepare('WHERE comment_type= %s', 'review AND starcat_review');
 
         $pending = $wpdb->get_results("SELECT comment_post_ID, COUNT(comment_ID) as num_comments FROM $wpdb->comments {$where} AND comment_approved = '0'", ARRAY_A);
 
