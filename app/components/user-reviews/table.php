@@ -79,7 +79,7 @@ class UR_List_Table extends WP_List_Table
         }
 
         // $comment_type = !empty($_REQUEST['comment_type']) ? $_REQUEST['comment_type'] : '';
-        $comment_type = SCR_COMMENT_TYPE;
+        $comment_type = 'review';
 
         $search = (isset($_REQUEST['s'])) ? $_REQUEST['s'] : '';
 
@@ -342,9 +342,9 @@ class UR_List_Table extends WP_List_Table
         global $wpdb;
 
         $post_id = (int) $post_id;
-        $where = $wpdb->prepare('WHERE comment_type= %s', SCR_COMMENT_TYPE);
+        $where = $wpdb->prepare('WHERE comment_type= %s', 'review');
         if ($post_id > 0) {
-            $where = $wpdb->prepare('WHERE comment_type= %s AND comment_post_ID = %d', SCR_COMMENT_TYPE, $post_id);
+            $where = $wpdb->prepare('WHERE comment_type= %s AND comment_post_ID = %d', 'review', $post_id);
         }
 
         $totals = (array) $wpdb->get_results("SELECT comment_approved, COUNT( * ) AS total
@@ -979,6 +979,8 @@ if ('top' === $which) {
     {
         $rating = '---';
         $props = get_comment_meta($comment->comment_ID, 'scr_user_review_props', true);
+        // error_log('props : ' . print_r($props, true));
+
         if (isset($props['rating']) && !empty($props['rating'])) {
             $args = SCR_Getter::get_stat_default_args();
             $args['items']['stats-list'] = $props['stats'];
@@ -1162,7 +1164,7 @@ class UR_List_Table_Controller
     {
         global $wpdb;
         $count = 0;
-        $where = $wpdb->prepare('WHERE comment_type= %s', 'review AND starcat_review');
+        $where = $wpdb->prepare('WHERE comment_type= %s', 'review');
 
         $pending = $wpdb->get_results("SELECT comment_post_ID, COUNT(comment_ID) as num_comments FROM $wpdb->comments {$where} AND comment_approved = '0'", ARRAY_A);
 
