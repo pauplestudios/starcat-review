@@ -61,6 +61,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
 
         public function get_comment_item($comment, $args)
         {
+            $author = isset($comment->comment_author) && !empty($comment->comment_author) ? ucfirst($comment->comment_author) : __('Anonymous', SCR_DOMAIN);
             $comment_item = [
                 'content' => $comment->comment_content,
                 'comment_id' => $comment->comment_ID,
@@ -68,7 +69,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
                 'comment_time' => $this->get_comment_time($comment->comment_date),
                 'time_stamp' => get_comment_date('U', $comment->comment_ID),
                 'comment_parent' => $comment->comment_parent,
-                'comment_author' => ucfirst($comment->comment_author),
+                'comment_author' => $author,
                 'comment_author_email' => $comment->comment_author_email,
                 'commentor_avatar' => get_avatar($comment->user_id),
                 'comment_approved' => $comment->comment_approved,
@@ -82,10 +83,8 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
                 $comment_item['args'] = $this->get_args($args, $comment);
             }
 
-            // if (isset($comment->review) && !empty($comment->review)) {
             $comment_item['title'] = isset($comment->review['title']) && !empty($comment->review['title']) ? $comment->review['title'] : '';
             $comment_item['rating'] = isset($comment->review['rating']) && !empty($comment->review['rating']) ? $comment->review['rating'] : 0;
-            // }
 
             // Used by non-logged-in-user
             $comment_item = apply_filters('scr_get_comment_item', $comment_item, $comment);
