@@ -28,7 +28,9 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
                 $no_of_column = 'one';
             }
 
-            $html = '<div class="scr-summary">';
+            $html = '';
+            $html .= $this->get_product_reviews_title();
+            $html .= '<div class="scr-summary">';
             $html .= '<div class="ui stackable ' . $no_of_column . ' column grid">';
 
             // Author Summary
@@ -56,15 +58,28 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
             if ($author_args['enable-author-review']) {
                 $author_prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller();
                 $html .= $author_prosandcons->get_view($author_args);
-            }            
+            }
 
             $attachements = (isset($user_args['items']['attachments']) && !empty($user_args['items']['attachments'])) ? $user_args['items']['attachments'] : [];
             $all_photos = apply_filters('scr_photo_reviews/get_all_photos', $attachements);
             $all_photos_html = is_string($all_photos) ? $all_photos : '';
 
             $html .= $all_photos_html;
-            
+
             $html .= '</div></div>';
+
+            return $html;
+        }
+
+        protected function get_product_reviews_title()
+        {
+            $html = '';
+            global $product;
+            if (isset($product) && $product->get_review_count() && wc_review_ratings_enabled()) {
+                $count = $product->get_review_count();
+                $reviews_title = sprintf(esc_html(_n('%1$s review for %2$s', '%1$s reviews for %2$s', $count, 'woocommerce')), esc_html($count), '<span>' . get_the_title() . '</span>');
+                $html .= apply_filters('woocommerce_reviews_title', $reviews_title, $count, $product); // WPCS: XSS ok.
+            }
 
             return $html;
         }
