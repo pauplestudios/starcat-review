@@ -20,15 +20,17 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
 
         public function get($viewProps)
         {
+            $html = '';
             if (!isset($viewProps['items']) || empty($viewProps['items'])) {
-                return '';
+                return $html;
             }
             $this->collection = $viewProps['collection'];
 
-            $html = '<div class="ui scr_user_reviews list comments">';
             if ($this->collection['show_list_title']) {
                 $html .= '<h3 class="ui dividing header"> ' . $this->collection['list_title'] . '</h3>';
             }
+
+            $html .= '<div class="ui scr_user_reviews list comments">';
 
             foreach ($viewProps['items'] as $comment) {
 
@@ -52,7 +54,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
                 $can = true;
             }
 
-             // Used by non-logged-in-user
+            // Used by non-logged-in-user
             $can = apply_filters('scr_can_view_comment', $can, $comment);
 
             return $can;
@@ -118,12 +120,12 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '<div class="stats"> ' . $this->get_stats_view($comment) . '</div>';
             $html .= '<div class="description review-card__body"><p>' . $comment['content'] . '</p></div>';
             $html .= $this->get_prosandcons_view($comment);
-            
+
             $review_photos = apply_filters('scr_photo_reviews/get_single_review_photos', $comment);
             $review_photos_html = is_string($review_photos) ? $review_photos : '';
 
             $html .= $review_photos_html;
-            
+
             $html .= '</div>';
             $html .= $this->get_moderation_html($comment);
 
