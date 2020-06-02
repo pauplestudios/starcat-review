@@ -82,10 +82,10 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
                 $comment_item['args'] = $this->get_args($args, $comment);
             }
 
-            if (isset($comment->review) && !empty($comment->review)) {
-                $comment_item['title'] = $comment->review['title'];
-                $comment_item['rating'] = $comment->review['rating'];
-            }
+            // if (isset($comment->review) && !empty($comment->review)) {
+            $comment_item['title'] = isset($comment->review['title']) && !empty($comment->review['title']) ? $comment->review['title'] : '';
+            $comment_item['rating'] = isset($comment->review['rating']) && !empty($comment->review['rating']) ? $comment->review['rating'] : 0;
+            // }
 
             // Used by non-logged-in-user
             $comment_item = apply_filters('scr_get_comment_item', $comment_item, $comment);
