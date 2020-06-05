@@ -25,14 +25,14 @@ Inspirations
     - widget-makers -- Make widgets for wp_widgets, elementor_widgets, shortcodes and guttenberg blocks.
     
 - features -- Uses hooks and executes user stories
+- languages -- Domain string translations ( pot files and translated po and mo files )
 - includes 
     - assets -- Scripts, Styles, Images and Data assets
     - lib -- Addons plugins 
     - settings -- gets options or its defaults
     - utils -- helpers methods, test dummies and test datas
     - widgets -- registering widgets from widget-makers for now
-    - services -- move to app services
-- languages -- Domain string translations ( pot files and translated po and mo files )
+- services -- should move to app services
 
 > To recap, Templates->Widget_Makers->Components->Blocks.
 
