@@ -14,7 +14,7 @@ Inspirations
 1. https://moderntribe.github.io/products-engineering/
 2. https://10up.github.io/Engineering-Best-Practices/php/
 
-## Code Organisation
+## Code Organisation and Folder Structure
 - app
 	- abstracts -- Contains abstract classes
 	- builders -- Builder design patterns
