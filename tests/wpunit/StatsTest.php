@@ -12,6 +12,124 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
 
     public function test_stat()
     {
+
+        $data = $this->get_stats_data();
+        $args = [
+            'items' => [
+                'stats-list' => $data['comment_metas'][0]['stats'],
+            ],
+        ];
+        $args = array_merge($args, $data['settings']);
+        $stats_model = new \StarcatReview\App\Components\Stats\Model();
+        $model_props = $stats_model->get_viewProps($args);
+
+        error_log('model_props : ' . print_r($model_props, true));
+        // error_log('stats data : ' . print_r($data, true));
+        $this->assertTrue(true);
+    }
+
+    public function get_stats_data()
+    {
+
+        $data = [
+            'post_options' => [
+                'stats-list' => [
+                    'feature' => [
+                        'stat_name' => 'Feature',
+                        'rating' => 0,
+                    ],
+                    'speed' => [
+                        'stat_name' => 'Speed',
+                        'rating' => 80,
+                    ],
+                    'ui' => [
+                        'stat_name' => 'ui',
+                        'rating' => 90,
+                    ],
+                    'quality' => [
+                        'stat_name' => 'quality',
+                        'rating' => 40,
+                    ],
+                ],
+            ],
+            // User reviews comments of its reviews stats meta
+            'comment_metas' => [
+                [
+                    'stats' => [
+                        'feature' => [
+                            'stat_name' => 'feature',
+                            'rating' => 100,
+                        ],
+                        'speed' => [
+                            'stat_name' => 'speed',
+                            'rating' => 80,
+                        ],
+                    ],
+                ],
+                [
+                    'stats' => [
+                        'feature' => [
+                            'stat_name' => 'feature',
+                            'rating' => 100,
+                        ],
+                        'speed' => [
+                            'stat_name' => 'speed',
+                            'rating' => 80,
+                        ],
+                    ],
+                ],
+                [
+                    'stats' => [
+                        'feature' => [
+                            'stat_name' => 'feature',
+                            'rating' => 100,
+                        ],
+                        'speed' => [
+                            'stat_name' => 'speed',
+                            'rating' => 80,
+                        ],
+                    ],
+                ],
+
+            ],
+
+            'settings' => [
+                'singularity' => 'multiple', // single or multiple
+                'type' => 'star',
+                'steps' => 'full', // full or half
+                'limit' => 5, // 5 or 10
+                'global_stats' => [
+                    ['stat_name' => 'Feature'],
+                    ['stat_name' => 'speed'],
+                    ['stat_name' => 'quality'],
+                    ['stat_name' => 'ui'],
+                ],
+                'source_type' => 'icon',
+                'icons' => 'star',
+                'images' => [],
+                'animate' => false,
+                'show_rating_label' => true,
+            ],
+            /*
+        'settings' => [
+        'stat-singularity' => 'single', // single or multiple
+        'stats-type' => 'full', // full or half
+        'stats-stars-limit' => 5, // 5 or 10
+        'global_stats' => [
+        ['stat_name' => 'Feature'],
+        ['stat_name' => 'speed'],
+        ['stat_name' => 'quality'],
+        ['stat_name' => 'ui'],
+        ],
+        ],
+         */
+        ];
+
+        return $data;
+    }
+
+    private function later_refer_details()
+    {
         /* Single Review */
         // mulitple
         $expected = [
@@ -80,13 +198,32 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
         // Author and User -- Post level
         // Author -- Post Level
         // User reviews --  review Level
-
-        $stats_model = new \StarcatReview\App\Components\Stats\Model();
-        $model_props = $stats_model->get_itemsProps([]);
-        error_log('model_props : ' . print_r($model_props, true));
     }
 
 /*
+[global_stats] => Array
+(
+[0] => Array
+(
+[stat_name] => Feature
+)
+
+[1] => Array
+(
+[stat_name] => speed
+)
+
+[2] => Array
+(
+[stat_name] => quality
+)
+
+[3] => Array
+(
+[stat_name] => ui
+)
+
+)
 
 rating = below and equal to 5 and whole number
 
