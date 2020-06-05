@@ -14,7 +14,7 @@ Inspirations
 1. https://moderntribe.github.io/products-engineering/
 2. https://10up.github.io/Engineering-Best-Practices/php/
 
-## Code Organisation and Folder Structure
+## Code Organisation
 - app
 	- abstracts -- Contains abstract classes
 	- builders -- Builder design patterns
@@ -33,6 +33,7 @@ Inspirations
     - widgets -- registering widgets from widget-makers for now
     - services -- move to app services
 - languages -- Domain string translations ( pot files and translated po and mo files )
+
 > To recap, Templates->Widget_Makers->Components->Blocks.
 
 ### Components
