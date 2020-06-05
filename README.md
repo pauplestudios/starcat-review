@@ -15,8 +15,25 @@ Inspirations
 2. https://10up.github.io/Engineering-Best-Practices/php/
 
 ## Code Organisation
-
-1. To recap, Templates->Widget_Makers->Components->Blocks.
+- app
+	- abstracts -- Contains abstract classes
+	- builders -- Builder design patterns
+    - components -- UI component. Input => $component_args(array), output => $html(string)
+    - repositories -- Data collection such as queries, data manipulation
+    - services -- Perform certain actions in general and connect external modules
+    - views -- Minor element views used in components
+    - widget-makers -- Make widgets for wp_widgets, elementor_widgets, shortcodes and guttenberg blocks.
+    
+- features -- Uses hooks and executes user stories
+- includes 
+    - assets -- Scripts, Styles, Images and Data assets
+    - lib -- Addons plugins 
+    - settings -- gets options or its defaults
+    - utils -- helpers methods, test dummies and test datas
+    - widgets -- registering widgets from widget-makers for now
+    - services -- move to app services
+- languages -- Domain string translations ( pot files and translated po and mo files )
+> To recap, Templates->Widget_Makers->Components->Blocks.
 
 ### Components
 
