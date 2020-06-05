@@ -16,12 +16,54 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
         $data = $this->get_stats_data();
         $args = [
             'items' => [
-                'stats-list' => $data['comment_metas'][0]['stats'],
+                'stats-list' => $data['comments_review_metas'][0]['stats'],
             ],
         ];
         $args = array_merge($args, $data['settings']);
         $stats_model = new \StarcatReview\App\Components\Stats\Model();
+
+        // singularity type == single
         $model_props = $stats_model->get_viewProps($args);
+        $expected = [
+            'feature' => [
+                'rating' => 100,
+                'score' => 5,
+            ],
+        ];
+        $actual = $model_pros['items'];
+
+        /*
+        segment: 'single singluarity for single review'
+        given_args: singularity = single, type = star, steps = 'full'
+         */
+        $this->assertEquals($expected, $actual);
+
+        /*
+        segment: 'multiple singluarity for single review'
+        given_args: singularity = multiple, type = star, steps = 'full'
+         */
+        $model_props = $stats_model->get_viewProps($args);
+        $expected = [
+            'feature' => [
+                'rating' => 100,
+                'score' => 5,
+            ],
+        ];
+        $actual = $model_pros['items'];
+        /*
+        segment: 'single singluarity for combine review summary'
+        given_args: singularity = multiple, type = star, steps = 'full'
+         */
+
+        /*
+        segment: 'multiple singluarity for combine review summary'
+        given_args: singularity = multiple, type = star, steps = 'full'
+         */
+
+        // /*
+        // segment: 'multiple singluarity for combine review summary'
+        // given_args: singularity = multiple, type = star, steps = 'full'
+        //  */
 
         error_log('model_props : ' . print_r($model_props, true));
         // error_log('stats data : ' . print_r($data, true));
@@ -53,12 +95,36 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
                 ],
             ],
             // User reviews comments of its reviews stats meta
-            'comment_metas' => [
+            'comments_review_metas' => [
                 [
                     'stats' => [
                         'feature' => [
                             'stat_name' => 'feature',
                             'rating' => 100,
+                        ],
+                        'speed' => [
+                            'stat_name' => 'speed',
+                            'rating' => 80,
+                        ],
+                        'quality' => [
+                            'stat_name' => 'quality',
+                            'rating' => 70,
+                        ],
+                        'ui' => [
+                            'stat_name' => 'ui',
+                            'rating' => 50,
+                        ],
+                    ],
+                ],
+                [
+                    'stats' => [
+                        'feature' => [
+                            'stat_name' => 'feature',
+                            'rating' => 100,
+                        ],
+                        'quality' => [
+                            'stat_name' => 'quality',
+                            'rating' => 60,
                         ],
                         'speed' => [
                             'stat_name' => 'speed',
@@ -74,6 +140,22 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
                         ],
                         'speed' => [
                             'stat_name' => 'speed',
+                            'rating' => 90,
+                        ],
+                    ],
+                ],
+                [
+                    'stats' => [
+                        'feature' => [
+                            'stat_name' => 'feature',
+                            'rating' => 80,
+                        ],
+                    ],
+                ],
+                [
+                    'stats' => [
+                        'speed' => [
+                            'stat_name' => 'speed',
                             'rating' => 80,
                         ],
                     ],
@@ -82,11 +164,7 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
                     'stats' => [
                         'feature' => [
                             'stat_name' => 'feature',
-                            'rating' => 100,
-                        ],
-                        'speed' => [
-                            'stat_name' => 'speed',
-                            'rating' => 80,
+                            'rating' => 0,
                         ],
                     ],
                 ],
@@ -94,7 +172,7 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
             ],
 
             'settings' => [
-                'singularity' => 'multiple', // single or multiple
+                'singularity' => 'single', // single or multiple
                 'type' => 'star',
                 'steps' => 'full', // full or half
                 'limit' => 5, // 5 or 10
