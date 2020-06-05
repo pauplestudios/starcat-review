@@ -14,67 +14,119 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
     {
 
         $data = $this->get_stats_data();
+        $review_meta = $data[SCR_COMMENT_META][0]['stats'];
         $args = [
             'items' => [
-                'stats-list' => $data['comments_review_metas'][0]['stats'],
+                'stats-list' => $review_meta,
             ],
         ];
-        $args = array_merge($args, $data['settings']);
+        $args = array_merge($args, $data[SCR_OPTIONS]);
         $stats_model = new \StarcatReview\App\Components\Stats\Model();
 
-        // singularity type == single
-        $model_props = $stats_model->get_viewProps($args);
-        $expected = [
-            'feature' => [
-                'rating' => 100,
-                'score' => 5,
-            ],
-        ];
-        $actual = $model_pros['items'];
-
         /*
-        segment: 'single singluarity for single review'
-        given_args: singularity = single, type = star, steps = 'full'
+        Case 1: 'single singluarity'
          */
+
+        $expected = $this->get_expected_stat($review_meta);
+        $model_props = $stats_model->get_viewProps($args);
+        $actual = $model_props['items'];
+
         $this->assertEquals($expected, $actual);
 
         /*
-        segment: 'multiple singluarity for single review'
-        given_args: singularity = multiple, type = star, steps = 'full'
+        Case 2: 'multiple singluarity'
          */
+        $args['singularity'] = 'multiple';
         $model_props = $stats_model->get_viewProps($args);
-        $expected = [
-            'feature' => [
-                'rating' => 100,
-                'score' => 5,
-            ],
-        ];
-        $actual = $model_pros['items'];
-        /*
-        segment: 'single singluarity for combine review summary'
-        given_args: singularity = multiple, type = star, steps = 'full'
-         */
+        $expected = $this->get_expected_stat($review_meta, 'multiple');
+
+        $expected =
+        $actual = $model_props['items'];
+        $this->assertEquals($expected, $actual);
 
         /*
-        segment: 'multiple singluarity for combine review summary'
-        given_args: singularity = multiple, type = star, steps = 'full'
+        case 3: 'single singluarity for combine summary'
          */
-
-        // /*
-        // segment: 'multiple singluarity for combine review summary'
-        // given_args: singularity = multiple, type = star, steps = 'full'
-        //  */
+        $args['combine_type'] = 'overall';
+        $args['singularity'] = 'single';
+        $args['items']['comments-list'] = $this->get_comments_stat_data();
+        $model_props = $stats_model->get_viewProps($args);
+        // $datas = ;
+        // error_log('datas : ' . print_r($datas, true));
 
         error_log('model_props : ' . print_r($model_props, true));
+
+        /*
+        case 4: 'multiple singluarity for combine summary'
+         */
+
+        // error_log('model_props : ' . print_r($model_props, true));
         // error_log('stats data : ' . print_r($data, true));
-        $this->assertTrue(true);
+        // $this->assertTrue(true);
+    }
+
+    protected function get_expected_stat($meta, $singularity = 'single')
+    {
+        $expected_stat = [];
+        $stat_count = 0;
+        $stat_total = 0;
+        foreach ($meta as $stat_key => $stat) {
+            $expected_stat[$stat_key] = [
+                'score' => $stat['rating'] / 20,
+                'rating' => $stat['rating'],
+            ];
+            if ($singularity == 'single') {
+                break;
+            }
+            $stat_count++;
+            $stat_total = $stat_total + $stat['rating'];
+        }
+
+        if ($singularity == 'mulitple') {
+            $expected_stat['overall'] = [
+                'rating' => $stat_total,
+                'score' => $stat_total / $stat_count,
+            ];
+        }
+
+        return $expected_stat;
+    }
+
+    protected function get_comments_stat_data()
+    {
+        $comemnt_list = [];
+        $comment_metas_stat = $this->get_stats_data()[SCR_COMMENT_META];
+        foreach ($comment_metas_stat as $key => $meta_stat) {
+            $object = new stdClass();
+            $object->reviews = $meta_stat;
+            $comemnt_list[] = $object;
+        }
+
+        return $comemnt_list;
     }
 
     public function get_stats_data()
     {
 
         $data = [
-            'post_options' => [
+            SCR_OPTIONS => [
+                'singularity' => 'single', // single or multiple
+                'type' => 'star',
+                'steps' => 'full', // full or half
+                'limit' => 5, // 5 or 10
+                'global_stats' => [
+                    ['stat_name' => 'Feature'],
+                    ['stat_name' => 'speed'],
+                    ['stat_name' => 'quality'],
+                    ['stat_name' => 'ui'],
+                ],
+                'source_type' => 'icon',
+                'icons' => 'star',
+                'images' => [],
+                'animate' => false,
+                'show_rating_label' => true,
+            ],
+            SCR_POST_META => [
                 'stats-list' => [
                     'feature' => [
                         'stat_name' => 'Feature',
@@ -95,12 +147,12 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
                 ],
             ],
             // User reviews comments of its reviews stats meta
-            'comments_review_metas' => [
+            SCR_COMMENT_META => [
                 [
                     'stats' => [
                         'feature' => [
                             'stat_name' => 'feature',
-                            'rating' => 100,
+                            'rating' => 50,
                         ],
                         'speed' => [
                             'stat_name' => 'speed',
@@ -168,39 +220,7 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
                         ],
                     ],
                 ],
-
             ],
-
-            'settings' => [
-                'singularity' => 'single', // single or multiple
-                'type' => 'star',
-                'steps' => 'full', // full or half
-                'limit' => 5, // 5 or 10
-                'global_stats' => [
-                    ['stat_name' => 'Feature'],
-                    ['stat_name' => 'speed'],
-                    ['stat_name' => 'quality'],
-                    ['stat_name' => 'ui'],
-                ],
-                'source_type' => 'icon',
-                'icons' => 'star',
-                'images' => [],
-                'animate' => false,
-                'show_rating_label' => true,
-            ],
-            /*
-        'settings' => [
-        'stat-singularity' => 'single', // single or multiple
-        'stats-type' => 'full', // full or half
-        'stats-stars-limit' => 5, // 5 or 10
-        'global_stats' => [
-        ['stat_name' => 'Feature'],
-        ['stat_name' => 'speed'],
-        ['stat_name' => 'quality'],
-        ['stat_name' => 'ui'],
-        ],
-        ],
-         */
         ];
 
         return $data;

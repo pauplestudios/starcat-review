@@ -32,6 +32,8 @@ define('SCR_URL', plugins_url('/', SCR__FILE__));
  */
 
 define('SCR_OPTIONS', 'scr_options');
+define('SCR_POST_META', '_scr_post_options');
+define('SCR_COMMENT_META', 'scr_user_review_props');
 define('SCR_CUSTOMIZE_OPTIONS', 'scr_customize_options');
 
 starcat_review_activation();
