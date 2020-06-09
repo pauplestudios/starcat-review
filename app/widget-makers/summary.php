@@ -33,7 +33,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Summary')) {
 
         protected function get_items()
         {
-            $post_meta = get_post_meta(get_the_ID(), '_scr_post_options', true);
+            $post_meta = get_post_meta(get_the_ID(), SCR_POST_META, true);
             $comments = $this->get_comments_list();
 
             $items = [];
@@ -67,7 +67,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Summary')) {
             $comments = get_comments($args);
 
             foreach ($comments as $comment) {
-                $comment->reviews = get_comment_meta($comment->comment_ID, 'scr_user_review_props', true);
+                $comment->reviews = get_comment_meta($comment->comment_ID, SCR_COMMENT_META, true);
                 if (isset($comment->reviews['attachments']) && !empty($comment->reviews['attachments'])) {
                     $comment->reviews['attachments'] = $this->get_attachments_with_src($comment);
                 }

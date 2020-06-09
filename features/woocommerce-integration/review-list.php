@@ -29,7 +29,7 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration\Review_List')
 
         public function list_result($comment)
         {
-            $review = get_comment_meta($comment->comment_ID, "scr_user_review_props", true);
+            $review = get_comment_meta($comment->comment_ID, SCR_COMMENT_META, true);
             $args = [
                 'items' => $review,
             ];
@@ -43,7 +43,7 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration\Review_List')
 
         public function list_prosandcons_result($comment)
         {
-            $review = get_comment_meta($comment->comment_ID, "scr_user_review_props", true);
+            $review = get_comment_meta($comment->comment_ID, SCR_COMMENT_META, true);
             $args = [
                 'items' => $review,
             ];
@@ -58,7 +58,7 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration\Review_List')
 
         public function list_review_meta_result($comment)
         {
-            $review = get_comment_meta($comment->comment_ID, "scr_user_review_props", true);
+            $review = get_comment_meta($comment->comment_ID, SCR_COMMENT_META, true);
             $args = [
                 'items' => $review,
             ];

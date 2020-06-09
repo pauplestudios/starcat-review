@@ -30,7 +30,7 @@ class ReviewListTest extends \Codeception\TestCase\WPTestCase
             $comment_content = "This is review $i";
             $review_data = [
                 'rating' => $i,
-                'scr_user_review_props' => [
+                SCR_COMMENT_META => [
                     'title' => 'Super Duper',
                     'description' => $comment_content,
                     'rating' => 80,

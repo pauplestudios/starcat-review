@@ -83,7 +83,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
 
         private function get_items_args()
         {
-            $post_meta = get_post_meta(get_the_ID(), '_scr_post_options', true);
+            $post_meta = get_post_meta(get_the_ID(), SCR_POST_META, true);
 
             $items = [];
 
@@ -102,7 +102,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
 
         private function get_interpreted_args($args)
         {
-           
+
             $args['can_user_vote'] = false;
             $args['can_user_reply'] = false;
             $args['can_user_review'] = false;
@@ -124,15 +124,15 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             if (isset($comments) && !empty($comments)) {
                 foreach ($comments as $comment) {
                     // added review props to comment
-                    $comment->review = get_comment_meta($comment->comment_ID, 'scr_user_review_props', true);
+                    $comment->review = get_comment_meta($comment->comment_ID, SCR_COMMENT_META, true);
 
                     // Current user already reviewed
                     $has_current_user_already_reviewed = ($comment->user_id == get_current_user_id() && $comment->comment_parent == 0);
-                    $has_current_user_already_reviewed = apply_filters( 'scr_has_current_user_already_reviewed', $has_current_user_already_reviewed, $comment );
+                    $has_current_user_already_reviewed = apply_filters('scr_has_current_user_already_reviewed', $has_current_user_already_reviewed, $comment);
                     if ($has_current_user_already_reviewed) {
                         $args['can_user_review'] = false;
                         $args['current_user_review'] = $comment;
-                        
+
                     }
                 }
 
@@ -146,7 +146,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
         // for rich snippet product schema purpose
         public function get_schema_reviews()
         {
-            $post_meta = get_post_meta(get_the_ID(), '_scr_post_options', true);
+            $post_meta = get_post_meta(get_the_ID(), SCR_POST_META, true);
             $reviews = $this->get_comments_list();
             return $reviews;
         }
@@ -161,7 +161,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             $comments = get_comments($args);
 
             foreach ($comments as $comment) {
-                $comment->review = get_comment_meta($comment->comment_ID, 'scr_user_review_props', true);
+                $comment->review = get_comment_meta($comment->comment_ID, SCR_COMMENT_META, true);
             }
 
             return $comments;

@@ -9,7 +9,7 @@ function scr_get_overall_rating($post_id)
         'combine_type' => 'overall',
     ];
     if (SCR_Getter::get('enable-author-review') == true) {
-        $items = get_post_meta($post_id, '_scr_post_options', true);
+        $items = get_post_meta($post_id, SCR_POST_META, true);
     }
     $args['items'] = isset($items) && !empty($items) ? $items : [];
     $args['items']['comments-list'] = scr_get_user_reviews($post_id);
@@ -40,7 +40,7 @@ function scr_get_user_reviews($post_id, $parent = true)
     $comments = get_comments($args);
 
     foreach ($comments as $comment) {
-        $comment->reviews = get_comment_meta($comment->comment_ID, 'scr_user_review_props', true);
+        $comment->reviews = get_comment_meta($comment->comment_ID, SCR_COMMENT_META, true);
     }
 
     return $comments;

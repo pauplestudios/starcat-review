@@ -87,7 +87,6 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                     $this->notification_settings($prefix);
                 }
 
-
                 if (class_exists('Starcat_Review_Ct')) {
                     $this->ct_settings($prefix);
                 }
@@ -96,7 +95,8 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             }
         }
 
-        public function ct_settings($prefix) {
+        public function ct_settings($prefix)
+        {
             // error_log('CT Settings');
             \CSF::createSection(
                 $prefix,
@@ -115,13 +115,14 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'style' => 'success',
                             'content' => 'Example: [starcat_review_comparison_table post_type="product" posts="213,245,256"]',
                         ),
-                    )
+                    ),
                 )
             );
 
         }
 
-        public function notification_settings($prefix){
+        public function notification_settings($prefix)
+        {
             $admin_email = get_option('admin_email');
             \CSF::createSection(
                 $prefix,
@@ -131,7 +132,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                     'icon' => 'fa fa-bell',
                     'fields' => array(
                         array(
-                            'type'    => 'heading',
+                            'type' => 'heading',
                             'content' => 'Woocommerce Notification Settings to notify users after they complete their orders',
                         ),
                         array(
@@ -166,9 +167,9 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'desc' => '<strong>Shown at the footer of the email</strong>',
                         ),
                         array(
-                            'id'     => 'ns_time_schedule', // ns: notification_settings
-                            'type'   => 'repeater',
-                            'title'  => 'Notification Time Schedule',
+                            'id' => 'ns_time_schedule', // ns: notification_settings
+                            'type' => 'repeater',
+                            'title' => 'Notification Time Schedule',
                             'desc' => '<strong> Notification Schedule: Hours/Days from the time of order completion. You can create multiple remainders (example: 24 hours, 3 days, 7 days from purchase)',
                             'fields' => array(
 
@@ -192,8 +193,8 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             ),
                             'default' => array(
                                 array(
-                                  'value' => '24',
-                                  'unit' => 'hours',
+                                    'value' => '24',
+                                    'unit' => 'hours',
                                 ),
                                 array(
                                     'value' => '1',
@@ -1143,7 +1144,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         public function single_post_meta_fields()
         {
             $locations = SCR_Getter::get('review_enable_post-types');
-            $prefix = '_scr_post_options';
+            $prefix = SCR_POST_META;
 
             \CSF::createMetabox($prefix, array(
                 'title' => 'Starcat Review',

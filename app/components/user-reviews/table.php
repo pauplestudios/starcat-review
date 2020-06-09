@@ -978,7 +978,7 @@ if ('top' === $which) {
     public function column_rating($comment)
     {
         $rating = '---';
-        $props = get_comment_meta($comment->comment_ID, 'scr_user_review_props', true);
+        $props = get_comment_meta($comment->comment_ID, SCR_COMMENT_META, true);
         // error_log('props : ' . print_r($props, true));
 
         if (isset($props['rating']) && !empty($props['rating'])) {

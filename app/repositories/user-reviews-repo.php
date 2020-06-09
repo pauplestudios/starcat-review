@@ -15,7 +15,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 return get_comment(intval($comment_id));
             }
 
-            return get_comment_meta($comment_id, 'scr_user_review_props');
+            return get_comment_meta($comment_id, SCR_COMMENT_META);
         }
 
         public function insert($props)
@@ -51,7 +51,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             // 4. Does this review have comment_meta to be updated
             $should_update_comment_meta = (isset($comment_id) && !empty($comment_id) && !isset($props['review_reply']) && $props['parent'] == 0);
             if ($should_update_comment_meta) {
-                add_comment_meta($comment_id, 'scr_user_review_props', $props);
+                add_comment_meta($comment_id, SCR_COMMENT_META, $props);
             }
 
             do_action('scr_photo_reviews/add_attachments', $comment_id);
@@ -135,7 +135,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 }
 
                 if (isset($comment_id) && !empty($comment_id) && !isset($props['review_reply']) && $props['parent'] == 0) {
-                    add_comment_meta($comment_id, 'scr_user_review_props', $props);
+                    add_comment_meta($comment_id, SCR_COMMENT_META, $props);
                 }
 
                 // do_action('scr_photos_review/add_attachments', $comment_id);
@@ -167,18 +167,18 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             // review only not reply update
             if ($props['parent'] == 0) {
 
-                $data = get_comment_meta($comment_id, 'scr_user_review_props', true);
+                $data = get_comment_meta($comment_id, SCR_COMMENT_META, true);
 
                 $votes = isset($data['votes']) && !empty($data['votes']) ? $data['votes'] : [];
                 $props['votes'] = $votes;
-                
+
                 $attachments = isset($data['attachments']) && !empty($data['attachments']) ? $data['attachments'] : [];
                 $props['attachments'] = $attachments;
-                
+
                 unset($props['parent']);
-                unset($props['methodType']);                
-                
-                update_comment_meta($comment_id, 'scr_user_review_props', $props);
+                unset($props['methodType']);
+
+                update_comment_meta($comment_id, SCR_COMMENT_META, $props);
 
                 do_action('scr_photo_reviews/add_attachments', $comment_id);
             }
@@ -188,8 +188,8 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
 
         public function store_vote($props)
         {
-            if (metadata_exists('comment', $props['comment_id'], 'scr_user_review_props')) {
-                $meta_props = get_comment_meta($props['comment_id'], 'scr_user_review_props', true);
+            if (metadata_exists('comment', $props['comment_id'], SCR_COMMENT_META)) {
+                $meta_props = get_comment_meta($props['comment_id'], SCR_COMMENT_META, true);
 
                 if (isset($meta_props['votes']) && !empty($meta_props['votes'])) {
                     $is_current_user_voted = false;
@@ -210,7 +210,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
 
                 // error_log('$meta_props : ' . print_r($meta_props['votes'], true));
 
-                update_comment_meta($props['comment_id'], 'scr_user_review_props', $meta_props);
+                update_comment_meta($props['comment_id'], SCR_COMMENT_META, $meta_props);
             }
         }
 
