@@ -168,6 +168,25 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
     webpackConfig.plugins.push(
         new FileManagerPlugin({
             onEnd: {
+                // copy addons for docker 
+                copy: [
+                    {
+                        source: "./includes/lib/cpt-addon",
+                        destination: "./artifacts/addons/starcat-review-cpt/",
+                    },
+                    {
+                        source: "./includes/lib/ct-addon",
+                        destination: "./artifacts/addons/starcat-review-ct/",
+                    },
+                    {
+                        source: "./includes/lib/starcat-review-woo-notify",
+                        destination: "./artifacts/addons/starcat-review-woo-notify/",
+                    },
+                    {
+                        source: "./includes/lib/photo-reviews-addon",
+                        destination: "./artifacts/addons/starcat-review-photo-reviews/",
+                    }
+                ],
                 archive: [
                     {
                         source: "./artifacts/dist",
@@ -180,6 +199,10 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
                     {
                         source: "./includes/lib/ct-addon",
                         destination: "./starcat-review-ct.zip",
+                    },
+                    {
+                        source: "./includes/lib/starcat-review-woo-notify",
+                        destination: "./starcat-review-woo-notify.zip",
                     },
                     {
                         source: "./includes/lib/photo-reviews-addon",
