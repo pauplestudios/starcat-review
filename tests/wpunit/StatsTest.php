@@ -27,8 +27,8 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
         Case 1: 'single singluarity'
          */
 
-        $expected = $this->get_expected_stat($review_meta);
         $model_props = $stats_model->get_viewProps($args);
+        $expected = $this->get_expected_stat($review_meta);
         $actual = $model_props['items'];
 
         $this->assertEquals($expected, $actual);
@@ -39,37 +39,55 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
         $args['singularity'] = 'multiple';
         $model_props = $stats_model->get_viewProps($args);
         $expected = $this->get_expected_stat($review_meta, 'multiple');
-
-        $expected =
         $actual = $model_props['items'];
+
         $this->assertEquals($expected, $actual);
 
         /*
-        case 3: 'single singluarity for combine summary'
+        case 3: 'summary single singluarity'
          */
         $args['combine_type'] = 'overall';
-        $args['singularity'] = 'single';
+        $args['singularity'] = 'multiple';
         $args['items']['comments-list'] = $this->get_comments_stat_data();
         $model_props = $stats_model->get_viewProps($args);
-        // $datas = ;
-        // error_log('datas : ' . print_r($datas, true));
+        $expected = ['overall' => ['rating' => 50, 'score' => 3]];
+        $actual = $model_props['items'];
 
-        error_log('model_props : ' . print_r($model_props, true));
+        error_log('args : ' . print_r($args, true));
+        error_log('expected : ' . print_r($expected, true));
+        error_log('actual : ' . print_r($actual, true));
+
+        // $this->assertEquals($expected, $actual);
+
+        // error_log('model_props : ' . print_r($model_props['items'], true));
 
         /*
-        case 4: 'multiple singluarity for combine summary'
+        case 4: 'summary multiple singluarity'
          */
 
-        // error_log('model_props : ' . print_r($model_props, true));
-        // error_log('stats data : ' . print_r($data, true));
-        // $this->assertTrue(true);
+        /*
+        case 5: 'overall post / product combine single singluarity '
+         */
+
+        /*
+        case 6: 'overall post / product combine multiple singluarity'
+         */
+
+        /*
+         *   1. with author
+         *   2. without author
+         */
+        $some = null;
     }
 
     protected function get_expected_stat($meta, $singularity = 'single')
     {
         $expected_stat = [];
+
         $stat_count = 0;
         $stat_total = 0;
+        $stat_score = 0;
+
         foreach ($meta as $stat_key => $stat) {
             $expected_stat[$stat_key] = [
                 'score' => $stat['rating'] / 20,
@@ -79,13 +97,14 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
                 break;
             }
             $stat_count++;
-            $stat_total = $stat_total + $stat['rating'];
+            $stat_score += $expected_stat[$stat_key]['score'];
+            $stat_total += $stat['rating'];
         }
 
-        if ($singularity == 'mulitple') {
+        if ($singularity == 'multiple') {
             $expected_stat['overall'] = [
-                'rating' => $stat_total,
-                'score' => $stat_total / $stat_count,
+                'score' => round(($stat_score / $stat_count), 1),
+                'rating' => $stat_total / $stat_count,
             ];
         }
 
@@ -224,6 +243,24 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
         ];
 
         return $data;
+    }
+
+    private function extra_datas()
+    {
+        // No existed review meta
+        /*
+         * 1. Has product rating -- UnEqualed
+         * 2. doesnt have product rating -- Non-review
+         */
+
+        /*
+         * Yes existed review meta
+         * 1. have stats entry - Equaled
+         * 2. Not have stats entry - UnEqualed
+         */
+
+        //
+        // yes existed review meta not have stats entry
     }
 
     private function later_refer_details()
