@@ -3,14 +3,60 @@
 
 class StatsTest extends \Codeception\TestCase\WPTestCase
 {
-    private $test_helper;
-
     public function _before()
     {
         wp_set_current_user(1);
     }
 
-    public function test_stat()
+    public function test_preparing_stat_args()
+    {
+        // Setting Up Stat DB data
+        $product_id = $this->tester->havePostInDatabase(['post_type' => 'product']);
+        $data = $this->get_stats_data();
+        $comment_metas = $data[SCR_COMMENT_META];
+        $comments_data = [];
+        for ($ii = 0; $ii < sizeof($comment_metas); $ii++) {
+            $comment_id = $this->tester->haveCommentInDatabase($product_id, ['comment_type' => 'review']);
+            $comments_data['comment_ids'][] = $comment_id;
+            $comments_data['comment_metas'][SCR_COMMENT_META][] = $this->tester->haveCommentMetaInDatabase($comment_id, SCR_COMMENT_META, $comment_metas[$ii]);
+            if ($ii % 2 == 0) {
+                $comments_data['comment_metas']['rating'][] = $this->tester->haveCommentMetaInDatabase($comment_id, 'rating', ($ii <= 5) ? $ii : 5);
+            }
+        }
+
+        error_log('Comment datas : ' . print_r($comments_data, true));
+        $global_stats = [
+            ['stat_name' => 'feature'],
+            ['stat_name' => 'speed'],
+            ['stat_name' => 'quality'],
+            ['stat_name' => 'ui'],
+            ['stat_name' => 'ux'],
+        ];
+
+        // SCR_Setter::set('global_stats', $global_stats);
+
+        $actual = apply_filters('prepare_stat_args', $product_id);
+        error_log('actual : ' . print_r($actual, true));
+
+        $expected = [
+            'stats' => [
+                'stat_key_1' => 'value', // number
+                'stat_key_2' => 'value', // number
+                'stat_key_3' => 'value', // number
+            ],
+            'stat' => [
+                'name' => 'some',
+                'score' => 5,
+                'rating' => 100,
+            ],
+        ];
+
+        // $this->assertEqualSets($expected, $actual);
+        // $randomPostId = $I->havePostInDatabase();
+
+    }
+
+    public function stat()
     {
 
         $data = $this->get_stats_data();
@@ -239,6 +285,58 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
                         ],
                     ],
                 ],
+                [
+                    'stats' => [
+                        'feature' => [
+                            'stat_name' => 'feature',
+                            'rating' => 65,
+                        ],
+                        'quality' => [
+                            'stat_name' => 'quality',
+                            'rating' => 95,
+                        ],
+                        'speed' => [
+                            'stat_name' => 'speed',
+                            'rating' => 90,
+                        ],
+                    ],
+                ],
+                [
+                    'stats' => [
+                        'feature' => [
+                            'stat_name' => 'feature',
+                            'rating' => 50,
+                        ],
+                        'quality' => [
+                            'stat_name' => 'quality',
+                            'rating' => 70,
+                        ],
+                    ],
+                ],
+                [
+                    'stats' => [
+                        'quality' => [
+                            'stat_name' => 'quality',
+                            'rating' => 60,
+                        ],
+                        'speed' => [
+                            'stat_name' => 'speed',
+                            'rating' => 40,
+                        ],
+                    ],
+                ],
+                [
+                    'stats' => [
+                        'quality' => [
+                            'stat_name' => 'quality',
+                            'rating' => 70,
+                        ],
+                        'speed' => [
+                            'stat_name' => 'speed',
+                            'rating' => 90,
+                        ],
+                    ],
+                ],
             ],
         ];
 
@@ -278,8 +376,15 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
 
         // single
         $expected = [
-            'stat' => [
+            'stats' => [
                 'stat_key_1' => 'value', // number
+                'stat_key_2' => 'value', // number
+                'stat_key_3' => 'value', // number
+            ],
+            'stat' => [
+                'label' => 'primary_stat_name',
+                'score' => 5,
+                'rating' => 100,
             ],
         ];
 
