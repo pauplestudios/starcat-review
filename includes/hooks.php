@@ -16,6 +16,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             // error_log('execute this timestamp1 : '.time());
             /* settings getter */
             require_once SCR_PATH . 'includes/settings/getter.php';
+            require_once SCR_PATH . 'includes/settings/setter.php';
 
             /*  Reviews Init Hook */
             add_action('init', array($this, 'init_hook'));
