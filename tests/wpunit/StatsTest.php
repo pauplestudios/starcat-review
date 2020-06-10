@@ -1,5 +1,6 @@
 
 <?php
+use \StarcatReview\Includes\Settings\SCR_Setter;
 
 class StatsTest extends \Codeception\TestCase\WPTestCase
 {
@@ -10,22 +11,54 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
 
     public function test_preparing_stat_args()
     {
-        // Setting Up Stat DB data
-        $product_id = $this->tester->havePostInDatabase(['post_type' => 'product']);
-        $data = $this->get_stats_data();
-        $comment_metas = $data[SCR_COMMENT_META];
+        $data = $this->setup_stat_db_datas();
+        // error_log('data : ' . print_r($data, true));
+
+        $actual = apply_filters('prepare_stat_args', $data['product_id']);
+        error_log('actual : ' . print_r($actual, true));
+
+        // $expected = [
+        //     'stats' => [
+        //         'stat_key_1' => 'value', // number
+        //         'stat_key_2' => 'value', // number
+        //         'stat_key_3' => 'value', // number
+        //     ],
+        //     'overall' => [
+        //         'name' => 'some',
+        //         'score' => 5,
+        //         'rating' => 100,
+        //     ],
+        // ];
+
+        /*
+        Case 1: 'single singluarity'
+         */
+
+        // $this->assertEquals($expected, $actual);
+        // $this->assertEqualSets($expected, $actual);
+        // $randomPostId = $I->havePostInDatabase();
+    }
+
+    // Setting Up Stat DB data
+    protected function setup_stat_db_datas()
+    {
+        $stats_data = $this->get_stats_data();
+        $comment_metas = $stats_data[SCR_COMMENT_META];
         $comments_data = [];
+
+        $data['product_id'] = $this->factory()->post->create(['post_type' => 'product']);
+        $comment_id = $this->factory()->comment->create_post_comments($data['product_id'], 1, ['comment_type' => 'review']);
+
         for ($ii = 0; $ii < sizeof($comment_metas); $ii++) {
-            $comment_id = $this->tester->haveCommentInDatabase($product_id, ['comment_type' => 'review']);
-            $comments_data['comment_ids'][] = $comment_id;
-            $comments_data['comment_metas'][SCR_COMMENT_META][] = $this->tester->haveCommentMetaInDatabase($comment_id, SCR_COMMENT_META, $comment_metas[$ii]);
+            $comment_id = $this->factory()->comment->create_post_comments($data['product_id'], 1, ['comment_type' => 'review'])[0];
+            $data['comment_ids'][] = $comment_id;
+            $data['comment_metas'][SCR_COMMENT_META][] = add_comment_meta($comment_id, SCR_COMMENT_META, $comment_metas[$ii]);
             if ($ii % 2 == 0) {
-                $comments_data['comment_metas']['rating'][] = $this->tester->haveCommentMetaInDatabase($comment_id, 'rating', ($ii <= 5) ? $ii : 5);
+                $data['comment_metas']['rating'][] = add_comment_meta($comment_id, 'rating', ($ii <= 5) ? $ii : 5);
             }
         }
 
-        error_log('Comment datas : ' . print_r($comments_data, true));
-        $global_stats = [
+        $data['global_stats'] = [
             ['stat_name' => 'feature'],
             ['stat_name' => 'speed'],
             ['stat_name' => 'quality'],
@@ -33,27 +66,9 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
             ['stat_name' => 'ux'],
         ];
 
-        // SCR_Setter::set('global_stats', $global_stats);
+        SCR_Setter::set('global_stats', $data['global_stats']);
 
-        $actual = apply_filters('prepare_stat_args', $product_id);
-        error_log('actual : ' . print_r($actual, true));
-
-        $expected = [
-            'stats' => [
-                'stat_key_1' => 'value', // number
-                'stat_key_2' => 'value', // number
-                'stat_key_3' => 'value', // number
-            ],
-            'stat' => [
-                'name' => 'some',
-                'score' => 5,
-                'rating' => 100,
-            ],
-        ];
-
-        // $this->assertEqualSets($expected, $actual);
-        // $randomPostId = $I->havePostInDatabase();
-
+        return $data;
     }
 
     public function stat()

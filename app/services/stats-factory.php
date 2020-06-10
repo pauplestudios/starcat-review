@@ -17,23 +17,31 @@ if (!class_exists('\StarcatReview\App\Services\StatsFactory')) {
 
         public function get_prepared_stat_args(int $post_id, string $component = 'post_overall')
         {
+            $comments = get_comments([
+                'post_id' => $post_id,
+                'comment_type' => 'review',
+            ]);
+
+            // error_log('comments : ' . print_r($comments, true));
+
             $stats_args = [];
             switch ($component) {
-                case "listing":
-                    break;
                 case "post_overall":
                     break;
-                case "summary_author":
-                    break;
-                case "summary_users":
-                    break;
-                default:
-                    break;
+                    // case "listing":
+                    //     break;
+                    // case "summary_author":
+                    //     break;
+                    // case "summary_users":
+                    //     break;
+                    // default:
+                    //     break;
             }
-            return $stats_args;
+
+            return $comments;
         }
 
-        protected function exclude_stats()
+        protected function filter_with_global_stats($stats)
         {
             $global_stats = SCR_Getter::get('global_stats');
             $stats = [];

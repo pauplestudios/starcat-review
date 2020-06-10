@@ -11,7 +11,7 @@ if (!class_exists('\StarcatReview\App\Services\Services')) {
     {
         public function register_services()
         {
-            $stats_factory = \StarcatReview\App\Services\StatsFactory();
+            $stats_factory = new \StarcatReview\App\Services\StatsFactory();
 
             add_filter('prepare_stat_args', [$stats_factory, 'get_prepared_stat_args']);
         }

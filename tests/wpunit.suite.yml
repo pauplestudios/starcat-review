@@ -5,17 +5,9 @@
 actor: WpunitTester
 modules:
     enabled:
-        - WPLoader
-        - WPDb
+        - WPLoader        
         - \Helper\Wpunit
-    config:
-        WPDb:
-            dsn: "mysql:host=%DB_HOST%;dbname=%DB_NAME%"
-            user: "%DB_USER%"
-            password: "%DB_PASSWORD%"                        
-            cleanup: false #import the dump between tests
-            url: "%WP_URL%"            
-            tablePrefix: "%TABLE_PREFIX%"
+    config:        
         WPLoader:
             wpRootFolder: "%WP_ROOT_FOLDER%"
             dbName: "%DB_NAME%"
