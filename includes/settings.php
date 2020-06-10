@@ -65,7 +65,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 \CSF::createOptions($prefix, $options);
 
                 $this->general_settings($prefix);
-                if (is_plugin_active('starcat-review-cpt/starcat-review-cpt.php')) {
+                if (is_plugin_active('starcat-review-cpt/starcat-review-cpt.php') && scr_cpt_fs()->can_use_premium_code()) {
                     // $options['menu_parent'] = null;
                     // $options['menu_type'] = 'menu';
                     $this->mainpage_settings($prefix);
