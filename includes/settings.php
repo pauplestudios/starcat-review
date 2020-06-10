@@ -88,7 +88,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 }
 
 
-                if (class_exists('Starcat_Review_Ct')) {
+                if (class_exists('Starcat_Review_Ct')  && scr_ct_fs()->can_use_premium_code() ) {
                     $this->ct_settings($prefix);
                 }
 
