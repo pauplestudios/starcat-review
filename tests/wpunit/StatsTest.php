@@ -12,41 +12,104 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
     public function test_preparing_stat_args()
     {
         $data = $this->setup_stat_db_datas();
-        // error_log('data : ' . print_r($data, true));
-
-        $actual = apply_filters('prepare_stat_args', $data['product_id']);
-        // error_log('actual : ' . print_r($actual, true));
-
-        // $expected = [
-        //     'stats' => [
-        //         'stat_key_1' => 'value', // number
-        //         'stat_key_2' => 'value', // number
-        //         'stat_key_3' => 'value', // number
-        //     ],
-
-        //     'overall' => [
-        //         'score' => 5,
-        //         'rating' => 100,
-        //     ],
-        // ];
 
         /*
-        Case 1: 'single singluarity'
+        Case 1: 'post Overall Single -- Singluarity'
          */
+        $actual = apply_filters('prepare_stat_args', $data['product_id']);
+        $expected = $this->get_args_expected();
+        $this->assertEquals($expected, $actual);
 
-        // $this->assertEquals($expected, $actual);
-        // $this->assertEqualSets($expected, $actual);
-        // $randomPostId = $I->havePostInDatabase();
+        /*
+        Case 2: 'summary_author Single -- Singluarity'
+         */
+        $component = 'summary_author';
+        $actual = apply_filters('prepare_stat_args', $data['product_id'], $component);
+        $expected = $this->get_args_expected($component);
+        $this->assertEquals($expected, $actual);
+
+        /*
+        Case 3: 'Summary_users Single -- Singluarity'
+         */
+        $component = 'summary_users';
+        $actual = apply_filters('prepare_stat_args', $data['product_id'], $component);
+        $expected = $this->get_args_expected($component);
+        $this->assertEquals($expected, $actual);
+
+        /*
+        Case 4: 'Listing Single -- Singluarity'
+         */
+        $component = 'listing';
+        $actual = apply_filters('prepare_stat_args', $data['product_id'], $component);
+        $expected = $this->get_args_expected($component);
+        $this->assertEquals($expected, $actual);
+
+        SCR_Setter::set('stat-singularity', 'multiple');
+        /*
+        Case 5: 'post Overall Muliple -- Singluarity'
+         */
+        $actual = apply_filters('prepare_stat_args', $data['product_id']);
+        $expected = $this->get_args_expected($component, true);
+        $this->assertEquals($expected, $actual);
+
+        /*
+        Case 6: 'Summary_author Muliple -- Singluarity'
+         */
+        $component = 'aummary_author';
+        $actual = apply_filters('prepare_stat_args', $data['product_id'], $component);
+        $expected = $this->get_args_expected($component, true);
+
+        $this->assertEquals($expected, $actual);
+
+        /*
+        Case 7: 'Summary_users Multiple -- Singluarity'
+         */
+        $component = 'summary_users';
+        $actual = apply_filters('prepare_stat_args', $data['product_id'], $component);
+        $expected = $this->get_args_expected($component, true);
+
+        $this->assertEquals($expected, $actual);
+
+        /*
+        Case 8: 'Listing Multiple -- Singluarity'
+         */
+        $component = 'listing';
+        $actual = apply_filters('prepare_stat_args', $data['product_id'], $component);
+        $expected = $this->get_args_expected($component, true);
+        $this->assertEquals($expected, $actual);
+
+        // error_log('data : ' . print_r($data, true));
+        // error_log('actual : ' . print_r($actual, true));
+    }
+
+    protected function get_args_expected($component = 'post_overall', $multi_stat = false)
+    {
+        $data = $this->get_stats_data();
+        $expected = [];
+        $expected = [
+            'stats' => [
+                'stat_key_1' => 'value', // number
+                'stat_key_2' => 'value', // number
+                'stat_key_3' => 'value', // number
+            ],
+
+            'overall' => 100,
+        ];
+
+        return $expected;
     }
 
     // Setting Up Stat DB data
     protected function setup_stat_db_datas()
     {
         $stats_data = $this->get_stats_data();
+        $post_meta = $stats_data[SCR_POST_META];
         $comment_metas = $stats_data[SCR_COMMENT_META];
         $comments_data = [];
 
         $data['product_id'] = $this->factory()->post->create(['post_type' => 'product']);
+        add_post_meta($data['product_id'], SCR_POST_META, $post_meta);
+
         $comment_id = $this->factory()->comment->create_post_comments($data['product_id'], 1, ['comment_type' => 'review']);
 
         for ($ii = 0; $ii < sizeof($comment_metas); $ii++) {
@@ -67,7 +130,6 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
         ];
 
         SCR_Setter::set('global_stats', $data['global_stats']);
-        SCR_Setter::set('stat-singularity', 'single');
 
         return $data;
     }
