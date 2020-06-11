@@ -15,7 +15,7 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
         // error_log('data : ' . print_r($data, true));
 
         $actual = apply_filters('prepare_stat_args', $data['product_id']);
-        error_log('actual : ' . print_r($actual, true));
+        // error_log('actual : ' . print_r($actual, true));
 
         // $expected = [
         //     'stats' => [
@@ -23,8 +23,8 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
         //         'stat_key_2' => 'value', // number
         //         'stat_key_3' => 'value', // number
         //     ],
+
         //     'overall' => [
-        //         'name' => 'some',
         //         'score' => 5,
         //         'rating' => 100,
         //     ],
@@ -67,6 +67,7 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
         ];
 
         SCR_Setter::set('global_stats', $data['global_stats']);
+        SCR_Setter::set('stat-singularity', 'single');
 
         return $data;
     }
