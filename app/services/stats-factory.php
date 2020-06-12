@@ -32,9 +32,24 @@ if (!class_exists('\StarcatReview\App\Services\StatsFactory')) {
 
             // Comment Overall with Comment feature stat overall
             $comment_stat = $this->get_comment_stat($comments_of_stats);
-            $post_stat = $this->get_post_stat($author_stats, $comment_stat);
+            $post_stat = $this->get_post_stat($author_stat, $comment_stat);
 
-            return $comment_stats;
+            return $post_stat;
+        }
+
+        protected function get_post_stat($author_stat, $comment_stat)
+        {
+
+            error_log('post_stats : ' . print_r($author_stat, true));
+            error_log('comment_stats : ' . print_r($comment_stat, true));
+            $is_author_stat_exist = isset($author_stat['overall']) && !empty($author_stat['overall']) ? true : false;
+            $is_comment_stat_exist = isset($comment_stat['overall']) && !empty($comment_stat['overall']) ? true : false;
+
+            if ($is_author_stat_exist && $is_comment_stat_exist) {
+                $total = $author_stat['overall'] + $comment_stat['overall'];
+                return $this->get_round_value($total, 2);
+            }
+            return $comment_stat;
         }
 
         protected function get_author_stat($post_id)
@@ -50,6 +65,46 @@ if (!class_exists('\StarcatReview\App\Services\StatsFactory')) {
             }
 
             return $stats;
+        }
+
+        protected function get_comment_stat($comments_of_stats)
+        {
+            $overall = [];
+            $comment_stat_of_feature = [];
+            $overall_count = 0;
+            $overall_total = 0;
+
+            if (isset($comments_of_stats) && !empty($comments_of_stats)) {
+                foreach ($comments_of_stats as $comment_stat) {
+
+                    $stat_count = 0;
+                    $stat_total = 0;
+
+                    foreach ($comment_stat['stats'] as $stat_key => $stat) {
+
+                        $stat_count++;
+                        $stat_total += $stat;
+
+                        if (!isset($comment_stat_of_feature[$stat_key])) {
+                            $comment_stat_of_feature[$stat_key]['total'] = 0;
+                            $comment_stat_of_feature[$stat_key]['times'] = 0;
+                        }
+
+                        $comment_stat_of_feature[$stat_key]['times']++;
+                        $comment_stat_of_feature[$stat_key]['total'] += $comment_stat['stats'][$stat_key];
+                    }
+
+                    $overall_count++;
+                    $overall_total += $stat_total / $stat_count;
+                }
+
+                $overall = [
+                    'stats' => $this->get_comment_stat_of_feature($comment_stat_of_feature),
+                    'overall' => $this->get_round_value($overall_total, $overall_count),
+                ];
+            }
+
+            return $overall;
         }
 
         protected function get_comments_of_stats($post_id)
@@ -77,10 +132,10 @@ if (!class_exists('\StarcatReview\App\Services\StatsFactory')) {
 
                     // WooCommerce product rating filters
                     if (get_post_type($post_id) == 'product') {
-                        $adds_rating_to_comment_stat = apply_filters('scr_comment_stat', $comment_id, $comments_of_stats);
-                        if (isset($adds_rating_to_comment_stat) && !is_array($adds_rating_to_comment_stat)) {
-                            error_log('adds_rating_to_comment_stat : ' . print_r($adds_rating_to_comment_stat, true));
-                            $comments_of_stats[$comment_id] = $add_woo_rating_to_comment_stat;
+                        $single_comment_stat = apply_filters('scr_comment_stat', $comment_id, $comments_of_stats);
+                        if (isset($single_comment_stat) && !is_array($single_comment_stat)) {
+                            error_log('adds_rating_to_comment_stat : ' . print_r($single_comment_stat, true));
+                            $comments_of_stats[$comment_id] = $single_comment_stat;
                         }
                     }
                 }
@@ -90,61 +145,6 @@ if (!class_exists('\StarcatReview\App\Services\StatsFactory')) {
             return $comments_of_stats;
         }
 
-        protected function get_comment_stat($comment_stats)
-        {
-            $overall = [];
-            $individual = [];
-            $overall_count = 0;
-            $overall_total = 0;
-
-            if (isset($comment_stats) && !empty($comment_stats)) {
-                foreach ($comment_stats['stats'] as $comment_stat) {
-
-                    $stat_count = 0;
-                    $stat_total = 0;
-
-                    foreach ($comment_stat['stats'] as $stat_key => $stat) {
-
-                        $stat_count++;
-                        $stat_total += $stat;
-
-                        if (!isset($individual[$stat_key])) {
-                            $individual[$stat_key]['total'] = 0;
-                            $individual[$stat_key]['times'] = 0;
-                        }
-
-                        $individual[$stat_key]['times']++;
-                        $individual[$stat_key]['total'] += $comment_stat['stats'][$stat_key];
-                    }
-
-                    $overall_count++;
-                    $overall_total += $stat_total / $stat_count;
-                }
-
-                $overall = [
-                    'stats' => $this->get_comment_stat_of_feature($individual),
-                    'overall' => $this->get_round_value($overall_total, $overall_count),
-                ];
-            }
-
-            return $overall;
-        }
-
-        protected function get_post_stat($author_stat, $comment_stat)
-        {
-
-            $stats = [];
-            $combined_total = 0;
-            error_log('post_stats : ' . print_r($post_stats, true));
-            error_log('comment_stats : ' . print_r($comment_stats, true));
-
-            // if (isset($comment_stats) && !empty($comment_stats)) {
-            //     foreach ($comment_stats['stats'] as $stats) {
-
-            //     }
-            // }
-            return $stats;
-        }
         /*
          *  Get Filtered Stats with Global stats ( Settings )
          */
@@ -170,30 +170,6 @@ if (!class_exists('\StarcatReview\App\Services\StatsFactory')) {
             return $stats;
         }
 
-        private function get_comments_ids($post_id)
-        {
-            $comment_ids = [];
-            $comments = get_comments([
-                'post_id' => $post_id,
-                'comment_type' => 'review',
-                'comment_parent' => 0,
-            ]);
-
-            $comment_ids = wp_list_pluck($comments, 'comment_ID');
-
-            return $comment_ids;
-        }
-
-        private function get_comment_stat_of_feature($stat_feature)
-        {
-            $comment_state_of_feature = [];
-            foreach ($stat_feature as $single_key => $single) {
-                $comment_state_of_feature[$single_key] = $this->get_round_value($single['total'], $single['times']);
-            }
-
-            return $comment_state_of_feature;
-        }
-
         private function get_single_stat($given_stats)
         {
             $stat_count = 0;
@@ -210,6 +186,30 @@ if (!class_exists('\StarcatReview\App\Services\StatsFactory')) {
                 'stats' => $given_stats,
                 'overall' => $this->get_round_value($stat_total, $stat_count),
             ];
+        }
+
+        private function get_comment_stat_of_feature($stat_feature)
+        {
+            $comment_state_of_feature = [];
+            foreach ($stat_feature as $single_key => $single) {
+                $comment_state_of_feature[$single_key] = $this->get_round_value($single['total'], $single['times']);
+            }
+
+            return $comment_state_of_feature;
+        }
+
+        private function get_comments_ids($post_id)
+        {
+            $comment_ids = [];
+            $comments = get_comments([
+                'post_id' => $post_id,
+                'comment_type' => 'review',
+                'comment_parent' => 0,
+            ]);
+
+            $comment_ids = wp_list_pluck($comments, 'comment_ID');
+
+            return $comment_ids;
         }
 
         private function get_round_value($total, $devisor, $digit = 0)
