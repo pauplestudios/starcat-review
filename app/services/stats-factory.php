@@ -28,10 +28,14 @@ if (!class_exists('\StarcatReview\App\Services\StatsFactory')) {
             if ($component == 'listing') {
                 return $comments_of_stats;
             }
-            // error_log('comments_of_stats : ' . print_r($comments_of_stats, true));
 
             // Comment Overall with Comment feature stat overall
             $comment_stat = $this->get_comment_stat($comments_of_stats);
+
+            if ($component == 'summary_users') {
+                return $comment_stat;
+            }
+
             $post_stat = $this->get_post_stat($author_stat, $comment_stat);
 
             return $post_stat;
@@ -39,16 +43,23 @@ if (!class_exists('\StarcatReview\App\Services\StatsFactory')) {
 
         protected function get_post_stat($author_stat, $comment_stat)
         {
-
-            error_log('post_stats : ' . print_r($author_stat, true));
-            error_log('comment_stats : ' . print_r($comment_stat, true));
             $is_author_stat_exist = isset($author_stat['overall']) && !empty($author_stat['overall']) ? true : false;
             $is_comment_stat_exist = isset($comment_stat['overall']) && !empty($comment_stat['overall']) ? true : false;
-
+            $post_stat = [];
+            $stats_name = 'stats';
+            $overall_name = 'overall';
             if ($is_author_stat_exist && $is_comment_stat_exist) {
-                $total = $author_stat['overall'] + $comment_stat['overall'];
-                return $this->get_round_value($total, 2);
+
+                foreach ($comment_stat[$stats_name] as $comment_stat_key => $comment_stat_value) {
+                    $stat_total = $author_stat[$stats_name][$comment_stat_key] + $comment_stat_value;
+                    $post_stat[$stats_name][$comment_stat_key] = $this->get_round_value($stat_total, 2);
+                }
+
+                $overall_total = $author_stat[$overall_name] + $comment_stat[$overall_name];
+                $post_stat[$overall_name] = $this->get_round_value($overall_total, 2);
+                return $post_stat;
             }
+
             return $comment_stat;
         }
 
@@ -59,9 +70,7 @@ if (!class_exists('\StarcatReview\App\Services\StatsFactory')) {
 
             if (isset($post_meta['stats-list']) && !empty($post_meta['stats-list'])) {
                 $stats = $this->get_allowed_stat($post_meta['stats-list']);
-                error_log('author stats : ' . print_r($stats, true));
-
-                // $stats = $this->get_single_stat($stats);
+                $stats = $this->get_single_stat($stats);
             }
 
             return $stats;
@@ -109,7 +118,6 @@ if (!class_exists('\StarcatReview\App\Services\StatsFactory')) {
 
         protected function get_comments_of_stats($post_id)
         {
-            $stats = [];
             $comments_of_stats = [];
 
             $comment_ids = $this->get_comments_ids($post_id);
@@ -125,17 +133,17 @@ if (!class_exists('\StarcatReview\App\Services\StatsFactory')) {
 
                     // Ignoring Empty filtered stats
                     if (!empty($allowed_stat)) {
-                        //Single Comment Stat
                         $comments_of_stats[$comment_id] = $this->get_single_stat($allowed_stat);
-                        // $comments_of_stats['stats'][$comment_id] = $allowed_stat;
                     }
 
                     // WooCommerce product rating filters
-                    if (get_post_type($post_id) == 'product') {
-                        $single_comment_stat = apply_filters('scr_comment_stat', $comment_id, $comments_of_stats);
-                        if (isset($single_comment_stat) && !is_array($single_comment_stat)) {
-                            error_log('adds_rating_to_comment_stat : ' . print_r($single_comment_stat, true));
-                            $comments_of_stats[$comment_id] = $single_comment_stat;
+                    $has_single_comment_stat = isset($comments_of_stats[$comment_id]) && !empty($comments_of_stats[$comment_id]) ? true : false;
+                    if (get_post_type($post_id) == 'product' && !$has_single_comment_stat) {
+                        $woo_added_comment_stat = apply_filters('scr_comment_stat', $comment_id);
+
+                        if (isset($woo_added_comment_stat) && is_array($woo_added_comment_stat)) {
+                            $comments_of_stats[$comment_id] = $this->get_single_stat($woo_added_comment_stat);
+
                         }
                     }
                 }
@@ -179,8 +187,6 @@ if (!class_exists('\StarcatReview\App\Services\StatsFactory')) {
                 $stat_count++;
                 $stat_total += $stat;
             }
-            error_log('stat_total : ' . $stat_total);
-            error_log('stat_count : ' . $stat_count);
 
             return [
                 'stats' => $given_stats,

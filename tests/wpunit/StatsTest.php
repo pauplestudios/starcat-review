@@ -1,6 +1,6 @@
 
 <?php
-use \StarcatReview\Includes\Settings\SCR_Setter;
+use \StarcatReview\Includes\Settings\SCR_Getter;
 
 class StatsTest extends \Codeception\TestCase\WPTestCase
 {
@@ -11,13 +11,16 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
 
     public function test_preparing_stat_args()
     {
-        $data = $this->setup_stat_db_datas();
 
+        $data = $this->setup_stat_db_datas();
         /*
         Case 1: 'post Overall Single -- Singluarity'
          */
         $actual = apply_filters('prepare_stat_args', $data['product_id']);
-        $expected = $this->get_args_expected();
+        $expected = [
+            'stats' => ['feature' => 64],
+            'overall' => 64,
+        ];
         $this->assertEquals($expected, $actual);
 
         /*
@@ -25,7 +28,11 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
          */
         $component = 'summary_author';
         $actual = apply_filters('prepare_stat_args', $data['product_id'], $component);
-        $expected = $this->get_args_expected($component);
+        $expected = [
+            'stats' => ['feature' => 50],
+            'overall' => 50,
+        ];
+
         $this->assertEquals($expected, $actual);
 
         /*
@@ -33,7 +40,11 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
          */
         $component = 'summary_users';
         $actual = apply_filters('prepare_stat_args', $data['product_id'], $component);
-        $expected = $this->get_args_expected($component);
+        $expected = [
+            'stats' => ['feature' => 78],
+            'overall' => 78,
+        ];
+
         $this->assertEquals($expected, $actual);
 
         /*
@@ -41,23 +52,41 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
          */
         $component = 'listing';
         $actual = apply_filters('prepare_stat_args', $data['product_id'], $component);
-        $expected = $this->get_args_expected($component);
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals(8, count($actual));
 
-        SCR_Setter::set('stat-singularity', 'multiple');
+        SCR_Getter::set('stat-singularity', 'multiple');
+        $singularity = SCR_Getter::get('stat-singularity');
+
         /*
         Case 5: 'post Overall Muliple -- Singluarity'
          */
         $actual = apply_filters('prepare_stat_args', $data['product_id']);
-        $expected = $this->get_args_expected($component, true);
+        $expected = [
+            'stats' => [
+                'feature' => 62,
+                'speed' => 80,
+                'ui' => 70,
+                'quality' => 56,
+            ],
+            'overall' => 70,
+        ];
+
         $this->assertEquals($expected, $actual);
 
         /*
         Case 6: 'Summary_author Muliple -- Singluarity'
          */
-        $component = 'aummary_author';
+        $component = 'summary_author';
         $actual = apply_filters('prepare_stat_args', $data['product_id'], $component);
-        $expected = $this->get_args_expected($component, true);
+        $expected = [
+            'stats' => [
+                'feature' => 50,
+                'speed' => 80,
+                'ui' => 90,
+                'quality' => 40,
+            ],
+            'overall' => 65,
+        ];
 
         $this->assertEquals($expected, $actual);
 
@@ -66,7 +95,15 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
          */
         $component = 'summary_users';
         $actual = apply_filters('prepare_stat_args', $data['product_id'], $component);
-        $expected = $this->get_args_expected($component, true);
+        $expected = [
+            'stats' => [
+                'feature' => 74,
+                'speed' => 79,
+                'ui' => 50,
+                'quality' => 71,
+            ],
+            'overall' => 75,
+        ];
 
         $this->assertEquals($expected, $actual);
 
@@ -75,28 +112,8 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
          */
         $component = 'listing';
         $actual = apply_filters('prepare_stat_args', $data['product_id'], $component);
-        $expected = $this->get_args_expected($component, true);
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals(9, count($actual));
 
-        // error_log('data : ' . print_r($data, true));
-        // error_log('actual : ' . print_r($actual, true));
-    }
-
-    protected function get_args_expected($component = 'post_overall', $multi_stat = false)
-    {
-        $data = $this->get_stats_data();
-        $expected = [];
-        $expected = [
-            'stats' => [
-                'stat_key_1' => 'value', // number
-                'stat_key_2' => 'value', // number
-                'stat_key_3' => 'value', // number
-            ],
-
-            'overall' => 100,
-        ];
-
-        return $expected;
     }
 
     // Setting Up Stat DB data
@@ -115,9 +132,10 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
         for ($ii = 0; $ii < sizeof($comment_metas); $ii++) {
             $comment_id = $this->factory()->comment->create_post_comments($data['product_id'], 1, ['comment_type' => 'review'])[0];
             $data['comment_ids'][] = $comment_id;
-            $data['comment_metas'][SCR_COMMENT_META][] = add_comment_meta($comment_id, SCR_COMMENT_META, $comment_metas[$ii]);
+            add_comment_meta($comment_id, SCR_COMMENT_META, $comment_metas[$ii]);
+
             if ($ii % 2 == 0) {
-                $data['comment_metas']['rating'][] = add_comment_meta($comment_id, 'rating', ($ii <= 5) ? $ii : 5);
+                add_comment_meta($comment_id, 'rating', ($ii <= 5) ? $ii : 5);
             }
         }
 
@@ -129,7 +147,7 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
             ['stat_name' => 'ux'],
         ];
 
-        SCR_Setter::set('global_stats', $data['global_stats']);
+        SCR_Getter::set('global_stats', $data['global_stats']);
 
         return $data;
     }
@@ -273,7 +291,7 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
                 'stats-list' => [
                     'feature' => [
                         'stat_name' => 'Feature',
-                        'rating' => 0,
+                        'rating' => 50,
                     ],
                     'speed' => [
                         'stat_name' => 'Speed',
@@ -421,146 +439,4 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
         return $data;
     }
 
-    private function extra_datas()
-    {
-        // No existed review meta
-        /*
-         * 1. Has product rating -- UnEqualed
-         * 2. doesnt have product rating -- Non-review
-         */
-
-        /*
-         * Yes existed review meta
-         * 1. have stats entry - Equaled
-         * 2. Not have stats entry - UnEqualed
-         */
-
-        //
-        // yes existed review meta not have stats entry
-    }
-
-    private function later_refer_details()
-    {
-        /* Single Review */
-        // mulitple
-        $expected = [
-            'stats' => [
-                'stat_key_1' => 'value', // number
-                'stat_key_2' => 'value', // number
-                'stat_key_3' => 'value', // number
-            ],
-            'aggregate' => 'value', // number
-        ];
-
-        // single
-        $expected = [
-            'stats' => [
-                'stat_key_1' => 'value', // number
-                'stat_key_2' => 'value', // number
-                'stat_key_3' => 'value', // number
-            ],
-            'stat' => [
-                'label' => 'primary_stat_name',
-                'score' => 5,
-                'rating' => 100,
-            ],
-        ];
-
-        /* summary review */
-        // multiple users
-        $expected = [
-            'stats' => [
-                'stat_key_1' => 'value', // number
-                'stat_key_2' => 'value', // number
-                'stat_key_3' => 'value', // number
-            ],
-            'aggregate' => 'value', // number
-        ];
-
-        // 100 percentage
-
-        $improved_data = [
-            0 => [
-                'speed' => 100,
-                'quality' => 50,
-                'design' => 10,
-            ],
-            1 => [
-                'speed' => 80,
-                'quality' => 90,
-            ],
-            2 => [
-                'speed' => 80,
-            ],
-            3 => [
-                'feature' => 90,
-            ],
-        ];
-
-        $existing_data = [
-            'stats' => [
-                'feature' => [
-                    'stat_name' => 'feature',
-                    'rating' => 100,
-                ],
-                'speed' => [
-                    'stat_name' => 'speed',
-                    'rating' => 80,
-                ],
-            ],
-        ];
-
-        // Settings available stat
-        $global_stats = ['feature', 'speed', 'ui', 'design']; // 400 Current
-
-        // Author and User -- Post level
-        // Author -- Post Level
-        // User reviews --  review Level
-    }
-
-/*
-[global_stats] => Array
-(
-[0] => Array
-(
-[stat_name] => Feature
-)
-
-[1] => Array
-(
-[stat_name] => speed
-)
-
-[2] => Array
-(
-[stat_name] => quality
-)
-
-[3] => Array
-(
-[stat_name] => ui
-)
-
-)
-
-rating = below and equal to 5 and whole number
-
-use cases :
-1. Combined author and User stat -- post level
-2. -- single review stat
-3. -- multi review stat
-
-1st
-mulitple stat [
-'speed' => 100
-'quality' => 50
-'design' => 10
-];
-
-overall of that based on
-single stat [
-'feature' or 'whatever_name'
-]
-
- */
 }
