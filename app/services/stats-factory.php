@@ -14,6 +14,14 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReview\App\Services\StatsFactory')) {
     class StatsFactory
     {
+        private $stats_name;
+        private $overall_name;
+
+        public function __construct()
+        {
+            $this->stats_name = 'stats';
+            $this->overall_name = 'overall';
+        }
 
         public function get_prepared_stat_args(int $post_id, $component = 'post_overall')
         {
@@ -43,20 +51,20 @@ if (!class_exists('\StarcatReview\App\Services\StatsFactory')) {
 
         protected function get_post_stat($author_stat, $comment_stat)
         {
-            $is_author_stat_exist = isset($author_stat['overall']) && !empty($author_stat['overall']) ? true : false;
-            $is_comment_stat_exist = isset($comment_stat['overall']) && !empty($comment_stat['overall']) ? true : false;
             $post_stat = [];
-            $stats_name = 'stats';
-            $overall_name = 'overall';
+
+            $is_author_stat_exist = isset($author_stat[$this->overall_name]) && !empty($author_stat[$this->overall_name]) ? true : false;
+            $is_comment_stat_exist = isset($comment_stat[$this->overall_name]) && !empty($comment_stat[$this->overall_name]) ? true : false;
+
             if ($is_author_stat_exist && $is_comment_stat_exist) {
 
-                foreach ($comment_stat[$stats_name] as $comment_stat_key => $comment_stat_value) {
-                    $stat_total = $author_stat[$stats_name][$comment_stat_key] + $comment_stat_value;
-                    $post_stat[$stats_name][$comment_stat_key] = $this->get_round_value($stat_total, 2);
+                foreach ($comment_stat[$this->stats_name] as $comment_stat_key => $comment_stat_value) {
+                    $stat_total = $author_stat[$this->stats_name][$comment_stat_key] + $comment_stat_value;
+                    $post_stat[$this->stats_name][$comment_stat_key] = $this->get_round_value($stat_total, 2);
                 }
 
-                $overall_total = $author_stat[$overall_name] + $comment_stat[$overall_name];
-                $post_stat[$overall_name] = $this->get_round_value($overall_total, 2);
+                $overall_total = $author_stat[$this->overall_name] + $comment_stat[$this->overall_name];
+                $post_stat[$this->overall_name] = $this->get_round_value($overall_total, 2);
                 return $post_stat;
             }
 
@@ -89,7 +97,7 @@ if (!class_exists('\StarcatReview\App\Services\StatsFactory')) {
                     $stat_count = 0;
                     $stat_total = 0;
 
-                    foreach ($comment_stat['stats'] as $stat_key => $stat) {
+                    foreach ($comment_stat[$this->stats_name] as $stat_key => $stat) {
 
                         $stat_count++;
                         $stat_total += $stat;
@@ -100,7 +108,7 @@ if (!class_exists('\StarcatReview\App\Services\StatsFactory')) {
                         }
 
                         $comment_stat_of_feature[$stat_key]['times']++;
-                        $comment_stat_of_feature[$stat_key]['total'] += $comment_stat['stats'][$stat_key];
+                        $comment_stat_of_feature[$stat_key]['total'] += $comment_stat[$this->stats_name][$stat_key];
                     }
 
                     $overall_count++;
@@ -108,8 +116,8 @@ if (!class_exists('\StarcatReview\App\Services\StatsFactory')) {
                 }
 
                 $overall = [
-                    'stats' => $this->get_comment_stat_of_feature($comment_stat_of_feature),
-                    'overall' => $this->get_round_value($overall_total, $overall_count),
+                    $this->stats_name => $this->get_comment_stat_of_feature($comment_stat_of_feature),
+                    $this->overall_name => $this->get_round_value($overall_total, $overall_count),
                 ];
             }
 
@@ -127,8 +135,8 @@ if (!class_exists('\StarcatReview\App\Services\StatsFactory')) {
                     $allowed_stat = [];
                     $review = get_comment_meta($comment_id, SCR_COMMENT_META, true);
 
-                    if (isset($review['stats']) && !empty($review['stats'])) {
-                        $allowed_stat = $this->get_allowed_stat($review['stats']);
+                    if (isset($review[$this->stats_name]) && !empty($review[$this->stats_name])) {
+                        $allowed_stat = $this->get_allowed_stat($review[$this->stats_name]);
                     }
 
                     // Ignoring Empty filtered stats
@@ -189,8 +197,8 @@ if (!class_exists('\StarcatReview\App\Services\StatsFactory')) {
             }
 
             return [
-                'stats' => $given_stats,
-                'overall' => $this->get_round_value($stat_total, $stat_count),
+                $this->stats_name => $given_stats,
+                $this->overall_name => $this->get_round_value($stat_total, $stat_count),
             ];
         }
 
@@ -209,7 +217,7 @@ if (!class_exists('\StarcatReview\App\Services\StatsFactory')) {
             $comment_ids = [];
             $comments = get_comments([
                 'post_id' => $post_id,
-                'comment_type' => 'review',
+                'comment_type' => ['review', 'starcat_review'],
                 'comment_parent' => 0,
             ]);
 
