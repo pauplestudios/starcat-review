@@ -9,15 +9,83 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
     class Model
     {
-        public function get_Props($args)
+        public function get_viewProps($args)
         {
-            $props = $args;
+            // $props = $args;
+            $viewProps = [
+                'collection' => [
+                    'users_title' => __('User Rating', SCR_DOMAIN),
+                    'author_title' => __('Author Rating', SCR_DOMAIN),
+                    'no_of_column' => $this->get_no_of_column($args),
+                    'reviews_title' => $this->get_product_reviews_title(),
+                    'review_count' => 10,
+                    // 'show' => 'both',
+                ],
+                'items' => $this->get_items_props($args),
+            ];
 
-            $props['items']['author'] = ($args['enable-author-review']) ? $args['items'] : [];
+            // $props['items']['author'] = ($args['enable-author-review']) ? $args['items'] : [];
 
-            $props['items']['user'] = $this->get_userItems($args);
+            // $props['items']['user'] = $this->get_userItems($args);
 
-            return $props;
+            return $viewProps;
+        }
+
+        public function get_items_props($args)
+        {
+            $stat_args = $args;
+            unset($stat_args['items']);
+
+            $author_stat_args = $stat_args;
+            $comment_stat_args = $stat_args;
+
+            $author_stat_args['items'] = $args['items']['summary_author'];
+            $comment_stat_args['items'] = $args['items']['summary_users'];
+
+            // if (!empty($groups['pros-list'])) {
+            //     $items['pros-list'] = $this->get_prosandcons($groups['pros-list']);
+            // }
+            // if (!empty($groups['cons-list'])) {
+            //     $items['cons-list'] = $this->get_prosandcons($groups['cons-list']);
+            // }
+            error_log('args["items"] : ' . print_r($args["items"], true));
+
+            $itemsProps = [
+                'author_stat' => $author_stat_args,
+                'comment_stat' => $comment_stat_args,
+                // 'pros-list' => $this->get_prosandcons($args['items']['pros-list']),
+                // 'cons-list' => $this->get_prosandcons($args['items']['cons-list']),
+            ];
+
+            return $itemsProps;
+
+        }
+
+        public function get_no_of_column($args)
+        {
+            $no_of_column = 'one';
+
+            $has_author_stat = !empty($args['items']['summary_author']) ? true : false;
+            $has_comment_stat = !empty($args['items']['summary_users']) ? true : false;
+
+            if ($has_comment_stat && $has_author_stat) {
+                $no_of_column = 'two';
+            }
+
+            return $no_of_column;
+        }
+
+        protected function get_product_reviews_title()
+        {
+            $html = '';
+            global $product;
+            if (isset($product) && $product->get_review_count() && wc_review_ratings_enabled()) {
+                $count = $product->get_review_count();
+                $reviews_title = sprintf(esc_html(_n('%1$s review for %2$s', '%1$s reviews for %2$s', $count, 'woocommerce')), esc_html($count), '<span>' . get_the_title() . '</span>');
+                $html .= apply_filters('woocommerce_reviews_title', $reviews_title, $count, $product); // WPCS: XSS ok.
+            }
+
+            return $html;
         }
 
         protected function get_userItems($args)
@@ -101,6 +169,8 @@ if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
         //Todo:  Not Working Properly
         protected function get_prosandcons($groups)
         {
+            error_log('groups : ' . print_r($groups, true));
+
             $items = [];
             $prosandcons = array_count_values($groups);
             $fliped = array_flip($prosandcons);

@@ -48,6 +48,28 @@ if (!class_exists('\StarcatReview\App\Components\Stats\Model')) {
             return $collection;
         }
 
+        public function get_itemsProps_new($args)
+        {
+            $itemsProps = [];
+
+            foreach ($args['items']['stats'] as $stat_key => $stat_value) {
+                $itemsProps[$stat_key] = $this->get_stat($stat_value);
+            }
+            if ($this->collection['singularity'] == 'multiple') {
+                $itemsProps['overall'] = $this->get_stat($args['items']['overall']);
+            }
+
+            return $itemsProps;
+        }
+
+        protected function get_stat($rating)
+        {
+            return [
+                'rating' => $rating,
+                'score' => $this->get_stat_score($rating),
+            ];
+        }
+
         public function get_itemsProps($args)
         {
             $stats = [];

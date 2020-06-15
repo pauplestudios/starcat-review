@@ -34,13 +34,17 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Summary')) {
         protected function get_items()
         {
             $post_meta = get_post_meta(get_the_ID(), SCR_POST_META, true);
-            $comments = $this->get_comments_list();
+            // $comments = $this->get_comments_list();
 
             $items = [];
 
             if (isset($post_meta['stats-list']) && !empty($post_meta['stats-list'])) {
                 $items['stats-list'] = $post_meta['stats-list'];
             }
+            $post_id = get_the_ID();
+            $items['summary_author'] = apply_filters('prepare_stat_args', $post_id, 'summary_author');
+            $items['summary_users'] = apply_filters('prepare_stat_args', $post_id, 'summary_users');
+
             if (isset($post_meta['pros-list']) && !empty($post_meta['pros-list'])) {
                 $items['pros-list'] = $post_meta['pros-list'];
             }
@@ -48,9 +52,9 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Summary')) {
                 $items['cons-list'] = $post_meta['cons-list'];
             }
 
-            if (isset($comments) && !empty($comments)) {
-                $items['comments-list'] = $comments;
-            }
+            // if (isset($comments) && !empty($comments)) {
+            //     $items['comments-list'] = $comments;
+            // }
 
             return $items;
         }

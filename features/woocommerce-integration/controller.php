@@ -31,7 +31,7 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration\Controller'))
             /*
              * Overriding the Existing product template by adding 11 as filter priotiry
              */
-            // add_filter('comments_template', [$this, 'comments_template_loader'], 11);
+            add_filter('comments_template', [$this, 'comments_template_loader'], 11);
             add_filter('scr_comment_stat', [$this, 'add_product_rating_to_comment_stat']);
         }
 
@@ -51,15 +51,12 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration\Controller'))
 
         public function add_product_rating_to_comment_stat($comment_id)
         {
-            $rating = get_comment_meta($comment_id, 'rating', true);
-            // error_log('rating : ' . $rating);
-
-            // $rating = get_comment_meta($comment_id, 'rating', true);
-
-            $is_rating_available = isset($rating) && !empty($rating) ? true : false;
-
             $global_stats = SCR_Getter::get('global_stats');
             $singularity = SCR_Getter::get('stat-singularity');
+
+            $rating = get_comment_meta($comment_id, 'rating', true);
+            $is_rating_available = isset($rating) && !empty($rating) ? true : false;
+
             $comment_stat = [];
             if ($singularity == 'single') {
                 $global_stats = [$global_stats[0]];
@@ -72,8 +69,6 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration\Controller'))
                     $allowed_stat_name = strtolower($allowed_stat['stat_name']);
                     $comment_stat[$allowed_stat_name] = $rating;
                 }
-                // error_log('comment rating : ' . print_r($comment_stat, true));
-
                 return $comment_stat;
             }
 
