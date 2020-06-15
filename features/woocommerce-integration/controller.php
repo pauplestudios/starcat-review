@@ -2,6 +2,8 @@
 
 namespace StarcatReview\Features\Woocommerce_Integration;
 
+use \StarcatReview\Includes\Settings\SCR_Getter;
+
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -30,7 +32,7 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration\Controller'))
              * Overriding the Existing product template by adding 11 as filter priotiry
              */
             // add_filter('comments_template', [$this, 'comments_template_loader'], 11);
-            add_filter('scr_comment_stat', [$this, 'add_product_rating_to_comment_stat'], 10, 2);
+            add_filter('scr_comment_stat', [$this, 'add_product_rating_to_comment_stat']);
         }
 
         public function comments_template_loader($template)
@@ -47,19 +49,35 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration\Controller'))
             return $template;
         }
 
-        public function add_product_rating_to_comment_stat($comment_id, $comments_of_stats)
+        public function add_product_rating_to_comment_stat($comment_id)
         {
             $rating = get_comment_meta($comment_id, 'rating', true);
-            $is_rating_available = isset($rating) && !empty($rating) ? true : false;
-            $is_comment_stat_not_exist = !isset($comments_of_stats[$comment_id]) && empty($comments_of_stats[$comment_id]) ? true : false;
+            // error_log('rating : ' . $rating);
 
-            // Product 5 Star rating changed to Percentage for better calculation
-            if ($is_comment_stat_not_exist && $is_rating_available) {
-                $rating = (!empty($rating)) ? $rating * 20 : $rating;
-                $comments_of_stats[$comment_id] = $rating;
+            // $rating = get_comment_meta($comment_id, 'rating', true);
+
+            $is_rating_available = isset($rating) && !empty($rating) ? true : false;
+
+            $global_stats = SCR_Getter::get('global_stats');
+            $singularity = SCR_Getter::get('stat-singularity');
+            $comment_stat = [];
+            if ($singularity == 'single') {
+                $global_stats = [$global_stats[0]];
             }
 
-            return $comments_of_stats;
+            // Product 5 Star rating changed to Percentage for better calculation
+            if ($is_rating_available) {
+                $rating = (!empty($rating)) ? $rating * 20 : $rating;
+                foreach ($global_stats as $allowed_stat) {
+                    $allowed_stat_name = strtolower($allowed_stat['stat_name']);
+                    $comment_stat[$allowed_stat_name] = $rating;
+                }
+                // error_log('comment rating : ' . print_r($comment_stat, true));
+
+                return $comment_stat;
+            }
+
+            return $comment_id;
         }
 
     }
