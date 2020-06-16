@@ -32,7 +32,7 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration\Controller'))
              * Overriding the Existing product template by adding 11 as filter priotiry
              */
             add_filter('comments_template', [$this, 'comments_template_loader'], 11);
-            add_filter('scr_comment_stat', [$this, 'add_product_rating_to_comment_stat']);
+            add_filter('scr_convert_product_rating_to_stat', [$this, 'convert_product_rating_to_stat']);
         }
 
         public function comments_template_loader($template)
@@ -49,7 +49,7 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration\Controller'))
             return $template;
         }
 
-        public function add_product_rating_to_comment_stat($comment_id)
+        public function convert_product_rating_to_stat($comment_id)
         {
             $global_stats = SCR_Getter::get('global_stats');
             $singularity = SCR_Getter::get('stat-singularity');
@@ -67,12 +67,14 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration\Controller'))
                 $rating = (!empty($rating)) ? $rating * 20 : $rating;
                 foreach ($global_stats as $allowed_stat) {
                     $allowed_stat_name = strtolower($allowed_stat['stat_name']);
-                    $comment_stat[$allowed_stat_name] = $rating;
+                    $comment_stat[$allowed_stat_name] = [
+                        'stat_name' => $allowed_stat_name,
+                        'rating' => $rating,
+                    ];
                 }
-                return $comment_stat;
             }
 
-            return $comment_id;
+            return $comment_stat;
         }
 
     }
