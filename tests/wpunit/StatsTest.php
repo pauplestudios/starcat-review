@@ -98,7 +98,7 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
         $expected = [
             'stats' => [
                 'feature' => 74,
-                'speed' => 79,
+                'speed' => 80,
                 'ui' => 50,
                 'quality' => 71,
             ],
@@ -112,7 +112,7 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
          */
         $component = 'listing';
         $actual = apply_filters('prepare_stat_args', $data['product_id'], $component);
-        $this->assertEquals(9, count($actual));
+        $this->assertEquals(10, count($actual));
 
     }
 
