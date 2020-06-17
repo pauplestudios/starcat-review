@@ -116,28 +116,31 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
                 $args['can_user_vote'] = true;
             }
 
-            $comments = get_comments([
-                'post_id' => get_the_ID(),
-                'type' => SCR_COMMENT_TYPE,
-            ]);
+            // $comments = get_comments([
+            //     'post_id' => get_the_ID(),
+            //     'type' => SCR_COMMENT_TYPE,
+            // ]);
 
-            if (isset($comments) && !empty($comments)) {
-                foreach ($comments as $comment) {
-                    // added review props to comment
-                    $comment->review = get_comment_meta($comment->comment_ID, SCR_COMMENT_META, true);
+            // if (isset($comments) && !empty($comments)) {
+            //     foreach ($comments as $comment) {
+            //         // added review props to comment
+            //         $comment->review = get_comment_meta($comment->comment_ID, SCR_COMMENT_META, true);
 
-                    // Current user already reviewed
-                    $has_current_user_already_reviewed = ($comment->user_id == get_current_user_id() && $comment->comment_parent == 0);
-                    $has_current_user_already_reviewed = apply_filters('scr_has_current_user_already_reviewed', $has_current_user_already_reviewed, $comment);
-                    if ($has_current_user_already_reviewed) {
-                        $args['can_user_review'] = false;
-                        $args['current_user_review'] = $comment;
+            //         // Current user already reviewed
+            //         $has_current_user_already_reviewed = ($comment->user_id == get_current_user_id() && $comment->comment_parent == 0);
+            //         $has_current_user_already_reviewed = apply_filters('scr_has_current_user_already_reviewed', $has_current_user_already_reviewed, $comment);
+            //         if ($has_current_user_already_reviewed) {
+            //             $args['can_user_review'] = false;
+            //             $args['current_user_review'] = $comment;
 
-                    }
-                }
+            //         }
+            //     }
+            $components = ['comments', 'stats', 'prosandcons', 'votes', 'attachments'];
+            $args['items'] = scr_get_comments_args(get_the_ID(), $components);
+            error_log('args["items"] : ' . print_r($args["items"], true));
 
-                $args['items']['comments-list'] = $comments;
-            }
+            // $args['items']['comments-list'] = $comments;
+            // }
 
             return $args;
         }

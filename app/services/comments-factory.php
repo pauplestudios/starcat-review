@@ -22,9 +22,9 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
                 foreach ($comment_ids as $comment_id) {
 
                     $review = get_comment_meta($comment_id, SCR_COMMENT_META, true);
-
                     $stat = $this->get_stat($post_id, $comment_id, $review);
                     $vote = $this->get_vote($review);
+                    $comment = $this->get_comment($comment_id, $review);
                     $proandcon = $this->get_proandcon($review);
                     $attachment = $this->get_attachment($review);
 
@@ -39,6 +39,9 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
                     }
                     if ($this->is_set($vote)) {
                         $components['attachments'][$comment_id] = $attachment;
+                    }
+                    if ($this->is_set($comment)) {
+                        $components['comments'][$comment_id] = $comment;
                     }
 
                 }
@@ -96,11 +99,33 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
 
         }
 
+        protected function get_comment($comment_id, $review)
+        {
+            $comment = [];
+            $comment_obj = get_comment($comment_id);
+            $comment = [
+                'content' => $comment_obj->comment_content,
+                'parent' => $comment_obj->comment_parent,
+                'user_id' => $comment_obj->user_id,
+                'approved' => $comment_obj->comment_approved,
+                'date' => get_comment_date('', $comment->comment_ID),
+                'time' => $this->get_comment_time($comment_obj->comment_date),
+                'email' => $comment_obj->comment_author_email,
+                'avatar' => get_avatar($comment->user_id),
+            ];
+
+            // error_log('comment : ' . print_r($comment_obj, true));
+            if ($this->is_key_exist('title', $review)) {
+                $comment['title'] = $review['title'];
+            }
+
+            return $comment;
+        }
+
         protected function get_vote($review)
         {
             $vote = [];
             return $vote;
-
         }
 
         protected function get_proandcon($review)
@@ -132,6 +157,13 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
                 $is_set = true;
             }
             return $is_set;
+        }
+
+        private function get_comment_time($date)
+        {
+            $date = mysql2date(get_option('time_format'), $date, true);
+
+            return apply_filters('get_comment_time', $date);
         }
     }
 }
