@@ -1,125 +1,164 @@
 
 <?php
+use \StarcatReview\Includes\Settings\SCR_Getter;
 
-class StatsTest extends \Codeception\TestCase\WPTestCase
+class FactoryTest extends \Codeception\TestCase\WPTestCase
 {
     public function _before()
     {
         wp_set_current_user(1);
     }
 
-    public function stat()
+    public function test_scr_get_comments_args()
     {
+        $data = $this->setup_stat_db_datas();
 
-        $data = $this->get_stats_data();
-        $review_meta = $data[SCR_COMMENT_META][0]['stats'];
-        $args = [
-            'items' => [
-                'stats-list' => $review_meta,
-            ],
+        /*
+        Case 1: 'Listing Single -- Singluarity'
+         */
+        $actual = scr_get_comments_args($data['product_id']);
+        $this->assertEquals(10, count($actual));
+
+        SCR_Getter::set('stat-singularity', 'multiple');
+
+        /*
+        Case 2: 'Listing Multiple -- Singluarity'
+         */
+
+        $actual = scr_get_comments_args($data['product_id']);
+        $this->assertEquals(10, count($actual));
+
+    }
+
+    public function test_scr_get_stat_args()
+    {
+        $author_stat = 'author_stat'; // summary_author
+        $comment_stat = 'comment_stat'; // summary_users
+
+        $data = $this->setup_stat_db_datas();
+        SCR_Getter::set('stat-singularity', 'single');
+
+        /*
+        Case 1: 'post Overall Single -- Singluarity'
+         */
+        $actual = scr_get_stat_args($data['product_id']);
+        $expected = [
+            'stats' => ['feature' => 64],
+            'overall' => 64,
         ];
-        $args = array_merge($args, $data[SCR_OPTIONS]);
-        $stats_model = new \StarcatReview\App\Components\Stats\Model();
+        $this->assertEquals($expected, $actual);
 
         /*
-        Case 1: 'single singluarity'
+        Case 2: 'summary_author or author_stat Single -- Singluarity'
          */
-
-        $model_props = $stats_model->get_viewProps($args);
-        $expected = $this->get_expected_stat($review_meta);
-        $actual = $model_props['items'];
+        $component = 'summary_author';
+        $actual = scr_get_stat_args($data['product_id'], $author_stat);
+        $expected = [
+            'stats' => ['feature' => 50],
+            'overall' => 50,
+        ];
 
         $this->assertEquals($expected, $actual);
 
         /*
-        Case 2: 'multiple singluarity'
+        Case 3: 'Summary_users Single -- Singluarity'
          */
-        $args['singularity'] = 'multiple';
-        $model_props = $stats_model->get_viewProps($args);
-        $expected = $this->get_expected_stat($review_meta, 'multiple');
-        $actual = $model_props['items'];
+        $component = 'summary_users';
+        $actual = scr_get_stat_args($data['product_id'], $comment_stat);
+        $expected = [
+            'stats' => ['feature' => 77],
+            'overall' => 77,
+        ];
+
+        $this->assertEquals($expected, $actual);
+
+        SCR_Getter::set('stat-singularity', 'multiple');
+        $singularity = SCR_Getter::get('stat-singularity');
+
+        /*
+        Case 4: 'post Overall Muliple -- Singluarity'
+         */
+        $actual = scr_get_stat_args($data['product_id']);
+        $expected = [
+            'stats' => [
+                'feature' => 63,
+                'speed' => 80,
+                'quality' => 56,
+                'ui' => 78,
+                'ux' => 80,
+            ],
+            'overall' => 70,
+        ];
 
         $this->assertEquals($expected, $actual);
 
         /*
-        case 3: 'summary single singluarity'
+        Case 5: 'Summary_author Muliple -- Singluarity'
          */
-        $args['combine_type'] = 'overall';
-        $args['singularity'] = 'multiple';
-        $args['items']['comments-list'] = $this->get_comments_stat_data();
-        $model_props = $stats_model->get_viewProps($args);
-        $expected = ['overall' => ['rating' => 50, 'score' => 3]];
-        $actual = $model_props['items'];
+        $component = 'summary_author';
+        $actual = scr_get_stat_args($data['product_id'], $author_stat);
+        $expected = [
+            'stats' => [
+                'feature' => 50,
+                'speed' => 80,
+                'quality' => 40,
+                'ui' => 90,
+            ],
+            'overall' => 65,
+        ];
 
-        error_log('args : ' . print_r($args, true));
-        error_log('expected : ' . print_r($expected, true));
-        error_log('actual : ' . print_r($actual, true));
-
-        // $this->assertEquals($expected, $actual);
-
-        // error_log('model_props : ' . print_r($model_props['items'], true));
+        $this->assertEquals($expected, $actual);
 
         /*
-        case 4: 'summary multiple singluarity'
+        Case 6: 'Summary_users Multiple -- Singluarity'
          */
+        $component = 'summary_users';
+        $actual = scr_get_stat_args($data['product_id'], $comment_stat);
+        $expected = [
+            'stats' => [
+                'feature' => 75,
+                'speed' => 79,
+                'quality' => 72,
+                'ui' => 65,
+                'ux' => 80,
+            ],
+            'overall' => 75,
+        ];
 
-        /*
-        case 5: 'overall post / product combine single singluarity '
-         */
+        $this->assertEquals($expected, $actual);
 
-        /*
-        case 6: 'overall post / product combine multiple singluarity'
-         */
-
-        /*
-         *   1. with author
-         *   2. without author
-         */
-        $some = null;
     }
 
-    protected function get_expected_stat($meta, $singularity = 'single')
+    // Setting Up Stat DB data
+    protected function setup_stat_db_datas()
     {
-        $expected_stat = [];
+        $stats_data = $this->get_stats_data();
+        $post_meta = $stats_data[SCR_POST_META];
+        $comment_metas = $stats_data[SCR_COMMENT_META];
+        $comments_data = [];
 
-        $stat_count = 0;
-        $stat_total = 0;
-        $stat_score = 0;
+        $data['product_id'] = $this->factory()->post->create(['post_type' => 'product']);
+        add_post_meta($data['product_id'], SCR_POST_META, $post_meta);
 
-        foreach ($meta as $stat_key => $stat) {
-            $expected_stat[$stat_key] = [
-                'score' => $stat['rating'] / 20,
-                'rating' => $stat['rating'],
-            ];
-            if ($singularity == 'single') {
-                break;
-            }
-            $stat_count++;
-            $stat_score += $expected_stat[$stat_key]['score'];
-            $stat_total += $stat['rating'];
+        for ($ii = 0; $ii < sizeof($comment_metas); $ii++) {
+            $comment_id = $this->factory()->comment->create_post_comments($data['product_id'], 1, ['comment_type' => 'review'])[0];
+            $data['comment_ids'][] = $comment_id;
+            add_comment_meta($comment_id, SCR_COMMENT_META, $comment_metas[$ii]);
+            // Adding product rating for each comment
+            add_comment_meta($comment_id, 'rating', 4);
         }
 
-        if ($singularity == 'multiple') {
-            $expected_stat['overall'] = [
-                'score' => round(($stat_score / $stat_count), 1),
-                'rating' => $stat_total / $stat_count,
-            ];
-        }
+        $data['global_stats'] = [
+            ['stat_name' => 'feature'],
+            ['stat_name' => 'speed'],
+            ['stat_name' => 'quality'],
+            ['stat_name' => 'ui'],
+            ['stat_name' => 'ux'],
+        ];
 
-        return $expected_stat;
-    }
+        SCR_Getter::set('global_stats', $data['global_stats']);
 
-    protected function get_comments_stat_data()
-    {
-        $comemnt_list = [];
-        $comment_metas_stat = $this->get_stats_data()[SCR_COMMENT_META];
-        foreach ($comment_metas_stat as $key => $meta_stat) {
-            $object = new stdClass();
-            $object->reviews = $meta_stat;
-            $comemnt_list[] = $object;
-        }
-
-        return $comemnt_list;
+        return $data;
     }
 
     public function get_stats_data()

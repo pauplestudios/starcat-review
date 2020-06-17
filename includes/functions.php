@@ -25,6 +25,28 @@ function scr_get_overall_rating($post_id)
     return $rating;
 }
 
+/*
+ * array $components [ 'stats', 'prosandcons', 'votes']
+ * by default it returns comments of stats
+ * returns comments of components
+ */
+function scr_get_comments_args($post_id, $components = ['stats'])
+{
+    return apply_filters('scr_comments_args', $post_id, $components);
+}
+
+/*
+ * string $type
+ * there are three types of stat available post_stat, author_stat and comment_stat
+ * by default return post-stat
+ * returns stat items args
+ */
+
+function scr_get_stat_args($post_id, $type = 'post_stat')
+{
+    return apply_filters('scr_stat_args', $post_id, $type);
+}
+
 function scr_get_user_reviews($post_id, $parent = true)
 {
     $args = [

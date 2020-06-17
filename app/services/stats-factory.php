@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) {
 } // Exit if accessed directly
 
 /*
- *  Use Cases for listing, post_overall, summary_author and summary_users
+ *  Use Cases of stats_factory are post_stat, author_stat and comment_stat
  */
 if (!class_exists('\StarcatReview\App\Services\Stats_Factory')) {
     class Stats_Factory
@@ -21,33 +21,19 @@ if (!class_exists('\StarcatReview\App\Services\Stats_Factory')) {
             $this->overall_name = 'overall';
         }
 
-        public function get_prepared_stat_args(int $post_id, $component = 'post_overall')
+        public function get_stat_args($post_id, $type = 'post_stat')
         {
-            // error_log('!!!  get_prepared_stat_args !!!');
-
             $author_stat = $this->get_author_stat($post_id);
-
-            if ($component == 'summary_author') {
+            if ($type == 'author_stat') {
                 return $author_stat;
             }
 
-            $comments_factory = new \StarcatReview\App\Services\Comments_Factory();
-            $comments_of_stats = $comments_factory->get_comments_of_items($post_id);
-
-            if ($component == 'listing') {
-                return $comments_of_stats;
-            }
-
-            // Comment Overall with Comment feature stat overall
-            $comment_stat = $this->get_comment_stat($comments_of_stats);
-
-            if ($component == 'summary_users') {
+            $comment_stat = $this->get_comment_stat(scr_get_comments_args($post_id));
+            if ($type == 'comment_stat') {
                 return $comment_stat;
             }
 
-            $post_stat = $this->get_post_stat($author_stat, $comment_stat);
-
-            return $post_stat;
+            return $this->get_post_stat($author_stat, $comment_stat);
         }
 
         public function get_single_stat($given_stats)

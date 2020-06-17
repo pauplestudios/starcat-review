@@ -16,8 +16,10 @@ if (!class_exists('\StarcatReview\App\Services\Services')) {
             // error_log('!!! register services !!!');
 
             $stats_factory = new \StarcatReview\App\Services\Stats_Factory();
+            $comments_factory = new \StarcatReview\App\Services\Comments_Factory();
 
-            add_filter('prepare_stat_args', [$stats_factory, 'get_prepared_stat_args'], 10, 2);
+            add_filter('scr_comments_args', [$comments_factory, 'get_comments_args'], 10, 2);
+            add_filter('scr_stat_args', [$stats_factory, 'get_stat_args'], 10, 2);
 
             add_filter('scr_stat', [$this, 'get_allowed_stat'], 1, 1);
             add_filter('scr_stat', [$stats_factory, 'get_single_stat']);
