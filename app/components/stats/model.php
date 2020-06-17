@@ -52,8 +52,12 @@ if (!class_exists('\StarcatReview\App\Components\Stats\Model')) {
                 foreach ($args['items']['stats'] as $stat_key => $stat_value) {
                     $itemsProps[$stat_key] = $this->get_stat($stat_value);
                 }
+                $overall_stat = $this->get_stat($args['items']['overall']);
                 if ($this->collection['singularity'] == 'multiple') {
-                    $itemsProps['overall'] = $this->get_stat($args['items']['overall']);
+                    $itemsProps['overall'] = $overall_stat;
+                }
+                if ($this->collection['stat_type'] == 'post_stat') {
+                    return ['overall' => $overall_stat];
                 }
             }
 

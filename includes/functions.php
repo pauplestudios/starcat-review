@@ -44,7 +44,7 @@ function scr_get_user_reviews($post_id, $parent = true)
 {
     $args = [
         'post_id' => $post_id,
-        'type' => SCR_COMMENT_TYPE,
+        'type' => [SCR_COMMENT_TYPE, 'starcat_review'],
         'status' => 'approve',
     ];
 
@@ -65,7 +65,7 @@ function scr_get_user_reviews_count($post_id, $parent = true)
 {
     $args = [
         'post_id' => $post_id,
-        'type' => SCR_COMMENT_TYPE,
+        'type' => [SCR_COMMENT_TYPE, 'starcat_review'],
         'status' => 'approve',
     ];
 
@@ -85,7 +85,7 @@ function scr_get_trend_score($post_id)
 {
     $args = [
         'post_id' => $post_id,
-        'type' => SCR_COMMENT_TYPE,
+        'type' => [SCR_COMMENT_TYPE, 'starcat_review'],
         'date_query' => array(
             'after' => '4 weeks ago',
             'before' => 'tomorrow',
