@@ -78,8 +78,8 @@ if (!class_exists('\StarcatReview\App\Services\Stats_Factory')) {
                     $post_stat[$this->stats_name][$comment_stat_key] = $stat_value;
                 }
 
-                $overall_total = $author_stat[$this->overall_name] + $comment_stat[$this->overall_name];
-                $post_stat[$this->overall_name] = $this->get_round_value($overall_total, 2);
+                $post_stat[$this->overall_name] = $this->get_overall_stat_value($author_stat, $comment_stat);
+
                 return $post_stat;
             }
 
@@ -136,6 +136,32 @@ if (!class_exists('\StarcatReview\App\Services\Stats_Factory')) {
             }
 
             return $overall;
+        }
+
+        private function get_overall_stat_value($author_stat, $comment_stat)
+        {
+            $is_author_exist = array_key_exists($this->overall_name, $author_stat);
+            $is_comment_exist = array_key_exists($this->overall_name, $comment_stat);
+
+            $is_author_zero_greater = ($is_author_exist && $author_stat[$this->overall_name] > 0) ? true : false;
+            $is_comment_zero_greater = ($is_comment_exist && $comment_stat[$this->overall_name] > 0) ? true : false;
+
+            $overall_value = 0;
+
+            if ($is_author_zero_greater) {
+                $overall_value = $author_stat[$this->overall_name];
+            }
+
+            if ($is_comment_zero_greater) {
+                $overall_value = $comment_stat[$this->overall_name];
+            }
+
+            if ($is_author_zero_greater && $is_comment_zero_greater) {
+                $overall_total = $author_stat[$this->overall_name] + $comment_stat[$this->overall_name];
+                $overall_value = $this->get_round_value($overall_total, 2);
+            }
+
+            return $overall_value;
         }
 
         private function get_comment_stat_of_feature($stat_feature)

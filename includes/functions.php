@@ -4,15 +4,8 @@ use \StarcatReview\Includes\Settings\SCR_Getter;
 
 function scr_get_overall_rating($post_id)
 {
-    $args = [
-        'post_id' => $post_id,
-        'combine_type' => 'overall',
-    ];
-    if (SCR_Getter::get('enable-author-review') == true) {
-        $items = get_post_meta($post_id, SCR_POST_META, true);
-    }
-    $args['items'] = isset($items) && !empty($items) ? $items : [];
-    $args['items']['comments-list'] = scr_get_user_reviews($post_id);
+    $args['items'] = scr_get_stat_args($post_id);
+    $args['stat_type'] = 'post_stat';
 
     $args = array_merge(SCR_Getter::get_stat_default_args(), $args);
 

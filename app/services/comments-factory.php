@@ -15,7 +15,7 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
 
         public function get_comments_args($post_id, $use_cases = ['stats'])
         {
-            $components = [];
+            $components = ['stats' => []];
             $comment_ids = $this->get_comments_ids($post_id);
 
             if ($this->is_set($comment_ids)) {
@@ -78,7 +78,8 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
         protected function get_stat($post_id, $comment_id, $review)
         {
             $stat_item = [];
-            if ($this->is_set($review['stats'])) {
+
+            if ($this->is_key_exist('stats', $review)) {
                 $stat_item = apply_filters('scr_stat', $review['stats']);
             }
 
@@ -113,6 +114,15 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
         {
             $attachment = [];
             return $attachment;
+        }
+
+        private function is_key_exist($key, $array)
+        {
+            $is_key_exist = true;
+            if (((is_array($array)) && (!array_key_exists($key, $array))) || (!is_array($array))) {
+                $is_key_exist = false;
+            }
+            return $is_key_exist;
         }
 
         private function is_set($given)

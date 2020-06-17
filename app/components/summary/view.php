@@ -59,6 +59,6 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
             $html .= '</div>';
 
             return $html;
-        }      
+        }
     }
 }
