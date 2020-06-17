@@ -41,8 +41,8 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
         $component = 'summary_users';
         $actual = apply_filters('prepare_stat_args', $data['product_id'], $component);
         $expected = [
-            'stats' => ['feature' => 78],
-            'overall' => 78,
+            'stats' => ['feature' => 77],
+            'overall' => 77,
         ];
 
         $this->assertEquals($expected, $actual);
@@ -52,7 +52,7 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
          */
         $component = 'listing';
         $actual = apply_filters('prepare_stat_args', $data['product_id'], $component);
-        $this->assertEquals(8, count($actual));
+        $this->assertEquals(10, count($actual));
 
         SCR_Getter::set('stat-singularity', 'multiple');
         $singularity = SCR_Getter::get('stat-singularity');
@@ -63,10 +63,11 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
         $actual = apply_filters('prepare_stat_args', $data['product_id']);
         $expected = [
             'stats' => [
-                'feature' => 62,
+                'feature' => 63,
                 'speed' => 80,
-                'ui' => 70,
                 'quality' => 56,
+                'ui' => 78,
+                'ux' => 80,
             ],
             'overall' => 70,
         ];
@@ -82,8 +83,8 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
             'stats' => [
                 'feature' => 50,
                 'speed' => 80,
-                'ui' => 90,
                 'quality' => 40,
+                'ui' => 90,
             ],
             'overall' => 65,
         ];
@@ -97,10 +98,11 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
         $actual = apply_filters('prepare_stat_args', $data['product_id'], $component);
         $expected = [
             'stats' => [
-                'feature' => 74,
-                'speed' => 80,
-                'ui' => 50,
-                'quality' => 71,
+                'feature' => 75,
+                'speed' => 79,
+                'quality' => 72,
+                'ui' => 65,
+                'ux' => 80,
             ],
             'overall' => 75,
         ];
@@ -127,16 +129,12 @@ class StatsTest extends \Codeception\TestCase\WPTestCase
         $data['product_id'] = $this->factory()->post->create(['post_type' => 'product']);
         add_post_meta($data['product_id'], SCR_POST_META, $post_meta);
 
-        $comment_id = $this->factory()->comment->create_post_comments($data['product_id'], 1, ['comment_type' => 'review']);
-
         for ($ii = 0; $ii < sizeof($comment_metas); $ii++) {
             $comment_id = $this->factory()->comment->create_post_comments($data['product_id'], 1, ['comment_type' => 'review'])[0];
             $data['comment_ids'][] = $comment_id;
             add_comment_meta($comment_id, SCR_COMMENT_META, $comment_metas[$ii]);
-
-            if ($ii % 2 == 0) {
-                add_comment_meta($comment_id, 'rating', ($ii <= 5) ? $ii : 5);
-            }
+            // Adding product rating for each comment
+            add_comment_meta($comment_id, 'rating', 4);
         }
 
         $data['global_stats'] = [

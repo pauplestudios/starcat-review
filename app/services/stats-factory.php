@@ -80,8 +80,16 @@ if (!class_exists('\StarcatReview\App\Services\Stats_Factory')) {
             if ($is_author_stat_exist && $is_comment_stat_exist) {
 
                 foreach ($comment_stat[$this->stats_name] as $comment_stat_key => $comment_stat_value) {
-                    $stat_total = $author_stat[$this->stats_name][$comment_stat_key] + $comment_stat_value;
-                    $post_stat[$this->stats_name][$comment_stat_key] = $this->get_round_value($stat_total, 2);
+
+                    $is_stat_exist = array_key_exists($comment_stat_key, $author_stat[$this->stats_name]);
+                    $stat_value = $comment_stat_value;
+
+                    if ($is_stat_exist && $author_stat[$this->stats_name][$comment_stat_key] > 0) {
+                        $stat_total = $author_stat[$this->stats_name][$comment_stat_key] + $comment_stat_value;
+                        $stat_value = $this->get_round_value($stat_total, 2);
+                    }
+
+                    $post_stat[$this->stats_name][$comment_stat_key] = $stat_value;
                 }
 
                 $overall_total = $author_stat[$this->overall_name] + $comment_stat[$this->overall_name];
