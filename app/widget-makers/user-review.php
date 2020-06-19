@@ -21,8 +21,10 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
         {
 
             $args = $this->get_default_args();
-            $form_view = $this->form_controller->get_view($args);
-            $reviews_list_view = $this->reviews_controller->get_view($args);
+            // $form_view = $this->form_controller->get_view($args);
+            // $reviews_list_view = $this->reviews_controller->get_view($args);
+            $ur_controller = new \StarcatReview\App\Components\User_Reviews_New\Controller();
+            $reviews_list_view = $ur_controller->get_view($args);
 
             $wrapper_start_html = '<div id="scr-controlled-list" class="scr-user-controlled-list" data-collectionprops="{<pagination<:true,<page<:9,<type<:2}">';
             $this->controls_builder = new \StarcatReview\App\Builders\Controls_Builder('user_review');
@@ -42,11 +44,11 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
 
         protected function get_default_args()
         {
-            $stat_args = SCR_Getter::get_stat_default_args();
+            $stat_args = ['stats_args' => SCR_Getter::get_stat_default_args()];
 
             $args = [
                 'post_id' => get_the_ID(),
-                'items' => $this->get_items_args(),
+                // 'items' => $this->get_items_args(),
                 'enable_pros_cons' => SCR_Getter::get('enable-pros-cons'),
                 'show_list_title' => SCR_Getter::get('ur_show_list_title'),
                 'list_title' => SCR_Getter::get('ur_list_title'),
@@ -137,21 +139,12 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             //     }
             $components = ['comments', 'stats', 'prosandcons', 'votes', 'attachments'];
             $args['items'] = scr_get_comments_args(get_the_ID(), $components);
-            error_log('args["items"] : ' . print_r($args["items"], true));
+            // error_log('args["items"] : ' . print_r($args["items"], true));
 
             // $args['items']['comments-list'] = $comments;
             // }
 
             return $args;
-        }
-
-        // I am not sure about we using this below methods in any components "santhosh"
-        // for rich snippet product schema purpose
-        public function get_schema_reviews()
-        {
-            $post_meta = get_post_meta(get_the_ID(), SCR_POST_META, true);
-            $reviews = $this->get_comments_list();
-            return $reviews;
         }
 
         protected function get_comments_list()
