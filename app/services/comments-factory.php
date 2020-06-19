@@ -125,9 +125,9 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
                 'date' => get_comment_date('', $comment_obj->comment_ID),
                 'time' => $this->get_comment_time($comment_obj->comment_date),
                 'time_stamp' => get_comment_date('U', $comment_obj->comment_ID),
-                'can_edit' => (get_current_user_id() == $comment_obj->user_id) ? true : false,
-
             ];
+
+            $filtered_comment = apply_filters("scr_comment", $comment);
 
             // error_log('comment : ' . print_r($comment_obj, true));
             if ($this->is_key_exist('title', $review)) {

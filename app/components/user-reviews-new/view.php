@@ -155,9 +155,8 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
             $html = '';
             $html .= '<div class="actions">';
             $html .= $this->get_action_links($comment);
-            $html .= $this->get_action_helpful($comment);
             // if ($this->collection['can_vote'] && $this->collection['enable_voting']) {
-            //     $html .= $this->get_helpful($comment);
+            $html .= $this->get_action_helpful($comment);
             // }
             $html .= '</div>';
 

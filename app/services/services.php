@@ -18,11 +18,12 @@ if (!class_exists('\StarcatReview\App\Services\Services')) {
             $stats_factory = new \StarcatReview\App\Services\Stats_Factory();
             $comments_factory = new \StarcatReview\App\Services\Comments_Factory();
 
-            add_filter('scr_comments_args', [$comments_factory, 'get_comments_args'], 10, 2);
-            add_filter('scr_stat_args', [$stats_factory, 'get_stat_args'], 10, 2);
-
             add_filter('scr_stat', [$this, 'get_allowed_stat'], 1, 1);
             add_filter('scr_stat', [$stats_factory, 'get_single_stat']);
+            add_filter('scr_stat_args', [$stats_factory, 'get_stat_args'], 10, 2);
+
+            add_filter('scr_comment', [$this, 'add_comment_capabilities']);
+            add_filter('scr_comments_args', [$comments_factory, 'get_comments_args'], 10, 2);
         }
 
         /*
@@ -55,6 +56,18 @@ if (!class_exists('\StarcatReview\App\Services\Services')) {
             }
 
             return $stats;
+        }
+
+        /*
+         * Adding capabilties to a comment like Can_Edit Can_Reply and Can_Vote
+         */
+
+        public function add_comment_capabilities($comment)
+        {
+            error_log('!!! add_capabilities_to_comment  !!!');
+            // error_log('comment : ' . print_r($comment, true));
+
+            return $comment;
         }
 
     } // END CLASS
