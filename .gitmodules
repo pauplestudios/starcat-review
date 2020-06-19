@@ -1,15 +1,15 @@
 [submodule "includes/lib/upgrader"]
 	path = includes/lib/upgrader
-	url = https://santhoshoutright@bitbucket.org/pauple/upgrader.git
+	url = https://bitbucket.org/pauple/upgrader.git
 [submodule "includes/lib/widgetry"]
 	path = includes/lib/widgetry
-	url = https://santhoshoutright@bitbucket.org/pauple/widgetry.git
+	url = https://bitbucket.org/pauple/widgetry.git
 [submodule "includes/lib/cpt-addon"]
 	path = includes/lib/cpt-addon
-	url = https://santhoshoutright@bitbucket.org/pauple/starcat-review-cpt.git
+	url = https://bitbucket.org/pauple/starcat-review-cpt.git
 [submodule "includes/lib/ct-addon"]
 	path = includes/lib/ct-addon
-	url = https://santhoshoutright@bitbucket.org/pauple/starcat-review-comparison-table.git
+	url = https://bitbucket.org/pauple/starcat-review-comparison-table.git
 [submodule "includes/lib/starcat-review-woo-notify"]
 	path = includes/lib/starcat-review-woo-notify
 	url = https://bitbucket.org/pauple/starcat-review-woo-notification.git
