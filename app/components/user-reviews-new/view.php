@@ -60,7 +60,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
 
         protected function get_children_item($comment)
         {
-            $html = '<div class="comment" id="' . $comment['comment_id'] . '" data-comment-parent-id ="' . $comment['comment_parent'] . '" >';
+            $html = '<div class="comment" id="' . $comment['ID'] . '" data-comment-parent-id ="' . $comment['parent'] . '" >';
             $html .= $this->get_avatar($comment);
 
             $html .= '<div class="content">';
@@ -88,17 +88,19 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
 
         protected function get_content_meta($comment)
         {
-            // $likes = (isset($comment['votes']['likes']) && !empty($comment['votes']['likes'])) ? $comment['votes']['likes'] : 0;
-            // $rating = (isset($comment['stats']['overall']) && !empty($comment['stats']['overall'])) ? $comment['stats']['overall'] : 0;
 
             $html = '';
             $html .= '<span class="author"> ' . $comment['author'] . ' </span>';
             $html .= '<div class="metadata">';
             $html .= '<span class="date">' . $comment['date'] . '</span>';
             $html .= '<span class="time">AT ' . $comment['time'] . '</span>';
-            $html .= '<span class="postDate" data-postDate="' . $comment['time_stamp'] . '"></span>'; // used by list-control.JS
-            $html .= '<span class="likes" data-likes="' . $comment['likes'] . '"></span>'; // used by list-control.JS
-            $html .= '<span class="positiveScore" data-positiveScore="' . $comment['rating'] . '"></span>'; // used by list-control.JS
+
+            if ($comment['parent'] == 0) {
+                $html .= '<span class="postDate" data-postDate="' . $comment['time_stamp'] . '"></span>'; // used by list-control.JS
+                $html .= '<span class="likes" data-likes="' . $comment['likes'] . '"></span>'; // used by list-control.JS
+                $html .= '<span class="positiveScore" data-positiveScore="' . $comment['rating'] . '"></span>'; // used by list-control.JS
+            }
+
             $html .= '</div>';
 
             return $html;

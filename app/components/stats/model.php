@@ -49,15 +49,17 @@ if (!class_exists('\StarcatReview\App\Components\Stats\Model')) {
             $itemsProps = [];
 
             if (isset($args['items']) && !empty($args['items'])) {
-                foreach ($args['items']['stats'] as $stat_key => $stat_value) {
-                    $itemsProps[$stat_key] = $this->get_stat($stat_value);
-                }
+
                 $overall_stat = $this->get_stat($args['items']['overall']);
-                if ($this->collection['singularity'] == 'multiple') {
+                if ($this->collection['singularity'] == 'multiple' && count($args['items']['stats']) > 1) {
                     $itemsProps['overall'] = $overall_stat;
                 }
                 if ($this->collection['stat_type'] == 'post_stat') {
                     return ['overall' => $overall_stat];
+                }
+
+                foreach ($args['items']['stats'] as $stat_key => $stat_value) {
+                    $itemsProps[$stat_key] = $this->get_stat($stat_value);
                 }
             }
 

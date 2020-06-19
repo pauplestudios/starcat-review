@@ -64,7 +64,7 @@ if (!class_exists('\StarcatReview\App\Services\Services')) {
 
         public function add_comment_capabilities($comment)
         {
-            error_log('!!! add_capabilities_to_comment  !!!');
+            // error_log('!!! add_capabilities_to_comment  !!!');
             // error_log('comment : ' . print_r($comment, true));
 
             return $comment;
