@@ -93,11 +93,28 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
 
         protected function get_text($comment)
         {
+            $title = '';
+            $stats_view = '';
+            $prosandcons_view = '';
+            if (isset($comment['stats'])) {
+                $stats = new \StarcatReview\App\Components\Stats\Controller($comment['stats']);
+                $stats_view = $stats->get_view();
+            }
+
+            if (isset($comment['prosandcons'])) {
+                $prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller();
+                $prosandcons_view = $prosandcons->get_view($comment['prosandcons']);
+            }
+
+            if (isset($comment['title'])) {
+                $title_html = '<div class="title review-card__header"> ' . $comment['title'] . ' </div>';
+            }
+
             $html = '<div class="text">';
-            $html .= '<div class="title review-card__header"> ' . $comment['title'] . ' </div>';
-            // $html .= '<div class="stats"> ' . $this->get_stats_view($comment) . '</div>';
+            $html .= $title;
+            $html .= '<div class="stats"> ' . $stats_view . '</div>';
             $html .= '<div class="description review-card__body"><p>' . $comment['content'] . '</p></div>';
-            // $html .= $this->get_prosandcons_view($comment);
+            $html .= $prosandcons_view;
 
             $review_photos = apply_filters('scr_photo_reviews/get_single_review_photos', $comment);
             $review_photos_html = is_string($review_photos) ? $review_photos : '';
@@ -153,9 +170,29 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
             $html .= '</div>';
             return $html;
         }
-        private function get_action_helpful()
+
+        private function get_action_helpful($comment)
         {
-            $html = '';
+            // $vote_summary = $this->get_vote_summary($props);
+            $vote_summary = $comment['votes'];
+
+            $like_active = ($vote_summary['active'] === 'like') ? 'active' : '';
+            $dislike_active = ($vote_summary['active'] === 'dislike') ? 'active' : '';
+
+            $html = '<div class="helpful"> ';
+
+            $html .= '<div class="vote likes-and-dislikes" data-comment-id="' . $comment['ID'] . '">';
+            $html .= 'Was this helpful to you ? ';
+            $html .= '<a class="like ' . $like_active . '"><i class="bordered thumbs up outline icon"></i><span class="likes">' . $vote_summary['likes'] . '</span></a>';
+            $html .= '<a class="dislike ' . $dislike_active . '"><i class="bordered thumbs down outline icon"></i><span class="dislikes">' . $vote_summary['dislikes'] . '</span></a>';
+            $html .= '</div>';
+
+            $html .= '<div class="vote-summary">';
+            $html .= '<span class="helpful">' . $vote_summary['likes'] . '</span> of <span class="people"> ' . $vote_summary['people'] . ' </span> people found this review helpful';
+            $html .= '</div>';
+
+            $html .= '</div>';
+
             return $html;
         }
 

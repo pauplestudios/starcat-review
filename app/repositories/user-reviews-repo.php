@@ -188,30 +188,25 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
 
         public function store_vote($props)
         {
-            if (metadata_exists('comment', $props['comment_id'], SCR_COMMENT_META)) {
-                $meta_props = get_comment_meta($props['comment_id'], SCR_COMMENT_META, true);
+            $meta_props = get_comment_meta($props['comment_id'], SCR_COMMENT_META, true);
 
-                if (isset($meta_props['votes']) && !empty($meta_props['votes'])) {
-                    $is_current_user_voted = false;
-                    foreach ($meta_props['votes'] as &$vote) {
-                        if ($vote['user_id'] == $props['vote']['user_id']) {
-                            $vote['vote'] = $props['vote']['vote'];
-                            $is_current_user_voted = true;
-                        }
-                        // error_log('each vote : ' . print_r($vote, true));
+            if (isset($meta_props['votes']) && !empty($meta_props['votes'])) {
+                $is_current_user_voted = false;
+                foreach ($meta_props['votes'] as &$vote) {
+                    if ($vote['user_id'] == $props['vote']['user_id']) {
+                        $vote['vote'] = $props['vote']['vote'];
+                        $is_current_user_voted = true;
                     }
-                    if ($is_current_user_voted == false) {
-                        array_push($meta_props['votes'], $props['vote']);
-                    }
-                } else {
-                    $vote_props = ['votes' => [$props['vote']]];
-                    $meta_props = array_merge($meta_props, $vote_props);
+                    error_log('each vote : ' . print_r($vote, true));
                 }
-
-                // error_log('$meta_props : ' . print_r($meta_props['votes'], true));
-
-                update_comment_meta($props['comment_id'], SCR_COMMENT_META, $meta_props);
+                if ($is_current_user_voted == false) {
+                    array_push($meta_props['votes'], $props['vote']);
+                }
+            } else {
+                $vote_props = ['votes' => [$props['vote']]];
+                $meta_props = isset($meta_props) && !empty($meta_props) ? array_merge($meta_props, $vote_props) : $vote_props;
             }
+            update_comment_meta($props['comment_id'], SCR_COMMENT_META, $meta_props);
         }
 
         public function get_processed_data()

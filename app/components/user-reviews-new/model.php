@@ -87,57 +87,5 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\Model')) {
 
             return $item;
         }
-
-        private function get_vote_likes($props)
-        {
-            $vote_summary = 0;
-
-            if (isset($props['args']['items']['votes']['summary']) && is_int($props['args']['items']['votes']['summary']['likes'])) {
-                $vote_summary = $props['args']['items']['votes']['summary']['likes'];
-            }
-
-            return $vote_summary;
-        }
-
-        private function get_helpful($props)
-        {
-            $vote_summary = $this->get_vote_summary($props);
-
-            $like_active = ($vote_summary['active'] === 'like') ? 'active' : '';
-            $dislike_active = ($vote_summary['active'] === 'dislike') ? 'active' : '';
-
-            $html = '<div class="helpful"> ';
-
-            $html .= '<div class="vote likes-and-dislikes" data-comment-id="' . $props['comment_id'] . '">';
-            $html .= 'Was this helpful to you ? ';
-            $html .= '<a class="like ' . $like_active . '"><i class="bordered thumbs up outline icon"></i><span class="likes">' . $vote_summary['likes'] . '</span></a>';
-            $html .= '<a class="dislike ' . $dislike_active . '"><i class="bordered thumbs down outline icon"></i><span class="dislikes">' . $vote_summary['dislikes'] . '</span></a>';
-            $html .= '</div>';
-
-            $html .= '<div class="vote-summary">';
-            $html .= '<span class="helpful">' . $vote_summary['likes'] . '</span> of <span class="people"> ' . $vote_summary['people'] . ' </span> people found this review helpful';
-            $html .= '</div>';
-
-            $html .= '</div>';
-
-            return $html;
-        }
-
-        private function get_vote_summary($props)
-        {
-            // Default
-            $vote_summary = [
-                'active' => '',
-                'likes' => 0,
-                'dislikes' => 0,
-                'people' => 0,
-            ];
-
-            if (isset($props['args']['items']['votes'])) {
-                $vote_summary = $props['args']['items']['votes']['summary'];
-            }
-
-            return $vote_summary;
-        }
     }
 }

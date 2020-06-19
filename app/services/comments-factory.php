@@ -175,6 +175,14 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
         protected function get_proandcon($review)
         {
             $proandcon = [];
+
+            if ($this->is_key_exist('pros', $review)) {
+                $proandcon['items']['pros-list'] = $review['pros'];
+            }
+            if ($this->is_key_exist('cons', $review)) {
+                $proandcon['items']['cons-list'] = $review['cons'];
+            }
+
             return $proandcon;
 
         }
