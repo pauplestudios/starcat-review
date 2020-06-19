@@ -107,15 +107,21 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
         {
             $comment = [];
             $comment_obj = get_comment($comment_id);
+            $author = isset($comment_obj->comment_author) && !empty($comment_obj->comment_author) ? ucfirst($comment_obj->comment_author) : __('Anonymous', SCR_DOMAIN);
+
             $comment = [
+                'ID' => $comment_obj->comment_ID,
+                'author' => $author,
+                'email' => $comment_obj->comment_author_email,
+                'user_id' => $comment_obj->user_id,
+                'avatar' => get_avatar($comment_obj->user_id),
                 'content' => $comment_obj->comment_content,
                 'parent' => $comment_obj->comment_parent,
-                'user_id' => $comment_obj->user_id,
                 'approved' => $comment_obj->comment_approved,
-                'date' => get_comment_date('', $comment->comment_ID),
+                'date' => get_comment_date('', $comment_obj->comment_ID),
                 'time' => $this->get_comment_time($comment_obj->comment_date),
-                'email' => $comment_obj->comment_author_email,
-                'avatar' => get_avatar($comment->user_id),
+                'time_stamp' => get_comment_date('U', $comment_obj->comment_ID),
+
             ];
 
             // error_log('comment : ' . print_r($comment_obj, true));
@@ -128,8 +134,42 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
 
         protected function get_vote($review)
         {
-            $vote = [];
-            return $vote;
+            $summary = [
+                'likes' => 0,
+                'dislikes' => 0,
+                'active' => 0,
+                'people' => 0,
+            ];
+
+            if ($this->is_key_exist('votes', $review)) {
+                foreach ($review['votes'] as $vote) {
+
+                    // Is active Like or DisLike or Not
+                    if (get_current_user_id() == $vote['user_id']) {
+                        if (($vote['vote'] == 1)) {
+                            $summary['active'] = 'like';
+                        } elseif (($vote['vote'] == -1)) {
+                            $summary['active'] = 'dislike';
+                        } else {
+                            $summary['active'] = 0;
+                        }
+                    }
+
+                    // Likes
+                    if ($vote['vote'] == 1) {
+                        $summary['likes']++;
+                    }
+
+                    // Dislikes
+                    if ($vote['vote'] == -1) {
+                        $summary['dislikes']++;
+                    }
+                    // poeple
+                    $summary['people']++;
+                }
+            }
+
+            return $summary;
         }
 
         protected function get_proandcon($review)
