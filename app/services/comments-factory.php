@@ -18,39 +18,48 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
             $identical = 'stats';
             $comments = [$identical => []];
             $comment_ids = $this->get_comments_ids($post_id);
-            
+
             if ($this->is_set($comment_ids)) {
                 foreach ($comment_ids as $comment_id) {
-                    
+
                     $review = get_comment_meta($comment_id, SCR_COMMENT_META, true);
 
                     foreach ($use_cases as $case) {
+                        $item = [];
                         $identical = $case;
+
                         if ($case == 'stats') {
-                            $comments[$case][$comment_id] = $this->get_stat($post_id, $comment_id, $review);
+                            $item = $this->get_stat($post_id, $comment_id, $review);
                         }
 
                         if ($case == 'prosandcons') {
-                            $comments[$case][$comment_id] = $this->get_proandcon($review);
-                        }
-                        
-                        if ($case == 'votes') {
-                            $comments[$case][$comment_id] = $this->get_vote($review);
+                            $item = $this->get_proandcon($review);
                         }
 
-                        if ($case == 'attachments'){
-                            $comments[$case][$comment_id] = $this->get_attachment($review);
-                        }                       
-                        
-                        if ($case == 'comments') {
-                            $comments[$case][$comment_id] = $this->get_comment($comment_id, $review);
+                        if ($case == 'votes') {
+                            $item = $this->get_vote($review);
                         }
-                    }                        
+
+                        if ($case == 'attachments') {
+                            $item = $this->get_attachment($review);
+                        }
+
+                        if ($case == 'comments') {
+                            $item = $this->get_comment($comment_id, $review);
+                        }
+
+                        // Non_empty item only added to comments array
+                        if ($this->is_set($item)) {
+                            $comments[$case][$comment_id] = $item;
+                        }
+                    }
+
                 }
 
             }
 
-            if(count($use_cases) == 1 && array_key_exists($identical, $comments)){
+            // It returns asked single component. Defualt component is 'stats'
+            if (count($use_cases) == 1 && array_key_exists($identical, $comments)) {
                 return $comments[$identical];
             }
 
