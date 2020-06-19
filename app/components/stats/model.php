@@ -14,10 +14,6 @@ if (!class_exists('\StarcatReview\App\Components\Stats\Model')) {
             $this->collection = $this->get_collectionProps($args);
             $this->items = $this->get_itemsProps($args);
 
-            if (isset($args['combine_type']) && $args['combine_type'] == 'overall') {
-                $this->items = $this->get_combined_overall($this->items, $args);
-            }
-
             $view_props = [
                 'collection' => $this->collection,
                 'items' => $this->items,
@@ -43,204 +39,39 @@ if (!class_exists('\StarcatReview\App\Components\Stats\Model')) {
             ];
 
             $collection = $this->get_icons($collection);
-            $collection['combine_type'] = isset($args['combine_type']) ? $args['combine_type'] : '';
+            $collection['stat_type'] = isset($args['stat_type']) && !empty($args['stat_type']) ? $args['stat_type'] : 'comment_stat';
 
             return $collection;
         }
 
         public function get_itemsProps($args)
         {
-            $stats = [];
+            $itemsProps = [];
 
-            if (!isset($args['items']['stats-list']) && empty($args['items']['stats-list'])) {
-                return $stats;
-            }
+            if (isset($args['items']) && !empty($args['items'])) {
 
-            $stat_items = $this->get_filtered_stats($args);
-
-            $stat_overall_cumulative = 0;
-            $stat_overall_count = 0;
-
-            foreach ($stat_items as $stat) {
-
-                if ($this->collection['singularity'] == 'single' && $stat_overall_count >= 1) {
-                    break;
+                $overall_stat = $this->get_stat($args['items']['overall']);
+                if ($this->collection['singularity'] == 'multiple' && count($args['items']['stats']) > 1) {
+                    $itemsProps['overall'] = $overall_stat;
+                }
+                if ($this->collection['stat_type'] == 'post_stat') {
+                    return ['overall' => $overall_stat];
                 }
 
-                $stat_overall_cumulative += $stat['rating'];
-                $stat_value = $stat['rating'];
-                $stat_score = $this->get_stat_score($stat_value);
-
-                if ($this->is_stat_included('all', $this->collection)) {
-                    $stats[$stat['stat_name']] = [
-                        'rating' => $stat['rating'],
-                        'score' => $stat_score,
-                    ];
+                foreach ($args['items']['stats'] as $stat_key => $stat_value) {
+                    $itemsProps[$stat_key] = $this->get_stat($stat_value);
                 }
-
-                $stat_overall_count++;
             }
 
-            if ($stat_overall_count > 1 && $this->collection['singularity'] !== 'single') {
-                $overall_stat = $this->get_overall_stat($stat_overall_cumulative, $stat_overall_count);
-                $stats = array_merge($overall_stat, $stats);
-            }
-
-            return array_change_key_case($stats);
+            return $itemsProps;
         }
 
-        protected function get_combined_overall($author_items, $args)
+        protected function get_stat($rating)
         {
-            $user_items = $this->get_userItems($args);
-            $user_args = $args;
-            $user_args['items'] = $user_items;
-            $user_items = $this->get_itemsProps($user_args);
-            // error_log("Author : " . print_r($author_items, true));
-            // error_log("User : " . print_r($user_items, true));
-            // error_log("Global : " . print_r($args['global_stats'], true));
-
-            $count = 0;
-            $combine = [
-                'user_overall' => 0,
-                'author_overall' => 0,
+            return [
+                'rating' => $rating,
+                'score' => $this->get_stat_score($rating),
             ];
-
-            foreach ($args['global_stats'] as $allowed_stat) {
-
-                if ($args['singularity'] == 'single' && $count >= 1) {
-                    break;
-                }
-
-                $allowed_stat_name = strtolower($allowed_stat['stat_name']);
-
-                if (array_key_exists($allowed_stat_name, $user_items)) {
-                    $combine['user_overall'] += $user_items[$allowed_stat_name]['rating'];
-                    // error_log("I am User Exist : " . $user_items[$allowed_stat_name]['rating']);
-                }
-                if (array_key_exists($allowed_stat_name, $author_items)) {
-                    $combine['author_overall'] += $author_items[$allowed_stat_name]['rating'];
-                    // error_log("I am Author Exist : " . $author_items[$allowed_stat_name]['rating']);
-                }
-                $count++;
-            }
-
-            $user_overall = $combine['user_overall'] / $count;
-            $author_overall = $combine['author_overall'] / $count;
-
-            if ($author_overall !== 0 && $user_overall !== 0) {
-                $overall_rating = ($author_overall + $user_overall) / 2;
-            } else {
-                $overall_rating = $author_overall + $user_overall;
-            }
-
-            $overall_score = $this->get_stat_score($overall_rating);
-
-            $combine = [
-                'overall' => [
-                    'rating' => $overall_rating,
-                    'score' => $overall_score,
-                ],
-            ];
-
-            // error_log("combined : " . print_r($combine, true));
-
-            return $combine;
-        }
-
-        protected function get_userItems($args)
-        {
-            $items = [];
-
-            $groups = [];
-            // $groups['pros-list'] = array();
-            // $groups['cons-list'] = array();
-            $groups['stats-list'] = array();
-
-            $count = 0;
-            if (isset($args['items']['comments-list']) || !empty($args['items']['comments-list'])) {
-                foreach ($args['items']['comments-list'] as $comment) {
-                    if (isset($comment->reviews['stats'])) {
-                        foreach ($comment->reviews['stats'] as $stat_key => $stat_value) {
-                            $global_stats = [];
-                            if (isset($args['global_stats']) && !empty($args['global_stats'])) {
-                                $global_stats = array_map(function ($stat) {
-                                    return strtolower($stat['stat_name']);
-                                }, $args['global_stats']);
-                            }
-
-                            if (in_array(strtolower($stat_key), $global_stats)) {
-                                if (!isset($groups['stats-list'][$stat_key])) {
-                                    $groups['stats-list'][$stat_key] = 0;
-                                }
-
-                                $groups['stats-list'][$stat_key] += $comment->reviews['stats'][$stat_key]['rating'];
-                            }
-                        }
-                    }
-                    $count++;
-                }
-            }
-            $items['review_count'] = $count;
-
-            if (!empty($groups['stats-list'])) {
-                $items['stats-list'] = $this->get_user_stats($groups['stats-list'], $count);
-            }
-
-            return $items;
-        }
-
-        protected function get_user_stats($groups, $count)
-        {
-            $stats = [];
-
-            foreach ($groups as $key => $value) {
-                $stats[$key] = [
-                    'stat_name' => $key,
-                    'rating' => round($value / $count, 1),
-                ];
-            }
-
-            return $stats;
-        }
-
-        protected function get_filtered_stats($args)
-        {
-            $stats = [];
-
-            if (!isset($args['global_stats']) || !isset($args['items']['stats-list'])) {
-                return $stats;
-            }
-            $global_stats = $args['global_stats'];
-            if ($args['singularity'] == 'single') {
-                $global_stats = [$global_stats[0]];
-            }
-            if (!empty($args['global_stats']) && !empty($args['items']['stats-list'])) {
-
-                foreach ($global_stats as $allowed_stat) {
-                    $allowed_stat_name = strtolower($allowed_stat['stat_name']);
-                    if (array_key_exists($allowed_stat_name, $args['items']['stats-list'])) {
-                        $stats[$allowed_stat_name] = $args['items']['stats-list'][$allowed_stat_name];
-                    }
-                }
-            }
-
-            return $stats;
-        }
-
-        protected function get_overall_stat($cumulative, $count)
-        {
-            $rating = round($cumulative / $count, 1);
-            $stat_value = $rating;
-            $stat_score = $this->get_stat_score($stat_value);
-
-            $overall_stat = [
-                'overall' => [
-                    'rating' => $rating,
-                    'score' => $stat_score,
-                ],
-            ];
-
-            return $overall_stat;
         }
 
         protected function get_icons($collection)
@@ -272,25 +103,6 @@ if (!class_exists('\StarcatReview\App\Components\Stats\Model')) {
             return $stat_score;
         }
 
-        protected function is_stat_included($stat_item, $collection)
-        {
-
-            $stat_item = $this->get_santized_key($stat_item);
-
-            if (in_array($stat_item, $collection['show_stats'])) {
-                return true;
-            }
-
-            return false;
-        }
-
-        protected function get_santized_key($key)
-        {
-            $key = strtolower($key);
-            $key = trim($key);
-
-            return $key;
-        }
     } // END CLASS
 
 }

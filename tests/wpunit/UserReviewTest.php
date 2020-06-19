@@ -1,6 +1,6 @@
 <?php
 
-class UserReviewsTest extends \Codeception\TestCase\WPTestCase
+class UserReviewTest extends \Codeception\TestCase\WPTestCase
 {
 
     /**
@@ -28,11 +28,11 @@ class UserReviewsTest extends \Codeception\TestCase\WPTestCase
         $items = [
             [
                 'user_id' => 1,
-                'vote' => 1
+                'vote' => 1,
             ],
             [
                 'user_id' => 2,
-                'vote' => 1
+                'vote' => 1,
             ],
         ];
 
@@ -68,4 +68,27 @@ class UserReviewsTest extends \Codeception\TestCase\WPTestCase
         add_comment_meta($comment_id, 'pros_and_cons', $post_data['pros_and_cons']);
         return $comment_id;
     }
+
+    // public function ReviewTest()
+    // {
+    //     // insert a product
+    //     // create subscriber user
+    //     // insert review
+    //     $expected = [
+    //         'comment_id',
+    //         'comment_approved',
+    //         'comment_review' => [
+    //             'title',
+    //             'content',
+    //             'pros_and_cons',
+    //             'attachments',
+    //         ],
+    //     ];
+
+    //     // manually comment_approved
+
+    //     // check status of review
+
+    // }
+
 } // END TEST CLASS

@@ -21,8 +21,10 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
         {
 
             $args = $this->get_default_args();
-            $form_view = $this->form_controller->get_view($args);
-            $reviews_list_view = $this->reviews_controller->get_view($args);
+            // $form_view = $this->form_controller->get_view($args);
+            // $reviews_list_view = $this->reviews_controller->get_view($args);
+            $ur_controller = new \StarcatReview\App\Components\User_Reviews_New\Controller();
+            $reviews_list_view = $ur_controller->get_view($args);
 
             $wrapper_start_html = '<div id="scr-controlled-list" class="scr-user-controlled-list" data-collectionprops="{<pagination<:true,<page<:9,<type<:2}">';
             $this->controls_builder = new \StarcatReview\App\Builders\Controls_Builder('user_review');
@@ -48,11 +50,11 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
 
         protected function get_default_args()
         {
-            $stat_args = SCR_Getter::get_stat_default_args();
+            $stat_args = ['stats_args' => SCR_Getter::get_stat_default_args()];
 
             $args = [
                 'post_id' => get_the_ID(),
-                'items' => $this->get_items_args(),
+                // 'items' => $this->get_items_args(),
                 'enable_pros_cons' => SCR_Getter::get('enable-pros-cons'),
                 'show_list_title' => SCR_Getter::get('ur_show_list_title'),
                 'list_title' => SCR_Getter::get('ur_list_title'),
@@ -89,7 +91,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
 
         private function get_items_args()
         {
-            $post_meta = get_post_meta(get_the_ID(), '_scr_post_options', true);
+            $post_meta = get_post_meta(get_the_ID(), SCR_POST_META, true);
 
             $items = [];
 
@@ -122,39 +124,33 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
                 $args['can_user_vote'] = true;
             }
 
-            $comments = get_comments([
-                'post_id' => get_the_ID(),
-                'type' => SCR_COMMENT_TYPE,
-            ]);
+            // $comments = get_comments([
+            //     'post_id' => get_the_ID(),
+            //     'type' => SCR_COMMENT_TYPE,
+            // ]);
 
-            if (isset($comments) && !empty($comments)) {
-                foreach ($comments as $comment) {
-                    // added review props to comment
-                    $comment->review = get_comment_meta($comment->comment_ID, 'scr_user_review_props', true);
+            // if (isset($comments) && !empty($comments)) {
+            //     foreach ($comments as $comment) {
+            //         // added review props to comment
+            //         $comment->review = get_comment_meta($comment->comment_ID, SCR_COMMENT_META, true);
 
-                    // Current user already reviewed
-                    $has_current_user_already_reviewed = ($comment->user_id == get_current_user_id() && $comment->comment_parent == 0);
-                    $has_current_user_already_reviewed = apply_filters('scr_has_current_user_already_reviewed', $has_current_user_already_reviewed, $comment);
-                    if ($has_current_user_already_reviewed) {
-                        $args['can_user_review'] = false;
-                        $args['current_user_review'] = $comment;
+            //         // Current user already reviewed
+            //         $has_current_user_already_reviewed = ($comment->user_id == get_current_user_id() && $comment->comment_parent == 0);
+            //         $has_current_user_already_reviewed = apply_filters('scr_has_current_user_already_reviewed', $has_current_user_already_reviewed, $comment);
+            //         if ($has_current_user_already_reviewed) {
+            //             $args['can_user_review'] = false;
+            //             $args['current_user_review'] = $comment;
 
-                    }
-                }
+            //         }
+            //     }
+            $components = ['comments', 'stats', 'prosandcons', 'votes', 'attachments'];
+            $args['items'] = scr_get_comments_args($components);
+            // error_log('args["items"] : ' . print_r($args["items"], true));
 
-                $args['items']['comments-list'] = $comments;
-            }
+            // $args['items']['comments-list'] = $comments;
+            // }
 
             return $args;
-        }
-
-        // I am not sure about we using this below methods in any components "santhosh"
-        // for rich snippet product schema purpose
-        public function get_schema_reviews()
-        {
-            $post_meta = get_post_meta(get_the_ID(), '_scr_post_options', true);
-            $reviews = $this->get_comments_list();
-            return $reviews;
         }
 
         protected function get_comments_list()
@@ -167,7 +163,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             $comments = get_comments($args);
 
             foreach ($comments as $comment) {
-                $comment->review = get_comment_meta($comment->comment_ID, 'scr_user_review_props', true);
+                $comment->review = get_comment_meta($comment->comment_ID, SCR_COMMENT_META, true);
             }
 
             return $comments;

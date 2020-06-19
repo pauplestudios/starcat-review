@@ -15,6 +15,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Summary')) {
         {
             $args = [
                 'enable-author-review' => SCR_Getter::get('enable-author-review'),
+                'review_count' => scr_get_user_reviews_count(get_the_ID()),
             ];
             $args = array_merge($args, $this->get_default_args());
             $summary = new \StarcatReview\App\Components\Summary\Controller();
@@ -33,14 +34,18 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Summary')) {
 
         protected function get_items()
         {
-            $post_meta = get_post_meta(get_the_ID(), '_scr_post_options', true);
-            $comments = $this->get_comments_list();
+            $post_meta = get_post_meta(get_the_ID(), SCR_POST_META, true);
+            // $comments = $this->get_comments_list();
 
             $items = [];
 
-            if (isset($post_meta['stats-list']) && !empty($post_meta['stats-list'])) {
-                $items['stats-list'] = $post_meta['stats-list'];
-            }
+            // if (isset($post_meta['stats-list']) && !empty($post_meta['stats-list'])) {
+            //     $items['stats-list'] = $post_meta['stats-list'];
+            // }
+            $post_id = get_the_ID();
+            $items['summary_author'] = scr_get_stat_args($post_id, 'author_stat');
+            $items['summary_users'] = scr_get_stat_args($post_id, 'comment_stat');
+
             if (isset($post_meta['pros-list']) && !empty($post_meta['pros-list'])) {
                 $items['pros-list'] = $post_meta['pros-list'];
             }
@@ -48,9 +53,9 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Summary')) {
                 $items['cons-list'] = $post_meta['cons-list'];
             }
 
-            if (isset($comments) && !empty($comments)) {
-                $items['comments-list'] = $comments;
-            }
+            // if (isset($comments) && !empty($comments)) {
+            //     $items['comments-list'] = $comments;
+            // }
 
             return $items;
         }
@@ -67,7 +72,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Summary')) {
             $comments = get_comments($args);
 
             foreach ($comments as $comment) {
-                $comment->reviews = get_comment_meta($comment->comment_ID, 'scr_user_review_props', true);
+                $comment->reviews = get_comment_meta($comment->comment_ID, SCR_COMMENT_META, true);
                 if (isset($comment->reviews['attachments']) && !empty($comment->reviews['attachments'])) {
                     $comment->reviews['attachments'] = $this->get_attachments_with_src($comment);
                 }

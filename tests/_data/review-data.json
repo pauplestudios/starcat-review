@@ -15,7 +15,10 @@
         "Stunning camera",
         "It’s actually innovative"
       ],
-      "cons": ["Awfully placed fingerprint sensor", "Bixby is a bit of a dud"]
+      "cons": [
+        "Awfully placed fingerprint sensor",
+        "Bixby is a bit of a dud"
+      ]
     }
   },
   "1": {
@@ -34,7 +37,32 @@
         "Stunning camera",
         "It’s actually innovative"
       ],
-      "cons": ["Awfully placed fingerprint sensor", "Bixby is a bit of a dud"]
+      "cons": [
+        "Awfully placed fingerprint sensor",
+        "Bixby is a bit of a dud"
+      ]
+    }
+  },
+  "2": {
+    "title": "WooCommerce",
+    "content": "woocommerce Software including product purchasing with listing, review system and greate follow back system",
+    "stats": {
+      "speed": 4,
+      "power": 4,
+      "listing": 4.5,
+      "customisation": 4.5
+    },
+    "pros_and_cons": {
+      "pros": [
+        "Awesome display",
+        "great UI Experiance",
+        "Fun purchasing",
+        "cool listing"
+      ],
+      "cons": [
+        "Nasty follow notification",
+        "Not a fan of emailing"
+      ]
     }
   }
 }

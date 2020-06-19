@@ -4,15 +4,8 @@ use \StarcatReview\Includes\Settings\SCR_Getter;
 
 function scr_get_overall_rating($post_id)
 {
-    $args = [
-        'post_id' => $post_id,
-        'combine_type' => 'overall',
-    ];
-    if (SCR_Getter::get('enable-author-review') == true) {
-        $items = get_post_meta($post_id, '_scr_post_options', true);
-    }
-    $args['items'] = isset($items) && !empty($items) ? $items : [];
-    $args['items']['comments-list'] = scr_get_user_reviews($post_id);
+    $args['items'] = scr_get_stat_args($post_id);
+    $args['stat_type'] = 'post_stat';
 
     $args = array_merge(SCR_Getter::get_stat_default_args(), $args);
 
@@ -25,11 +18,33 @@ function scr_get_overall_rating($post_id)
     return $rating;
 }
 
+/*
+ * array $components [ 'stats', 'prosandcons', 'votes']
+ * by default it returns comments of stats
+ * returns comments of components
+ */
+function scr_get_comments_args($components = ['stats'], $query_args = [])
+{
+    return apply_filters('scr_comments_args', $components, $query_args);
+}
+
+/*
+ * string $type
+ * there are three types of stat available post_stat, author_stat and comment_stat
+ * by default return post-stat
+ * returns stat items args
+ */
+
+function scr_get_stat_args($post_id, $type = 'post_stat')
+{
+    return apply_filters('scr_stat_args', $post_id, $type);
+}
+
 function scr_get_user_reviews($post_id, $parent = true)
 {
     $args = [
         'post_id' => $post_id,
-        'type' => SCR_COMMENT_TYPE,
+        'type' => [SCR_COMMENT_TYPE, 'starcat_review'],
         'status' => 'approve',
     ];
 
@@ -40,7 +55,7 @@ function scr_get_user_reviews($post_id, $parent = true)
     $comments = get_comments($args);
 
     foreach ($comments as $comment) {
-        $comment->reviews = get_comment_meta($comment->comment_ID, 'scr_user_review_props', true);
+        $comment->reviews = get_comment_meta($comment->comment_ID, SCR_COMMENT_META, true);
     }
 
     return $comments;
@@ -50,7 +65,7 @@ function scr_get_user_reviews_count($post_id, $parent = true)
 {
     $args = [
         'post_id' => $post_id,
-        'type' => SCR_COMMENT_TYPE,
+        'type' => [SCR_COMMENT_TYPE, 'starcat_review'],
         'status' => 'approve',
     ];
 
@@ -70,7 +85,7 @@ function scr_get_trend_score($post_id)
 {
     $args = [
         'post_id' => $post_id,
-        'type' => SCR_COMMENT_TYPE,
+        'type' => [SCR_COMMENT_TYPE, 'starcat_review'],
         'date_query' => array(
             'after' => '4 weeks ago',
             'before' => 'tomorrow',

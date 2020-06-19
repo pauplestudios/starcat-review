@@ -11,7 +11,7 @@ if (!class_exists('\StarcatReview\Includes\Actions')) {
     {
         public function __construct()
         {
-            add_action('pre_get_comments', [$this, 'exclude_from_comments']);
+            // add_action('pre_get_comments', [$this, 'exclude_from_comments']);
         }
 
         /*
