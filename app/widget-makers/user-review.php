@@ -40,6 +40,12 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             return $view;
         }
 
+        public function get_form_fields()
+        {
+            $args = $this->get_default_args();
+            return $this->form_controller->get_fields_view($args);
+        }
+
         protected function get_default_args()
         {
             $stat_args = SCR_Getter::get_stat_default_args();
@@ -102,7 +108,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
 
         private function get_interpreted_args($args)
         {
-           
+
             $args['can_user_vote'] = false;
             $args['can_user_reply'] = false;
             $args['can_user_review'] = false;
@@ -128,11 +134,11 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
 
                     // Current user already reviewed
                     $has_current_user_already_reviewed = ($comment->user_id == get_current_user_id() && $comment->comment_parent == 0);
-                    $has_current_user_already_reviewed = apply_filters( 'scr_has_current_user_already_reviewed', $has_current_user_already_reviewed, $comment );
+                    $has_current_user_already_reviewed = apply_filters('scr_has_current_user_already_reviewed', $has_current_user_already_reviewed, $comment);
                     if ($has_current_user_already_reviewed) {
                         $args['can_user_review'] = false;
                         $args['current_user_review'] = $comment;
-                        
+
                     }
                 }
 

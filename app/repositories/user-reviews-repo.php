@@ -285,7 +285,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             return $data;
         }
 
-        protected function get_prosandcons($features)
+        public function get_prosandcons($features)
         {
             $items = [];
 
@@ -300,7 +300,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             return $items;
         }
 
-        protected function get_rating($scores)
+        public function get_rating($scores)
         {
             $count = 0;
             $rating = 0;
@@ -317,7 +317,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             return $rating;
         }
 
-        protected function get_stat($scores)
+        public function get_stat($scores)
         {
             $stats = [];
 

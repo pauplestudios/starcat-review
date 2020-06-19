@@ -106,6 +106,38 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             return $html;
         }
 
+        public function get_fields()
+        {
+            $html = '';
+            if ($this->props['collection']['show_title']) {
+                $html .= '<div class="inline field">';
+                $html .= '<input type="text" name="title" placeholder="Your title" value="" required/>';
+                $html .= '</div>';
+            }
+
+            if ($this->props['collection']['show_stats']) {
+                $html .= '<div class="rating fields">';
+                $html .= $this->get_user_review();
+                $html .= '</div>';
+            }
+
+            if ($this->props['collection']['show_description']) {
+                $html .= '<div class="field">';
+                $html .= '<textarea rows="4" spellcheck="true" name="comment" placeholder="Your review" required></textarea>';
+                $html .= '</div>';
+            }
+
+            if ($this->props['collection']['show_prosandcons']) {
+                $html .= $this->get_pros_and_cons();
+            }
+
+            if ($this->props['collection']['show_captcha']) {
+                $html .= Recaptcha::load_v2_html();
+            }
+
+            return $html;
+        }
+
         protected function get_pros_and_cons()
         {
             $prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller();
