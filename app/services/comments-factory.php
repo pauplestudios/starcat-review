@@ -13,11 +13,11 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
     class Comments_Factory
     {
 
-        public function get_comments_args($post_id, $use_cases = ['stats'])
+        public function get_comments_args($use_cases = ['stats'], $query_args)
         {
             $identical = 'stats';
             $comments = [$identical => []];
-            $comment_ids = $this->get_comments_ids($post_id);
+            $comment_ids = $this->get_comments_ids($query_args);
 
             if ($this->is_set($comment_ids)) {
                 foreach ($comment_ids as $comment_id) {
@@ -29,7 +29,7 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
                         $identical = $case;
 
                         if ($case == 'stats') {
-                            $item = $this->get_stat($post_id, $comment_id, $review);
+                            $item = $this->get_stat($query_args, $comment_id, $review);
                         }
 
                         if ($case == 'prosandcons') {
@@ -58,7 +58,7 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
 
             }
 
-            // It returns asked single component. Defualt component is 'stats'
+            // Returns asked single component. Defualt component is 'stats'
             if (count($use_cases) == 1 && array_key_exists($identical, $comments)) {
                 return $comments[$identical];
             }
@@ -67,28 +67,32 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
 
         }
 
-        protected function get_comments_ids($post_id)
+        protected function get_comments_ids($query_args)
         {
             $comment_ids = [];
-            $comments = get_comments([
-                'post_id' => $post_id,
-                'comment_type' => ['review', 'starcat_review'],
-                'comment_parent' => 0,
-                // 'comment_status' => 'approve',
-            ]);
+            $query = [
+                'post_id' => isset($query_args['post_id']) ? $query_args['post_id'] : get_the_ID(),
+                'type' => ['review', 'starcat_review'],
+                'parent' => isset($query_args['parent']) ? $query_args['parent'] : 0,
+                'status' => isset($query_args['status']) ? $query_args['status'] : '',
+            ];
+
+            $comments = get_comments($query);
 
             $comment_ids = wp_list_pluck($comments, 'comment_ID');
 
             return $comment_ids;
         }
 
-        protected function get_stat($post_id, $comment_id, $review)
+        protected function get_stat($args, $comment_id, $review)
         {
             $stat_item = [];
 
             if ($this->is_key_exist('stats', $review)) {
                 $stat_item = apply_filters('scr_stat', $review['stats']);
             }
+
+            $post_id = isset($args['post_id']) ? $args['post_id'] : get_the_ID();
 
             // WooCommerce product post_type Only
             if (get_post_type($post_id) == 'product' && !$this->is_set($stat_item)) {
@@ -121,6 +125,7 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
                 'date' => get_comment_date('', $comment_obj->comment_ID),
                 'time' => $this->get_comment_time($comment_obj->comment_date),
                 'time_stamp' => get_comment_date('U', $comment_obj->comment_ID),
+                'can_edit' => (get_current_user_id() == $comment_obj->user_id) ? true : false,
 
             ];
 

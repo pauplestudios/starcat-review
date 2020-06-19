@@ -9,14 +9,6 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
     class View
     {
-        private $html;
-
-        public function __construct()
-        {
-            /* Views */
-            // $this->card = new \StarcatReview\App\Views\Blocks\Enhanced_Card();
-        }
-
         public function get($viewProps)
         {
             $html = '';
@@ -44,23 +36,45 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
 
         protected function get_item($comment)
         {
-            // $vote_likes = $this->get_vote_likes($comment);
-            // error_log('$comment : ' . print_r($comment, true));
             $html = '<div class="comment" id="' . $comment['ID'] . '">';
             $html .= $this->get_avatar($comment);
-            $html .= $this->get_content($comment);
-            $html .= $this->get_text($comment);
-            $html .= $this->get_moderation_info($comment);
-            $html .= $this->get_actions($comment);
+
+            $html .= '<div class="content">';
+            $html .= $this->get_content_meta($comment);
+            $html .= $this->get_content_text($comment);
+            $html .= $this->get_content_moderation_info($comment);
+            $html .= $this->get_content_actions($comment);
 
             // 1 level indentation of comment childrens
-            // foreach ($items as $item) {
-            //     if ($item['parent'] == $comment['comment_id'] && $this->can_view_comment($item)) {
-            //         $html .= $this->get_reply_comment($item);
-            //     }
-            // }
+            if ($comment['parent'] == 0 && isset($comment['childrens']) && !empty($comment['childrens'])) {
+                foreach ($comment['childrens'] as $child_comment) {
+                    $html .= $this->get_children_item($child_comment);
+                }
+            }
+            $html . '</div>';
 
-            // $html .= '</div>';
+            $html .= '</div>';
+
+            return $html;
+        }
+
+        protected function get_children_item($comment)
+        {
+            $html = '<div class="comment" id="' . $comment['comment_id'] . '" data-comment-parent-id ="' . $comment['comment_parent'] . '" >';
+            $html .= $this->get_avatar($comment);
+
+            $html .= '<div class="content">';
+            $html .= $this->get_content_meta($comment);
+            $html .= '<div class="text">' . $comment['content'] . '</div>';
+            $html .= $this->get_content_moderation_info($comment, 'Reply');
+
+            $html .= '<div class="actions">';
+            $html .= '<div class="links">';
+            if ($this->collection['can_reply'] && $comment['can_edit']) {
+                $html .= '<a class="reply_edit_link"><i class="edit icon"></i> EDIT</a>';
+            }
+            $html .= '</div></div>';
+            $html .= '</div>';
 
             $html .= '</div>';
 
@@ -72,12 +86,12 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
             return '<a class="avatar"> ' . $comment['avatar'] . '</a>';
         }
 
-        protected function get_content($comment)
+        protected function get_content_meta($comment)
         {
             // $likes = (isset($comment['votes']['likes']) && !empty($comment['votes']['likes'])) ? $comment['votes']['likes'] : 0;
             // $rating = (isset($comment['stats']['overall']) && !empty($comment['stats']['overall'])) ? $comment['stats']['overall'] : 0;
 
-            $html = '<div class="content">';
+            $html = '';
             $html .= '<span class="author"> ' . $comment['author'] . ' </span>';
             $html .= '<div class="metadata">';
             $html .= '<span class="date">' . $comment['date'] . '</span>';
@@ -91,7 +105,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
 
         }
 
-        protected function get_text($comment)
+        protected function get_content_text($comment)
         {
             $title = '';
             $stats_view = '';
@@ -126,7 +140,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
             return $html;
         }
 
-        protected function get_moderation_info($comment, $title = 'Review')
+        protected function get_content_moderation_info($comment, $title = 'Review')
         {
             $html = '';
             if ($comment['approved'] == 0 && $comment['user_id'] == $this->collection['current_user_id']) {
@@ -136,7 +150,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
             return $html;
         }
 
-        protected function get_actions($comment)
+        protected function get_content_actions($comment)
         {
             $html = '';
             $html .= '<div class="actions">';

@@ -23,9 +23,9 @@ function scr_get_overall_rating($post_id)
  * by default it returns comments of stats
  * returns comments of components
  */
-function scr_get_comments_args($post_id, $components = ['stats'])
+function scr_get_comments_args($components = ['stats'], $query_args = [])
 {
-    return apply_filters('scr_comments_args', $post_id, $components);
+    return apply_filters('scr_comments_args', $components, $query_args);
 }
 
 /*

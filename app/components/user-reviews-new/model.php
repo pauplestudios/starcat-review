@@ -12,7 +12,6 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\Model')) {
         public function get_viewProps($args)
         {
             $this->args = $args;
-            // error_log('args["arags"] : ' . print_r($this->args, true));
 
             $collection = $this->get_collectionProps($args);
             $items = $this->get_itemProps($args);
@@ -48,17 +47,11 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\Model')) {
                 foreach ($args['items']['comments'] as $comment) {
                     $components_item = $this->get_components_item($args['items'], $comment['ID']);
                     $items[$comment['ID']] = array_merge($comment, $components_item);
+
+                    // Childrens of comments
+                    $items[$comment['ID']]['childrens'] = scr_get_comments_args(['comments'], ['parent' => $comment['ID']]);
                 }
             }
-
-            /*
-             * Parent comment filter
-             * components level filters 'stats', 'prosandcons', 'attachments', votes
-             */
-
-            /*
-             * Child comment filter
-             */
 
             return $items;
         }

@@ -138,7 +138,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             //         }
             //     }
             $components = ['comments', 'stats', 'prosandcons', 'votes', 'attachments'];
-            $args['items'] = scr_get_comments_args(get_the_ID(), $components);
+            $args['items'] = scr_get_comments_args($components);
             // error_log('args["items"] : ' . print_r($args["items"], true));
 
             // $args['items']['comments-list'] = $comments;

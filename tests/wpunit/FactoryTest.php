@@ -16,7 +16,7 @@ class FactoryTest extends \Codeception\TestCase\WPTestCase
         /*
         Case 1: 'Listing Single -- Singluarity'
          */
-        $actual = scr_get_comments_args($data['product_id']);
+        $actual = scr_get_comments_args(['stats'], ['post_id' => $data['product_id']]);
         $this->assertEquals(10, count($actual));
 
         SCR_Getter::set('stat-singularity', 'multiple');
@@ -25,7 +25,7 @@ class FactoryTest extends \Codeception\TestCase\WPTestCase
         Case 2: 'Listing Multiple -- Singluarity'
          */
 
-        $actual = scr_get_comments_args($data['product_id']);
+        $actual = scr_get_comments_args(['stats'], ['post_id' => $data['product_id']]);
         $this->assertEquals(10, count($actual));
 
     }
