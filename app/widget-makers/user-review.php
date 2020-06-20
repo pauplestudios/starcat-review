@@ -21,7 +21,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
         {
 
             $args = $this->get_default_args();
-            // $form_view = $this->form_controller->get_view($args);
+            $form_view = $this->form_controller->get_view($args);
             // $reviews_list_view = $this->reviews_controller->get_view($args);
             $ur_controller = new \StarcatReview\App\Components\User_Reviews_New\Controller();
             $reviews_list_view = $ur_controller->get_view($args);
@@ -54,7 +54,6 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
 
             $args = [
                 'post_id' => get_the_ID(),
-                // 'items' => $this->get_items_args(),
                 'enable_pros_cons' => SCR_Getter::get('enable-pros-cons'),
                 'show_list_title' => SCR_Getter::get('ur_show_list_title'),
                 'list_title' => SCR_Getter::get('ur_list_title'),
@@ -89,25 +88,6 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             return $html;
         }
 
-        private function get_items_args()
-        {
-            $post_meta = get_post_meta(get_the_ID(), SCR_POST_META, true);
-
-            $items = [];
-
-            if (isset($post_meta['stats-list']) && !empty($post_meta['stats-list'])) {
-                $items['stats-list'] = $post_meta['stats-list'];
-            }
-            if (isset($post_meta['pros-list']) && !empty($post_meta['pros-list'])) {
-                $items['pros-list'] = $post_meta['pros-list'];
-            }
-            if (isset($post_meta['cons-list']) && !empty($post_meta['cons-list'])) {
-                $items['cons-list'] = $post_meta['cons-list'];
-            }
-
-            return $items;
-        }
-
         private function get_interpreted_args($args)
         {
 
@@ -124,49 +104,10 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
                 $args['can_user_vote'] = true;
             }
 
-            // $comments = get_comments([
-            //     'post_id' => get_the_ID(),
-            //     'type' => SCR_COMMENT_TYPE,
-            // ]);
-
-            // if (isset($comments) && !empty($comments)) {
-            //     foreach ($comments as $comment) {
-            //         // added review props to comment
-            //         $comment->review = get_comment_meta($comment->comment_ID, SCR_COMMENT_META, true);
-
-            //         // Current user already reviewed
-            //         $has_current_user_already_reviewed = ($comment->user_id == get_current_user_id() && $comment->comment_parent == 0);
-            //         $has_current_user_already_reviewed = apply_filters('scr_has_current_user_already_reviewed', $has_current_user_already_reviewed, $comment);
-            //         if ($has_current_user_already_reviewed) {
-            //             $args['can_user_review'] = false;
-            //             $args['current_user_review'] = $comment;
-
-            //         }
-            //     }
             $components = ['comments', 'stats', 'prosandcons', 'votes', 'attachments'];
             $args['items'] = scr_get_comments_args($components);
-            // error_log('args["items"] : ' . print_r($args["items"], true));
-
-            // $args['items']['comments-list'] = $comments;
-            // }
 
             return $args;
-        }
-
-        protected function get_comments_list()
-        {
-            $args = [
-                'post_id' => get_the_ID(),
-                'type' => SCR_COMMENT_TYPE,
-            ];
-
-            $comments = get_comments($args);
-
-            foreach ($comments as $comment) {
-                $comment->review = get_comment_meta($comment->comment_ID, SCR_COMMENT_META, true);
-            }
-
-            return $comments;
         }
     }
 }

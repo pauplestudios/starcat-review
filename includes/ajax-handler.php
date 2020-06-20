@@ -97,8 +97,8 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
             $review = $user_review_repo->get($comment_id, $props['parent']);
 
             if ($props['parent'] !== 0 && !isset($props['methodType'])) { // review_reply
-                $review_controller = new \StarcatReview\App\Components\User_Reviews\Controller();
-                $review = $review_controller->get_reply_review($review);
+                $review_controller = new \StarcatReview\App\Components\User_Reviews_New\Controller();
+                $review = $review_controller->get_comment_view($comment_id, 'reply');
             }
 
             echo json_encode($review);

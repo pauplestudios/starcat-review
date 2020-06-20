@@ -237,12 +237,12 @@ var Reply = {
             .post(scr_ajax.ajax_url, props, function (results) {
                 results = JSON.parse(results);
                 // console.log(results);
-                jQuery("#" + results.props.comment_parent)
+                jQuery("#" + results.props.parent)
                     .find(".review_reply.placeholder")
                     .first()
                     .replaceWith(results.view);
 
-                jQuery("#" + results.props.comment_id).transition("pulse");
+                jQuery("#" + results.props.ID).transition("pulse");
             })
             .fail(function (response) {
                 console.log("review_reply failed");

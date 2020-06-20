@@ -45,7 +45,7 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
                         }
 
                         if ($case == 'comments') {
-                            $item = $this->get_comment($comment_id, $review);
+                            $item = scr_get_comment($comment_id, $review);
                         }
 
                         // Non_empty item only added to comments array
@@ -65,6 +65,34 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
 
             return $comments;
 
+        }
+
+        public function get_comment($comment_id, $review = [])
+        {
+            $comment = [];
+            $comment_obj = get_comment($comment_id);
+            $author = isset($comment_obj->comment_author) && !empty($comment_obj->comment_author) ? ucfirst($comment_obj->comment_author) : __('Anonymous', SCR_DOMAIN);
+
+            $comment = [
+                'ID' => $comment_obj->comment_ID,
+                'author' => $author,
+                'email' => $comment_obj->comment_author_email,
+                'user_id' => $comment_obj->user_id,
+                'avatar' => get_avatar($comment_obj->user_id),
+                'content' => $comment_obj->comment_content,
+                'parent' => $comment_obj->comment_parent,
+                'approved' => $comment_obj->comment_approved,
+                'date' => get_comment_date('', $comment_obj->comment_ID),
+                'time' => $this->get_comment_time($comment_obj->comment_date),
+                'time_stamp' => get_comment_date('U', $comment_obj->comment_ID),
+            ];
+
+            // error_log('comment : ' . print_r($comment_obj, true));
+            if ($this->is_key_exist('title', $review)) {
+                $comment['title'] = $review['title'];
+            }
+
+            return $comment;
         }
 
         protected function get_comments_ids($query_args)
@@ -105,36 +133,6 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
 
             return $stat_item;
 
-        }
-
-        protected function get_comment($comment_id, $review)
-        {
-            $comment = [];
-            $comment_obj = get_comment($comment_id);
-            $author = isset($comment_obj->comment_author) && !empty($comment_obj->comment_author) ? ucfirst($comment_obj->comment_author) : __('Anonymous', SCR_DOMAIN);
-
-            $comment = [
-                'ID' => $comment_obj->comment_ID,
-                'author' => $author,
-                'email' => $comment_obj->comment_author_email,
-                'user_id' => $comment_obj->user_id,
-                'avatar' => get_avatar($comment_obj->user_id),
-                'content' => $comment_obj->comment_content,
-                'parent' => $comment_obj->comment_parent,
-                'approved' => $comment_obj->comment_approved,
-                'date' => get_comment_date('', $comment_obj->comment_ID),
-                'time' => $this->get_comment_time($comment_obj->comment_date),
-                'time_stamp' => get_comment_date('U', $comment_obj->comment_ID),
-            ];
-
-            $filtered_comment = apply_filters("scr_comment", $comment);
-
-            // error_log('comment : ' . print_r($comment_obj, true));
-            if ($this->is_key_exist('title', $review)) {
-                $comment['title'] = $review['title'];
-            }
-
-            return $comment;
         }
 
         protected function get_vote($review)

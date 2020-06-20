@@ -197,7 +197,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                         $vote['vote'] = $props['vote']['vote'];
                         $is_current_user_voted = true;
                     }
-                    error_log('each vote : ' . print_r($vote, true));
+                    // error_log('each vote : ' . print_r($vote, true));
                 }
                 if ($is_current_user_voted == false) {
                     array_push($meta_props['votes'], $props['vote']);

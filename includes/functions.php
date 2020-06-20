@@ -40,6 +40,15 @@ function scr_get_stat_args($post_id, $type = 'post_stat')
     return apply_filters('scr_stat_args', $post_id, $type);
 }
 
+/*
+ * current uses cases of this function are reply comment and comments_factory to generate to comments
+ */
+
+function scr_get_comment($comment_id, $review = [])
+{
+    return apply_filters('scr_comment', $comment_id, $review);
+}
+
 function scr_get_user_reviews($post_id, $parent = true)
 {
     $args = [

@@ -16,9 +16,9 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
             $this->itemProps = $viewProps['items'];
             $this->collection = $viewProps['collection'];
 
-            if ($this->collection['show_list_title']) {
-                $html .= '<h3 class="ui dividing header"> ' . $this->collection['list_title'] . '</h3>';
-            }
+            // if ($this->collection['show_list_title']) {
+            //     $html .= '<h3 class="ui dividing header"> ' . $this->collection['list_title'] . '</h3>';
+            // }
 
             $html .= '<div class="ui scr_user_reviews list comments">';
             if (isset($viewProps['items']) && !empty($viewProps['items'])) {
@@ -34,7 +34,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
             return $html;
         }
 
-        protected function get_item($comment)
+        public function get_item($comment)
         {
             $html = '<div class="comment" id="' . $comment['ID'] . '">';
             $html .= $this->get_avatar($comment);
@@ -48,7 +48,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
             // 1 level indentation of comment childrens
             if ($comment['parent'] == 0 && isset($comment['childrens']) && !empty($comment['childrens'])) {
                 foreach ($comment['childrens'] as $child_comment) {
-                    $html .= $this->get_children_item($child_comment);
+                    $html .= $this->get_child_item($child_comment);
                 }
             }
             $html . '</div>';
@@ -58,7 +58,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
             return $html;
         }
 
-        protected function get_children_item($comment)
+        public function get_child_item($comment)
         {
             $html = '<div class="comment" id="' . $comment['ID'] . '" data-comment-parent-id ="' . $comment['parent'] . '" >';
             $html .= $this->get_avatar($comment);
@@ -88,7 +88,6 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
 
         protected function get_content_meta($comment)
         {
-
             $html = '';
             $html .= '<span class="author"> ' . $comment['author'] . ' </span>';
             $html .= '<div class="metadata">';
@@ -157,9 +156,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
             $html = '';
             $html .= '<div class="actions">';
             $html .= $this->get_action_links($comment);
-            // if ($this->collection['can_vote'] && $this->collection['enable_voting']) {
             $html .= $this->get_action_helpful($comment);
-            // }
             $html .= '</div>';
 
             return $html;
@@ -188,20 +185,19 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
 
         private function get_action_helpful($comment)
         {
-            // $vote_summary = $this->get_vote_summary($props);
             $vote_summary = $comment['votes'];
 
             $like_active = ($vote_summary['active'] === 'like') ? 'active' : '';
             $dislike_active = ($vote_summary['active'] === 'dislike') ? 'active' : '';
 
             $html = '<div class="helpful"> ';
-
-            $html .= '<div class="vote likes-and-dislikes" data-comment-id="' . $comment['ID'] . '">';
-            $html .= 'Was this helpful to you ? ';
-            $html .= '<a class="like ' . $like_active . '"><i class="bordered thumbs up outline icon"></i><span class="likes">' . $vote_summary['likes'] . '</span></a>';
-            $html .= '<a class="dislike ' . $dislike_active . '"><i class="bordered thumbs down outline icon"></i><span class="dislikes">' . $vote_summary['dislikes'] . '</span></a>';
-            $html .= '</div>';
-
+            if ($this->collection['can_vote'] && $this->collection['enable_voting']) {
+                $html .= '<div class="vote likes-and-dislikes" data-comment-id="' . $comment['ID'] . '">';
+                $html .= 'Was this helpful to you ? ';
+                $html .= '<a class="like ' . $like_active . '"><i class="bordered thumbs up outline icon"></i><span class="likes">' . $vote_summary['likes'] . '</span></a>';
+                $html .= '<a class="dislike ' . $dislike_active . '"><i class="bordered thumbs down outline icon"></i><span class="dislikes">' . $vote_summary['dislikes'] . '</span></a>';
+                $html .= '</div>';
+            }
             $html .= '<div class="vote-summary">';
             $html .= '<span class="helpful">' . $vote_summary['likes'] . '</span> of <span class="people"> ' . $vote_summary['people'] . ' </span> people found this review helpful';
             $html .= '</div>';

@@ -22,7 +22,9 @@ if (!class_exists('\StarcatReview\App\Services\Services')) {
             add_filter('scr_stat', [$stats_factory, 'get_single_stat']);
             add_filter('scr_stat_args', [$stats_factory, 'get_stat_args'], 10, 2);
 
+            add_filter('scr_comment', [$comments_factory, 'get_comment'], 1, 2);
             add_filter('scr_comment', [$this, 'add_comment_capabilities']);
+
             add_filter('scr_comments_args', [$comments_factory, 'get_comments_args'], 10, 2);
         }
 
