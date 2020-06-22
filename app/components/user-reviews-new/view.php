@@ -16,9 +16,9 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
             $this->itemProps = $viewProps['items'];
             $this->collection = $viewProps['collection'];
 
-            // if ($this->collection['show_list_title']) {
-            //     $html .= '<h3 class="ui dividing header"> ' . $this->collection['list_title'] . '</h3>';
-            // }
+            if ($this->collection['show_list_title']) {
+                $html .= '<h3 class="ui dividing header"> ' . $this->collection['list_title'] . '</h3>';
+            }
 
             $html .= '<div class="ui scr_user_reviews list comments">';
             if (isset($viewProps['items']) && !empty($viewProps['items'])) {
@@ -51,7 +51,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
                     $html .= $this->get_child_item($child_comment);
                 }
             }
-            $html . '</div>';
+            $html .= '</div>';
 
             $html .= '</div>';
 
