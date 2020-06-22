@@ -94,14 +94,12 @@ var Edit = {
                 item.remove();
             }
             jQuery(this).find('.stars-result').css('width', stat + '%');
-            // console.log('@@@ Item @@@');
-
+            var score = Stats.getStatScore(stat, Stats.getProps());
+            item.find('.stars-result').width(stat + "%");
+            item.find('input').val(stat);
+            item.find('.review-item-stars').attr('result', stat);
+            item.find('.review-item-label__score').text(score);
         });
-        // for (var i = 0; i < list.children().length; i++) {
-        //     form.find('.review-list li').child;
-        // }
-        // console.log('@@@ List stat item @@@');
-        // console.log(item);
 
         return form;
     },
