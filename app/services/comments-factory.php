@@ -54,6 +54,7 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
                         }
                     }
 
+                    // $comments['capabilities'] = $this->get_capabilities($comment_id);
                 }
 
             }
@@ -76,6 +77,7 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
             $comment = [
                 'ID' => $comment_obj->comment_ID,
                 'author' => $author,
+                'author_IP' => $comment_obj->comment_author_IP,
                 'email' => $comment_obj->comment_author_email,
                 'user_id' => $comment_obj->user_id,
                 'avatar' => get_avatar($comment_obj->user_id),
@@ -100,7 +102,7 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
             $comment_ids = [];
             $query = [
                 'post_id' => isset($query_args['post_id']) ? $query_args['post_id'] : get_the_ID(),
-                'type' => ['review', 'starcat_review'],
+                // 'type' => ['review', 'starcat_review'],
                 'parent' => isset($query_args['parent']) ? $query_args['parent'] : 0,
                 'status' => isset($query_args['status']) ? $query_args['status'] : '',
             ];
@@ -110,6 +112,13 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
             $comment_ids = wp_list_pluck($comments, 'comment_ID');
 
             return $comment_ids;
+        }
+
+        protected function get_capabilities()
+        {
+            $capabiliy = [];
+
+            return $capabiliy;
         }
 
         protected function get_stat($args, $comment_id, $review)
