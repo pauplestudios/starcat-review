@@ -36,8 +36,11 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
 
         public function get_item($comment)
         {
-            $html = '<div class="comment" id="' . $comment['ID'] . '">';
+            $data_props = htmlspecialchars(json_encode($comment['props']), ENT_QUOTES, 'UTF-8');
+
+            $html = '<div class="comment" id="' . $comment['ID'] . '" data-props="' . $data_props . '">';
             $html .= $this->get_avatar($comment);
+            // error_log('comment : ' . print_r($comment, true));
 
             $html .= '<div class="content">';
             $html .= $this->get_content_meta($comment);
@@ -122,7 +125,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
             }
 
             if (isset($comment['title'])) {
-                $title_html = '<div class="title review-card__header"> ' . $comment['title'] . ' </div>';
+                $title = '<div class="title review-card__header"> ' . $comment['title'] . ' </div>';
             }
 
             $html = '<div class="text">';
@@ -175,7 +178,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
             if ($can_edit_comment) {
                 $html .= '<a class="edit_link"><i class="edit icon"></i> EDIT</a>';
             }
-            // if ($this->collection['can_reply']) {
+            // if ($this->collection['can_delete']) {
             //     $html .= '<a class="delete_link"><i class="delete icon"></i> DELETE</a>';
             // }
 

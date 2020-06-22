@@ -61,14 +61,18 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\Model')) {
             $item = [
                 'likes' => 0,
                 'rating' => 0,
+                'props' => [],
             ];
 
             if (isset($items['stats'][$comment_id]) && !empty($items['stats'][$comment_id])) {
                 $item['stats'] = array_merge($this->args['stats_args'], ['items' => $items['stats'][$comment_id]]);
                 $item['rating'] = $items['stats'][$comment_id]['overall'];
+                $item['props']['stats'] = $items['stats'][$comment_id]['stats'];
             }
             if (isset($items['prosandcons'][$comment_id]) && !empty($items['prosandcons'][$comment_id])) {
                 $item['prosandcons'] = $items['prosandcons'][$comment_id];
+                $item['props']['prosandcons'] = $items['prosandcons'][$comment_id]['items'];
+
             }
             if (isset($items['votes'][$comment_id]) && !empty($items['votes'][$comment_id])) {
                 $item['votes'] = $items['votes'][$comment_id];
@@ -76,6 +80,8 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\Model')) {
             }
             if (isset($items['attachments'][$comment_id]) && !empty($items['attachments'][$comment_id])) {
                 $item['attachments'] = $items['attachments'][$comment_id];
+                $item['props']['attachments'] = $items['attachments'][$comment_id];
+
             }
 
             return $item;
