@@ -13,7 +13,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
     {
         public function __construct()
         {
-            $this->form_controller = new \StarcatReview\App\Components\Form\Controller();
+            $this->form_controller = new \StarcatReview\App\Components\Form_New\Controller();
             $this->reviews_controller = new \StarcatReview\App\Components\User_Reviews\Controller();
         }
 
@@ -22,7 +22,6 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
 
             $args = $this->get_default_args();
             $form_view = $this->form_controller->get_view($args);
-            // $reviews_list_view = $this->reviews_controller->get_view($args);
             $ur_controller = new \StarcatReview\App\Components\User_Reviews_New\Controller();
             $reviews_list_view = $ur_controller->get_view($args);
 

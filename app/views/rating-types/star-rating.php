@@ -12,6 +12,8 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
         public function __construct($viewProps)
         {
             $this->props = $viewProps;
+            // error_log('viewProps : ' . print_r($viewProps, true));
+
         }
 
         public function get_view()
