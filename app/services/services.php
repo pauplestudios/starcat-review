@@ -66,9 +66,12 @@ if (!class_exists('\StarcatReview\App\Services\Services')) {
 
         public function add_comment_capabilities($comment)
         {
+            $comment['can_edit'] = false;
             // error_log('!!! add_capabilities_to_comment  !!!');
+            if (get_current_user_id() == $comment['user_id']) {
+                $comment['can_edit'] = true;
+            }
             // error_log('comment : ' . print_r($comment, true));
-
             return $comment;
         }
 
