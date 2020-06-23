@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
 /**
  * undocumented class
  */
-class review_template
+class reviews_template
 {
     public function __construct()
     {
@@ -24,4 +24,4 @@ class review_template
     }
 }
 
-new review_template();
+new reviews_template();

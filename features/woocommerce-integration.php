@@ -1,6 +1,6 @@
 <?php
 
-namespace StarcatReview\Features\Woocommerce_Integration;
+namespace StarcatReview\Features;
 
 use \StarcatReview\Includes\Settings\SCR_Getter;
 
@@ -8,8 +8,8 @@ if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\StarcatReview\Features\Woocommerce_Integration\Controller')) {
-    class Controller
+if (!class_exists('\StarcatReview\Features\Woocommerce_Integration')) {
+    class Woocommerce_Integration
     {
         public function __construct()
         {
@@ -26,9 +26,10 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration\Controller'))
                 return $template;
             }
 
-            $list_controller = new \StarcatReview\App\Builders\Review_Builder();
-            $template = $list_controller->get_reviews();
-
+            $dir = SCR_PATH . '/app/templates/';
+            if (file_exists(trailingslashit($dir) . 'reviews-template.php')) {
+                $template = trailingslashit($dir) . 'reviews-template.php';
+            }
             return $template;
         }
 
