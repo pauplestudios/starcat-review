@@ -14,13 +14,14 @@ if (!class_exists('\StarcatReview\App\Components\Form_New\View')) {
         public function __construct($viewProps)
         {
             $this->props = $viewProps;
+            $this->capability = $viewProps['collection']['capability'];
         }
 
         public function get()
         {
             $class = '';
             $title = '';
-            $review = '';
+            $review = [];
             $display = '';
             $cancel_btn = '';
             $description = '';
@@ -29,19 +30,10 @@ if (!class_exists('\StarcatReview\App\Components\Form_New\View')) {
             $form_title = '<h2 class="ui header">' . $this->props['collection']['form_title'] . '</h2>';
 
             // User Already Reviewed or Not Logged in User
-            $hide_form = !$this->props['collection']['can_user_review'];
+            $hide_form = !$this->capability['can_user_review'];
 
             if ($hide_form) {
-                $class = 'mini';
-                $form_title = '';
-                $method_type = 'PUT';
                 $display = 'style="display: none"';
-                $review = $this->props['items']['current_user_review'];
-                $title = (isset($review['title'])) ? $review['title'] : '';
-                $description = (isset($review['description'])) ? $review['description'] : '';
-
-                $cancel_btn = '<div class="ui cancel ' . $class . ' button"> Cancel </div>';
-                $submit_btn_name = 'Save';
             }
 
             $html = '<form
@@ -69,7 +61,7 @@ if (!class_exists('\StarcatReview\App\Components\Form_New\View')) {
 
             if ($this->props['collection']['show_stats']) {
                 $html .= '<div class="rating fields">';
-                $html .= $this->get_user_review();
+                $html .= $this->get_user_review_stats();
                 $html .= '</div>';
             }
 
@@ -103,6 +95,10 @@ if (!class_exists('\StarcatReview\App\Components\Form_New\View')) {
             return $html;
         }
 
+        /*
+         * TODO: Append our fields to Themes Comment_form
+         * Not Used
+         */
         public function get_fields()
         {
             $html = '';
@@ -114,7 +110,7 @@ if (!class_exists('\StarcatReview\App\Components\Form_New\View')) {
 
             if ($this->props['collection']['show_stats']) {
                 $html .= '<div class="rating fields">';
-                $html .= $this->get_user_review();
+                $html .= $this->get_user_review_stats();
                 $html .= '</div>';
             }
 
@@ -141,7 +137,7 @@ if (!class_exists('\StarcatReview\App\Components\Form_New\View')) {
             return $prosandcons->get_fields($this->props);
         }
 
-        protected function get_user_review()
+        protected function get_user_review_stats()
         {
             $html = '';
             $html .= '<ul class="review-list"

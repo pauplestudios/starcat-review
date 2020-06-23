@@ -33,9 +33,8 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\Model')) {
                 'list_title' => $args['list_title'],
                 'enable_voting' => $args['enable_voting'],
                 'title' => 'Reviews',
-                'can_reply' => $args['can_user_reply'],
-                'can_vote' => $args['can_user_vote'],
                 'current_user_id' => $args['current_user_id'],
+                'capability' => $args['capability'],
             ];
         }
 

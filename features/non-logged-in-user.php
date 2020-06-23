@@ -2,7 +2,7 @@
 
 namespace StarcatReview\Features;
 
-use StarcatReview\Includes\Settings\SCR_Getter;
+use \StarcatReview\Includes\Settings\SCR_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -19,7 +19,6 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
 
         public function get_settings()
         {
-
             $settings = [
                 'who_can_review' => SCR_Getter::get('ur_who_can_review'),
             ];
@@ -37,7 +36,6 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
 
             add_filter('scr_user_form_start', [$this, 'form_modification'], 10, 2);
             add_filter('scr_form_process_data', [$this, 'process_form']);
-            add_filter('scr_user_review_pre_interpreted_args', [$this, 'user_review_args']);
             add_filter('scr_comment', [$this, 'get_comment_item']);
             add_filter('scr_can_view_comment', [$this, 'can_view_comment'], 10, 2);
             add_filter('scr_has_current_user_already_reviewed', [$this, 'has_current_user_already_reviewed'], 10, 2);
@@ -68,16 +66,13 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
 
         public function can_view_comment($can_view, $comment)
         {
-
             // error_log('$comment_info : ' . print_r($comment_info, true));
             if (!is_array($comment)) {
                 error_log('CHECK DATA TYPE OF : ' . print_r($comment, true));
             }
 
-            // $comment = $comment_info['args']['current_user_review'];
-
             // Exit Rule 1 for this hook
-            if ($comment['comment_approved'] == 1) {
+            if ($comment['approved'] == 1) {
                 return $can_view;
             }
 
@@ -86,14 +81,12 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
                 return $can_view;
             }
 
-            error_log('$can_view_comment : ' . print_r($comment, true));
-
             // If user is logged_in, this method should not be called at all.
             $Current_User = new \StarcatReview\App\Services\User();
             $current_user_IP = $Current_User->get_user_IP();
             $settings = $this->get_settings();
 
-            if ($settings['who_can_review'] == 'everyone' && $comment['comment_author_IP'] == $current_user_IP) {
+            if ($settings['who_can_review'] == 'everyone' && $comment['author_IP'] == $current_user_IP) {
                 $can_view = true;
             } else {
                 $can_view = false;
@@ -122,41 +115,28 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
 
         public function has_current_user_already_reviewed($has_reviewed, $comment)
         {
-            error_log('$has_current_user_already_reviewed COMMENT : ' . print_r($comment, true));
+            // error_log('$has_current_user_already_reviewed COMMENT : ' . print_r($comment, true));
             // Exit Rule 1 for this hook
-            if ((isset($comment->user_id) && $comment->user_id != 0)) {
+            if ((isset($comment['user_id']) && $comment['user_id'] != 0)) {
                 return $has_reviewed;
             }
 
             $Current_User = new \StarcatReview\App\Services\User();
             $current_user_IP = $Current_User->get_user_IP();
 
-            if ($comment->comment_author_IP == $current_user_IP && $comment->comment_parent == 0) {
+            if ($comment['author_IP'] == $current_user_IP && $comment['parent'] == 0) {
                 $has_reviewed = true;
             } else {
                 $has_reviewed = false;
             }
 
             return $has_reviewed;
-
-        }
-
-        public function user_review_args($args = [])
-        {
-            $settings = $this->get_settings();
-            $who_can_review = $settings['who_can_review']; // Settings
-
-            if ($who_can_review == 'everyone') {
-                $args['can_user_review'] = true;
-                $args['can_user_reply'] = true;
-            }
-
-            return $args;
         }
 
         public function form_modification($html = '', $review = [])
         {
-            $commenter = wp_get_current_commenter();
+            $commenters = wp_get_current_commenter();
+            // error_log('commenter : ' . print_r($commenter, true));
 
             $author = (isset($commenter['comment_author'])) ? $commenter['comment_author'] : '';
             $author_email = (isset($commenter['comment_author_email'])) ? $commenter['comment_author_email'] : '';
@@ -182,8 +162,3 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
         }
     } // END CLASS
 }
-
-/*
-Non-Logged in User
-1. Add
- */

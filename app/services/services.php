@@ -23,9 +23,10 @@ if (!class_exists('\StarcatReview\App\Services\Services')) {
             add_filter('scr_stat_args', [$stats_factory, 'get_stat_args'], 10, 2);
 
             add_filter('scr_comment', [$comments_factory, 'get_comment'], 1, 2);
-            add_filter('scr_comment', [$this, 'add_comment_capabilities']);
+            add_filter('scr_comment', [$this, 'get_comment_capabilities']);
 
             add_filter('scr_comments_args', [$comments_factory, 'get_comments_args'], 10, 2);
+            add_filter('scr_capabilities_args', [$this, 'get_capabilities_args'], 1);
         }
 
         /*
@@ -64,7 +65,7 @@ if (!class_exists('\StarcatReview\App\Services\Services')) {
          * Adding capabilties to a comment like Can_Edit Can_Reply and Can_Vote
          */
 
-        public function add_comment_capabilities($comment)
+        public function get_comment_capabilities($comment)
         {
             $comment['can_edit'] = false;
             // error_log('!!! add_capabilities_to_comment  !!!');
@@ -73,6 +74,41 @@ if (!class_exists('\StarcatReview\App\Services\Services')) {
             }
             // error_log('comment : ' . print_r($comment, true));
             return $comment;
+        }
+
+        public function get_capabilities_args($comments = [])
+        {
+            $capability = [
+                'can_user_vote' => false,
+                'can_user_reply' => false,
+                'can_user_review' => false,
+            ];
+
+            $who_can_review = SCR_Getter::get('ur_who_can_review');
+            $can_same_user_leave_multiple_review = SCR_Getter::get('ur_allow_same_user_can_leave_multiple_reviews');
+
+            if (is_user_logged_in() || $who_can_review == 'everyone') {
+                $capability['can_user_review'] = true;
+                $capability['can_user_reply'] = true;
+                $capability['can_user_vote'] = true;
+            }
+
+            if ($can_same_user_leave_multiple_review) {
+                $capability['can_user_review'] = true;
+            }
+
+            if ($can_same_user_leave_multiple_review == false && isset($comments) && !empty($comments)) {
+                foreach ($comments as $comment) {
+                    // Current user already reviewed
+                    $has_current_user_already_reviewed = ($comment['user_id'] == get_current_user_id() && $comment['parent'] == 0);
+                    $has_current_user_already_reviewed = apply_filters('scr_has_current_user_already_reviewed', $has_current_user_already_reviewed, $comment);
+                    if ($has_current_user_already_reviewed) {
+                        $capability['can_user_review'] = false;
+                    }
+                }
+            }
+
+            return $capability;
         }
 
     } // END CLASS

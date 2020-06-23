@@ -53,8 +53,6 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
                             $comments[$case][$comment_id] = $item;
                         }
                     }
-
-                    // $comments['capabilities'] = $this->get_capabilities($comment_id);
                 }
 
             }
@@ -112,13 +110,6 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
             $comment_ids = wp_list_pluck($comments, 'comment_ID');
 
             return $comment_ids;
-        }
-
-        protected function get_capabilities()
-        {
-            $capabiliy = [];
-
-            return $capabiliy;
         }
 
         protected function get_stat($args, $comment_id, $review)

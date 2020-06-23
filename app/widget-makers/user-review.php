@@ -19,7 +19,6 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
 
         public function get_view()
         {
-
             $args = $this->get_default_args();
             $form_view = $this->form_controller->get_view($args);
             $ur_controller = new \StarcatReview\App\Components\User_Reviews_New\Controller();
@@ -90,21 +89,12 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
         private function get_interpreted_args($args)
         {
 
-            $args['can_user_vote'] = false;
-            $args['can_user_reply'] = false;
-            $args['can_user_review'] = false;
-
-            // Used by non-logged-in-users.php
-            $args = apply_filters('scr_user_review_pre_interpreted_args', $args);
-
-            if (is_user_logged_in()) {
-                $args['can_user_review'] = true;
-                $args['can_user_reply'] = true;
-                $args['can_user_vote'] = true;
-            }
-
             $components = ['comments', 'stats', 'prosandcons', 'votes', 'attachments'];
             $args['items'] = scr_get_comments_args($components);
+            // error_log('!!! some !!!');
+            // error_log('$args' . print_r($args['items']['comments'], true));
+
+            $args['capability'] = apply_filters('scr_capabilities_args', $args['items']['comments']);
 
             return $args;
         }

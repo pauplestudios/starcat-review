@@ -15,6 +15,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
 
             $this->itemProps = $viewProps['items'];
             $this->collection = $viewProps['collection'];
+            $this->capability = $viewProps['collection']['capability'];
 
             if ($this->collection['show_list_title']) {
                 $html .= '<h3 class="ui dividing header"> ' . $this->collection['list_title'] . '</h3>';
@@ -23,7 +24,9 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
             $html .= '<div class="ui scr_user_reviews list comments">';
             if (isset($viewProps['items']) && !empty($viewProps['items'])) {
                 foreach ($viewProps['items'] as $comment) {
-                    $html .= $this->get_item($comment);
+                    if ($this->can_view_comment($comment) && $comment['parent'] == 0) {
+                        $html .= $this->get_item($comment);
+                    }
                 }
             }
 
@@ -32,6 +35,20 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
             $html .= '</div>';
 
             return $html;
+        }
+
+        protected function can_view_comment($comment)
+        {
+            $can = false;
+
+            if ($comment['approved'] == 1 || $comment['user_id'] == $this->collection['current_user_id']) {
+                $can = true;
+            }
+
+            // Used by non-logged-in-user
+            $can = apply_filters('scr_can_view_comment', $can, $comment);
+
+            return $can;
         }
 
         public function get_item($comment)
@@ -73,7 +90,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
 
             $html .= '<div class="actions">';
             $html .= '<div class="links">';
-            if ($this->collection['can_reply'] && $comment['can_edit']) {
+            if ($this->capability['can_user_reply'] && $comment['can_edit']) {
                 $html .= '<a class="reply_edit_link"><i class="edit icon"></i> EDIT</a>';
             }
             $html .= '</div></div>';
@@ -169,8 +186,8 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
         {
             $html = '<div class="links">';
 
-            $can_reply = $this->collection['can_reply'];
-            $can_edit_comment = $this->collection['can_reply'] && $comment['can_edit'];
+            $can_reply = $this->capability['can_user_reply'];
+            $can_edit_comment = $this->capability['can_user_reply'] && $comment['can_edit'];
 
             if ($can_reply) {
                 $html .= '<a class="reply_link"><i class="reply icon"></i> REPLY</a>';
@@ -194,7 +211,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews_New\View')) {
             $dislike_active = ($vote_summary['active'] === 'dislike') ? 'active' : '';
 
             $html = '<div class="helpful"> ';
-            if ($this->collection['can_vote'] && $this->collection['enable_voting']) {
+            if ($this->capability['can_user_vote'] && $this->collection['enable_voting']) {
                 $html .= '<div class="vote likes-and-dislikes" data-comment-id="' . $comment['ID'] . '">';
                 $html .= 'Was this helpful to you ? ';
                 $html .= '<a class="like ' . $like_active . '"><i class="bordered thumbs up outline icon"></i><span class="likes">' . $vote_summary['likes'] . '</span></a>';

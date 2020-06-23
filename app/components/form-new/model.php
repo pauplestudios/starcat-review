@@ -37,10 +37,8 @@ if (!class_exists('\StarcatReview\App\Components\Form_New\Model')) {
                 'show_prosandcons' => $args['enable_pros_cons'],
                 'show_description' => $args['show_description'],
                 'show_captcha' => $args['show_captcha'],
-                'can_user_review' => $args['can_user_review'],
-                'can_user_reply' => $args['can_user_reply'],
-                'can_same_user_leave_multiple_reviews' => true,
                 'stats_args' => $args['stats_args'],
+                'capability' => $args['capability'],
             ];
 
             // $collection = array_merge($collection)
