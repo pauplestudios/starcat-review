@@ -340,6 +340,14 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         ),
 
                         array(
+                            'id' => 'ur_allow_same_user_can_leave_multiple_reviews',
+                            'type' => 'switcher',
+                            'desc' => 'Allow Same user to leave more than one review on a single post',
+                            'title' => 'Allow Same User Can leave More than One Review',
+                            'default' => false,
+                        ),
+
+                        array(
                             'id' => 'ur_show_list_title',
                             'type' => 'switcher',
                             'title' => __('Show User Reviews List Title', SCR_DOMAIN),

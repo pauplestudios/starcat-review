@@ -128,6 +128,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'ur_enable_replies' => true,
                 'ur_enable_approval' => true,
                 'ur_who_can_review' => 'logged_in',
+                'ur_allow_same_user_can_leave_multiple_reviews' => false,
                 'ur_show_list_title' => true,
                 'ur_list_title' => 'User Reviews',
                 'ur_enable_voting' => true,
