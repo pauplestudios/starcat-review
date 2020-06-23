@@ -63,22 +63,14 @@ var Edit = {
     },
 
     modify_form_for_editing: function (form, props, content) {
-        // console.log('@@@ Comment Form @@@');
-        // console.log(form);
-        form.addClass('mini');
-        form.find('h2.ui.header').remove();
-        // console.log('@@@ comment ID @@@');
-        // console.log(commentID);
-        console.log('@@@ Comment Data Props @@@');
-        console.log(props);
-        // console.log('@@@ Comment Edit Form @@@');
-        // console.log(form);
-        props.title = content.find('.title').text().trim();
-        props.description = content.find('.description').text().trim();
-        console.log('@@@ Comment Data Props @@@');
-        console.log(props);
         var sumbitBtn = '<div class="ui blue submit mini button">Save</div>';
         var cancelBtn = '<div class="ui cancel mini button">Cancel</div>';
+
+        props.title = content.find('.title').text().trim();
+        props.description = content.find('.description').text().trim();
+
+        form.addClass('mini');
+        form.find('h2.ui.header').remove();
         form.find("h5").addClass("ui tiny header");
         form.find('[name="title"]').val(props.title);
         form.find('[name="description"]').val(props.description);
@@ -90,7 +82,6 @@ var Edit = {
             var item = jQuery(this);
             var stat = props.stats[item.find('.review-item-label__text').text().trim()];
             if (!stat) {
-                console.log('@@@ Remove Stat Item @@@');
                 item.remove();
             }
             jQuery(this).find('.stars-result').css('width', stat + '%');
@@ -101,7 +92,29 @@ var Edit = {
             item.find('.review-item-label__score').text(score);
         });
 
+        // ProsandCons 
+        Edit.getModifiedFormforProsandCons(props, form, 'pros');
+        Edit.getModifiedFormforProsandCons(props, form, 'cons');
+
         return form;
+    },
+
+    getModifiedFormforProsandCons: function (props, form, listname) {
+        if (props.prosandcons[listname + '-list'].length > 1) {
+            for (var ii = 1; ii < props.prosandcons[listname + '-list'].length; ii++) {
+                form.find('.review-' + listname + '-repeater [data-repeater-create]').trigger("click");
+            }
+        }
+
+        var index = 0;
+        form.find('.review-' + listname + '-repeater [data-repeater-item]').each(function () {
+            if (props.prosandcons[listname + '-list'][index]) {
+                jQuery(this).find(".prosandcons").dropdownX("set text", props.prosandcons[listname + '-list'][index].item);
+            } else {
+                jQuery(this).find("[data-repeater-delete]").trigger("click");
+            }
+            index++;
+        });
     },
 
     cancelBtn: function (reviewContent) {
