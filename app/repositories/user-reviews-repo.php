@@ -52,6 +52,11 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             $should_update_comment_meta = (isset($comment_id) && !empty($comment_id) && !isset($props['review_reply']) && $props['parent'] == 0);
             if ($should_update_comment_meta) {
                 add_comment_meta($comment_id, SCR_COMMENT_META, $props);
+
+                // WooCommerce product review
+                if (get_post_type() == 'product' && isset($props['rating']) && !empty($props['rating'])) {
+                    add_comment_meta($comment_id, 'rating', round($props['rating'] / 20));
+                }
             }
 
             do_action('scr_photo_reviews/add_attachments', $comment_id);
@@ -94,63 +99,6 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             return $comment_data;
         }
 
-        public function insert_old($props)
-        {
-            if (is_user_logged_in()) {
-                if (!empty($_SERVER['REMOTE_ADDR']) && rest_is_ip_address(wp_unslash($_SERVER['REMOTE_ADDR']))) { // WPCS: input var ok, sanitization ok.
-                    $comment_author_IP = wp_unslash($_SERVER['REMOTE_ADDR']); // WPCS: input var ok.
-                } else {
-                    $comment_author_IP = '127.0.0.1';
-                }
-
-                $user = get_user_by('id', get_current_user_id());
-                $comment_author = $user->display_name;
-                $comment_author_email = $user->user_email;
-                $comment_author_url = $user->user_url;
-
-                $commentdata = array(
-                    'comment_post_ID' => $props['post_id'],
-                    'comment_author' => $comment_author,
-                    'comment_author_email' => $comment_author_email,
-                    'comment_author_url' => $comment_author_url,
-                    'comment_content' => $props['description'],
-                    'comment_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36',
-                    'comment_type' => SCR_COMMENT_TYPE,
-                    // 'comment_date' => current_time('timestamp', true),
-                    'comment_parent' => !isset($props['parent']) ? 0 : $props['parent'],
-                    'user_id' => $user->ID,
-                    'comment_author_IP' => $comment_author_IP,
-                    'comment_approved' => 1,
-                );
-
-                $comment_id = wp_new_comment($commentdata);
-
-                if (!current_user_can('manage_options')) {
-                    $commentarr = [
-                        'comment_ID' => $comment_id,
-                        'comment_approved' => 0,
-                    ];
-
-                    wp_update_comment($commentarr);
-                }
-
-                if (isset($comment_id) && !empty($comment_id) && !isset($props['review_reply']) && $props['parent'] == 0) {
-                    add_comment_meta($comment_id, SCR_COMMENT_META, $props);
-                }
-
-                // do_action('scr_photos_review/add_attachments', $comment_id);
-
-                return $comment_id;
-            }
-            // else{
-            //     $comment_author        = 'StarcatReview';
-            //     $comment_author_email  = 'starcatreview' . '@';
-            //     $comment_author_email .= isset($_SERVER['HTTP_HOST']) ? str_replace('www.', '', sanitize_text_field(wp_unslash($_SERVER['HTTP_HOST']))) : 'noreply.com'; // WPCS: input var ok.
-            //     $comment_author_email  = sanitize_email($comment_author_email);
-            // }
-            return 0;
-        }
-
         public function update($props)
         {
             // error_log('props : ' . print_r($props, true));
@@ -179,6 +127,11 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 unset($props['methodType']);
 
                 update_comment_meta($comment_id, SCR_COMMENT_META, $props);
+
+                // WooCommerce product review
+                if (get_post_type() == 'product' && isset($props['rating']) && !empty($props['rating'])) {
+                    update_comment_meta($comment_id, 'rating', round($props['rating'] / 20));
+                }
 
                 do_action('scr_photo_reviews/add_attachments', $comment_id);
             }
