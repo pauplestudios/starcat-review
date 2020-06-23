@@ -46,16 +46,18 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
         public function get_comment_item($comment_item)
         {
             // Rule for this hook
-            if (isset($comment_item->user_id) && $comment_item->user_id != 0) {
+            if (isset($comment_item['user_id']) && $comment_item['user_id'] != 0) {
                 return $comment_item;
             }
 
-            // If user is logged_in, this method should not be called at all.
             $Current_User = new \StarcatReview\App\Services\User();
             $current_user_IP = $Current_User->get_user_IP();
             $settings = $this->get_settings();
 
-            if ($settings['who_can_review'] == 'everyone' && $comment_item->comment_item_author_IP == $current_user_IP) {
+            $commenters = wp_get_current_commenter();
+            // error_log('commenters : ' . print_r($commenters, true));
+
+            if ($settings['who_can_review'] == 'everyone' && $comment_item['author_IP'] == $current_user_IP) {
                 $comment_item['can_edit'] = true;
             } else {
                 $comment_item['can_edit'] = false;
@@ -102,16 +104,17 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
 
         public function process_form($props = [])
         {
-            if (isset($_POST['user_email']) && !empty($_POST['user_email'])) {
-                $props['user_email'] = $_POST['user_email'];
+
+            if (isset($_POST['author']) && !empty($_POST['author'])) {
+                $props['author'] = $_POST['author'];
             }
 
-            if (isset($_POST['first_name']) && !empty($_POST['first_name'])) {
-                $props['first_name'] = $_POST['first_name'];
+            if (isset($_POST['email']) && !empty($_POST['email'])) {
+                $props['email'] = $_POST['email'];
             }
 
-            if (isset($_POST['last_name']) && !empty($_POST['last_name'])) {
-                $props['last_name'] = $_POST['last_name'];
+            if (isset($_POST['url']) && !empty($_POST['url'])) {
+                $props['url'] = $_POST['url'];
             }
 
             return $props;
@@ -153,23 +156,25 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
 
         public function form_modification($html = '', $review = [])
         {
-            $user_email = (isset($review['user_email'])) ? $review['user_email'] : '';
-            $first_name = (isset($review['first_name'])) ? $review['first_name'] : '';
-            $last_name = (isset($review['last_name'])) ? $review['last_name'] : '';
+            $commenter = wp_get_current_commenter();
+
+            $author = (isset($commenter['comment_author'])) ? $commenter['comment_author'] : '';
+            $author_email = (isset($commenter['comment_author_email'])) ? $commenter['comment_author_email'] : '';
+            $author_url = (isset($commenter['comment_author_url'])) ? $commenter['comment_author_url'] : '';
 
             $html .= '<div class="inline field">';
             // $html .= '<label>Review Title</label>';
-            $html .= '<input type="text" name="user_email" placeholder="me@mycompany.com" value="' . $user_email . '"/>';
+            $html .= '<input type="text" name="author" placeholder="Name" value="' . $author . '"/>';
             $html .= '</div>';
 
             $html .= '<div class="inline field">';
             // $html .= '<label>Review Title</label>';
-            $html .= '<input type="text" name="first_name" placeholder="John" value="' . $first_name . '"/>';
+            $html .= '<input type="text" name="email" placeholder="Email" value="' . $author_email . '"/>';
             $html .= '</div>';
 
             $html .= '<div class="inline field">';
             // $html .= '<label>Review Title</label>';
-            $html .= '<input type="text" name="last_name" placeholder="Doe  " value="' . $last_name . '"/>';
+            $html .= '<input type="text" name="url" placeholder="url" value="' . $author_url . '"/>';
             $html .= '</div>';
 
             // error_log('html: ' . $html);
@@ -177,3 +182,8 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
         }
     } // END CLASS
 }
+
+/*
+Non-Logged in User
+1. Add
+ */
