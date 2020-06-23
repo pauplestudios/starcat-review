@@ -23,18 +23,19 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Controller')) {
             return $view;
         }
 
-        public function get_reply_review($props)
+        public function get_comment_view($comment_id, $type = 'review')
         {
-            $props = $this->model->get_comment_item($props, null);
-            $view = $this->view->get_reply_comment($props);
+            $comment = scr_get_comment($comment_id);
+            $view = ($type == 'review') ? $this->view->get_item($comment) : $this->view->get_child_item($comment);
 
             $result = [
-                'props' => $props,
+                'props' => $comment,
                 'view' => $view,
             ];
 
             return $result;
         }
+
     } // END CLASS
 
 }

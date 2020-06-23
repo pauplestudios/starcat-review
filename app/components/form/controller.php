@@ -21,6 +21,10 @@ if (!class_exists('\StarcatReview\App\Components\Form\Controller')) {
             return $view->get();
         }
 
+        /*
+         * TODO: Append our fields to Themes Comment_form
+         * Not Used
+         */
         public function get_fields_view($args)
         {
             $viewProps = $this->model->get_viewProps($args);

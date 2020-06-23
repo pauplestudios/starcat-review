@@ -13,7 +13,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
     {
         public function __construct()
         {
-            $this->form_controller = new \StarcatReview\App\Components\Form_New\Controller();
+            $this->form_controller = new \StarcatReview\App\Components\Form\Controller();
             $this->reviews_controller = new \StarcatReview\App\Components\User_Reviews\Controller();
         }
 
@@ -21,7 +21,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
         {
             $args = $this->get_default_args();
             $form_view = $this->form_controller->get_view($args);
-            $ur_controller = new \StarcatReview\App\Components\User_Reviews_New\Controller();
+            $ur_controller = new \StarcatReview\App\Components\User_Reviews\Controller();
             $reviews_list_view = $ur_controller->get_view($args);
 
             $wrapper_start_html = '<div id="scr-controlled-list" class="scr-user-controlled-list" data-collectionprops="{<pagination<:true,<page<:9,<type<:2}">';
