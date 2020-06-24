@@ -33,9 +33,8 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             ];
 
             $controls_view = $this->controls_builder->get_controls($args);
-            $pagination_view = $this->get_pagination_html();
 
-            $view = $form_view . $wrapper_start_html . $controls_view . $reviews_list_view . $pagination_view . '</div>';
+            $view = $form_view . $wrapper_start_html . $controls_view . $reviews_list_view . '</div>';
 
             return $view;
         }
@@ -70,20 +69,6 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             $args = $this->get_interpreted_args($args);
 
             return $args;
-        }
-
-        protected function get_pagination_html()
-        {
-            $html = '';
-            $html .= '<ul class="ui pagination scr-pagination menu">';
-
-            for ($ii = 1; $ii <= 2; $ii++) {
-                # code...
-                $html .= '<li class="active"><a class="page" href="">' . $ii . '</a></li>';
-            }
-
-            $html .= '</ul>';
-            return $html;
         }
 
         private function get_interpreted_args($args)

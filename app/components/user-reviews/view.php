@@ -34,6 +34,8 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
 
             $html .= '</div>';
 
+            $html .= $this->get_pagination_html($viewProps['items']);
+
             return $html;
         }
 
@@ -96,6 +98,23 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '</div>';
 
             $html .= '</div>';
+
+            return $html;
+        }
+
+        protected function get_pagination_html($items)
+        {
+            $html = '';
+
+            if (!empty($items) && count($items) > 9) {
+
+                $html .= '<ul class="ui pagination scr-pagination menu">';
+                for ($ii = 1; $ii <= 2; $ii++) {
+                    # code...
+                    $html .= '<li class="active"><a class="page" href="">' . $ii . '</a></li>';
+                }
+                $html .= '</ul>';
+            }
 
             return $html;
         }
@@ -211,10 +230,10 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
 
         private function get_action_helpful($comment)
         {
-            $vote = $comment['votes'];
+            $vote = isset($comment['votes']) && !empty($comment['votes']) ? $comment['votes'] : [];
 
-            $like_active = ($vote['active'] === 'like') ? 'active' : '';
-            $dislike_active = ($vote['active'] === 'dislike') ? 'active' : '';
+            $like_active = (isset($vote['active']) && $vote['active'] === 'like') ? 'active' : '';
+            $dislike_active = (isset($vote['active']) && $vote['active'] === 'dislike') ? 'active' : '';
 
             $likes = (isset($vote['likes']) && !empty($vote['likes']) && $vote['likes'] > 0) ? $vote['likes'] : 0;
             $dislikes = (isset($vote['dislikes']) && !empty($vote['dislikes']) && $vote['dislikes'] > 0) ? $vote['dislikes'] : 0;
