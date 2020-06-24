@@ -76,14 +76,14 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
                 $this->user_review_settings($prefix);
 
-                if (is_plugin_active('starcat-review-photo-reviews/starcat-review-photo-reviews.php')) {
+                if (is_plugin_active('starcat-review-photo-reviews/starcat-review-photo-reviews.php') && scr_pr_fs()->can_use_premium_code()) {
                     $this->photo_reviews_settings($prefix);
                 }
 
                 // $this->comparison_table_settings($prefix);
                 // $active_plugins = get_option('active_plugins');
                 // error_log('$active_plugins : ' . print_r($active_plugins, true));
-                if (class_exists('starcat_review_woo_notify')) {
+                if (class_exists('starcat_review_woo_notify') && scr_wn_fs()->can_use_premium_code()) {
                     $this->notification_settings($prefix);
                 }
 
