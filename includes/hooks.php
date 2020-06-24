@@ -40,7 +40,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
                 if ($post_type == 'product') {
                     // add_filter('woocommerce_product_tabs', [$this, 'woo_new_product_tab']);
                     // add_action('woocommerce_single_product_summary', [$this, 'woocommerce_review_display_overall_rating'], 10);
-                    // add_filter('woocommerce_product_get_rating_html', [$this, 'woocommerce_shop_display'], 10, 3);
+                    add_filter('woocommerce_product_get_rating_html', [$this, 'woocommerce_shop_display'], 10, 3);
                     add_action('woocommerce_after_shop_loop_item_title', [$this, 'woocommerce_shop_display'], 11);
                 }
             }
