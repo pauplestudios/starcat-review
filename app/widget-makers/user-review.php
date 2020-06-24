@@ -88,12 +88,8 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
 
         private function get_interpreted_args($args)
         {
-
             $components = ['comments', 'stats', 'prosandcons', 'votes', 'attachments'];
             $args['items'] = scr_get_comments_args($components);
-            // error_log('!!! some !!!');
-            // error_log('$args' . print_r($args['items']['comments'], true));
-
             $args['capability'] = apply_filters('scr_capabilities_args', $args['items']['comments']);
 
             return $args;

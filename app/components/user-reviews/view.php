@@ -205,22 +205,27 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
 
         private function get_action_helpful($comment)
         {
-            $vote_summary = $comment['votes'];
+            $vote = $comment['votes'];
 
-            $like_active = ($vote_summary['active'] === 'like') ? 'active' : '';
-            $dislike_active = ($vote_summary['active'] === 'dislike') ? 'active' : '';
+            $like_active = ($vote['active'] === 'like') ? 'active' : '';
+            $dislike_active = ($vote['active'] === 'dislike') ? 'active' : '';
+
+            $likes = (isset($vote['likes']) && !empty($vote['likes']) && $vote['likes'] > 0) ? $vote['likes'] : 0;
+            $dislikes = (isset($vote['dislikes']) && !empty($vote['dislikes']) && $vote['dislikes'] > 0) ? $vote['dislikes'] : 0;
 
             $html = '<div class="helpful"> ';
             if ($this->capability['can_user_vote'] && $this->collection['enable_voting']) {
                 $html .= '<div class="vote likes-and-dislikes" data-comment-id="' . $comment['ID'] . '">';
                 $html .= 'Was this helpful to you ? ';
-                $html .= '<a class="like ' . $like_active . '"><i class="bordered thumbs up outline icon"></i><span class="likes">' . $vote_summary['likes'] . '</span></a>';
-                $html .= '<a class="dislike ' . $dislike_active . '"><i class="bordered thumbs down outline icon"></i><span class="dislikes">' . $vote_summary['dislikes'] . '</span></a>';
+                $html .= '<a class="like ' . $like_active . '"><i class="bordered thumbs up outline icon"></i><span class="likes">' . $likes . '</span></a>';
+                $html .= '<a class="dislike ' . $dislike_active . '"><i class="bordered thumbs down outline icon"></i><span class="dislikes">' . $dislikes . '</span></a>';
                 $html .= '</div>';
             }
-            $html .= '<div class="vote-summary">';
-            $html .= '<span class="helpful">' . $vote_summary['likes'] . '</span> of <span class="people"> ' . $vote_summary['people'] . ' </span> people found this review helpful';
-            $html .= '</div>';
+            if (($likes || $dislikes) != 0) {
+                $html .= '<div class="vote-summary">';
+                $html .= '<span class="helpful">' . $likes . '</span> of <span class="people"> ' . $vote['people'] . ' </span> people found this review helpful';
+                $html .= '</div>';
+            }
 
             $html .= '</div>';
 

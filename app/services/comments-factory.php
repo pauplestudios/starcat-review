@@ -16,7 +16,7 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
         public function get_comments_args($use_cases = ['stats'], $query_args)
         {
             $identical = 'stats';
-            $comments = [$identical => []];
+            $comments = [];
             $comment_ids = $this->get_comments_ids($query_args);
 
             if ($this->is_set($comment_ids)) {
@@ -137,14 +137,16 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
 
         protected function get_vote($review)
         {
-            $summary = [
-                'likes' => 0,
-                'dislikes' => 0,
-                'active' => 0,
-                'people' => 0,
-            ];
+            $summary = [];
 
             if ($this->is_key_exist('votes', $review)) {
+                $summary = [
+                    'likes' => 0,
+                    'dislikes' => 0,
+                    'active' => 0,
+                    'people' => 0,
+                ];
+
                 foreach ($review['votes'] as $vote) {
 
                     // Is active Like or DisLike or Not

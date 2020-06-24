@@ -154,7 +154,7 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
 
             $html .= '<div class="inline field">';
             // $html .= '<label>Review Title</label>';
-            $html .= '<input type="text" name="url" placeholder="url" value="' . $author_url . '"/>';
+            $html .= '<input type="text" name="url" placeholder="URL" value="' . $author_url . '"/>';
             $html .= '</div>';
 
             // error_log('html: ' . $html);

@@ -2,6 +2,8 @@
 <?php
 use \StarcatReview\Includes\Settings\SCR_Getter;
 
+require_once SCR_PATH . 'includes/utils/review-data.php';
+
 class FactoryTest extends \Codeception\TestCase\WPTestCase
 {
     public function _before()
@@ -9,25 +11,33 @@ class FactoryTest extends \Codeception\TestCase\WPTestCase
         wp_set_current_user(1);
     }
 
+    public function test_get_prosandcons_args()
+    {
+        $data = $this->get_data();
+        $actual = scr_get_comments_args(['prosandcons'], ['post_id' => $data['product_id']]);
+        $this->assertEquals(1, count($actual));
+    }
+
+    public function test_get_votes_args()
+    {
+        $data = $this->get_data();
+        $votes = scr_get_comments_args(['votes'], ['post_id' => $data['product_id']]);
+
+        $this->assertEquals(1, count($votes));
+
+        $single_vote = current($votes);
+
+        $this->assertEquals(2, $single_vote['likes']);
+        $this->assertEquals(0, $single_vote['dislikes']);
+        $this->assertEquals('like', $single_vote['active']);
+        $this->assertEquals(2, $single_vote['people']);
+    }
+
     public function test_scr_get_comments_args()
     {
-        $data = $this->setup_stat_db_datas();
-
-        /*
-        Case 1: 'Listing Single -- Singluarity'
-         */
-        $actual = scr_get_comments_args(['stats'], ['post_id' => $data['product_id']]);
+        $data = $this->get_data();
+        $actual = scr_get_comments_args(['comments'], ['post_id' => $data['product_id']]);
         $this->assertEquals(10, count($actual));
-
-        SCR_Getter::set('stat-singularity', 'multiple');
-
-        /*
-        Case 2: 'Listing Multiple -- Singluarity'
-         */
-
-        $actual = scr_get_comments_args(['stats'], ['post_id' => $data['product_id']]);
-        $this->assertEquals(10, count($actual));
-
     }
 
     public function test_scr_get_stat_args()
@@ -35,7 +45,8 @@ class FactoryTest extends \Codeception\TestCase\WPTestCase
         $author_stat = 'author_stat'; // summary_author
         $comment_stat = 'comment_stat'; // summary_users
 
-        $data = $this->setup_stat_db_datas();
+        $data = $this->get_data();
+
         SCR_Getter::set('stat-singularity', 'single');
 
         /*
@@ -127,12 +138,25 @@ class FactoryTest extends \Codeception\TestCase\WPTestCase
 
         $this->assertEquals($expected, $actual);
 
+        /*
+        Case 7: 'Listing Multiple -- Singluarity'
+         */
+
+        $actual = scr_get_comments_args(['stats'], ['post_id' => $data['product_id']]);
+        $this->assertEquals(10, count($actual));
+
+        SCR_Getter::set('stat-singularity', 'single');
+        /*
+        Case 8: 'Listing Single -- Singluarity'
+         */
+        $actual = scr_get_comments_args(['stats'], ['post_id' => $data['product_id']]);
+        $this->assertEquals(10, count($actual));
     }
 
     // Setting Up Stat DB data
-    protected function setup_stat_db_datas()
+    public function get_data()
     {
-        $stats_data = $this->get_stats_data();
+        $stats_data = ReviewData::get_stats_data();
         $post_meta = $stats_data[SCR_POST_META];
         $comment_metas = $stats_data[SCR_COMMENT_META];
         $comments_data = [];
@@ -160,178 +184,4 @@ class FactoryTest extends \Codeception\TestCase\WPTestCase
 
         return $data;
     }
-
-    public function get_stats_data()
-    {
-
-        $data = [
-            SCR_OPTIONS => [
-                'singularity' => 'single', // single or multiple
-                'type' => 'star',
-                'steps' => 'full', // full or half
-                'limit' => 5, // 5 or 10
-                'global_stats' => [
-                    ['stat_name' => 'Feature'],
-                    ['stat_name' => 'speed'],
-                    ['stat_name' => 'quality'],
-                    ['stat_name' => 'ui'],
-                ],
-                'source_type' => 'icon',
-                'icons' => 'star',
-                'images' => [],
-                'animate' => false,
-                'show_rating_label' => true,
-            ],
-            SCR_POST_META => [
-                'stats-list' => [
-                    'feature' => [
-                        'stat_name' => 'Feature',
-                        'rating' => 50,
-                    ],
-                    'speed' => [
-                        'stat_name' => 'Speed',
-                        'rating' => 80,
-                    ],
-                    'ui' => [
-                        'stat_name' => 'ui',
-                        'rating' => 90,
-                    ],
-                    'quality' => [
-                        'stat_name' => 'quality',
-                        'rating' => 40,
-                    ],
-                ],
-            ],
-            // User reviews comments of its reviews stats meta
-            SCR_COMMENT_META => [
-                [
-                    'stats' => [
-                        'feature' => [
-                            'stat_name' => 'feature',
-                            'rating' => 50,
-                        ],
-                        'speed' => [
-                            'stat_name' => 'speed',
-                            'rating' => 80,
-                        ],
-                        'quality' => [
-                            'stat_name' => 'quality',
-                            'rating' => 70,
-                        ],
-                        'ui' => [
-                            'stat_name' => 'ui',
-                            'rating' => 50,
-                        ],
-                    ],
-                ],
-                [
-                    'stats' => [
-                        'feature' => [
-                            'stat_name' => 'feature',
-                            'rating' => 100,
-                        ],
-                        'quality' => [
-                            'stat_name' => 'quality',
-                            'rating' => 60,
-                        ],
-                        'speed' => [
-                            'stat_name' => 'speed',
-                            'rating' => 80,
-                        ],
-                    ],
-                ],
-                [
-                    'stats' => [
-                        'feature' => [
-                            'stat_name' => 'feature',
-                            'rating' => 100,
-                        ],
-                        'speed' => [
-                            'stat_name' => 'speed',
-                            'rating' => 90,
-                        ],
-                    ],
-                ],
-                [
-                    'stats' => [
-                        'feature' => [
-                            'stat_name' => 'feature',
-                            'rating' => 80,
-                        ],
-                    ],
-                ],
-                [
-                    'stats' => [
-                        'speed' => [
-                            'stat_name' => 'speed',
-                            'rating' => 80,
-                        ],
-                    ],
-                ],
-                [
-                    'stats' => [
-                        'feature' => [
-                            'stat_name' => 'feature',
-                            'rating' => 0,
-                        ],
-                    ],
-                ],
-                [
-                    'stats' => [
-                        'feature' => [
-                            'stat_name' => 'feature',
-                            'rating' => 65,
-                        ],
-                        'quality' => [
-                            'stat_name' => 'quality',
-                            'rating' => 95,
-                        ],
-                        'speed' => [
-                            'stat_name' => 'speed',
-                            'rating' => 90,
-                        ],
-                    ],
-                ],
-                [
-                    'stats' => [
-                        'feature' => [
-                            'stat_name' => 'feature',
-                            'rating' => 50,
-                        ],
-                        'quality' => [
-                            'stat_name' => 'quality',
-                            'rating' => 70,
-                        ],
-                    ],
-                ],
-                [
-                    'stats' => [
-                        'quality' => [
-                            'stat_name' => 'quality',
-                            'rating' => 60,
-                        ],
-                        'speed' => [
-                            'stat_name' => 'speed',
-                            'rating' => 40,
-                        ],
-                    ],
-                ],
-                [
-                    'stats' => [
-                        'quality' => [
-                            'stat_name' => 'quality',
-                            'rating' => 70,
-                        ],
-                        'speed' => [
-                            'stat_name' => 'speed',
-                            'rating' => 90,
-                        ],
-                    ],
-                ],
-            ],
-        ];
-
-        return $data;
-    }
-
 }
