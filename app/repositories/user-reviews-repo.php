@@ -21,7 +21,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
         public function insert($props)
         {
 
-            error_log('props : ' . print_r($props, true));
+            // error_log('props : ' . print_r($props, true));
             $Current_User = new \StarcatReview\App\Services\User();
 
             $user_can_review = $Current_User->can_review();

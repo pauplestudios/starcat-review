@@ -1,4 +1,5 @@
 var Stats = require("./stats.js");
+var Upload = require("./../photo-reviews/upload.js");
 
 var selectors = {
     reviewForm: ".scr-user-review.form",
@@ -87,6 +88,7 @@ var Edit = {
         Edit.getModifiedFormforProsandCons(props, form, 'pros');
         Edit.getModifiedFormforProsandCons(props, form, 'cons');
         // Attachments
+        Edit.getModifiedFormforPhotos(props, form);
 
         return form;
     },
@@ -125,6 +127,23 @@ var Edit = {
             }
             index++;
         });
+    },
+
+    getModifiedFormforPhotos: function (props, form) {
+
+
+        if (props.attachments && props.attachments.length && form.find(".scr_pr_uploaded_image_group").length == 1) {
+            jQuery(props.attachments).each(function () {
+                var attachment = this;
+                var html = "<div class='ui tiny deleteable image' data-review-id='" + attachment.review_id + "' data-attachment-id='" + attachment.id + "'>";
+                html += "<a class='ui right corner red label'><i class='delete icon'></i></a>";
+                html += "<img src='" + attachment.url + "' />";
+                html += "</div>";
+
+                form.find(".scr_pr_uploaded_image_group").prepend(html);
+            });
+            Upload.removePhoto();
+        }
     },
 
     cancelBtn: function (reviewContent) {
