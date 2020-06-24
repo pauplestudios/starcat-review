@@ -12,11 +12,16 @@ var StarcatReview = {
         ListBuilder.init();
         PhotoReviews.init();
         // ListControl.init();
-        // ComparisonTable.init();        
+        // ComparisonTable.init();  
+        this.eventHandlers();
     },
 
     eventHandlers: function () {
-        var thisModule = this;
+
+        // Refreshing PhotoReviews events for paginated List items
+        jQuery(".scr-pagination li").one("click", function (e) {
+            PhotoReviews.init();
+        });
     },
 };
 
