@@ -14,8 +14,6 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
 
         public function get($props)
         {
-            // error_log('props : ' . print_r($props, true));
-
             $html = '';
             $html .= $props['collection']['reviews_title'];
             $html .= '<div class="scr-summary">';
@@ -29,11 +27,7 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
                 $html .= $prosandcons->get_view($props);
             }
 
-            // $attachements = (isset($props['items']['attachments']) && !empty($user_args['items']['attachments'])) ? $user_args['items']['attachments'] : [];
-            // $all_photos = apply_filters('scr_photo_reviews/get_all_photos', $attachements);
-            // $all_photos_html = is_string($all_photos) ? $all_photos : '';
-
-            // $html .= $all_photos_html;
+            $html .= $this->get_all_attachments($props);
 
             $html .= '</div></div>';
 
@@ -57,6 +51,19 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
             $html .= '<h4 class="ui header">' . $title . ' </h4>';
             $html .= $stats_view;
             $html .= '</div>';
+
+            return $html;
+        }
+
+        public function get_all_attachments($props)
+        {
+            $html = '';
+            $attachments = (isset($props['items']['attachments']) && !empty($props['items']['attachments'])) ? $props['items']['attachments'] : [];
+
+            if (isset($attachments) && !empty($attachments)) {
+                $all_photos = apply_filters('scr_photo_reviews/get_all_photos', $attachments);
+                $html .= is_string($all_photos) ? $all_photos : '';
+            }
 
             return $html;
         }

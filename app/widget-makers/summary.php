@@ -35,13 +35,9 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Summary')) {
         protected function get_items()
         {
             $post_meta = get_post_meta(get_the_ID(), SCR_POST_META, true);
-            // $comments = $this->get_comments_list();
 
             $items = [];
 
-            // if (isset($post_meta['stats-list']) && !empty($post_meta['stats-list'])) {
-            //     $items['stats-list'] = $post_meta['stats-list'];
-            // }
             $post_id = get_the_ID();
             $items['summary_author'] = scr_get_stat_args($post_id, 'author_stat');
             $items['summary_users'] = scr_get_stat_args($post_id, 'comment_stat');
@@ -53,47 +49,9 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Summary')) {
                 $items['cons-list'] = $post_meta['cons-list'];
             }
 
-            // if (isset($comments) && !empty($comments)) {
-            //     $items['comments-list'] = $comments;
-            // }
+            $items['attachments'] = scr_get_comments_args(['attachments']);
 
             return $items;
-        }
-
-        protected function get_comments_list()
-        {
-            $args = [
-                'post_id' => get_the_ID(),
-                'type' => SCR_COMMENT_TYPE,
-                'status' => 'approve',
-                'parent' => 0,
-            ];
-
-            $comments = get_comments($args);
-
-            foreach ($comments as $comment) {
-                $comment->reviews = get_comment_meta($comment->comment_ID, SCR_COMMENT_META, true);
-                if (isset($comment->reviews['attachments']) && !empty($comment->reviews['attachments'])) {
-                    $comment->reviews['attachments'] = $this->get_attachments_with_src($comment);
-                }
-
-            }
-
-            return $comments;
-        }
-
-        protected function get_attachments_with_src($comment)
-        {
-            $photos = [];
-            for ($ii = 0; $ii < sizeof($comment->reviews['attachments']); $ii++) {
-                $photos[$ii] = [
-                    'id' => $comment->reviews['attachments'][$ii],
-                    'review_id' => $comment->comment_ID,
-                    'url' => wp_get_attachment_image_src($comment->reviews['attachments'][$ii], 'medium')[0],
-                ];
-            }
-
-            return $photos;
         }
     }
 }

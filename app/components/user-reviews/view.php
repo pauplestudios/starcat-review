@@ -57,7 +57,6 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
 
             $html = '<div class="comment" id="' . $comment['ID'] . '" data-props="' . $data_props . '">';
             $html .= $this->get_avatar($comment);
-            // error_log('comment : ' . print_r($comment, true));
 
             $html .= '<div class="content">';
             $html .= $this->get_content_meta($comment);
@@ -150,13 +149,20 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '<div class="stats"> ' . $stats_view . '</div>';
             $html .= '<div class="description review-card__body"><p>' . $comment['content'] . '</p></div>';
             $html .= $prosandcons_view;
-
-            $review_photos = apply_filters('scr_photo_reviews/get_single_review_photos', $comment);
-            $review_photos_html = is_string($review_photos) ? $review_photos : '';
-
-            $html .= $review_photos_html;
+            $html .= $this->get_attachments($comment);
 
             $html .= '</div>';
+
+            return $html;
+        }
+
+        public function get_attachments($comment)
+        {
+            $html = '';
+            if (isset($comment['attachments']) && !empty($comment['attachments'])) {
+                $review_photos = apply_filters('scr_photo_reviews/get_single_review_photos', $comment['attachments']);
+                $html .= is_string($review_photos) ? $review_photos : '';
+            }
 
             return $html;
         }

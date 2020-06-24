@@ -62,6 +62,10 @@ if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
                 $itemsProps['cons-list'] = $args['items']['cons-list'];
             }
 
+            if (isset($args['items']['attachments']) && !empty($args['items']['attachments'])) {
+                $itemsProps['attachments'] = $this->get_all_attachments($args['items']['attachments']);
+            }
+
             return $itemsProps;
 
         }
@@ -91,6 +95,19 @@ if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
             }
 
             return $html;
+        }
+
+        protected function get_all_attachments($attachments_list = [])
+        {
+            $attachments = [];
+            if (!empty($attachments_list)) {
+                foreach ($attachments_list as $attachments_item) {
+                    if (!empty($attachments_item)) {
+                        $attachments = array_merge($attachments, $attachments_item);
+                    }
+                }
+            }
+            return $attachments;
         }
     }
 }

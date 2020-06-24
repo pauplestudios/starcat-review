@@ -41,7 +41,7 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
                         }
 
                         if ($case == 'attachments') {
-                            $item = $this->get_attachment($review);
+                            $item = $this->get_attachment($comment_id, $review);
                         }
 
                         if ($case == 'comments') {
@@ -192,9 +192,23 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
 
         }
 
-        protected function get_attachment($review)
+        /* 
+        TODO: have list of sizes like medium, large, small, full
+        */
+
+        protected function get_attachment($comment_id, $review)
         {
             $attachment = [];
+            if ($this->is_key_exist('attachments', $review)) {
+                foreach ($review['attachments'] as $attachment_id) {
+                    $attachment[] = [
+                        'id' => $attachment_id,
+                        'review_id' => $comment_id,
+                        'url' => wp_get_attachment_image_src($attachment_id, 'medium')[0],
+                    ];        
+                }
+            }
+
             return $attachment;
         }
 
