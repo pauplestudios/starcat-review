@@ -33,10 +33,11 @@ var Edit = {
             jQuery(".comment .content .text").show();
 
             // Clicked link closest review content
-            var reviewContent = link
+
+            var allReviewContent = link
                 .closest(".comment .content")
-                .find(".text")
-                .first();
+                .find(".text").show();
+            var reviewContent = allReviewContent.first();
 
             // Hide clicked link of closest review content
             reviewContent.hide();

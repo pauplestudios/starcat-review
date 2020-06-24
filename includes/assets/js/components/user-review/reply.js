@@ -77,7 +77,7 @@ var Reply = {
 
             // Remove all reviews list forms except clonned form
             jQuery(selectors.userReviews)
-                .find("form.form")
+                .find(".form").hide().find(selectors.replyForm)
                 .remove();
 
             // Hide clicked review link
@@ -224,7 +224,7 @@ var Reply = {
             }
 
             jQuery(this)
-                .closest("form.form")
+                .closest(selectors.replyForm)
                 .remove();
         });
     },
