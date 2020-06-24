@@ -106,15 +106,14 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
         {
             $html = '';
 
-            if (!empty($items) && count($items) > 9) {
+            $display = (!empty($items) && count($items) > 9) ? '' : 'style="display: none;"';
 
-                $html .= '<ul class="ui pagination scr-pagination menu">';
-                for ($ii = 1; $ii <= 2; $ii++) {
-                    # code...
-                    $html .= '<li class="active"><a class="page" href="">' . $ii . '</a></li>';
-                }
-                $html .= '</ul>';
+            $html .= '<ul class="ui pagination scr-pagination menu" '.$display.'>';
+            for ($ii = 1; $ii <= 2; $ii++) {
+                # code...
+                $html .= '<li class="active"><a class="page" href="">' . $ii . '</a></li>';
             }
+            $html .= '</ul>';
 
             return $html;
         }
