@@ -15,13 +15,13 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 return get_comment(intval($comment_id));
             }
 
-            return get_comment_meta($comment_id, 'scr_user_review_props');
+            return get_comment_meta($comment_id, SCR_COMMENT_META);
         }
 
         public function insert($props)
         {
 
-            error_log('props : ' . print_r($props, true));
+            // error_log('props : ' . print_r($props, true));
             $Current_User = new \StarcatReview\App\Services\User();
 
             $user_can_review = $Current_User->can_review();
@@ -51,7 +51,12 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             // 4. Does this review have comment_meta to be updated
             $should_update_comment_meta = (isset($comment_id) && !empty($comment_id) && !isset($props['review_reply']) && $props['parent'] == 0);
             if ($should_update_comment_meta) {
-                add_comment_meta($comment_id, 'scr_user_review_props', $props);
+                add_comment_meta($comment_id, SCR_COMMENT_META, $props);
+
+                // WooCommerce product review
+                if (get_post_type() == 'product' && isset($props['rating']) && !empty($props['rating'])) {
+                    add_comment_meta($comment_id, 'rating', round($props['rating'] / 20));
+                }
             }
 
             do_action('scr_photo_reviews/add_attachments', $comment_id);
@@ -94,63 +99,6 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             return $comment_data;
         }
 
-        public function insert_old($props)
-        {
-            if (is_user_logged_in()) {
-                if (!empty($_SERVER['REMOTE_ADDR']) && rest_is_ip_address(wp_unslash($_SERVER['REMOTE_ADDR']))) { // WPCS: input var ok, sanitization ok.
-                    $comment_author_IP = wp_unslash($_SERVER['REMOTE_ADDR']); // WPCS: input var ok.
-                } else {
-                    $comment_author_IP = '127.0.0.1';
-                }
-
-                $user = get_user_by('id', get_current_user_id());
-                $comment_author = $user->display_name;
-                $comment_author_email = $user->user_email;
-                $comment_author_url = $user->user_url;
-
-                $commentdata = array(
-                    'comment_post_ID' => $props['post_id'],
-                    'comment_author' => $comment_author,
-                    'comment_author_email' => $comment_author_email,
-                    'comment_author_url' => $comment_author_url,
-                    'comment_content' => $props['description'],
-                    'comment_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36',
-                    'comment_type' => SCR_COMMENT_TYPE,
-                    // 'comment_date' => current_time('timestamp', true),
-                    'comment_parent' => !isset($props['parent']) ? 0 : $props['parent'],
-                    'user_id' => $user->ID,
-                    'comment_author_IP' => $comment_author_IP,
-                    'comment_approved' => 1,
-                );
-
-                $comment_id = wp_new_comment($commentdata);
-
-                if (!current_user_can('manage_options')) {
-                    $commentarr = [
-                        'comment_ID' => $comment_id,
-                        'comment_approved' => 0,
-                    ];
-
-                    wp_update_comment($commentarr);
-                }
-
-                if (isset($comment_id) && !empty($comment_id) && !isset($props['review_reply']) && $props['parent'] == 0) {
-                    add_comment_meta($comment_id, 'scr_user_review_props', $props);
-                }
-
-                // do_action('scr_photos_review/add_attachments', $comment_id);
-
-                return $comment_id;
-            }
-            // else{
-            //     $comment_author        = 'StarcatReview';
-            //     $comment_author_email  = 'starcatreview' . '@';
-            //     $comment_author_email .= isset($_SERVER['HTTP_HOST']) ? str_replace('www.', '', sanitize_text_field(wp_unslash($_SERVER['HTTP_HOST']))) : 'noreply.com'; // WPCS: input var ok.
-            //     $comment_author_email  = sanitize_email($comment_author_email);
-            // }
-            return 0;
-        }
-
         public function update($props)
         {
             // error_log('props : ' . print_r($props, true));
@@ -167,18 +115,23 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             // review only not reply update
             if ($props['parent'] == 0) {
 
-                $data = get_comment_meta($comment_id, 'scr_user_review_props', true);
+                $data = get_comment_meta($comment_id, SCR_COMMENT_META, true);
 
                 $votes = isset($data['votes']) && !empty($data['votes']) ? $data['votes'] : [];
                 $props['votes'] = $votes;
-                
+
                 $attachments = isset($data['attachments']) && !empty($data['attachments']) ? $data['attachments'] : [];
                 $props['attachments'] = $attachments;
-                
+
                 unset($props['parent']);
-                unset($props['methodType']);                
-                
-                update_comment_meta($comment_id, 'scr_user_review_props', $props);
+                unset($props['methodType']);
+
+                update_comment_meta($comment_id, SCR_COMMENT_META, $props);
+
+                // WooCommerce product review
+                if (get_post_type() == 'product' && isset($props['rating']) && !empty($props['rating'])) {
+                    update_comment_meta($comment_id, 'rating', round($props['rating'] / 20));
+                }
 
                 do_action('scr_photo_reviews/add_attachments', $comment_id);
             }
@@ -188,30 +141,25 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
 
         public function store_vote($props)
         {
-            if (metadata_exists('comment', $props['comment_id'], 'scr_user_review_props')) {
-                $meta_props = get_comment_meta($props['comment_id'], 'scr_user_review_props', true);
+            $meta_props = get_comment_meta($props['comment_id'], SCR_COMMENT_META, true);
 
-                if (isset($meta_props['votes']) && !empty($meta_props['votes'])) {
-                    $is_current_user_voted = false;
-                    foreach ($meta_props['votes'] as &$vote) {
-                        if ($vote['user_id'] == $props['vote']['user_id']) {
-                            $vote['vote'] = $props['vote']['vote'];
-                            $is_current_user_voted = true;
-                        }
-                        // error_log('each vote : ' . print_r($vote, true));
+            if (isset($meta_props['votes']) && !empty($meta_props['votes'])) {
+                $is_current_user_voted = false;
+                foreach ($meta_props['votes'] as &$vote) {
+                    if ($vote['user_id'] == $props['vote']['user_id']) {
+                        $vote['vote'] = $props['vote']['vote'];
+                        $is_current_user_voted = true;
                     }
-                    if ($is_current_user_voted == false) {
-                        array_push($meta_props['votes'], $props['vote']);
-                    }
-                } else {
-                    $vote_props = ['votes' => [$props['vote']]];
-                    $meta_props = array_merge($meta_props, $vote_props);
+                    // error_log('each vote : ' . print_r($vote, true));
                 }
-
-                // error_log('$meta_props : ' . print_r($meta_props['votes'], true));
-
-                update_comment_meta($props['comment_id'], 'scr_user_review_props', $meta_props);
+                if ($is_current_user_voted == false) {
+                    array_push($meta_props['votes'], $props['vote']);
+                }
+            } else {
+                $vote_props = ['votes' => [$props['vote']]];
+                $meta_props = isset($meta_props) && !empty($meta_props) ? array_merge($meta_props, $vote_props) : $vote_props;
             }
+            update_comment_meta($props['comment_id'], SCR_COMMENT_META, $meta_props);
         }
 
         public function get_processed_data()
@@ -285,7 +233,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             return $data;
         }
 
-        protected function get_prosandcons($features)
+        public function get_prosandcons($features)
         {
             $items = [];
 
@@ -300,7 +248,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             return $items;
         }
 
-        protected function get_rating($scores)
+        public function get_rating($scores)
         {
             $count = 0;
             $rating = 0;
@@ -317,7 +265,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             return $rating;
         }
 
-        protected function get_stat($scores)
+        public function get_stat($scores)
         {
             $stats = [];
 

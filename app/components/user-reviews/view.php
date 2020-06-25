@@ -9,37 +9,32 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
     class View
     {
-        private $html;
-
-        public function __construct()
-        {
-            /* Views */
-            $this->card = new \StarcatReview\App\Views\Blocks\Enhanced_Card();
-            $this->controls_builder = new \StarcatReview\App\Builders\Controls_Builder();
-        }
-
         public function get($viewProps)
         {
-            if (!isset($viewProps['items']) || empty($viewProps['items'])) {
-                return '';
-            }
-            $this->collection = $viewProps['collection'];
+            $html = '';
 
-            $html = '<div class="ui scr_user_reviews list comments">';
+            $this->itemProps = $viewProps['items'];
+            $this->collection = $viewProps['collection'];
+            $this->capability = $viewProps['collection']['capability'];
+
             if ($this->collection['show_list_title']) {
                 $html .= '<h3 class="ui dividing header"> ' . $this->collection['list_title'] . '</h3>';
             }
 
-            foreach ($viewProps['items'] as $comment) {
-
-                if ($this->can_view_comment($comment) && $comment['comment_parent'] == 0) {
-                    $html .= $this->get_comment_item($comment, $viewProps['items']);
+            $html .= '<div class="ui scr_user_reviews list comments">';
+            if (isset($viewProps['items']) && !empty($viewProps['items'])) {
+                foreach ($viewProps['items'] as $comment) {
+                    if ($this->can_view_comment($comment) && $comment['parent'] == 0) {
+                        $html .= $this->get_item($comment);
+                    }
                 }
             }
 
             $html .= $this->get_reply_form();
 
             $html .= '</div>';
+
+            $html .= $this->get_pagination_html($viewProps['items']);
 
             return $html;
         }
@@ -48,90 +43,175 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
         {
             $can = false;
 
-            if ($comment['comment_approved'] == 1 || $comment['user_id'] == $this->collection['current_user_id']) {
+            if ($comment['approved'] == 1 || $comment['user_id'] == $this->collection['current_user_id']) {
                 $can = true;
             }
 
-             // Used by non-logged-in-user
+            // Used by non-logged-in-user
             $can = apply_filters('scr_can_view_comment', $can, $comment);
 
             return $can;
         }
 
-        public function get_reply_comment($comment)
+        public function get_item($comment)
         {
-            $html = '<div class="comment" id="' . $comment['comment_id'] . '" data-comment-parent-id ="' . $comment['comment_parent'] . '" >';
-            $html .= '<a class="avatar"> ' . $comment['commentor_avatar'] . '</a>';
+            $data_props = htmlspecialchars(json_encode($comment['props']), ENT_QUOTES, 'UTF-8');
+
+            $html = '<div class="comment" id="' . $comment['ID'] . '" data-props="' . $data_props . '">';
+            $html .= $this->get_avatar($comment);
+
             $html .= '<div class="content">';
+            $html .= $this->get_content_meta($comment);
+            $html .= $this->get_content_text($comment);
+            $html .= $this->get_content_moderation_info($comment);
+            $html .= $this->get_content_actions($comment);
 
-            $html .= '<span class="author"> ' . $comment['comment_author'] . ' </span>';
-            $html .= '<div class="metadata">';
-            $html .= '<span class="date">' . $comment['comment_date'] . '</span>';
-            $html .= '<span class="time">AT ' . $comment['comment_time'] . '</span>';
-            $html .= '</div>';
-            $html .= '<div class="text">' . $comment['content'] . '</div>';
-            $html .= $this->get_moderation_html($comment, 'Reply');
-
-            $html .= '<div class="actions">';
-            $html .= '<div class="links">';
-            if ($this->collection['can_reply'] && $comment['can_edit']) {
-                $html .= '<a class="reply_edit_link"><i class="edit icon"></i> EDIT</a>';
+            // 1 level indentation of comment childrens
+            if ($comment['parent'] == 0 && isset($comment['childrens']) && !empty($comment['childrens'])) {
+                foreach ($comment['childrens'] as $child_comment) {
+                    $html .= $this->get_child_item($child_comment);
+                }
             }
-            $html .= '</div></div>';
-
             $html .= '</div>';
+
             $html .= '</div>';
 
             return $html;
         }
 
-        protected function get_moderation_html($comment, $title = 'Review')
+        public function get_child_item($comment)
+        {
+            $html = '<div class="comment" id="' . $comment['ID'] . '" data-comment-parent-id ="' . $comment['parent'] . '" >';
+            $html .= $this->get_avatar($comment);
+
+            $html .= '<div class="content">';
+            $html .= $this->get_content_meta($comment);
+            $html .= '<div class="text">' . $comment['content'] . '</div>';
+            $html .= $this->get_content_moderation_info($comment, 'Reply');
+
+            $html .= '<div class="actions">';
+            $html .= '<div class="links">';
+            if ($this->capability['can_user_reply'] && $comment['can_edit']) {
+                $html .= '<a class="reply_edit_link"><i class="edit icon"></i> EDIT</a>';
+            }
+            $html .= '</div></div>';
+            $html .= '</div>';
+
+            $html .= '</div>';
+
+            return $html;
+        }
+
+        protected function get_pagination_html($items)
         {
             $html = '';
-            if ($comment['comment_approved'] == 0 && $comment['user_id'] == $this->collection['current_user_id']) {
+
+            $display = (!empty($items) && count($items) > 9) ? '' : 'style="display: none;"';
+
+            $html .= '<ul class="ui pagination scr-pagination menu" '.$display.'>';
+            for ($ii = 1; $ii <= 2; $ii++) {
+                # code...
+                $html .= '<li class="active"><a class="page" href="">' . $ii . '</a></li>';
+            }
+            $html .= '</ul>';
+
+            return $html;
+        }
+
+        protected function get_avatar($comment)
+        {
+            return '<a class="avatar"> ' . $comment['avatar'] . '</a>';
+        }
+
+        protected function get_content_meta($comment)
+        {
+            $html = '';
+            $html .= '<span class="author"> ' . $comment['author'] . ' </span>';
+            $html .= '<div class="metadata">';
+            $html .= '<span class="date">' . $comment['date'] . '</span>';
+            $html .= '<span class="time">AT ' . $comment['time'] . '</span>';
+
+            if ($comment['parent'] == 0) {
+                $html .= '<span class="postDate" data-postDate="' . $comment['time_stamp'] . '"></span>'; // used by list-control.JS
+                $html .= '<span class="likes" data-likes="' . $comment['likes'] . '"></span>'; // used by list-control.JS
+                $html .= '<span class="positiveScore" data-positiveScore="' . $comment['rating'] . '"></span>'; // used by list-control.JS
+            }
+
+            $html .= '</div>';
+
+            return $html;
+
+        }
+
+        protected function get_content_text($comment)
+        {
+            $title = '';
+            $stats_view = '';
+            $prosandcons_view = '';
+            if (isset($comment['stats'])) {
+                $stats = new \StarcatReview\App\Components\Stats\Controller($comment['stats']);
+                $stats_view = $stats->get_view();
+            }
+
+            if (isset($comment['prosandcons'])) {
+                $prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller();
+                $prosandcons_view = $prosandcons->get_view($comment['prosandcons']);
+            }
+
+            if (isset($comment['title'])) {
+                $title = '<div class="title review-card__header"> ' . $comment['title'] . ' </div>';
+            }
+
+            $html = '<div class="text">';
+            $html .= $title;
+            $html .= '<div class="stats"> ' . $stats_view . '</div>';
+            $html .= '<div class="description review-card__body"><p>' . $comment['content'] . '</p></div>';
+            $html .= $prosandcons_view;
+            $html .= $this->get_attachments($comment);
+
+            $html .= '</div>';
+
+            return $html;
+        }
+
+        public function get_attachments($comment)
+        {
+            $html = '';
+            if (isset($comment['attachments']) && !empty($comment['attachments'])) {
+                $review_photos = apply_filters('scr_photo_reviews/get_single_review_photos', $comment['attachments']);
+                $html .= is_string($review_photos) ? $review_photos : '';
+            }
+
+            return $html;
+        }
+
+        protected function get_content_moderation_info($comment, $title = 'Review')
+        {
+            $html = '';
+            if ($comment['approved'] == 0 && $comment['user_id'] == $this->collection['current_user_id']) {
                 $html .= '<div class="comment_in_moderation">' . $title . ' in Moderation !</div>';
             }
 
             return $html;
         }
 
-        protected function get_comment_item($comment, $items)
+        protected function get_content_actions($comment)
         {
-            $vote_likes = $this->get_vote_likes($comment);
-            // error_log('$comment : ' . print_r($comment, true));
-            $html = '<div class="comment" id="' . $comment['comment_id'] . '">';
-            $html .= '<a class="avatar"> ' . $comment['commentor_avatar'] . '</a>';
-
-            $html .= '<div class="content">';
-
-            $html .= '<span class="author"> ' . $comment['comment_author'] . ' </span>';
-            $html .= '<div class="metadata">';
-            $html .= '<span class="date">' . $comment['comment_date'] . '</span>';
-            $html .= '<span class="time">AT ' . $comment['comment_time'] . '</span>';
-            $html .= '<span class="postDate" data-postDate="' . $comment['time_stamp'] . '"></span>'; // used by list-control.JS
-            $html .= '<span class="likes" data-likes="' . $vote_likes . '"></span>'; // used by list-control.JS
-            $html .= '<span class="positiveScore" data-positiveScore="' . $comment['rating'] . '"></span>'; // used by list-control.JS
-            $html .= '</div>';
-
-            $html .= '<div class="text">';
-            $html .= '<div class="title review-card__header"> ' . $comment['title'] . ' </div>';
-            $html .= '<div class="stats"> ' . $this->get_stats_view($comment) . '</div>';
-            $html .= '<div class="description review-card__body"><p>' . $comment['content'] . '</p></div>';
-            $html .= $this->get_prosandcons_view($comment);
-            
-            $review_photos = apply_filters('scr_photo_reviews/get_single_review_photos', $comment);
-            $review_photos_html = is_string($review_photos) ? $review_photos : '';
-
-            $html .= $review_photos_html;
-            
-            $html .= '</div>';
-            $html .= $this->get_moderation_html($comment);
-
+            $html = '';
             $html .= '<div class="actions">';
-            $html .= '<div class="links">';
+            $html .= $this->get_action_links($comment);
+            $html .= $this->get_action_helpful($comment);
+            $html .= '</div>';
 
-            $can_reply = $this->collection['can_reply'];
-            $can_edit_comment = $this->collection['can_reply'] && $comment['can_edit'];
+            return $html;
+        }
+
+        private function get_action_links($comment)
+        {
+            $html = '<div class="links">';
+
+            $can_reply = $this->capability['can_user_reply'];
+            $can_edit_comment = $this->capability['can_user_reply'] && $comment['can_edit'];
 
             if ($can_reply) {
                 $html .= '<a class="reply_link"><i class="reply icon"></i> REPLY</a>';
@@ -139,99 +219,41 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             if ($can_edit_comment) {
                 $html .= '<a class="edit_link"><i class="edit icon"></i> EDIT</a>';
             }
-            // if ($this->collection['can_reply']) {
+            // if ($this->collection['can_delete']) {
             //     $html .= '<a class="delete_link"><i class="delete icon"></i> DELETE</a>';
             // }
 
             $html .= '</div>';
-            if ($this->collection['can_vote'] && $this->collection['enable_voting']) {
-                $html .= $this->get_helpful($comment);
-            }
-            $html .= '</div>';
-
-            //1st level comment children
-            foreach ($items as $item) {
-                if ($item['comment_parent'] == $comment['comment_id'] && $this->can_view_comment($item)) {
-                    $html .= $this->get_reply_comment($item);
-                }
-            }
-
-            $html .= '</div>';
-
-            $html .= '</div>';
-
             return $html;
         }
 
-        private function get_stats_view($props)
+        private function get_action_helpful($comment)
         {
-            $stats = new \StarcatReview\App\Components\Stats\Controller($props['args']);
-            $view = $stats->get_view();
+            $vote = isset($comment['votes']) && !empty($comment['votes']) ? $comment['votes'] : [];
 
-            return $view;
-        }
+            $like_active = (isset($vote['active']) && $vote['active'] === 'like') ? 'active' : '';
+            $dislike_active = (isset($vote['active']) && $vote['active'] === 'dislike') ? 'active' : '';
 
-        private function get_prosandcons_view($props)
-        {
-            $view = '';
-            if ($props['args']['enable_pros_cons']) {
-                $prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller();
-                $view = $prosandcons->get_view($props['args']);
-            }
-
-            return $view;
-        }
-
-        private function get_vote_likes($props)
-        {
-            $vote_summary = 0;
-
-            if (isset($props['args']['items']['votes']['summary']) && is_int($props['args']['items']['votes']['summary']['likes'])) {
-                $vote_summary = $props['args']['items']['votes']['summary']['likes'];
-            }
-
-            return $vote_summary;
-        }
-
-        private function get_helpful($props)
-        {
-            $vote_summary = $this->get_vote_summary($props);
-
-            $like_active = ($vote_summary['active'] === 'like') ? 'active' : '';
-            $dislike_active = ($vote_summary['active'] === 'dislike') ? 'active' : '';
+            $likes = (isset($vote['likes']) && !empty($vote['likes']) && $vote['likes'] > 0) ? $vote['likes'] : 0;
+            $dislikes = (isset($vote['dislikes']) && !empty($vote['dislikes']) && $vote['dislikes'] > 0) ? $vote['dislikes'] : 0;
 
             $html = '<div class="helpful"> ';
-
-            $html .= '<div class="vote likes-and-dislikes" data-comment-id="' . $props['comment_id'] . '">';
-            $html .= 'Was this helpful to you ? ';
-            $html .= '<a class="like ' . $like_active . '"><i class="bordered thumbs up outline icon"></i><span class="likes">' . $vote_summary['likes'] . '</span></a>';
-            $html .= '<a class="dislike ' . $dislike_active . '"><i class="bordered thumbs down outline icon"></i><span class="dislikes">' . $vote_summary['dislikes'] . '</span></a>';
-            $html .= '</div>';
-
-            $html .= '<div class="vote-summary">';
-            $html .= '<span class="helpful">' . $vote_summary['likes'] . '</span> of <span class="people"> ' . $vote_summary['people'] . ' </span> people found this review helpful';
-            $html .= '</div>';
+            if ($this->capability['can_user_vote'] && $this->collection['enable_voting']) {
+                $html .= '<div class="vote likes-and-dislikes" data-comment-id="' . $comment['ID'] . '">';
+                $html .= 'Was this helpful to you ? ';
+                $html .= '<a class="like ' . $like_active . '"><i class="bordered thumbs up outline icon"></i><span class="likes">' . $likes . '</span></a>';
+                $html .= '<a class="dislike ' . $dislike_active . '"><i class="bordered thumbs down outline icon"></i><span class="dislikes">' . $dislikes . '</span></a>';
+                $html .= '</div>';
+            }
+            if (($likes || $dislikes) != 0) {
+                $html .= '<div class="vote-summary">';
+                $html .= '<span class="helpful">' . $likes . '</span> of <span class="people"> ' . $vote['people'] . ' </span> people found this review helpful';
+                $html .= '</div>';
+            }
 
             $html .= '</div>';
 
             return $html;
-        }
-
-        private function get_vote_summary($props)
-        {
-            // Default
-            $vote_summary = [
-                'active' => '',
-                'likes' => 0,
-                'dislikes' => 0,
-                'people' => 0,
-            ];
-
-            if (isset($props['args']['items']['votes'])) {
-                $vote_summary = $props['args']['items']['votes']['summary'];
-            }
-
-            return $vote_summary;
         }
 
         private function get_reply_form()
@@ -247,15 +269,5 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             return $html;
         }
 
-        private function get_excerpt($content)
-        {
-            $word_count = 150;
-            $excerpt = $content;
-            $excerpt = strip_tags($excerpt);
-            $excerpt = substr($excerpt, 0, $word_count);
-            $excerpt .= ' ...';
-
-            return $excerpt;
-        }
     } // END CLASS
 }
