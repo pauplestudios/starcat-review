@@ -17,7 +17,7 @@ if (!class_exists('\StarcatReview\App\Components\Summary\Controller')) {
 
         public function get_view($args)
         {
-            $props = $this->model->get_Props($args);
+            $props = $this->model->get_viewProps($args);
             return $this->view->get($props);
         }
     }

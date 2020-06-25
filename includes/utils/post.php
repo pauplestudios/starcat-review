@@ -6,12 +6,9 @@ if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-
-
 if (!class_exists('\StarcatReview\Includes\Utils\Post')) {
     class Post
     {
-
         public function insert_term_with_post($post_type, $term_value, $taxonomy, $post_title = 'random', $post_content = 'demo text', $parent_term_id = 0)
         {
             if (!term_exists($term_value, $taxonomy, $parent_term_id)) {
@@ -54,5 +51,4 @@ if (!class_exists('\StarcatReview\Includes\Utils\Post')) {
             return $post_id;
         }
     } // END CLASS
-
 }

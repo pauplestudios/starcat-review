@@ -1,35 +1,96 @@
-**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
+## Getting Started with this Repository
 
-When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
-
-*We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket.*
-
----
-
-## Edit a file
-
-You’ll start by editing this README file to learn how to edit a file in Bitbucket.
-
-1. Click **Source** on the left side.
-2. Click the README.md link from the list of files.
-3. Click the **Edit** button.
-4. Delete the following text: *Delete this line to make a change to the README from Bitbucket.*
-5. After making your change, click **Commit** and then **Commit** again in the dialog. The commit page will open and you’ll see the change you just made.
-6. Go back to the **Source** page.
+1. Install Node Modules: **npm install**
+2. Install Composer: **composer install**
+3. Run Webpack to compile scripts, styles and assets: **yarn start**
+4. Run Tests
 
 ---
 
-## Create a file
+# STANDARDS
 
-Next, you’ll add a new file to this repository.
+Inspirations
 
-1. Click the **New file** button at the top of the **Source** page.
-2. Give the file a filename of **contributors.txt**.
-3. Enter your name in the empty file space.
-4. Click **Commit** and then **Commit** again in the dialog.
-5. Go back to the **Source** page.
+1. https://moderntribe.github.io/products-engineering/
+2. https://10up.github.io/Engineering-Best-Practices/php/
 
-Before you move on, go ahead and explore the repository. You've already seen the **Source** page, but check out the **Commits**, **Branches**, and **Settings** pages.
+## Code Organisation
+- app
+	- abstracts -- Contains abstract classes
+	- builders -- Builder design patterns
+    - components -- UI component. Input => $component_args(array), output => $html(string)
+    - repositories -- Data collection such as queries, data manipulation
+    - services -- Perform certain actions in general and connect external modules
+    - views -- Minor element views used in components
+    - widget-makers -- Make widgets for wp_widgets, elementor_widgets, shortcodes and guttenberg blocks.
+    
+- features -- Uses hooks and executes user stories
+- languages -- Domain string translations ( pot files and translated po and mo files )
+- includes 
+    - assets -- Scripts, Styles, Images and Data assets
+    - lib -- Addons plugins 
+    - settings -- gets options or its defaults
+    - utils -- helpers methods, test dummies and test datas
+    - widgets -- registering widgets from widget-makers for now
+- services -- should move to app services
+
+> To recap, Templates->Widget_Makers->Components->Blocks.
+
+### Components
+
+1. There should be **no WordPress code inside /components folder**.
+2. Components should only have **\$args** as input, there should be no other dependencies / global settings used inside.
+3. Blocks are used only in components and are not directly used anywhere.
+
+### Widgets
+
+1. Passing arguments to JS:
+
+    1. The component should have the JS \$args / config as HTML attribute
+    2. There should be a Builder JS file for constructing multiple instances ( example List_Builder )
+    3. The Builder JS Class will read the HTML attributes and then construct the component instances ( List_Builder.js-> List.js )
+
+        Pros:
+
+    4. Supports Multiple Instances of Widgets without conflict
+    5. No need of complicated Localize methods
+    6. Easy to code and maintain
+
+---
+
+## PHP
+
+1. Use Constants for repeated values like post_type, taxonomy, paths, etc
+2. Class Names should always directly be meaningful and container the purpose name ( controller, model, view )
+3. Methods should always have verbs like get, set, update, etc
+4. Constantly look for bad code smells ( https://sourcemaking.com/refactoring )
+
+---
+
+## HTML, CSS, Javascript
+
+The basic rules
+
+1. Every basic component's id/class should start with **scr-** prefix
+2. Names of elements should be hypenated like **scr-categories-list**
+3. Do not have more than 3 levels of nesting for SCSS files
+
+### JS
+
+1. When a JS file has a lot of selectors, create a property called selectors and add selectors as sub-properties
+
+---
+
+## Development Process
+
+How to work in development
+
+1. Make sure every task you do has an issue in Bitbucket / Jira. If it's not, then create one.
+2. After making sure that an issue exists, create a branch with the id and name of that issue.
+3. Use **GitFlow Method** of branching ( https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow )
+4. Constantly look for bad code smells ( https://sourcemaking.com/refactoring ) before creating pull-requests
+5. Write Unit Tests
+6. Always create Pull Requests for every task/issue
 
 ---
 
@@ -43,11 +104,3 @@ Use these steps to clone from SourceTree, our client for using the repository co
 4. Open the directory you just created to see your repository’s files.
 
 Now that you're more familiar with your Bitbucket repository, go ahead and add a new file locally. You can [push your change back to Bitbucket with SourceTree](https://confluence.atlassian.com/x/iqyBMg), or you can [add, commit,](https://confluence.atlassian.com/x/8QhODQ) and [push from the command line](https://confluence.atlassian.com/x/NQ0zDQ).
-
-
-# USE FULL SOLUTIONS
-
-## DOCKER
-
-WordPress asking for FTP credentials to install plugins
-https://github.com/docker-library/wordpress/issues/298

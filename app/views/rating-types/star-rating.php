@@ -12,6 +12,8 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
         public function __construct($viewProps)
         {
             $this->props = $viewProps;
+            // error_log('viewProps : ' . print_r($viewProps, true));
+
         }
 
         public function get_view()
@@ -61,9 +63,10 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
         {
             $html = '<li class="reviewed-item">';
 
-            if ($this->props['collection']['combine_type'] !== 'overall') {
-                $html .= '<div class="reviewed-item-label__text">' . $key . '</div>';
+            $is_post_stat = isset($this->props['collection']['stat_type']) && $this->props['collection']['stat_type'] == 'post_stat' ? true : false;
 
+            if (!$is_post_stat) {
+                $html .= '<div class="reviewed-item-label__text">' . $key . '</div>';
             }
 
             $html .= '<div class="reviewed-item-stars"

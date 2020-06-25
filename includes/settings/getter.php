@@ -33,6 +33,19 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
             }
         }
 
+        public static function set($option_name, $option_value)
+        {
+            // Only set one time
+            if (!isset(self::$options) || empty(self::$options)) {
+                self::$options = get_option(SCR_OPTIONS); // unique id of the framework
+            }
+
+            if (isset($option_value) && !empty($option_value)) {
+                self::$options[$option_name] = $option_value;
+                update_option(SCR_OPTIONS, self::$options);
+            }
+        }
+
         public static function get_settings()
         {
             return self::$options;
@@ -115,6 +128,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'ur_enable_replies' => true,
                 'ur_enable_approval' => true,
                 'ur_who_can_review' => 'logged_in',
+                'ur_allow_same_user_can_leave_multiple_reviews' => false,
                 'ur_show_list_title' => true,
                 'ur_list_title' => 'User Reviews',
                 'ur_enable_voting' => true,

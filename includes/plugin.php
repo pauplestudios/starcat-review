@@ -33,6 +33,9 @@ if (!class_exists('\Starcat_Review')) {
 
             /* New Features */
             $Non_Logged_In_User = new \StarcatReview\Features\Non_Logged_In_User();
+
+            /* Core WooCommerce Review Integration */
+            new \StarcatReview\Features\Woocommerce_Integration();
         }
 
         // public function register_cpt_and_taxonomy()
@@ -66,10 +69,10 @@ if (!class_exists('\Starcat_Review')) {
             $recaptcha = new \StarcatReview\Services\Recaptcha();
 
             // Developement Purpose Only
-            if (file_exists(SCR_PATH . 'includes/utils/fake-pages.php')) {
-                require_once SCR_PATH . 'includes/utils/fake-pages.php';
-            }
-              
+            // if (file_exists(SCR_PATH . 'includes/utils/fake-pages.php')) {
+            //     require_once SCR_PATH . 'includes/utils/fake-pages.php';
+            // }
+
             /* Notification */
             // $Notification_Data = new \StarcatReview\Includes\Utils\Notification\Notification_Test_Data();
             // $Notification_Data = new \StarcatReview\Includes\Utils\Notification\Data();
