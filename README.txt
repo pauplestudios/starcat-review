@@ -19,6 +19,11 @@ Create Review Posts, add reviews to existing post types and enable user reviews.
 
 == Change Log ==
 
+= 0.6 =
+* Feature: Photo Reviews Addon (sold also as a Bundle)
+* Feature: WooCommerce Integration
+* General Fixes
+
 = 0.5 =
 * Feature: Comparison Table Addon (sold also as a Bundle)
 * Fix: Multisite issues
