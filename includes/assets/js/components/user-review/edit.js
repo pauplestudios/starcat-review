@@ -112,7 +112,7 @@ var Edit = {
     },
 
     getModifiedFormforProsandCons: function (props, form, listname) {
-        if (props.prosandcons && props.prosandcons[listname + '-list'].length > 1) {
+        if (props.prosandcons && props.prosandcons[listname + '-list'] && props.prosandcons[listname + '-list'].length > 1) {
             for (var ii = 1; ii < props.prosandcons[listname + '-list'].length; ii++) {
                 form.find('.review-' + listname + '-repeater [data-repeater-create]').trigger("click");
             }
@@ -120,7 +120,7 @@ var Edit = {
 
         var index = 0;
         form.find('.review-' + listname + '-repeater [data-repeater-item]').each(function () {
-            if (props.prosandcons && props.prosandcons[listname + '-list'][index]) {
+            if (props.prosandcons && props.prosandcons[listname + '-list'] && props.prosandcons[listname + '-list'][index]) {
                 jQuery(this).find(".prosandcons").dropdownX("set text", props.prosandcons[listname + '-list'][index].item);
             } else {
                 jQuery(this).find("[data-repeater-delete]").trigger("click");
@@ -130,20 +130,7 @@ var Edit = {
     },
 
     getModifiedFormforPhotos: function (props, form) {
-
-
-        if (props.attachments && props.attachments.length && form.find(".scr_pr_uploaded_image_group").length == 1) {
-            jQuery(props.attachments).each(function () {
-                var attachment = this;
-                var html = "<div class='ui tiny deleteable image' data-review-id='" + attachment.review_id + "' data-attachment-id='" + attachment.id + "'>";
-                html += "<a class='ui right corner red label'><i class='delete icon'></i></a>";
-                html += "<img src='" + attachment.url + "' />";
-                html += "</div>";
-
-                form.find(".scr_pr_uploaded_image_group").prepend(html);
-            });
-            Upload.removePhoto();
-        }
+        Upload.getEditFormPhotos(props, form);
     },
 
     cancelBtn: function (reviewContent) {

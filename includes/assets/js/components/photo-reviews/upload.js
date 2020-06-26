@@ -12,22 +12,41 @@ var Upload = {
     init: function () {
         this.eventHandlers();
     },
-    
-    eventHandlers: function () {        
+
+    eventHandlers: function () {
         Upload.addPhotos();
         Upload.photoPreview();
         Upload.removePhoto();
     },
 
+    // Used In for Edit forms
+    getEditFormPhotos: function (props, form) {
+        if (props.attachments && props.attachments.length) {
+            var photosHTML = '';
+            var addPhotoHTMl = form.find(".scr_pr_uploaded_image_group .add-photos")[0].outerHTML;
+            jQuery(props.attachments).each(function () {
+                var attachment = this;
+                photosHTML += "<div class='ui tiny deleteable image' data-review-id='" + attachment.review_id + "' data-attachment-id='" + attachment.id + "'>";
+                photosHTML += "<a class='ui right corner red label'><i class='delete icon'></i></a>";
+                photosHTML += "<img src='" + attachment.url + "' />";
+                photosHTML += "</div>";
+            });
+            form.find(".scr_pr_uploaded_image_group").html(photosHTML + addPhotoHTMl);
+            Upload.addPhotos();
+            Upload.removePhoto();
+            Upload._showOrHideAddPhotosField();
+        }
+    },
+
     addPhotos: function () {
-        jQuery(selectors.addPhotos).on('click', function (e) {            
+        jQuery(selectors.addPhotos).on('click', function (e) {
             jQuery('#' + jQuery(this).attr("for")).click();
         });
 
         Upload._showOrHideAddPhotosField();
     },
 
-    photoPreview: function(){
+    photoPreview: function () {
         jQuery(selectors.uploadHiddenField).change(function (e) {
 
             var previewGroup = jQuery(selectors.photosPreviewGroup);
@@ -38,7 +57,7 @@ var Upload = {
             }
 
         });
-    },   
+    },
 
     removePhoto: function () {
         jQuery(selectors.removePhotoLink).click(function () {
@@ -74,8 +93,8 @@ var Upload = {
 
         return html;
     },
-    
-    _showOrHideAddPhotosField: function(){
+
+    _showOrHideAddPhotosField: function () {
         var addPhotos = jQuery(selectors.addPhotos);
         var maxFiles = jQuery(selectors.maxFilesField).val();
         var photos = jQuery(selectors.photos).length;
@@ -83,10 +102,10 @@ var Upload = {
         console.log('attachments : ' + photos);
 
         addPhotos.show();
-        if(photos >= maxFiles){
+        if (photos >= maxFiles) {
             addPhotos.hide();
-        }        
-    },       
+        }
+    },
 
     backendUpload: function () {
         // Set all variables to be used in scope
