@@ -32,6 +32,7 @@ var Upload = {
                 photosHTML += "</div>";
             });
             form.find(".scr_pr_uploaded_image_group").html(photosHTML + addPhotoHTMl);
+            Upload.addPhotos();
             Upload.removePhoto();
             Upload._showOrHideAddPhotosField();
         }
