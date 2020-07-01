@@ -187,5 +187,14 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
 
             return $args;
         }
+
+        public static function reviews_enabled_post_types()
+        {
+            $post_types = SCR_Getter::get('review_enable_post-types');
+            $enabled_post_types = is_string($post_types) ? [0 => $post_types] : $post_types;
+
+            return $enabled_post_types;
+        }
+
     } // END CLASS
 }
