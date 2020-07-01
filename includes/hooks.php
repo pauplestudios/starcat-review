@@ -52,56 +52,6 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
             $service_controller = new \StarcatReview\App\Services\Services();
             $service_controller->register_services();
-
-            // add_action( 'phpmailer_init', array($this,'src_mailer_config'));
-            // show wp_mail() errors
-            // add_action('wp_mail_failed',array($this, 'scr_mail_handler'),10,1);
-
-            // add_action('bl_cron_hook', 'src_cron_exec');
-            // error_log('execute this timestamp2 : '.time());
-            // add_filter( 'cron_schedules', 'src_cron_schedule_interval', 10, 1 );
-            // error_log('execute this timestamp3 : '.time());
-
-        }
-
-        // public function src_cron_schedule_interval($schedules){
-
-        //     $schedules['every_two_minute'] = array(
-        //         'interval' => 120,
-        //         'display'  => esc_html__( 'Every Two Minute' ),
-        //     );
-
-        //     return (array)$schedules;
-        // }
-
-        // public function src_cron_exec(){
-        //     error_log('src cron jobs exec');
-        //     if ( ! wp_next_scheduled( 'bl_cron_hook' ) ) {
-        //         wp_schedule_event( time(), 'every_two_minute', 'bl_cron_hook' );
-        //     }
-        // }
-
-        public function src_mailer_config($phpmailer)
-        {
-
-            error_log('init php mailer : ');
-
-            $phpmailer->Host = "smtp.gmail.com";
-            $phpmailer->SMTPAuth = true;
-            $phpmailer->Port = "587";
-            $phpmailer->Username = "themechanic.dev@gmail.com";
-            $phpmailer->Password = "sekar#dev#4650";
-
-            $phpmailer->isSMTP();
-            // $phpmailer->SMTPSecure = "tls";
-            // $phpmailer->From       = "themechanic.dev@gmail.com";
-            // $phpmailer->FromName   = "mechanic sekar";
-        }
-
-        public function scr_mail_handler($wp_error)
-        {
-            error_log('wperrors : ' . print_r($wp_error, true));
-
         }
 
         public function woocommerce_shop_display()
@@ -282,30 +232,6 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             }
 
             return $content;
-        }
-
-        public function woo_new_product_tab($tabs)
-        {
-            $tabs['scr-reviews'] = array(
-                'title' => sprintf(__('Product Reviews (%d)', SCR_DOMAIN), scr_get_user_reviews_count(get_the_ID())),
-                'priority' => 50,
-                'callback' => [$this, 'woo_new_product_tab_content'],
-            );
-
-            return $tabs;
-        }
-        public function woo_new_product_tab_content()
-        {
-            $content = $this->get_review_content();
-            if (!isset($content) && empty($content)) {
-                $content = 'There are no reviews yet';
-            }
-
-            $html = '<div id="scr-reviews">';
-            $html .= $content;
-            $html .= '</div>';
-
-            echo $html;
         }
 
         public function woocommerce_review_display_overall_rating()
