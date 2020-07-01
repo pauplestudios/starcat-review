@@ -30,36 +30,17 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
             /*  Reviews Shortcode */
             // require_once SCR_PATH . 'includes/shortcodes.php';
+
             /* All Plugins Loaded Hook */
             add_action('plugins_loaded', array($this, 'plugins_loaded_action'));
-
             add_filter('the_content', array($this, 'content_filter'));
-            // add_filter('the_excerpt', array($this, 'content_filter'));
-
-            foreach ($this->get_review_enabled_post_types() as $post_type) {
-                if ($post_type == 'product') {
-                    // add_filter('woocommerce_product_tabs', [$this, 'woo_new_product_tab']);
-                    // add_action('woocommerce_single_product_summary', [$this, 'woocommerce_review_display_overall_rating'], 10);
-                    add_filter('woocommerce_product_get_rating_html', [$this, 'woocommerce_shop_display'], 10, 3);
-                    add_action('woocommerce_after_shop_loop_item_title', [$this, 'woocommerce_shop_display'], 11);
-                }
-            }
-
             add_action('wp_head', array($this, 'scr_schema_reviews'));
-            // add_filter('the_excerpt', array($this, 'content_filter'));
 
+            // Dashboard User review Table
             require_once SCR_PATH . '/app/components/user-reviews/table.php';
 
             $service_controller = new \StarcatReview\App\Services\Services();
             $service_controller->register_services();
-        }
-
-        public function woocommerce_shop_display()
-        {
-            global $product;
-            $product_id = $product->get_id();
-            $overall_ratings = scr_get_overall_rating($product_id);
-            echo $overall_ratings['dom'];
         }
 
         public function init_hook()
