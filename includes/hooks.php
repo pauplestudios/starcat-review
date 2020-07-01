@@ -118,6 +118,9 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             $this->load_ajax_handler();
 
             // $register_templates = new \StarcatReview\Includes\Register_Templates();
+
+            /* Core WooCommerce Review Integration */
+            new \StarcatReview\Features\Woocommerce_Integration();
         }
 
         public function register_sidebar()
