@@ -73,6 +73,17 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
 
         private function get_interpreted_args($args)
         {
+            $post_meta = get_post_meta(get_the_ID(), SCR_POST_META, true);
+            $args['pros-list'] = [];
+            $args['cons-list'] = [];
+
+            if (isset($post_meta['pros-list']) && !empty($post_meta['pros-list'])) {
+                $args['pros-list'] = $post_meta['pros-list'];
+            }
+            if (isset($post_meta['cons-list']) && !empty($post_meta['cons-list'])) {
+                $args['cons-list'] = $post_meta['cons-list'];
+            }
+
             $components = ['comments', 'stats', 'prosandcons', 'votes', 'attachments'];
             $args['items'] = scr_get_comments_args($components);
             $args['capability'] = apply_filters('scr_capabilities_args', $args['items']['comments']);

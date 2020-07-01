@@ -35,6 +35,8 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
                 'show_title' => $args['show_title'],
                 'show_stats' => $args['show_stats'],
                 'show_prosandcons' => $args['enable_pros_cons'],
+                'pros-list' => $args['pros-list'],
+                'cons-list' => $args['cons-list'],
                 'show_description' => $args['show_description'],
                 'show_captcha' => $args['show_captcha'],
                 'stats_args' => $args['stats_args'],
@@ -50,10 +52,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
         public function get_itemsProps($args)
         {
             $items = [
-                'pros' => isset($args['items']['pros-list']) && !empty($args['items']['pros-list']) ? $args['items']['pros-list'] : [],
-                'cons' => isset($args['items']['cons-list']) && !empty($args['items']['cons-list']) ? $args['items']['cons-list'] : [],
                 'stats' => $this->get_filtered_stats($args),
-                'current_user_review' => (isset($args['current_user_review'])) ? $args['current_user_review']->review : [],
             ];
 
             return $items;
