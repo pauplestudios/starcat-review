@@ -37,6 +37,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
                 'show_prosandcons' => $args['enable_pros_cons'],
                 'pros-list' => $args['pros-list'],
                 'cons-list' => $args['cons-list'],
+                'enable_photo_reviews' => $args['enable_photo_reviews'],
                 'show_description' => $args['show_description'],
                 'show_captcha' => $args['show_captcha'],
                 'stats_args' => $args['stats_args'],
