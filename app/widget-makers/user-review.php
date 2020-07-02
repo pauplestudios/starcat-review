@@ -45,6 +45,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             return $this->form_controller->get_fields_view($args);
         }
 
+        // TODO: Is get_default_args() the correct name? Does this represent the default args?
         protected function get_default_args()
         {
             $stat_args = ['stats_args' => SCR_Getter::get_stat_default_args()];
