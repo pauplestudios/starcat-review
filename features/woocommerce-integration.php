@@ -17,6 +17,7 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration')) {
              * Overriding the Existing product template by adding 11 as filter priotiry
              */
             add_filter('comments_template', [$this, 'comments_template_loader'], 11);
+            add_filter('woocommerce_product_get_rating_html', [$this, 'woocommerce_rating_display'], 10, 2);
             add_filter('scr_convert_product_rating_to_stat', [$this, 'convert_product_rating_to_stat']);
         }
 
@@ -31,6 +32,18 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration')) {
                 $template = trailingslashit($dir) . 'reviews-template.php';
             }
             return $template;
+        }
+
+        public function woocommerce_rating_display($rating_html, $rating = 0)
+        {
+            $post_type = get_post_type(get_the_ID());
+            $enabled_post_types = SCR_Getter::get('review_enable_post-types');
+
+            if ($post_type == 'product' && in_array($post_type, $enabled_post_types)) {
+                $ratings = scr_get_overall_rating(get_the_ID());
+                return $ratings['dom'];
+            }
+            return $rating_html;
         }
 
         public function convert_product_rating_to_stat($comment_id)

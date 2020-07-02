@@ -12,10 +12,15 @@ function scr_get_overall_rating($post_id)
     $controller = new \StarcatReview\App\Components\Stats\Controller($args);
     $rating = $controller->get_rating();
 
-    // error_log('args : ' . print_r($args, true));
-    // error_log('rating : ' . print_r($rating, true));
+    $overall_rating = [
+        'overall' => [
+            'rating' => (isset($rating['overall']['rating'])) ? $rating['overall']['rating'] : 0,
+            'score' => (isset($rating['overall']['score'])) ? $rating['overall']['score'] : 0,
+        ],
+        'dom' => (!empty($rating['dom'])) ? $rating['dom'] : '',
+    ];
 
-    return $rating;
+    return $overall_rating;
 }
 
 /*
