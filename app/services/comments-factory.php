@@ -2,6 +2,8 @@
 
 namespace StarcatReview\App\Services;
 
+use \StarcatReview\Includes\Settings\SCR_Getter;
+
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -32,7 +34,7 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
                             $item = $this->get_stat($query_args, $comment_id, $review);
                         }
 
-                        if ($case == 'prosandcons') {
+                        if ($case == 'prosandcons' && SCR_Getter::get('enable-pros-cons')) {
                             $item = $this->get_proandcon($review);
                         }
 
@@ -40,7 +42,7 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
                             $item = $this->get_vote($review);
                         }
 
-                        if ($case == 'attachments') {
+                        if ($case == 'attachments' && SCR_Getter::get('pr_enable')) {
                             $item = $this->get_attachment($comment_id, $review);
                         }
 
@@ -192,9 +194,9 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
 
         }
 
-        /* 
+        /*
         TODO: have list of sizes like medium, large, small, full
-        */
+         */
 
         protected function get_attachment($comment_id, $review)
         {
@@ -205,7 +207,7 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
                         'id' => $attachment_id,
                         'review_id' => $comment_id,
                         'url' => wp_get_attachment_image_src($attachment_id, 'medium')[0],
-                    ];        
+                    ];
                 }
             }
 
