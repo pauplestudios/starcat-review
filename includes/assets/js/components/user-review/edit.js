@@ -143,7 +143,18 @@ var Edit = {
 
     getProsandConsOptions: function (collectionOptions, itemOptions) {
         var values = [];
-        var options = itemOptions.concat(JSON.parse(collectionOptions));
+        collectionOptions = JSON.parse(collectionOptions);
+        // get options of unique values only
+        var options = itemOptions.concat(collectionOptions.filter(function (el) {
+            var result = true;
+            for (var ii in itemOptions) {
+                if (itemOptions[ii].item === el.item) {
+                    result = false;
+                }
+            }
+            return result;
+        }));
+
         for (var i = 0, len = options.length; i < len; i++) {
             values[i] = {
                 value: options[i].item,
