@@ -34,6 +34,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             /* All Plugins Loaded Hook */
             add_action('plugins_loaded', array($this, 'plugins_loaded_action'));
             add_filter('the_content', array($this, 'content_filter'));
+
             add_action('wp_head', array($this, 'scr_schema_reviews'));
 
             // Dashboard User review Table
@@ -49,6 +50,9 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             $this->load_ajax_handler();
 
             // $register_templates = new \StarcatReview\Includes\Register_Templates();
+            /* Core WooCommerce Review Integration */
+            new \StarcatReview\Features\Woocommerce_Integration();
+
         }
 
         public function register_sidebar()
@@ -213,25 +217,6 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             }
 
             return $content;
-        }
-
-        public function woocommerce_review_display_overall_rating()
-        {
-            $html = '';
-            $post_id = get_the_ID();
-            $rating = scr_get_overall_rating($post_id);
-            $review_count = scr_get_user_reviews_count($post_id);
-
-            if (isset($rating['overall']['rating']) && $rating['overall']['rating'] !== 0) {
-
-                $html .= $rating['dom'];
-                $html .= '<a href="#scr-reviews" class="woocommerce-scr-review-link" rel="nofollow">(';
-                $html .= '<span class="count">' . esc_html($review_count) . '</span>';
-                $html .= __(' customer review', SCR_DOMAIN);
-                $html .= ')</a>';
-            }
-
-            echo $html;
         }
 
         /* Non-Hooked */
