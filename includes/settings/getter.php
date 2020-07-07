@@ -219,10 +219,10 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 ],
             ];
 
-            foreach ($addon_plugins as $addon_name => $addon_file) {
+            foreach ($addon_plugins as $addon_name => $addon_slugs) {
 
                 $addon_function = 'scr_' . $addon_name . '_fs';
-                $is_addon_plugin_active = is_plugin_active($addon_file[0] || $addon_file[1]) ? true : false;
+                $is_addon_plugin_active = is_plugin_active($addon_slugs[0] || $addon_slugs[1]) ? true : false;
                 $is_addon_exist = function_exists($addon_function);
 
                 $conditions[$addon_name] = false;
