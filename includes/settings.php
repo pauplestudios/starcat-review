@@ -65,9 +65,8 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 \CSF::createOptions($prefix, $options);
 
                 $this->general_settings($prefix);
-                if (is_plugin_active('starcat-review-cpt/starcat-review-cpt.php') && scr_cpt_fs()->can_use_premium_code()) {
-                    // $options['menu_parent'] = null;
-                    // $options['menu_type'] = 'menu';
+
+                if (SCR_Getter::addons_condition()['cpt']) {
                     $this->mainpage_settings($prefix);
                     $this->category_page_settings($prefix);
                     $this->single_page_settings($prefix);
@@ -76,19 +75,15 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
                 $this->user_review_settings($prefix);
 
-                if (is_plugin_active('starcat-review-photo-reviews/starcat-review-photo-reviews.php') && scr_pr_fs()->can_use_premium_code()) {
+                if (SCR_Getter::addons_condition()['pr']) {
                     $this->photo_reviews_settings($prefix);
                 }
 
-                // $this->comparison_table_settings($prefix);
-                // $active_plugins = get_option('active_plugins');
-                // error_log('$active_plugins : ' . print_r($active_plugins, true));
-                if (class_exists('starcat_review_woo_notify') && scr_wn_fs()->can_use_premium_code()) {
+                if (SCR_Getter::addons_condition()['wn']) {
                     $this->notification_settings($prefix);
                 }
 
-
-                if (class_exists('Starcat_Review_Ct')  && scr_ct_fs()->can_use_premium_code() ) {
+                if (SCR_Getter::addons_condition()['ct']) {
                     $this->ct_settings($prefix);
                 }
 

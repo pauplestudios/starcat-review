@@ -195,5 +195,52 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
 
             return $enabled_post_types;
         }
+
+        public static function addons_condition()
+        {
+            $conditions = [];
+
+            $addon_plugins = [
+                'ct' => [
+                    'starcat-review-ct/starcat-review-ct.php',
+                    'starcat-review-ct-premium/starcat-review-ct.php',
+                ],
+                'pr' => [
+                    'starcat-review-photo-reviews/starcat-review-photo-reviews.php',
+                    'starcat-review-photo-reviews-premium/starcat-review-photo-reviews.php',
+                ],
+                'wn' => [
+                    'starcat-review-woo-notify/starcat-review-woo-notify.php',
+                    'starcat-review-woo-notify-premium/starcat-review-woo-notify.php',
+                ],
+                'cpt' => [
+                    'starcat-review-cpt/starcat-review-cpt.php',
+                    'starcat-review-cpt-premium/starcat-review-cpt.php',
+                ],
+            ];
+
+            foreach ($addon_plugins as $addon_name => $addon_file) {
+
+                $addon_function = 'scr_' . $addon_name . '_fs';
+                $is_addon_plugin_active = is_plugin_active($addon_file[0] || $addon_file[1]) ? true : false;
+                $is_addon_exist = function_exists($addon_function);
+
+                $conditions[$addon_name] = false;
+
+                // Woo notification 0.1 version only
+                if ($addon_name == 'wn' && $is_addon_plugin_active && get_plugin_data(SCR_WOO_NOTIFY__FILE__)['Version'] == 0.1) {
+                    $conditions[$addon_name] = function_exists('src_wn') && src_wn()->can_use_premium_code() ? true : false;
+                }
+
+                // for all addon's
+                if ($is_addon_plugin_active && $is_addon_exist && $addon_function()->can_use_premium_code()) {
+                    $conditions[$addon_name] = true;
+                }
+
+            }
+
+            return $conditions;
+        }
+
     } // END CLASS
 }
