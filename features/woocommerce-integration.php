@@ -17,8 +17,14 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration')) {
              * Overriding the Existing product template by adding 11 as filter priotiry
              */
             add_filter('comments_template', [$this, 'comments_template_loader'], 11);
-            add_filter('woocommerce_product_get_rating_html', [$this, 'woocommerce_rating_display'], 10, 2);
             add_filter('scr_convert_product_rating_to_stat', [$this, 'convert_product_rating_to_stat']);
+            foreach (SCR_Getter::reviews_enabled_post_types() as $post_type) {
+                if ($post_type == 'product') {
+                    add_action('woocommerce_single_product_summary', [$this, 'woocommerce_review_display_overall_rating'], 10);
+                    add_filter('woocommerce_product_get_rating_html', [$this, 'woocommerce_rating_display'], 10, 3);
+                }
+            }
+
         }
 
         public function comments_template_loader($template)
@@ -34,16 +40,34 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration')) {
             return $template;
         }
 
-        public function woocommerce_rating_display($rating_html, $rating = 0)
+        public function woocommerce_rating_display()
         {
-            $post_type = get_post_type(get_the_ID());
-            $enabled_post_types = SCR_Getter::get('review_enable_post-types');
+            global $product;
+            $product_id = $product->get_id();
+            $overall_ratings = scr_get_overall_rating($product_id);
+            return $overall_ratings['dom'];
+        }
 
-            if ($post_type == 'product' && in_array($post_type, $enabled_post_types)) {
-                $ratings = scr_get_overall_rating(get_the_ID());
-                return $ratings['dom'];
+        public function woocommerce_review_display_overall_rating()
+        {
+            global $product;
+            $product_id = $product->get_id();
+
+            $rating = scr_get_overall_rating($product_id);
+            $review_count = scr_get_user_reviews_count($product_id);
+
+            $html = '';
+
+            if (isset($rating['overall']['rating']) && $rating['overall']['rating'] !== 0) {
+
+                $html .= $rating['dom'];
+                $html .= '<a href="#reviews" class="woocommerce-review-link" rel="nofollow">(';
+                $html .= '<span class="count">' . esc_html($review_count) . '</span>';
+                $html .= __(' customer review', SCR_DOMAIN);
+                $html .= ')</a>';
             }
-            return $rating_html;
+
+            echo $html;
         }
 
         public function convert_product_rating_to_stat($comment_id)
