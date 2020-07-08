@@ -49,7 +49,6 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             /*  Reviews Ajax Hooks */
             $this->load_ajax_handler();
 
-            // $register_templates = new \StarcatReview\Includes\Register_Templates();
             /* Core WooCommerce Review Integration */
             new \StarcatReview\Features\Woocommerce_Integration();
 
