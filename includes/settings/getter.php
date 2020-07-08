@@ -188,6 +188,14 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
             return $args;
         }
 
+        public static function reviews_enabled_post_types()
+        {
+            $post_types = SCR_Getter::get('review_enable_post-types');
+            $enabled_post_types = is_string($post_types) ? [0 => $post_types] : $post_types;
+
+            return $enabled_post_types;
+        }
+
         public static function addons_available_condition()
         {
             $conditions = [];
@@ -195,7 +203,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
 
             foreach ($addon_plugins as $addon_name => $addon_slugs) {
                 $freemius = 'scr_' . $addon_name . '_fs';
-                $is_addon_freemius_active = function_exists($freemius);
+                $is_addon_freemius_active = (function_exists($freemius)) ? true : false;
                 $is_addon_plugin_active = is_plugin_active($addon_slugs[0] || $addon_slugs[1]) ? true : false;
 
                 // Assuming addon is not available
