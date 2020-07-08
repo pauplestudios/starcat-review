@@ -126,7 +126,7 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
 
             // WooCommerce product post_type Only
             if (get_post_type($post_id) == 'product' && !$this->is_set($stat_item)) {
-                $rating = apply_filters('scr_convert_product_rating_to_stat', $comment_id);
+                $rating = apply_filters('scr_woocommerce_integration/convert_product_rating_to_stat', $comment_id);
 
                 if ($this->is_set($rating)) {
                     $stat_item = apply_filters('scr_stat', $rating);

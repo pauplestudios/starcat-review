@@ -23,7 +23,7 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration')) {
 
             add_action('scr_woocommerce_integration/add_rating_meta', [$this, 'add_rating_meta'], 10, 2);
 
-            add_filter('scr_woocommerce_integration/convert_product_rating_to_stat', [$this, 'convert_product_rating_to_stat']);
+            // add_filter('scr_woocommerce_integration/convert_product_rating_to_stat', [$this, 'convert_product_rating_to_stat']);
         }
 
         public function comments_template_loader($template)
