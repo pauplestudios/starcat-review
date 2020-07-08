@@ -54,7 +54,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 add_comment_meta($comment_id, SCR_COMMENT_META, $props);
 
                 do_action('scr_woocommerce_integration/add_rating_meta', $comment_id, $props);
-                // do_action('scr_woocommerce_integration/add_verified_owners_meta', $comment_id);
+                do_action('scr_woocommerce_integration/add_verified_owners_meta', $comment_id);
             }
 
             do_action('scr_photo_reviews/add_attachments', $comment_id);
@@ -129,7 +129,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 do_action('scr_photo_reviews/add_attachments', $comment_id);
 
                 do_action('scr_woocommerce_integration/add_rating_meta', $comment_id, $props);
-                // do_action('scr_woocommerce_integration/add_verified_owners_meta', $comment_id);
+                do_action('scr_woocommerce_integration/add_verified_owners_meta', $comment_id);
             }
 
             return $comment_id;

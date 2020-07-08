@@ -22,8 +22,8 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration')) {
             add_filter('comments_template', [$this, 'comments_template_loader'], 11);
 
             add_action('scr_woocommerce_integration/add_rating_meta', [$this, 'add_rating_meta'], 10, 2);
-
-            // add_filter('scr_woocommerce_integration/convert_product_rating_to_stat', [$this, 'convert_product_rating_to_stat']);
+            add_action('scr_woocommerce_integration/add_verified_owners_meta', [$this, 'add_comment_purchase_verification']);
+            add_filter('scr_woocommerce_integration/convert_product_rating_to_stat', [$this, 'convert_product_rating_to_stat']);
         }
 
         public function comments_template_loader($template)
@@ -106,6 +106,23 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration')) {
                 $updated = true;
             }
             return $updated;
+        }
+
+        /**
+         * Determine if a review is from a verified owner at submission.
+         *
+         * @param int $comment_id Comment ID.
+         * @return bool
+         */
+        public function add_comment_purchase_verification($comment_id)
+        {
+            $comment = get_comment($comment_id);
+            $verified = false;
+            if ('product' === get_post_type($comment->comment_post_ID)) {
+                $verified = wc_customer_bought_product($comment->comment_author_email, $comment->user_id, $comment->comment_post_ID);
+                add_comment_meta($comment_id, 'verified', (int) $verified, true);
+            }
+            return $verified;
         }
 
     }
