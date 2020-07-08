@@ -108,7 +108,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
 
             $display = (!empty($items) && count($items) > 9) ? '' : 'style="display: none;"';
 
-            $html .= '<ul class="ui pagination scr-pagination menu" '.$display.'>';
+            $html .= '<ul class="ui pagination scr-pagination menu" ' . $display . '>';
             for ($ii = 1; $ii <= 2; $ii++) {
                 # code...
                 $html .= '<li class="active"><a class="page" href="">' . $ii . '</a></li>';
@@ -127,6 +127,12 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
         {
             $html = '';
             $html .= '<span class="author"> ' . $comment['author'] . ' </span>';
+
+            if ($comment['parent'] == 0 && $comment['is_verified_review']) {
+                $html .= '<em class="verified">(' . __('verified owner', SCR_DOMAIN) . ')</em> ';
+                $html .= '<i class="check circle blue icon"></i>';
+            }
+
             $html .= '<div class="metadata">';
             $html .= '<span class="date">' . $comment['date'] . '</span>';
             $html .= '<span class="time">AT ' . $comment['time'] . '</span>';

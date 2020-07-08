@@ -76,6 +76,7 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
 
             $comment = [
                 'ID' => $comment_obj->comment_ID,
+                'post_ID' => $comment_obj->comment_post_ID,
                 'author' => $author,
                 'author_IP' => $comment_obj->comment_author_IP,
                 'email' => $comment_obj->comment_author_email,

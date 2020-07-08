@@ -14,16 +14,17 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration')) {
         public function __construct()
         {
             if (in_array('product', SCR_Getter::reviews_enabled_post_types(), true)) {
+                // Overriding the Existing product template by adding 11 as filter priotiry
+                add_filter('comments_template', [$this, 'comments_template_loader'], 11);
+
                 add_filter('woocommerce_product_get_rating_html', [$this, 'woocommerce_rating_display'], 10, 3);
                 add_action('woocommerce_single_product_summary', [$this, 'woocommerce_review_display_overall_rating'], 10);
+
+                add_filter('scr_comment', [$this, 'get_is_review_from_verified_owner']);
+                add_action('scr_woocommerce_integration/add_rating_meta', [$this, 'add_rating_meta'], 10, 2);
+                add_action('scr_woocommerce_integration/add_verified_owners_meta', [$this, 'add_comment_purchase_verification']);
+                add_filter('scr_woocommerce_integration/convert_product_rating_to_stat', [$this, 'convert_product_rating_to_stat']);
             }
-
-            // Overriding the Existing product template by adding 11 as filter priotiry
-            add_filter('comments_template', [$this, 'comments_template_loader'], 11);
-
-            add_action('scr_woocommerce_integration/add_rating_meta', [$this, 'add_rating_meta'], 10, 2);
-            add_action('scr_woocommerce_integration/add_verified_owners_meta', [$this, 'add_comment_purchase_verification']);
-            add_filter('scr_woocommerce_integration/convert_product_rating_to_stat', [$this, 'convert_product_rating_to_stat']);
         }
 
         public function comments_template_loader($template)
@@ -108,12 +109,7 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration')) {
             return $updated;
         }
 
-        /**
-         * Determine if a review is from a verified owner at submission.
-         *
-         * @param int $comment_id Comment ID.
-         * @return bool
-         */
+        /* Determine if a review is from a verified owner at submission. */
         public function add_comment_purchase_verification($comment_id)
         {
             $comment = get_comment($comment_id);
@@ -123,6 +119,18 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration')) {
                 add_comment_meta($comment_id, 'verified', (int) $verified, true);
             }
             return $verified;
+        }
+
+        public function get_is_review_from_verified_owner($comment)
+        {
+            $comment['is_verified_review'] = false;
+
+            if ($comment['parent'] == 0 && 'product' === get_post_type($comment['post_ID']) && get_option('woocommerce_review_rating_verification_label') === 'yes') {
+                $is_customer_bought_product = wc_customer_bought_product($comment['email'], $comment['user_id'], $comment['post_ID']);
+                $comment['is_verified_review'] = ($is_customer_bought_product) ? true : false;
+            }
+
+            return $comment;
         }
 
     }
