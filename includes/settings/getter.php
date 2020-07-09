@@ -215,7 +215,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 }
 
                 // woo notification addon v0.1 compatible support
-                if ($addon_name == 'wn' && $is_addon_plugin_active && get_plugin_data(SCR_WOO_NOTIFY__FILE__)['Version'] == 0.1) {
+                if ($addon_name == 'wn' && $is_addon_plugin_active && defined('SCR_WOO_NOTIFY__FILE__') && get_plugin_data(SCR_WOO_NOTIFY__FILE__)['Version'] == 0.1) {
                     $conditions[$addon_name] = function_exists('src_wn') && src_wn()->can_use_premium_code() ? true : false;
                 }
 
