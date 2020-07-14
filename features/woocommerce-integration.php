@@ -16,17 +16,17 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration')) {
             if (in_array('product', SCR_Getter::reviews_enabled_post_types(), true)) {
                 // Overriding the Existing product template by adding 11 as filter priotiry
                 add_filter('comments_template', [$this, 'comments_template_loader'], 11);
-
                 add_filter('woocommerce_product_get_rating_html', [$this, 'woocommerce_rating_display'], 10, 3);
 
-                remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_rating', 10);
+                remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_rating');
                 add_action('woocommerce_single_product_summary', [$this, 'woocommerce_review_display_overall_rating'], 5);
-
-                add_filter('scr_comment', [$this, 'get_is_review_from_verified_owner']);
-                add_action('scr_woocommerce_integration/add_rating_meta', [$this, 'add_rating_meta'], 10, 2);
-                add_action('scr_woocommerce_integration/add_verified_owners_meta', [$this, 'add_comment_purchase_verification']);
-                add_filter('scr_woocommerce_integration/convert_product_rating_to_stat', [$this, 'convert_product_rating_to_stat']);
             }
+
+            add_filter('scr_comment', [$this, 'get_is_review_from_verified_owner']);
+            add_action('scr_woocommerce_integration/add_rating_meta', [$this, 'add_rating_meta'], 10, 2);
+            add_action('scr_woocommerce_integration/add_verified_owners_meta', [$this, 'add_comment_purchase_verification']);
+            add_filter('scr_woocommerce_integration/convert_product_rating_to_stat', [$this, 'convert_product_rating_to_stat']);
+
         }
 
         public function comments_template_loader($template)

@@ -1,11 +1,11 @@
 <?php
+use \StarcatReview\Includes\Settings\SCR_Getter;
 
 class VerifiedOwnersReviewTest extends \Codeception\TestCase\WPTestCase
 {
     public function _before()
     {
         wp_set_current_user(1);
-
     }
 
     public function test_customer_is_verfied_owner()
@@ -23,18 +23,19 @@ class VerifiedOwnersReviewTest extends \Codeception\TestCase\WPTestCase
         // submit order without completion
         $order = $this->submit_order($customer_id, $product);
         // submit a review
+        SCR_Getter::set('review_enable_post-types', ['post', 'product']);
+        update_option('woocommerce_review_rating_verification_label', "yes");
         $review_id = $this->submit_review($product_id);
         $comments = scr_get_comments_args(['comments'], ['post_id' => $product_id]);
-        error_log('comments : ' . print_r($comments, true));
-
         // check current customer review is not from the verified owner of the product
+        $this->assertFalse($comments[$review_id]['is_verified_review']);
 
         // success condition
-        // create product
-        // register customer
-        // order the created product
-        // review the product
-
+        // complete order of the  product
+        $order->update_status('completed');
+        // check current customer review is from the verified owner of the product
+        $comments = scr_get_comments_args(['comments'], ['post_id' => $product_id]);
+        $this->assertTrue($comments[$review_id]['is_verified_review']);
     }
 
     public function submit_order($customer_id, $product)
@@ -63,14 +64,6 @@ class VerifiedOwnersReviewTest extends \Codeception\TestCase\WPTestCase
         $review_id = $UR_Repo->insert($props);
 
         return $review_id;
-    }
-
-    public function get_review_data($product_id)
-    {
-        ;
-
-        return $data;
-
     }
 
 } // END TEST CLASS
