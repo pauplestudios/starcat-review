@@ -17,6 +17,10 @@ class UR_List_Table extends WP_List_Table
 
     private $user_can;
 
+    private $comments_of_stats = array();
+
+    private $stat_args;
+
     /**
      * Constructor.
      *
@@ -46,6 +50,9 @@ class UR_List_Table extends WP_List_Table
                 'screen' => isset($args['screen']) ? $args['screen'] : null,
             )
         );
+
+        $this->comments_of_stats = scr_get_comments_args(['stats']);
+        $this->stat_args = SCR_Getter::get_stat_default_args();
     }
 
     public function floated_admin_avatar($name, $comment_ID)
@@ -978,17 +985,11 @@ if ('top' === $which) {
     public function column_rating($comment)
     {
         $rating = '---';
-        $props = get_comment_meta($comment->comment_ID, SCR_COMMENT_META, true);
-        // error_log('props : ' . print_r($props, true));
-
-        if (isset($props['rating']) && !empty($props['rating'])) {
-            $args = SCR_Getter::get_stat_default_args();
-            $args['items']['stats-list'] = $props['stats'];
-            // error_log('args : ' . print_r($args, true));
-            $stat_controller = new \StarcatReview\App\Components\Stats\Controller($args);
+        
+        if (isset($this->comments_of_stats[$comment->comment_ID]) && !empty($this->comments_of_stats[$comment->comment_ID])) {
+            $stat_args = array_merge($this->stat_args, ['items' => $this->comments_of_stats[$comment->comment_ID]]);
+            $stat_controller = new \StarcatReview\App\Components\Stats\Controller($stat_args);
             $rating = $stat_controller->get_view();
-
-            // $rating = $props['rating'];
         }
 
         echo $rating;
