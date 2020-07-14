@@ -18,7 +18,9 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration')) {
                 add_filter('comments_template', [$this, 'comments_template_loader'], 11);
 
                 add_filter('woocommerce_product_get_rating_html', [$this, 'woocommerce_rating_display'], 10, 3);
-                add_action('woocommerce_single_product_summary', [$this, 'woocommerce_review_display_overall_rating'], 10);
+
+                remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_rating', 10);
+                add_action('woocommerce_single_product_summary', [$this, 'woocommerce_review_display_overall_rating'], 5);
 
                 add_filter('scr_comment', [$this, 'get_is_review_from_verified_owner']);
                 add_action('scr_woocommerce_integration/add_rating_meta', [$this, 'add_rating_meta'], 10, 2);
