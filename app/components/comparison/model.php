@@ -13,31 +13,31 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\Model')) {
         /*
         Data Model
         $stats = [
-                'stat_name_1' => [
-                    'post_id_1' => 'post_id_1_value',
-                    'post_id_2' => 'post_id_2_value',
-                    'post_id_3' => 'post_id_3_value',
-                ],
-                'stat_name_2 => [
-                    'post_id_1' => 'post_id_1_value',
-                    'post_id_2' => 'post_id_2_value',
-                    'post_id_3' => 'post_id_3_value',
-                ],
-            ];
+        'stat_name_1' => [
+        'post_id_1' => 'post_id_1_value',
+        'post_id_2' => 'post_id_2_value',
+        'post_id_3' => 'post_id_3_value',
+        ],
+        'stat_name_2 => [
+        'post_id_1' => 'post_id_1_value',
+        'post_id_2' => 'post_id_2_value',
+        'post_id_3' => 'post_id_3_value',
+        ],
+        ];
 
-                    $stats = [
-                'stat_name_1' => [
-                    'post_id_1' => 'post_id_1_value',
-                    'post_id_2' => 'post_id_2_value',
-                    'post_id_3' => 'post_id_3_value',
-                ],
-                'stat_name_2 => [
-                    'post_id_1' => 'post_id_1_value',
-                    'post_id_2' => 'post_id_2_value',
-                    'post_id_3' => 'post_id_3_value',
-                ],
-            ];
-        */
+        $stats = [
+        'stat_name_1' => [
+        'post_id_1' => 'post_id_1_value',
+        'post_id_2' => 'post_id_2_value',
+        'post_id_3' => 'post_id_3_value',
+        ],
+        'stat_name_2 => [
+        'post_id_1' => 'post_id_1_value',
+        'post_id_2' => 'post_id_2_value',
+        'post_id_3' => 'post_id_3_value',
+        ],
+        ];
+         */
         public function get($args)
         {
             $stat_cols = array();
@@ -56,7 +56,7 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\Model')) {
             }
             // error_log("args" . print_r($args, true));
             // $get_overall_stat_features = $this->get_overall_features($args['posts']);
-            $args['cols']   = count($stat_cols) > 0 ? $stat_cols : array();
+            $args['cols'] = count($stat_cols) > 0 ? $stat_cols : array();
 
             return $args;
         }
@@ -78,10 +78,9 @@ if (!class_exists('\StarcatReview\App\Components\Comparison\Model')) {
             return $stat_columns;
         }
 
-
         protected function get_stats_list($post_id)
         {
-            $review_post_meta =  get_post_meta($post_id, '_scr_post_options', true);
+            $review_post_meta = get_post_meta($post_id, SCR_POST_META, true);
 
             // Return if empty
             if (!isset($review_post_meta['stats']) || empty($review_post_meta['stats'])) {

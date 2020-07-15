@@ -11,10 +11,15 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
     {
         public function get_viewProps($args)
         {
-            $this->collection = $this->get_collectionProps($args);
+            $this->args = $args;
+
+            $collection = $this->get_collectionProps($args);
+            $items = $this->get_itemProps($args);
+
+            // error_log('args["items"] : ' . print_r($items, true));
             $viewProps = [
-                'collection' => $this->collection,
-                'items' => $this->get_itemPorps($args),
+                'collection' => $collection,
+                'items' => $items,
             ];
 
             return $viewProps;
@@ -28,157 +33,57 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
                 'list_title' => $args['list_title'],
                 'enable_voting' => $args['enable_voting'],
                 'title' => 'Reviews',
-                'columns' => 1,
-                'items_display' => ['title', 'content'],
-                'show_controls' => [
-                    'search' => true,
-                    'sort' => true,
-                    'reviews' => true,
-                    'verified' => false,
-                ],
-                'pagination' => true,
-                'can_reply' => $args['can_user_reply'],
-                'can_vote' => $args['can_user_vote'],
                 'current_user_id' => $args['current_user_id'],
+                'capability' => $args['capability'],
             ];
         }
 
-        protected function get_itemPorps($args)
+        protected function get_itemProps($args)
         {
             $items = [];
-            if (!isset($args['items']['comments-list']) && empty($args['items']['comments-list'])) {
-                return $items;
-            }
 
-            foreach ($args['items']['comments-list'] as $comment) {
-                // error_log('comment : ' . print_r($comment, true));
+            if (isset($args['items']['comments']) && !empty($args['items']['comments'])) {
+                foreach ($args['items']['comments'] as $comment) {
+                    $components_item = $this->get_components_item($args['items'], $comment['ID']);
+                    $items[$comment['ID']] = array_merge($comment, $components_item);
 
-                $items[] = $this->get_comment_item($comment, $args);
+                    // Childrens of comments
+                    $items[$comment['ID']]['childrens'] = scr_get_comments_args(['comments'], ['parent' => $comment['ID']]);
+                }
             }
 
             return $items;
         }
 
-        public function get_comment_item($comment, $args)
+        protected function get_components_item($items, $comment_id)
         {
-            $comment_item = [
-                'content' => $comment->comment_content,
-                'comment_id' => $comment->comment_ID,
-                'comment_date' => get_comment_date('', $comment->comment_ID),
-                'comment_time' => $this->get_comment_time($comment->comment_date),
-                'time_stamp' => get_comment_date('U', $comment->comment_ID),
-                'comment_parent' => $comment->comment_parent,
-                'comment_author' => ucfirst($comment->comment_author),
-                'comment_author_email' => $comment->comment_author_email,
-                'commentor_avatar' => get_avatar($comment->user_id),
-                'comment_approved' => $comment->comment_approved,
-                'user_id' => $comment->user_id,
-                'comment_author_IP' => $comment->comment_author_IP,
-            ];
-
-            $comment_item['can_edit'] = ($comment->user_id == $this->collection['current_user_id']);
-         
-
-            if (isset($args)) {
-                $comment_item['args'] = $this->get_args($args, $comment);
-            }
-
-            if (isset($comment->review) && !empty($comment->review)) {
-                $comment_item['title'] = $comment->review['title'];
-                $comment_item['rating'] = $comment->review['rating'];
-            }   
-
-            // Used by non-logged-in-user
-            $comment_item = apply_filters('scr_get_comment_item', $comment_item, $comment);
-
-            return $comment_item;
-        }
-
-        public function get_args($component_args, $comment)
-        {
-            $args = $component_args;
-            unset($args['items']);
-
-            $args['items'] = [];
-
-            if (isset($comment->review['stats']) && !empty($comment->review['stats'])) {
-                $args['items']['stats-list'] = $comment->review['stats'];
-            }
-            if (isset($comment->review['pros']) && !empty($comment->review['pros'])) {
-
-                $args['items']['pros-list'] = $comment->review['pros'];
-            }
-            if (isset($comment->review['cons']) && !empty($comment->review['cons'])) {
-                $args['items']['cons-list'] = $comment->review['cons'];
-            }
-
-            if (isset($comment->review['votes']) && !empty($comment->review['votes'])) {
-                $args['items']['votes'] = $this->get_votes($comment->review['votes']);
-            }
-
-            // if (isset($comment->review['helpful']) && !empty($comment->review['helpful'])) {
-            //     $args['items']['helpful'] = $comment->review['helpful'];
-            // }
-
-            return $args;
-        }
-
-        private function get_comment_time($date)
-        {
-            $date = mysql2date(get_option('time_format'), $date, true);
-
-            return apply_filters('get_comment_time', $date);
-        }
-
-        // TODO: Move to own class?
-        public function get_votes($items)
-        {
-            $votes = [
-                'total' => $items,
-                'summary' => $this->get_vote_summary($items),
-            ];
-
-            // error_log('items : ' . print_r($items, true));
-            // error_log('Votes : ' . print_r($votes, true));
-            return $votes;
-        }
-
-        protected function get_vote_summary($votes)
-        {
-            $summary = [
+            $item = [
                 'likes' => 0,
-                'dislikes' => 0,
-                'active' => 0,
-                'people' => 0,
+                'rating' => 0,
+                'props' => [],
             ];
 
-            foreach ($votes as $vote) {
+            if (isset($items['stats'][$comment_id]) && !empty($items['stats'][$comment_id])) {
+                $item['stats'] = array_merge($this->args['stats_args'], ['items' => $items['stats'][$comment_id]]);
+                $item['rating'] = $items['stats'][$comment_id]['overall'];
+                $item['props']['stats'] = $items['stats'][$comment_id]['stats'];
+            }
+            if (isset($items['prosandcons'][$comment_id]) && !empty($items['prosandcons'][$comment_id])) {
+                $item['prosandcons'] = $items['prosandcons'][$comment_id];
+                $item['props']['prosandcons'] = $items['prosandcons'][$comment_id]['items'];
 
-                // Is active Like or DisLike or Not
-                if ($this->collection['current_user_id'] == $vote['user_id']) {
-                    if (($vote['vote'] == 1)) {
-                        $summary['active'] = 'like';
-                    } elseif (($vote['vote'] == -1)) {
-                        $summary['active'] = 'dislike';
-                    } else {
-                        $summary['active'] = 0;
-                    }
-                }
+            }
+            if (isset($items['votes'][$comment_id]) && !empty($items['votes'][$comment_id])) {
+                $item['votes'] = $items['votes'][$comment_id];
+                $item['likes'] = $items['votes'][$comment_id]['likes'];
+            }
+            if (isset($items['attachments'][$comment_id]) && !empty($items['attachments'][$comment_id])) {
+                $item['attachments'] = $items['attachments'][$comment_id];
+                $item['props']['attachments'] = $items['attachments'][$comment_id];
 
-                // Likes
-                if ($vote['vote'] == 1) {
-                    $summary['likes']++;
-                }
-
-                // Dislikes
-                if ($vote['vote'] == -1) {
-                    $summary['dislikes']++;
-                }
-                // poeple
-                $summary['people']++;
             }
 
-            return $summary;
+            return $item;
         }
     }
 }

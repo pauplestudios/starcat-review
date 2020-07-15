@@ -65,25 +65,30 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 \CSF::createOptions($prefix, $options);
 
                 $this->general_settings($prefix);
-                if (is_plugin_active('starcat-review-cpt/starcat-review-cpt.php')) {
+                if (is_plugin_active('starcat-review-cpt/starcat-review-cpt.php') && scr_cpt_fs()->can_use_premium_code()) {
                     // $options['menu_parent'] = null;
                     // $options['menu_type'] = 'menu';
                     $this->mainpage_settings($prefix);
                     $this->category_page_settings($prefix);
                     $this->single_page_settings($prefix);
                     $this->category_meta_fields();
-               }
+                }
 
                 $this->user_review_settings($prefix);
+
+                if (is_plugin_active('starcat-review-photo-reviews/starcat-review-photo-reviews.php') && scr_pr_fs()->can_use_premium_code()) {
+                    $this->photo_reviews_settings($prefix);
+                }
+
                 // $this->comparison_table_settings($prefix);
                 // $active_plugins = get_option('active_plugins');
                 // error_log('$active_plugins : ' . print_r($active_plugins, true));
-                if (class_exists('starcat_review_woo_notify')) {
+                if (class_exists('starcat_review_woo_notify') && scr_wn_fs()->can_use_premium_code()) {
                     $this->notification_settings($prefix);
                 }
 
 
-                if (class_exists('Starcat_Review_Ct')) {
+                if (class_exists('Starcat_Review_Ct')  && scr_ct_fs()->can_use_premium_code() ) {
                     $this->ct_settings($prefix);
                 }
 
@@ -91,7 +96,8 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             }
         }
 
-        public function ct_settings($prefix) {
+        public function ct_settings($prefix)
+        {
             // error_log('CT Settings');
             \CSF::createSection(
                 $prefix,
@@ -110,13 +116,14 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'style' => 'success',
                             'content' => 'Example: [starcat_review_comparison_table post_type="product" posts="213,245,256"]',
                         ),
-                    )
+                    ),
                 )
             );
 
         }
 
-        public function notification_settings($prefix){
+        public function notification_settings($prefix)
+        {
             $admin_email = get_option('admin_email');
             \CSF::createSection(
                 $prefix,
@@ -126,7 +133,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                     'icon' => 'fa fa-bell',
                     'fields' => array(
                         array(
-                            'type'    => 'heading',
+                            'type' => 'heading',
                             'content' => 'Woocommerce Notification Settings to notify users after they complete their orders',
                         ),
                         array(
@@ -161,47 +168,47 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'desc' => '<strong>Shown at the footer of the email</strong>',
                         ),
                         array(
-                            'id'     => 'ns_time_schedule', // ns: notification_settings
-                            'type'   => 'repeater',
-                            'title'  => 'Notification Time Schedule',
+                            'id' => 'ns_time_schedule', // ns: notification_settings
+                            'type' => 'repeater',
+                            'title' => 'Notification Time Schedule',
                             'desc' => '<strong> Notification Schedule: Hours/Days from the time of order completion. You can create multiple remainders (example: 24 hours, 3 days, 7 days from purchase)',
                             'fields' => array(
-                          
-                              array(
-                                'id'    => 'value',
-                                'type'  => 'text',
-                                'title' => 'Time Value'
-                              ),
-                              array(
-                                'id'          => 'unit',
-                                'type'        => 'select',
-                                'title'       => 'Time Unit',
-                                'placeholder' => 'Select an option',
-                                'options'     => array(
-                                  'hours'  => 'Hours',
-                                  'days'  => 'Days',
+
+                                array(
+                                    'id' => 'value',
+                                    'type' => 'text',
+                                    'title' => 'Time Value',
                                 ),
-                                'default'     => 'days'
-                              ),
-                          
+                                array(
+                                    'id' => 'unit',
+                                    'type' => 'select',
+                                    'title' => 'Time Unit',
+                                    'placeholder' => 'Select an option',
+                                    'options' => array(
+                                        'hours' => 'Hours',
+                                        'days' => 'Days',
+                                    ),
+                                    'default' => 'days',
+                                ),
+
                             ),
-                            'default'   => array(
+                            'default' => array(
                                 array(
-                                  'value' => '24',
-                                  'unit' => 'hours',
+                                    'value' => '24',
+                                    'unit' => 'hours',
                                 ),
                                 array(
-                                  'value' => '1',
-                                  'unit' => 'days' 
+                                    'value' => '1',
+                                    'unit' => 'days',
                                 ),
                                 array(
                                     'value' => '3',
-                                    'unit' => 'days' 
-                                )
-                            )
+                                    'unit' => 'days',
+                                ),
+                            ),
                         ),
 
-                     )
+                    ),
                 )
             );
         }
@@ -322,15 +329,23 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         // ),
 
                         array(
-                            'id'    => 'ur_who_can_review',
-                            'type'  => 'select',
+                            'id' => 'ur_who_can_review',
+                            'type' => 'select',
                             'desc' => 'Selecting Everyone will let even Non Logged-in Users add reviews',
                             'title' => 'Who Can Review',
                             'options' => array(
                                 'logged_in' => 'Logged In Users',
                                 'everyone' => 'Everyone',
-                               
-                            )
+
+                            ),
+                        ),
+
+                        array(
+                            'id' => 'ur_allow_same_user_can_leave_multiple_reviews',
+                            'type' => 'switcher',
+                            'desc' => 'Allow Same user to leave more than one review on a single post',
+                            'title' => 'Allow Same User Can leave More than One Review',
+                            'default' => false,
                         ),
 
                         array(
@@ -403,9 +418,9 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'title' => __('Show reCAPTCHA (v2 checkbox)', SCR_DOMAIN),
                             'default' => false,
                             'desc' => 'Register for reCAPTCHA v2 at <a href="https://www.google.com/recaptcha">https://www.google.com/recaptcha</a> to get your site key and secret key.' .
-                                ' Make sure to add your domain name in the settings at the reCAPTCHA website. ' .
-                                'Read More at <a href="https://paupledocs.gitbook.io/starcat-documentation/">Starcat Reviews - Docs</a>.' .
-                                ' Note: reCAPTCHA v3 will not work, just v2. v3 will be added soon.',
+                            ' Make sure to add your domain name in the settings at the reCAPTCHA website. ' .
+                            'Read More at <a href="https://paupledocs.gitbook.io/starcat-documentation/">Starcat Reviews - Docs</a>.' .
+                            ' Note: reCAPTCHA v3 will not work, just v2. v3 will be added soon.',
                         ),
 
                         array(
@@ -414,7 +429,6 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'title' => __('reCAPTCHA Site Key', SCR_DOMAIN),
                             'dependency' => array('ur_show_captcha', '==', 'true'),
                         ),
-
 
                         array(
                             'id' => 'recaptcha_secret_key',
@@ -458,6 +472,70 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         //     ),
                         // ),
 
+                    ),
+                )
+            );
+        }
+
+        public function photo_reviews_settings($prefix)
+        {
+            \CSF::createSection(
+                $prefix,
+                array(
+                    'id' => 'photo_reviews_settings',
+                    'title' => 'Photo Reviews',
+                    'icon' => 'fa fa-image',
+                    'fields' => array(
+                        array(
+                            'id' => 'pr_enable',
+                            'type' => 'switcher',
+                            'title' => __('Enable Photo Reviews', SCR_DOMAIN),
+                            'default' => true,
+                        ),
+
+                        array(
+                            'id' => 'pr_require_photo',
+                            'type' => 'switcher',
+                            'title' => __('Photo required', SCR_DOMAIN),
+                            'default' => true,
+                            'desc' => 'Make this a required field',
+                            'dependency' => array('pr_enable', '==', 'true'),
+                        ),
+
+                        // array(
+                        //     'id' => 'pr_photo_order',
+                        //     'type' => 'select',
+                        //     'chosen' => true,
+                        //     'title' => __('Showing Photo Order', SCR_DOMAIN),
+                        //     'placeholder' => __('Select an option', SCR_DOMAIN),
+                        //     'options' => array(
+                        //         'newest' => 'Newest First',
+                        //         'oldest' => 'Oldest First',
+                        //     ),
+                        //     'default' => 'oldest',
+                        //     'dependency' => array('pr_enable', '==', 'true'),
+                        // ),
+
+                        array(
+                            'id' => 'pr_photo_size',
+                            'type' => 'text',
+                            'title' => __('Maximum photo size', SCR_DOMAIN),
+                            'default' => 2000,
+                            'desc' => 'kB (Max 307200kB).',
+                            'dependency' => array('pr_enable', '==', 'true'),
+                        ),
+                        array(
+                            'id' => 'pr_photo_quantity',
+                            'title' => 'Maximum photo quantity',
+                            'type' => 'slider',
+                            'min' => 1,
+                            'max' => 20,
+                            'step' => 1,
+                            'unit' => '#',
+                            'default' => 5,
+                            'desc' => 'Maximum value: 20',
+                            'dependency' => array('pr_enable', '==', 'true'),
+                        ),
                     ),
                 )
             );
@@ -673,9 +751,9 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'type' => 'content',
                             'content' => '<div class="button-container">'
-                                . '<span><b>Where is my main page?</b></span>'
-                                . '<br>'
-                                . $main_page_button . '<span>Save and Refresh Page if you changed it.</span></div>',
+                            . '<span><b>Where is my main page?</b></span>'
+                            . '<br>'
+                            . $main_page_button . '<span>Save and Refresh Page if you changed it.</span></div>',
                         ),
                         array(
                             'type' => 'subheading',
@@ -1075,7 +1153,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         public function single_post_meta_fields()
         {
             $locations = SCR_Getter::get('review_enable_post-types');
-            $prefix = '_scr_post_options';
+            $prefix = SCR_POST_META;
 
             \CSF::createMetabox($prefix, array(
                 'title' => 'Starcat Review',

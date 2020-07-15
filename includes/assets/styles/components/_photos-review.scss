@@ -1,0 +1,198 @@
+
+@import "../../node_modules/swiper/css/swiper.css";
+
+// All User Uploaded Photos and Single Users Photos
+.photos-gallery-preview.ui.tiny.images, 
+.ui.tiny.images.review-photos{
+    width: 100%;
+    float: none;
+    
+    .image{
+        height: 89px;
+        width: 89px;    
+        cursor: pointer;
+        overflow: hidden;    
+        border-radius: .5em;
+        border: 1px solid rgba(0,0,0,.1);        
+        
+        & img{             
+            height: 89px;
+            width: 89px;
+            object-fit: cover;
+        }   
+        
+        & span.show-gallery{
+            cursor: pointer;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            background-color: #1b1c1d ;            
+            opacity: .6;
+            align-items: center;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            color: #f0f0f0;
+            font-size: 18px;
+            font-weight: 500; 
+            z-index: 1;
+            
+            &:hover{
+                opacity: 1;
+            }
+        }
+        
+        &:hover{
+            opacity: .9;
+            border: 1px solid rgba(0,0,0,.2);   
+        }
+    }
+}
+
+// Storefront Fix
+#scr-reviews .photos-gallery-preview.ui.tiny.images, 
+#scr-reviews .review-photos.ui.tiny.images{
+    width: 100%;
+    float: none;
+}
+    
+    .scr-photos-review{    
+        // background-color: #333; 
+        & .photos-review-slider-thumbs{        
+            padding: 10px;
+            & .photos-review-wrapper.swiper-wrapper{
+                justify-content: center;
+            }
+        & .photos-review__slide.swiper-slide{        
+            width: 89px;        
+            box-sizing: border-box;
+            cursor: pointer;
+            opacity: 0.5;
+            img{         
+                height: 89px;       
+                width: 89px;   
+                object-fit: cover;
+            }
+            &:hover{
+                box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+            }
+        }
+
+        & .photos-review__slide.swiper-slide-thumb-active{
+            opacity: 1;
+            &:after{
+                 content: '';
+            display: block;
+            position: absolute;
+            border: 2px solid #f0f0f0;        
+            top: 0;
+            left: 0;
+            height: 100%;            
+            width: 100%;            
+            transition: opacity .2s ease-out;
+            box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+            }
+        }              
+    }
+
+    & .photos-review-slider-top {
+        padding: 10px;
+        & .photos-review__slide.swiper-slide {
+            text-align: center;
+        }
+        & img{
+            display: inline;
+        }
+    }
+
+    & .photos-review__button-prev, .photos-review__button-next{
+        display: none;        
+        position: absolute;        
+        top: 50%;
+        z-index: 10;        
+        cursor: pointer;        
+        align-items: center;
+        justify-content: center; 
+        
+        &.swiper-button-disabled,.swiper-button-disabled {
+            opacity: 0.35;
+            cursor: not-allowed;            
+        }
+    } 
+    & .photos-review__button-prev{
+        left: 10px;
+    }
+    & .photos-review__button-next{
+        right: 10px;
+    }
+
+    &:hover{
+        & .photos-review__button-prev, .photos-review__button-next{
+            display: flex;
+        } 
+    }    
+}
+
+.ui.dimmer.photos-review-modal{
+    background-color: rgba(0,0,0,.6);
+    position: fixed;
+    
+    & .close.icon{
+        z-index: 2;
+    }
+
+    & .header{
+        padding: .5em 1em;
+        margin: 0;
+        border-bottom: 1px solid #e1e1e1;
+
+        .arrow.left:hover{
+            cursor: pointer;
+            box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+        }
+    }
+    & p{
+        display: none;
+    }
+
+    & .item-content{
+        padding: 1em;
+        max-height: calc(80vh - 10em);
+        overflow: auto;
+    }
+
+    & .placeholder{
+        height: 100%;
+    }
+}
+
+
+.scr-user-review div.ui.tiny.images.scr_pr_uploaded_image_group
+{
+    padding-top: 5px !important;
+    width: 100%;
+    img{
+        object-fit: contain;
+        height: 80px;
+    }
+
+    .image{
+        border: 1px solid rgba(0,0,0,.1);
+        width: 80px;        
+    }
+
+    .add-photos{
+        width: 80px;
+        height: 82px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;        
+        cursor: pointer;
+        &:hover{
+            box-shadow: 0 1px 2px rgba(0,0,0,0.16), 0 1px 2px rgba(0,0,0,0.23);
+        }
+    }
+}
+
+

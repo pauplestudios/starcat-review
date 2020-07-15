@@ -33,6 +33,9 @@ if (!class_exists('\Starcat_Review')) {
 
             /* New Features */
             $Non_Logged_In_User = new \StarcatReview\Features\Non_Logged_In_User();
+
+            /* Core WooCommerce Review Integration */
+            new \StarcatReview\Features\Woocommerce_Integration();
         }
 
         // public function register_cpt_and_taxonomy()
@@ -46,20 +49,16 @@ if (!class_exists('\Starcat_Review')) {
             $hooks = new \StarcatReview\Includes\Hooks();
         }
 
-
         public function load_ajax_handler()
         {
             $ajax_handler = new \StarcatReview\Includes\Ajax_Handler();
             $ajax_handler->register_ajax_actions();
         }
 
-
         public function load_components()
         {
 
-
             $settings = new \StarcatReview\Includes\Settings();
-
 
             /* Upgrades */
             $Upgrades = new \StarcatReview\Includes\Upgrades();
@@ -69,13 +68,16 @@ if (!class_exists('\Starcat_Review')) {
             require_once SCR_PATH . 'includes/settings/getter.php';
             $recaptcha = new \StarcatReview\Services\Recaptcha();
 
-            
+            // Developement Purpose Only
+            // if (file_exists(SCR_PATH . 'includes/utils/fake-pages.php')) {
+            //     require_once SCR_PATH . 'includes/utils/fake-pages.php';
+            // }
+
             /* Notification */
             // $Notification_Data = new \StarcatReview\Includes\Utils\Notification\Notification_Test_Data();
             // $Notification_Data = new \StarcatReview\Includes\Utils\Notification\Data();
             // $Notification = new \StarcatReview\Includes\Utils\Notification\Notification($Notification_Data);
-            
-            
+
         }
 
         /**
@@ -129,7 +131,6 @@ if (!class_exists('\Starcat_Review')) {
             require_once SCR_PATH . '/includes/autoloader.php';
             \StarcatReview\Autoloader::run();
         }
-
 
         /* Note: Nice Idea */
         public function load_view($view)

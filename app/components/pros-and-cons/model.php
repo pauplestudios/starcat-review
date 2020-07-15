@@ -83,5 +83,43 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\Model')) {
 
             return $is_empty;
         }
+
+        /*
+         * Below methods are not used
+         */
+        private function get_prosandcon_title($title = "Pros & Cons")
+        {
+            $condition = $this->get_condition();
+
+            $title = ($condition['is_pros_empty']) ? 'Cons' : $title;
+            $title = ($condition['is_cons_empty']) ? 'Pros' : $title;
+
+            return $title;
+        }
+
+        private function get_condition()
+        {
+            $condition = [
+                'is_both_empty' => false,
+                'is_pros_empty' => false,
+                'is_cons_empty' => false,
+            ];
+
+            if (!isset($this->items) || empty($this->items)) {
+                error_log('this->items : ' . print_r($this->items, true));
+
+                $condition['is_both_empty'] = true;
+            }
+
+            if (!isset($this->items['pros']) || empty($this->items['pros'])) {
+                $condition['is_pros_empty'] = true;
+            }
+
+            if (!isset($this->items['cons']) || empty($this->items['cons'])) {
+                $condition['is_cons_empty'] = true;
+            }
+
+            return $condition;
+        }
     } // END CLASS
 }

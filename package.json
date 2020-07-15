@@ -1,24 +1,28 @@
 {
     "name": "starcat-review",
-    "version": "0.5",
+    "version": "0.6",
     "main": "index.js",
     "license": "MIT",
     "scripts": {
+        "build_dependency": "composer update && yarn build_addons",
         "build_semantic": "cd includes/assets/vendors/semantic && gulp build && cd ../../../../",
-        "build_addons": "chmod +x addons.sh && bash addons.sh",  
+        "build_addons": "chmod +x bin/addons.sh && bash bin/addons.sh",
+        "docker-destroy": "chmod +x bin/docker-destroy.sh && bash bin/docker-destroy.sh && docker volume prune",
         "build": "cross-env NODE_ENV=production ./node_modules/.bin/webpack --mode=production",
         "start": "./node_modules/.bin/webpack --mode=development --watch",
-        "buildtest": "cross-env NODE_ENV=test ./node_modules/.bin/webpack",
+        "build_test": "cross-env NODE_ENV=test ./node_modules/.bin/webpack",
         "lint": "esw webpack.config.* src tools --color",
-        "runtest": "docker-compose down && docker-compose up -d && sleep 20 && yarn acceptance",
+        "run_test": "yarn prepare_docker && yarn acceptance",
+        "run_test2": "yarn build && docker-compose down && docker-compose up -d && sleep 10 && yarn codeceptjs",
+        "run_unit_test": "yarn prepare_docker && yarn wpunit_spec",
         "acceptance": "vendor/bin/codecept run acceptance --steps",
         "acceptance_spec": "vendor/bin/codecept run acceptance tests/acceptance/BasicCest.php:comparisonTableAddonActivation --steps",
-        "unittest": "yarn build && docker-compose down && docker-compose up",
         "wpunit": "vendor/bin/codecept run wpunit --steps",
-        "wpunit_spec": "vendor/bin/codecept run wpunit tests/wpunit/NotificationTest.php -vvv",
-        "runtest2": "yarn build && docker-compose down && docker-compose up -d && sleep 10 && yarn codeceptjs",
+        "wpunit_spec": "vendor/bin/codecept run wpunit tests/wpunit/FactoryTest.php -vvv",
+        "prepare_docker": "yarn build && docker-compose down && docker-compose up -d && sleep 20",
         "analyse": "vendor/bin/churn run includes features utils && vendor/bin/phpcpd includes features utils",
-        "rename_old" : "renamer --find artifacts/addons/dist --replace starcat-review-cpt --dry-run"
+        "rename_old": "renamer --find artifacts/addons/dist --replace starcat-review-cpt --dry-run",
+        "test-wpunit": "docker-compose exec -T -w /var/www/html/wp-content/plugins/starcat-review wordpress ./vendor/bin/codecept run wpunit"
     },
     "devDependencies": {
         "@babel/core": "^7.5.5",
@@ -75,6 +79,8 @@
         "immer": "^1.8.0",
         "jquery": "^3.4.1",
         "list.js": "^1.5.0",
+        "semantic-ui": "^2.4.2",
+        "swiper": "^5.3.1",
         "react-hot-loader": "^3.0.0-beta.7"
     },
     "_comment": "Higher versions of YUP cause UNDEFINED error "

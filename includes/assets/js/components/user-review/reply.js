@@ -77,7 +77,7 @@ var Reply = {
 
             // Remove all reviews list forms except clonned form
             jQuery(selectors.userReviews)
-                .find("form.form")
+                .find(".form").hide().find(selectors.replyForm)
                 .remove();
 
             // Hide clicked review link
@@ -224,7 +224,7 @@ var Reply = {
             }
 
             jQuery(this)
-                .closest("form.form")
+                .closest(selectors.replyForm)
                 .remove();
         });
     },
@@ -237,12 +237,12 @@ var Reply = {
             .post(scr_ajax.ajax_url, props, function (results) {
                 results = JSON.parse(results);
                 // console.log(results);
-                jQuery("#" + results.props.comment_parent)
+                jQuery("#" + results.props.parent)
                     .find(".review_reply.placeholder")
                     .first()
                     .replaceWith(results.view);
 
-                jQuery("#" + results.props.comment_id).transition("pulse");
+                jQuery("#" + results.props.ID).transition("pulse");
             })
             .fail(function (response) {
                 console.log("review_reply failed");

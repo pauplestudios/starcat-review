@@ -21,7 +21,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Controller'))
         }
 
         public function load()
-        { }
+        {}
 
         public function get_view($args)
         {
@@ -147,7 +147,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Controller'))
                 $args['post_id'] = $post->ID;
 
                 $args['combine_type'] = 'overall';
-                $author_review = get_post_meta($post->ID, '_scr_post_options', true);
+                $author_review = get_post_meta($post->ID, SCR_POST_META, true);
                 $args['items'] = isset($author_review) && !empty($author_review) ? $author_review : [];
                 $comments = $this->get_comments_list($post->ID);
                 if (isset($comments) && !empty($comments)) {
@@ -172,7 +172,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Review_Listing\Controller'))
             $comments = get_comments($args);
 
             foreach ($comments as $comment) {
-                $comment->reviews = get_comment_meta($comment->comment_ID, 'scr_user_review_props', true);
+                $comment->reviews = get_comment_meta($comment->comment_ID, SCR_COMMENT_META, true);
             }
 
             return $comments;
