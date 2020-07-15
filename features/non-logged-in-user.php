@@ -98,16 +98,16 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
         public function process_form($props = [])
         {
 
-            if (isset($_POST['author']) && !empty($_POST['author'])) {
-                $props['author'] = $_POST['author'];
+            if (isset($_POST['name']) && !empty($_POST['name'])) {
+                $props['name'] = $_POST['name'];
             }
 
             if (isset($_POST['email']) && !empty($_POST['email'])) {
                 $props['email'] = $_POST['email'];
             }
 
-            if (isset($_POST['url']) && !empty($_POST['url'])) {
-                $props['url'] = $_POST['url'];
+            if (isset($_POST['website']) && !empty($_POST['website'])) {
+                $props['website'] = $_POST['website'];
             }
 
             return $props;
@@ -138,23 +138,23 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
             $commenters = wp_get_current_commenter();
             // error_log('commenter : ' . print_r($commenter, true));
 
-            $author = (isset($commenter['comment_author'])) ? $commenter['comment_author'] : '';
-            $author_email = (isset($commenter['comment_author_email'])) ? $commenter['comment_author_email'] : '';
-            $author_url = (isset($commenter['comment_author_url'])) ? $commenter['comment_author_url'] : '';
+            $name = (isset($commenter['comment_author'])) ? $commenter['comment_author'] : '';
+            $email = (isset($commenter['comment_author_email'])) ? $commenter['comment_author_email'] : '';
+            $website = (isset($commenter['comment_author_url'])) ? $commenter['comment_author_url'] : '';
 
             $html .= '<div class="inline field">';
             // $html .= '<label>Review Title</label>';
-            $html .= '<input type="text" name="author" placeholder="Name" value="' . $author . '"/>';
+            $html .= '<input type="text" name="name" placeholder="Name" value="' . $name . '"/>';
             $html .= '</div>';
 
             $html .= '<div class="inline field">';
             // $html .= '<label>Review Title</label>';
-            $html .= '<input type="text" name="email" placeholder="Email" value="' . $author_email . '"/>';
+            $html .= '<input type="text" name="email" placeholder="Email" value="' . $email . '"/>';
             $html .= '</div>';
 
             $html .= '<div class="inline field">';
             // $html .= '<label>Review Title</label>';
-            $html .= '<input type="text" name="url" placeholder="URL" value="' . $author_url . '"/>';
+            $html .= '<input type="text" name="website" placeholder="Website" value="' . $website . '"/>';
             $html .= '</div>';
 
             // error_log('html: ' . $html);
