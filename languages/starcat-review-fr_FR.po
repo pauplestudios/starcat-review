@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Helpie SCR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-15 08:29+0000\n"
-"PO-Revision-Date: 2020-07-15 08:31+0000\n"
+"POT-Creation-Date: 2020-07-15 19:14+0000\n"
+"PO-Revision-Date: 2020-07-15 19:15+0000\n"
 "Last-Translator: Santhosh\n"
 "Language-Team: Français\n"
 "Language: fr_FR\n"
@@ -40,6 +40,9 @@ msgid "Author Rating"
 msgstr "Évaluation de l'auteur"
 
 #. Dashboard Settings
+msgid "Starcat Settings"
+msgstr "Paramètres de StarCat"
+
 msgid "General Settings"
 msgstr "réglages généraux"
 

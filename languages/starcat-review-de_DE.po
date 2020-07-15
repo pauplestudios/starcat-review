@@ -2,11 +2,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Starcat Review\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-15 08:22+0000\n"
-"PO-Revision-Date: 2020-07-15 08:25+0000\n"
+"POT-Creation-Date: 2020-07-15 20:29+0000\n"
+"PO-Revision-Date: 2020-07-15 20:30+0000\n"
 "Last-Translator: Santhosh\n"
 "Language-Team: Deutsch\n"
-"Language: de-DE\n"
+"Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -14,16 +14,59 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.4.0; wp-5.4.2"
 
-#. User Reviews List
-msgid "Reply to"
-msgstr "Antwort an"
+#. User Review Submit, Edit, Reply Form
+#. __('', SCR_DOMAIN)
+msgid "Name"
+msgstr "Name"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Website"
+msgstr "Webseite"
+
+msgid "Title"
+msgstr "Titel"
+
+msgid "Description"
+msgstr "Beschreibung"
+
+msgid "Pros"
+msgstr "Profis"
+
+msgid "Type new or select existing pros"
+msgstr "Geben Sie new ein oder wählen Sie vorhandene Profis aus"
+
+msgid "Cons"
+msgstr "Nachteile"
+
+msgid "Type new or select existing cons"
+msgstr "Geben Sie new ein oder wählen Sie vorhandene Nachteile aus"
+
+msgid "Submit"
+msgstr "einreichen"
 
 msgid "REPLY"
 msgstr "ANTWORTEN"
 
+msgid "EDIT"
+msgstr "BEARBEITEN"
+
+msgid "Reply to"
+msgstr "Antwort an"
+
+msgid "Save"
+msgstr "sparen"
+
 msgid "Cancel"
 msgstr "Stornieren"
 
+#. Summary
+msgid "Author Rating"
+msgstr "Autorenbewertung"
+
+#. User Reviews List Controlls
+#. User Reviews List
 msgid "Was this helpful to you ?"
 msgstr "War das hilfreich für dich?"
 
@@ -33,13 +76,10 @@ msgstr "von"
 msgid "people found this review helpful"
 msgstr "Leute fanden diese Bewertung hilfreich"
 
-#. User Reviews List Controlls
-#. User Review Form
-#. Summary
-msgid "Author Rating"
-msgstr "Autorenbewertung"
-
 #. Dashboard Settings
+msgid "Starcat Settings"
+msgstr ""
+
 msgid "General Settings"
 msgstr "Allgemeine Einstellungen"
 
@@ -112,9 +152,6 @@ msgstr ""
 
 #. General Tab
 msgid "General"
-msgstr ""
-
-msgid "Title"
 msgstr ""
 
 msgid "SCR Title"

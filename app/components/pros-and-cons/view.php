@@ -81,7 +81,7 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
 
             $html = '<div class="field review-' . $name . '-repeater" data-' . $name . '="' . $options . '">';
             // $html .= '<div class="ui segment">';
-            $html .= '<h5> ' . ucfirst($name) . ' </h5>';
+            $html .= '<h5> ' . __(ucfirst($name), SCR_DOMAIN) . ' </h5>';
             $html .= '<div data-repeater-list="' . $name . '" >';
             $html .= $optionsHTML;
             $html .= '</div>';
@@ -112,7 +112,7 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
         private function get_options($name, $options, $data)
         {
             // default option value or sometimes field placeholder
-            $html = '<option value=""> Type new or select existing one ' . $name . '</option>';
+            $html = '<option value=""> ' . __('Type new or select existing ' . $name, SCR_DOMAIN) . ' </option>';
 
             if (!empty($data)) {
                 $html = $this->get_option($data);

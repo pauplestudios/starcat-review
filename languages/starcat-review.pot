@@ -1,13 +1,58 @@
-#. User Reviews List
+#. User Review Submit, Edit, Reply Form
+#. __('', SCR_DOMAIN)
 
-msgid "Reply to"
-msgstr "Reply to" 
+msgid "Name"
+msgstr "Name"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Website"
+msgstr "Website"
+
+msgid "Title"
+msgstr "Title" 
+
+msgid "Description"
+msgstr "Description" 
+
+msgid "Pros"
+msgstr "Pros" 
+
+msgid "Type new or select existing pros"
+msgstr "Type new or select existing pros" 
+
+msgid "Cons"
+msgstr "Cons" 
+
+msgid "Type new or select existing cons"
+msgid "Type new or select existing cons"
+
+msgid "Submit"
+msgstr "Submit" 
 
 msgid "REPLY"
 msgstr "REPLY" 
 
+msgid "EDIT"
+msgstr "EDIT" 
+
+msgid "Reply to"
+msgstr "Reply to" 
+
+msgid "Save"
+msgstr "Save"
+
 msgid "Cancel"
 msgstr "Cancel" 
+
+#. Summary
+
+msgid "Author Rating"
+msgstr "Author Rating" 
+
+#. User Reviews List Controlls
+#. User Reviews List
 
 msgid "Was this helpful to you ?"
 msgstr "Was this helpful to you ?" 
@@ -18,15 +63,11 @@ msgstr "of"
 msgid "people found this review helpful"
 msgstr "people found this review helpful" 
 
-
-#. User Reviews List Controlls
-#. User Review Form
-#. Summary
-
-msgid "Author Rating"
-msgstr "Author Rating" 
-
 #. Dashboard Settings
+
+msgid "Starcat Settings"
+msgstr "Starcat Settings" 
+
 msgid "General Settings"
 msgstr "General Settings" 
 

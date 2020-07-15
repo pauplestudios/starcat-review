@@ -92,7 +92,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '<div class="actions">';
             $html .= '<div class="links">';
             if ($this->capability['can_user_reply'] && $comment['can_edit']) {
-                $html .= '<a class="reply_edit_link"><i class="edit icon"></i> EDIT</a>';
+                $html .= '<a class="reply_edit_link"><i class="edit icon"></i> ' . __('EDIT', SCR_DOMAIN) . '</a>';
             }
             $html .= '</div></div>';
             $html .= '</div>';
@@ -108,7 +108,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
 
             $display = (!empty($items) && count($items) > 9) ? '' : 'style="display: none;"';
 
-            $html .= '<ul class="ui pagination scr-pagination menu" '.$display.'>';
+            $html .= '<ul class="ui pagination scr-pagination menu" ' . $display . '>';
             for ($ii = 1; $ii <= 2; $ii++) {
                 # code...
                 $html .= '<li class="active"><a class="page" href="">' . $ii . '</a></li>';
@@ -214,10 +214,10 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $can_edit_comment = $this->capability['can_user_reply'] && $comment['can_edit'];
 
             if ($can_reply) {
-                $html .= '<a class="reply_link"><i class="reply icon"></i> REPLY</a>';
+                $html .= '<a class="reply_link"><i class="reply icon"></i> ' . __('REPLY', SCR_DOMAIN) . '</a>';
             }
             if ($can_edit_comment) {
-                $html .= '<a class="edit_link"><i class="edit icon"></i> EDIT</a>';
+                $html .= '<a class="edit_link"><i class="edit icon"></i> ' . __('EDIT', SCR_DOMAIN) . '</a>';
             }
             // if ($this->collection['can_delete']) {
             //     $html .= '<a class="delete_link"><i class="delete icon"></i> DELETE</a>';
@@ -240,7 +240,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html = '<div class="helpful"> ';
             if ($this->capability['can_user_vote'] && $this->collection['enable_voting']) {
                 $html .= '<div class="vote likes-and-dislikes" data-comment-id="' . $comment['ID'] . '">';
-                $html .= 'Was this helpful to you ? ';
+                $html .= __('Was this helpful to you ?', SCR_DOMAIN) . ' ';
                 $html .= '<a class="like ' . $like_active . '"><i class="bordered thumbs up outline icon"></i><span class="likes">' . $likes . '</span></a>';
                 $html .= '<a class="dislike ' . $dislike_active . '"><i class="bordered thumbs down outline icon"></i><span class="dislikes">' . $dislikes . '</span></a>';
                 $html .= '</div>';
@@ -262,8 +262,8 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '<div class="field">';
             $html .= '<textarea rows="2" name="description" placeholder="Reply to @them ..." ></textarea>';
             $html .= '</div>';
-            $html .= '<div class="ui mini icon blue submit button"><i class="plus circle icon"></i> REPLY</div>';
-            $html .= '<div class="ui mini icon cancel button">Cancel</div>';
+            $html .= '<div class="ui mini icon blue submit button"><i class="plus circle icon"></i> ' . __('REPLY', SCR_DOMAIN) . '</div>';
+            $html .= '<div class="ui mini icon cancel button">' . __('Cancel', SCR_DOMAIN) . '</div>';
             $html .= '</form>';
 
             return $html;

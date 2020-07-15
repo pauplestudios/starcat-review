@@ -144,17 +144,17 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
 
             $html .= '<div class="inline field">';
             // $html .= '<label>Review Title</label>';
-            $html .= '<input type="text" name="name" placeholder="Name" value="' . $name . '"/>';
+            $html .= '<input type="text" name="name" placeholder="' . __('Name', SCR_DOMAIN) . '" value="' . $name . '"/>';
             $html .= '</div>';
 
             $html .= '<div class="inline field">';
             // $html .= '<label>Review Title</label>';
-            $html .= '<input type="text" name="email" placeholder="Email" value="' . $email . '"/>';
+            $html .= '<input type="text" name="email" placeholder="' . __('Email', SCR_DOMAIN) . '" value="' . $email . '"/>';
             $html .= '</div>';
 
             $html .= '<div class="inline field">';
             // $html .= '<label>Review Title</label>';
-            $html .= '<input type="text" name="website" placeholder="Website" value="' . $website . '"/>';
+            $html .= '<input type="text" name="website" placeholder="' . __('Website', SCR_DOMAIN) . '" value="' . $website . '"/>';
             $html .= '</div>';
 
             // error_log('html: ' . $html);
