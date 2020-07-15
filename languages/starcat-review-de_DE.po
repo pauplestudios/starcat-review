@@ -1,238 +1,243 @@
-#. User Reviews List
+msgid ""
+msgstr ""
+"Project-Id-Version: Starcat Review\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-07-15 08:22+0000\n"
+"PO-Revision-Date: 2020-07-15 08:25+0000\n"
+"Last-Translator: Santhosh\n"
+"Language-Team: Deutsch\n"
+"Language: de-DE\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.4.0; wp-5.4.2"
 
+#. User Reviews List
 msgid "Reply to"
-msgstr "Reply to" 
+msgstr "Antwort an"
 
 msgid "REPLY"
-msgstr "REPLY" 
+msgstr "ANTWORTEN"
 
 msgid "Cancel"
-msgstr "Cancel" 
+msgstr "Stornieren"
 
 msgid "Was this helpful to you ?"
-msgstr "Was this helpful to you ?" 
+msgstr "War das hilfreich für dich?"
 
 msgid "of"
-msgstr "of" 
+msgstr "von"
 
 msgid "people found this review helpful"
-msgstr "people found this review helpful" 
-
+msgstr "Leute fanden diese Bewertung hilfreich"
 
 #. User Reviews List Controlls
 #. User Review Form
 #. Summary
-
 msgid "Author Rating"
-msgstr "Author Rating" 
+msgstr "Autorenbewertung"
 
 #. Dashboard Settings
 msgid "General Settings"
-msgstr "General Settings" 
+msgstr "Allgemeine Einstellungen"
 
 msgid "Main Page"
-msgstr "Main Page" 
+msgstr "Hauptseite"
 
 #. Dashboard SCR Menu and CPT SCRs Section
-
 msgid "SCR"
-msgstr "SCR" 
+msgstr ""
 
 msgid "SCRs"
-msgstr "SCRs" 
+msgstr ""
 
 msgid "All SCRs"
-msgstr "All SCRs" 
+msgstr ""
 
 msgid "Add New SCR"
-msgstr "Add New SCR" 
+msgstr ""
 
 msgid "Add New"
-msgstr "Add New" 
+msgstr ""
 
 msgid "New SCR"
-msgstr "New SCR" 
+msgstr ""
 
 msgid "Edit SCR"
-msgstr "Edit SCR" 
+msgstr ""
 
 msgid "Add SCR"
-msgstr "Add SCR" 
+msgstr ""
 
 msgid "Hide"
-msgstr "Hide" 
+msgstr ""
 
 msgid "View SCR"
-msgstr "View SCR" 
+msgstr ""
 
 msgid "SCR Category"
-msgstr "SCR Category" 
+msgstr ""
 
 msgid "Categories"
-msgstr "Categories" 
+msgstr ""
 
 msgid "KB Categories"
-msgstr "KB Categories" 
+msgstr ""
 
 msgid "Woo Products"
-msgstr "Woo Products" 
+msgstr ""
 
 msgid "All SCR Categories"
-msgstr "All SCR Categories" 
+msgstr ""
 
 msgid "SCR Categories"
-msgstr "SCR Categories" 
+msgstr ""
 
 msgid "SCR Tag"
-msgstr "SCR Tag" 
+msgstr ""
 
 msgid "Tags"
-msgstr "Tags" 
+msgstr ""
 
 msgid "All SCR Tags"
-msgstr "All SCR Tags" 
+msgstr ""
 
 msgid "SCR Tags"
-msgstr "SCR Tags" 
+msgstr ""
 
 msgid "SCR Settings"
-msgstr "SCR Settings" 
+msgstr ""
 
 #. General Tab
-
 msgid "General"
-msgstr "General" 
+msgstr ""
 
 msgid "Title"
-msgstr "Title" 
+msgstr ""
 
 msgid "SCR Title"
-msgstr "SCR Title" 
+msgstr ""
 
 msgid "Show Search"
-msgstr "Show Search" 
+msgstr ""
 
 msgid "Show Search in SCR"
-msgstr "Show Search in SCR" 
+msgstr ""
 
 msgid "You can search through all SCR items"
-msgstr "You can search through all SCR items" 
+msgstr ""
 
 msgid "Search Placeholder"
-msgstr "Search Placeholder" 
+msgstr ""
 
 msgid "Search Placeholder text"
-msgstr "Search Placeholder text" 
+msgstr ""
 
 msgid "SCR Search Placeholder text"
-msgstr "SCR Search Placeholder text" 
+msgstr ""
 
 msgid "Toggle"
-msgstr "Toggle" 
+msgstr ""
 
 msgid "Toggle Open / closed Previous Item"
-msgstr "Toggle Open / closed Previous Item" 
+msgstr ""
 
 msgid "Open First SCR Item"
-msgstr "Open First SCR Item" 
+msgstr ""
 
 msgid "First item open by default"
-msgstr "First item open by default" 
+msgstr ""
 
 msgid "Sort By"
-msgstr "Sort By" 
+msgstr ""
 
 msgid "Publish Date"
-msgstr "Publish Date" 
+msgstr ""
 
 msgid "Updated Date"
-msgstr "Updated Date" 
+msgstr ""
 
 msgid "Alphabetical"
-msgstr "Alphabetical" 
+msgstr ""
 
 msgid "Order"
-msgstr "Order" 
+msgstr ""
 
 msgid "Ascending"
-msgstr "Ascending" 
+msgstr ""
 
 msgid "Descending"
-msgstr "Descending" 
+msgstr ""
 
 msgid "Limit"
-msgstr "Limit" 
+msgstr ""
 
 msgid "Limit ( number of items )"
-msgstr "Limit ( number of items )" 
+msgstr ""
 
 msgid "Limit of the SCR items"
-msgstr "Limit of the SCR items" 
-
+msgstr ""
 
 #. Style Tab
-
 msgid "Style"
-msgstr "Style" 
+msgstr ""
 
 msgid "Theme"
-msgstr "Theme" 
+msgstr ""
 
 msgid "Light"
-msgstr "Light" 
+msgstr ""
 
 msgid "Dark"
-msgstr "Dark" 
+msgstr ""
 
 msgid "Select Theme of SCR Layout Section"
-msgstr "Select Theme of SCR Layout Section" 
+msgstr ""
 
 #. Integrations Tab
-
 msgid "Integrations"
-msgstr "Integrations" 
+msgstr ""
 
 #. KB Tab
-
 msgid "Enable SCR in Helpie KB"
-msgstr "Enable SCR in Helpie KB" 
+msgstr ""
 
 msgid "Show SCR In Helpie KB Category Page"
-msgstr "Show SCR In Helpie KB Category Page" 
+msgstr ""
 
 msgid "Where to Show SCR in Helpie KB Category Page"
-msgstr "Where to Show SCR in Helpie KB Category Page" 
+msgstr ""
 
 msgid "Content"
-msgstr "Content" 
+msgstr ""
 
 msgid "Before Content"
-msgstr "Before Content" 
+msgstr ""
 
 msgid "After Content"
-msgstr "After Content" 
+msgstr ""
 
 msgid "Select show scr before or after content in kb category page"
-msgstr "Select show scr before or after content in kb category page" 
+msgstr ""
 
 #. WooCommerce Tab
-
 msgid "Show SCR in WooCommerce"
-msgstr "Show SCR in WooCommerce" 
+msgstr ""
 
 msgid "Show SCR In WooCommerce product tab"
-msgstr "Show SCR In WooCommerce product tab" 
+msgstr ""
 
 msgid "Tab Title"
-msgstr "Tab Title" 
+msgstr ""
 
-#.Elementor Widget
-
+#. Elementor Widget
 msgid "Single Item"
-msgstr "Single Item" 
+msgstr ""
 
 msgid "Single Item - Header"
-msgstr "Single Item - Header" 
+msgstr ""
 
 msgid "Single Item - Body"
-msgstr "Single Item - Body" 
+msgstr ""

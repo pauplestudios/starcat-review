@@ -4,6 +4,9 @@ namespace StarcatReview\Includes;
 
 use \StarcatReview\Includes\Settings\SCR_Getter;
 
+use \StarcatReview\Includes\Translations as Translations;
+
+
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -719,7 +722,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 $prefix,
                 array(
                     'id' => 'mainpage_settings',
-                    'title' => 'Main Page ',
+                    'title' => Translations::getStrings('MainPage'),
                     'icon' => 'fa fa-home',
                     'fields' => array(
 
@@ -897,7 +900,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 array(
 
                     'id' => 'general_settings',
-                    'title' => __('General Settings', SCR_DOMAIN),
+                    'title' => Translations::getStrings('GeneralSettings'),
                     'icon' => 'fa fa-cogs',
                     'fields' => array(
 
