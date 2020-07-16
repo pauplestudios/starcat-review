@@ -339,21 +339,64 @@ msgstr "Author and User both"
 msgid "Combined Rating"
 msgstr "Combined Rating" 
 
-msgid "AT"
-msgstr "AT" 
+#. User Reviews
 
-msgid "AT"
-msgstr "AT" 
+msgid "Who Can Review"
+msgstr "Who Can Review" 
 
-msgid "AT"
-msgstr "AT" 
+msgid "Selecting Everyone will let even Non Logged-in Users add reviews"
+msgstr "Selecting Everyone will let even Non Logged-in Users add reviews" 
 
-msgid "AT"
-msgstr "AT" 
+msgid "Logged In Users"
+msgstr "Logged In Users" 
 
-msgid "AT"
-msgstr "AT" 
+msgid "Everyone"
+msgstr "Everyone" 
 
+msgid "Allow Same User Can leave More than One Review"
+msgstr "Allow Same User Can leave More than One Review" 
+
+msgid "Allow Same user to leave more than one review on a single post"
+msgstr "Allow Same user to leave more than one review on a single post" 
+
+msgid "Show User Reviews List Title"
+msgstr "Show User Reviews List Title" 
+
+msgid "User Reviews List Title"
+msgstr "User Reviews List Title" 
+
+msgid "Voting"
+msgstr "Voting" 
+
+msgid "User Review Form"
+msgstr "User Review Form" 
+
+msgid "Show Form Title"
+msgstr "Show Form Title" 
+
+msgid "Form Title"
+msgstr "Form Title" 
+
+msgid "Show Title"
+msgstr "Show Title" 
+
+msgid "Show Stat"
+msgstr "Show Stat" 
+
+msgid "User Review Rating options are based on stats option from general settings section"
+msgstr "User Review Rating options are based on stats option from general settings section" 
+
+msgid "Show reCAPTCHA (v2 checkbox)"
+msgstr "Show reCAPTCHA (v2 checkbox)" 
+
+msgid "reCAPTCHA Secret Key"
+msgstr "reCAPTCHA Secret Key" 
+
+msgid "reCAPTCHA Site Key"
+msgstr "reCAPTCHA Site Key" 
+
+msgid "Register for reCAPTCHA v2 at %s to get your site key and secret key. Make sure to add your domain name in the settings at the reCAPTCHA website. Read More at %s. %s reCAPTCHA v3 will not work, just v2. v3 will be added soon."
+msgstr "Register for reCAPTCHA v2 at %s to get your site key and secret key. Make sure to add your domain name in the settings at the reCAPTCHA website. Read More at %s. %s reCAPTCHA v3 will not work, just v2. v3 will be added soon."
 
 #.Elementor Widget
 

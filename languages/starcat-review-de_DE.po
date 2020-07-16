@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Starcat Review\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-16 12:49+0000\n"
-"PO-Revision-Date: 2020-07-16 12:53+0000\n"
+"POT-Creation-Date: 2020-07-16 13:28+0000\n"
+"PO-Revision-Date: 2020-07-16 13:32+0000\n"
 "Last-Translator: Santhosh\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -380,6 +380,80 @@ msgstr "Autor und Benutzer beide"
 
 msgid "Combined Rating"
 msgstr "Kombinierte Bewertung"
+
+#. User Reviews
+msgid "Who Can Review"
+msgstr "Wer kann überprüfen"
+
+msgid "Selecting Everyone will let even Non Logged-in Users add reviews"
+msgstr ""
+"Wenn Sie Alle auswählen, können auch nicht angemeldete Benutzer Bewertungen "
+"hinzufügen"
+
+msgid "Logged In Users"
+msgstr "Angemeldete Benutzer"
+
+msgid "Everyone"
+msgstr "Jeder"
+
+msgid "Allow Same User Can leave More than One Review"
+msgstr "Derselbe Benutzer zulassen kann mehr als eine Bewertung abgeben"
+
+msgid "Allow Same user to leave more than one review on a single post"
+msgstr ""
+"Erlauben Sie demselben Benutzer, mehr als eine Bewertung für einen einzelnen "
+"Beitrag abzugeben"
+
+msgid "Show User Reviews List Title"
+msgstr "Titel der Liste der Benutzerbewertungen anzeigen"
+
+msgid "User Reviews List Title"
+msgstr "Titel der Liste der Benutzerbewertungen"
+
+msgid "Voting"
+msgstr "Wählen"
+
+msgid "User Review Form"
+msgstr "Benutzerüberprüfungsformular"
+
+msgid "Show Form Title"
+msgstr "Formulartitel anzeigen"
+
+msgid "Form Title"
+msgstr "Formulartitel"
+
+msgid "Show Title"
+msgstr "Titel anzeigen"
+
+msgid "Show Stat"
+msgstr "Statistiken anzeigen"
+
+msgid ""
+"User Review Rating options are based on stats option from general settings "
+"section"
+msgstr ""
+"Die Bewertungsoptionen für die Benutzerbewertung basieren auf der "
+"Statistikoption aus dem Abschnitt \"Allgemeine Einstellungen\""
+
+msgid "Show reCAPTCHA (v2 checkbox)"
+msgstr "ReCAPTCHA anzeigen (Kontrollkästchen v2)"
+
+msgid "reCAPTCHA Secret Key"
+msgstr "reCAPTCHA Geheimer Schlüssel"
+
+msgid "reCAPTCHA Site Key"
+msgstr "reCAPTCHA Site-Schlüssel"
+
+msgid ""
+"Register for reCAPTCHA v2 at %s to get your site key and secret key. Make "
+"sure to add your domain name in the settings at the reCAPTCHA website. Read "
+"More at %s. %s reCAPTCHA v3 will not work, just v2. v3 will be added soon."
+msgstr ""
+"Registrieren Sie sich bei %s für reCAPTCHA v2, um Ihren Site-Schlüssel und "
+"Ihren geheimen Schlüssel zu erhalten. Stellen Sie sicher, dass Sie Ihren "
+"Domainnamen in den Einstellungen auf der reCAPTCHA-Website hinzufügen. Lesen "
+"Sie mehr unter %s. %s reCAPTCHA v3 funktioniert nicht, nur v2. v3 wird bald "
+"hinzugefügt."
 
 #. Elementor Widget
 msgid "Single Item"

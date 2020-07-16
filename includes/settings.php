@@ -327,11 +327,11 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'id' => 'ur_who_can_review',
                             'type' => 'select',
-                            'desc' => 'Selecting Everyone will let even Non Logged-in Users add reviews',
-                            'title' => 'Who Can Review',
+                            'title' => __('Who Can Review', SCR_DOMAIN),
+                            'desc' => __('Selecting Everyone will let even Non Logged-in Users add reviews', SCR_DOMAIN),
                             'options' => array(
-                                'logged_in' => 'Logged In Users',
-                                'everyone' => 'Everyone',
+                                'logged_in' => __('Logged In Users', SCR_DOMAIN),
+                                'everyone' => __('Everyone', SCR_DOMAIN),
 
                             ),
                         ),
@@ -339,8 +339,8 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'id' => 'ur_allow_same_user_can_leave_multiple_reviews',
                             'type' => 'switcher',
-                            'desc' => 'Allow Same user to leave more than one review on a single post',
-                            'title' => 'Allow Same User Can leave More than One Review',
+                            'title' => __('Allow Same User Can leave More than One Review', SCR_DOMAIN),
+                            'desc' => __('Allow Same user to leave more than one review on a single post', SCR_DOMAIN),
                             'default' => false,
                         ),
 
@@ -368,7 +368,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
                         array(
                             'type' => 'subheading',
-                            'content' => 'User Review Form',
+                            'content' => __('User Review Form', SCR_DOMAIN),
                         ),
 
                         array(
@@ -381,7 +381,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'id' => 'ur_form_title',
                             'type' => 'text',
-                            'title' => 'Form Title',
+                            'title' => __('Form Title', SCR_DOMAIN),
                             'dependency' => array('ur_show_form_title', '==', 'true'),
                             'default' => 'Leave a Review',
                         ),
@@ -398,7 +398,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'type' => 'switcher',
                             'title' => __('Show Stat', SCR_DOMAIN),
                             'default' => true,
-                            'desc' => '<b>User Review Rating</b> options are based on stats option from general settings section',
+                            'desc' => __('User Review Rating options are based on stats option from general settings section', SCR_DOMAIN),
                         ),
 
                         array(
@@ -413,10 +413,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'type' => 'switcher',
                             'title' => __('Show reCAPTCHA (v2 checkbox)', SCR_DOMAIN),
                             'default' => false,
-                            'desc' => 'Register for reCAPTCHA v2 at <a href="https://www.google.com/recaptcha">https://www.google.com/recaptcha</a> to get your site key and secret key.' .
-                            ' Make sure to add your domain name in the settings at the reCAPTCHA website. ' .
-                            'Read More at <a href="https://paupledocs.gitbook.io/starcat-documentation/">Starcat Reviews - Docs</a>.' .
-                            ' Note: reCAPTCHA v3 will not work, just v2. v3 will be added soon.',
+                            'desc' => sprintf(__('Register for reCAPTCHA v2 at %s to get your site key and secret key. Make sure to add your domain name in the settings at the reCAPTCHA website. Read More at %s. %s reCAPTCHA v3 will not work, just v2. v3 will be added soon.', SCR_DOMAIN), '<a href="https://www.google.com/recaptcha">https://www.google.com/recaptcha</a>', '<a href="https://paupledocs.gitbook.io/starcat-documentation/">Starcat Reviews - Docs</a>', '<strong>' . __('Note', SCR_DOMAIN) . '</strong> : '),
                         ),
 
                         array(
