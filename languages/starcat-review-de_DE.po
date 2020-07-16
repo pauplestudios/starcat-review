@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Starcat Review\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-16 19:44+0000\n"
-"PO-Revision-Date: 2020-07-16 19:46+0000\n"
+"POT-Creation-Date: 2020-07-16 20:20+0000\n"
+"PO-Revision-Date: 2020-07-16 20:22+0000\n"
 "Last-Translator: Santhosh\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -121,6 +121,20 @@ msgstr "%d von %d personen fand diese bewertung hilfreich"
 
 msgid "AT"
 msgstr "Um"
+
+#. CPT
+msgid "See More"
+msgstr "Mehr sehen"
+
+msgid "Topic"
+msgstr "Thema"
+
+#. Photo Reviews
+msgid "All User Review Images"
+msgstr "Alle Nutzerbewertung Bilder"
+
+msgid "Back to Gallery"
+msgstr "Zurück zur Galerie"
 
 #. Dashboard Settings
 msgid "Starcat Settings"

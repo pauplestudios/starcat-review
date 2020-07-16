@@ -108,6 +108,22 @@ msgstr "%d of %d people found this review helpful"
 msgid "AT"
 msgstr "AT" 
 
+#. CPT 
+
+msgid "See More"
+msgstr "See More" 
+
+msgid "Topic"
+msgstr "Topic" 
+
+#. Photo Reviews
+
+msgid "All User Review Images"
+msgstr "All User Review Images" 
+
+msgid "Back to Gallery"
+msgstr "Back to Gallery" 
+
 #. Dashboard Settings
 
 msgid "Starcat Settings"
