@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Starcat Review\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-16 19:09+0000\n"
-"PO-Revision-Date: 2020-07-16 19:10+0000\n"
+"POT-Creation-Date: 2020-07-16 19:44+0000\n"
+"PO-Revision-Date: 2020-07-16 19:46+0000\n"
 "Last-Translator: Santhosh\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -671,7 +671,27 @@ msgid "New Review Tag Name"
 msgstr "Neuer Review-Tag-Name"
 
 #. Post Meta's -- Dashboard
-#. User Reviews -- Dashboard
+msgid "Features"
+msgstr "Eigenschaften"
+
+msgid "Repeater"
+msgstr "Verstärker"
+
+msgid "Stat Name"
+msgstr "Stat Name"
+
+msgid "Item Details"
+msgstr "Artikeldetails"
+
+msgid "Rich Snippets"
+msgstr "Reiche Schnipsel"
+
+msgid "Author Review Stats List"
+msgstr "Liste der Autoren-Überprüfungsstatistiken"
+
+msgid "Rating 0 - 100"
+msgstr "Bewertung 0 - 100"
+
 #. Elementor Widget
 msgid "Single Item"
 msgstr "Einzelexemplar"

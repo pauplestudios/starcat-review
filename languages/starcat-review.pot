@@ -604,6 +604,27 @@ msgstr "Review Tag"
 
 #. Post Meta's -- Dashboard 
 
+msgid "Features"
+msgstr "Features" 
+
+msgid "Repeater"
+msgstr "Repeater" 
+
+msgid "Stat Name"
+msgstr "Stat Name" 
+
+msgid "Item Details"
+msgstr "Item Details" 
+
+msgid "Rich Snippets"
+msgstr "Rich Snippets" 
+
+msgid "Author Review Stats List"
+msgstr "Author Review Stats List" 
+
+msgid "Rating 0 - 100"
+msgstr "Rating 0 - 100" 
+
 #.Elementor Widget
 
 msgid "Single Item"

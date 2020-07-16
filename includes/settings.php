@@ -1149,7 +1149,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             $prefix = SCR_POST_META;
 
             \CSF::createMetabox($prefix, array(
-                'title' => 'Starcat Review',
+                'title' => __('Starcat Review', SCR_DOMAIN),
                 'post_type' => $locations,
                 'show_restore' => true,
                 'theme' => 'light',
@@ -1170,25 +1170,25 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         {
             \CSF::createSection($prefix, array(
                 'parent' => $parent,
-                'title' => 'Stats',
+                'title' => __('Stats', SCR_DOMAIN),
                 'icon' => 'fa fa-eye',
                 'fields' => array(
 
                     array(
                         'id' => 'stats',
                         'type' => 'fieldset',
-                        'title' => 'Features',
+                        'title' => __('Features', SCR_DOMAIN),
                         'fields' => array(
                             array(
                                 'id' => 'stats-list',
                                 'type' => 'repeater',
-                                'title' => 'Repeater',
+                                'title' => __('Repeater', SCR_DOMAIN),
                                 'fields' => array(
 
                                     array(
                                         'id' => 'stat_name',
                                         'type' => 'text',
-                                        'title' => 'Stat Name',
+                                        'title' => __('Stat Name', SCR_DOMAIN),
                                     ),
                                 ),
                             ),
@@ -1207,7 +1207,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 $prefix,
                 array(
                     'parent' => $parent,
-                    'title' => 'Item Details',
+                    'title' => __('Item Details', SCR_DOMAIN),
                     'icon' => 'fa fa-eye',
                     'fields' => $details_fields,
                 )
@@ -1222,7 +1222,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 $prefix,
                 array(
                     'parent' => $parent,
-                    'title' => 'Rich Snippets',
+                    'title' => __('Rich Snippets', SCR_DOMAIN),
                     'icon' => 'fa fa-eye',
                     'fields' => $fields,
                 )
@@ -1236,7 +1236,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
             \CSF::createSection($prefix, array(
                 'parent' => $parent,
-                'title' => 'Pros',
+                'title' => __('Pros', SCR_DOMAIN),
                 'icon' => 'fa fa-thumbs-up',
                 'dependency' => array('enable-pros-cons', '==', 'true', 'true'),
                 'fields' => $fields,
@@ -1250,7 +1250,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
             \CSF::createSection($prefix, array(
                 'parent' => $parent,
-                'title' => 'Cons',
+                'title' => __('Cons', SCR_DOMAIN),
                 'icon' => 'fa fa-thumbs-down',
                 'fields' => $fields,
             ));
@@ -1263,7 +1263,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
             \CSF::createSection($prefix, array(
                 'id' => 'stat',
-                'title' => 'Stats',
+                'title' => __('Stats', SCR_DOMAIN),
                 'icon' => 'fa fa-th-list',
                 'fields' => $list_of_stat_fields,
             ));
@@ -1292,7 +1292,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             if (isset($stats) && !empty($stats)) {
                 $stats_list[] = array(
                     'type' => 'submessage',
-                    'content' => 'Author Review Stats List',
+                    'content' => __('Author Review Stats List', SCR_DOMAIN),
                 );
                 $count = 0;
                 foreach ($stats as $stat) {
@@ -1309,7 +1309,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             array(
                                 'id' => 'stat_name',
                                 'type' => 'text',
-                                'title' => 'Stat Name',
+                                'title' => __('Stat Name', SCR_DOMAIN),
                                 'attributes' => array(
                                     'readonly' => 'readonly',
                                 ),
@@ -1319,7 +1319,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             array(
                                 'id' => 'rating',
                                 'type' => 'slider',
-                                'title' => 'Rating',
+                                'title' => __('Rating', SCR_DOMAIN),
                                 'min' => 0,
                                 'max' => 100,
                                 'step' => 1,
@@ -1330,7 +1330,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             array(
                                 'type' => 'submessage',
                                 'style' => 'success',
-                                'content' => 'Rating 0 - 100 ',
+                                'content' => __('Rating 0 - 100', SCR_DOMAIN),
                             ),
                         ),
                     );
