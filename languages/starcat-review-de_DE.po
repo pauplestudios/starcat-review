@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Starcat Review\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-15 20:29+0000\n"
-"PO-Revision-Date: 2020-07-15 20:30+0000\n"
+"POT-Creation-Date: 2020-07-16 05:00+0000\n"
+"PO-Revision-Date: 2020-07-16 05:02+0000\n"
 "Last-Translator: Santhosh\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -63,7 +63,14 @@ msgstr "Stornieren"
 
 #. Summary
 msgid "Author Rating"
-msgstr "Autorenbewertung"
+msgstr "Autoren Bewertung"
+
+#| msgid "Users Rating ( %d )"
+msgid "Users Rating (%d)"
+msgstr "Benutzer Bewertung (%d)"
+
+msgid "Pros & Cons"
+msgstr "Profis und Nachteile"
 
 #. User Reviews List Controlls
 #. User Reviews List

@@ -51,6 +51,12 @@ msgstr "Cancel"
 msgid "Author Rating"
 msgstr "Author Rating" 
 
+msgid "Users Rating (%d)"
+msgstr "Users Rating (%d)" 
+
+msgid "Pros & Cons"
+msgstr "Pros & Cons"
+
 #. User Reviews List Controlls
 #. User Reviews List
 
