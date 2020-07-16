@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Starcat Review\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-16 13:28+0000\n"
-"PO-Revision-Date: 2020-07-16 13:32+0000\n"
+"POT-Creation-Date: 2020-07-16 14:02+0000\n"
+"PO-Revision-Date: 2020-07-16 14:08+0000\n"
 "Last-Translator: Santhosh\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -454,6 +454,98 @@ msgstr ""
 "Domainnamen in den Einstellungen auf der reCAPTCHA-Website hinzufügen. Lesen "
 "Sie mehr unter %s. %s reCAPTCHA v3 funktioniert nicht, nur v2. v3 wird bald "
 "hinzugefügt."
+
+#. Photo Reviews
+msgid "Enable Photo Reviews"
+msgstr "Aktivieren Sie Fotobewertungen"
+
+msgid "Photo required"
+msgstr "Foto erforderlich"
+
+msgid "Make this a required field"
+msgstr "Machen Sie dies zu einem Pflichtfeld"
+
+msgid "Maximum photo size"
+msgstr "Maximale Fotogröße"
+
+msgid "kB (Max 307200kB)"
+msgstr "kB (max. 307200 kB)"
+
+msgid "Maximum photo quantity"
+msgstr "Maximale Fotomenge"
+
+msgid "Maximum value: 20"
+msgstr "Maximalwert: 20"
+
+#. WooCommerce Notification
+msgid ""
+"Woocommerce Notification Settings to notify users after they complete their "
+"orders"
+msgstr ""
+"Woocommerce-Benachrichtigungseinstellungen, um Benutzer zu benachrichtigen, "
+"nachdem sie ihre Bestellungen abgeschlossen haben"
+
+msgid "Enter From Address"
+msgstr "Von Adresse eingeben"
+
+msgid ""
+"Make sure this is a valid email address. Invalid emails maybe marked as spam"
+msgstr ""
+"Stellen Sie sicher, dass dies eine gültige E-Mail-Adresse ist. Ungültige E-"
+"Mails können als Spam markiert werden"
+
+msgid "Subject"
+msgstr "Gegenstand"
+
+msgid "Subject of the Email"
+msgstr "Betreff der E-Mail"
+
+msgid ""
+"Use {{sitename}} to use the name of your website dynamically. This improves "
+"your anti-spam score"
+msgstr ""
+"Verwenden Sie {{sitename}}, um den Namen Ihrer Website dynamisch zu "
+"verwenden. Dies verbessert Ihren Anti-Spam-Score"
+
+msgid "Body of the Email"
+msgstr "Text der E-Mail"
+
+msgid "Use {{product_review_link}} to add links to purchased product pages"
+msgstr ""
+"Verwenden Sie {{product_review_link}}, um Links zu gekauften Produktseiten "
+"hinzuzufügen"
+
+msgid "Disclaimer"
+msgstr "Haftungsausschluss"
+
+msgid "Shown at the footer of the email"
+msgstr "Wird in der Fußzeile der E-Mail angezeigt"
+
+msgid "Notification Time Schedule"
+msgstr "Benachrichtigungszeitplan"
+
+msgid ""
+"%s Hours/Days from the time of order completion. You can create multiple "
+"remainders (example: 24 hours, 3 days, 7 days from purchase)"
+msgstr ""
+"%s Stunden / Tage ab dem Zeitpunkt des Auftragsabschlusses. Sie können "
+"mehrere Erinnerungen erstellen (Beispiel: 24 Stunden, 3 Tage, 7 Tage nach "
+"dem Kauf)."
+
+msgid "Notification Schedule"
+msgstr "Benachrichtigungsplan"
+
+msgid "Time Value"
+msgstr "Zeitwert"
+
+msgid "Time Unit"
+msgstr "Zeiteinheit"
+
+msgid "Days"
+msgstr "Tage"
+
+msgid "Hours"
+msgstr "Std"
 
 #. Elementor Widget
 msgid "Single Item"

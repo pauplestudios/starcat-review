@@ -398,6 +398,82 @@ msgstr "reCAPTCHA Site Key"
 msgid "Register for reCAPTCHA v2 at %s to get your site key and secret key. Make sure to add your domain name in the settings at the reCAPTCHA website. Read More at %s. %s reCAPTCHA v3 will not work, just v2. v3 will be added soon."
 msgstr "Register for reCAPTCHA v2 at %s to get your site key and secret key. Make sure to add your domain name in the settings at the reCAPTCHA website. Read More at %s. %s reCAPTCHA v3 will not work, just v2. v3 will be added soon."
 
+#. Photo Reviews
+
+msgid "Enable Photo Reviews"
+msgstr "Enable Photo Reviews" 
+
+msgid "Photo required"
+msgstr "Photo required" 
+
+msgid "Make this a required field"
+msgstr "Make this a required field" 
+
+msgid "Maximum photo size"
+msgstr "Maximum photo size" 
+
+msgid "kB (Max 307200kB)"
+msgstr "kB (Max 307200kB)" 
+
+msgid "Maximum photo quantity"
+msgstr "Maximum photo quantity" 
+
+msgid "Maximum value: 20"
+msgstr "Maximum value: 20" 
+
+#. WooCommerce Notification
+
+msgid "Woocommerce Notification Settings to notify users after they complete their orders"
+msgstr "Woocommerce Notification Settings to notify users after they complete their orders" 
+
+msgid "Enter From Address"
+msgstr "Enter From Address" 
+
+msgid "Make sure this is a valid email address. Invalid emails maybe marked as spam"
+msgstr "Make sure this is a valid email address. Invalid emails maybe marked as spam" 
+
+msgid "Subject"
+msgstr "Subject" 
+
+msgid "Subject of the Email"
+msgstr "Subject of the Email" 
+
+msgid "Use {{sitename}} to use the name of your website dynamically. This improves your anti-spam score"
+msgstr "Use {{sitename}} to use the name of your website dynamically. This improves your anti-spam score" 
+
+msgid "Body of the Email"
+msgstr "Body of the Email" 
+
+msgid "Use {{product_review_link}} to add links to purchased product pages"
+msgstr "Use {{product_review_link}} to add links to purchased product pages" 
+
+msgid "Disclaimer"
+msgstr "Disclaimer" 
+
+msgid "Shown at the footer of the email"
+msgstr "Shown at the footer of the email" 
+
+msgid "Notification Time Schedule"
+msgstr "Notification Time Schedule" 
+
+msgid "%s Hours/Days from the time of order completion. You can create multiple remainders (example: 24 hours, 3 days, 7 days from purchase)"
+msgstr "%s Hours/Days from the time of order completion. You can create multiple remainders (example: 24 hours, 3 days, 7 days from purchase)" 
+
+msgid "Notification Schedule"
+msgstr "Notification Schedule" 
+
+msgid "Time Value"
+msgstr "Time Value" 
+
+msgid "Time Unit"
+msgstr "Time Unit" 
+
+msgid "Days"
+msgstr "Days" 
+
+msgid "Hours"
+msgstr "Hours" 
+
 #.Elementor Widget
 
 msgid "Single Item"

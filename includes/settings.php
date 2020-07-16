@@ -80,9 +80,9 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                     $this->photo_reviews_settings($prefix);
                 }
 
-                if (SCR_Getter::addons_available_condition()['wn']) {
-                    $this->notification_settings($prefix);
-                }
+                // if (SCR_Getter::addons_available_condition()['wn']) {
+                $this->notification_settings($prefix);
+                // }
 
                 if (SCR_Getter::addons_available_condition()['ct']) {
                     $this->ct_settings($prefix);
@@ -130,59 +130,60 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                     'fields' => array(
                         array(
                             'type' => 'heading',
-                            'content' => 'Woocommerce Notification Settings to notify users after they complete their orders',
+                            'content' => __('Woocommerce Notification Settings to notify users after they complete their orders', SCR_DOMAIN),
                         ),
                         array(
                             'id' => 'ns_from_address', // ns: notification_settings
                             'type' => 'text',
-                            'title' => 'Enter From Address',
+                            'title' => __('Enter From Address', SCR_DOMAIN),
                             'placeholder' => $admin_email,
                             'default' => $admin_email,
-                            'desc' => 'Make sure this is a valid email address. Invalid emails maybe marked as spam',
+                            'desc' => __('Make sure this is a valid email address. Invalid emails maybe marked as spam', SCR_DOMAIN),
                         ),
                         array(
                             'id' => 'ns_subject', // ns: notification_settings
                             'type' => 'text',
-                            'title' => 'Subject',
-                            'placeholder' => 'Subject of the Email',
+                            'title' => __('Subject', SCR_DOMAIN),
+                            'placeholder' => __('Subject of the Email', SCR_DOMAIN),
                             'default' => 'Thank you for Purchasing from {{Sitename}}',
-                            'desc' => 'Use {{sitename}} to use the name of your website dynamically. This improves your anti-spam score.',
+                            'desc' => __('Use {{sitename}} to use the name of your website dynamically. This improves your anti-spam score', SCR_DOMAIN),
                         ),
                         array(
                             'id' => 'ns_content', // ns: notification_settings
                             'type' => 'textarea',
-                            'title' => 'Body of the Email',
-                            'placeholder' => 'Body of the email',
+                            'title' => __('Body of the Email', SCR_DOMAIN),
+                            'placeholder' => __('Body of the email', SCR_DOMAIN),
                             'default' => 'Thank you for purchasing from Starcat Dev. If you liked your product, please leave a review: {{product_review_link}}',
-                            'desc' => 'Use {{product_review_link}} to add links to purchased product pages.',
+                            'desc' => __('Use {{product_review_link}} to add links to purchased product pages', SCR_DOMAIN),
                         ),
                         array(
                             'id' => 'ns_disclaimer', // ns: notification_settings
                             'type' => 'textarea',
-                            'title' => 'Disclaimer',
-                            'placeholder' => 'Disclaimers',
-                            'desc' => '<strong>Shown at the footer of the email</strong>',
+                            'title' => __('Disclaimer', SCR_DOMAIN),
+                            'placeholder' => __('Disclaimer', SCR_DOMAIN),
+                            'desc' => '<strong>' . __('Shown at the footer of the email', SCR_DOMAIN) . '</strong>',
                         ),
                         array(
                             'id' => 'ns_time_schedule', // ns: notification_settings
                             'type' => 'repeater',
-                            'title' => 'Notification Time Schedule',
-                            'desc' => '<strong> Notification Schedule: Hours/Days from the time of order completion. You can create multiple remainders (example: 24 hours, 3 days, 7 days from purchase)',
+                            'title' => __('Notification Time Schedule', SCR_DOMAIN),
+                            'desc' => sprintf(__('%s Hours/Days from the time of order completion. You can create multiple remainders (example: 24 hours, 3 days, 7 days from purchase)', SCR_DOMAIN), '<strong>' . __('Notification Schedule', SCR_DOMAIN) . '</strong> :'),
                             'fields' => array(
 
                                 array(
                                     'id' => 'value',
                                     'type' => 'text',
-                                    'title' => 'Time Value',
+                                    'title' => __('Time Value', SCR_DOMAIN),
                                 ),
                                 array(
                                     'id' => 'unit',
                                     'type' => 'select',
-                                    'title' => 'Time Unit',
-                                    'placeholder' => 'Select an option',
+                                    'title' => __('Time Unit', SCR_DOMAIN),
+                                    'chosen' => true,
+                                    'placeholder' => __('Select an option', SCR_DOMAIN),
                                     'options' => array(
-                                        'hours' => 'Hours',
-                                        'days' => 'Days',
+                                        'hours' => __('Hours', SCR_DOMAIN),
+                                        'days' => __('Days', SCR_DOMAIN),
                                     ),
                                     'default' => 'days',
                                 ),
@@ -491,7 +492,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'type' => 'switcher',
                             'title' => __('Photo required', SCR_DOMAIN),
                             'default' => true,
-                            'desc' => 'Make this a required field',
+                            'desc' => __('Make this a required field', SCR_DOMAIN),
                             'dependency' => array('pr_enable', '==', 'true'),
                         ),
 
@@ -502,8 +503,8 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         //     'title' => __('Showing Photo Order', SCR_DOMAIN),
                         //     'placeholder' => __('Select an option', SCR_DOMAIN),
                         //     'options' => array(
-                        //         'newest' => 'Newest First',
-                        //         'oldest' => 'Oldest First',
+                        //         'newest' => __('Newest First', SCR_DOMAIN),
+                        //         'oldest' => __('Oldest First', SCR_DOMAIN),
                         //     ),
                         //     'default' => 'oldest',
                         //     'dependency' => array('pr_enable', '==', 'true'),
@@ -514,19 +515,19 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'type' => 'text',
                             'title' => __('Maximum photo size', SCR_DOMAIN),
                             'default' => 2000,
-                            'desc' => 'kB (Max 307200kB).',
+                            'desc' => __('kB (Max 307200kB)', SCR_DOMAIN),
                             'dependency' => array('pr_enable', '==', 'true'),
                         ),
                         array(
                             'id' => 'pr_photo_quantity',
-                            'title' => 'Maximum photo quantity',
+                            'title' => __('Maximum photo quantity', SCR_DOMAIN),
                             'type' => 'slider',
                             'min' => 1,
                             'max' => 20,
                             'step' => 1,
                             'unit' => '#',
                             'default' => 5,
-                            'desc' => 'Maximum value: 20',
+                            'desc' => __('Maximum value: 20', SCR_DOMAIN),
                             'dependency' => array('pr_enable', '==', 'true'),
                         ),
                     ),
