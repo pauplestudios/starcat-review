@@ -549,7 +549,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'type' => 'submessage',
                             // 'style'   => 'info',
-                            'content' => 'These settings are only for starcat-review post type.',
+                            'content' => __('These settings are only for starcat-review post type.', SCR_DOMAIN),
                         ),
                         array(
                             'type' => 'subheading',
@@ -565,13 +565,13 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                                 'full-width' => SCR_URL . '/includes/assets/img/templates/full-width.png',
                             ),
                             'default' => 'full-width',
-                            'desc' => "Layout Types for your Single Review Page. Left / Right Sidebar, No-sidebar.",
+                            'desc' => __('Layout Types for your Single Review Page. Left / Right Sidebar, No-sidebar.', SCR_DOMAIN),
                         ),
                         // A Submessage
                         array(
                             'type' => 'submessage',
                             'style' => 'success',
-                            'content' => 'You can add widgets to your sidebar from Appearance -> Widgets',
+                            'content' => __('You can add widgets to your sidebar from Appearance -> Widgets', SCR_DOMAIN),
                         ),
 
                         array(
@@ -588,10 +588,10 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'title' => __('Show Review', SCR_DOMAIN),
                             'placeholder' => __('Select an option', SCR_DOMAIN),
                             'options' => array(
-                                'author' => 'Author Only',
-                                'user' => 'User Only',
-                                'both' => 'Author and User both',
-                                'combined' => 'Combined Rating',
+                                'author' => __('Author Only', SCR_DOMAIN),
+                                'user' => __('User Only', SCR_DOMAIN),
+                                'both' => __('Author and User both', SCR_DOMAIN),
+                                'combined' => __('Combined Rating', SCR_DOMAIN),
                             ),
                             'default' => 'combined',
                         ),
@@ -623,13 +623,13 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                                 'full-width' => SCR_URL . '/includes/assets/img/templates/full-width.png',
                             ),
                             'default' => 'full-width',
-                            'desc' => "Layout Types for your Review Categories Page. Left / Right Sidebar, No-sidebar",
+                            'desc' => __('Layout Types for your Review Categories Page. Left / Right Sidebar, No-sidebar', SCR_DOMAIN),
                         ),
                         // A Submessage
                         array(
                             'type' => 'submessage',
                             'style' => 'success',
-                            'content' => 'You can add widgets to your sidebar from Appearance -> Widgets',
+                            'content' => __('You can add widgets to your sidebar from Appearance -> Widgets', SCR_DOMAIN),
                         ),
                         array(
                             'id' => 'cp_controls',
@@ -640,7 +640,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'id' => 'cp_controls_subheading',
                             'type' => 'subheading',
-                            'content' => 'Controls',
+                            'content' => __('Controls', SCR_DOMAIN),
                             'dependency' => array('cp_controls', '==', 'true'),
                         ),
                         array(
@@ -668,7 +668,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'id' => 'cp_listing_options_subheading',
                             'type' => 'subheading',
-                            'content' => 'Listing Options',
+                            'content' => __('Listing Options', SCR_DOMAIN),
 
                         ),
 
@@ -685,10 +685,10 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'title' => __('Default Sort By', SCR_DOMAIN),
                             'placeholder' => __('Select a sortby option', SCR_DOMAIN),
                             'options' => array(
-                                'alphabetical_asc' => 'Alphabetical Ascending',
-                                'alphabetical_desc' => 'Alphabetical Descending',
-                                'recent' => 'Recent',
-                                'updated' => 'Recently Updated',
+                                'alphabetical_asc' => __('Alphabetical Ascending', SCR_DOMAIN),
+                                'alphabetical_desc' => __('Alphabetical Descending', SCR_DOMAIN),
+                                'recent' => __('Recent', SCR_DOMAIN),
+                                'updated' => __('Recently Updated', SCR_DOMAIN),
                                 // 'num_of_reviews' => 'Number of Reviews',
                             ),
                             'default' => 'recent',

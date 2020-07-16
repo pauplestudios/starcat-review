@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Starcat Review\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-16 12:27+0000\n"
-"PO-Revision-Date: 2020-07-16 12:27+0000\n"
+"POT-Creation-Date: 2020-07-16 12:49+0000\n"
+"PO-Revision-Date: 2020-07-16 12:53+0000\n"
 "Last-Translator: Santhosh\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Loco-Version: 2.4.0; wp-5.4.2"
 
 #. User Review Submit, Edit, Reply Form
-#. __(, SCR_DOMAIN)
+#. __('', SCR_DOMAIN)
 msgid "Name"
 msgstr "Name"
 
@@ -328,6 +328,58 @@ msgstr "Alphabetisch aufsteigend"
 
 msgid "Alphabetical Descending"
 msgstr "Alphabetisch absteigend"
+
+#. Category Page
+msgid ""
+"Layout Types for your Review Categories Page. Left / Right Sidebar, No-"
+"sidebar"
+msgstr ""
+"Layouttypen für Ihre Seite \"Überprüfungskategorien\". Linke / rechte "
+"Seitenleiste, keine Seitenleiste"
+
+msgid "Show Controls"
+msgstr "Steuerelemente anzeigen"
+
+msgid "Controls"
+msgstr "Kontrollen"
+
+msgid "Show Search"
+msgstr "Suche anzeigen"
+
+msgid "Show SortBy"
+msgstr "Suche Sortiere nach"
+
+msgid "Listing Options"
+msgstr "Listing-Optionen"
+
+msgid "Posts Per Page"
+msgstr "Beiträge pro Seite"
+
+#. Single Page
+msgid "These settings are only for starcat-review post type."
+msgstr ""
+"Diese Einstellungen gelten nur für den Beitragstyp \"StarCat-Überprüfungen\"."
+
+msgid ""
+"Layout Types for your Single Review Page. Left / Right Sidebar, No-sidebar."
+msgstr ""
+"Layouttypen für Ihre einzelne Überprüfungsseite. Linke / rechte Seitenleiste,"
+" keine Seitenleiste."
+
+msgid "Show Review"
+msgstr "Bewertungen anzeigen"
+
+msgid "Author Only"
+msgstr "Nur Autor"
+
+msgid "User Only"
+msgstr "Nur für Benutzer"
+
+msgid "Author and User both"
+msgstr "Autor und Benutzer beide"
+
+msgid "Combined Rating"
+msgstr "Kombinierte Bewertung"
 
 #. Elementor Widget
 msgid "Single Item"

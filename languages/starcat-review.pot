@@ -1,5 +1,5 @@
 #. User Review Submit, Edit, Reply Form
-#. __(, SCR_DOMAIN)
+#. __('', SCR_DOMAIN)
 
 msgid "Name"
 msgstr "Name"
@@ -292,6 +292,55 @@ msgstr "Alphabetical Ascending"
 
 msgid "Alphabetical Descending"
 msgstr "Alphabetical Descending" 
+
+#. Category Page
+
+msgid "Layout Types for your Review Categories Page. Left / Right Sidebar, No-sidebar"
+msgstr "Layout Types for your Review Categories Page. Left / Right Sidebar, No-sidebar"  
+
+msgid "Show Controls"
+msgstr "Show Controls" 
+
+msgid "Controls"
+msgstr "Controls" 
+
+msgid "Show Search"
+msgstr "Show Search" 
+
+msgid "Show SortBy"
+msgstr "Show SortBy" 
+
+msgid "Listing Options"
+msgstr "Listing Options" 
+
+msgid "Posts Per Page"
+msgstr "Posts Per Page" 
+
+#. Single Page
+
+msgid "These settings are only for starcat-review post type."
+msgstr "These settings are only for starcat-review post type." 
+
+msgid "Layout Types for your Single Review Page. Left / Right Sidebar, No-sidebar."
+msgstr "Layout Types for your Single Review Page. Left / Right Sidebar, No-sidebar." 
+
+msgid "Show Review"
+msgstr "Show Review" 
+
+msgid "Author Only"
+msgstr "Author Only" 
+
+msgid "User Only"
+msgstr "User Only" 
+
+msgid "Author and User both"
+msgstr "Author and User both" 
+
+msgid "Combined Rating"
+msgstr "Combined Rating" 
+
+msgid "AT"
+msgstr "AT" 
 
 msgid "AT"
 msgstr "AT" 
