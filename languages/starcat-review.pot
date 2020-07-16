@@ -57,7 +57,47 @@ msgstr "Users Rating (%d)"
 msgid "Pros & Cons"
 msgstr "Pros & Cons"
 
+msgid "Not Rated Yet !!!"
+msgstr "Not Rated Yet !!!"
+
+msgid "overall"
+msgstr "overall" 
+
+
+msgid "(%d customer review)"
+msgstr "(%d customer review)" 
+
 #. User Reviews List Controlls
+msgid "Recent"
+msgstr "Recent" 
+
+msgid "Most Positive"
+msgstr "Most Positive" 
+
+msgid "Trending"
+msgstr "Trending" 
+
+msgid "Alphabetic Asc"
+msgstr "Alphabetic Asc" 
+
+msgid "Alphabetic Desc"
+msgstr "Alphabetic Desc" 
+
+msgid "Number of Reviews"
+msgstr "Number of Reviews" 
+
+msgid "Recently Updated"
+msgstr "Recently Updated" 
+
+msgid "Most Helpful"
+msgstr "Most Helpful" 
+
+msgid "Sort by"
+msgstr "Sort by" 
+
+msgid "Search"
+msgstr "Search" 
+
 #. User Reviews List
 
 msgid "Was this helpful to you ?"
@@ -185,9 +225,6 @@ msgstr "Open First SCR Item"
 
 msgid "First item open by default"
 msgstr "First item open by default" 
-
-msgid "Sort By"
-msgstr "Sort By" 
 
 msgid "Publish Date"
 msgstr "Publish Date" 

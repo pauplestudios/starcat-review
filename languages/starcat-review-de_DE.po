@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Starcat Review\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-16 05:00+0000\n"
-"PO-Revision-Date: 2020-07-16 05:02+0000\n"
+"POT-Creation-Date: 2020-07-16 05:40+0000\n"
+"PO-Revision-Date: 2020-07-16 05:41+0000\n"
 "Last-Translator: Santhosh\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -72,7 +72,45 @@ msgstr "Benutzer Bewertung (%d)"
 msgid "Pros & Cons"
 msgstr "Profis und Nachteile"
 
+msgid "Not Rated Yet !!!"
+msgstr "Noch nicht bewertet !!!"
+
+#, fuzzy
+#| msgid "Overall"
+msgid "overall"
+msgstr "Insgesamt"
+
 #. User Reviews List Controlls
+msgid "Recent"
+msgstr "Kürzlich"
+
+msgid "Most Positive"
+msgstr "Am positivsten"
+
+msgid "Trending"
+msgstr "Trend"
+
+msgid "Alphabetic Asc"
+msgstr "Alphabetischer Asc"
+
+msgid "Alphabetic Desc"
+msgstr "Alphabetischer Desc"
+
+msgid "Number of Reviews"
+msgstr "Anzahl der Bewertungen"
+
+msgid "Recently Updated"
+msgstr "Kürzlich aktualisiert"
+
+msgid "Most Helpful"
+msgstr "Am hilfreichsten"
+
+msgid "Sort by"
+msgstr "Sortiere nach"
+
+msgid "Search"
+msgstr "Suche"
+
 #. User Reviews List
 msgid "Was this helpful to you ?"
 msgstr "War das hilfreich für dich?"
@@ -194,9 +232,6 @@ msgstr ""
 msgid "First item open by default"
 msgstr ""
 
-msgid "Sort By"
-msgstr ""
-
 msgid "Publish Date"
 msgstr ""
 
@@ -204,7 +239,7 @@ msgid "Updated Date"
 msgstr ""
 
 msgid "Alphabetical"
-msgstr ""
+msgstr "Alphabetischer"
 
 msgid "Order"
 msgstr ""
