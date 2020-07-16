@@ -15,6 +15,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Summary')) {
         {
             $args = [
                 'enable-author-review' => SCR_Getter::get('enable-author-review'),
+                'enable_pros_cons' => SCR_Getter::get('enable-pros-cons'),
                 'review_count' => scr_get_user_reviews_count(get_the_ID()),
             ];
             $args = array_merge($args, $this->get_default_args());

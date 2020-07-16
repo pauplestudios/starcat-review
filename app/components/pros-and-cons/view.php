@@ -35,6 +35,7 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
         // User review Form fields
         public function get_fields($props)
         {
+            $this->collection = $props['collection'];
             $html = '';
             // $html .= '<div class="two fields">';
             $html .= $this->get_fields_of('pros', $props);
@@ -63,18 +64,22 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
 
         protected function get_fields_of($name, $props)
         {
+            // error_log('prosandcons props : ' . print_r($props, true));
+
             $options = isset($props['items']) && !empty($props['items']) ? $props['items'] : [];
-            $fields = isset($props['fields']) && !empty($props['fields']) ? $props['fields'] : [];
+            // $fields = isset($props['fields']) && !empty($props['fields']) ? $props['fields'] : [];
 
             $optionsHTML = $this->get_field($name, $props['items'], 0, '');
-            if (isset($fields[$name]) && !empty($fields[$name])) {
-                $optionsHTML = '';
-                for ($ii = 0; $ii < sizeof($fields[$name]); $ii++) {
-                    $optionsHTML .= $this->get_field($name, $options, $ii, $fields[$name][$ii]);
-                }
-            }
+            // if (isset($fields[$name]) && !empty($fields[$name])) {
+            //     $optionsHTML = '';
+            //     for ($ii = 0; $ii < sizeof($fields[$name]); $ii++) {
+            //         $optionsHTML .= $this->get_field($name, $options, $ii, $fields[$name][$ii]);
+            //     }
+            // }
 
-            $html = '<div class="field review-' . $name . '-repeater">';
+            $options = $data_props = htmlspecialchars(json_encode($this->collection[$name . '-list']), ENT_QUOTES, 'UTF-8');
+
+            $html = '<div class="field review-' . $name . '-repeater" data-' . $name . '="' . $options . '">';
             // $html .= '<div class="ui segment">';
             $html .= '<h5> ' . ucfirst($name) . ' </h5>';
             $html .= '<div data-repeater-list="' . $name . '" >';
@@ -112,10 +117,11 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\View')) {
             if (!empty($data)) {
                 $html = $this->get_option($data);
             }
+            $options = $this->collection[$name . '-list'];
 
-            if (isset($options[$name]) && !empty($options[$name])) {
-                foreach ($options[$name] as $option) {
-                    $html .= $this->get_option($option);
+            if (isset($options) && !empty($options)) {
+                foreach ($options as $option) {
+                    $html .= $this->get_option($option['item']);
                 }
             }
 

@@ -76,10 +76,11 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
                 $html .= $this->get_pros_and_cons();
             }
 
-            $upload_photos_field = apply_filters('scr_photo_reviews/get_single_review_upload_photos_field', $review);
-            $upload_photos_field_html = is_string($upload_photos_field) ? $upload_photos_field : '';
-
-            $html .= $upload_photos_field_html;
+            if ($this->props['collection']['enable_photo_reviews']) {
+                $upload_photos_field = apply_filters('scr_photo_reviews/get_single_review_upload_photos_field', $review);
+                $upload_photos_field_html = is_string($upload_photos_field) ? $upload_photos_field : '';
+                $html .= $upload_photos_field_html;
+            }
 
             if ($this->props['collection']['show_captcha']) {
                 $html .= Recaptcha::load_v2_html();
