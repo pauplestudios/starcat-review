@@ -524,8 +524,8 @@ if ('top' === $which) {
         }
 
         $columns['author'] = __('Author');
-        $columns['rating'] = _x('Rating', 'column name');
-        $columns['comment'] = _x('Review', 'column name');
+        $columns['rating'] = __('Rating', SCR_DOMAIN);
+        $columns['comment'] = __('Review', SCR_DOMAIN);
 
         if (!$post_id) {
             /* translators: Column name or table row header. */

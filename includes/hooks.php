@@ -148,7 +148,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         public function manage_cpt_custom_columns($columns)
         {
             $items = array(
-                'scr_rating' => __('Ratings', SCR_DOMAIN),
+                'scr_rating' => __('Rating', SCR_DOMAIN),
                 // Todo: 'scr_product_price'
             );
 

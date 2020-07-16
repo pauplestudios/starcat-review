@@ -474,6 +474,136 @@ msgstr "Days"
 msgid "Hours"
 msgstr "Hours" 
 
+#.Comparison Table
+
+msgid "You can use Comparison Tables via [starcat_review_comparison_table] shortcode with args post_type and posts(post_id)"
+msgstr "You can use Comparison Tables via [starcat_review_comparison_table] shortcode with args post_type and posts(post_id)" 
+
+msgid "Example: [starcat_review_comparison_table post_type='product' posts='213,245,256']"
+msgstr "Example: [starcat_review_comparison_table post_type='product' posts='213,245,256']" 
+
+#. CPT Posts -- Dashboard 
+
+msgid "Starcat Review"
+msgstr "Starcat Review"
+
+msgid "Review"
+msgstr "Review"
+
+msgid "Rating"
+msgstr "Rating"
+
+msgid "Reviews"
+msgstr "Reviews"
+
+msgid "Add New"
+msgstr "Add New"
+
+msgid "Add New Review"
+msgstr "Add New Review"
+
+msgid "New Review"
+msgstr "New Review"
+
+msgid "Edit Review"
+msgstr "Edit Review"
+
+msgid "Update Review"
+msgstr "Update Review"
+
+msgid "View Review"
+msgstr "View Review"
+
+msgid "All Reviews"
+msgstr "All Reviews"
+
+msgid "Search Reviews"
+msgstr "Search Reviews"
+
+msgid "No Reviews found"
+msgstr "No Reviews found"
+
+msgid "Parent Reviews"
+msgstr "Parent Reviews"
+
+msgid "No Reviews found in Trash"
+msgstr "No Reviews found in Trash"
+
+msgid "Review Items list"
+msgstr "Review Items list"
+
+msgid "Review Items list Navigation"
+msgstr "Review Items list Navigation"
+
+msgid "Filter Review Items list"
+msgstr "Filter Review Items list"
+
+#. CPT Categories -- Dashboard 
+
+msgid "Review Categories"
+msgstr "Review Categories"
+
+msgid "Review Category"
+msgstr "Review Category"
+
+msgid "Search Review Categories"
+msgstr "Search Review Categories"
+
+msgid "All Review Categories"
+msgstr "All Review Categories"
+
+msgid "Parent Review Category"
+msgstr "Parent Review Category"
+
+msgid "Edit Review Category"
+msgstr "Edit Review Category"
+
+msgid "Update Review Category"
+msgstr "Update Review Category"
+
+msgid "Add New Review Category"
+msgstr "Add New Review Category"
+
+msgid "New Review Category Name"
+msgstr "New Review Category Name"
+
+msgid "Review Category"
+msgstr "Review Category"
+
+#. CPT Tags -- Dashboard 
+
+msgid "Review Tag"
+msgstr "Review Tag"
+
+msgid "Review Tags"
+msgstr "Review Tags"
+
+msgid "Search Review Tags"
+msgstr "Search Review Tags"
+
+msgid "All Review Tags"
+msgstr "All Review Tags"
+
+msgid "Parent Review Tag"
+msgstr "Parent Review Tag"
+
+msgid "Edit Review Tag"
+msgstr "Edit Review Tag"
+
+msgid "Update Review Tag"
+msgstr "Update Review Tag"
+
+msgid "Add New Review Tag"
+msgstr "Add New Review Tag"
+
+msgid "New Review Tag Name"
+msgstr "New Review Tag Name"
+
+msgid "Review Tag"
+msgstr "Review Tag"
+
+#. Post Meta's -- Dashboard 
+
 #.Elementor Widget
 
 msgid "Single Item"

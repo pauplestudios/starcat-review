@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Starcat Review\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-16 14:02+0000\n"
-"PO-Revision-Date: 2020-07-16 14:08+0000\n"
+"POT-Creation-Date: 2020-07-16 19:09+0000\n"
+"PO-Revision-Date: 2020-07-16 19:10+0000\n"
 "Last-Translator: Santhosh\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -124,7 +124,7 @@ msgstr "Um"
 
 #. Dashboard Settings
 msgid "Starcat Settings"
-msgstr "StarCat-Einstellungen"
+msgstr "Starcat Settings"
 
 msgid "General Settings"
 msgstr "Allgemeine Einstellungen"
@@ -200,8 +200,6 @@ msgid "Source Type"
 msgstr "Quelle Typ"
 
 #, fuzzy
-#| msgid "Icon"
-#| msgid_plural "Icons"
 msgid "Icon"
 msgstr "Symbol"
 
@@ -209,8 +207,6 @@ msgid "Icons"
 msgstr "Symbole"
 
 #, fuzzy
-#| msgid "Image"
-#| msgid_plural "Images"
 msgid "Image"
 msgstr "Bild"
 
@@ -547,6 +543,135 @@ msgstr "Tage"
 msgid "Hours"
 msgstr "Std"
 
+#. Comparison Table
+msgid ""
+"You can use Comparison Tables via [starcat_review_comparison_table] "
+"shortcode with args post_type and posts(post_id)"
+msgstr ""
+"Sie können Vergleichstabellen über den Shortcode "
+"[starcat_review_comparison_table] mit den Argumenten post_type und posts "
+"(post_id) verwenden."
+
+msgid ""
+"Example: [starcat_review_comparison_table post_type='product' posts='213,245,"
+"256']"
+msgstr ""
+"Beispiel: [starcat_review_comparison_table post_type = 'product' posts = "
+"'213,245,256']"
+
+#. CPT Posts -- Dashboard
+msgid "Starcat Review"
+msgstr "Starcat Review"
+
+msgid "Review"
+msgstr "Rezension"
+
+msgid "Rating"
+msgstr "Bewertung"
+
+msgid "Reviews"
+msgstr "Bewertungen"
+
+msgid "Add New"
+msgstr "Neue hinzufügen"
+
+msgid "Add New Review"
+msgstr "Neue Bewertung hinzufügen"
+
+msgid "New Review"
+msgstr "Neue Bewertung"
+
+msgid "Edit Review"
+msgstr "Bewertung bearbeiten"
+
+msgid "Update Review"
+msgstr "Überprüfung überprüfen"
+
+msgid "View Review"
+msgstr "Bewertung anzeigen"
+
+msgid "All Reviews"
+msgstr "Alle Bewertungen"
+
+msgid "Search Reviews"
+msgstr "Bewertungen suchen"
+
+msgid "No Reviews found"
+msgstr "Keine Bewertungen gefunden"
+
+msgid "Parent Reviews"
+msgstr "Übergeordnete Bewertungen"
+
+msgid "No Reviews found in Trash"
+msgstr "Keine Bewertungen in Trash gefunden"
+
+msgid "Review Items list"
+msgstr "Liste der Artikel überprüfen"
+
+msgid "Review Items list Navigation"
+msgstr "Liste der Überprüfungselemente Navigation"
+
+msgid "Filter Review Items list"
+msgstr "Liste der Überprüfungselemente filtern"
+
+#. CPT Categories -- Dashboard
+msgid "Review Categories"
+msgstr "Bewertungen Kategorien"
+
+msgid "Review Category"
+msgstr "Bewertungen Kategorie"
+
+msgid "Search Review Categories"
+msgstr "Bewertungen suchen Kategorien"
+
+msgid "All Review Categories"
+msgstr "Alle Bewertungen Kategorien"
+
+msgid "Parent Review Category"
+msgstr "Übergeordnete Bewertungskategorie"
+
+msgid "Edit Review Category"
+msgstr "Überprüfungskategorie bearbeiten"
+
+msgid "Update Review Category"
+msgstr "Überprüfungskategorie aktualisieren"
+
+msgid "Add New Review Category"
+msgstr "Neue Bewertungskategorie hinzufügen"
+
+msgid "New Review Category Name"
+msgstr "Neue Entscheidungskategorie gehört"
+
+#. CPT Tags -- Dashboard
+msgid "Review Tag"
+msgstr "Tag überprüfen"
+
+msgid "Review Tags"
+msgstr "Tags überprüfen"
+
+msgid "Search Review Tags"
+msgstr "Suche Review Tags"
+
+msgid "All Review Tags"
+msgstr "Alle Review-Tags"
+
+msgid "Parent Review Tag"
+msgstr "Übergeordnetes Überprüfungs-Tag"
+
+msgid "Edit Review Tag"
+msgstr "Review-Tag bearbeiten"
+
+msgid "Update Review Tag"
+msgstr "Review Tag aktualisieren"
+
+msgid "Add New Review Tag"
+msgstr "Neues Review-Tag hinzufügen"
+
+msgid "New Review Tag Name"
+msgstr "Neuer Review-Tag-Name"
+
+#. Post Meta's -- Dashboard
+#. User Reviews -- Dashboard
 #. Elementor Widget
 msgid "Single Item"
 msgstr "Einzelexemplar"

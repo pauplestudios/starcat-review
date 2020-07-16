@@ -80,9 +80,9 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                     $this->photo_reviews_settings($prefix);
                 }
 
-                // if (SCR_Getter::addons_available_condition()['wn']) {
-                $this->notification_settings($prefix);
-                // }
+                if (SCR_Getter::addons_available_condition()['wn']) {
+                    $this->notification_settings($prefix);
+                }
 
                 if (SCR_Getter::addons_available_condition()['ct']) {
                     $this->ct_settings($prefix);
@@ -105,12 +105,12 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'type' => 'submessage',
                             'style' => 'success',
-                            'content' => 'You can use Comparison Tables via [starcat_review_comparison_table] shortcode with args post_type and posts(post_id) ',
+                            'content' => __('You can use Comparison Tables via [starcat_review_comparison_table] shortcode with args post_type and posts(post_id)', SCR_DOMAIN),
                         ),
                         array(
                             'type' => 'submessage',
                             'style' => 'success',
-                            'content' => 'Example: [starcat_review_comparison_table post_type="product" posts="213,245,256"]',
+                            'content' => __("Example: [starcat_review_comparison_table post_type='product' posts='213,245,256']", SCR_DOMAIN),
                         ),
                     ),
                 )
