@@ -63,9 +63,8 @@ msgstr "Not Rated Yet !!!"
 msgid "overall"
 msgstr "overall" 
 
-
-msgid "(%d customer review)"
-msgstr "(%d customer review)" 
+msgid "customer review"
+msgstr "customer review" 
 
 #. User Reviews List Controlls
 msgid "Recent"
@@ -103,11 +102,11 @@ msgstr "Search"
 msgid "Was this helpful to you ?"
 msgstr "Was this helpful to you ?" 
 
-msgid "of"
-msgstr "of" 
+msgid "%d of %d people found this review helpful"
+msgstr "%d of %d people found this review helpful"
 
-msgid "people found this review helpful"
-msgstr "people found this review helpful" 
+msgid "AT"
+msgstr "AT" 
 
 #. Dashboard Settings
 

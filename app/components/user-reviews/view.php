@@ -129,7 +129,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '<span class="author"> ' . $comment['author'] . ' </span>';
             $html .= '<div class="metadata">';
             $html .= '<span class="date">' . $comment['date'] . '</span>';
-            $html .= '<span class="time">AT ' . $comment['time'] . '</span>';
+            $html .= '<span class="time">' . __('AT', SCR_DOMAIN) . ' ' . $comment['time'] . '</span>';
 
             if ($comment['parent'] == 0) {
                 $html .= '<span class="postDate" data-postDate="' . $comment['time_stamp'] . '"></span>'; // used by list-control.JS
@@ -247,7 +247,8 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             }
             if (($likes || $dislikes) != 0) {
                 $html .= '<div class="vote-summary">';
-                $html .= '<span class="helpful">' . $likes . '</span> of <span class="people"> ' . $vote['people'] . ' </span> people found this review helpful';
+                $html .= '<span class="helpful">' . sprintf(__('%d of %d people found this review helpful', SCR_DOMAIN), $likes, $vote['people']) . '</span>';
+                // $html .= '<span class="helpful">' . $likes . ' of ' . $vote['people'] . ' </span> people found this review helpful </span>';
                 $html .= '</div>';
             }
 

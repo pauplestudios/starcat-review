@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Starcat Review\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-16 05:40+0000\n"
-"PO-Revision-Date: 2020-07-16 05:41+0000\n"
+"POT-Creation-Date: 2020-07-16 07:54+0000\n"
+"PO-Revision-Date: 2020-07-16 07:54+0000\n"
 "Last-Translator: Santhosh\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -80,6 +80,9 @@ msgstr "Noch nicht bewertet !!!"
 msgid "overall"
 msgstr "Insgesamt"
 
+msgid "customer review"
+msgstr "Kundenrezensionen"
+
 #. User Reviews List Controlls
 msgid "Recent"
 msgstr "Kürzlich"
@@ -115,11 +118,11 @@ msgstr "Suche"
 msgid "Was this helpful to you ?"
 msgstr "War das hilfreich für dich?"
 
-msgid "of"
-msgstr "von"
+msgid "%d of %d people found this review helpful"
+msgstr "%d von %d personen fand diese bewertung hilfreich"
 
-msgid "people found this review helpful"
-msgstr "Leute fanden diese Bewertung hilfreich"
+msgid "AT"
+msgstr "Um"
 
 #. Dashboard Settings
 msgid "Starcat Settings"

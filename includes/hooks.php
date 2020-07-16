@@ -3,6 +3,7 @@
 namespace StarcatReview\Includes;
 
 use \StarcatReview\Includes\Settings\SCR_Getter;
+use \StarcatReview\Includes\Translations as Translations;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -258,6 +259,9 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             wp_localize_script('starcat-review-script', 'SCROptions', [
                 'global_stats' => SCR_Getter::get('global_stats'),
             ]);
+
+            wp_localize_script('starcat-review-script', 'Translations', Translations::getAllStrings());
+
             wp_enqueue_style('style-name', SCR_URL . "includes/assets/bundle/main.bundle.css");
         }
     } // END CLASS
