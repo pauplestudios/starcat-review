@@ -14,6 +14,7 @@ if (!class_exists('\StarcatReview\Includes\Translations')) {
         {
             $strings = [];
             $strings = array_merge($strings, self::getAllStrings());
+            // error_log('strings : ' . print_r($strings, true));
 
             return $strings[$stringName];
         }
@@ -21,21 +22,27 @@ if (!class_exists('\StarcatReview\Includes\Translations')) {
         public static function getAllStrings()
         {
             $strings = [];
-            $strings = array_merge($strings, self::settings());
-            $strings = array_merge($strings, self::formSrings());
+            $strings = array_merge($strings, self::getSettingsStrings());
+            $strings = array_merge($strings, self::getFormSrings());
 
             return $strings;
         }
 
-        protected static function settings()
+        public static function getSettingsStrings()
         {
             return [
                 'GeneralSettings' => __('General Settings', SCR_DOMAIN),
                 'MainPage' => __('Main Page', SCR_DOMAIN),
+                'CategoryPage' => __('Category Page', SCR_DOMAIN),
+                'SinglePage' => __('Single Page', SCR_DOMAIN),
+                'UserReviews' => __('User Reviews', SCR_DOMAIN),
+                'PhotoReviews' => __('Photo Reviews', SCR_DOMAIN),
+                'ComparisonTable' => __('Comparison Table', SCR_DOMAIN),
+                'WoocommerceNotification' => __('Woocommerce Notification', SCR_DOMAIN),
             ];
         }
 
-        protected static function formSrings()
+        public static function getFormSrings()
         {
             return [
                 'save' => __('Save', SCR_DOMAIN),

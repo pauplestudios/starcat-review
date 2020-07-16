@@ -1,5 +1,5 @@
 #. User Review Submit, Edit, Reply Form
-#. __('', SCR_DOMAIN)
+#. __(, SCR_DOMAIN)
 
 msgid "Name"
 msgstr "Name"
@@ -119,195 +119,192 @@ msgstr "General Settings"
 msgid "Main Page"
 msgstr "Main Page" 
 
-#. Dashboard SCR Menu and CPT SCRs Section
+msgid "Category Page"
+msgstr "Category Page" 
 
-msgid "SCR"
-msgstr "SCR" 
+msgid "Single Page"
+msgstr "Single Page" 
 
-msgid "SCRs"
-msgstr "SCRs" 
+msgid "User Reviews"
+msgstr "User Reviews" 
 
-msgid "All SCRs"
-msgstr "All SCRs" 
+msgid "Photo Reviews"
+msgstr "Photo Reviews" 
 
-msgid "Add New SCR"
-msgstr "Add New SCR" 
+msgid "Woocommerce Notification"
+msgstr "Woocommerce Notification" 
 
-msgid "Add New"
-msgstr "Add New" 
+msgid "Comparison Table"
+msgstr "Comparison Table" 
 
-msgid "New SCR"
-msgstr "New SCR" 
+#. General Settings
 
-msgid "Edit SCR"
-msgstr "Edit SCR" 
+msgid "Where to include reviews?"
+msgstr "Where to include reviews?" 
 
-msgid "Add SCR"
-msgstr "Add SCR" 
+msgid "Enable author review"
+msgstr "Enable author review" 
 
-msgid "Hide"
-msgstr "Hide" 
+msgid "Enable Pros and Cons"
+msgstr "Enable Pros and Cons" 
 
-msgid "View SCR"
-msgstr "View SCR" 
+msgid "Stats"
+msgstr "Stats" 
 
-msgid "SCR Category"
-msgstr "SCR Category" 
+msgid "You can rate each of these stats in the edit post page(author rating). And if you have enabled 'user review', your users can rate them from the front end"
+msgstr "You can rate each of these stats in the edit post page(author rating). And if you have enabled 'user review', your users can rate them from the front end" 
 
-msgid "Categories"
-msgstr "Categories" 
+msgid "Single or Multiple Stat"
+msgstr "Single or Multiple Stat" 
 
-msgid "KB Categories"
-msgstr "KB Categories" 
+msgid "Single"
+msgstr "Single" 
 
-msgid "Woo Products"
-msgstr "Woo Products" 
+msgid "Multiple"
+msgstr "Multiple" 
 
-msgid "All SCR Categories"
-msgstr "All SCR Categories" 
+msgid "The first stat is always considered as the primary stat ( highlighted by blue color ), When you change from multiple stat to single stat values from the primary stat are used."
+msgstr "The first stat is always considered as the primary stat ( highlighted by blue color ), When you change from multiple stat to single stat values from the primary stat are used." 
 
-msgid "SCR Categories"
-msgstr "SCR Categories" 
+msgid "Feature"
+msgstr "Feature" 
 
-msgid "SCR Tag"
-msgstr "SCR Tag" 
+msgid "Stats Type"
+msgstr "Stats Type" 
 
-msgid "Tags"
-msgstr "Tags" 
+msgid "Source Type"
+msgstr "Source Type" 
 
-msgid "All SCR Tags"
-msgstr "All SCR Tags" 
+msgid "Icon"
+msgstr "Icon"
 
-msgid "SCR Tags"
-msgstr "SCR Tags" 
+msgid "Icons"
+msgstr "Icons"
 
-msgid "SCR Settings"
-msgstr "SCR Settings" 
+msgid "Image"
+msgstr "Image"
 
-#. General Tab
+msgid "Images"
+msgstr "Images"
 
-msgid "General"
-msgstr "General" 
+msgid "Show Rating Label"
+msgstr "Show Rating Label" 
 
-msgid "Title"
-msgstr "Title" 
+msgid "Icons Color"
+msgstr "Icons Color" 
 
-msgid "SCR Title"
-msgstr "SCR Title" 
+msgid "Icons Label Color"
+msgstr "Icons Label Color" 
 
-msgid "Show Search"
-msgstr "Show Search" 
+msgid "Outline Image"
+msgstr "Outline Image" 
 
-msgid "Show Search in SCR"
-msgstr "Show Search in SCR" 
-
-msgid "You can search through all SCR items"
-msgstr "You can search through all SCR items" 
-
-msgid "Search Placeholder"
-msgstr "Search Placeholder" 
-
-msgid "Search Placeholder text"
-msgstr "Search Placeholder text" 
-
-msgid "SCR Search Placeholder text"
-msgstr "SCR Search Placeholder text" 
-
-msgid "Toggle"
-msgstr "Toggle" 
-
-msgid "Toggle Open / closed Previous Item"
-msgstr "Toggle Open / closed Previous Item" 
-
-msgid "Open First SCR Item"
-msgstr "Open First SCR Item" 
-
-msgid "First item open by default"
-msgstr "First item open by default" 
-
-msgid "Publish Date"
-msgstr "Publish Date" 
-
-msgid "Updated Date"
-msgstr "Updated Date" 
-
-msgid "Alphabetical"
-msgstr "Alphabetical" 
-
-msgid "Order"
-msgstr "Order" 
-
-msgid "Ascending"
-msgstr "Ascending" 
-
-msgid "Descending"
-msgstr "Descending" 
+msgid "Image size below 50 * 50 is enough"
+msgstr "Image size below 50 * 50 is enough" 
 
 msgid "Limit"
 msgstr "Limit" 
 
-msgid "Limit ( number of items )"
-msgstr "Limit ( number of items )" 
+msgid "Star stat scale b/w limit 5 to 10"
+msgstr "Star stat scale b/w limit 5 to 10" 
 
-msgid "Limit of the SCR items"
-msgstr "Limit of the SCR items" 
+msgid "Steps"
+msgstr "Steps" 
 
+msgid "Half"
+msgstr "Half" 
 
-#. Style Tab
+msgid "Full"
+msgstr "Full" 
 
-msgid "Style"
-msgstr "Style" 
+msgid "Stat Animate"
+msgstr "Stat Animate"
 
-msgid "Theme"
-msgstr "Theme" 
+msgid "No rated message"
+msgstr "No rated message"  
 
-msgid "Light"
-msgstr "Light" 
+#. Main Page
+msgid "Main Page Meta Title"
+msgstr "Main Page Meta Title" 
 
-msgid "Dark"
-msgstr "Dark" 
+msgid "Note"
+msgstr "Note" 
 
-msgid "Select Theme of SCR Layout Section"
-msgstr "Select Theme of SCR Layout Section" 
+msgid "Keep your meta title between 60 and 64 characters."
+msgstr "Keep your meta title between 60 and 64 characters." 
 
-#. Integrations Tab
+msgid "Main Page Meta Description"
+msgstr "Main Page Meta Description" 
 
-msgid "Integrations"
-msgstr "Integrations" 
+msgid "Keep your meta descriptions between 150 and 154 characters."
+msgstr "Keep your meta descriptions between 150 and 154 characters." 
 
-#. KB Tab
+msgid "Main Page Slug"
+msgstr "Main Page Slug" 
 
-msgid "Enable SCR in Helpie KB"
-msgstr "Enable SCR in Helpie KB" 
+msgid "Visit Main Page"
+msgstr "Visit Main Page" 
 
-msgid "Show SCR In Helpie KB Category Page"
-msgstr "Show SCR In Helpie KB Category Page" 
+msgid "Where is my main page?"
+msgstr "Where is my main page?" 
 
-msgid "Where to Show SCR in Helpie KB Category Page"
-msgstr "Where to Show SCR in Helpie KB Category Page" 
+msgid "Save and Refresh Page if you changed it."
+msgstr "Save and Refresh Page if you changed it." 
 
-msgid "Content"
-msgstr "Content" 
+msgid "Template"
+msgstr "Template" 
 
-msgid "Before Content"
-msgstr "Before Content" 
+msgid "Layout Types for your Reviews Main Page. Left / Right Sidebar, No-sidebar"
+msgstr "Layout Types for your Reviews Main Page. Left / Right Sidebar, No-sidebar" 
 
-msgid "After Content"
-msgstr "After Content" 
+msgid "You can add widgets to your sidebar from Appearance -> Widgets"
+msgstr "You can add widgets to your sidebar from Appearance -> Widgets" 
 
-msgid "Select show scr before or after content in kb category page"
-msgstr "Select show scr before or after content in kb category page" 
+msgid "Components Control"
+msgstr "Components Control" 
 
-#. WooCommerce Tab
+msgid "Controls order and visibility of these components in Main Page"
+msgstr "Controls order and visibility of these components in Main Page" 
 
-msgid "Show SCR in WooCommerce"
-msgstr "Show SCR in WooCommerce" 
+msgid "Category Listing"
+msgstr "Category Listing" 
 
-msgid "Show SCR In WooCommerce product tab"
-msgstr "Show SCR In WooCommerce product tab" 
+msgid "Review Listing"
+msgstr "Review Listing" 
 
-msgid "Tab Title"
-msgstr "Tab Title" 
+msgid "Default Sort By"
+msgstr "Default Sort By" 
+
+msgid "Select a sortby option"
+msgstr "Select a sortby option" 
+
+msgid "Show Description"
+msgstr "Show Description" 
+
+msgid "Num Of Columns"
+msgstr "Num Of Columns" 
+
+msgid "Select an option"
+msgstr "Select an option" 
+
+msgid "Alphabetical Ascending"
+msgstr "Alphabetical Ascending" 
+
+msgid "Alphabetical Descending"
+msgstr "Alphabetical Descending" 
+
+msgid "AT"
+msgstr "AT" 
+
+msgid "AT"
+msgstr "AT" 
+
+msgid "AT"
+msgstr "AT" 
+
+msgid "AT"
+msgstr "AT" 
+
 
 #.Elementor Widget
 

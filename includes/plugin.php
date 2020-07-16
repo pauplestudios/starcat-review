@@ -69,6 +69,10 @@ if (!class_exists('\Starcat_Review')) {
             // if (file_exists(SCR_PATH . 'includes/utils/fake-pages.php')) {
             //     require_once SCR_PATH . 'includes/utils/fake-pages.php';
             // }
+            // require_once SCR_PATH . 'includes/lib/cpt-addon/starcat-review-cpt.php';
+            // require_once SCR_PATH . 'includes/lib/photo-reviews-addon/starcat-review-photo-reviews.php';
+            // require_once SCR_PATH . 'includes/lib/ct-addon/starcat-review-ct.php';
+            // require_once SCR_PATH . 'includes/lib/starcat-review-woo-notify/starcat-review-woo-notify.php';
 
             /* Notification */
             // $Notification_Data = new \StarcatReview\Includes\Utils\Notification\Notification_Test_Data();

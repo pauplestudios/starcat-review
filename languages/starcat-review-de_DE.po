@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Starcat Review\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-16 07:54+0000\n"
-"PO-Revision-Date: 2020-07-16 07:54+0000\n"
+"POT-Creation-Date: 2020-07-16 12:27+0000\n"
+"PO-Revision-Date: 2020-07-16 12:27+0000\n"
 "Last-Translator: Santhosh\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Loco-Version: 2.4.0; wp-5.4.2"
 
 #. User Review Submit, Edit, Reply Form
-#. __('', SCR_DOMAIN)
+#. __(, SCR_DOMAIN)
 msgid "Name"
 msgstr "Name"
 
@@ -65,7 +65,6 @@ msgstr "Stornieren"
 msgid "Author Rating"
 msgstr "Autoren Bewertung"
 
-#| msgid "Users Rating ( %d )"
 msgid "Users Rating (%d)"
 msgstr "Benutzer Bewertung (%d)"
 
@@ -76,7 +75,6 @@ msgid "Not Rated Yet !!!"
 msgstr "Noch nicht bewertet !!!"
 
 #, fuzzy
-#| msgid "Overall"
 msgid "overall"
 msgstr "Insgesamt"
 
@@ -126,7 +124,7 @@ msgstr "Um"
 
 #. Dashboard Settings
 msgid "Starcat Settings"
-msgstr ""
+msgstr "StarCat-Einstellungen"
 
 msgid "General Settings"
 msgstr "Allgemeine Einstellungen"
@@ -134,192 +132,209 @@ msgstr "Allgemeine Einstellungen"
 msgid "Main Page"
 msgstr "Hauptseite"
 
-#. Dashboard SCR Menu and CPT SCRs Section
-msgid "SCR"
-msgstr ""
+msgid "Category Page"
+msgstr "Kategorieseite"
 
-msgid "SCRs"
-msgstr ""
+msgid "Single Page"
+msgstr "Einzelne Seite"
 
-msgid "All SCRs"
-msgstr ""
+msgid "User Reviews"
+msgstr "Nutzerbewertungen"
 
-msgid "Add New SCR"
-msgstr ""
+msgid "Photo Reviews"
+msgstr "Fotobewertungen"
 
-msgid "Add New"
-msgstr ""
+msgid "Woocommerce Notification"
+msgstr "Woocommerce-Benachrichtigung"
 
-msgid "New SCR"
-msgstr ""
+msgid "Comparison Table"
+msgstr "Vergleichstabelle"
 
-msgid "Edit SCR"
-msgstr ""
+#. General Settings
+msgid "Where to include reviews?"
+msgstr "Wo kann man Bewertungen einfügen?"
 
-msgid "Add SCR"
-msgstr ""
+msgid "Enable author review"
+msgstr "Aktivieren Sie die Autorenbewertung"
 
-msgid "Hide"
-msgstr ""
+msgid "Enable Pros and Cons"
+msgstr "Aktivieren Sie Vor- und Nachteile"
 
-msgid "View SCR"
-msgstr ""
+msgid "Stats"
+msgstr "Statistiken"
 
-msgid "SCR Category"
+msgid ""
+"You can rate each of these stats in the edit post page(author rating). And "
+"if you have enabled 'user review', your users can rate them from the front "
+"end"
 msgstr ""
+"Sie können jede dieser Statistiken auf der Seite zum Bearbeiten von Posts "
+"bewerten (Autorenbewertung). Wenn Sie die Benutzerüberprüfung aktiviert "
+"haben, können Ihre Benutzer sie vom Front-End aus bewerten"
 
-msgid "Categories"
+msgid "Single or Multiple Stat"
+msgstr "Einzel- oder Mehrfachstat"
+
+msgid "Single"
+msgstr "Single"
+
+msgid "Multiple"
+msgstr "Mehrere"
+
+msgid ""
+"The first stat is always considered as the primary stat ( highlighted by "
+"blue color ), When you change from multiple stat to single stat values from "
+"the primary stat are used."
 msgstr ""
+"Die erste Statistik wird immer als primäre Statistik betrachtet (durch blaue "
+"Farbe hervorgehoben). Wenn Sie von mehreren Statistiken zu einzelnen "
+"Statistiken wechseln, werden Werte aus der primären Statistik verwendet."
 
-msgid "KB Categories"
-msgstr ""
+msgid "Feature"
+msgstr "Feature"
 
-msgid "Woo Products"
-msgstr ""
+msgid "Stats Type"
+msgstr "Statistik Typ"
 
-msgid "All SCR Categories"
-msgstr ""
+msgid "Source Type"
+msgstr "Quelle Typ"
 
-msgid "SCR Categories"
-msgstr ""
+#, fuzzy
+#| msgid "Icon"
+#| msgid_plural "Icons"
+msgid "Icon"
+msgstr "Symbol"
 
-msgid "SCR Tag"
-msgstr ""
+msgid "Icons"
+msgstr "Symbole"
 
-msgid "Tags"
-msgstr ""
+#, fuzzy
+#| msgid "Image"
+#| msgid_plural "Images"
+msgid "Image"
+msgstr "Bild"
 
-msgid "All SCR Tags"
-msgstr ""
+msgid "Images"
+msgstr "Bilder"
 
-msgid "SCR Tags"
-msgstr ""
+msgid "Show Rating Label"
+msgstr "Bewertungsetikett anzeigen"
 
-msgid "SCR Settings"
-msgstr ""
+msgid "Icons Color"
+msgstr "Symbole Farbe"
 
-#. General Tab
-msgid "General"
-msgstr ""
+msgid "Icons Label Color"
+msgstr "Symbole Beschriftungsfarbe"
 
-msgid "SCR Title"
-msgstr ""
+msgid "Outline Image"
+msgstr "Umrissbild"
 
-msgid "Show Search"
-msgstr ""
-
-msgid "Show Search in SCR"
-msgstr ""
-
-msgid "You can search through all SCR items"
-msgstr ""
-
-msgid "Search Placeholder"
-msgstr ""
-
-msgid "Search Placeholder text"
-msgstr ""
-
-msgid "SCR Search Placeholder text"
-msgstr ""
-
-msgid "Toggle"
-msgstr ""
-
-msgid "Toggle Open / closed Previous Item"
-msgstr ""
-
-msgid "Open First SCR Item"
-msgstr ""
-
-msgid "First item open by default"
-msgstr ""
-
-msgid "Publish Date"
-msgstr ""
-
-msgid "Updated Date"
-msgstr ""
-
-msgid "Alphabetical"
-msgstr "Alphabetischer"
-
-msgid "Order"
-msgstr ""
-
-msgid "Ascending"
-msgstr ""
-
-msgid "Descending"
-msgstr ""
+msgid "Image size below 50 * 50 is enough"
+msgstr "Bildgröße unter 50 * 50 ist ausreichend"
 
 msgid "Limit"
-msgstr ""
+msgstr "Grenze"
 
-msgid "Limit ( number of items )"
-msgstr ""
+msgid "Star stat scale b/w limit 5 to 10"
+msgstr "Sternstatistikskala zwischen Limit 5 und 10"
 
-msgid "Limit of the SCR items"
-msgstr ""
+msgid "Steps"
+msgstr "Schritte"
 
-#. Style Tab
-msgid "Style"
-msgstr ""
+msgid "Half"
+msgstr "Hälfte"
 
-msgid "Theme"
-msgstr ""
+msgid "Full"
+msgstr "Voll"
 
-msgid "Light"
-msgstr ""
+msgid "Stat Animate"
+msgstr "Statistiken animiert"
 
-msgid "Dark"
-msgstr ""
+msgid "No rated message"
+msgstr "Keine bewertete Nachricht"
 
-msgid "Select Theme of SCR Layout Section"
-msgstr ""
+#. Main Page
+msgid "Main Page Meta Title"
+msgstr "Hauptseite Metatitel"
 
-#. Integrations Tab
-msgid "Integrations"
-msgstr ""
+msgid "Note"
+msgstr "Hinweis"
 
-#. KB Tab
-msgid "Enable SCR in Helpie KB"
-msgstr ""
+msgid "Keep your meta title between 60 and 64 characters."
+msgstr "Halten Sie Ihren Metatitel zwischen 60 und 64 Zeichen."
 
-msgid "Show SCR In Helpie KB Category Page"
-msgstr ""
+msgid "Main Page Meta Description"
+msgstr "Hauptseite Meta Beschreibung"
 
-msgid "Where to Show SCR in Helpie KB Category Page"
-msgstr ""
+msgid "Keep your meta descriptions between 150 and 154 characters."
+msgstr "Halten Sie Ihre Meta-Beschreibung zwischen 150 und 154 Zeichen."
 
-msgid "Content"
-msgstr ""
+msgid "Main Page Slug"
+msgstr "Hauptseite Slug"
 
-msgid "Before Content"
-msgstr ""
+msgid "Visit Main Page"
+msgstr "Besuchen Sie die Hauptseite"
 
-msgid "After Content"
-msgstr ""
+msgid "Where is my main page?"
+msgstr "Wo ist meine Hauptseite?"
 
-msgid "Select show scr before or after content in kb category page"
-msgstr ""
+msgid "Save and Refresh Page if you changed it."
+msgstr "Seite speichern und aktualisieren, wenn Sie sie geändert haben."
 
-#. WooCommerce Tab
-msgid "Show SCR in WooCommerce"
-msgstr ""
+msgid "Template"
+msgstr "Vorlage"
 
-msgid "Show SCR In WooCommerce product tab"
+msgid ""
+"Layout Types for your Reviews Main Page. Left / Right Sidebar, No-sidebar"
 msgstr ""
+"Layouttypen für Ihre Review-Hauptseite. Linke / rechte Seitenleiste, keine "
+"Seitenleiste"
 
-msgid "Tab Title"
+msgid "You can add widgets to your sidebar from Appearance -> Widgets"
 msgstr ""
+"Sie können Ihrer Seitenleiste Widgets über Darstellung -> Widgets hinzufügen"
+
+msgid "Components Control"
+msgstr "Komponentensteuerung"
+
+msgid "Controls order and visibility of these components in Main Page"
+msgstr ""
+"Kontrollieren Sie die Reihenfolge und Sichtbarkeit dieser Komponenten auf "
+"der Hauptseite"
+
+msgid "Category Listing"
+msgstr "Kategorieliste"
+
+msgid "Review Listing"
+msgstr "Auflistung überprüfen"
+
+msgid "Default Sort By"
+msgstr "Standard Sortieren nach"
+
+msgid "Select a sortby option"
+msgstr "Wählen Sie eine Sortieroption"
+
+msgid "Show Description"
+msgstr "Beschreibung anzeigen"
+
+msgid "Num Of Columns"
+msgstr "Anzahl der Spalten"
+
+msgid "Select an option"
+msgstr "Wähle eine Option"
+
+msgid "Alphabetical Ascending"
+msgstr "Alphabetisch aufsteigend"
+
+msgid "Alphabetical Descending"
+msgstr "Alphabetisch absteigend"
 
 #. Elementor Widget
 msgid "Single Item"
-msgstr ""
+msgstr "Einzelexemplar"
 
 msgid "Single Item - Header"
-msgstr ""
+msgstr "Einzelstück - Kopfzeile"
 
 msgid "Single Item - Body"
-msgstr ""
+msgstr "Einzelstück - Körper"

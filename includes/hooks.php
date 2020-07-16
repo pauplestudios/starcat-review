@@ -260,7 +260,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
                 'global_stats' => SCR_Getter::get('global_stats'),
             ]);
 
-            wp_localize_script('starcat-review-script', 'Translations', Translations::getAllStrings());
+            wp_localize_script('starcat-review-script', 'Translations', Translations::getFormSrings());
 
             wp_enqueue_style('style-name', SCR_URL . "includes/assets/bundle/main.bundle.css");
         }
