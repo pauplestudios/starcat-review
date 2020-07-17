@@ -2,6 +2,8 @@
 
 namespace StarcatReview\App\Services;
 
+use \StarcatReview\Includes\Settings\SCR_Getter as Getter;
+
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -19,9 +21,14 @@ if (!class_exists('\StarcatReview\App\Services\User')) {
 
             return $IP;
         }
+
+        // TODO: Need to check with WooCommerce review coupon's, points and rewards plugins
         public function can_user_directly_publish_reviews()
         {
-            return !current_user_can('manage_options');
+            $approve = current_user_can('manage_options') ? true : false;
+            $approve = (Getter::get('ur_auto_approve')) ? true : $approve;
+
+            return $approve;
         }
 
         public function can_review()

@@ -25,7 +25,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             $Current_User = new \StarcatReview\App\Services\User();
 
             $user_can_review = $Current_User->can_review();
-            $user_review_needs_approval = $Current_User->can_user_directly_publish_reviews();
+            $can_approve = $Current_User->can_user_directly_publish_reviews();
 
             // 1. Check if current_user can add review
             if ($user_can_review == false) {
@@ -39,7 +39,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             $comment_id = wp_new_comment($comment_data);
 
             // 3. Check if we need to manually approve this review
-            if ($user_review_needs_approval) {
+            if (!$can_approve) {
                 $comment_modifier = [
                     'comment_ID' => $comment_id,
                     'comment_approved' => 0,
@@ -101,13 +101,16 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
 
         public function update($props)
         {
+            $Current_User = new \StarcatReview\App\Services\User();
+            $can_approve = $Current_User->can_user_directly_publish_reviews();
+
             // error_log('props : ' . print_r($props, true));
             $comment_id = $props['comment_id'];
             $comment = array(
                 'comment_ID' => $props['comment_id'],
                 'comment_content' => $props['description'],
                 'comment_parent' => $props['parent'],
-                'comment_approved' => current_user_can('manage_options') ? 1 : 0,
+                'comment_approved' => $can_approve ? 1 : 0,
             );
 
             wp_update_comment($comment);
