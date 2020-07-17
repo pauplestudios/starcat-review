@@ -86,6 +86,9 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
                 $html .= Recaptcha::load_v2_html();
             }
 
+            $user_form_end = apply_filters('scr_user_form_end', '', $review);
+            $html .= $user_form_end;
+
             $html .= '<div class="field">';
             $html .= '<div class="ui blue submit ' . $class . ' button"> ' . $submit_btn_name . ' </div>';
             $html .= $cancel_btn;

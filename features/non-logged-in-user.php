@@ -35,6 +35,8 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
             }
 
             add_filter('scr_user_form_start', [$this, 'form_modification'], 10, 2);
+            add_filter('scr_user_form_end', [$this, 'form_comment_consent_modification'], 10, 2);
+
             add_filter('scr_form_process_data', [$this, 'process_form']);
             add_filter('scr_comment', [$this, 'get_comment_item']);
             add_filter('scr_can_view_comment', [$this, 'can_view_comment'], 10, 2);
@@ -110,6 +112,10 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
                 $props['website'] = $_POST['website'];
             }
 
+            if (isset($_POST['wp-comment-cookies-consent']) && !empty($_POST['wp-comment-cookies-consent'])) {
+                $props['wp-comment-cookies-consent'] = $_POST['wp-comment-cookies-consent'];
+            }
+
             return $props;
         }
 
@@ -135,8 +141,7 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
 
         public function form_modification($html = '', $review = [])
         {
-            $commenters = wp_get_current_commenter();
-            // error_log('commenter : ' . print_r($commenter, true));
+            $commenter = wp_get_current_commenter();
 
             $name = (isset($commenter['comment_author'])) ? $commenter['comment_author'] : '';
             $email = (isset($commenter['comment_author_email'])) ? $commenter['comment_author_email'] : '';
@@ -157,7 +162,18 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
             $html .= '<input type="text" name="website" placeholder="' . __('Website', SCR_DOMAIN) . '" value="' . $website . '"/>';
             $html .= '</div>';
 
-            // error_log('html: ' . $html);
+            return $html;
+        }
+
+        public function form_comment_consent_modification($html = '', $review)
+        {
+            $commenter = wp_get_current_commenter();
+
+            $consent = empty($commenter['comment_author_email']) ? '' : ' checked="checked"';
+            $html .= '<div class="field">';
+            $html .= '<div class="ui checkbox comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"' . $consent . ' /><label for="wp-comment-cookies-consent">' . esc_html__('Save my name, email, and website in this browser for the next time I comment.', SCR_DOMAIN) . '</label></div>';
+            $html .= '</div>';
+
             return $html;
         }
     } // END CLASS
