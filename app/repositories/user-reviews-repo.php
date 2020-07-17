@@ -90,9 +90,9 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 $comment_data['comment_author_url'] = $user->user_url;
                 $comment_data['user_id'] = $user->ID;
             } else {
-                $comment_data['comment_author'] = $props['first_name'] . ' ' . $props['last_name'];
-                $comment_data['comment_author_email'] = $props['user_email'];
-                $comment_data['comment_author_url'] = '';
+                $comment_data['comment_author'] = $props['name'];
+                $comment_data['comment_author_email'] = $props['email'];
+                $comment_data['comment_author_url'] = (isset($props['website']) && !empty($props['website'])) ? $props['website'] : '';
                 $comment_data['user_id'] = '';
             }
 
