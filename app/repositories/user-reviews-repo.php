@@ -38,7 +38,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             $comment_data = $this->build_and_get_comment_data($user, $props);
             $comment_id = wp_new_comment($comment_data);
 
-            // 3. Store Comment Cookies consent for Non-Logged in Users
+            // 3. Store wp_comment, wp_consent in Cookies for non-logged-in users
             if (!$Current_User->is_loggedin()) {
                 $wp_comment = get_comment($comment_id);
                 $wp_user = wp_get_current_user();
