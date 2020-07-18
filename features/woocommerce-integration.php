@@ -63,7 +63,7 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration')) {
                 $html .= $rating['dom'];
                 $html .= '<a href="#reviews" class="woocommerce-review-link" rel="nofollow">(';
                 $html .= '<span class="count">' . esc_html($review_count) . '</span>';
-                $html .= __(' customer review', SCR_DOMAIN);
+                $html .= ' ' . __('customer review', SCR_DOMAIN);
                 $html .= ')</a>';
             }
 

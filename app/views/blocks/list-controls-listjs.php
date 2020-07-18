@@ -21,9 +21,9 @@ if (!class_exists('\StarcatReview\App\Views\Blocks\List_Controls_Listjs')) {
             $html = '';
 
             $html .= '<div class="scr-controls-container scr-container">';
-            $html .= '<input class="collection-search" placeholder="Search" />';
+            $html .= '<input class="collection-search" placeholder="' . __('Search', SCR_DOMAIN) . '" />';
             $html .= '<ul class="sort-by">';
-            $html .= '<li class="sort btn" data-sort="review-card__header">Sort by name</li>';
+            $html .= '<li class="sort btn" data-sort="review-card__header">' . __('Sort by name', SCR_DOMAIN) . '</li>';
             $html .= '</ul>';
             $html .= "</div>";
 
@@ -33,7 +33,7 @@ if (!class_exists('\StarcatReview\App\Views\Blocks\List_Controls_Listjs')) {
         public function search()
         {
             $html = '';
-            $html .= '<input class="collection-search scr-search" placeholder="Search" />';
+            $html .= '<input class="collection-search scr-search" placeholder="' . __('Search', SCR_DOMAIN) . '" />';
 
             return $html;
         }
@@ -42,7 +42,7 @@ if (!class_exists('\StarcatReview\App\Views\Blocks\List_Controls_Listjs')) {
         {
             $html = '';
             $html .= '<ul class="sort-by">';
-            $html .= '<li class="sort btn" data-sort="review-card__header">Sort by name</li>';
+            $html .= '<li class="sort btn" data-sort="review-card__header">' . __('Sort by name', SCR_DOMAIN) . '</li>';
             $html .= '</ul>';
             return $html;
         }

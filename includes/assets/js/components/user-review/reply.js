@@ -44,7 +44,7 @@ var Reply = {
 
             var parent = replyLink.closest(".comment").attr("id");
             // console.log(link.closest(".comment").find.children().length);
-            var placeholder = "Reply to @" + author + " ...";
+            var placeholder = Translations.replyto + " @" + author + " ...";
 
             jQuery(selectors.replyForm).remove();
 
@@ -101,7 +101,7 @@ var Reply = {
                 .closest(".comment")
                 .attr("data-comment-parent-id");
 
-            var placeholder = "Reply to @" + author + " ...";
+            var placeholder = Translations.replyto + " @" + author + " ...";
 
             jQuery(selectors.replyForm).remove();
 
@@ -132,7 +132,7 @@ var Reply = {
         editForm
             .find(".submit.button")
             .addClass("blue")
-            .text("Save");
+            .text(Translations.save);
 
         return editForm[0].outerHTML;
     },

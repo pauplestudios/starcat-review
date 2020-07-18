@@ -62,8 +62,8 @@ var Edit = {
     },
 
     modifyFormForEditing: function (form, props, content) {
-        var sumbitBtn = '<div class="ui blue submit mini button">Save</div>';
-        var cancelBtn = '<div class="ui cancel mini button">Cancel</div>';
+        var sumbitBtn = '<div class="ui blue submit mini button">' + Translations.save + '</div>';
+        var cancelBtn = '<div class="ui cancel mini button">' + Translations.cancel + '</div>';
 
         props.title = content.find('.title').text().trim();
         props.description = content.find('.description').text().trim();
