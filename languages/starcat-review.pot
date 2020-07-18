@@ -31,6 +31,9 @@ msgid "Type new or select existing cons"
 msgid "Submit"
 msgstr "Submit" 
 
+msgid "Reply"
+msgstr "Reply"
+
 msgid "REPLY"
 msgstr "REPLY" 
 
@@ -107,6 +110,9 @@ msgstr "%d of %d people found this review helpful"
 
 msgid "AT"
 msgstr "AT" 
+
+msgid "%s in Moderation !"
+msgstr "%s in Moderation !"
 
 #. CPT 
 
