@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Starcat Review\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-18 09:32+0000\n"
-"PO-Revision-Date: 2020-07-18 09:33+0000\n"
+"POT-Creation-Date: 2020-07-18 09:59+0000\n"
+"PO-Revision-Date: 2020-07-18 10:00+0000\n"
 "Last-Translator: Santhosh\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -45,6 +45,9 @@ msgstr "Geben Sie new ein oder wählen Sie vorhandene Nachteile aus"
 
 msgid "Submit"
 msgstr "einreichen"
+
+msgid "Reply"
+msgstr "Antworten"
 
 msgid "REPLY"
 msgstr "ANTWORTEN"
@@ -120,6 +123,9 @@ msgstr "%d von %d personen fand diese bewertung hilfreich"
 
 msgid "AT"
 msgstr "Um"
+
+msgid "%s in Moderation !"
+msgstr "%s im Mäßigung!"
 
 #. CPT
 msgid "See More"
