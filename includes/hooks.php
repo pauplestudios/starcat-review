@@ -3,6 +3,7 @@
 namespace StarcatReview\Includes;
 
 use \StarcatReview\Includes\Settings\SCR_Getter;
+use \StarcatReview\Includes\Translations as Translations;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -147,7 +148,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         public function manage_cpt_custom_columns($columns)
         {
             $items = array(
-                'scr_rating' => __('Ratings', SCR_DOMAIN),
+                'scr_rating' => __('Rating', SCR_DOMAIN),
                 // Todo: 'scr_product_price'
             );
 
@@ -258,6 +259,9 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             wp_localize_script('starcat-review-script', 'SCROptions', [
                 'global_stats' => SCR_Getter::get('global_stats'),
             ]);
+
+            wp_localize_script('starcat-review-script', 'Translations', Translations::getFormSrings());
+
             wp_enqueue_style('style-name', SCR_URL . "includes/assets/bundle/main.bundle.css");
         }
     } // END CLASS

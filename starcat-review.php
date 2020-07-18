@@ -1,16 +1,16 @@
 <?php
 
-/*
-Plugin Name: Starcat Review
-Plugin URI: https://starcatwp.com/
-Description: Adds Author and User Reviews to any post_type
-Author: HelpieWP
-Version: 0.6
-Author URI: https://starcatwp.com/
-Network: True
-Text Domain: starcat-review
-Domain Path: /languages
-
+/**
+ * @wordpress-plugin
+ * Plugin Name:       Starcat Review
+ * Plugin URI:        https://starcatwp.com/
+ * Description:       Adds Author and User Reviews to any post_type
+ * Version:           0.6
+ * Author:            HelpieWP
+ * Author URI:        https: //starcatwp.com/
+ * Network:           True
+ * Text Domain:       starcat-review
+ * Domain Path:       /languages
  */
 
 if (!defined('ABSPATH')) {
@@ -48,6 +48,7 @@ function starcat_review_activation()
     } elseif (!version_compare(get_bloginfo('version'), '4.5', '>=')) {
         add_action('admin_notices', 'starcat_review_fail_wp_version');
     } else {
+        add_action('plugins_loaded', 'starcat_load_textdomain');
         require SCR_PATH . 'includes/plugin.php';
     }
 }
@@ -84,3 +85,7 @@ function starcat_review_fail_wp_version()
 /**
  * Starcat Review Internalization
  */
+function starcat_load_textdomain()
+{
+    load_plugin_textdomain(SCR_DOMAIN, false, basename(dirname(__FILE__)) . '/languages');
+}

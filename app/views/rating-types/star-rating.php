@@ -66,7 +66,7 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
             $is_post_stat = isset($this->props['collection']['stat_type']) && $this->props['collection']['stat_type'] == 'post_stat' ? true : false;
 
             if (!$is_post_stat) {
-                $html .= '<div class="reviewed-item-label__text">' . $key . '</div>';
+                $html .= '<div class="reviewed-item-label__text">' . __($key, SCR_DOMAIN) . '</div>';
             }
 
             $html .= '<div class="reviewed-item-stars"
