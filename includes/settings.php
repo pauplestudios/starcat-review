@@ -318,13 +318,6 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         //     'default' => true,
                         // ),
 
-                        // array(
-                        //     'id' => 'ur_enable_approval',
-                        //     'type' => 'switcher',
-                        //     'title' => __('Require Admin Approval to publish reviews', SCR_DOMAIN),
-                        //     'default' => true,
-                        // ),
-
                         array(
                             'id' => 'ur_who_can_review',
                             'type' => 'select',
@@ -335,6 +328,14 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                                 'everyone' => __('Everyone', SCR_DOMAIN),
 
                             ),
+                        ),
+
+                        array(
+                            'id' => 'ur_auto_approve',
+                            'type' => 'switcher',
+                            'title' => __('Auto Approve Review', SCR_DOMAIN),
+                            'desc' => __("Publish the submitted review directly. Don't ask for approval", SCR_DOMAIN),
+                            'default' => false,
                         ),
 
                         array(

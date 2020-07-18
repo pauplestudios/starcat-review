@@ -189,7 +189,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
         {
             $html = '';
             if ($comment['approved'] == 0 && $comment['user_id'] == $this->collection['current_user_id']) {
-                $html .= '<div class="comment_in_moderation">' . $title . ' in Moderation !</div>';
+                $html .= '<div class="comment_in_moderation">' . sprintf(__('%s in Moderation !', SCR_DOMAIN), __($title, SCR_DOMAIN)) . '</div>';
             }
 
             return $html;
