@@ -54,8 +54,8 @@ var Form = {
             contentType: false,
             success: function (results) {
 
-                if (results.alert) {                    
-                    alert(results.alert);                                                            
+                if (results.alert) {
+                    alert(results.alert);
                     // Reloading the page
                     window.location.reload();
                 }
@@ -106,7 +106,7 @@ var Form = {
 
         var form_data = new FormData();
         var uploadField = document.getElementById('scr_pr_image_upload');
-        var files = (uploadField)? uploadField.files : [];
+        var files = (uploadField) ? uploadField.files : [];
 
         console.log("Files Length : ");
         console.log(files.length);
@@ -126,38 +126,38 @@ var Form = {
 
     getRules: function () {
         var rules = {
+            name: {
+                identifier: "name",
+                rules: [
+                    {
+                        type: "empty",
+                        prompt: "Please enter your Name",
+                    },
+                ],
+            },
+            email: {
+                identifier: "email",
+                rules: [
+                    {
+                        type: 'email',
+                        prompt: "Please enter your E-mail",
+                    },
+                ],
+            },
+            // website: {
+            //     identifier: "website",
+            //     rules: [
+            //         {
+            //             type: "empty",
+            //             prompt: "Please enter your Website URL",
+            //         },
+            //     ],
+            // },
             title: {
                 identifier: "title",
                 rules: [
                     {
                         type: "empty",
-                        prompt: "Please enter your title",
-                    },
-                ],
-            },
-            first_name: {
-                identifier: "first_name",
-                rules: [
-                    {
-                        type: "empty",
-                        prompt: "Please enter your First Name",
-                    },
-                ],
-            },
-            last_name: {
-                identifier: "last_name",
-                rules: [
-                    {
-                        type: "empty",
-                        prompt: "Please enter your Last Name",
-                    },
-                ],
-            },
-            user_email: {
-                identifier: "user_email",
-                rules: [
-                    {
-                        type: 'email',
                         prompt: "Please enter your title",
                     },
                 ],

@@ -38,7 +38,16 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             $comment_data = $this->build_and_get_comment_data($user, $props);
             $comment_id = wp_new_comment($comment_data);
 
-            // 3. Check if we need to manually approve this review
+            // 3. Store wp_comment, wp_consent in Cookies for non-logged-in users
+            if (!$Current_User->is_loggedin()) {
+                $wp_comment = get_comment($comment_id);
+                $wp_user = wp_get_current_user();
+                $wp_consent = isset($props['wp-comment-cookies-consent']) ? $props['wp-comment-cookies-consent'] : '';
+
+                do_action('set_comment_cookies', $wp_comment, $wp_user, $wp_consent);
+            }
+
+            // 4. Check if we need to manually approve this review
             if (!$can_approve) {
                 $comment_modifier = [
                     'comment_ID' => $comment_id,
@@ -48,7 +57,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 wp_update_comment($comment_modifier);
             }
 
-            // 4. Does this review have comment_meta to be updated
+            // 5. Does this review have comment_meta to be updated
             $should_update_comment_meta = (isset($comment_id) && !empty($comment_id) && !isset($props['review_reply']) && $props['parent'] == 0);
             if ($should_update_comment_meta) {
                 add_comment_meta($comment_id, SCR_COMMENT_META, $props);
@@ -90,9 +99,9 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 $comment_data['comment_author_url'] = $user->user_url;
                 $comment_data['user_id'] = $user->ID;
             } else {
-                $comment_data['comment_author'] = $props['first_name'] . ' ' . $props['last_name'];
-                $comment_data['comment_author_email'] = $props['user_email'];
-                $comment_data['comment_author_url'] = '';
+                $comment_data['comment_author'] = $props['name'];
+                $comment_data['comment_author_email'] = $props['email'];
+                $comment_data['comment_author_url'] = (isset($props['website']) && !empty($props['website'])) ? $props['website'] : '';
                 $comment_data['user_id'] = '';
             }
 

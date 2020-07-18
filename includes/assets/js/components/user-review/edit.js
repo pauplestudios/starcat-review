@@ -78,9 +78,10 @@ var Edit = {
         form.show();
 
         // Non-logged-in Users
-        // form.find('[name="user_name"]').attr("disabled", "");
-        // form.find('[name="user_email"]').attr("disabled", "");
-        // form.find('[name="website"]').attr("disabled", "");
+        form.find('[name="name"]').attr("disabled", "");
+        form.find('[name="email"]').attr("disabled", "");
+        form.find('[name="website"]').attr("disabled", "");
+        form.find('[name="wp-comment-cookies-consent"]').attr("disabled", "");
 
         // Stats
         Edit.getModifiedFormforStats(props, form);
