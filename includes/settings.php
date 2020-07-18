@@ -330,7 +330,6 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             ),
                         ),
 
-                        // TODO: Translation
                         array(
                             'id' => 'ur_auto_approve',
                             'type' => 'switcher',

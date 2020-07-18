@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Starcat Review\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-16 20:20+0000\n"
-"PO-Revision-Date: 2020-07-16 20:22+0000\n"
+"POT-Creation-Date: 2020-07-18 09:32+0000\n"
+"PO-Revision-Date: 2020-07-18 09:33+0000\n"
 "Last-Translator: Santhosh\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -74,7 +74,6 @@ msgstr "Profis und Nachteile"
 msgid "Not Rated Yet !!!"
 msgstr "Noch nicht bewertet !!!"
 
-#, fuzzy
 msgid "overall"
 msgstr "Insgesamt"
 
@@ -213,14 +212,12 @@ msgstr "Statistik Typ"
 msgid "Source Type"
 msgstr "Quelle Typ"
 
-#, fuzzy
 msgid "Icon"
 msgstr "Symbol"
 
 msgid "Icons"
 msgstr "Symbole"
 
-#, fuzzy
 msgid "Image"
 msgstr "Bild"
 
@@ -405,6 +402,14 @@ msgstr "Angemeldete Benutzer"
 
 msgid "Everyone"
 msgstr "Jeder"
+
+msgid "Auto Approve Review"
+msgstr "Überprüfung automatisch genehmigen"
+
+msgid "Publish the submitted review directly. Don't ask for approval"
+msgstr ""
+"Veröffentlichen Sie die eingereichte Bewertung direkt. Bitten Sie nicht um "
+"Genehmigung"
 
 msgid "Allow Same User Can leave More than One Review"
 msgstr "Derselbe Benutzer zulassen kann mehr als eine Bewertung abgeben"

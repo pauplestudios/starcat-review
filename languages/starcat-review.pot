@@ -369,6 +369,12 @@ msgstr "Logged In Users"
 msgid "Everyone"
 msgstr "Everyone" 
 
+msgid "Auto Approve Review"
+msgstr "Auto Approve Review" 
+
+msgid "Publish the submitted review directly. Don't ask for approval"
+msgstr "Publish the submitted review directly. Don't ask for approval" 
+
 msgid "Allow Same User Can leave More than One Review"
 msgstr "Allow Same User Can leave More than One Review" 
 
