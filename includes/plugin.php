@@ -53,9 +53,9 @@ if (!class_exists('\Starcat_Review')) {
             $recaptcha = new \StarcatReview\Services\Recaptcha();
 
             // Developement Purpose Only to add add-ons without activate and install
-            require_once SCR_PATH . 'includes/lib/cpt-addon/starcat-review-cpt.php';
-            require_once SCR_PATH . 'includes/lib/photo-reviews-addon/starcat-review-photo-reviews.php';
-            require_once SCR_PATH . 'includes/lib/ct-addon/starcat-review-ct.php';
+            // require_once SCR_PATH . 'includes/lib/cpt-addon/starcat-review-cpt.php';
+            // require_once SCR_PATH . 'includes/lib/photo-reviews-addon/starcat-review-photo-reviews.php';
+            // require_once SCR_PATH . 'includes/lib/ct-addon/starcat-review-ct.php';
             // require_once SCR_PATH . 'includes/lib/starcat-review-woo-notify/starcat-review-woo-notify.php';
 
         }

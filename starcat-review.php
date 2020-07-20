@@ -48,7 +48,6 @@ function starcat_review_activation()
     } elseif (!version_compare(get_bloginfo('version'), '4.5', '>=')) {
         add_action('admin_notices', 'starcat_review_fail_wp_version');
     } else {
-        add_action('plugins_loaded', 'starcat_load_textdomain');
         require SCR_PATH . 'includes/plugin.php';
     }
 }
@@ -81,11 +80,4 @@ function starcat_review_fail_wp_version()
     $message = sprintf(esc_html__('Starcat Review requires WordPress version %s+. Because you are using an earlier version, the plugin is currently NOT ACTIVE.', 'starcat-review'), '4.5');
     $html_message = sprintf('<div class="error">%s</div>', wpautop($message));
     echo wp_kses_post($html_message);
-}
-/**
- * Starcat Review Internalization
- */
-function starcat_load_textdomain()
-{
-    load_plugin_textdomain(SCR_DOMAIN, false, basename(dirname(__FILE__)) . '/languages');
 }
