@@ -40,8 +40,8 @@ if (!class_exists('\Starcat_Review')) {
             $settings = new \StarcatReview\Includes\Settings();
 
             /* Upgrades */
-            $Upgrades = new \StarcatReview\Includes\Upgrades();
-            \StarcatReview\Includes\Upgrades::init();
+            $upgrades = new \StarcatReview\Includes\Update\Upgrades();
+            $upgrades::init();
 
             // Dashboard User review Table
             require_once SCR_PATH . '/app/components/user-reviews/table.php';
