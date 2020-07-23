@@ -63,7 +63,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 add_comment_meta($comment_id, SCR_COMMENT_META, $props);
 
                 // WooCommerce product review
-                if (get_post_type() == 'product' && isset($props['rating']) && !empty($props['rating'])) {
+                if (get_post_type(get_comment($comment_id)->comment_post_ID) == 'product' && isset($props['rating']) && !empty($props['rating'])) {
                     add_comment_meta($comment_id, 'rating', round($props['rating'] / 20));
                 }
             }
@@ -141,7 +141,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 update_comment_meta($comment_id, SCR_COMMENT_META, $props);
 
                 // WooCommerce product review
-                if (get_post_type() == 'product' && isset($props['rating']) && !empty($props['rating'])) {
+                if (get_post_type(get_comment($comment_id)->comment_post_ID) == 'product' && isset($props['rating']) && !empty($props['rating'])) {
                     update_comment_meta($comment_id, 'rating', round($props['rating'] / 20));
                 }
 
