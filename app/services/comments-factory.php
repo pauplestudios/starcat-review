@@ -102,7 +102,7 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
             $comment_ids = [];
             $query = [
                 'post_id' => isset($query_args['post_id']) ? $query_args['post_id'] : get_the_ID(),
-                // 'type' => ['review', 'starcat_review'],
+                'type' => isset($query_args['type']) ? $query_args['type'] : SCR_COMMENT_TYPE,
                 'parent' => isset($query_args['parent']) ? $query_args['parent'] : 0,
                 'status' => isset($query_args['status']) ? $query_args['status'] : '',
             ];
