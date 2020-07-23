@@ -15,7 +15,7 @@ if (!function_exists('scr_fs')) {
                 'type' => 'plugin',
                 'public_key' => 'pk_ad2b6650d9ef2e5df3c203ea9046f',
                 'is_premium' => true,
-                'is_premium_only'     => true,
+                'is_premium_only' => true,
                 'premium_suffix' => 'Pro',
                 // If your plugin is a serviceware, set this option to false.
                 'has_premium_version' => true,
