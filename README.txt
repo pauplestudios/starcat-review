@@ -19,6 +19,13 @@ Create Review Posts, add reviews to existing post types and enable user reviews.
 
 == Change Log ==
 
+= 0.6.1 =
+* Feature: Auto Approve Review settings added 
+* Feature: Starcat Review Internalization
+* Feature: German Translation ready
+* Fix: Non-logged-in users submitted reviews shows author as Anonymous
+* General Fixes
+
 = 0.6 =
 * Feature: Photo Reviews Addon (sold also as a Bundle)
 * Feature: WooCommerce Integration
