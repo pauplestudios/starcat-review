@@ -17,16 +17,24 @@ class BelowZeroPointSixPointOneTest extends \Codeception\TestCase\WPTestCase
     public function test_upgrade_v061()
     {
         $upgrader_list = new \StarcatReview\Includes\Update\Upgrades_List();
-        $this->setup_reviews_and_replies_data();
+        $review_data = $this->setup_reviews_and_replies_data();
 
-        /* Part 1 : Non-logged-in authors info review and reply support */
+        $comments = scr_get_comments_args(['comments'], ['parent' => '']);
+        $this->assertEquals(4, count($comments));
 
-        /* Part 2 : woocomemrce integration support */
-        $actual = scr_get_comments_args(['comments'], ['parent' => '']);
-        $expected = 4;
-        $this->assertEquals($expected, count($actual));
+        $comments = scr_get_comments_args(['comments'], ['user_id' => 0]);
+        $this->assertEquals(2, count($comments));
 
         $upgrader_list->upgrade_v061();
+        /* Part 2 : Non-logged-in reviews author info support */
+        $comments = scr_get_comments_args(['comments'], ['user_id' => 0]);
+        $this->assertEquals(3, count($comments));
+
+        $is_author_anonymous = array_search('Anonymous', wp_list_pluck($comments, 'author'));
+        $this->assertFalse($is_author_anonymous);
+
+        /* Part 1 : woocomemrce integration support */
+
         $actual = scr_get_comments_args(['comments'], ['parent' => '']);
         $expected = 6;
         $this->assertEquals($expected, count($actual));
@@ -60,9 +68,9 @@ class BelowZeroPointSixPointOneTest extends \Codeception\TestCase\WPTestCase
                 'url' => 'chandlerbing.com',
             ],
             "0.6.1" => [
-                'name' => 'Ross Geller',
-                'email' => 'rossgeller@gmail.com',
-                'website' => 'rossgeller.com',
+                'author' => 'Ross Geller',
+                'email' => 'chandlerbing@gmail.com',
+                'url' => 'chandlerbing.com',
             ],
         ];
 
@@ -75,6 +83,7 @@ class BelowZeroPointSixPointOneTest extends \Codeception\TestCase\WPTestCase
             // reviews
             $comment_id = $UR_Repo->insert($data);
             $review[] = $comment_id;
+            $this->update_scr_comment_props($comment_id);
             $this->update_comment_type($comment_id, $version);
 
             // replies
@@ -85,6 +94,34 @@ class BelowZeroPointSixPointOneTest extends \Codeception\TestCase\WPTestCase
         }
 
         return $review;
+    }
+
+    protected function update_scr_comment_props($comment_id)
+    {
+
+        $props = get_comment_meta($comment_id, SCR_COMMENT_META, true);
+
+        if (isset($_POST['first_name']) && !empty($_POST['first_name'])) {
+            $props['first_name'] = $_POST['first_name'];
+        }
+
+        if (isset($_POST['last_name']) && !empty($_POST['last_name'])) {
+            $props['last_name'] = $_POST['last_name'];
+        }
+
+        if (isset($_POST['user_email']) && !empty($_POST['user_email'])) {
+            $props['user_email'] = $_POST['user_email'];
+        }
+
+        if (isset($_POST['author']) && !empty($_POST['author'])) {
+            $props['author'] = $_POST['author'];
+        }
+
+        if (isset($_POST['url']) && !empty($_POST['url'])) {
+            $props['url'] = $_POST['url'];
+        }
+
+        update_comment_meta($comment_id, SCR_COMMENT_META, $props);
     }
 
     protected function update_comment_type($comment_id, $version)

@@ -43,36 +43,62 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
 
         public function upgrade_v061()
         {
-            // error_log('upgrade_v061');
             $result = false;
             $part1_result = $this->upgrade_below_v061_part_1();
             $part2_result = $this->upgrade_below_v061_part_2();
 
-            if ($part1_result && $part2_result) {
-                $result = true;
-            }
             return $result;
         }
 
         /* Non-logged-in authors info review and replies support */
-        public function upgrade_below_v061_part_1()
+        public function upgrade_below_v061_part_2()
         {
-            $result = false;
+            // Get non-loggedin users comments of version0.6 don’t have the author name in the comment table
+            $comments = scr_get_comments_args(['comments'], ['user_id' => 0]);
 
-            // Get all the comments don’t have the author name in the comment table
+            $comment_ids = array_keys($comments);
+            if (isset($comment_ids) && !empty($comment_ids)) {
+                foreach ($comment_ids as $comment_id) {
+                    $wp_comment = get_comment($comment_id);
+                    if (empty(trim($wp_comment->comment_author))) {
+                        // Check out the related SCR-comment meta and get the details if the name, email and website of v0.5 and v0.6 are presents
+                        $comment_meta = get_comment_meta($comment_id, SCR_COMMENT_META, true);
+                        $comment_modifier = [
+                            'comment_ID' => $comment_id,
+                        ];
 
-            // Check out the related SCR-comment meta and get the details if the name, email and website of v0.5 and v0.6 are presents
+                        if (isset($comment_meta['first_name']) && isset($comment_meta['last_name'])) {
+                            $comment_modifier['comment_author'] = $comment_meta['first_name'] . ' ' . $comment_meta['last_name'];
+                        }
 
-            // Update the comment table from given details
+                        if (isset($comment_meta['author']) && !empty($comment_meta['author'])) {
+                            $comment_modifier['comment_author'] = $comment_meta['author'];
+                        }
 
-            // Remove SCR-comment meta details fields after updating.
-            return $result;
+                        if (isset($comment_meta['user_email']) && !empty($comment_meta['user_email'])) {
+                            $comment_modifier['comment_author_email'] = $comment_meta['user_email'];
+                        }
+
+                        if (isset($comment_meta['email']) && !empty($comment_meta['email'])) {
+                            $comment_modifier['comment_author_email'] = $comment_meta['email'];
+                        }
+
+                        if (isset($comment_meta['url']) && !empty($comment_meta['url'])) {
+                            $comment_modifier['comment_author_url'] = $comment_meta['url'];
+                        }
+
+                        // Update the comment table from given details
+                        wp_update_comment($comment_modifier);
+                    }
+
+                }
+            }
+            return true;
         }
 
         /* show in wooCommerce reviews and replies support when starcat plugin deactivated */
-        public function upgrade_below_v061_part_2()
+        public function upgrade_below_v061_part_1()
         {
-            $result = false;
             $comments = scr_get_comments_args(['comments'], $query_args = ['type' => 'starcat_review', 'parent' => '']);
             if (!empty($comments) && is_array($comments)) {
                 $comment_ids = array_keys($comments);
@@ -89,13 +115,13 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
 
                     // WooCommerce product review
                     if (get_post_type($wp_comment->comment_post_ID) == 'product' && isset($scr_comment_meta['rating']) && !empty($scr_comment_meta['rating'])) {
+
                         update_comment_meta($comment_id, 'rating', round($scr_comment_meta['rating'] / 20));
                     }
-                    $result = true;
                 }
             }
 
-            return $result;
+            return true;
         }
     } // END CLASS
 }
