@@ -1,8 +1,7 @@
 
 <?php
-// use \StarcatReview\Includes\Settings\SCR_Getter;
 
-class BelowZeroPointSixTest extends \Codeception\TestCase\WPTestCase
+class BelowZeroPointSixPointOneTest extends \Codeception\TestCase\WPTestCase
 {
 
     public function setUp()
@@ -18,18 +17,22 @@ class BelowZeroPointSixTest extends \Codeception\TestCase\WPTestCase
     public function test_upgrade_v061()
     {
         $upgrader_list = new \StarcatReview\Includes\Update\Upgrades_List();
+        $this->setup_reviews_and_replies_data();
 
-        $actual = $upgrader_list->upgrade_v061();
-        $expected = [];
+        /* Part 1 : Non-logged-in authors info review and reply support */
 
-        $review_data = $this->get_review_data();
-        $comments = scr_get_comments_args(['comments'], []);
+        /* Part 2 : woocomemrce integration support */
+        $actual = scr_get_comments_args(['comments'], ['parent' => '']);
+        $expected = 4;
+        $this->assertEquals($expected, count($actual));
 
-        error_log('review_data : ' . print_r($review_data, true));
-        error_log('comments : ' . print_r($comments, true));
+        $upgrader_list->upgrade_v061();
+        $actual = scr_get_comments_args(['comments'], ['parent' => '']);
+        $expected = 6;
+        $this->assertEquals($expected, count($actual));
     }
 
-    public function get_review_data()
+    protected function setup_reviews_and_replies_data()
     {
         $UR_Repo = new \StarcatReview\App\Repositories\User_Reviews_Repo();
         $product_id = $this->factory()->post->create(['post_type' => 'product']);
@@ -68,25 +71,33 @@ class BelowZeroPointSixTest extends \Codeception\TestCase\WPTestCase
         $review = [];
         foreach ($datas as $version => $data) {
             $data = array_merge($data, $general);
-            error_log('data : ' . print_r($data, true));
 
+            // reviews
             $comment_id = $UR_Repo->insert($data);
             $review[] = $comment_id;
+            $this->update_comment_type($comment_id, $version);
 
-            $comment_modifier = [
-                'comment_ID' => $comment_id,
-                'comment_approved' => 1,
-            ];
-
-            if ($version == "0.5") {
-                $comment_modifier['comment_type'] = 'starcat_review';
-            }
-            wp_update_comment($comment_modifier);
+            // replies
+            $data['parent'] = $comment_id;
+            $comment_id = $UR_Repo->insert($data);
+            $replies[] = $comment_id;
+            $this->update_comment_type($comment_id, $version);
         }
 
         return $review;
     }
 
+    protected function update_comment_type($comment_id, $version)
+    {
+        $comment_modifier = [
+            'comment_ID' => $comment_id,
+        ];
+
+        if ($version == "0.5") {
+            $comment_modifier['comment_type'] = 'starcat_review';
+        }
+        wp_update_comment($comment_modifier);
+    }
 }
 
 ?>
