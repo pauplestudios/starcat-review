@@ -139,13 +139,19 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
                         "assets/vendors/semantic/gulpfile.js",
 
                         "assets/vendors/comparison-table/**/*",
+
+                        // Ignore add-ons folders
+                        "lib/ct-addon/**/*",
+                        "lib/cpt-addon/**/*",
+                        "lib/photo-reviews-addon/**/*",
+                        "lib/starcat-review-woo-notify/**/*",
                     ],
                 },
 
-                // {
-                //     from: path.resolve(__dirname, "languages") + "/**",
-                //     to: buildFolder
-                // },
+                {
+                    from: path.resolve(__dirname, "languages") + "/**",
+                    to: buildFolder
+                },
 
                 {
                     from: path.resolve(__dirname, "*.php"),
