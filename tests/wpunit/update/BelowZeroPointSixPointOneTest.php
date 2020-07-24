@@ -38,6 +38,8 @@ class BelowZeroPointSixPointOneTest extends \Codeception\TestCase\WPTestCase
         $actual = scr_get_comments_args(['comments'], ['parent' => '']);
         $expected = 6;
         $this->assertEquals($expected, count($actual));
+
+        $this->assertEquals(4, get_comment_meta($review_data[0], 'rating', true));
     }
 
     protected function setup_reviews_and_replies_data()
@@ -54,6 +56,7 @@ class BelowZeroPointSixPointOneTest extends \Codeception\TestCase\WPTestCase
                 'feature' => 80,
                 'UI' => 60,
             ],
+            'rating' => 80,
         ];
 
         $datas = [
