@@ -23,8 +23,7 @@ class LibraryTest extends \Codeception\TestCase\WPTestCase
 
     public function test_upgrader()
     {
-        require_once SCR_PATH . 'includes/upgrades-list.php';
-        $upgrader_list = new \StarcatReview\Includes\Upgrades_List();
+        $upgrader_list = new \StarcatReview\Includes\Update\Upgrades_List();
 
         // Upgrade Test
         $this->init($this, $upgrader_list);
@@ -68,7 +67,7 @@ class LibraryTest extends \Codeception\TestCase\WPTestCase
 
     protected function get_upgrades_list_stub()
     {
-        $upgrades_list_stub = \Codeception\Stub::make('\StarcatReview\Includes\Upgrades_List', [
+        $upgrades_list_stub = \Codeception\Stub::make('\StarcatReview\Includes\Update\Upgrades_List', [
             'get_upgrades' => function () {
                 $upgrades = [
                     '0.2' => 'upgrade_v02',

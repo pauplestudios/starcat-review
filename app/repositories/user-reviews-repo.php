@@ -39,10 +39,10 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             $comment_id = wp_new_comment($comment_data);
 
             // 3. Store wp_comment, wp_consent in Cookies for non-logged-in users
-            if (!$Current_User->is_loggedin()) {
+            if (!$Current_User->is_loggedin() && isset($props['wp-comment-cookies-consent'])) {
                 $wp_comment = get_comment($comment_id);
                 $wp_user = wp_get_current_user();
-                $wp_consent = isset($props['wp-comment-cookies-consent']) ? $props['wp-comment-cookies-consent'] : '';
+                $wp_consent = $props['wp-comment-cookies-consent'];
 
                 do_action('set_comment_cookies', $wp_comment, $wp_user, $wp_consent);
             }
@@ -63,7 +63,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 add_comment_meta($comment_id, SCR_COMMENT_META, $props);
 
                 // WooCommerce product review
-                if (get_post_type() == 'product' && isset($props['rating']) && !empty($props['rating'])) {
+                if (get_post_type(get_comment($comment_id)->comment_post_ID) == 'product' && isset($props['rating']) && !empty($props['rating'])) {
                     add_comment_meta($comment_id, 'rating', round($props['rating'] / 20));
                 }
             }
@@ -99,8 +99,8 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 $comment_data['comment_author_url'] = $user->user_url;
                 $comment_data['user_id'] = $user->ID;
             } else {
-                $comment_data['comment_author'] = $props['name'];
-                $comment_data['comment_author_email'] = $props['email'];
+                $comment_data['comment_author'] = (isset($props['name']) && !empty($props['name'])) ? $props['name'] : '';
+                $comment_data['comment_author_email'] = (isset($props['email']) && !empty($props['email'])) ? $props['email'] : '';
                 $comment_data['comment_author_url'] = (isset($props['website']) && !empty($props['website'])) ? $props['website'] : '';
                 $comment_data['user_id'] = '';
             }
@@ -141,7 +141,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 update_comment_meta($comment_id, SCR_COMMENT_META, $props);
 
                 // WooCommerce product review
-                if (get_post_type() == 'product' && isset($props['rating']) && !empty($props['rating'])) {
+                if (get_post_type(get_comment($comment_id)->comment_post_ID) == 'product' && isset($props['rating']) && !empty($props['rating'])) {
                     update_comment_meta($comment_id, 'rating', round($props['rating'] / 20));
                 }
 

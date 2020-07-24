@@ -14,21 +14,17 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
     {
         public function __construct()
         {
-            // error_log('execute this timestamp1 : '.time());
-            /* settings getter */
-            require_once SCR_PATH . 'includes/settings/getter.php';
-            require_once SCR_PATH . 'includes/settings/setter.php';
-
             /*  Reviews Init Hook */
             add_action('init', array($this, 'init_hook'));
 
-            /* */
             add_action('widgets_init', [$this, 'register_sidebar']);
 
             /*  Reviews Admin Section Initialization Hook */
             add_action('admin_init', array($this, 'load_admin_hooks'));
+
             /*  Reviews Enqueing Script Action hook */
             add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
+
             /*  Reviews Shortcode */
             // require_once SCR_PATH . 'includes/shortcodes.php';
 
@@ -37,9 +33,6 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             add_filter('the_content', array($this, 'content_filter'));
 
             add_action('wp_head', array($this, 'scr_schema_reviews'));
-
-            // Dashboard User review Table
-            require_once SCR_PATH . '/app/components/user-reviews/table.php';
 
             $service_controller = new \StarcatReview\App\Services\Services();
             $service_controller->register_services();
@@ -50,10 +43,8 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             /*  Reviews Ajax Hooks */
             $this->load_ajax_handler();
 
-            // $register_templates = new \StarcatReview\Includes\Register_Templates();
             /* Core WooCommerce Review Integration */
             new \StarcatReview\Features\Woocommerce_Integration();
-
         }
 
         public function register_sidebar()
@@ -101,11 +92,9 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
         public function plugins_loaded_action()
         {
-            /*  Reviews Settings */
-            //  new \StarcatReview\Includes\Settings();
+            /*  Starcat Review Internalization Translation  */
+            load_plugin_textdomain(SCR_DOMAIN, false, basename(dirname(SCR__FILE__)) . '/languages');
 
-            /*  Starcat Review Plugin Translation  */
-            // load_plugin_textdomain('starcat-review', false, basename(dirname(__FILE__)) . '/languages/');
             if (class_exists('\StarcatReviewCpt\Widgets\Review_Listing\Controller')) {
                 /*  Reviews Widget */
                 $this->load_widgets();
