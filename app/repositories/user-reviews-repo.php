@@ -24,21 +24,14 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             // error_log('props : ' . print_r($props, true));
             $Current_User = new \StarcatReview\App\Services\User();
 
-            $user_can_review = $Current_User->can_review();
             $can_approve = $Current_User->can_user_directly_publish_reviews();
 
-            // 1. Check if current_user can add review
-            if ($user_can_review == false) {
-                // return 'Failed: User cannot submit reviews';
-                return 0;
-            }
-
-            // 2. Proceed only in $user_can_review == true . Store new comment.
+            // 1. Proceed only in $user_can_review == true . Store new comment.
             $user = get_user_by('id', get_current_user_id());
             $comment_data = $this->build_and_get_comment_data($user, $props);
             $comment_id = wp_new_comment($comment_data);
 
-            // 3. Store wp_comment, wp_consent in Cookies for non-logged-in users
+            // 2. Store wp_comment, wp_consent in Cookies for non-logged-in users
             if (!$Current_User->is_loggedin() && isset($props['wp-comment-cookies-consent'])) {
                 $wp_comment = get_comment($comment_id);
                 $wp_user = wp_get_current_user();
@@ -47,17 +40,17 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 do_action('set_comment_cookies', $wp_comment, $wp_user, $wp_consent);
             }
 
-            // 4. Check if we need to manually approve this review
-            if (!$can_approve) {
+            // 3. Check if we need to manually approve this review
+            if ($can_approve) {
                 $comment_modifier = [
                     'comment_ID' => $comment_id,
-                    'comment_approved' => 0,
+                    'comment_approved' => 1,
                 ];
 
                 wp_update_comment($comment_modifier);
             }
 
-            // 5. Does this review have comment_meta to be updated
+            // 4. Does this review have comment_meta to be updated
             $should_update_comment_meta = (isset($comment_id) && !empty($comment_id) && !isset($props['review_reply']) && $props['parent'] == 0);
             if ($should_update_comment_meta) {
                 add_comment_meta($comment_id, SCR_COMMENT_META, $props);
@@ -89,7 +82,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             $comment_data['comment_type'] = SCR_COMMENT_TYPE;
             // $comment_data['comment_date'] = current_time('timestamp', true);
             $comment_data['comment_parent'] = !isset($props['parent']) ? 0 : $props['parent'];
-            $comment_data['comment_approved'] = 1;
+            $comment_data['comment_approved'] = 0;
 
             // Properties which change for different user types (logged_in and non_logged_in)
             if ($is_user_logged_in) {
@@ -113,10 +106,18 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             $Current_User = new \StarcatReview\App\Services\User();
             $can_approve = $Current_User->can_user_directly_publish_reviews();
 
-            // error_log('props : ' . print_r($props, true));
+            $commenter = wp_get_current_commenter();
+
+            $name = (isset($commenter['comment_author'])) ? $commenter['comment_author'] : '';
+            $email = (isset($commenter['comment_author_email'])) ? $commenter['comment_author_email'] : '';
+            $website = (isset($commenter['comment_author_url'])) ? $commenter['comment_author_url'] : '';
+
             $comment_id = $props['comment_id'];
             $comment = array(
                 'comment_ID' => $props['comment_id'],
+                'comment_author' => $name,
+                'comment_author_email' => $email,
+                'comment_author_url' => $website,
                 'comment_content' => $props['description'],
                 'comment_parent' => $props['parent'],
                 'comment_approved' => $can_approve ? 1 : 0,
