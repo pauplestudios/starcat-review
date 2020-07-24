@@ -21,7 +21,7 @@ Create Review Posts, add reviews to existing post types and enable user reviews.
 
 = 0.6.1 =
 * Feature: Auto Approve Review settings added 
-* Feature: Starcat Review Internalization
+* Feature: Starcat Review Internationalization
 * Feature: German Translation ready
 * Fix: Non-logged-in users submitted reviews shows author as Anonymous
 * General Fixes

@@ -13,18 +13,17 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration')) {
     {
         public function __construct()
         {
-            /*
-             * Overriding the Existing product template by adding 11 as filter priotiry
-             */
-            add_filter('scr_convert_product_rating_to_stat', [$this, 'convert_product_rating_to_stat']);
             foreach (SCR_Getter::reviews_enabled_post_types() as $post_type) {
                 if ($post_type == 'product') {
+                    // Overriding the Existing product template by adding 11 as filter priotiry
                     add_filter('comments_template', [$this, 'comments_template_loader'], 11);
-                    add_action('woocommerce_single_product_summary', [$this, 'woocommerce_review_display_overall_rating'], 10);
                     add_filter('woocommerce_product_get_rating_html', [$this, 'woocommerce_rating_display'], 10, 3);
+
+                    remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_rating');
+                    add_action('woocommerce_single_product_summary', [$this, 'woocommerce_review_display_overall_rating'], 5);
                 }
             }
-
+            add_filter('scr_convert_product_rating_to_stat', [$this, 'convert_product_rating_to_stat']);
         }
 
         public function comments_template_loader($template)
