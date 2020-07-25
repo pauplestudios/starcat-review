@@ -33,6 +33,19 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
             }
         }
 
+        public static function set($option_name, $option_value)
+        {
+            // Only set one time
+            if (!isset(self::$options) || empty(self::$options)) {
+                self::$options = get_option(SCR_OPTIONS); // unique id of the framework
+            }
+
+            if (isset($option_value) && !empty($option_value)) {
+                self::$options[$option_name] = $option_value;
+                update_option(SCR_OPTIONS, self::$options);
+            }
+        }
+
         public static function get_settings()
         {
             return self::$options;
@@ -105,6 +118,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 //     'disabled' => []
                 // ],
                 'sp_template_layout' => 'left-sidebar',
+
                 // User Review Start
                 // 'ur_enable_post-types' => ['post'],
                 'ur_show_controls' => true,
@@ -112,8 +126,9 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'ur_show_search' => true,
                 'ur_show_sortBy' => true,
                 'ur_enable_replies' => true,
-                'ur_enable_approval' => true,
                 'ur_who_can_review' => 'logged_in',
+                'ur_auto_approve' => false,
+                'ur_allow_same_user_can_leave_multiple_reviews' => false,
                 'ur_show_list_title' => true,
                 'ur_list_title' => 'User Reviews',
                 'ur_enable_voting' => true,
@@ -124,15 +139,23 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'ur_show_description' => true,
                 'ur_show_captcha' => true,
                 'ur_form_custom_fields' => [],
+
+                // Photos Review start
+                'pr_enable' => true,
+                'pr_require_photo' => true,
+                'pr_photo_order' => 'oldest',
+                'pr_photo_size' => 2000,
+                'pr_photo_quantity' => 5,
+
                 // Notification
                 'ns_from_address' => get_option('admin_email'),
-                'ns_subject' => 'Thanks for Puchasing from {{Sitename}}' ,
+                'ns_subject' => 'Thanks for Puchasing from {{Sitename}}',
                 'ns_content' => 'Thank you for purchasing from Starcat Dev. If you liked your product, please leave a review: {{product_review_link}}',
                 'ns_disclaimer' => '',
                 'ns_time_schedule' => [
-                    ['value' => '12', 'unit' => 'hours'], 
-                    ['value' => '1', 'unit' => 'days'], 
-                    ['value' => '3', 'unit' => 'days'], 
+                    ['value' => '12', 'unit' => 'hours'],
+                    ['value' => '1', 'unit' => 'days'],
+                    ['value' => '3', 'unit' => 'days'],
                 ]
 
                 // Comparison Table Start
@@ -164,5 +187,64 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
 
             return $args;
         }
+
+        public static function reviews_enabled_post_types()
+        {
+            $post_types = SCR_Getter::get('review_enable_post-types');
+            $enabled_post_types = is_string($post_types) ? [0 => $post_types] : $post_types;
+
+            return $enabled_post_types;
+        }
+
+        public static function addons_available_condition()
+        {
+            $conditions = [];
+            $addon_plugins = self::get_addon_plugins_slugs();
+
+            foreach ($addon_plugins as $addon_name => $addon_slugs) {
+                $freemius = 'scr_' . $addon_name . '_fs';
+                $is_addon_freemius_active = (function_exists($freemius)) ? true : false;
+                $is_addon_plugin_active = is_plugin_active($addon_slugs[0] || $addon_slugs[1]) ? true : false;
+
+                // Assuming addon is not available
+                $conditions[$addon_name] = false;
+
+                // Addon Plugin and freeemius licences are activated
+                if ($is_addon_plugin_active && $is_addon_freemius_active && $freemius()->can_use_premium_code()) {
+                    $conditions[$addon_name] = true;
+                }
+
+                // woo notification addon v0.1 compatible support
+                if ($addon_name == 'wn' && $is_addon_plugin_active && defined('SCR_WOO_NOTIFY__FILE__') && get_plugin_data(SCR_WOO_NOTIFY__FILE__)['Version'] == 0.1) {
+                    $conditions[$addon_name] = function_exists('src_wn') && src_wn()->can_use_premium_code() ? true : false;
+                }
+
+            }
+
+            return $conditions;
+        }
+
+        public static function get_addon_plugins_slugs()
+        {
+            return [
+                'ct' => [
+                    'starcat-review-ct/starcat-review-ct.php',
+                    'starcat-review-ct-premium/starcat-review-ct.php',
+                ],
+                'pr' => [
+                    'starcat-review-photo-reviews/starcat-review-photo-reviews.php',
+                    'starcat-review-photo-reviews-premium/starcat-review-photo-reviews.php',
+                ],
+                'wn' => [
+                    'starcat-review-woo-notify/starcat-review-woo-notify.php',
+                    'starcat-review-woo-notify-premium/starcat-review-woo-notify.php',
+                ],
+                'cpt' => [
+                    'starcat-review-cpt/starcat-review-cpt.php',
+                    'starcat-review-cpt-premium/starcat-review-cpt.php',
+                ],
+            ];
+        }
+
     } // END CLASS
 }

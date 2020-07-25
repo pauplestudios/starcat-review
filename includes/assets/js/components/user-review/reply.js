@@ -44,7 +44,7 @@ var Reply = {
 
             var parent = replyLink.closest(".comment").attr("id");
             // console.log(link.closest(".comment").find.children().length);
-            var placeholder = "Reply to @" + author + " ...";
+            var placeholder = Translations.replyto + " @" + author + " ...";
 
             jQuery(selectors.replyForm).remove();
 
@@ -77,7 +77,7 @@ var Reply = {
 
             // Remove all reviews list forms except clonned form
             jQuery(selectors.userReviews)
-                .find("form.form")
+                .find(".form").hide().find(selectors.replyForm)
                 .remove();
 
             // Hide clicked review link
@@ -101,7 +101,7 @@ var Reply = {
                 .closest(".comment")
                 .attr("data-comment-parent-id");
 
-            var placeholder = "Reply to @" + author + " ...";
+            var placeholder = Translations.replyto + " @" + author + " ...";
 
             jQuery(selectors.replyForm).remove();
 
@@ -132,7 +132,7 @@ var Reply = {
         editForm
             .find(".submit.button")
             .addClass("blue")
-            .text("Save");
+            .text(Translations.save);
 
         return editForm[0].outerHTML;
     },
@@ -224,7 +224,7 @@ var Reply = {
             }
 
             jQuery(this)
-                .closest("form.form")
+                .closest(selectors.replyForm)
                 .remove();
         });
     },
@@ -237,12 +237,12 @@ var Reply = {
             .post(scr_ajax.ajax_url, props, function (results) {
                 results = JSON.parse(results);
                 // console.log(results);
-                jQuery("#" + results.props.comment_parent)
+                jQuery("#" + results.props.parent)
                     .find(".review_reply.placeholder")
                     .first()
                     .replaceWith(results.view);
 
-                jQuery("#" + results.props.comment_id).transition("pulse");
+                jQuery("#" + results.props.ID).transition("pulse");
             })
             .fail(function (response) {
                 console.log("review_reply failed");

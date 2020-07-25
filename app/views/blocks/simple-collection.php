@@ -11,7 +11,7 @@ if (!class_exists('\StarcatReview\App\Views\Blocks\Simple_Collection')) {
     {
 
         public function __construct()
-        { }
+        {}
 
         /* TODO: Write validation for inputs in Blocks.php */
         public function get_view($itemsProps, $collectionProps)
@@ -29,7 +29,7 @@ if (!class_exists('\StarcatReview\App\Views\Blocks\Simple_Collection')) {
 
                 $html .= $this->get_single_card($item);
 
-                // close row 
+                // close row
                 // if ($count  % $columns == 0) $html .= '</div>';
 
                 $count++;
@@ -47,9 +47,9 @@ if (!class_exists('\StarcatReview\App\Views\Blocks\Simple_Collection')) {
 
             $html .= '<div class="scr-collection__col col-xs-12 col-lg-4">'; // can't add additional classes
             $html .= '<div class="scr-review-card">';
-            $html .= '<div class="review-card__header">' . $item['title'] . '</div>';
-            $html .= '<div class="review-card__body">' . $item['content'] . '</div>';
-            $html .= '<div class="review-card__footer"><a href="' . $item['url'] . '">See all >> </a></div>';
+            $html .= '<div class="review-card__header">' . __($item['title'], SCR_DOMAIN) . '</div>';
+            $html .= '<div class="review-card__body">' . __($item['content'], SCR_DOMAIN) . '</div>';
+            $html .= '<div class="review-card__footer"><a href="' . $item['url'] . '">' . __('See all', SCR_DOMAIN) . ' >> </a></div>';
             $html .= '</div>';
             $html .= '</div>';
 

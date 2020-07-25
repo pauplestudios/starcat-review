@@ -3,6 +3,7 @@
 namespace StarcatReview\Includes;
 
 use \StarcatReview\Includes\Settings\SCR_Getter;
+use \StarcatReview\Includes\Translations as Translations;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -52,11 +53,11 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 $prefix = SCR_OPTIONS; // scr_options
 
                 $options = array(
-                    'menu_title' => 'Starcat Settings',
+                    'menu_title' => __('Starcat Settings', 'starcat-review'),
                     'menu_parent' => 'edit.php?post_type=starcat_review',
                     'menu_type' => 'menu', // menu, submenu, options, theme, etc.
                     'menu_slug' => 'scr-settings',
-                    'framework_title' => 'Starcat Settings',
+                    'framework_title' => __('Starcat Settings', 'starcat-review'),
                     'theme' => 'light',
                     'show_search' => false, // TODO: Enable once autofill password is fixed
                 );
@@ -65,24 +66,25 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 \CSF::createOptions($prefix, $options);
 
                 $this->general_settings($prefix);
-                if (is_plugin_active('starcat-review-cpt/starcat-review-cpt.php')) {
-                    // $options['menu_parent'] = null;
-                    // $options['menu_type'] = 'menu';
+
+                if (SCR_Getter::addons_available_condition()['cpt']) {
                     $this->mainpage_settings($prefix);
                     $this->category_page_settings($prefix);
                     $this->single_page_settings($prefix);
                     $this->category_meta_fields();
-               }
+                }
 
                 $this->user_review_settings($prefix);
-                // $this->comparison_table_settings($prefix);
-                $active_plugins = get_option('active_plugins');
-                error_log('$active_plugins : ' . print_r($active_plugins, true));
-                if (is_plugin_active('starcat-review-woo-notify/starcat-review-woo-notify.php')) {
+
+                if (SCR_Getter::addons_available_condition()['pr']) {
+                    $this->photo_reviews_settings($prefix);
+                }
+
+                if (SCR_Getter::addons_available_condition()['wn']) {
                     $this->notification_settings($prefix);
                 }
 
-                if (is_plugin_active('starcat-review-ct/starcat-review-ct.php')) {
+                if (SCR_Getter::addons_available_condition()['ct']) {
                     $this->ct_settings($prefix);
                 }
 
@@ -90,117 +92,120 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             }
         }
 
-        public function ct_settings($prefix) {
+        public function ct_settings($prefix)
+        {
             // error_log('CT Settings');
             \CSF::createSection(
                 $prefix,
                 array(
                     'id' => 'comparison_table_settings',
-                    'title' => 'Comparison Table',
+                    'title' => Translations::getStrings('ComparisonTable'),
                     'icon' => 'fa fa-bell',
                     'fields' => array(
                         array(
                             'type' => 'submessage',
                             'style' => 'success',
-                            'content' => 'You can use Comparison Tables via [starcat_review_comparison_table] shortcode with args post_type and posts(post_id) ',
+                            'content' => __('You can use Comparison Tables via [starcat_review_comparison_table] shortcode with args post_type and posts(post_id)', SCR_DOMAIN),
                         ),
                         array(
                             'type' => 'submessage',
                             'style' => 'success',
-                            'content' => 'Example: [starcat_review_comparison_table post_type="product" posts="213,245,256"]',
+                            'content' => __("Example: [starcat_review_comparison_table post_type='product' posts='213,245,256']", SCR_DOMAIN),
                         ),
-                    )
+                    ),
                 )
             );
 
         }
 
-        public function notification_settings($prefix){
+        public function notification_settings($prefix)
+        {
             $admin_email = get_option('admin_email');
             \CSF::createSection(
                 $prefix,
                 array(
                     'id' => 'notification_settings',
-                    'title' => 'Woocommerce Notification',
+                    'title' => Translations::getStrings('WoocommerceNotification'),
                     'icon' => 'fa fa-bell',
                     'fields' => array(
                         array(
-                            'type'    => 'heading',
-                            'content' => 'Woocommerce Notification Settings to notify users after they complete their orders',
+                            'type' => 'heading',
+                            'content' => __('Woocommerce Notification Settings to notify users after they complete their orders', SCR_DOMAIN),
                         ),
                         array(
                             'id' => 'ns_from_address', // ns: notification_settings
                             'type' => 'text',
-                            'title' => 'Enter From Address',
+                            'title' => __('Enter From Address', SCR_DOMAIN),
                             'placeholder' => $admin_email,
                             'default' => $admin_email,
-                            'desc' => 'Make sure this is a valid email address. Invalid emails maybe marked as spam',
+                            'desc' => __('Make sure this is a valid email address. Invalid emails maybe marked as spam', SCR_DOMAIN),
                         ),
                         array(
                             'id' => 'ns_subject', // ns: notification_settings
                             'type' => 'text',
-                            'title' => 'Subject',
-                            'placeholder' => 'Subject of the Email',
+                            'title' => __('Subject', SCR_DOMAIN),
+                            'placeholder' => __('Subject of the Email', SCR_DOMAIN),
                             'default' => 'Thank you for Purchasing from {{Sitename}}',
-                            'desc' => 'Use {{sitename}} to use the name of your website dynamically. This improves your anti-spam score.',
+                            'desc' => __('Use {{sitename}} to use the name of your website dynamically. This improves your anti-spam score', SCR_DOMAIN),
                         ),
                         array(
                             'id' => 'ns_content', // ns: notification_settings
                             'type' => 'textarea',
-                            'title' => 'Body of the Email',
-                            'placeholder' => 'Body of the email',
+                            'title' => __('Body of the Email', SCR_DOMAIN),
+                            'placeholder' => __('Body of the email', SCR_DOMAIN),
                             'default' => 'Thank you for purchasing from Starcat Dev. If you liked your product, please leave a review: {{product_review_link}}',
-                            'desc' => 'Use {{product_review_link}} to add links to purchased product pages.',
+                            'desc' => __('Use {{product_review_link}} to add links to purchased product pages', SCR_DOMAIN),
                         ),
                         array(
                             'id' => 'ns_disclaimer', // ns: notification_settings
                             'type' => 'textarea',
-                            'title' => 'Disclaimer',
-                            'placeholder' => 'Disclaimers',
-                            'desc' => '<strong>Shown at the footer of the email</strong>',
+                            'title' => __('Disclaimer', SCR_DOMAIN),
+                            'placeholder' => __('Disclaimer', SCR_DOMAIN),
+                            'desc' => '<strong>' . __('Shown at the footer of the email', SCR_DOMAIN) . '</strong>',
                         ),
                         array(
-                            'id'     => 'ns_time_schedule', // ns: notification_settings
-                            'type'   => 'repeater',
-                            'title'  => 'Notification Time Schedule',
-                            'desc' => '<strong> Notification Schedule: Hours/Days from the time of order completion. You can create multiple remainders (example: 24 hours, 3 days, 7 days from purchase)',
+                            'id' => 'ns_time_schedule', // ns: notification_settings
+                            'type' => 'repeater',
+                            'title' => __('Notification Time Schedule', SCR_DOMAIN),
+                            'desc' => sprintf(__('%s Hours/Days from the time of order completion. You can create multiple remainders (example: 24 hours, 3 days, 7 days from purchase)', SCR_DOMAIN), '<strong>' . __('Notification Schedule', SCR_DOMAIN) . '</strong> :'),
                             'fields' => array(
-                          
-                              array(
-                                'id'    => 'value',
-                                'type'  => 'text',
-                                'title' => 'Time Value'
-                              ),
-                              array(
-                                'id'          => 'unit',
-                                'type'        => 'select',
-                                'title'       => 'Time Unit',
-                                'placeholder' => 'Select an option',
-                                'options'     => array(
-                                  'hours'  => 'Hours',
-                                  'days'  => 'Days',
+
+                                array(
+                                    'id' => 'value',
+                                    'type' => 'text',
+                                    'title' => __('Time Value', SCR_DOMAIN),
                                 ),
-                                'default'     => 'days'
-                              ),
-                          
+                                array(
+                                    'id' => 'unit',
+                                    'type' => 'select',
+                                    'title' => __('Time Unit', SCR_DOMAIN),
+                                    'chosen' => true,
+                                    'placeholder' => __('Select an option', SCR_DOMAIN),
+                                    'options' => array(
+                                        'hours' => __('Hours', SCR_DOMAIN),
+                                        'days' => __('Days', SCR_DOMAIN),
+                                    ),
+                                    'default' => 'days',
+                                ),
+
                             ),
-                            'default'   => array(
+                            'default' => array(
                                 array(
-                                  'value' => '24',
-                                  'unit' => 'hours',
+                                    'value' => '24',
+                                    'unit' => 'hours',
                                 ),
                                 array(
-                                  'value' => '1',
-                                  'unit' => 'days' 
+                                    'value' => '1',
+                                    'unit' => 'days',
                                 ),
                                 array(
                                     'value' => '3',
-                                    'unit' => 'days' 
-                                )
-                            )
+                                    'unit' => 'days',
+                                ),
+                            ),
                         ),
 
-                     )
+                    ),
                 )
             );
         }
@@ -235,17 +240,17 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 $prefix,
                 array(
                     'id' => 'comparison_table_settings',
-                    'title' => 'Comparison Table',
+                    'title' => Translations::getStrings('ComparisonTable'),
                     'icon' => 'fa fa-table',
                     'fields' => array(
 
                         array(
                             'id' => 'ct_page', // ct: comparison_table
                             'type' => 'select',
-                            'title' => 'Select with pages',
-                            'placeholder' => 'Select a page',
+                            'title' => __('Select with pages', SCR_DOMAIN),
+                            'placeholder' => __('Select a page', SCR_DOMAIN),
                             'options' => 'pages',
-                            'desc' => '<strong>  [advanced_review_comparison_table] -> Add this shortcode to the selected page.</strong>',
+                            'desc' => '<strong>  ' . __('[advanced_review_comparison_table] -> Add this shortcode to the selected page', SCR_DOMAIN) . '.</strong>',
                         ),
 
                     ),
@@ -259,7 +264,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 $prefix,
                 array(
                     'id' => 'user_review_settings',
-                    'title' => __('User Review', SCR_DOMAIN),
+                    'title' => Translations::getStrings('UserReviews'),
                     'icon' => 'fa fa-commenting',
                     'fields' => array(
 
@@ -313,23 +318,32 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         //     'default' => true,
                         // ),
 
-                        // array(
-                        //     'id' => 'ur_enable_approval',
-                        //     'type' => 'switcher',
-                        //     'title' => __('Require Admin Approval to publish reviews', SCR_DOMAIN),
-                        //     'default' => true,
-                        // ),
+                        array(
+                            'id' => 'ur_who_can_review',
+                            'type' => 'select',
+                            'title' => __('Who Can Review', SCR_DOMAIN),
+                            'desc' => __('Selecting Everyone will let even Non Logged-in Users add reviews', SCR_DOMAIN),
+                            'options' => array(
+                                'logged_in' => __('Logged In Users', SCR_DOMAIN),
+                                'everyone' => __('Everyone', SCR_DOMAIN),
+
+                            ),
+                        ),
 
                         array(
-                            'id'    => 'ur_who_can_review',
-                            'type'  => 'select',
-                            'desc' => 'Selecting Everyone will let even Non Logged-in Users add reviews',
-                            'title' => 'Who Can Review',
-                            'options' => array(
-                                'logged_in' => 'Logged In Users',
-                                'everyone' => 'Everyone',
-                               
-                            )
+                            'id' => 'ur_auto_approve',
+                            'type' => 'switcher',
+                            'title' => __('Auto Approve Review', SCR_DOMAIN),
+                            'desc' => __("Publish the submitted review directly. Don't ask for approval", SCR_DOMAIN),
+                            'default' => false,
+                        ),
+
+                        array(
+                            'id' => 'ur_allow_same_user_can_leave_multiple_reviews',
+                            'type' => 'switcher',
+                            'title' => __('Allow Same User Can leave More than One Review', SCR_DOMAIN),
+                            'desc' => __('Allow Same user to leave more than one review on a single post', SCR_DOMAIN),
+                            'default' => false,
                         ),
 
                         array(
@@ -356,7 +370,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
                         array(
                             'type' => 'subheading',
-                            'content' => 'User Review Form',
+                            'content' => __('User Review Form', SCR_DOMAIN),
                         ),
 
                         array(
@@ -369,7 +383,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'id' => 'ur_form_title',
                             'type' => 'text',
-                            'title' => 'Form Title',
+                            'title' => __('Form Title', SCR_DOMAIN),
                             'dependency' => array('ur_show_form_title', '==', 'true'),
                             'default' => 'Leave a Review',
                         ),
@@ -386,7 +400,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'type' => 'switcher',
                             'title' => __('Show Stat', SCR_DOMAIN),
                             'default' => true,
-                            'desc' => '<b>User Review Rating</b> options are based on stats option from general settings section',
+                            'desc' => __('User Review Rating options are based on stats option from general settings section', SCR_DOMAIN),
                         ),
 
                         array(
@@ -401,10 +415,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'type' => 'switcher',
                             'title' => __('Show reCAPTCHA (v2 checkbox)', SCR_DOMAIN),
                             'default' => false,
-                            'desc' => 'Register for reCAPTCHA v2 at <a href="https://www.google.com/recaptcha">https://www.google.com/recaptcha</a> to get your site key and secret key.' .
-                                ' Make sure to add your domain name in the settings at the reCAPTCHA website. ' .
-                                'Read More at <a href="https://paupledocs.gitbook.io/starcat-documentation/">Starcat Reviews - Docs</a>.' .
-                                ' Note: reCAPTCHA v3 will not work, just v2. v3 will be added soon.',
+                            'desc' => sprintf(__('Register for reCAPTCHA v2 at %s to get your site key and secret key. Make sure to add your domain name in the settings at the reCAPTCHA website. Read More at %s. %s reCAPTCHA v3 will not work, just v2. v3 will be added soon.', SCR_DOMAIN), '<a href="https://www.google.com/recaptcha">https://www.google.com/recaptcha</a>', '<a href="https://paupledocs.gitbook.io/starcat-documentation/">Starcat Reviews - Docs</a>', '<strong>' . __('Note', SCR_DOMAIN) . '</strong> : '),
                         ),
 
                         array(
@@ -413,7 +424,6 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'title' => __('reCAPTCHA Site Key', SCR_DOMAIN),
                             'dependency' => array('ur_show_captcha', '==', 'true'),
                         ),
-
 
                         array(
                             'id' => 'recaptcha_secret_key',
@@ -462,19 +472,83 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             );
         }
 
+        public function photo_reviews_settings($prefix)
+        {
+            \CSF::createSection(
+                $prefix,
+                array(
+                    'id' => 'photo_reviews_settings',
+                    'title' => Translations::getStrings('PhotoReviews'),
+                    'icon' => 'fa fa-image',
+                    'fields' => array(
+                        array(
+                            'id' => 'pr_enable',
+                            'type' => 'switcher',
+                            'title' => __('Enable Photo Reviews', SCR_DOMAIN),
+                            'default' => true,
+                        ),
+
+                        array(
+                            'id' => 'pr_require_photo',
+                            'type' => 'switcher',
+                            'title' => __('Photo required', SCR_DOMAIN),
+                            'default' => true,
+                            'desc' => __('Make this a required field', SCR_DOMAIN),
+                            'dependency' => array('pr_enable', '==', 'true'),
+                        ),
+
+                        // array(
+                        //     'id' => 'pr_photo_order',
+                        //     'type' => 'select',
+                        //     'chosen' => true,
+                        //     'title' => __('Showing Photo Order', SCR_DOMAIN),
+                        //     'placeholder' => __('Select an option', SCR_DOMAIN),
+                        //     'options' => array(
+                        //         'newest' => __('Newest First', SCR_DOMAIN),
+                        //         'oldest' => __('Oldest First', SCR_DOMAIN),
+                        //     ),
+                        //     'default' => 'oldest',
+                        //     'dependency' => array('pr_enable', '==', 'true'),
+                        // ),
+
+                        array(
+                            'id' => 'pr_photo_size',
+                            'type' => 'text',
+                            'title' => __('Maximum photo size', SCR_DOMAIN),
+                            'default' => 2000,
+                            'desc' => __('kB (Max 307200kB)', SCR_DOMAIN),
+                            'dependency' => array('pr_enable', '==', 'true'),
+                        ),
+                        array(
+                            'id' => 'pr_photo_quantity',
+                            'title' => __('Maximum photo quantity', SCR_DOMAIN),
+                            'type' => 'slider',
+                            'min' => 1,
+                            'max' => 20,
+                            'step' => 1,
+                            'unit' => '#',
+                            'default' => 5,
+                            'desc' => __('Maximum value: 20', SCR_DOMAIN),
+                            'dependency' => array('pr_enable', '==', 'true'),
+                        ),
+                    ),
+                )
+            );
+        }
+
         public function single_page_settings($prefix)
         {
             \CSF::createSection(
                 $prefix,
                 array(
                     'id' => 'single_page_settings',
-                    'title' => 'Single Page ',
+                    'title' => Translations::getStrings('SinglePage'),
                     'icon' => 'fa fa-file',
                     'fields' => array(
                         array(
                             'type' => 'submessage',
                             // 'style'   => 'info',
-                            'content' => 'These settings are only for starcat-review post type.',
+                            'content' => __('These settings are only for starcat-review post type.', SCR_DOMAIN),
                         ),
                         array(
                             'type' => 'subheading',
@@ -490,13 +564,13 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                                 'full-width' => SCR_URL . '/includes/assets/img/templates/full-width.png',
                             ),
                             'default' => 'full-width',
-                            'desc' => "Layout Types for your Single Review Page. Left / Right Sidebar, No-sidebar.",
+                            'desc' => __('Layout Types for your Single Review Page. Left / Right Sidebar, No-sidebar.', SCR_DOMAIN),
                         ),
                         // A Submessage
                         array(
                             'type' => 'submessage',
                             'style' => 'success',
-                            'content' => 'You can add widgets to your sidebar from Appearance -> Widgets',
+                            'content' => __('You can add widgets to your sidebar from Appearance -> Widgets', SCR_DOMAIN),
                         ),
 
                         array(
@@ -513,10 +587,10 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'title' => __('Show Review', SCR_DOMAIN),
                             'placeholder' => __('Select an option', SCR_DOMAIN),
                             'options' => array(
-                                'author' => 'Author Only',
-                                'user' => 'User Only',
-                                'both' => 'Author and User both',
-                                'combined' => 'Combined Rating',
+                                'author' => __('Author Only', SCR_DOMAIN),
+                                'user' => __('User Only', SCR_DOMAIN),
+                                'both' => __('Author and User both', SCR_DOMAIN),
+                                'combined' => __('Combined Rating', SCR_DOMAIN),
                             ),
                             'default' => 'combined',
                         ),
@@ -531,7 +605,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 $prefix,
                 array(
                     'id' => 'category_page_settings',
-                    'title' => 'Category Page ',
+                    'title' => Translations::getStrings('CategoryPage'),
                     'icon' => 'fa fa-folder-open',
                     'fields' => array(
                         array(
@@ -548,13 +622,13 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                                 'full-width' => SCR_URL . '/includes/assets/img/templates/full-width.png',
                             ),
                             'default' => 'full-width',
-                            'desc' => "Layout Types for your Review Categories Page. Left / Right Sidebar, No-sidebar",
+                            'desc' => __('Layout Types for your Review Categories Page. Left / Right Sidebar, No-sidebar', SCR_DOMAIN),
                         ),
                         // A Submessage
                         array(
                             'type' => 'submessage',
                             'style' => 'success',
-                            'content' => 'You can add widgets to your sidebar from Appearance -> Widgets',
+                            'content' => __('You can add widgets to your sidebar from Appearance -> Widgets', SCR_DOMAIN),
                         ),
                         array(
                             'id' => 'cp_controls',
@@ -565,7 +639,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'id' => 'cp_controls_subheading',
                             'type' => 'subheading',
-                            'content' => 'Controls',
+                            'content' => __('Controls', SCR_DOMAIN),
                             'dependency' => array('cp_controls', '==', 'true'),
                         ),
                         array(
@@ -593,7 +667,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'id' => 'cp_listing_options_subheading',
                             'type' => 'subheading',
-                            'content' => 'Listing Options',
+                            'content' => __('Listing Options', SCR_DOMAIN),
 
                         ),
 
@@ -610,10 +684,10 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'title' => __('Default Sort By', SCR_DOMAIN),
                             'placeholder' => __('Select a sortby option', SCR_DOMAIN),
                             'options' => array(
-                                'alphabetical_asc' => 'Alphabetical Ascending',
-                                'alphabetical_desc' => 'Alphabetical Descending',
-                                'recent' => 'Recent',
-                                'updated' => 'Recently Updated',
+                                'alphabetical_asc' => __('Alphabetical Ascending', SCR_DOMAIN),
+                                'alphabetical_desc' => __('Alphabetical Descending', SCR_DOMAIN),
+                                'recent' => __('Recent', SCR_DOMAIN),
+                                'updated' => __('Recently Updated', SCR_DOMAIN),
                                 // 'num_of_reviews' => 'Number of Reviews',
                             ),
                             'default' => 'recent',
@@ -645,7 +719,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 $prefix,
                 array(
                     'id' => 'mainpage_settings',
-                    'title' => 'Main Page ',
+                    'title' => Translations::getStrings('MainPage'),
                     'icon' => 'fa fa-home',
                     'fields' => array(
 
@@ -653,14 +727,14 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'id' => 'mp_meta_title',
                             'type' => 'text',
                             'title' => __('Main Page Meta Title', SCR_DOMAIN),
-                            'desc' => '<strong> Note </strong>: Keep your meta title between 60 and 64 characters.',
+                            'desc' => '<strong>' . __('Note', SCR_DOMAIN) . '</strong> : ' . __('Keep your meta title between 60 and 64 characters.', SCR_DOMAIN),
                             'default' => 'Reviews',
                         ),
                         array(
                             'id' => 'mp_meta_description',
                             'type' => 'text',
                             'title' => __('Main Page Meta Description', SCR_DOMAIN),
-                            'desc' => '<strong> Note </strong>: Keep your meta descriptions between 150 and 154 characters.',
+                            'desc' => '<strong>' . __('Note', SCR_DOMAIN) . '</strong> : ' . __('Keep your meta descriptions between 150 and 154 characters.', SCR_DOMAIN),
                             'default' => 'These are your reviews',
                         ),
                         array(
@@ -672,9 +746,9 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'type' => 'content',
                             'content' => '<div class="button-container">'
-                                . '<span><b>Where is my main page?</b></span>'
-                                . '<br>'
-                                . $main_page_button . '<span>Save and Refresh Page if you changed it.</span></div>',
+                            . '<span><b>' . __('Where is my main page?', SCR_DOMAIN) . '</b></span>'
+                            . '<br>'
+                            . $main_page_button . '<span>' . __('Save and Refresh Page if you changed it.', SCR_DOMAIN) . '</span></div>',
                         ),
                         array(
                             'type' => 'subheading',
@@ -690,24 +764,24 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                                 'full-width' => SCR_URL . '/includes/assets/img/templates/full-width.png',
                             ),
                             'default' => 'full-width',
-                            'desc' => "Layout Types for your Reviews Main Page. Left / Right Sidebar, No-sidebar",
+                            'desc' => __('Layout Types for your Reviews Main Page. Left / Right Sidebar, No-sidebar', SCR_DOMAIN),
                         ),
                         // A Submessage
                         array(
                             'type' => 'submessage',
                             'style' => 'success',
-                            'content' => 'You can add widgets to your sidebar from Appearance -> Widgets',
+                            'content' => __('You can add widgets to your sidebar from Appearance -> Widgets', SCR_DOMAIN),
                         ),
                         array(
                             'id' => 'mp_components_order',
                             'type' => 'sortable',
-                            'title' => 'Components Control',
-                            'desc' => 'Controls order and visibility of these components in Main Page',
+                            'title' => __('Components Control', SCR_DOMAIN),
+                            'desc' => __('Controls order and visibility of these components in Main Page', SCR_DOMAIN),
                             'fields' => array(
                                 array(
                                     'id' => 'mp_category_listing',
                                     'type' => 'switcher',
-                                    'title' => __('Category  Listing', SCR_DOMAIN),
+                                    'title' => __('Category Listing', SCR_DOMAIN),
                                     'default' => true,
                                 ),
                                 array(
@@ -727,7 +801,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'id' => 'mp_cl_heading',
                             'type' => 'subheading',
-                            'content' => 'Category Listing',
+                            'content' => __('Category Listing', SCR_DOMAIN),
                             'dependency' => array('mp_category_listing', '==', 'true'),
                         ),
 
@@ -752,7 +826,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'type' => 'select',
                             'chosen' => true,
                             'title' => __('Num Of Columns', SCR_DOMAIN),
-                            'placeholder' => 'Select an option',
+                            'placeholder' => __('Select an option', SCR_DOMAIN),
                             'options' => array(
                                 '1' => 1,
                                 '2' => 2,
@@ -767,7 +841,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'id' => 'mp_rl_heading',
                             'type' => 'subheading',
-                            'content' => 'Review Listing',
+                            'content' => __('Review Listing', SCR_DOMAIN),
                             'dependency' => array('mp_review_listing', '==', 'true'),
                         ),
 
@@ -776,7 +850,6 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'type' => 'text',
                             'title' => __('Title', SCR_DOMAIN),
                             'default' => 'Review Listing',
-                            'default' => 'Review Posts',
                             'dependency' => array('mp_review_listing', '==', 'true'),
                         ),
                         array(
@@ -786,11 +859,11 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'title' => __('Default Sort By', SCR_DOMAIN),
                             'placeholder' => __('Select a sortby option', SCR_DOMAIN),
                             'options' => array(
-                                'alphabetical_asc' => 'Alphabetical Ascending',
-                                'alphabetical_desc' => 'Alphabetical Descending',
-                                'recent' => 'Recent',
-                                'updated' => 'Recently Updated',
-                                // 'num_of_reviews' => 'Number of Reviews',
+                                'alphabetical_asc' => __('Alphabetical Ascending', SCR_DOMAIN),
+                                'alphabetical_desc' => __('Alphabetical Descending', SCR_DOMAIN),
+                                'recent' => __('Recent', SCR_DOMAIN),
+                                'updated' => __('Recently Updated', SCR_DOMAIN),
+                                // 'num_of_reviews' => __('Number of Reviews, SCR_DOMAIN),
                             ),
                             'default' => 'recent',
                             'dependency' => array('mp_review_listing', '==', 'true'),
@@ -823,7 +896,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 array(
 
                     'id' => 'general_settings',
-                    'title' => __('General Settings', SCR_DOMAIN),
+                    'title' => Translations::getStrings('GeneralSettings'),
                     'icon' => 'fa fa-cogs',
                     'fields' => array(
 
@@ -843,7 +916,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'id' => 'review_enable_post-types',
                             'type' => 'select',
-                            'title' => 'Where to include reviews?',
+                            'title' => __('Where to include reviews?', SCR_DOMAIN),
                             'chosen' => true,
                             'placeholder' => 'Select post types',
                             'options' => 'post_types',
@@ -857,36 +930,36 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'id' => 'enable-author-review',
                             'type' => 'switcher',
-                            'title' => 'Enable author review',
+                            'title' => __('Enable author review', SCR_DOMAIN),
                             'default' => true,
                         ),
 
                         array(
                             'id' => 'enable-pros-cons',
                             'type' => 'switcher',
-                            'title' => 'Enable Pros and Cons',
+                            'title' => __('Enable Pros and Cons', SCR_DOMAIN),
                             'default' => true,
                         ),
 
                         array(
                             'id' => 'stats-subheading',
                             'type' => 'subheading',
-                            'content' => 'Stats',
+                            'content' => __('Stats', SCR_DOMAIN),
                         ),
 
                         array(
                             'type' => 'submessage',
                             // 'style'   => 'info',
-                            'content' => 'You can rate each of these stats in the edit post page(author rating). And if you have enabled "user_reviews", your users can rate them from the frontend',
+                            'content' => __("You can rate each of these stats in the edit post page(author rating). And if you have enabled 'user review', your users can rate them from the front end", SCR_DOMAIN),
                         ),
 
                         array(
                             'id' => 'stat-singularity',
                             'type' => 'select',
-                            'title' => 'Single or Multiple Stat',
+                            'title' => __('Single or Multiple Stat', SCR_DOMAIN),
                             'options' => array(
-                                'single' => 'Single',
-                                'multiple' => 'Multiple',
+                                'single' => __('Single', SCR_DOMAIN),
+                                'multiple' => __('Multiple', SCR_DOMAIN),
                             ),
                             'default' => 'single',
                         ),
@@ -894,19 +967,19 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'type' => 'submessage',
                             'style' => 'info',
-                            'content' => 'The first stat is always considered as the primary stat ( highlighted by blue color ), When you change from multiple stat to single stat values from the primary stat are used.',
+                            'content' => __('The first stat is always considered as the primary stat ( highlighted by blue color ), When you change from multiple stat to single stat values from the primary stat are used.', SCR_DOMAIN),
                             'dependency' => array('stat-singularity', '==', 'multiple'),
                         ),
 
                         array(
                             'id' => 'global_stats',
                             'type' => 'repeater',
-                            'title' => 'Stats',
+                            'title' => __('Stats', SCR_DOMAIN),
                             'fields' => array(
                                 array(
                                     'id' => 'stat_name',
                                     'type' => 'text',
-                                    'placeholder' => 'Feature',
+                                    'placeholder' => __('Feature', SCR_DOMAIN),
                                 ),
                             ),
                             'min' => 1,
@@ -921,7 +994,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'id' => 'stats-type',
                             'type' => 'image_select',
-                            'title' => 'Stats Type',
+                            'title' => __('Stats Type', SCR_DOMAIN),
                             'options' => array(
                                 'star' => SCR_URL . 'includes/assets/img/stars-stat.png',
                                 // 'bar' => SCR_URL . 'includes/assets/img/bars-stat.png',
@@ -933,10 +1006,10 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'id' => 'stats-source-type',
                             'type' => 'select',
-                            'title' => 'Source Type',
+                            'title' => __('Source Type', SCR_DOMAIN),
                             'options' => array(
-                                'icon' => 'Icon',
-                                'image' => 'Image',
+                                'icon' => __('Icon', SCR_DOMAIN),
+                                'image' => __('Image', SCR_DOMAIN),
                             ),
                             // 'dependency' => array('stats-type', '==', 'star'),
                             'default' => 'icon',
@@ -945,14 +1018,14 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'id' => 'stats-show-rating-label',
                             'type' => 'switcher',
-                            'title' => 'Show Rating Label',
+                            'title' => __('Show Rating Label', SCR_DOMAIN),
                             'default' => true,
                         ),
 
                         array(
                             'id' => 'stats-icons',
                             'type' => 'icon_dropdown',
-                            'title' => 'Icons',
+                            'title' => __('Icons', SCR_DOMAIN),
                             // 'dependency' => array('stats-source-type|stats-type', '==|==', 'icon|star'),
                             'dependency' => array('stats-source-type', '==', 'icon'),
                             'default' => 'star',
@@ -960,7 +1033,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'id' => 'stats-icons-color',
                             'type' => 'color',
-                            'title' => 'Icons Color',
+                            'title' => __('Icons Color', SCR_DOMAIN),
                             'dependency' => array('stats-source-type', '==', 'icon'),
                             'output' => array('.review-list .review-item-stars i', '.review-list .reviewed-item-stars i', '.reviewed-list .review-item-stars i', '.reviewed-list .reviewed-item-stars i'),
                             'output_mode' => 'color',
@@ -969,7 +1042,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'id' => 'stats-icons-label-color',
                             'type' => 'color',
-                            'title' => 'Icons Label Color',
+                            'title' => __('Icons Label Color', SCR_DOMAIN),
                             'dependency' => array('stats-source-type', '==', 'icon'),
                             'output' => array('.review-list .reviewed-item .reviewed-item-label__score', '.review-list .reviewed-item .reviewed-item-label__score', '.reviewed-list .reviewed-item .reviewed-item-label__score', '.reviewed-list .reviewed-item .reviewed-item-label__score'),
                             'output_mode' => 'color',
@@ -979,14 +1052,14 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'id' => 'stats-images',
                             'type' => 'fieldset',
-                            'title' => 'Images',
+                            'title' => __('Images', SCR_DOMAIN),
                             // 'dependency' => array('stats-source-type|stats-type', '==|==', 'image|star'),
                             'dependency' => array('stats-source-type', '==', 'image'),
                             'fields' => array(
                                 array(
                                     'id' => 'image',
                                     'type' => 'media',
-                                    'title' => 'Image',
+                                    'title' => __('Image', SCR_DOMAIN),
                                     'library' => 'image',
                                     'placeholder' => 'http://',
                                     'default' => [
@@ -997,7 +1070,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                                 array(
                                     'id' => 'image-outline',
                                     'type' => 'media',
-                                    'title' => 'Outline Image',
+                                    'title' => __('Outline Image', SCR_DOMAIN),
                                     'library' => 'image',
                                     'placeholder' => 'http://',
                                     'default' => [
@@ -1009,7 +1082,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                                 array(
                                     'type' => 'submessage',
                                     'style' => 'info',
-                                    'content' => 'Image size below 50 * 50 is enough',
+                                    'content' => __('Image size below 50 * 50 is enough', SCR_DOMAIN),
                                 ),
                             ),
                         ),
@@ -1029,25 +1102,25 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
                         array(
                             'id' => 'stats-stars-limit',
-                            'title' => 'Limit',
+                            'title' => __('Limit', SCR_DOMAIN),
                             'type' => 'slider',
                             'min' => 5,
                             'max' => 10,
                             'step' => 5,
                             'unit' => '#',
                             'default' => 5,
-                            'desc' => 'Star stat scale b/w limit <b> 5 to 10 </b>',
+                            'desc' => __('Star stat scale b/w limit 5 to 10', SCR_DOMAIN),
                             // 'dependency' => array('stats-type', '==', 'star'),
                         ),
 
                         array(
                             'id' => 'stats-steps',
                             'type' => 'select',
-                            'title' => 'Steps',
+                            'title' => __('Steps', SCR_DOMAIN),
                             'options' => array(
                                 // 'precise' => 'Precise',
-                                'half' => 'Half',
-                                'full' => 'Full',
+                                'half' => __('Half', SCR_DOMAIN),
+                                'full' => __('Full', SCR_DOMAIN),
                             ),
                             'default' => 'half',
                         ),
@@ -1062,7 +1135,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'id' => 'stats-no-rated-message',
                             'type' => 'text',
-                            'title' => 'No rated message',
+                            'title' => __('No rated message', SCR_DOMAIN),
                             'default' => 'Not Rated Yet !!!',
                         ),
                     ),
@@ -1074,10 +1147,10 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         public function single_post_meta_fields()
         {
             $locations = SCR_Getter::get('review_enable_post-types');
-            $prefix = '_scr_post_options';
+            $prefix = SCR_POST_META;
 
             \CSF::createMetabox($prefix, array(
-                'title' => 'Starcat Review',
+                'title' => __('Starcat Review', SCR_DOMAIN),
                 'post_type' => $locations,
                 'show_restore' => true,
                 'theme' => 'light',
@@ -1098,25 +1171,25 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         {
             \CSF::createSection($prefix, array(
                 'parent' => $parent,
-                'title' => 'Stats',
+                'title' => __('Stats', SCR_DOMAIN),
                 'icon' => 'fa fa-eye',
                 'fields' => array(
 
                     array(
                         'id' => 'stats',
                         'type' => 'fieldset',
-                        'title' => 'Features',
+                        'title' => __('Features', SCR_DOMAIN),
                         'fields' => array(
                             array(
                                 'id' => 'stats-list',
                                 'type' => 'repeater',
-                                'title' => 'Repeater',
+                                'title' => __('Repeater', SCR_DOMAIN),
                                 'fields' => array(
 
                                     array(
                                         'id' => 'stat_name',
                                         'type' => 'text',
-                                        'title' => 'Stat Name',
+                                        'title' => __('Stat Name', SCR_DOMAIN),
                                     ),
                                 ),
                             ),
@@ -1135,7 +1208,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 $prefix,
                 array(
                     'parent' => $parent,
-                    'title' => 'Item Details',
+                    'title' => __('Item Details', SCR_DOMAIN),
                     'icon' => 'fa fa-eye',
                     'fields' => $details_fields,
                 )
@@ -1150,7 +1223,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 $prefix,
                 array(
                     'parent' => $parent,
-                    'title' => 'Rich Snippets',
+                    'title' => __('Rich Snippets', SCR_DOMAIN),
                     'icon' => 'fa fa-eye',
                     'fields' => $fields,
                 )
@@ -1164,7 +1237,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
             \CSF::createSection($prefix, array(
                 'parent' => $parent,
-                'title' => 'Pros',
+                'title' => __('Pros', SCR_DOMAIN),
                 'icon' => 'fa fa-thumbs-up',
                 'dependency' => array('enable-pros-cons', '==', 'true', 'true'),
                 'fields' => $fields,
@@ -1178,7 +1251,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
             \CSF::createSection($prefix, array(
                 'parent' => $parent,
-                'title' => 'Cons',
+                'title' => __('Cons', SCR_DOMAIN),
                 'icon' => 'fa fa-thumbs-down',
                 'fields' => $fields,
             ));
@@ -1191,7 +1264,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
             \CSF::createSection($prefix, array(
                 'id' => 'stat',
-                'title' => 'Stats',
+                'title' => __('Stats', SCR_DOMAIN),
                 'icon' => 'fa fa-th-list',
                 'fields' => $list_of_stat_fields,
             ));
@@ -1220,7 +1293,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             if (isset($stats) && !empty($stats)) {
                 $stats_list[] = array(
                     'type' => 'submessage',
-                    'content' => 'Author Review Stats List',
+                    'content' => __('Author Review Stats List', SCR_DOMAIN),
                 );
                 $count = 0;
                 foreach ($stats as $stat) {
@@ -1237,7 +1310,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             array(
                                 'id' => 'stat_name',
                                 'type' => 'text',
-                                'title' => 'Stat Name',
+                                'title' => __('Stat Name', SCR_DOMAIN),
                                 'attributes' => array(
                                     'readonly' => 'readonly',
                                 ),
@@ -1247,7 +1320,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             array(
                                 'id' => 'rating',
                                 'type' => 'slider',
-                                'title' => 'Rating',
+                                'title' => __('Rating', SCR_DOMAIN),
                                 'min' => 0,
                                 'max' => 100,
                                 'step' => 1,
@@ -1258,7 +1331,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             array(
                                 'type' => 'submessage',
                                 'style' => 'success',
-                                'content' => 'Rating 0 - 100 ',
+                                'content' => __('Rating 0 - 100', SCR_DOMAIN),
                             ),
                         ),
                     );

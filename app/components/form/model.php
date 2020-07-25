@@ -19,11 +19,15 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
                 'items' => $this->items,
             ];
 
+            // error_log('!!! Form !!!');
+
             return $view_props;
         }
 
         protected function get_collectionProps($args)
         {
+            // error_log('args : ' . print_r($args, true));
+
             $collection = [
                 'post_id' => $args['post_id'],
                 'show_form_title' => $args['show_form_title'],
@@ -31,22 +35,16 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
                 'show_title' => $args['show_title'],
                 'show_stats' => $args['show_stats'],
                 'show_prosandcons' => $args['enable_pros_cons'],
+                'pros-list' => $args['pros-list'],
+                'cons-list' => $args['cons-list'],
+                'enable_photo_reviews' => $args['enable_photo_reviews'],
                 'show_description' => $args['show_description'],
                 'show_captcha' => $args['show_captcha'],
-                'show_rating_label' => $args['show_rating_label'],
-                'singularity' => $args['singularity'],
-                'review_type' => $args['type'], // Star, Bar, Circle
-                'source_type' => $args['source_type'], // icon or image
-                'icons' => $args['icons'],
-                'images' => $args['images'],
-                'limit' => $args['limit'],
-                'steps' => $args['steps'], // full or half or progress
-                'no_rated_message' => $args['no_rated_message'],
-                'animate' => false,
-                'can_user_review' => $args['can_user_review'],
-                'can_user_reply' => $args['can_user_reply'],
+                'stats_args' => $args['stats_args'],
+                'capability' => $args['capability'],
             ];
 
+            // $collection = array_merge($collection)
             $collection = $this->get_icons($collection);
 
             return $collection;
@@ -55,10 +53,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
         public function get_itemsProps($args)
         {
             $items = [
-                'pros' => isset($args['items']['pros-list']) && !empty($args['items']['pros-list']) ? $args['items']['pros-list'] : [],
-                'cons' => isset($args['items']['cons-list']) && !empty($args['items']['cons-list']) ? $args['items']['cons-list'] : [],
                 'stats' => $this->get_filtered_stats($args),
-                'current_user_review' => (isset($args['current_user_review'])) ? $args['current_user_review']->review : [],
             ];
 
             return $items;
@@ -91,12 +86,12 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
         {
             $image = SCR_URL . 'includes/assets/img/tomato.png';
             $image_outline = SCR_URL . 'includes/assets/img/tomato-outline.png';
-            $collection['icon'] = (isset($collection['images']['image']['thumbnail'])) ? $collection['images']['image']['thumbnail'] : $image;
-            $collection['outline_icon'] = (isset($collection['images']['image-outline']['thumbnail'])) ? $collection['images']['image-outline']['thumbnail'] : $image_outline;
+            $collection['stats_args']['icon'] = (isset($collection['stats_args']['images']['image']['thumbnail'])) ? $collection['stats_args']['images']['image']['thumbnail'] : $image;
+            $collection['stats_args']['outline_icon'] = (isset($collection['stats_args']['images']['image-outline']['thumbnail'])) ? $collection['stats_args']['images']['image-outline']['thumbnail'] : $image_outline;
 
-            if ($collection['source_type'] == 'icon') {
-                $collection['icon'] = $collection['icons'] . ' icon';
-                $collection['outline_icon'] = $collection['icons'] . ' outline icon';
+            if ($collection['stats_args']['source_type'] == 'icon') {
+                $collection['stats_args']['icon'] = $collection['stats_args']['icons'] . ' icon';
+                $collection['stats_args']['outline_icon'] = $collection['stats_args']['icons'] . ' outline icon';
             }
 
             return $collection;

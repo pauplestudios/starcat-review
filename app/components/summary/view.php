@@ -14,65 +14,61 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
 
         public function get($props)
         {
-            $author_args = $props;
-            $user_args = $props;
+            $html = '';
+            $html .= $props['collection']['reviews_title'];
+            $html .= '<div class="scr-summary">';
+            $html .= '<div class="ui stackable ' . $props['collection']['no_of_column'] . ' column grid">';
 
-            $is_user_empty = $this->is_empty($props['items']['user']);
-            $is_author_empty = $this->is_empty($props['items']['author']);
-
-            if (!$is_author_empty && !$is_user_empty) {
-                $no_of_column = 'two';
-            } elseif (!$is_author_empty || !$is_user_empty) {
-                $no_of_column = 'one';
-            } else {
-                $no_of_column = 'one';
+            if ($props['collection']['is_enable_author']) {
+                $html .= $this->get_column($props['collection']['author_title'], $props['items']['author_stat']);
             }
 
-            $html = '<div class="scr-summary">';
-            $html .= '<div class="ui stackable ' . $no_of_column . ' column grid">';
+            $html .= $this->get_column($props['collection']['users_title'], $props['items']['comment_stat']);
 
-            // Author Summary
-            if ($is_author_empty !== true) {
-                $html .= '<div class="column">';
-                $author_args['items'] = $props['items']['author'];
-                $html .= '<h4 class="ui header"> Author Rating </h4>';
-                $author_stat = new \StarcatReview\App\Components\Stats\Controller($author_args);
-                $html .= $author_stat->get_view();
-                $html .= '</div>';
+            if ($props['collection']['is_enable_author'] && $props['collection']['is_enable_prosandcons']) {
+                $prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller();
+                $html .= $prosandcons->get_view($props);
             }
 
-            // User Summary
-            if ($is_user_empty !== true) {
-                $html .= '<div class="column">';
-                $html .= '<h4 class="ui header"> User Rating ( ' . $props['items']['user']['review_count'] . ' )</h4>';
-                $user_args['items'] = $props['items']['user'];
-                $user_stat = new \StarcatReview\App\Components\Stats\Controller($user_args);
-                // $user_prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller($props);
-                $html .= $user_stat->get_view();
-                // $html .= $user_prosandcons->get_view();
-                $html .= '</div>';
-            }
-
-            if ($author_args['enable-author-review']) {
-                $author_prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller();
-                $html .= $author_prosandcons->get_view($author_args);
-            }
+            $html .= $this->get_all_attachments($props);
 
             $html .= '</div></div>';
 
             return $html;
+
         }
 
-        /* PRIVATE METHODS */
-        private function is_empty($items = [])
+        public function get_column($title, $stat_args)
         {
-            $is_empty = false;
+            $html = '';
+            $is_stat_set = isset($stat_args['items']) && !empty($stat_args['items']) ? true : false;
 
-            if (!isset($items['stats-list']) || empty($items['stats-list'])) {
-                $is_empty = true;
+            if (!$is_stat_set) {
+                return $html;
             }
 
-            return $is_empty;
+            $stats = new \StarcatReview\App\Components\Stats\Controller($stat_args);
+            $stats_view = $stats->get_view();
+
+            $html .= '<div class="column">';
+            $html .= '<h4 class="ui header">' . $title . ' </h4>';
+            $html .= $stats_view;
+            $html .= '</div>';
+
+            return $html;
+        }
+
+        public function get_all_attachments($props)
+        {
+            $html = '';
+            $attachments = (isset($props['items']['attachments']) && !empty($props['items']['attachments'])) ? $props['items']['attachments'] : [];
+
+            if (isset($attachments) && !empty($attachments)) {
+                $all_photos = apply_filters('scr_photo_reviews/get_all_photos', $attachments);
+                $html .= is_string($all_photos) ? $all_photos : '';
+            }
+
+            return $html;
         }
     }
 }

@@ -19,10 +19,10 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
 
         public function get_view()
         {
-
             $args = $this->get_default_args();
             $form_view = $this->form_controller->get_view($args);
-            $reviews_list_view = $this->reviews_controller->get_view($args);
+            $ur_controller = new \StarcatReview\App\Components\User_Reviews\Controller();
+            $reviews_list_view = $ur_controller->get_view($args);
 
             $wrapper_start_html = '<div id="scr-controlled-list" class="scr-user-controlled-list" data-collectionprops="{<pagination<:true,<page<:9,<type<:2}">';
             $this->controls_builder = new \StarcatReview\App\Builders\Controls_Builder('user_review');
@@ -33,21 +33,27 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             ];
 
             $controls_view = $this->controls_builder->get_controls($args);
-            $pagination_view = $this->get_pagination_html();
 
-            $view = $form_view . $wrapper_start_html . $controls_view . $reviews_list_view . $pagination_view . '</div>';
+            $view = $form_view . $wrapper_start_html . $controls_view . $reviews_list_view . '</div>';
 
             return $view;
         }
 
+        public function get_form_fields()
+        {
+            $args = $this->get_default_args();
+            return $this->form_controller->get_fields_view($args);
+        }
+
+        // TODO: Is get_default_args() the correct name? Does this represent the default args?
         protected function get_default_args()
         {
-            $stat_args = SCR_Getter::get_stat_default_args();
+            $stat_args = ['stats_args' => SCR_Getter::get_stat_default_args()];
 
             $args = [
                 'post_id' => get_the_ID(),
-                'items' => $this->get_items_args(),
                 'enable_pros_cons' => SCR_Getter::get('enable-pros-cons'),
+                'enable_photo_reviews' => SCR_Getter::get('pr_enable'),
                 'show_list_title' => SCR_Getter::get('ur_show_list_title'),
                 'list_title' => SCR_Getter::get('ur_list_title'),
                 'enable_voting' => SCR_Getter::get('ur_enable_voting'),
@@ -67,104 +73,25 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             return $args;
         }
 
-        protected function get_pagination_html()
-        {
-            $html = '';
-            $html .= '<ul class="ui pagination scr-pagination menu">';
-
-            for ($ii = 1; $ii <= 2; $ii++) {
-                # code...
-                $html .= '<li class="active"><a class="page" href="">' . $ii . '</a></li>';
-            }
-
-            $html .= '</ul>';
-            return $html;
-        }
-
-        private function get_items_args()
-        {
-            $post_meta = get_post_meta(get_the_ID(), '_scr_post_options', true);
-
-            $items = [];
-
-            if (isset($post_meta['stats-list']) && !empty($post_meta['stats-list'])) {
-                $items['stats-list'] = $post_meta['stats-list'];
-            }
-            if (isset($post_meta['pros-list']) && !empty($post_meta['pros-list'])) {
-                $items['pros-list'] = $post_meta['pros-list'];
-            }
-            if (isset($post_meta['cons-list']) && !empty($post_meta['cons-list'])) {
-                $items['cons-list'] = $post_meta['cons-list'];
-            }
-
-            return $items;
-        }
-
         private function get_interpreted_args($args)
         {
-           
-            $args['can_user_vote'] = false;
-            $args['can_user_reply'] = false;
-            $args['can_user_review'] = false;
+            $post_meta = get_post_meta(get_the_ID(), SCR_POST_META, true);
+            $args['pros-list'] = [];
+            $args['cons-list'] = [];
 
-            // Used by non-logged-in-users.php
-            $args = apply_filters('scr_user_review_pre_interpreted_args', $args);
-
-            if (is_user_logged_in()) {
-                $args['can_user_review'] = true;
-                $args['can_user_reply'] = true;
-                $args['can_user_vote'] = true;
+            if (isset($post_meta['pros-list']) && !empty($post_meta['pros-list'])) {
+                $args['pros-list'] = $post_meta['pros-list'];
+            }
+            if (isset($post_meta['cons-list']) && !empty($post_meta['cons-list'])) {
+                $args['cons-list'] = $post_meta['cons-list'];
             }
 
-            $comments = get_comments([
-                'post_id' => get_the_ID(),
-                'type' => SCR_COMMENT_TYPE,
-            ]);
-
-            if (isset($comments) && !empty($comments)) {
-                foreach ($comments as $comment) {
-                    // added review props to comment
-                    $comment->review = get_comment_meta($comment->comment_ID, 'scr_user_review_props', true);
-
-                    // Current user already reviewed
-                    $has_current_user_already_reviewed = ($comment->user_id == get_current_user_id() && $comment->comment_parent == 0);
-                    $has_current_user_already_reviewed = apply_filters( 'scr_has_current_user_already_reviewed', $has_current_user_already_reviewed, $comment );
-                    if ($has_current_user_already_reviewed) {
-                        $args['can_user_review'] = false;
-                        $args['current_user_review'] = $comment;
-                        
-                    }
-                }
-
-                $args['items']['comments-list'] = $comments;
-            }
+            $components = ['comments', 'stats', 'prosandcons', 'votes', 'attachments'];
+            $args['items'] = scr_get_comments_args($components);
+            $commentsItems = (isset($args['items']['comments']) && !empty($args['items']['comments'])) ? $args['items']['comments'] : [];
+            $args['capability'] = apply_filters('scr_capabilities_args', $commentsItems);
 
             return $args;
-        }
-
-        // I am not sure about we using this below methods in any components "santhosh"
-        // for rich snippet product schema purpose
-        public function get_schema_reviews()
-        {
-            $post_meta = get_post_meta(get_the_ID(), '_scr_post_options', true);
-            $reviews = $this->get_comments_list();
-            return $reviews;
-        }
-
-        protected function get_comments_list()
-        {
-            $args = [
-                'post_id' => get_the_ID(),
-                'type' => SCR_COMMENT_TYPE,
-            ];
-
-            $comments = get_comments($args);
-
-            foreach ($comments as $comment) {
-                $comment->review = get_comment_meta($comment->comment_ID, 'scr_user_review_props', true);
-            }
-
-            return $comments;
         }
     }
 }

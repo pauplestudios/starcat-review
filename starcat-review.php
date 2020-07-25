@@ -1,16 +1,16 @@
 <?php
 
-/*
-Plugin Name: Starcat Review
-Plugin URI: https://starcatwp.com/
-Description: Adds Author and User Reviews to any post_type
-Author: HelpieWP
-Version: 0.5
-Author URI: https://starcatwp.com/
-Network: True
-Text Domain: starcat-review
-Domain Path: /languages
-
+/**
+ * @wordpress-plugin
+ * Plugin Name:       Starcat Review
+ * Plugin URI:        https://starcatwp.com/
+ * Description:       Adds Author and User Reviews to any post_type
+ * Version:           0.6.1
+ * Author:            HelpieWP
+ * Author URI:        https: //starcatwp.com/
+ * Network:           True
+ * Text Domain:       starcat-review
+ * Domain Path:       /languages
  */
 
 if (!defined('ABSPATH')) {
@@ -19,9 +19,9 @@ if (!defined('ABSPATH')) {
 
 require_once plugin_dir_path(__FILE__) . "/includes/lib/freemius-integrator.php";
 
-define('SCR_VERSION', '0.5');
+define('SCR_VERSION', '0.6.1');
 define('SCR_DOMAIN', 'starcat-review');
-define('SCR_COMMENT_TYPE', 'starcat_review');
+define('SCR_COMMENT_TYPE', 'review');
 define('SCR__FILE__', __FILE__);
 define('SCR_PLUGIN_BASE', plugin_basename(SCR__FILE__));
 define('SCR_PATH', plugin_dir_path(SCR__FILE__));
@@ -32,9 +32,14 @@ define('SCR_URL', plugins_url('/', SCR__FILE__));
  */
 
 define('SCR_OPTIONS', 'scr_options');
+define('SCR_POST_META', '_scr_post_options');
+define('SCR_COMMENT_META', 'scr_user_review_props');
 define('SCR_CUSTOMIZE_OPTIONS', 'scr_customize_options');
 
 starcat_review_activation();
+
+// This should be final step
+do_action('scr_plugin_loaded');
 
 function starcat_review_activation()
 {
@@ -76,6 +81,3 @@ function starcat_review_fail_wp_version()
     $html_message = sprintf('<div class="error">%s</div>', wpautop($message));
     echo wp_kses_post($html_message);
 }
-/**
- * Starcat Review Internalization
- */

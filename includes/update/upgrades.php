@@ -1,6 +1,6 @@
 <?php
 
-namespace StarcatReview\Includes;
+namespace StarcatReview\Includes\Update;
 
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
  *
  * @since 1.9
  */
-if (!class_exists('\StarcatReview\Includes\Upgrades')) {
+if (!class_exists('\StarcatReview\Includes\Update\Upgrades')) {
     class Upgrades
     {
 
@@ -27,10 +27,15 @@ if (!class_exists('\StarcatReview\Includes\Upgrades')) {
                 'slug' => 'slug',
             ];
 
-            $upgrades_list = new \StarcatReview\Includes\Upgrades_List();
+            $upgrades_list = new \StarcatReview\Includes\Update\Upgrades_List();
             include_once SCR_PATH . 'includes/lib/upgrader/upgrader.php';
-            $upgrader = new \Upgrader\Upgrader($args, $upgrades_list);
-            $upgrader::add_actions();
+            if (class_exists('\Upgrader\Upgrader')) {
+                $upgrader = new \Upgrader\Upgrader($args, $upgrades_list);
+                $upgrader::add_actions();
+            } else {
+                error_log('Upgrader Does not Exist');
+            }
+
         }
     } // END CLASS
 }
