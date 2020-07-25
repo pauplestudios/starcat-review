@@ -12,6 +12,16 @@
         }
     }
 
+    .field .ui.checkbox {
+        display: flex;
+    }
+    
+    #wp-comment-cookies-consent{
+        display: flex;
+        align-self: center;
+        margin-right: .5em;
+    }
+
     .rating.fields {
         & ul.review-list {
             width: 100%;
@@ -31,4 +41,9 @@
             border-radius: 3px;
         }
     }
+}
+
+.ui.form.user-review-reply {
+    margin: 1em 0;
+    box-sizing: content-box;
 }

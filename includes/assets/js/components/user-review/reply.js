@@ -162,6 +162,7 @@ var Reply = {
             },
             onSuccess: function (e, fields) {
                 e.preventDefault();
+                jQuery(selectors.links).show();
                 replyForm.replaceWith(placeholderContent);
                 thisModule.submit(replyForm, fields);
             },
