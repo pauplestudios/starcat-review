@@ -20,7 +20,6 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
 
         public function insert($props)
         {
-
             // error_log('props : ' . print_r($props, true));
             $Current_User = new \StarcatReview\App\Services\User();
 
@@ -92,9 +91,14 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 $comment_data['comment_author_url'] = $user->user_url;
                 $comment_data['user_id'] = $user->ID;
             } else {
-                $comment_data['comment_author'] = (isset($props['name']) && !empty($props['name'])) ? $props['name'] : '';
-                $comment_data['comment_author_email'] = (isset($props['email']) && !empty($props['email'])) ? $props['email'] : '';
-                $comment_data['comment_author_url'] = (isset($props['website']) && !empty($props['website'])) ? $props['website'] : '';
+                $commenter = wp_get_current_commenter();
+                $name = (isset($commenter['comment_author'])) ? $commenter['comment_author'] : '';
+                $email = (isset($commenter['comment_author_email'])) ? $commenter['comment_author_email'] : '';
+                $website = (isset($commenter['comment_author_url'])) ? $commenter['comment_author_url'] : '';
+
+                $comment_data['comment_author'] = (isset($props['name']) && !empty($props['name'])) ? $props['name'] : $name;
+                $comment_data['comment_author_email'] = (isset($props['email']) && !empty($props['email'])) ? $props['email'] : $email;
+                $comment_data['comment_author_url'] = (isset($props['website']) && !empty($props['website'])) ? $props['website'] : $website;
                 $comment_data['user_id'] = '';
             }
 
