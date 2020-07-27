@@ -55,11 +55,11 @@ msgstr "Thanks for your review"
 msgid "You can see your review below. Also, look at the users summary"
 msgstr "You can see your review below. Also, look at the users summary" 
 
-msgid "This is a Bad request, Our development team processing it for while so we suggest you should keep browsing!"
-msgstr "This is a Bad request, Our development team processing it for while so we suggest you should keep browsing!" 
+msgid "Review failed. Please try again later!"
+msgstr "Review failed. Please try again later!" 
 
-msgid "Thanks for your review though"
-msgstr "Thanks for your review though" 
+msgid "If it keeps failing, please contact the admin of the site"
+msgstr "If it keeps failing, please contact the admin of the site" 
 
 #. Summary
 
