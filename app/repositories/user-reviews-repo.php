@@ -50,13 +50,8 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             }
 
             // 4. Check if we need to manually approve this review
-            if ($can_approve) {
-                $comment_modifier = [
-                    'comment_ID' => $comment_id,
-                    'comment_approved' => 1,
-                ];
-
-                wp_update_comment($comment_modifier);
+            if ($can_approve == false) {
+                wp_set_comment_status($comment_id, 0);
             }
 
             // 5. Does this review have comment_meta to be updated
@@ -90,7 +85,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             $comment_data['comment_type'] = SCR_COMMENT_TYPE;
             // $comment_data['comment_date'] = current_time('timestamp', true);
             $comment_data['comment_parent'] = !isset($props['parent']) ? 0 : $props['parent'];
-            $comment_data['comment_approved'] = 0;
+            $comment_data['comment_approved'] = 1;
 
             // Properties which change for different user types (logged_in and non_logged_in)
             if ($is_user_logged_in) {
@@ -108,7 +103,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 $comment_data['comment_author'] = $commenter_name;
                 $comment_data['comment_author_email'] = $commenter_email;
                 $comment_data['comment_author_url'] = $commenter_website;
-                $comment_data['user_id'] = '';
+                $comment_data['user_id'] = 0;
             }
 
             return $comment_data;
