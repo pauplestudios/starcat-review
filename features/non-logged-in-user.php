@@ -38,29 +38,26 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
             add_filter('scr_user_form_end', [$this, 'form_comment_consent_modification'], 10, 2);
 
             add_filter('scr_form_process_data', [$this, 'process_form']);
-            add_filter('scr_comment', [$this, 'get_comment_item']);
+            add_filter('scr_comment', [$this, 'get_can_edit_comment_capabilities']);
             add_filter('scr_can_view_comment', [$this, 'can_view_comment'], 10, 2);
             add_filter('scr_has_current_user_already_reviewed', [$this, 'has_current_user_already_reviewed'], 10, 2);
         }
 
-        public function get_comment_item($comment_item)
+        public function get_can_edit_comment_capabilities($comment_item)
         {
-            // Rule for this hook
+            // return if current_user is not a non-logged-in-user
             if (isset($comment_item['user_id']) && $comment_item['user_id'] != 0) {
                 return $comment_item;
             }
 
-            $Current_User = new \StarcatReview\App\Services\User();
-            $current_user_IP = $Current_User->get_user_IP();
-            $settings = $this->get_settings();
+            $current_user = new \StarcatReview\App\Services\User();
+            $current_user_IP = $current_user->get_user_IP();
 
-            $commenters = wp_get_current_commenter();
-            // error_log('commenters : ' . print_r($commenters, true));
+            $comment_item['can_edit'] = false;
 
-            if ($settings['who_can_review'] == 'everyone' && $comment_item['author_IP'] == $current_user_IP) {
+            // Non-Logged-in-users
+            if ($comment_item['author_IP'] == $current_user_IP) {
                 $comment_item['can_edit'] = true;
-            } else {
-                $comment_item['can_edit'] = false;
             }
 
             return $comment_item;

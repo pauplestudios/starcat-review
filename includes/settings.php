@@ -326,8 +326,8 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'options' => array(
                                 'logged_in' => __('Logged In Users', SCR_DOMAIN),
                                 'everyone' => __('Everyone', SCR_DOMAIN),
-
                             ),
+                            'default' => 'logged_in',
                         ),
 
                         array(
