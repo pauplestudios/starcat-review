@@ -75,7 +75,7 @@ if (!class_exists('\StarcatReview\App\Services\Services')) {
                 $comment['can_edit'] = true;
             }
 
-            return $comment_item;
+            return $comment;
         }
 
         public function get_capabilities_args($comments = [])
