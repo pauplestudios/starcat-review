@@ -100,9 +100,14 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 $comment_data['comment_author_url'] = $user->user_url;
                 $comment_data['user_id'] = $user->ID;
             } else {
-                $comment_data['comment_author'] = (isset($props['name']) && !empty($props['name'])) ? $props['name'] : '';
-                $comment_data['comment_author_email'] = (isset($props['email']) && !empty($props['email'])) ? $props['email'] : '';
-                $comment_data['comment_author_url'] = (isset($props['website']) && !empty($props['website'])) ? $props['website'] : '';
+                $commenter = wp_get_current_commenter();
+                $commenter_name = (isset($props['name']) && !empty($props['name'])) ? $props['name'] : $commenter['comment_author'];
+                $commenter_email = (isset($props['email']) && !empty($props['email'])) ? $props['email'] : $commenter['comment_author_email'];
+                $commenter_website = (isset($props['website']) && !empty($props['website'])) ? $props['website'] : $commenter['comment_author_url'];
+
+                $comment_data['comment_author'] = $commenter_name;
+                $comment_data['comment_author_email'] = $commenter_email;
+                $comment_data['comment_author_url'] = $commenter_website;
                 $comment_data['user_id'] = '';
             }
 
@@ -113,8 +118,17 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
         {
             $can_approve = $this->current_user->can_user_directly_publish_reviews();
             $comment_id = $props['comment_id'];
+
+            $commenter = wp_get_current_commenter();
+            $commenter_name = (isset($commenter['comment_author']) && !empty($commenter['comment_author'])) ? $commenter['comment_author'] : '';
+            $commenter_email = (isset($commenter['comment_author_email']) && !empty($commenter['comment_author_email'])) ? $commenter['comment_author_email'] : '';
+            $commenter_website = (isset($commenter['comment_author_url']) && !empty($commenter['comment_author_url'])) ? $commenter['comment_author_url'] : '';
+
             $comment = array(
                 'comment_ID' => $props['comment_id'],
+                'comment_author' => $commenter_name,
+                'comment_author_email' => $commenter_email,
+                'comment_author_url' => $commenter_website,
                 'comment_content' => $props['description'],
                 'comment_parent' => $props['parent'],
                 'comment_approved' => $can_approve ? 1 : 0,
