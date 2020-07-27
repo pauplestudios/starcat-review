@@ -52,6 +52,10 @@ if (!class_exists('\StarcatReview\Includes\Translations')) {
                 'replyto' => __('Reply to', SCR_DOMAIN),
                 'existspros' => __('Type new or select existing pros', SCR_DOMAIN),
                 'existscons' => __('Type new or select existing cons', SCR_DOMAIN),
+                'reviewSuccessTitle' => __('Thanks for your review', SCR_DOMAIN),
+                'reviewSuccessDescription' => __('You can see your review below. Also, look at the users summary', SCR_DOMAIN),
+                'reviewFailTitle' => __('This is a Bad request, Our development team processing it for while so we suggest you should keep browsing!', SCR_DOMAIN),
+                'reviewFailDescription' => __('Thanks for your review though', SCR_DOMAIN),
             ];
         }
     } // END CLASS

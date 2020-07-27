@@ -49,6 +49,18 @@ msgstr "Save"
 msgid "Cancel"
 msgstr "Cancel" 
 
+msgid "Thanks for your review"
+msgstr "Thanks for your review" 
+
+msgid "You can see your review below. Also, look at the users summary"
+msgstr "You can see your review below. Also, look at the users summary" 
+
+msgid "This is a Bad request, Our development team processing it for while so we suggest you should keep browsing!"
+msgstr "This is a Bad request, Our development team processing it for while so we suggest you should keep browsing!" 
+
+msgid "Thanks for your review though"
+msgstr "Thanks for your review though" 
+
 #. Summary
 
 msgid "Author Rating"
