@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Starcat Review\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-18 09:59+0000\n"
-"PO-Revision-Date: 2020-07-18 10:00+0000\n"
-"Last-Translator: Santhosh\n"
+"POT-Creation-Date: 2020-07-27 09:46+0000\n"
+"PO-Revision-Date: 2020-07-27 09:46+0000\n"
+"Last-Translator: \n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
@@ -63,6 +63,22 @@ msgstr "sparen"
 
 msgid "Cancel"
 msgstr "Stornieren"
+
+msgid "Thanks for your review"
+msgstr "Vielen Dank für Ihre Bewertung"
+
+msgid "You can see your review below. Also, look at the users summary"
+msgstr ""
+"Sie können Ihre Bewertung unten sehen. Schauen Sie sich auch die "
+"Benutzerübersicht an"
+
+msgid "Review failed. Please try again later!"
+msgstr "Überprüfung fehlgeschlagen. Bitte versuchen Sie es später noch einmal!"
+
+msgid "If it keeps failing, please contact the admin of the site"
+msgstr ""
+"Wenn dies weiterhin fehlschlägt, wenden Sie sich bitte an den Administrator "
+"der Website"
 
 #. Summary
 msgid "Author Rating"

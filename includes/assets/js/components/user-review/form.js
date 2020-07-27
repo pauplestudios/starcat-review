@@ -65,9 +65,8 @@ var Form = {
                 // Success Message
                 var msgProps = {
                     type: "positive",
-                    title: "Thanks for your Review.",
-                    description:
-                        "You can see your review below. Also look at the user summary.",
+                    title: Translations.reviewSuccessTitle,
+                    description: Translations.reviewSuccessDescription,
                 };
 
                 SCRForm.html(Form.getMessageTemplate(msgProps));
@@ -86,9 +85,8 @@ var Form = {
             // Fail Message
             var msgProps = {
                 type: "negative",
-                title:
-                    "This is a Bad request, Our development team processing it for while so we suggest you should Keep browsing!",
-                description: "Thanks for your Review though.",
+                title: Translations.reviewFailTitle,
+                description: Translations.reviewFailDescription,
             };
             SCRForm.html(Form.getMessageTemplate(msgProps));
 
