@@ -11,10 +11,6 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReview\App\Services\User')) {
     class User
     {
-        public function __construct()
-        {
-            $this->can_user_directly_publish_reviews();
-        }
         public function get_user_IP()
         {
             if (!empty($_SERVER['REMOTE_ADDR']) && rest_is_ip_address(wp_unslash($_SERVER['REMOTE_ADDR']))) { // WPCS: input var ok, sanitization ok.

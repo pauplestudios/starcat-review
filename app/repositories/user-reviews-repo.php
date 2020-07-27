@@ -50,9 +50,8 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             }
 
             // 4. Check if we need to manually approve this review
-            if ($can_approve == false) {
-                wp_set_comment_status($comment_id, 0);
-            }
+            $status = ($can_approve) ? 1 : 0;
+            wp_set_comment_status($comment_id, $status);
 
             // 5. Does this review have comment_meta to be updated
             $should_update_comment_meta = (isset($comment_id) && !empty($comment_id) && !isset($props['review_reply']) && $props['parent'] == 0);
@@ -115,9 +114,16 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             $comment_id = $props['comment_id'];
 
             $commenter = wp_get_current_commenter();
-            $commenter_name = (isset($commenter['comment_author']) && !empty($commenter['comment_author'])) ? $commenter['comment_author'] : '';
-            $commenter_email = (isset($commenter['comment_author_email']) && !empty($commenter['comment_author_email'])) ? $commenter['comment_author_email'] : '';
-            $commenter_website = (isset($commenter['comment_author_url']) && !empty($commenter['comment_author_url'])) ? $commenter['comment_author_url'] : '';
+            $commenter_name = $commenter['comment_author'];
+            $commenter_email = $commenter['comment_author'];
+            $commenter_website = $commenter['comment_author'];
+
+            if ($this->current_user->is_loggedin()) {
+                $user = get_user_by('id', get_current_user_id());
+                $commenter_name = $user->display_name;
+                $commenter_email = $user->user_email;
+                $commenter_website = $user->user_url;
+            }
 
             $comment = array(
                 'comment_ID' => $props['comment_id'],
