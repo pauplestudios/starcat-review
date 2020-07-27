@@ -63,13 +63,12 @@ if (!class_exists('\StarcatReview\App\Services\Services')) {
 
         public function get_can_edit_comment_capabilities($comment)
         {
-            $comment['can_edit'] = false;
-
             // return if current_user is not a logged-in-user
             if (isset($comment['user_id']) && $comment['user_id'] == 0) {
                 return $comment;
             }
 
+            $comment['can_edit'] = false;
             // Logged-in-users
             if (get_current_user_id() == $comment['user_id']) {
                 $comment['can_edit'] = true;
@@ -97,7 +96,7 @@ if (!class_exists('\StarcatReview\App\Services\Services')) {
 
             $is_either_one_of_the_user_can_review = $is_logged_in_user_can_review || $is_non_logged_in_user_can_review ? true : false;
 
-            if ($is_either_one_of_the_user_can_review && $can_same_user_leave_multiple_review) {
+            if ($is_either_one_of_the_user_can_review && $can_same_user_leave_multiple_review || $is_either_one_of_the_user_can_review) {
                 $capability['can_user_review'] = true;
             }
 
@@ -120,7 +119,7 @@ if (!class_exists('\StarcatReview\App\Services\Services')) {
 
             // error_log('is_logged_in_user_can_review : ' . $is_logged_in_user_can_review);
             // error_log('is_non_logged_in_user_can_review : ' . $is_non_logged_in_user_can_review);
-            // error_log('is_either_one_of_the_user_can_review : ' . $is_non_logged_in_user_can_review);
+            // error_log('is_either_one_of_the_user_can_review : ' . $is_either_one_of_the_user_can_review);
             // error_log('can_same_user_leave_multiple_review : ' . $can_same_user_leave_multiple_review);
 
             // error_log('capability : ' . print_r($capability, true));
