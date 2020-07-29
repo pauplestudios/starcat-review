@@ -423,6 +423,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'type' => 'text',
                             'title' => __('reCAPTCHA Site Key', SCR_DOMAIN),
                             'dependency' => array('ur_show_captcha', '==', 'true'),
+                            'validate' => 'csf_validate_recaptcha_site_key',
                         ),
 
                         array(
@@ -431,6 +432,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'title' => __('reCAPTCHA Secret Key', SCR_DOMAIN),
                             'default' => '',
                             'dependency' => array('ur_show_captcha', '==', 'true'),
+                            'validate' => 'csf_validate_recaptcha_secret_key',
                         ),
 
                         // array(
