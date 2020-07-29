@@ -80,7 +80,7 @@ if (!class_exists('\StarcatReview\App\Services\Services')) {
         public function get_capabilities_args($comments = [])
         {
             $capability = [
-                'can_user_vote' => false,
+                'can_user_vote' => true,
                 'can_user_reply' => false,
                 'can_user_review' => false,
             ];
@@ -103,7 +103,7 @@ if (!class_exists('\StarcatReview\App\Services\Services')) {
             // can reply and vote for a review feature is only for logged-in-users
             if ($is_logged_in_user_can_review) {
                 $capability['can_user_reply'] = true;
-                $capability['can_user_vote'] = true;
+                // $capability['can_user_vote'] = true;
             }
 
             if ($can_same_user_leave_multiple_review == false && isset($comments) && !empty($comments)) {
