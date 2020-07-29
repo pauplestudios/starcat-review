@@ -78,10 +78,13 @@ var Edit = {
         form.show();
 
         // Non-logged-in Users
-        form.find('[name="name"]').attr("disabled", "");
-        form.find('[name="email"]').attr("disabled", "");
-        form.find('[name="website"]').attr("disabled", "");
-        form.find('[name="wp-comment-cookies-consent"]').attr("disabled", "");
+        var name = (props.user["name"] && props.user["name"] != Translations['anonymous']) ? props.user["name"] : form.find('[name="name"]').val();
+        var email = (props.user["email"]) ? props.user["email"] : form.find('[name="email"]').val();
+        var website = (props.user["website"]) ? props.user["website"] : form.find('[name="website"]').val();
+
+        form.find('[name="name"]').val(name);
+        form.find('[name="email"]').val(email);
+        form.find('[name="website"]').val(website);
 
         // Stats
         Edit.getModifiedFormforStats(props, form);

@@ -78,6 +78,7 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
                 'ID' => $comment_obj->comment_ID,
                 'author' => $author,
                 'author_IP' => $comment_obj->comment_author_IP,
+                'website' => $comment_obj->comment_author_url,
                 'email' => $comment_obj->comment_author_email,
                 'user_id' => $comment_obj->user_id,
                 'avatar' => get_avatar($comment_obj->user_id),
