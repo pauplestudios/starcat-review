@@ -45,6 +45,7 @@ if (!class_exists('\StarcatReview\Includes\Translations')) {
         public static function getFormSrings()
         {
             return [
+                'anonymous' => __('Anonymous', SCR_DOMAIN),
                 'save' => __('Save', SCR_DOMAIN),
                 'edit' => __('Edit', SCR_DOMAIN),
                 'cancel' => __('Cancel', SCR_DOMAIN),
