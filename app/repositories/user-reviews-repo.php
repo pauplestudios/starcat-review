@@ -201,6 +201,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             $commenter_email = (isset($props['email']) && !empty($props['email'])) ? $props['email'] : $commenter['comment_author_email'];
             $commenter_website = (isset($props['website']) && !empty($props['website'])) ? $props['website'] : $commenter['comment_author_url'];
 
+            $user = new \stdClass();
             $user->comment_author = $commenter_name;
             $user->comment_author_email = $commenter_email;
             $user->comment_author_url = $commenter_website;
