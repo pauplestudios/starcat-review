@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
     class User_Reviews_Repo
     {
-        public function __construct(Type $var = null)
+        public function __construct()
         {
             $this->current_user = new \StarcatReview\App\Services\User();
         }
@@ -26,8 +26,6 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
         {
             $user_can_review = $this->current_user->can_review();
             $can_approve = $this->current_user->can_user_directly_publish_reviews();
-            $can_store_wp_consent = isset($props['wp-comment-cookies-consent']) && $props['wp-comment-cookies-consent'] == 'yes' ? true : false;
-            $is_non_logged_in_user = !$this->current_user->is_loggedin() ? true : false;
 
             // 1. Check if current_user can add review
             if ($user_can_review == false) {
@@ -40,14 +38,8 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             $comment_data = $this->build_and_get_comment_data($user, $props);
             $comment_id = wp_new_comment($comment_data);
 
-            // 3. Store wp_comment, wp_consent in Cookies for non-logged-in users
-            if ($is_non_logged_in_user && $can_store_wp_consent) {
-                $wp_comment = get_comment($comment_id);
-                $wp_user = wp_get_current_user();
-                $wp_consent = $props['wp-comment-cookies-consent'];
-
-                do_action('set_comment_cookies', $wp_comment, $wp_user, $wp_consent);
-            }
+            // 3. Store wp_comment_consent in Cookies for non-logged-in users
+            $this->set_wp_comment_cookies($props, $comment_id);
 
             // 4. Check if we need to manually approve this review
             $status = ($can_approve) ? 1 : 0;
@@ -94,14 +86,10 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 $comment_data['comment_author_url'] = $user->user_url;
                 $comment_data['user_id'] = $user->ID;
             } else {
-                $commenter = wp_get_current_commenter();
-                $commenter_name = (isset($props['name']) && !empty($props['name'])) ? $props['name'] : $commenter['comment_author'];
-                $commenter_email = (isset($props['email']) && !empty($props['email'])) ? $props['email'] : $commenter['comment_author_email'];
-                $commenter_website = (isset($props['website']) && !empty($props['website'])) ? $props['website'] : $commenter['comment_author_url'];
-
-                $comment_data['comment_author'] = $commenter_name;
-                $comment_data['comment_author_email'] = $commenter_email;
-                $comment_data['comment_author_url'] = $commenter_website;
+                $user = $this->get_non_logged_in_user($props);
+                $comment_data['comment_author'] = $user->comment_author;
+                $comment_data['comment_author_email'] = $user->comment_author_email;
+                $comment_data['comment_author_url'] = $user->comment_author_url;
                 $comment_data['user_id'] = 0;
             }
 
@@ -113,10 +101,11 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             $can_approve = $this->current_user->can_user_directly_publish_reviews();
             $comment_id = $props['comment_id'];
 
-            $commenter = wp_get_current_commenter();
-            $commenter_name = $commenter['comment_author'];
-            $commenter_email = $commenter['comment_author'];
-            $commenter_website = $commenter['comment_author'];
+            $user = $this->get_non_logged_in_user($props);
+
+            $commenter_name = $user->comment_author;
+            $commenter_email = $user->comment_author_email;
+            $commenter_website = $user->comment_author_url;
 
             if ($this->current_user->is_loggedin()) {
                 $user = get_user_by('id', get_current_user_id());
@@ -136,6 +125,8 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             );
 
             wp_update_comment($comment);
+
+            $this->set_wp_comment_cookies($props, $props['comment_id']);
 
             // review only not reply update
             if ($props['parent'] == 0) {
@@ -185,6 +176,36 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 $meta_props = isset($meta_props) && !empty($meta_props) ? array_merge($meta_props, $vote_props) : $vote_props;
             }
             update_comment_meta($props['comment_id'], SCR_COMMENT_META, $meta_props);
+        }
+
+        public function set_wp_comment_cookies($props, $comment_id)
+        {
+            $is_non_logged_in_user = !$this->current_user->is_loggedin() ? true : false;
+            $can_store_wp_consent = isset($props['wp-comment-cookies-consent']) && $props['wp-comment-cookies-consent'] == 'yes' ? true : false;
+
+            // Store wp_comment_consent in Cookies for non-logged-in users
+            if ($is_non_logged_in_user && $can_store_wp_consent) {
+                $wp_comment = get_comment($comment_id);
+                $wp_user = wp_get_current_user();
+                $wp_consent = $props['wp-comment-cookies-consent'];
+
+                do_action('set_comment_cookies', $wp_comment, $wp_user, $wp_consent);
+            }
+        }
+
+        public function get_non_logged_in_user($props)
+        {
+            $commenter = wp_get_current_commenter();
+
+            $commenter_name = (isset($props['name']) && !empty($props['name'])) ? $props['name'] : $commenter['comment_author'];
+            $commenter_email = (isset($props['email']) && !empty($props['email'])) ? $props['email'] : $commenter['comment_author_email'];
+            $commenter_website = (isset($props['website']) && !empty($props['website'])) ? $props['website'] : $commenter['comment_author_url'];
+
+            $user->comment_author = $commenter_name;
+            $user->comment_author_email = $commenter_email;
+            $user->comment_author_url = $commenter_website;
+
+            return $user;
         }
 
         public function get_processed_data()
