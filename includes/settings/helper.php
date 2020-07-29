@@ -206,3 +206,23 @@ if (!function_exists('csf_validate_stat_limit')) {
         }
     }
 }
+
+if (!function_exists('csf_validate_recaptcha_site_key')) {
+
+    function csf_validate_recaptcha_site_key($value)
+    {
+        if (!sanitize_key($value)) {
+            return esc_html__('Please add a reCAPTCHA Site Key !', SCR_DOMAIN);
+        }
+    }
+}
+
+if (!function_exists('csf_validate_recaptcha_secret_key')) {
+
+    function csf_validate_recaptcha_secret_key($value)
+    {
+        if (!sanitize_key($value)) {
+            return esc_html__('Please add a reCAPTCHA Secret Key !', SCR_DOMAIN);
+        }
+    }
+}

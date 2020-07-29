@@ -168,9 +168,9 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
 
             $consent = empty($commenter['comment_author_email']) ? '' : ' checked="checked"';
             $html .= '<div class="field">';
-            $html .= '<div class="ui checkbox comment-form-cookies-consent">';
-            $html .= '<input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"' . $consent . ' />';
-            $html .= '<label for="wp-comment-cookies-consent">' . esc_html__('Save my name, email, and website in this browser for the next time I comment.', SCR_DOMAIN) . '</label>';
+            $html .= '<div class="ui checkbox wp-scr-comment-cookies-consent">';
+            $html .= '<input id="wp-scr-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"' . $consent . ' />';
+            $html .= '<label for="wp-scr-comment-cookies-consent">' . __('Save my name, email, and website in this browser for the next time I comment.', SCR_DOMAIN) . '</label>';
             $html .= '</div>';
             $html .= '</div>';
 
