@@ -8,7 +8,6 @@
  * Version:           0.6.1
  * Author:            HelpieWP
  * Author URI:        https: //starcatwp.com/
- * Network:           True
  * Text Domain:       starcat-review
  * Domain Path:       /languages
  */
