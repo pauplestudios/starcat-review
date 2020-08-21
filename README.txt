@@ -19,6 +19,11 @@ Create Review Posts, add reviews to existing post types and enable user reviews.
 
 == Change Log ==
 
+= 0.6.1.1 =
+* Fix: Starcat Review Photo Reviews add-on not displaying in user review
+* Fix: Starcat Review add-ons settings not added in starcat review settings
+* House-Keeping: Freemius SDK verion 2.4.0.1 updated
+
 = 0.6.1 =
 * Feature: Auto Approve Review settings added 
 * Feature: Starcat Review Internationalization
