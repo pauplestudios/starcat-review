@@ -68,9 +68,7 @@ if (function_exists('scr_fs')) {
 
             /**
              * Show in WP Dashboard notice about the plugin is not activated (PHP version).
-             *
              * @since 1.0.0
-             *
              * @return void
              */
             public function starcat_review_fail_php_version()
@@ -83,9 +81,7 @@ if (function_exists('scr_fs')) {
 
             /**
              * Show in WP Dashboard notice about the plugin is not activated (WP version).
-             *
              * @since 1.5.0
-             *
              * @return void
              */
             public function starcat_review_fail_wp_version()

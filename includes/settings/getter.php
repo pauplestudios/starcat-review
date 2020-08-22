@@ -219,8 +219,6 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 }
             }
 
-            // error_log('conditions : ' . print_r($conditions, true));
-
             return $conditions;
         }
 
