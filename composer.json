@@ -5,41 +5,55 @@
   },
   "extra": {
     "installer-paths": {
-        "artifacts/plugins/{$name}/": ["type:wordpress-plugin"],
-        "includes/lib/{$name}/": ["vendor/pauple/package"]
+      "artifacts/plugins/{$name}/": [
+        "type:wordpress-plugin"
+      ],
+      "includes/lib/{$name}/": [
+        "vendor/pauple/package"
+      ]
     }
-},
-  "repositories":[
+  },
+  "repositories": [
     {
-        "type":"composer",
-        "url":"https://wpackagist.org"
+      "type": "composer",
+      "url": "https://wpackagist.org"
     },
     {
       "type": "git",
-      "url" : "https://bitbucket.org/pauple/starcat-review-woo-notification.git"
-  },
+      "url": "https://bitbucket.org/pauple/upgrader.git"
+    },
     {
       "type": "git",
-      "url" : "https://bitbucket.org/pauple/upgrader.git"
-  },
+      "url": "https://bitbucket.org/pauple/widgetry.git"
+    },
     {
       "type": "git",
-      "url" : "https://bitbucket.org/pauple/starcat-review-cpt.git"
-  },
-  {
-    "type": "git",
-    "url" : "https://bitbucket.org/pauple/starcat-review-comparison-table.git"
-
-  }
-],
+      "url": "https://bitbucket.org/pauple/starcat-review-cpt.git"
+    },
+    {
+      "type": "git",
+      "url": "https://bitbucket.org/pauple/starcat-review-comparison-table.git"
+    },
+    {
+      "type": "git",
+      "url": "https://bitbucket.org/pauple/starcat-review-woo-notification.git"
+    },
+    {
+      "type": "git",
+      "url": "https://bitbucket.org/pauple/starcat-reviews-photo-reviews.git"
+    }
+  ],
   "require-dev": {
     "pauple/upgrader": "dev-master",
+    "pauple/widgetry": "dev-develop",
     "pauple/starcat-review-woo-notify": "dev-master",
-    "pauple/starcat-review-cpt": "dev-develop",
+    "pauple/starcat-review-cpt": "dev-hotfix/0.3.1",
     "pauple/starcat-review-ct": "dev-release/0.2",
-    "lucatume/wp-browser": "~2.1.5",
+    "pauple/starcat-review-photo-reviews": "dev-hotfix/0.1.2",
+    "lucatume/wp-browser": "^2.6.9",
     "bmitch/churn-php": "^1.0",
     "sebastian/phpcpd": "^4.1",
-    "wpackagist-plugin/woocommerce":"4.1.1"
+    "wpackagist-plugin/woocommerce": "dev-trunk",
+    "wpackagist-plugin/wp-migrate-db": "dev-trunk"
   }
 }
