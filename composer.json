@@ -50,10 +50,10 @@
     "pauple/starcat-review-cpt": "dev-hotfix/0.3.1",
     "pauple/starcat-review-ct": "dev-release/0.2",
     "pauple/starcat-review-photo-reviews": "dev-hotfix/0.1.2",
-    "lucatume/wp-browser": "^2.6.9",
+    "lucatume/wp-browser": "~2.1.5",
     "bmitch/churn-php": "^1.0",
     "sebastian/phpcpd": "^4.1",
-    "wpackagist-plugin/woocommerce": "dev-trunk",
-    "wpackagist-plugin/wp-migrate-db": "dev-trunk"
+    "wpackagist-plugin/woocommerce": "4.4.1",
+    "wpackagist-plugin/wp-migrate-db": "1.0.15"
   }
 }
