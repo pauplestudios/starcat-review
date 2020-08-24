@@ -263,8 +263,8 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '<div class="field">';
             $html .= '<textarea rows="2" name="description" placeholder="Reply to @them ..." ></textarea>';
             $html .= '</div>';
-            $html .= '<div class="ui mini icon blue submit button"><i class="plus circle icon"></i> ' . __('REPLY', SCR_DOMAIN) . '</div>';
-            $html .= '<div class="ui mini icon cancel button">' . __('Cancel', SCR_DOMAIN) . '</div>';
+            $html .= '<div class="ui mini blue submit button">' . __('REPLY', SCR_DOMAIN) . '</div>';
+            $html .= '<div class="ui mini cancel button">' . __('Cancel', SCR_DOMAIN) . '</div>';
             $html .= '</form>';
 
             return $html;
