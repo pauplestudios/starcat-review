@@ -33,9 +33,6 @@ if (!class_exists('\Starcat_Review')) {
 
             /* New Features */
             $Non_Logged_In_User = new \StarcatReview\Features\Non_Logged_In_User();
-
-            /* Core WooCommerce Review Integration */
-            new \StarcatReview\Features\Woocommerce_Integration();
         }
 
         // public function register_cpt_and_taxonomy()

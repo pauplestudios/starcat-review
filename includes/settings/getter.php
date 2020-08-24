@@ -187,5 +187,64 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
 
             return $args;
         }
+
+        public static function reviews_enabled_post_types()
+        {
+            $post_types = SCR_Getter::get('review_enable_post-types');
+            $enabled_post_types = is_string($post_types) ? [0 => $post_types] : $post_types;
+
+            return $enabled_post_types;
+        }
+
+        public static function addons_available_condition()
+        {
+            $conditions = [];
+            $addon_plugins = self::get_addon_plugins_slugs();
+
+            foreach ($addon_plugins as $addon_name => $addon_slugs) {
+                $freemius = 'scr_' . $addon_name . '_fs';
+                $is_addon_freemius_active = (function_exists($freemius)) ? true : false;
+                $is_addon_plugin_active = is_plugin_active($addon_slugs[0] || $addon_slugs[1]) ? true : false;
+
+                // Assuming addon is not available
+                $conditions[$addon_name] = false;
+
+                // Addon Plugin and freeemius licences are activated
+                if ($is_addon_plugin_active && $is_addon_freemius_active && $freemius()->can_use_premium_code()) {
+                    $conditions[$addon_name] = true;
+                }
+
+                // woo notification addon v0.1 compatible support
+                if ($addon_name == 'wn' && $is_addon_plugin_active && get_plugin_data(SCR_WOO_NOTIFY__FILE__)['Version'] == 0.1) {
+                    $conditions[$addon_name] = function_exists('src_wn') && src_wn()->can_use_premium_code() ? true : false;
+                }
+
+            }
+
+            return $conditions;
+        }
+
+        public static function get_addon_plugins_slugs()
+        {
+            return [
+                'ct' => [
+                    'starcat-review-ct/starcat-review-ct.php',
+                    'starcat-review-ct-premium/starcat-review-ct.php',
+                ],
+                'pr' => [
+                    'starcat-review-photo-reviews/starcat-review-photo-reviews.php',
+                    'starcat-review-photo-reviews-premium/starcat-review-photo-reviews.php',
+                ],
+                'wn' => [
+                    'starcat-review-woo-notify/starcat-review-woo-notify.php',
+                    'starcat-review-woo-notify-premium/starcat-review-woo-notify.php',
+                ],
+                'cpt' => [
+                    'starcat-review-cpt/starcat-review-cpt.php',
+                    'starcat-review-cpt-premium/starcat-review-cpt.php',
+                ],
+            ];
+        }
+
     } // END CLASS
 }

@@ -21,7 +21,8 @@ var Upload = {
 
     // Used In for Edit forms
     getEditFormPhotos: function (props, form) {
-        if (props.attachments && props.attachments.length) {
+
+        if (props.attachments && props.attachments.length && form.find(".scr_pr_uploaded_image_group .add-photos")[0]) {
             var photosHTML = '';
             var addPhotoHTMl = form.find(".scr_pr_uploaded_image_group .add-photos")[0].outerHTML;
             jQuery(props.attachments).each(function () {

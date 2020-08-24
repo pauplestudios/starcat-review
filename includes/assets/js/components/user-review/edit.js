@@ -112,21 +112,57 @@ var Edit = {
     },
 
     getModifiedFormforProsandCons: function (props, form, listname) {
+
+        // Creating Fieald by triggering click event
         if (props.prosandcons && props.prosandcons[listname + '-list'] && props.prosandcons[listname + '-list'].length > 1) {
             for (var ii = 1; ii < props.prosandcons[listname + '-list'].length; ii++) {
                 form.find('.review-' + listname + '-repeater [data-repeater-create]').trigger("click");
             }
         }
 
+        // Delete field if Empty
         var index = 0;
         form.find('.review-' + listname + '-repeater [data-repeater-item]').each(function () {
             if (props.prosandcons && props.prosandcons[listname + '-list'] && props.prosandcons[listname + '-list'][index]) {
-                jQuery(this).find(".prosandcons").dropdownX("set text", props.prosandcons[listname + '-list'][index].item);
+
+                var collectionOptions = form.find('.review-' + listname + '-repeater').attr('data-' + listname);
+                var itemOptions = props.prosandcons[listname + '-list'];
+                var values = Edit.getProsandConsOptions(collectionOptions, itemOptions);
+                var prosAndConsField = jQuery(this).find(".prosandcons");
+
+                prosAndConsField.dropdownX('change values', values);
+                prosAndConsField.dropdownX("set text", props.prosandcons[listname + '-list'][index].item);
+                prosAndConsField.dropdownX("set selected", props.prosandcons[listname + '-list'][index].item);
+
             } else {
                 jQuery(this).find("[data-repeater-delete]").trigger("click");
             }
             index++;
         });
+    },
+
+    getProsandConsOptions: function (collectionOptions, itemOptions) {
+        var values = [];
+        collectionOptions = JSON.parse(collectionOptions);
+        // get options of unique values only
+        var options = itemOptions.concat(collectionOptions.filter(function (el) {
+            var result = true;
+            for (var ii in itemOptions) {
+                if (itemOptions[ii].item === el.item) {
+                    result = false;
+                }
+            }
+            return result;
+        }));
+
+        for (var i = 0, len = options.length; i < len; i++) {
+            values[i] = {
+                value: options[i].item,
+                name: options[i].item
+            };
+        }
+
+        return values;
     },
 
     getModifiedFormforPhotos: function (props, form) {
