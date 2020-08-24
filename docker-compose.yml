@@ -1,10 +1,10 @@
-version: '3.6'
+version: "3.6"
 services:
     wordpress:
         build:
             context: ./tests
             args:
-              WP_TAG: wordpress:${WP_TAG}
+                WP_TAG: wordpress:${WP_TAG}
         restart: always
         ports:
             - ${WP_PORT}:80
@@ -25,10 +25,10 @@ services:
                 /* define( 'WP_FS__SIMULATE_FREEMIUS_OFF', true ); */
         volumes:
             - ./:/var/www/html/wp-content/plugins/starcat-review
-            - ./artifacts/addons/starcat-review-cpt:/var/www/html/wp-content/plugins/starcat-review-cpt
-            - ./artifacts/addons/starcat-review-ct:/var/www/html/wp-content/plugins/starcat-review-ct
-            - ./artifacts/addons/starcat-review-woo-notify:/var/www/html/wp-content/plugins/starcat-review-woo-notify
-            - ./artifacts/addons/starcat-review-photo-reviews:/var/www/html/wp-content/plugins/starcat-review-photo-reviews
+            - ./vendor/pauple/starcat-review-cpt:/var/www/html/wp-content/plugins/starcat-review-cpt
+            - ./vendor/pauple/starcat-review-ct:/var/www/html/wp-content/plugins/starcat-review-ct
+            - ./vendor/pauple/starcat-review-woo-notify:/var/www/html/wp-content/plugins/starcat-review-woo-notify
+            - ./vendor/pauple/starcat-review-photo-reviews:/var/www/html/wp-content/plugins/starcat-review-photo-reviews
             - ./artifacts/plugins/woocommerce:/var/www/html/wp-content/plugins/woocommerce
             - ./artifacts/plugins/wp-migrate-db:/var/www/html/wp-content/plugins/wp-migrate-db
             - ./config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
@@ -48,5 +48,4 @@ services:
             MYSQL_DATABASE: wp
             MYSQL_USER: wp
             MYSQL_PASSWORD: pass
-            MYSQL_RANDOM_ROOT_PASSWORD: '1'
-            
+            MYSQL_RANDOM_ROOT_PASSWORD: "1"

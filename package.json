@@ -14,7 +14,7 @@
         "lint": "esw webpack.config.* src tools --color",
         "run_test": "yarn prepare_docker && yarn acceptance",
         "run_test2": "yarn build && docker-compose down && docker-compose up -d && sleep 10 && yarn codeceptjs",
-        "run_unit_test": "yarn prepare_docker && yarn wpunit_spec",
+        "run_unit_test": "yarn prepare_docker && yarn wpunit",
         "acceptance": "vendor/bin/codecept run acceptance --steps",
         "acceptance_spec": "vendor/bin/codecept run acceptance tests/acceptance/BasicCest.php:comparisonTableAddonActivation --steps",
         "wpunit": "vendor/bin/codecept run wpunit --steps",
