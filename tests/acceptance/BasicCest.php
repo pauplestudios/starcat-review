@@ -24,15 +24,7 @@ class BasicCest
 
     public function websiteLoads(\AcceptanceTester $I)
     {
-        // $this->updateDatabase($I);
-        // $I->see('Username');
         $I->loginAsAdmin();
-
-        /* Start Conditional */
-        // $I->click("Remind me later");
-        // $I->click("Update WordPress Database");
-        /* End Conditional */
-
         $I->amOnPluginsPage();
         $I->activatePlugin('starcat-review');
         $I->amOnPagesPage();
@@ -52,19 +44,15 @@ class BasicCest
         $I->amOnPluginsPage();
         $I->seePluginDeactivated('starcat-review');
         $I->activatePlugin($data_slug);
-        $I->seeElement('.error');
-        $I->amOnPagesPage();
-        $I->amOnPluginsPage();
-        $I->seePluginDeactivated($data_slug);
+        $I->seeElement('.error.scr-error.scr-missing-parent');
 
-        // 2. When Parent is activated
+        // 2. When Parent plugin is activated
         $I->amOnPluginsPage();
         $I->activatePlugin('starcat-review');
-        $I->activatePlugin($data_slug); // TODO: This fails in Bitbucket Pipelines, find WHY. Maybe because its already active
+        $I->activatePlugin($data_slug);
         $I->amOnPagesPage();
         $I->amOnPluginsPage();
         $I->seePluginActivated($data_slug);
-        // $I->dontSeeElement('.error.src-error.missing-parent');
 
         /* Settings Page */
         $I->amOnPage('/wp-admin/admin.php?page=scr-settings#tab=1');
@@ -85,10 +73,7 @@ class BasicCest
         $I->amOnPluginsPage();
         $I->seePluginDeactivated('starcat-review');
         $I->activatePlugin($data_slug);
-        $I->seeElement('.error');
-        $I->amOnPagesPage();
-        $I->amOnPluginsPage();
-        $I->seePluginDeactivated($data_slug);
+        $I->seeElement('.error.scr-error.scr-missing-parent');
 
         // 2. When Parent plugin is activated
         $I->amOnPluginsPage();
@@ -117,7 +102,7 @@ class BasicCest
         $I->amOnPluginsPage();
         $I->seePluginDeactivated('starcat-review');
         $I->activatePlugin($data_slug);
-        $I->seeElement('.error');
+        $I->seeElement('.error.scr-error.scr-missing-parent');
 
         // 2. When Parent plugin is activated
         $I->amOnPluginsPage();
@@ -146,7 +131,7 @@ class BasicCest
         $I->amOnPluginsPage();
         $I->seePluginDeactivated('starcat-review');
         $I->activatePlugin($data_slug);
-        $I->seeElement('.error.src-error.missing-parent');
+        $I->seeElement('.error.scr-error.scr-missing-parent');
 
         // 2. When Parent plugin is activated
         $I->amOnPluginsPage();
