@@ -16,7 +16,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
         public function get($comment_id, $parent = 0)
         {
             if ($parent != 0) {
-                return get_comment(intval($comment_id));
+                return get_comment($comment_id);
             }
 
             return get_comment_meta($comment_id, SCR_COMMENT_META);

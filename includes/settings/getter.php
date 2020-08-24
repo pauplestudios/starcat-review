@@ -199,50 +199,36 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
         public static function addons_available_condition()
         {
             $conditions = [];
-            $addon_plugins = self::get_addon_plugins_slugs();
+            $addon_plugins = self::get_addon_plugins_file_constants();
 
-            foreach ($addon_plugins as $addon_name => $addon_slugs) {
-                $freemius = 'scr_' . $addon_name . '_fs';
-                $is_addon_freemius_active = (function_exists($freemius)) ? true : false;
-                $is_addon_plugin_active = is_plugin_active($addon_slugs[0] || $addon_slugs[1]) ? true : false;
+            foreach ($addon_plugins as $addon_short_name => $addon_file_cons) {
+                $freemius = 'scr_' . $addon_short_name . '_fs';
+                $is_addon_file_defined = defined($addon_file_cons) ? true : false;
 
                 // Assuming addon is not available
-                $conditions[$addon_name] = false;
+                $conditions[$addon_short_name] = false;
 
                 // Addon Plugin and freeemius licences are activated
-                if ($is_addon_plugin_active && $is_addon_freemius_active && $freemius()->can_use_premium_code()) {
-                    $conditions[$addon_name] = true;
+                if ($is_addon_file_defined && $freemius()->can_use_premium_code()) {
+                    $conditions[$addon_short_name] = true;
                 }
 
                 // woo notification addon v0.1 compatible support
-                if ($addon_name == 'wn' && $is_addon_plugin_active && defined('SCR_WOO_NOTIFY__FILE__') && get_plugin_data(SCR_WOO_NOTIFY__FILE__)['Version'] == 0.1) {
-                    $conditions[$addon_name] = function_exists('src_wn') && src_wn()->can_use_premium_code() ? true : false;
+                if ($addon_short_name == 'wn' && $is_addon_file_defined && get_plugin_data($addon_file_cons)['Version'] == 0.1) {
+                    $conditions[$addon_short_name] = function_exists('src_wn') && src_wn()->can_use_premium_code() ? true : false;
                 }
-
             }
 
             return $conditions;
         }
 
-        public static function get_addon_plugins_slugs()
+        public static function get_addon_plugins_file_constants()
         {
             return [
-                'ct' => [
-                    'starcat-review-ct/starcat-review-ct.php',
-                    'starcat-review-ct-premium/starcat-review-ct.php',
-                ],
-                'pr' => [
-                    'starcat-review-photo-reviews/starcat-review-photo-reviews.php',
-                    'starcat-review-photo-reviews-premium/starcat-review-photo-reviews.php',
-                ],
-                'wn' => [
-                    'starcat-review-woo-notify/starcat-review-woo-notify.php',
-                    'starcat-review-woo-notify-premium/starcat-review-woo-notify.php',
-                ],
-                'cpt' => [
-                    'starcat-review-cpt/starcat-review-cpt.php',
-                    'starcat-review-cpt-premium/starcat-review-cpt.php',
-                ],
+                'ct' => "SCR_CT__FILE__",
+                'pr' => "SCR_PR__FILE__",
+                'wn' => "SCR_WOO_NOTIFY__FILE__",
+                'cpt' => "SCR_CPT__FILE__",
             ];
         }
 
