@@ -23,7 +23,7 @@ var ProsAndCons = {
     },
 
     addItem: function (selector, list, group) {
-        var duplicateItem = ProsAndCons.getDuplicateItem(list);
+        var duplicateItem = ProsAndCons.getDuplicateItem(list, group);
 
         jQuery(selector + " [data-repeater-create]").on("click", function () {
             var indexedItem = ProsAndCons.setIndex(list, duplicateItem, group);
@@ -39,12 +39,12 @@ var ProsAndCons = {
         });
     },
 
-    getDuplicateItem: function (list) {
+    getDuplicateItem: function (list, group) {
         var item = list
             .find("[data-repeater-item]")
             .first()[0];
         item = (item) ? item.outerHTML : '';
-        var placeholderText = '<option value="">Type new or select a existing one</option>';
+        var placeholderText = '<option value="">' + Translations['exists' + group] + '</option>';
         item = item.replace(new RegExp('<option[^>]*>.*?<\/option>'), placeholderText);
 
         return item;

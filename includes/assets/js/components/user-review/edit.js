@@ -62,8 +62,8 @@ var Edit = {
     },
 
     modifyFormForEditing: function (form, props, content) {
-        var sumbitBtn = '<div class="ui blue submit mini button">Save</div>';
-        var cancelBtn = '<div class="ui cancel mini button">Cancel</div>';
+        var sumbitBtn = '<div class="ui blue submit mini button">' + Translations.save + '</div>';
+        var cancelBtn = '<div class="ui cancel mini button">' + Translations.cancel + '</div>';
 
         props.title = content.find('.title').text().trim();
         props.description = content.find('.description').text().trim();
@@ -78,9 +78,13 @@ var Edit = {
         form.show();
 
         // Non-logged-in Users
-        // form.find('[name="user_name"]').attr("disabled", "");
-        // form.find('[name="user_email"]').attr("disabled", "");
-        // form.find('[name="website"]').attr("disabled", "");
+        var name = (props.user["name"] && props.user["name"] != Translations['anonymous']) ? props.user["name"] : form.find('[name="name"]').val();
+        var email = (props.user["email"]) ? props.user["email"] : form.find('[name="email"]').val();
+        var website = (props.user["website"]) ? props.user["website"] : form.find('[name="website"]').val();
+
+        form.find('[name="name"]').val(name);
+        form.find('[name="email"]').val(email);
+        form.find('[name="website"]').val(website);
 
         // Stats
         Edit.getModifiedFormforStats(props, form);
