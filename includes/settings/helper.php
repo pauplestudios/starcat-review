@@ -4,6 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
+use \StarcatReview\Includes\Settings\SCR_Getter;
+
 if (!class_exists('CSF_Field_icon_dropdown')) {
     class CSF_Field_icon_dropdown extends \CSF_Fields
     {
@@ -203,6 +205,26 @@ if (!function_exists('csf_validate_stat_limit')) {
 
         if (!ctype_digit($value)) {
             return esc_html__('Please giva a rounded value limit !', 'csf');
+        }
+    }
+}
+
+if (!function_exists('csf_validate_recaptcha_site_key')) {
+
+    function csf_validate_recaptcha_site_key($value)
+    {
+        if (SCR_Getter::get('ur_show_captcha') == true && !sanitize_key($value)) {
+            return esc_html__('Please add a reCAPTCHA Site Key !', SCR_DOMAIN);
+        }
+    }
+}
+
+if (!function_exists('csf_validate_recaptcha_secret_key')) {
+
+    function csf_validate_recaptcha_secret_key($value)
+    {
+        if (SCR_Getter::get('ur_show_captcha') == true && !sanitize_key($value)) {
+            return esc_html__('Please add a reCAPTCHA Secret Key !', SCR_DOMAIN);
         }
     }
 }

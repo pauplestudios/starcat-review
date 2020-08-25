@@ -19,10 +19,13 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
             $html .= '<div class="scr-summary">';
             $html .= '<div class="ui stackable ' . $props['collection']['no_of_column'] . ' column grid">';
 
-            $html .= $this->get_column($props['collection']['author_title'], $props['items']['author_stat']);
+            if ($props['collection']['is_enable_author']) {
+                $html .= $this->get_column($props['collection']['author_title'], $props['items']['author_stat']);
+            }
+
             $html .= $this->get_column($props['collection']['users_title'], $props['items']['comment_stat']);
 
-            if ($props['collection']['is_enable_author']) {
+            if ($props['collection']['is_enable_author'] && $props['collection']['is_enable_prosandcons']) {
                 $prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller();
                 $html .= $prosandcons->get_view($props);
             }

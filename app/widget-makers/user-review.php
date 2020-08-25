@@ -45,6 +45,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             return $this->form_controller->get_fields_view($args);
         }
 
+        // TODO: Is get_default_args() the correct name? Does this represent the default args?
         protected function get_default_args()
         {
             $stat_args = ['stats_args' => SCR_Getter::get_stat_default_args()];
@@ -52,6 +53,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             $args = [
                 'post_id' => get_the_ID(),
                 'enable_pros_cons' => SCR_Getter::get('enable-pros-cons'),
+                'enable_photo_reviews' => SCR_Getter::get('pr_enable'),
                 'show_list_title' => SCR_Getter::get('ur_show_list_title'),
                 'list_title' => SCR_Getter::get('ur_list_title'),
                 'enable_voting' => SCR_Getter::get('ur_enable_voting'),
@@ -73,9 +75,21 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
 
         private function get_interpreted_args($args)
         {
+            $post_meta = get_post_meta(get_the_ID(), SCR_POST_META, true);
+            $args['pros-list'] = [];
+            $args['cons-list'] = [];
+
+            if (isset($post_meta['pros-list']) && !empty($post_meta['pros-list'])) {
+                $args['pros-list'] = $post_meta['pros-list'];
+            }
+            if (isset($post_meta['cons-list']) && !empty($post_meta['cons-list'])) {
+                $args['cons-list'] = $post_meta['cons-list'];
+            }
+
             $components = ['comments', 'stats', 'prosandcons', 'votes', 'attachments'];
             $args['items'] = scr_get_comments_args($components);
-            $args['capability'] = apply_filters('scr_capabilities_args', $args['items']['comments']);
+            $commentsItems = (isset($args['items']['comments']) && !empty($args['items']['comments'])) ? $args['items']['comments'] : [];
+            $args['capability'] = apply_filters('scr_capabilities_args', $commentsItems);
 
             return $args;
         }

@@ -2,6 +2,8 @@
 
 namespace StarcatReview\App\Services;
 
+use \StarcatReview\Includes\Settings\SCR_Getter;
+
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -32,7 +34,7 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
                             $item = $this->get_stat($query_args, $comment_id, $review);
                         }
 
-                        if ($case == 'prosandcons') {
+                        if ($case == 'prosandcons' && SCR_Getter::get('enable-pros-cons')) {
                             $item = $this->get_proandcon($review);
                         }
 
@@ -40,7 +42,7 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
                             $item = $this->get_vote($review);
                         }
 
-                        if ($case == 'attachments') {
+                        if ($case == 'attachments' && SCR_Getter::get('pr_enable')) {
                             $item = $this->get_attachment($comment_id, $review);
                         }
 
@@ -77,6 +79,7 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
                 'author' => $author,
                 'author_IP' => $comment_obj->comment_author_IP,
                 'email' => $comment_obj->comment_author_email,
+                'website' => $comment_obj->comment_author_url,
                 'user_id' => $comment_obj->user_id,
                 'avatar' => get_avatar($comment_obj->user_id),
                 'content' => $comment_obj->comment_content,
@@ -100,9 +103,10 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
             $comment_ids = [];
             $query = [
                 'post_id' => isset($query_args['post_id']) ? $query_args['post_id'] : get_the_ID(),
-                // 'type' => ['review', 'starcat_review'],
+                'type' => isset($query_args['type']) ? $query_args['type'] : SCR_COMMENT_TYPE,
                 'parent' => isset($query_args['parent']) ? $query_args['parent'] : 0,
                 'status' => isset($query_args['status']) ? $query_args['status'] : '',
+                'user_id' => isset($query_args['user_id']) ? $query_args['user_id'] : '',
             ];
 
             $comments = get_comments($query);
@@ -192,9 +196,9 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
 
         }
 
-        /* 
+        /*
         TODO: have list of sizes like medium, large, small, full
-        */
+         */
 
         protected function get_attachment($comment_id, $review)
         {
@@ -205,7 +209,7 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
                         'id' => $attachment_id,
                         'review_id' => $comment_id,
                         'url' => wp_get_attachment_image_src($attachment_id, 'medium')[0],
-                    ];        
+                    ];
                 }
             }
 

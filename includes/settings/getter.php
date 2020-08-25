@@ -126,8 +126,8 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'ur_show_search' => true,
                 'ur_show_sortBy' => true,
                 'ur_enable_replies' => true,
-                'ur_enable_approval' => true,
                 'ur_who_can_review' => 'logged_in',
+                'ur_auto_approve' => false,
                 'ur_allow_same_user_can_leave_multiple_reviews' => false,
                 'ur_show_list_title' => true,
                 'ur_list_title' => 'User Reviews',
@@ -194,6 +194,42 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
             $enabled_post_types = is_string($post_types) ? [0 => $post_types] : $post_types;
 
             return $enabled_post_types;
+        }
+
+        public static function addons_available_condition()
+        {
+            $conditions = [];
+            $addon_plugins = self::get_addon_plugins_file_constants();
+
+            foreach ($addon_plugins as $addon_short_name => $addon_file_cons) {
+                $freemius = 'scr_' . $addon_short_name . '_fs';
+                $is_addon_file_defined = defined($addon_file_cons) ? true : false;
+
+                // Assuming addon is not available
+                $conditions[$addon_short_name] = false;
+
+                // Addon Plugin and freeemius licences are activated
+                if ($is_addon_file_defined && $freemius()->can_use_premium_code()) {
+                    $conditions[$addon_short_name] = true;
+                }
+
+                // woo notification addon v0.1 compatible support
+                if ($addon_short_name == 'wn' && $is_addon_file_defined && get_plugin_data(constant($addon_file_cons))['Version'] == 0.1) {
+                    $conditions[$addon_short_name] = function_exists('src_wn') && src_wn()->can_use_premium_code() ? true : false;
+                }
+            }
+
+            return $conditions;
+        }
+
+        public static function get_addon_plugins_file_constants()
+        {
+            return [
+                'ct' => "SCR_CT__FILE__",
+                'pr' => "SCR_PR__FILE__",
+                'wn' => "SCR_WOO_NOTIFY__FILE__",
+                'cpt' => "SCR_CPT__FILE__",
+            ];
         }
 
     } // END CLASS

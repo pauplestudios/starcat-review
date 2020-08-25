@@ -28,12 +28,13 @@ if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
         public function get_collectionProps($args)
         {
             $collection = [
-                'users_title' => sprintf('User Rating ( %1$d )', $args['review_count'], SCR_DOMAIN),
+                'users_title' => sprintf(__('Users Rating (%d)', SCR_DOMAIN), $args['review_count']),
                 'author_title' => __('Author Rating', SCR_DOMAIN),
                 'no_of_column' => $this->get_no_of_column($args),
                 'reviews_title' => $this->get_product_reviews_title(),
                 // 'show' => 'both',
                 'is_enable_author' => $args['enable-author-review'],
+                'is_enable_prosandcons' => $args['enable_pros_cons'],
             ];
 
             return $collection;
@@ -74,7 +75,7 @@ if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
         {
             $no_of_column = 'one';
 
-            $has_author_stat = !empty($args['items']['summary_author']) ? true : false;
+            $has_author_stat = !empty($args['items']['summary_author']) && $args['enable-author-review'] ? true : false;
             $has_comment_stat = !empty($args['items']['summary_users']) ? true : false;
 
             if ($has_comment_stat && $has_author_stat) {

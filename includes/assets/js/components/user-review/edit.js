@@ -62,8 +62,8 @@ var Edit = {
     },
 
     modifyFormForEditing: function (form, props, content) {
-        var sumbitBtn = '<div class="ui blue submit mini button">Save</div>';
-        var cancelBtn = '<div class="ui cancel mini button">Cancel</div>';
+        var sumbitBtn = '<div class="ui blue submit mini button">' + Translations.save + '</div>';
+        var cancelBtn = '<div class="ui cancel mini button">' + Translations.cancel + '</div>';
 
         props.title = content.find('.title').text().trim();
         props.description = content.find('.description').text().trim();
@@ -78,9 +78,13 @@ var Edit = {
         form.show();
 
         // Non-logged-in Users
-        // form.find('[name="user_name"]').attr("disabled", "");
-        // form.find('[name="user_email"]').attr("disabled", "");
-        // form.find('[name="website"]').attr("disabled", "");
+        var name = (props.user["name"] && props.user["name"] != Translations['anonymous']) ? props.user["name"] : form.find('[name="name"]').val();
+        var email = (props.user["email"]) ? props.user["email"] : form.find('[name="email"]').val();
+        var website = (props.user["website"]) ? props.user["website"] : form.find('[name="website"]').val();
+
+        form.find('[name="name"]').val(name);
+        form.find('[name="email"]').val(email);
+        form.find('[name="website"]').val(website);
 
         // Stats
         Edit.getModifiedFormforStats(props, form);
@@ -112,21 +116,57 @@ var Edit = {
     },
 
     getModifiedFormforProsandCons: function (props, form, listname) {
+
+        // Creating Fieald by triggering click event
         if (props.prosandcons && props.prosandcons[listname + '-list'] && props.prosandcons[listname + '-list'].length > 1) {
             for (var ii = 1; ii < props.prosandcons[listname + '-list'].length; ii++) {
                 form.find('.review-' + listname + '-repeater [data-repeater-create]').trigger("click");
             }
         }
 
+        // Delete field if Empty
         var index = 0;
         form.find('.review-' + listname + '-repeater [data-repeater-item]').each(function () {
             if (props.prosandcons && props.prosandcons[listname + '-list'] && props.prosandcons[listname + '-list'][index]) {
-                jQuery(this).find(".prosandcons").dropdownX("set text", props.prosandcons[listname + '-list'][index].item);
+
+                var collectionOptions = form.find('.review-' + listname + '-repeater').attr('data-' + listname);
+                var itemOptions = props.prosandcons[listname + '-list'];
+                var values = Edit.getProsandConsOptions(collectionOptions, itemOptions);
+                var prosAndConsField = jQuery(this).find(".prosandcons");
+
+                prosAndConsField.dropdownX('change values', values);
+                prosAndConsField.dropdownX("set text", props.prosandcons[listname + '-list'][index].item);
+                prosAndConsField.dropdownX("set selected", props.prosandcons[listname + '-list'][index].item);
+
             } else {
                 jQuery(this).find("[data-repeater-delete]").trigger("click");
             }
             index++;
         });
+    },
+
+    getProsandConsOptions: function (collectionOptions, itemOptions) {
+        var values = [];
+        collectionOptions = JSON.parse(collectionOptions);
+        // get options of unique values only
+        var options = itemOptions.concat(collectionOptions.filter(function (el) {
+            var result = true;
+            for (var ii in itemOptions) {
+                if (itemOptions[ii].item === el.item) {
+                    result = false;
+                }
+            }
+            return result;
+        }));
+
+        for (var i = 0, len = options.length; i < len; i++) {
+            values[i] = {
+                value: options[i].item,
+                name: options[i].item
+            };
+        }
+
+        return values;
     },
 
     getModifiedFormforPhotos: function (props, form) {
