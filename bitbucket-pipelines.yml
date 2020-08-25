@@ -13,12 +13,19 @@ pipelines:
           - mkdir artifacts/addons
           - ls artifacts/addons
           - cp -r vendor/pauple/upgrader includes/lib/upgrader
-          - cp -r vendor/pauple/widgetry includes/lib/widgetry
+          # - cp -r vendor/pauple/widgetry includes/lib/widgetry
           - cp -r vendor/pauple/starcat-review-ct artifacts/addons
           - cp -r vendor/pauple/starcat-review-cpt artifacts/addons
           - cp -r vendor/pauple/starcat-review-woo-notify artifacts/addons
           - cp -r vendor/pauple/starcat-review-photo-reviews artifacts/addons
+          - rm -v artifacts/addons/*/*.json
+          - rm -v artifacts/addons/*/*.md
+          - rm -v artifacts/addons/*/*.log
+          - rm -v artifacts/addons/*/*.lock
           - rm -v artifacts/addons/**/*.zip
+          - rm -v artifacts/addons/**/dist
+          - rm -v artifacts/addons/**/vendor
+          - rm -v artifacts/addons/**/node_modules
           - ls artifacts/addons
           - ls artifacts/addons/starcat-review-ct
           - ls artifacts/addons/starcat-review-cpt
@@ -26,6 +33,7 @@ pipelines:
           - ls artifacts/addons/starcat-review-photo-reviews
           - cp bitbucket.env .env
           - cp artifacts/bitbucket-dump.sql artifacts/dump.sql
+          - cp artifacts/dump.sql dump.sql
           - php -v
         artifacts:
           - "**"

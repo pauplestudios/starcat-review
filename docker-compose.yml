@@ -25,10 +25,10 @@ services:
                 /* define( 'WP_FS__SIMULATE_FREEMIUS_OFF', true ); */
         volumes:
             - ./:/var/www/html/wp-content/plugins/starcat-review
-            - ./vendor/pauple/starcat-review-cpt:/var/www/html/wp-content/plugins/starcat-review-cpt
-            - ./vendor/pauple/starcat-review-ct:/var/www/html/wp-content/plugins/starcat-review-ct
-            - ./vendor/pauple/starcat-review-woo-notify:/var/www/html/wp-content/plugins/starcat-review-woo-notify
-            - ./vendor/pauple/starcat-review-photo-reviews:/var/www/html/wp-content/plugins/starcat-review-photo-reviews
+            - ./artifacts/addons/starcat-review-cpt:/var/www/html/wp-content/plugins/starcat-review-cpt
+            - ./artifacts/addons/starcat-review-ct:/var/www/html/wp-content/plugins/starcat-review-ct
+            - ./artifacts/addons/starcat-review-woo-notify:/var/www/html/wp-content/plugins/starcat-review-woo-notify
+            - ./artifacts/addons/starcat-review-photo-reviews:/var/www/html/wp-content/plugins/starcat-review-photo-reviews
             - ./artifacts/plugins/woocommerce:/var/www/html/wp-content/plugins/woocommerce
             - ./artifacts/plugins/wp-migrate-db:/var/www/html/wp-content/plugins/wp-migrate-db
             - ./config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
