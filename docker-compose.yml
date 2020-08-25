@@ -1,10 +1,10 @@
-version: '3.6'
+version: "3.6"
 services:
     wordpress:
         build:
             context: ./tests
             args:
-              WP_TAG: wordpress:${WP_TAG}
+                WP_TAG: wordpress:${WP_TAG}
         restart: always
         ports:
             - ${WP_PORT}:80
@@ -48,5 +48,4 @@ services:
             MYSQL_DATABASE: wp
             MYSQL_USER: wp
             MYSQL_PASSWORD: pass
-            MYSQL_RANDOM_ROOT_PASSWORD: '1'
-            
+            MYSQL_RANDOM_ROOT_PASSWORD: "1"

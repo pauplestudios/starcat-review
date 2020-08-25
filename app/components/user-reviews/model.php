@@ -63,6 +63,12 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
                 'props' => [],
             ];
 
+            if (isset($items['comments'][$comment_id]) && !empty($items['comments'][$comment_id])) {
+                $item['props']['user']['name'] = $items['comments'][$comment_id]['author'];
+                $item['props']['user']['email'] = $items['comments'][$comment_id]['email'];
+                $item['props']['user']['website'] = $items['comments'][$comment_id]['website'];
+            }
+
             if (isset($items['stats'][$comment_id]) && !empty($items['stats'][$comment_id])) {
                 $item['stats'] = array_merge($this->args['stats_args'], ['items' => $items['stats'][$comment_id]]);
                 $item['rating'] = $items['stats'][$comment_id]['overall'];

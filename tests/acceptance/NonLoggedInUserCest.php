@@ -10,10 +10,14 @@ class NonLoggedInUserCest
         $I->activatePlugin(['woocommerce']);
         $I->seePluginActivated('woocommerce');
         // $I->activatePlugin(['hello-dolly','woocommerce']);
+
     }
 
     public function non_logged_in_user(AcceptanceTester $I)
     {
+        $this->dont_see_non_logged_user_fields($I);
+        $I->see('Log Out');
+        $I->click('Log Out');
 
         $this->settings_non_loggedin($I);
 
@@ -37,6 +41,42 @@ class NonLoggedInUserCest
         $I->click('#tab-reviews');
         $I->see('Leave a Review');
 
+        $this->can_see_non_logged_in_fields($I);
+
+        $I->submitForm('form.form.scr-user-review',
+            [
+                'name' => 'Miles Davis',
+                'email' => 'milesdavis@gmail.com',
+                'website' => 'milesdavis.local',
+                'title' => 'This is Title of Review',
+                'scores[]' => '4.5',
+                'description' => 'This is Description of Review',
+                'pros[0]' => 'First Pro',
+                'cons[0]' => 'First Con',
+                'wp-comment-cookies-consent' => 'checked',
+            ]
+        );
+
+    }
+
+    private function can_see_non_logged_in_fields($I)
+    {
+        $formElement = "form.form.scr-user-review";
+        $I->seeElement($formElement . " [name='name']");
+        $I->seeElement($formElement . " [name='email']");
+        $I->seeElement($formElement . " [name='website']");
+        $I->seeElement($formElement . " [name='scores[]']");
+        $I->seeElement($formElement . " [name='wp-comment-cookies-consent']");
+
+    }
+
+    private function dont_see_non_logged_user_fields($I)
+    {
+        $formElement = "form.form.scr-user-review";
+        $I->dontSeeElement($formElement . " [name='name']");
+        $I->dontSeeElement($formElement . " [name='email']");
+        $I->dontSeeElement($formElement . " [name='website']");
+        $I->dontSeeElement($formElement . " [name='wp-comment-cookies-consent']");
     }
 
     private function settings_non_loggedin($I)
@@ -78,14 +118,5 @@ class NonLoggedInUserCest
         $postId = $comment_data['comment_post_ID'];
         $I->haveCommentInDatabase($postId, $comment_data);
         // wp_update_comment($comment_modifier);
-    }
-
-    private function submit_review($I)
-    {
-        $I->fillField('title', 'This is Title of Review');
-        $I->fillField('scores[feature]', '4.5');
-        $I->fillField('description', 'This is Description of Review');
-        $I->fillField('pros[0]', 'First Pro');
-        $I->fillField('cons[0]', 'First Con');
     }
 }

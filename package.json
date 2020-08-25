@@ -1,6 +1,6 @@
 {
     "name": "starcat-review",
-    "version": "0.6",
+    "version": "0.6.1.1",
     "main": "index.js",
     "license": "MIT",
     "scripts": {
@@ -14,11 +14,11 @@
         "lint": "esw webpack.config.* src tools --color",
         "run_test": "yarn prepare_docker && yarn acceptance",
         "run_test2": "yarn build && docker-compose down && docker-compose up -d && sleep 10 && yarn codeceptjs",
-        "run_unit_test": "yarn prepare_docker && yarn wpunit_spec",
+        "run_unit_test": "yarn prepare_docker && yarn wpunit",
         "acceptance": "vendor/bin/codecept run acceptance --steps",
         "acceptance_spec": "vendor/bin/codecept run acceptance tests/acceptance/BasicCest.php:comparisonTableAddonActivation --steps",
         "wpunit": "vendor/bin/codecept run wpunit --steps",
-        "wpunit_spec": "vendor/bin/codecept run wpunit tests/wpunit/FactoryTest.php -vvv",
+        "wpunit_spec": "vendor/bin/codecept run wpunit tests/wpunit/update/BelowZeroPointSixPointOneTest.php -vvv",
         "prepare_docker": "yarn build && docker-compose down && docker-compose up -d && sleep 20",
         "analyse": "vendor/bin/churn run includes features utils && vendor/bin/phpcpd includes features utils",
         "rename_old": "renamer --find artifacts/addons/dist --replace starcat-review-cpt --dry-run",
@@ -79,9 +79,12 @@
         "immer": "^1.8.0",
         "jquery": "^3.4.1",
         "list.js": "^1.5.0",
+        "react-hot-loader": "^3.0.0-beta.7",
         "semantic-ui": "^2.4.2",
-        "swiper": "^5.3.1",
-        "react-hot-loader": "^3.0.0-beta.7"
+        "swiper": "^5.3.1"
     },
-    "_comment": "Higher versions of YUP cause UNDEFINED error "
+    "_comment": "Higher versions of YUP cause UNDEFINED error ",
+    "optionalDependencies": {
+        "fsevents": "^2.1.3"
+    }
 }

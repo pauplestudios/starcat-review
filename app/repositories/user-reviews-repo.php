@@ -9,10 +9,14 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
     class User_Reviews_Repo
     {
+        public function __construct()
+        {
+            $this->current_user = new \StarcatReview\App\Services\User();
+        }
         public function get($comment_id, $parent = 0)
         {
             if ($parent != 0) {
-                return get_comment(intval($comment_id));
+                return get_comment($comment_id);
             }
 
             return get_comment_meta($comment_id, SCR_COMMENT_META);
@@ -20,12 +24,8 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
 
         public function insert($props)
         {
-
-            // error_log('props : ' . print_r($props, true));
-            $Current_User = new \StarcatReview\App\Services\User();
-
-            $user_can_review = $Current_User->can_review();
-            $user_review_needs_approval = $Current_User->can_user_directly_publish_reviews();
+            $user_can_review = $this->current_user->can_review();
+            $can_approve = $this->current_user->can_user_directly_publish_reviews();
 
             // 1. Check if current_user can add review
             if ($user_can_review == false) {
@@ -38,26 +38,23 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             $comment_data = $this->build_and_get_comment_data($user, $props);
             $comment_id = wp_new_comment($comment_data);
 
-            // 3. Check if we need to manually approve this review
-            if ($user_review_needs_approval) {
-                $comment_modifier = [
-                    'comment_ID' => $comment_id,
-                    'comment_approved' => 0,
-                ];
+            // 3. Store wp_comment_consent in Cookies for non-logged-in users
+            $this->set_wp_comment_cookies($props, $comment_id);
 
-                wp_update_comment($comment_modifier);
-            }
+            // 4. Check if we need to manually approve this review
+            $status = ($can_approve) ? 1 : 0;
+            wp_set_comment_status($comment_id, $status);
 
-            // 4. Does this review have comment_meta to be updated
+            // 5. Does this review have comment_meta to be updated
             $should_update_comment_meta = (isset($comment_id) && !empty($comment_id) && !isset($props['review_reply']) && $props['parent'] == 0);
             if ($should_update_comment_meta) {
                 add_comment_meta($comment_id, SCR_COMMENT_META, $props);
 
                 do_action('scr_woocommerce_integration/add_rating_meta', $comment_id, $props);
                 do_action('scr_woocommerce_integration/add_verified_owners_meta', $comment_id);
-            }
 
-            do_action('scr_photo_reviews/add_attachments', $comment_id);
+                do_action('scr_photo_reviews/add_attachments', $comment_id);
+            }
 
             return $comment_id;
 
@@ -65,13 +62,12 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
 
         public function build_and_get_comment_data($user, $props)
         {
-            $Current_User = new \StarcatReview\App\Services\User();
-            $is_user_logged_in = $Current_User->is_loggedin();
+            $is_user_logged_in = $this->current_user->is_loggedin();
 
             $comment_data = [];
 
             // General Properties
-            $comment_data['comment_author_IP'] = $Current_User->get_user_IP();
+            $comment_data['comment_author_IP'] = $this->current_user->get_user_IP();
             $comment_data['comment_post_ID'] = $props['post_id'];
             $comment_data['comment_content'] = $props['description'];
             $comment_data['comment_agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36';
@@ -88,10 +84,11 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 $comment_data['comment_author_url'] = $user->user_url;
                 $comment_data['user_id'] = $user->ID;
             } else {
-                $comment_data['comment_author'] = $props['first_name'] . ' ' . $props['last_name'];
-                $comment_data['comment_author_email'] = $props['user_email'];
-                $comment_data['comment_author_url'] = '';
-                $comment_data['user_id'] = '';
+                $user = $this->get_non_logged_in_user($props);
+                $comment_data['comment_author'] = $user->comment_author;
+                $comment_data['comment_author_email'] = $user->comment_author_email;
+                $comment_data['comment_author_url'] = $user->comment_author_url;
+                $comment_data['user_id'] = 0;
             }
 
             return $comment_data;
@@ -99,16 +96,35 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
 
         public function update($props)
         {
-            // error_log('props : ' . print_r($props, true));
+            $can_approve = $this->current_user->can_user_directly_publish_reviews();
             $comment_id = $props['comment_id'];
+
+            $user = $this->get_non_logged_in_user($props);
+
+            $commenter_name = $user->comment_author;
+            $commenter_email = $user->comment_author_email;
+            $commenter_website = $user->comment_author_url;
+
+            if ($this->current_user->is_loggedin()) {
+                $user = get_user_by('id', get_current_user_id());
+                $commenter_name = $user->display_name;
+                $commenter_email = $user->user_email;
+                $commenter_website = $user->user_url;
+            }
+
             $comment = array(
                 'comment_ID' => $props['comment_id'],
+                'comment_author' => $commenter_name,
+                'comment_author_email' => $commenter_email,
+                'comment_author_url' => $commenter_website,
                 'comment_content' => $props['description'],
                 'comment_parent' => $props['parent'],
-                'comment_approved' => current_user_can('manage_options') ? 1 : 0,
+                'comment_approved' => $can_approve ? 1 : 0,
             );
 
             wp_update_comment($comment);
+
+            $this->set_wp_comment_cookies($props, $props['comment_id']);
 
             // review only not reply update
             if ($props['parent'] == 0) {
@@ -156,6 +172,37 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 $meta_props = isset($meta_props) && !empty($meta_props) ? array_merge($meta_props, $vote_props) : $vote_props;
             }
             update_comment_meta($props['comment_id'], SCR_COMMENT_META, $meta_props);
+        }
+
+        public function set_wp_comment_cookies($props, $comment_id)
+        {
+            $is_non_logged_in_user = !$this->current_user->is_loggedin() ? true : false;
+            $can_store_wp_consent = isset($props['wp-comment-cookies-consent']) && $props['wp-comment-cookies-consent'] == 'yes' ? true : false;
+
+            // Store wp_comment_consent in Cookies for non-logged-in users
+            if ($is_non_logged_in_user && $can_store_wp_consent) {
+                $wp_comment = get_comment($comment_id);
+                $wp_user = wp_get_current_user();
+                $wp_consent = $props['wp-comment-cookies-consent'];
+
+                do_action('set_comment_cookies', $wp_comment, $wp_user, $wp_consent);
+            }
+        }
+
+        public function get_non_logged_in_user($props)
+        {
+            $commenter = wp_get_current_commenter();
+
+            $commenter_name = (isset($props['name']) && !empty($props['name'])) ? $props['name'] : $commenter['comment_author'];
+            $commenter_email = (isset($props['email']) && !empty($props['email'])) ? $props['email'] : $commenter['comment_author_email'];
+            $commenter_website = (isset($props['website']) && !empty($props['website'])) ? $props['website'] : $commenter['comment_author_url'];
+
+            $user = new \stdClass();
+            $user->comment_author = $commenter_name;
+            $user->comment_author_email = $commenter_email;
+            $user->comment_author_url = $commenter_website;
+
+            return $user;
         }
 
         public function get_processed_data()

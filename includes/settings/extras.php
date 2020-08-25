@@ -17,7 +17,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\Extras')) {
             $href = $this->get_mainpage_permalink();
 
             $html = "<a target ='_blank' class='ui labeled icon small button' href=" . $href . ">";
-            $html .= __("Visit Main Page", "pauple-helpie");
+            $html .= __("Visit Main Page", SCR_DOMAIN);
             $html .= "<i class='external alternate icon'></i>";
             $html .= "</a>";
 

@@ -19,11 +19,11 @@ if (!class_exists('\StarcatReview\App\Builders\Review_Builder')) {
 
         public function get_reviews()
         {
-            $post_type = get_post_type();
-            $review_enable_post_types = SCR_Getter::get('review_enable_post-types');
-
             $html = '';
-            if ($this->is_enable_post_type($post_type, $review_enable_post_types)) {
+            $post_type = get_post_type();
+            $enabled_post_types = SCR_Getter::reviews_enabled_post_types();
+
+            if (in_array($post_type, $enabled_post_types)) {
                 $html .= $this->summary->get_view();
                 $html .= $this->user_review->get_view();
             }
@@ -31,18 +31,6 @@ if (!class_exists('\StarcatReview\App\Builders\Review_Builder')) {
             return $html;
         }
 
-        public function is_enable_post_type($post_type, $enable_post_types)
-        {
-            $is_enable = false;
-            if (is_string($enable_post_types) && ($post_type == $enable_post_types)) {
-                $is_enable = true;
-            }
-            if (is_array($enable_post_types) && in_array($post_type, $enable_post_types)) {
-                $is_enable = true;
-            }
-
-            return $is_enable;
-        }
     } // END CLASS
 
 }

@@ -13,13 +13,15 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration')) {
     {
         public function __construct()
         {
-            if (in_array('product', SCR_Getter::reviews_enabled_post_types(), true)) {
-                // Overriding the Existing product template by adding 11 as filter priotiry
-                add_filter('comments_template', [$this, 'comments_template_loader'], 11);
-                add_filter('woocommerce_product_get_rating_html', [$this, 'woocommerce_rating_display'], 10, 3);
+            foreach (SCR_Getter::reviews_enabled_post_types() as $post_type) {
+                if ($post_type == 'product') {
+                    // Overriding the Existing product and other popular WC addons template by adding 99 as filter priotiry
+                    add_filter('comments_template', [$this, 'comments_template_loader'], 99);
+                    add_filter('woocommerce_product_get_rating_html', [$this, 'woocommerce_rating_display'], 10, 3);
 
-                remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_rating');
-                add_action('woocommerce_single_product_summary', [$this, 'woocommerce_review_display_overall_rating'], 5);
+                    remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_rating');
+                    add_action('woocommerce_single_product_summary', [$this, 'woocommerce_review_display_overall_rating'], 5);
+                }
             }
 
             add_filter('scr_comment', [$this, 'get_is_review_from_verified_owner']);
@@ -31,14 +33,16 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration')) {
 
         public function comments_template_loader($template)
         {
-            if (get_post_type() !== 'product') {
-                return $template;
-            }
+            $post_type = get_post_type();
+            $enabled_post_types = SCR_Getter::reviews_enabled_post_types();
 
             $dir = SCR_PATH . '/app/templates/';
-            if (file_exists(trailingslashit($dir) . 'reviews-template.php')) {
-                $template = trailingslashit($dir) . 'reviews-template.php';
+            if ($post_type == 'product' && in_array($post_type, $enabled_post_types)) {
+                if (file_exists(trailingslashit($dir) . 'reviews-template.php')) {
+                    $template = trailingslashit($dir) . 'reviews-template.php';
+                }
             }
+
             return $template;
         }
 
@@ -65,7 +69,7 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration')) {
                 $html .= $rating['dom'];
                 $html .= '<a href="#reviews" class="woocommerce-review-link" rel="nofollow">(';
                 $html .= '<span class="count">' . esc_html($review_count) . '</span>';
-                $html .= __(' customer review', SCR_DOMAIN);
+                $html .= ' ' . __('customer review', SCR_DOMAIN);
                 $html .= ')</a>';
             }
 

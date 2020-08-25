@@ -20,107 +20,44 @@ if (!class_exists('\Starcat_Review')) {
             /* Require functions.php */
             require_once SCR_PATH . 'includes/functions.php';
 
-            /*  Reviews Register Post types and its Taxonomies */
-            // $this->register_cpt_and_taxonomy();
-
-            // Load Hooks
-            $this->load_hooks();
-
-            $this->load_ajax_handler();
-
             // These components will handle the hooks internally, no need to call this in a hook
             $this->load_components();
 
-            /* New Features */
-            $Non_Logged_In_User = new \StarcatReview\Features\Non_Logged_In_User();
+            // Load Hooks
+            $this->load_hooks();
         }
-
-        // public function register_cpt_and_taxonomy()
-        // {
-        //     $cpt = new \StarcatReview\Includes\Cpt();
-        //     $cpt->register();
-        // }
 
         public function load_hooks()
         {
             $hooks = new \StarcatReview\Includes\Hooks();
         }
 
-        public function load_ajax_handler()
-        {
-            $ajax_handler = new \StarcatReview\Includes\Ajax_Handler();
-            $ajax_handler->register_ajax_actions();
-        }
-
         public function load_components()
         {
+            /* settings getter */
+            require_once SCR_PATH . 'includes/settings/getter.php';
 
             $settings = new \StarcatReview\Includes\Settings();
 
             /* Upgrades */
-            $Upgrades = new \StarcatReview\Includes\Upgrades();
-            \StarcatReview\Includes\Upgrades::init();
+            $upgrades = new \StarcatReview\Includes\Update\Upgrades();
+            $upgrades::init();
+
+            // Dashboard User review Table
+            require_once SCR_PATH . '/app/components/user-reviews/table.php';
+
+            /* New Features */
+            $Non_Logged_In_User = new \StarcatReview\Features\Non_Logged_In_User();
 
             /* Recaptcha */
-            require_once SCR_PATH . 'includes/settings/getter.php';
             $recaptcha = new \StarcatReview\Services\Recaptcha();
 
-            // Developement Purpose Only
-            // if (file_exists(SCR_PATH . 'includes/utils/fake-pages.php')) {
-            //     require_once SCR_PATH . 'includes/utils/fake-pages.php';
-            // }
+            // Developement Purpose Only to add add-ons without activate and install
+            // require_once SCR_PATH . 'includes/lib/cpt-addon/starcat-review-cpt.php';
+            // require_once SCR_PATH . 'includes/lib/photo-reviews-addon/starcat-review-photo-reviews.php';
+            // require_once SCR_PATH . 'includes/lib/ct-addon/starcat-review-ct.php';
+            // require_once SCR_PATH . 'includes/lib/starcat-review-woo-notify/starcat-review-woo-notify.php';
 
-            /* Notification */
-            // $Notification_Data = new \StarcatReview\Includes\Utils\Notification\Notification_Test_Data();
-            // $Notification_Data = new \StarcatReview\Includes\Utils\Notification\Data();
-            // $Notification = new \StarcatReview\Includes\Utils\Notification\Notification($Notification_Data);
-
-        }
-
-        /**
-         * Throw error on object clone
-         *
-         * The whole idea of the singleton design pattern is that there is a single
-         * object therefore, we don't want the object to be cloned.
-         *
-         * @access public
-         * @since 1.0.0
-         * @return void
-         */
-        public function __clone()
-        {
-            // Cloning instances of the class is forbidden.
-            _doing_it_wrong(__FUNCTION__, esc_html__('Cheatin&#8217; huh?', 'starcat-review'), '1.0.0');
-        }
-
-        /**
-         * Disable unserializing of the class
-         *
-         * @access public
-         * @since 1.0.0
-         * @return void
-         */
-        public function __wakeup()
-        {
-            // Unserializing instances of the class is forbidden.
-            _doing_it_wrong(__FUNCTION__, esc_html__('Cheatin&#8217; huh?', 'starcat-review'), '1.0.0');
-        }
-
-        /**
-         * @static
-         * @since 1.0.0
-         * @access public
-         * @return Plugin
-         * Note: Check how this works
-         */
-        public static function instance()
-        {
-            if (is_null(self::$instance)) {
-                self::$instance = new self();
-                do_action('starcat_review/loaded');
-            }
-
-            return self::$instance;
         }
 
         protected function setup_autoload()
@@ -129,15 +66,6 @@ if (!class_exists('\Starcat_Review')) {
             \StarcatReview\Autoloader::run();
         }
 
-        /* Note: Nice Idea */
-        public function load_view($view)
-        {
-            $path = trailingslashit($this->views_dir) . $view;
-
-            if (file_exists($path)) {
-                include $path;
-            }
-        }
     } // END CLASS
 }
 

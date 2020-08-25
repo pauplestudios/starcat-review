@@ -23,7 +23,7 @@ if (!class_exists('\StarcatReview\App\Services\Services')) {
             add_filter('scr_stat_args', [$stats_factory, 'get_stat_args'], 10, 2);
 
             add_filter('scr_comment', [$comments_factory, 'get_comment'], 1, 2);
-            add_filter('scr_comment', [$this, 'get_comment_capabilities']);
+            add_filter('scr_comment', [$this, 'get_can_edit_comment_capabilities']);
 
             add_filter('scr_comments_args', [$comments_factory, 'get_comments_args'], 10, 2);
             add_filter('scr_capabilities_args', [$this, 'get_capabilities_args'], 1);
@@ -61,40 +61,49 @@ if (!class_exists('\StarcatReview\App\Services\Services')) {
             return $stats;
         }
 
-        /*
-         * Adding capabilties to a comment like Can_Edit Can_Reply and Can_Vote
-         */
-
-        public function get_comment_capabilities($comment)
+        public function get_can_edit_comment_capabilities($comment)
         {
+            // return if current_user is not a logged-in-user
+            if (isset($comment['user_id']) && $comment['user_id'] == 0) {
+                return $comment;
+            }
+
             $comment['can_edit'] = false;
-            // error_log('!!! add_capabilities_to_comment  !!!');
+            // Logged-in-users
             if (get_current_user_id() == $comment['user_id']) {
                 $comment['can_edit'] = true;
             }
-            // error_log('comment : ' . print_r($comment, true));
+
             return $comment;
         }
 
         public function get_capabilities_args($comments = [])
         {
             $capability = [
-                'can_user_vote' => false,
+                'can_user_vote' => true,
                 'can_user_reply' => false,
                 'can_user_review' => false,
             ];
 
+            $is_logged_in_user = is_user_logged_in() ? true : false;
+            $is_non_logged_in_user = !$is_logged_in_user ? true : false;
+
             $who_can_review = SCR_Getter::get('ur_who_can_review');
             $can_same_user_leave_multiple_review = SCR_Getter::get('ur_allow_same_user_can_leave_multiple_reviews');
 
-            if (is_user_logged_in() || $who_can_review == 'everyone') {
+            $is_logged_in_user_can_review = ($is_logged_in_user && ($who_can_review == ('everyone' || 'logged_in'))) ? true : false;
+            $is_non_logged_in_user_can_review = ($is_non_logged_in_user && $who_can_review == 'everyone') ? true : false;
+
+            $is_either_one_of_the_user_can_review = $is_logged_in_user_can_review || $is_non_logged_in_user_can_review ? true : false;
+
+            if ($is_either_one_of_the_user_can_review && $can_same_user_leave_multiple_review || $is_either_one_of_the_user_can_review) {
                 $capability['can_user_review'] = true;
-                $capability['can_user_reply'] = true;
-                $capability['can_user_vote'] = true;
             }
 
-            if ($can_same_user_leave_multiple_review) {
-                $capability['can_user_review'] = true;
+            // can reply and vote for a review feature is only for logged-in-users
+            if ($is_logged_in_user_can_review) {
+                $capability['can_user_reply'] = true;
+                // $capability['can_user_vote'] = true;
             }
 
             if ($can_same_user_leave_multiple_review == false && isset($comments) && !empty($comments)) {
@@ -107,6 +116,13 @@ if (!class_exists('\StarcatReview\App\Services\Services')) {
                     }
                 }
             }
+
+            // error_log('is_logged_in_user_can_review : ' . $is_logged_in_user_can_review);
+            // error_log('is_non_logged_in_user_can_review : ' . $is_non_logged_in_user_can_review);
+            // error_log('is_either_one_of_the_user_can_review : ' . $is_either_one_of_the_user_can_review);
+            // error_log('can_same_user_leave_multiple_review : ' . $can_same_user_leave_multiple_review);
+
+            // error_log('capability : ' . print_r($capability, true));
 
             return $capability;
         }
