@@ -78,8 +78,7 @@ class UR_List_Table extends WP_List_Table
             $comment_status = 'all';
         }
 
-        // $comment_type = !empty($_REQUEST['comment_type']) ? $_REQUEST['comment_type'] : '';
-        $comment_type = 'review';
+        $comment_type = ['review', 'starcat_review'];
 
         $search = (isset($_REQUEST['s'])) ? $_REQUEST['s'] : '';
 
@@ -232,7 +231,7 @@ class UR_List_Table extends WP_List_Table
             ),
 
             /* translators: %s: Number of comments. */
-            'moderated' => _nx_noop(
+            'awaiting_moderation' => _nx_noop(
                 'Pending <span class="count">(%s)</span>',
                 'Pending <span class="count">(%s)</span>',
                 'comments'
@@ -271,8 +270,9 @@ class UR_List_Table extends WP_List_Table
 
         foreach ($stati as $status => $label) {
             $current_link_attributes = '';
+            $link_status = ('awaiting_moderation' === $status) ? 'moderated' : $status;
 
-            if ($status === $comment_status) {
+            if ($link_status === $comment_status) {
                 $current_link_attributes = ' class="current" aria-current="page"';
             }
 
@@ -297,7 +297,8 @@ class UR_List_Table extends WP_List_Table
             if (!isset($num_comments->$status)) {
                 $num_comments->$status = 0;
             }
-            $link = add_query_arg('comment_status', $status, $link);
+
+            $link = add_query_arg('comment_status', $link_status, $link);
             if ($post_id) {
                 $link = add_query_arg('p', absint($post_id), $link);
             }
@@ -306,6 +307,7 @@ class UR_List_Table extends WP_List_Table
             if ( !empty( $_REQUEST['s'] ) )
             $link = add_query_arg( 's', esc_attr( wp_unslash( $_REQUEST['s'] ) ), $link );
              */
+
             $status_links[$status] = "<a href='$link'$current_link_attributes>" . sprintf(
                 translate_nooped_plural($label, $num_comments->$status),
                 sprintf(
@@ -342,9 +344,9 @@ class UR_List_Table extends WP_List_Table
         global $wpdb;
 
         $post_id = (int) $post_id;
-        $where = $wpdb->prepare('WHERE comment_type= %s', 'review');
+        $where = $wpdb->prepare('WHERE comment_type IN (%s, %s)', 'review', 'starcat_review');
         if ($post_id > 0) {
-            $where = $wpdb->prepare('WHERE comment_type= %s AND comment_post_ID = %d', 'review', $post_id);
+            $where = $wpdb->prepare('WHERE comment_type IN (%s, %s) AND comment_post_ID = %d', 'review', 'starcat_review', $post_id);
         }
 
         $totals = (array) $wpdb->get_results("SELECT comment_approved, COUNT( * ) AS total
@@ -1164,11 +1166,8 @@ class UR_List_Table_Controller
     {
         global $wpdb;
         $count = 0;
-        $where = $wpdb->prepare('WHERE comment_type= %s', 'review');
-
+        $where = $wpdb->prepare('WHERE comment_type IN (%s, %s)', 'review', 'starcat_review');
         $pending = $wpdb->get_results("SELECT comment_post_ID, COUNT(comment_ID) as num_comments FROM $wpdb->comments {$where} AND comment_approved = '0'", ARRAY_A);
-
-        // error_log('pending : ' . print_r($pending, true));
 
         if (!empty($pending)) {
             $count = absint($pending[0]['num_comments']);
