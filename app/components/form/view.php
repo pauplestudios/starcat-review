@@ -26,8 +26,8 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             $cancel_btn = '';
             $description = '';
             $method_type = 'POST';
-            $submit_btn_name = 'Submit';
-            $form_title = '<h2 class="ui header">' . $this->props['collection']['form_title'] . '</h2>';
+            $submit_btn_name = __('Submit', SCR_DOMAIN);
+            $form_title = '<h2 class="ui header">' . __($this->props['collection']['form_title'], SCR_DOMAIN) . '</h2>';
 
             // User Already Reviewed or Not Logged in User
             $hide_form = !$this->capability['can_user_review'];
@@ -55,7 +55,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             if ($this->props['collection']['show_title']) {
                 $html .= '<div class="inline field">';
                 // $html .= '<label>Review Title</label>';
-                $html .= '<input type="text" name="title" placeholder="Title" value="' . $title . '"/>';
+                $html .= '<input type="text" name="title" placeholder="' . __('Title', SCR_DOMAIN) . '" value="' . $title . '"/>';
                 $html .= '</div>';
             }
 
@@ -68,7 +68,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             if ($this->props['collection']['show_description']) {
                 $html .= '<div class="field">';
                 // $html .= '<label>Review Description</label>';
-                $html .= '<textarea rows="5" spellcheck="false" name="description" placeholder="Description">' . $description . '</textarea>';
+                $html .= '<textarea rows="5" spellcheck="false" name="description" placeholder="' . __('Description', SCR_DOMAIN) . '">' . $description . '</textarea>';
                 $html .= '</div>';
             }
 
@@ -85,6 +85,9 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             if ($this->props['collection']['show_captcha']) {
                 $html .= Recaptcha::load_v2_html();
             }
+
+            $user_form_end = apply_filters('scr_user_form_end', '', $review);
+            $html .= $user_form_end;
 
             $html .= '<div class="field">';
             $html .= '<div class="ui blue submit ' . $class . ' button"> ' . $submit_btn_name . ' </div>';

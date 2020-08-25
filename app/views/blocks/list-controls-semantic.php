@@ -59,14 +59,13 @@ if (!class_exists('\StarcatReview\App\Views\Blocks\List_Controls_Semantic')) {
             return $html;
         }
 
-
         public function checkbox()
         {
             $html = '';
 
             $html .= '<div class="ui checkbox">';
             $html .= '<input type="checkbox" name="example">';
-            $html .= ' <label>Make my profile visible</label>';
+            $html .= ' <label>' . __('Make my profile visible', SCR_DOMAIN) . '</label>';
             $html .= '</div>';
 
             return $html;
@@ -78,7 +77,7 @@ if (!class_exists('\StarcatReview\App\Views\Blocks\List_Controls_Semantic')) {
 
             $html .= '<div class="ui form">';
             $html .= '<div class="grouped fields">';
-            $html .= '<label>' . $props['label'] . '</label>';
+            $html .= '<label>' . __($props['label'], SCR_DOMAIN) . '</label>';
 
             $options = $props['options'];
             foreach ($options as $key => $option_value) {
@@ -97,7 +96,7 @@ if (!class_exists('\StarcatReview\App\Views\Blocks\List_Controls_Semantic')) {
 
             $html .= '</div>';
             $html .= '</div>';
-            return  $html;
+            return $html;
         }
     } // END CLASS
 }

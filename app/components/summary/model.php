@@ -28,7 +28,7 @@ if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
         public function get_collectionProps($args)
         {
             $collection = [
-                'users_title' => sprintf('User Rating ( %1$d )', $args['review_count'], SCR_DOMAIN),
+                'users_title' => sprintf(__('Users Rating (%d)', SCR_DOMAIN), $args['review_count']),
                 'author_title' => __('Author Rating', SCR_DOMAIN),
                 'no_of_column' => $this->get_no_of_column($args),
                 'reviews_title' => $this->get_product_reviews_title(),

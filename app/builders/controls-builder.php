@@ -2,8 +2,6 @@
 
 namespace StarcatReview\App\Builders;
 
-use \StarcatReview\Includes\Settings\SCR_Getter;
-
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -14,36 +12,36 @@ if (!class_exists('\StarcatReview\App\Builders\Controls_Builder')) {
 
         public function __construct($type = '')
         {
-            $sort_options =  [
-                'post-date' => 'Recent',
-                'avg-rating' => 'Most Positive',
-                'trending' => 'Trending',
-                'alphabet-asc' => 'Alphabetic Asc',
-                'alphabet-desc' => 'Alphabetic Desc',
-                'review-count' => 'Number of Reviews',
-                'post-modified' => 'Recently Updated',
+            $sort_options = [
+                'post-date' => __('Recent', SCR_DOMAIN),
+                'avg-rating' => __('Most Positive', SCR_DOMAIN),
+                'trending' => __('Trending', SCR_DOMAIN),
+                'alphabet-asc' => __('Alphabetic Asc', SCR_DOMAIN),
+                'alphabet-desc' => __('Alphabetic Desc', SCR_DOMAIN),
+                'review-count' => __('Number of Reviews', SCR_DOMAIN),
+                'post-modified' => __('Recently Updated', SCR_DOMAIN),
             ];
 
             if ($type == 'user_review') {
-                $sort_options =  [
-                    'post-date' => 'Recent',
-                    'avg-rating' => 'Most Positive',
-                    'helpful' => 'Most Helpful'
+                $sort_options = [
+                    'post-date' => __('Recent', SCR_DOMAIN),
+                    'avg-rating' => __('Most Positive', SCR_DOMAIN),
+                    'helpful' => __('Most Helpful', SCR_DOMAIN),
                 ];
             }
             $this->controls = [
                 'search' => [
                     'type' => 'search',
-                    'size' => 12
+                    'size' => 12,
                 ],
 
                 'sort' => [
                     'name' => 'sort',
                     'type' => 'dropdown',
                     'default' => 'post-date',
-                    'label' => 'SortBy',
+                    'label' => __('Sort by', SCR_DOMAIN),
                     'options' => $sort_options,
-                    'size' => 4
+                    'size' => 4,
                 ],
                 // 'reviews' => [
                 //     'name' => 'reviews',
@@ -87,11 +85,13 @@ if (!class_exists('\StarcatReview\App\Builders\Controls_Builder')) {
 
                 // error_log('$key : ' . $key);
                 // error_log('$control : ' . print_r($control, true));
-                if (!$show_controls[$key]) continue; // skip iteration if false
+                if (!$show_controls[$key]) {
+                    continue;
+                }
+                // skip iteration if false
 
                 $map = $this->get_map($control['type']);
                 $methodName = $map['methodName'];
-
 
                 $html .= '<div class="item col-xs-12 col-lg-' . $control['size'] . '">';
                 $html .= $map['class']->$methodName($control);
@@ -104,26 +104,25 @@ if (!class_exists('\StarcatReview\App\Builders\Controls_Builder')) {
             return $html;
         }
 
-
         private function get_map($controlName)
         {
             $map = [
                 'search' => [
                     'class' => new \StarcatReview\App\Views\Blocks\List_Controls_Listjs(),
-                    'methodName' => 'search'
+                    'methodName' => 'search',
                 ],
                 'sort_button' => [
                     'class' => new \StarcatReview\App\Views\Blocks\List_Controls_Listjs(),
-                    'methodName' => 'sort_button'
+                    'methodName' => 'sort_button',
                 ],
                 'dropdown' => [
                     'class' => new \StarcatReview\App\Views\Blocks\List_Controls_Semantic(),
-                    'methodName' => 'dropdown'
+                    'methodName' => 'dropdown',
                 ],
                 'radio' => [
                     'class' => new \StarcatReview\App\Views\Blocks\List_Controls_Semantic(),
-                    'methodName' => 'radio_group'
-                ]
+                    'methodName' => 'radio_group',
+                ],
             ];
 
             return $map[$controlName];

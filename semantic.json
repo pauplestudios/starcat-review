@@ -23,6 +23,7 @@
         "card",
         "comment",
         "dimmer",
+        "checkbox",
         "dropdown",
         "form",
         "grid",
