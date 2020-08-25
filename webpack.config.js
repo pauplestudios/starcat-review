@@ -144,9 +144,6 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
                         "lib/cpt-addon/**/*",
                         "lib/photo-reviews-addon/**/*",
                         "lib/starcat-review-woo-notify/**/*",
-
-                        // Ignore not used dependancy
-                        "lib/widgetry/**/*",
                     ],
                 },
 
