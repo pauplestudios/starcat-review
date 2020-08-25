@@ -23,9 +23,6 @@ pipelines:
           - rm -v artifacts/addons/*/*.log
           - rm -v artifacts/addons/*/*.lock
           - rm -v artifacts/addons/**/*.zip
-          - rm -v artifacts/addons/**/dist
-          - rm -v artifacts/addons/**/vendor
-          - rm -v artifacts/addons/**/node_modules
           - ls artifacts/addons
           - ls artifacts/addons/starcat-review-ct
           - ls artifacts/addons/starcat-review-cpt
