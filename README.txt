@@ -20,7 +20,9 @@ Create Review Posts, add reviews to existing post types and enable user reviews.
 == Change Log ==
 
 = 0.6.2 =
-* Fix: Starcat Review and its add-ons plugins multi-site support 
+* Fix: Product review template replaced by other woocommerce review plugins
+* Fix: Display dashboard user reviews of below v0.6
+* Feature: Starcat Review and its add-ons plugins multi-site support 
 * General Fixes
 
 = 0.6.1.1 =
