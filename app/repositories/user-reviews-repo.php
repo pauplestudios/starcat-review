@@ -50,10 +50,8 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             if ($should_update_comment_meta) {
                 add_comment_meta($comment_id, SCR_COMMENT_META, $props);
 
-                // WooCommerce product review
-                if (get_post_type(get_comment($comment_id)->comment_post_ID) == 'product' && isset($props['rating']) && !empty($props['rating'])) {
-                    add_comment_meta($comment_id, 'rating', round($props['rating'] / 20));
-                }
+                do_action('scr_woocommerce_integration/add_rating_meta', $comment_id, $props);
+                do_action('scr_woocommerce_integration/add_verified_owners_meta', $comment_id);
 
                 do_action('scr_photo_reviews/add_attachments', $comment_id);
             }
@@ -144,12 +142,10 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
 
                 update_comment_meta($comment_id, SCR_COMMENT_META, $props);
 
-                // WooCommerce product review
-                if (get_post_type(get_comment($comment_id)->comment_post_ID) == 'product' && isset($props['rating']) && !empty($props['rating'])) {
-                    update_comment_meta($comment_id, 'rating', round($props['rating'] / 20));
-                }
-
                 do_action('scr_photo_reviews/add_attachments', $comment_id);
+
+                do_action('scr_woocommerce_integration/add_rating_meta', $comment_id, $props);
+                do_action('scr_woocommerce_integration/add_verified_owners_meta', $comment_id);
             }
 
             return $comment_id;
