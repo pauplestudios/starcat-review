@@ -14,27 +14,8 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
     {
         public function __construct()
         {
-            add_action('init', [$this, 'setup_options_init']);
             add_action('init', [$this, 'init']);
-            add_action('wp_loaded', [$this, 'wp_loaded']);
-            add_filter('csf_helpie-kb_sections', [$this, 'filter_args']);
-            // $this->init();
-
             $this->fields = new \StarcatReview\Includes\Settings\Fields();
-        }
-
-        public function filter_args($content)
-        {
-            return $content;
-        }
-
-        public function setup_options_init()
-        {
-            // require_once SCR_PATH . 'includes/settings/settings-config.php';
-        }
-
-        public function wp_loaded()
-        {
         }
 
         public function init()
@@ -65,30 +46,34 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 // Create options
                 \CSF::createOptions($prefix, $options);
 
-                $this->general_settings($prefix);
-
-                if (SCR_Getter::addons_available_condition()['cpt']) {
-                    $this->mainpage_settings($prefix);
-                    $this->category_page_settings($prefix);
-                    $this->single_page_settings($prefix);
-                    $this->category_meta_fields();
-                }
-
-                $this->user_review_settings($prefix);
-
-                if (SCR_Getter::addons_available_condition()['pr']) {
-                    $this->photo_reviews_settings($prefix);
-                }
-
-                if (SCR_Getter::addons_available_condition()['wn']) {
-                    $this->notification_settings($prefix);
-                }
-
-                if (SCR_Getter::addons_available_condition()['ct']) {
-                    $this->ct_settings($prefix);
-                }
-
+                $this->settings_tabs($prefix);
                 $this->single_post_meta_fields();
+            }
+        }
+
+        public function settings_tabs($prefix)
+        {
+            $this->general_settings($prefix);
+
+            if (SCR_Getter::addons_available_condition()['cpt']) {
+                $this->mainpage_settings($prefix);
+                $this->category_page_settings($prefix);
+                $this->single_page_settings($prefix);
+                $this->category_meta_fields();
+            }
+
+            $this->user_review_settings($prefix);
+
+            if (SCR_Getter::addons_available_condition()['pr']) {
+                $this->photo_reviews_settings($prefix);
+            }
+
+            if (SCR_Getter::addons_available_condition()['wn']) {
+                $this->notification_settings($prefix);
+            }
+
+            if (SCR_Getter::addons_available_condition()['ct']) {
+                $this->ct_settings($prefix);
             }
         }
 
