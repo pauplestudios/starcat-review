@@ -14,11 +14,15 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
     {
         public function __construct()
         {
-            add_action('init', [$this, 'init']);
+            add_action('init', [$this, 'init_settings']);
+            if (is_network_admin()) {
+                remove_action('init', [$this, 'init_settings']);
+            }
+
             $this->fields = new \StarcatReview\Includes\Settings\Fields();
         }
 
-        public function init()
+        public function init_settings()
         {
 
             if (!function_exists('\CSF') && !class_exists('\CSF')) {
