@@ -20,7 +20,6 @@ test-artifacts/build/**
 tests/_output/**
 artifacts/dist/**
 package-lock.json
-auth.json
 
 includes/assets/vendors/semantic/bundle/components/
 includes/assets/vendors/semantic/bundle/themes/basic/
