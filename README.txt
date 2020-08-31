@@ -25,6 +25,7 @@ Create Review Posts, add reviews to existing post types and enable user reviews.
 * Fix: Display dashboard user reviews of below v0.6
 * Fix: Support forum link added
 * Fix: Starcat settings menu from Multisite Network Dashboard
+* Fix: Starcat Review and its Add-on's plugins activation Issues
 * Feature: Starcat Review and its add-ons plugins multi-site support 
 * Feature: Option to show Verified Owner label
 * General Fixes
