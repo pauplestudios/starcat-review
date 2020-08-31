@@ -193,9 +193,12 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
                     }
                 ],
                 delete: [
+                    // Delete files
+                    './artifacts/addons/*/package.json',
+                    './artifacts/addons/*/package-lock.json',
+                    './artifacts/addons/*/composer.json',
                     // Delete file types
                     './artifacts/addons/*/*.zip',
-                    './artifacts/addons/*/*.json',
                     './artifacts/addons/*/*.md',
                     './artifacts/addons/*/*.log',
                     './artifacts/addons/*/*.lock',
