@@ -23,7 +23,8 @@ Create Review Posts, add reviews to existing post types and enable user reviews.
 * Fix: Ratings Column for post types in the dashboard ratings are not displaying from V0.6
 * Fix: Product review template replaced by other woocommerce review plugins
 * Fix: Display dashboard user reviews of below v0.6
-* Fix: Removed starcat settings menu from Multisite Network Dashboard
+* Fix: Support forum link added
+* Fix: Starcat settings menu from Multisite Network Dashboard
 * Feature: Starcat Review and its add-ons plugins multi-site support 
 * Feature: Option to show Verified Owner label
 * General Fixes

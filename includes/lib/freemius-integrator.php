@@ -50,13 +50,26 @@ if (!function_exists('scr_fs')) {
     // Signal that SDK was initiated.
     do_action('scr_fs_loaded');
 
-    function scr_fs_settings_url()
-    {
-        return admin_url('edit.php?post_type=starcat_review&page=scr-settings');
-    }
+    scr_fs()->add_filter('support_forum_submenu', 'scr_fs_support_forum_submenu');
+    scr_fs()->add_filter('support_forum_url', 'scr_fs_support_forum_url');
 
     // scr_fs()->add_filter('connect_url', 'scr_fs_settings_url');
     // scr_fs()->add_filter('after_skip_url', 'scr_fs_settings_url');
     // scr_fs()->add_filter('after_connect_url', 'scr_fs_settings_url');
     // scr_fs()->add_filter('after_pending_connect_url', 'scr_fs_settings_url');
+
+    // function scr_fs_settings_url()
+    // {
+    //     return admin_url('edit.php?post_type=starcat_review&page=scr-settings');
+    // }
+
+    function scr_fs_support_forum_submenu($wp_org_support_forum_submenu)
+    {
+        return __('Support', SCR_DOMAIN);
+    }
+
+    function scr_fs_support_forum_url($wp_org_support_forum_url)
+    {
+        return 'https://pauple.freshdesk.com/';
+    }
 }
