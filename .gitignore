@@ -21,7 +21,6 @@ tests/_output/**
 artifacts/dist/**
 package-lock.json
 
-
 includes/assets/vendors/semantic/bundle/components/
 includes/assets/vendors/semantic/bundle/themes/basic/
 includes/assets/vendors/semantic/bundle/themes/github/

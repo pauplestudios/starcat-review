@@ -1,9 +1,9 @@
 === Starcat Review - WordPress Reviews & Rating Plugin ===
-Donate link: http://helpiewp.com/
+Donate link: https://starcatwp.com
 Tags: helpdesk, support, knowledge base, customer, helpie, documentation
 Requires at least: 5.2
 Tested up to: 5.5
-Stable tag: 0.6.1.1
+Stable tag: 0.6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,6 +18,17 @@ Create Review Posts, add reviews to existing post types and enable user reviews.
 4. Done. You can now go to Helpie KB Wiki -> Helpie Settings and check out the settings or learn more at https://helpiewp.com/docs/
 
 == Change Log ==
+
+= 0.6.2 =
+* Fix: Ratings Column for post types in the dashboard ratings are not displaying from V0.6
+* Fix: Product review template replaced by other woocommerce review plugins
+* Fix: Display dashboard user reviews of below v0.6
+* Fix: Support forum link added
+* Fix: Starcat settings menu from Multisite Network Dashboard
+* Fix: Starcat Review and its Add-on's plugins activation Issues
+* Feature: Starcat Review and its add-ons plugins multi-site support 
+* Feature: Option to show Verified Owner label
+* General Fixes
 
 = 0.6.1.1 =
 * Fix: Starcat Review Photo Reviews add-on not displaying in user review

@@ -11,10 +11,10 @@ class WCVerifiedOwnersCest
         $I->seePluginActivated('woocommerce');
         // $I->activatePlugin(['hello-dolly','woocommerce']);
     }
-
+    // skipped acceptance and unittest there for this
     public function isVerfiedOwner(AcceptanceTester $I)
     {
-        $product = $I->WC_Helper_Product::create_simple_product();
+        // $product = $I->WC_Helper_Product::create_simple_product();
 
         // create product
 
