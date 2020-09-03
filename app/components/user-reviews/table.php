@@ -17,6 +17,10 @@ class UR_List_Table extends WP_List_Table
 
     private $user_can;
 
+    private $comments_of_stats = array();
+
+    private $stat_args;
+
     /**
      * Constructor.
      *
@@ -46,6 +50,9 @@ class UR_List_Table extends WP_List_Table
                 'screen' => isset($args['screen']) ? $args['screen'] : null,
             )
         );
+
+        $this->comments_of_stats = scr_get_comments_args(['stats']);
+        $this->stat_args = SCR_Getter::get_stat_default_args();
     }
 
     public function floated_admin_avatar($name, $comment_ID)
@@ -78,8 +85,7 @@ class UR_List_Table extends WP_List_Table
             $comment_status = 'all';
         }
 
-        // $comment_type = !empty($_REQUEST['comment_type']) ? $_REQUEST['comment_type'] : '';
-        $comment_type = 'review';
+        $comment_type = ['review', 'starcat_review'];
 
         $search = (isset($_REQUEST['s'])) ? $_REQUEST['s'] : '';
 
@@ -232,7 +238,7 @@ class UR_List_Table extends WP_List_Table
             ),
 
             /* translators: %s: Number of comments. */
-            'moderated' => _nx_noop(
+            'awaiting_moderation' => _nx_noop(
                 'Pending <span class="count">(%s)</span>',
                 'Pending <span class="count">(%s)</span>',
                 'comments'
@@ -271,8 +277,9 @@ class UR_List_Table extends WP_List_Table
 
         foreach ($stati as $status => $label) {
             $current_link_attributes = '';
+            $link_status = ('awaiting_moderation' === $status) ? 'moderated' : $status;
 
-            if ($status === $comment_status) {
+            if ($link_status === $comment_status) {
                 $current_link_attributes = ' class="current" aria-current="page"';
             }
 
@@ -297,7 +304,8 @@ class UR_List_Table extends WP_List_Table
             if (!isset($num_comments->$status)) {
                 $num_comments->$status = 0;
             }
-            $link = add_query_arg('comment_status', $status, $link);
+
+            $link = add_query_arg('comment_status', $link_status, $link);
             if ($post_id) {
                 $link = add_query_arg('p', absint($post_id), $link);
             }
@@ -306,6 +314,7 @@ class UR_List_Table extends WP_List_Table
             if ( !empty( $_REQUEST['s'] ) )
             $link = add_query_arg( 's', esc_attr( wp_unslash( $_REQUEST['s'] ) ), $link );
              */
+
             $status_links[$status] = "<a href='$link'$current_link_attributes>" . sprintf(
                 translate_nooped_plural($label, $num_comments->$status),
                 sprintf(
@@ -342,9 +351,9 @@ class UR_List_Table extends WP_List_Table
         global $wpdb;
 
         $post_id = (int) $post_id;
-        $where = $wpdb->prepare('WHERE comment_type= %s', 'review');
+        $where = $wpdb->prepare('WHERE comment_type IN (%s, %s)', 'review', 'starcat_review');
         if ($post_id > 0) {
-            $where = $wpdb->prepare('WHERE comment_type= %s AND comment_post_ID = %d', 'review', $post_id);
+            $where = $wpdb->prepare('WHERE comment_type IN (%s, %s) AND comment_post_ID = %d', 'review', 'starcat_review', $post_id);
         }
 
         $totals = (array) $wpdb->get_results("SELECT comment_approved, COUNT( * ) AS total
@@ -978,17 +987,11 @@ if ('top' === $which) {
     public function column_rating($comment)
     {
         $rating = '---';
-        $props = get_comment_meta($comment->comment_ID, SCR_COMMENT_META, true);
-        // error_log('props : ' . print_r($props, true));
-
-        if (isset($props['rating']) && !empty($props['rating'])) {
-            $args = SCR_Getter::get_stat_default_args();
-            $args['items']['stats-list'] = $props['stats'];
-            // error_log('args : ' . print_r($args, true));
-            $stat_controller = new \StarcatReview\App\Components\Stats\Controller($args);
+        
+        if (isset($this->comments_of_stats[$comment->comment_ID]) && !empty($this->comments_of_stats[$comment->comment_ID])) {
+            $stat_args = array_merge($this->stat_args, ['items' => $this->comments_of_stats[$comment->comment_ID]]);
+            $stat_controller = new \StarcatReview\App\Components\Stats\Controller($stat_args);
             $rating = $stat_controller->get_view();
-
-            // $rating = $props['rating'];
         }
 
         echo $rating;
@@ -1164,11 +1167,8 @@ class UR_List_Table_Controller
     {
         global $wpdb;
         $count = 0;
-        $where = $wpdb->prepare('WHERE comment_type= %s', 'review');
-
+        $where = $wpdb->prepare('WHERE comment_type IN (%s, %s)', 'review', 'starcat_review');
         $pending = $wpdb->get_results("SELECT comment_post_ID, COUNT(comment_ID) as num_comments FROM $wpdb->comments {$where} AND comment_approved = '0'", ARRAY_A);
-
-        // error_log('pending : ' . print_r($pending, true));
 
         if (!empty($pending)) {
             $count = absint($pending[0]['num_comments']);

@@ -22,7 +22,7 @@ class NonLoggedInUserCest
         $this->settings_non_loggedin($I);
 
         $I->amOnPage('/product/album/');
-        $I->see('Reviews');
+        $I->see('Reviews (0)');
         $I->click('#tab-reviews');
         $I->see('Leave a Review');
 
@@ -82,7 +82,7 @@ class NonLoggedInUserCest
     private function settings_non_loggedin($I)
     {
         $options = [
-            'review_enable_post-types' => ['post', 'page', 'product'],
+            'review_enable_post-types' => ['post', 'starcat_review', 'product'],
             'ur_who_can_review' => 'everyone',
         ];
 

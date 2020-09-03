@@ -127,6 +127,12 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
         {
             $html = '';
             $html .= '<span class="author"> ' . $comment['author'] . ' </span>';
+
+            if ($comment['parent'] == 0 && $comment['is_verified_review']) {
+                $html .= '<em class="verified">(' . __('verified owner', SCR_DOMAIN) . ')</em> ';
+                $html .= '<i class="check circle blue icon"></i>';
+            }
+
             $html .= '<div class="metadata">';
             $html .= '<span class="date">' . $comment['date'] . '</span>';
             $html .= '<span class="time">' . __('AT', SCR_DOMAIN) . ' ' . $comment['time'] . '</span>';

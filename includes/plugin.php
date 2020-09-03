@@ -7,29 +7,60 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\Starcat_Review')) {
     class Starcat_Review
     {
-        public $plugin_domain;
-        public $views_dir;
-        public $version;
-
         public function __construct()
         {
             $this->setup_autoload();
-            $this->plugin_domain = SCR_DOMAIN;
-            $this->version = SCR_VERSION;
-
             /* Require functions.php */
             require_once SCR_PATH . 'includes/functions.php';
 
-            // These components will handle the hooks internally, no need to call this in a hook
-            $this->load_components();
-
             // Load Hooks
             $this->load_hooks();
+
+            // These components will handle the hooks internally, no need to call this in a hook
+            $this->load_components();
         }
 
         public function load_hooks()
         {
-            $hooks = new \StarcatReview\Includes\Hooks();
+            new \StarcatReview\Includes\Hooks();
+            register_activation_hook(SCR__FILE__, [$this, 'activate_plugin_name']);
+            register_deactivation_hook(SCR__FILE__, [$this, 'deactivate_plugin_name']);
+        }
+
+        public static function activate_plugin_name($network_wide)
+        {
+            if ($network_wide) { //Plugin is network activated
+                $site_ids = get_sites(array('fields' => 'ids'));
+                foreach ($site_ids as $site_id) {
+                    //Perform something on all sites within the network
+                    switch_to_blog($site_id);
+                    add_option(SCR_PLUGIN_BASE, true);
+                    // error_log('!!! Multi Site Plugin Activation Done !!!');
+                    restore_current_blog();
+                }
+                return;
+            }
+
+            // error_log('!!! Single Site Plugin Activation Done !!!');
+            add_option(SCR_PLUGIN_BASE, true);
+        }
+
+        public static function deactivate_plugin_name($network_wide)
+        {
+            if ($network_wide) { //Plugin is network activated
+                $site_ids = get_sites(array('fields' => 'ids'));
+                foreach ($site_ids as $site_id) {
+                    //Perform something on all sites within the network
+                    switch_to_blog($site_id);
+                    delete_option(SCR_PLUGIN_BASE);
+                    // error_log('!!! Multi Site Plugin Deactivation Done !!!');
+                    restore_current_blog();
+                }
+                return;
+            }
+
+            // error_log('!!! Single Site Plugin Deactivation Done !!!');
+            delete_option(SCR_PLUGIN_BASE);
         }
 
         public function load_components()
