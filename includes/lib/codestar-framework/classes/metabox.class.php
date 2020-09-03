@@ -11,12 +11,12 @@ if( ! class_exists( 'CSF_Metabox' ) ) {
   class CSF_Metabox extends CSF_Abstract{
 
     // constans
-    public $unique     = '';
-    public $abstract   = 'metabox';
-    public $pre_fields = array();
-    public $sections   = array();
-    public $post_type  = array();
-    public $args       = array(
+    public $unique         = '';
+    public $abstract       = 'metabox';
+    public $pre_fields     = array();
+    public $sections       = array();
+    public $post_type      = array();
+    public $args           = array(
       'title'              => '',
       'post_type'          => 'post',
       'data_type'          => 'serialize',
@@ -30,6 +30,7 @@ if( ! class_exists( 'CSF_Metabox' ) ) {
       'async_webfont'      => false,
       'output_css'         => true,
       'theme'              => 'dark',
+      'class'              => '',
       'defaults'           => array(),
     );
 
@@ -45,9 +46,10 @@ if( ! class_exists( 'CSF_Metabox' ) ) {
       $this->pre_fields     = $this->pre_fields( $this->sections );
 
       add_action( 'add_meta_boxes', array( &$this, 'add_meta_box' ) );
-      add_action( 'save_post', array( &$this, 'save_meta_box' ), 10, 2 );
+      add_action( 'save_post', array( &$this, 'save_meta_box' ) );
+      add_action( 'edit_attachment', array( &$this, 'save_meta_box' ) );
 
-      if( ! empty( $this->page_templates ) || ! empty( $this->post_formats ) ) {
+      if( ! empty( $this->page_templates ) || ! empty( $this->post_formats ) || ! empty( $this->args['class'] ) ) {
         foreach( $this->post_type as $post_type ) {
           add_filter( 'postbox_classes_'. $post_type .'_'. $this->unique, array( &$this, 'add_metabox_classes' ) );
         }
@@ -124,6 +126,10 @@ if( ! class_exists( 'CSF_Metabox' ) ) {
 
       }
 
+      if( ! empty( $this->args['class'] ) ) {
+        $classes[] = $this->args['class'];
+      }
+
       return $classes;
 
     }
@@ -140,7 +146,7 @@ if( ! class_exists( 'CSF_Metabox' ) ) {
     // get default value
     public function get_default( $field ) {
 
-      $default = ( isset( $this->args['defaults'][$field['id']] ) ) ? $this->args['defaults'][$field['id']] : '';
+      $default = ( isset( $field['id'] ) && isset( $this->args['defaults'][$field['id']] ) ) ? $this->args['defaults'][$field['id']] : null;
       $default = ( isset( $field['default'] ) ) ? $field['default'] : $default;
 
       return $default;
@@ -152,7 +158,7 @@ if( ! class_exists( 'CSF_Metabox' ) ) {
 
       global $post;
 
-      $value = '';
+      $value = null;
 
       if( is_object( $post ) && ! empty( $field['id'] ) ) {
 
@@ -164,10 +170,10 @@ if( ! class_exists( 'CSF_Metabox' ) ) {
           $value = ( isset( $meta[$field['id']] ) ) ? $meta[$field['id']] : null;
         }
 
-        $default = $this->get_default( $field );
-        $value   = ( isset( $value ) ) ? $value : $default;
-
       }
+
+      $default = $this->get_default( $field );
+      $value   = ( isset( $value ) ) ? $value : $default;
 
       return $value;
 
@@ -182,14 +188,15 @@ if( ! class_exists( 'CSF_Metabox' ) ) {
       $show_all = ( ! $has_nav ) ? ' csf-show-all' : '';
       $errors   = ( is_object ( $post ) ) ? get_post_meta( $post->ID, '_csf_errors', true ) : array();
       $errors   = ( ! empty( $errors ) ) ? $errors : array();
+      $theme    = ( $this->args['theme'] ) ? ' csf-theme-'. $this->args['theme'] : '';
 
       if( is_object ( $post ) && ! empty( $errors ) ) {
         delete_post_meta( $post->ID, '_csf_errors' );
       }
 
-      wp_nonce_field( 'csf_metabox_nonce', 'csf_metabox_nonce' );
+      wp_nonce_field( 'csf_metabox_nonce', 'csf_metabox_nonce'. $this->unique );
 
-      echo '<div class="csf csf-theme-'. $this->args['theme'] .' csf-metabox">';
+      echo '<div class="csf csf-metabox'. $theme .'">';
 
         echo '<div class="csf-wrapper'. $show_all .'">';
 
@@ -283,107 +290,112 @@ if( ! class_exists( 'CSF_Metabox' ) ) {
     }
 
     // save metabox
-    public function save_meta_box( $post_id, $post ) {
+    public function save_meta_box( $post_id ) {
 
-      if ( wp_verify_nonce( csf_get_var( 'csf_metabox_nonce' ), 'csf_metabox_nonce' ) ) {
+      if( ! wp_verify_nonce( csf_get_var( 'csf_metabox_nonce'. $this->unique ), 'csf_metabox_nonce' ) ) {
+        return $post_id;
+      }
 
-        $errors  = array();
-        $request = csf_get_var( $this->unique );
+      if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+        return $post_id;
+      }
 
-        if( ! empty( $request ) ) {
+      $errors  = array();
+      $request = csf_get_var( $this->unique );
 
-          // ignore _nonce
-          if( isset( $request['_nonce'] ) ) {
-            unset( $request['_nonce'] );
-          }
+      if( ! empty( $request ) ) {
 
-          // sanitize and validate
-          $section_key = 1;
-          foreach( $this->sections as $section ) {
+        // ignore _nonce
+        if( isset( $request['_nonce'] ) ) {
+          unset( $request['_nonce'] );
+        }
 
-            if( ! empty( $section['fields'] ) ) {
+        // sanitize and validate
+        $section_key = 1;
+        foreach( $this->sections as $section ) {
 
-              foreach( $section['fields'] as $field ) {
+          if( ! empty( $section['fields'] ) ) {
 
-                if( ! empty( $field['id'] ) ) {
+            foreach( $section['fields'] as $field ) {
 
-                  // sanitize
-                  if( ! empty( $field['sanitize'] ) ) {
+              if( ! empty( $field['id'] ) ) {
 
-                    $sanitize              = $field['sanitize'];
-                    $value_sanitize        = isset( $request[$field['id']] ) ? $request[$field['id']] : '';
-                    $request[$field['id']] = call_user_func( $sanitize, $value_sanitize );
+                // sanitize
+                if( ! empty( $field['sanitize'] ) ) {
+
+                  $sanitize              = $field['sanitize'];
+                  $value_sanitize        = isset( $request[$field['id']] ) ? $request[$field['id']] : '';
+                  $request[$field['id']] = call_user_func( $sanitize, $value_sanitize );
+
+                }
+
+                // validate
+                if( ! empty( $field['validate'] ) ) {
+
+                  $validate       = $field['validate'];
+                  $value_validate = isset( $request[$field['id']] ) ? $request[$field['id']] : '';
+                  $has_validated  = call_user_func( $validate, $value_validate );
+
+                  if( ! empty( $has_validated ) ) {
+
+                    $errors['sections'][$section_key] = true;
+                    $errors['fields'][$field['id']] = $has_validated;
+                    $request[$field['id']] = $this->get_meta_value( $field );
 
                   }
 
-                  // validate
-                  if( ! empty( $field['validate'] ) ) {
+                }
 
-                    $validate       = $field['validate'];
-                    $value_validate = isset( $request[$field['id']] ) ? $request[$field['id']] : '';
-                    $has_validated  = call_user_func( $validate, $value_validate );
-
-                    if( ! empty( $has_validated ) ) {
-
-                      $errors['sections'][$section_key] = true;
-                      $errors['fields'][$field['id']] = $has_validated;
-                      $request[$field['id']] = $this->get_meta_value( $field );
-
-                    }
-
-                  }
-
-                  // auto sanitize
-                  if( ! isset( $request[$field['id']] ) || is_null( $request[$field['id']] ) ) {
-                    $request[$field['id']] = '';
-                  }
-
+                // auto sanitize
+                if( ! isset( $request[$field['id']] ) || is_null( $request[$field['id']] ) ) {
+                  $request[$field['id']] = '';
                 }
 
               }
 
             }
 
-            $section_key++;
           }
 
-          $request = apply_filters( "csf_{$this->unique}_save", $request, $post_id, $this );
-
-          do_action( "csf_{$this->unique}_save_before", $request, $post_id, $this );
-
-          if( empty( $request ) || ! empty( $request['_restore'] ) ) {
-
-            if( $this->args['data_type'] !== 'serialize' ) {
-              foreach ( $request as $key => $value ) {
-                delete_post_meta( $post_id, $key );
-              }
-            } else {
-              delete_post_meta( $post_id, $this->unique );
-            }
-
-          } else {
-
-            if( $this->args['data_type'] !== 'serialize' ) {
-              foreach ( $request as $key => $value ) {
-                update_post_meta( $post_id, $key, $value );
-              }
-            } else {
-              update_post_meta( $post_id, $this->unique, $request );
-            }
-
-            if( ! empty( $errors ) ) {
-              update_post_meta( $post_id, '_csf_errors', $errors );
-            }
-
-          }
-
-          do_action( "csf_{$this->unique}_saved", $request, $post_id, $this );
-
-          do_action( "csf_{$this->unique}_save_after", $request, $post_id, $this );
-
+          $section_key++;
         }
 
       }
+
+      $request = apply_filters( "csf_{$this->unique}_save", $request, $post_id, $this );
+
+      do_action( "csf_{$this->unique}_save_before", $request, $post_id, $this );
+
+      if( empty( $request ) || ! empty( $request['_restore'] ) ) {
+
+        if( $this->args['data_type'] !== 'serialize' ) {
+          foreach ( $request as $key => $value ) {
+            delete_post_meta( $post_id, $key );
+          }
+        } else {
+          delete_post_meta( $post_id, $this->unique );
+        }
+
+      } else {
+
+        if( $this->args['data_type'] !== 'serialize' ) {
+          foreach ( $request as $key => $value ) {
+            update_post_meta( $post_id, $key, $value );
+          }
+        } else {
+          update_post_meta( $post_id, $this->unique, $request );
+        }
+
+        if( ! empty( $errors ) ) {
+          update_post_meta( $post_id, '_csf_errors', $errors );
+        }
+
+      }
+
+      do_action( "csf_{$this->unique}_saved", $request, $post_id, $this );
+
+      do_action( "csf_{$this->unique}_save_after", $request, $post_id, $this );
+
     }
   }
 }

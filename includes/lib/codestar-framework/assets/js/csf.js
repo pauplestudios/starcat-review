@@ -937,7 +937,7 @@
 
         $cloned_item.removeClass('csf-cloneable-hidden');
 
-        $cloned_item.find(':input').each( function() {
+        $cloned_item.find(':input[name!="_pseudo"]').each( function() {
           this.name = new_field_id + this.name.replace( ( this.name.startsWith('_nonce') ? '_nonce' : unique_id ), '');
         });
 
@@ -1060,7 +1060,9 @@
 
           $modal.find('.csf-modal-loading').show();
 
-          window.wp.ajax.post( 'csf-get-icons', { nonce: $button.data('nonce') } ).done( function( response ) {
+          window.wp.ajax.post( 'csf-get-icons', {
+            nonce: $button.data('nonce')
+          }).done( function( response ) {
 
             $modal.find('.csf-modal-loading').hide();
 
@@ -1103,25 +1105,23 @@
             });
 
             $modal.on('click', '.csf-modal-close, .csf-modal-overlay', function() {
-
               $modal.hide();
-
             });
 
+          }).fail( function( response ) {
+            $modal.find('.csf-modal-loading').hide();
+            $modal.find('.csf-modal-load').html( response.error );
+            $modal.on('click', function() { $modal.hide(); });
           });
-
         }
 
       });
 
       $this.on('click', '.csf-icon-remove', function( e ) {
-
         e.preventDefault();
-
         $this.find('.csf-icon-preview').addClass('hidden');
         $this.find('input').val('').trigger('change');
         $(this).addClass('hidden');
-
       });
 
     });
@@ -1163,6 +1163,10 @@
           var thumbnail;
           var attributes   = wp_media_frame.state().get('selection').first().attributes;
           var preview_size = $upload_button.data('preview-size') || 'thumbnail';
+
+          if( $library.length && $library.indexOf(attributes.subtype) === -1 && $library.indexOf(attributes.type) === -1 ) {
+            return;
+          }
 
           $this.find('.csf--url').val( attributes.url );
           $this.find('.csf--id').val( attributes.id );
@@ -1258,7 +1262,7 @@
 
         $cloned_item.removeClass('csf-repeater-hidden');
 
-        $cloned_item.find(':input').each( function() {
+        $cloned_item.find(':input[name!="_pseudo"]').each( function() {
           this.name = new_field_id + this.name.replace( ( this.name.startsWith('_nonce') ? '_nonce' : unique_id ), '');
         });
 
@@ -1985,7 +1989,15 @@
         });
 
         wp_media_frame.on( 'select', function() {
-          $input.val( wp_media_frame.state().get('selection').first().attributes.url ).trigger('change');
+
+          var attributes = wp_media_frame.state().get('selection').first().attributes;
+
+          if( $library.length && $library.indexOf(attributes.subtype) === -1 && $library.indexOf(attributes.type) === -1 ) {
+            return;
+          }
+
+          $input.val(attributes.url).trigger('change');
+
         });
 
         wp_media_frame.open();
@@ -1996,6 +2008,108 @@
         e.preventDefault();
         $input.val('').trigger('change');
       });
+
+    });
+
+  };
+
+  //
+  // Field: wp_editor
+  //
+  $.fn.csf_field_wp_editor = function() {
+    return this.each( function() {
+
+      if( typeof window.wp.editor === 'undefined' || typeof window.tinyMCEPreInit === 'undefined' || typeof window.tinyMCEPreInit.mceInit.csf_wp_editor === 'undefined' ) {
+        return;
+      }
+
+      var $this     = $(this),
+          $editor   = $this.find('.csf-wp-editor'),
+          $textarea = $this.find('textarea');
+
+      // If there is wp-editor remove it for avoid dupliated wp-editor conflicts.
+      var $has_wp_editor = $this.find('.wp-editor-wrap').length || $this.find('.mce-container').length;
+
+      if( $has_wp_editor ) {
+        $editor.empty();
+        $editor.append($textarea);
+        $textarea.css('display', '');
+      }
+
+      // Generate a unique id
+      var uid = CSF.helper.uid('csf-editor-');
+
+      $textarea.attr('id', uid);
+
+      // Get default editor settings
+      var default_editor_settings = {
+        tinymce: window.tinyMCEPreInit.mceInit.csf_wp_editor,
+        quicktags: window.tinyMCEPreInit.qtInit.csf_wp_editor
+      };
+
+      // Get default editor settings
+      var field_editor_settings = $editor.data('editor-settings');
+
+      // Add on change event handle
+      var editor_on_change = function( editor ) {
+        editor.on('change', CSF.helper.debounce( function() {
+          editor.save();
+          $textarea.trigger('change');
+        }, 250 ) );
+      };
+
+      // Callback for old wp editor
+      var wpEditor = wp.oldEditor ? wp.oldEditor : wp.editor;
+
+      if( wpEditor && wpEditor.hasOwnProperty('autop') ) {
+        wp.editor.autop = wpEditor.autop;
+        wp.editor.removep = wpEditor.removep;
+        wp.editor.initialize = wpEditor.initialize;
+      }
+
+      // Extend editor selector and on change event handler
+      default_editor_settings.tinymce = $.extend( {}, default_editor_settings.tinymce, { selector: '#'+ uid, setup: editor_on_change } );
+
+      // Override editor tinymce settings
+      if( field_editor_settings.tinymce === false ) {
+        default_editor_settings.tinymce = false;
+        $editor.addClass('csf-no-tinymce');
+      }
+
+      // Override editor quicktags settings
+      if( field_editor_settings.quicktags === false ) {
+        default_editor_settings.quicktags = false;
+        $editor.addClass('csf-no-quicktags');
+      }
+
+      // Wait until :visible
+      var interval = setInterval(function () {
+        if( $this.is(':visible') ) {
+          window.wp.editor.initialize(uid, default_editor_settings);
+          clearInterval(interval);
+        }
+      });
+
+      // Add Media buttons
+      if( field_editor_settings.media_buttons && window.csf_media_buttons ) {
+
+        var $editor_buttons = $editor.find('.wp-media-buttons');
+
+        if( $editor_buttons.length ) {
+
+          $editor_buttons.find('.csf-shortcode-button').data('editor-id', uid);
+
+        } else {
+
+          var $media_buttons = $(window.csf_media_buttons);
+
+          $media_buttons.find('.csf-shortcode-button').data('editor-id', uid);
+
+          $editor.prepend( $media_buttons );
+
+        }
+
+      }
 
     });
 
@@ -2371,7 +2485,7 @@
         e.preventDefault();
 
         var shortcode = '';
-        var serialize = $modal.find('.csf-field:not(.hidden)').find(':input').serializeObjectCSF();
+        var serialize = $modal.find('.csf-field:not(.hidden)').find(':input:not(.ignore)').serializeObjectCSF();
 
         switch ( sc_view ) {
 
@@ -2404,6 +2518,8 @@
           break;
 
         }
+
+        shortcode = ( shortcode === '' ) ? '['+ sc_name +']' : shortcode;
 
         if( gutenberg_id ) {
 
@@ -2451,153 +2567,6 @@
 
       $modal.on('click', '.csf-modal-close, .csf-modal-overlay', function() {
         $modal.hide();
-      });
-
-    });
-  };
-
-  //
-  // Helper Checkbox Checker
-  //
-  $.fn.csf_checkbox = function() {
-    return this.each( function() {
-
-      var $this     = $(this),
-          $input    = $this.find('.csf--input'),
-          $checkbox = $this.find('.csf--checkbox');
-
-      $checkbox.on('click', function() {
-        $input.val( Number( $checkbox.prop('checked') ) ).trigger('change');
-      });
-
-    });
-  };
-
-  //
-  // Field: wp_editor
-  //
-  $.fn.csf_field_wp_editor = function() {
-    return this.each( function() {
-
-      if( typeof window.wp.editor === 'undefined' || typeof window.tinyMCEPreInit === 'undefined' || typeof window.tinyMCEPreInit.mceInit.csf_wp_editor === 'undefined' ) {
-        return;
-      }
-
-      var $this     = $(this),
-          $editor   = $this.find('.csf-wp-editor'),
-          $textarea = $this.find('textarea');
-
-      // If there is wp-editor remove it for avoid dupliated wp-editor conflicts.
-      var $has_wp_editor = $this.find('.wp-editor-wrap').length || $this.find('.mce-container').length;
-
-      if( $has_wp_editor ) {
-        $editor.empty();
-        $editor.append($textarea);
-        $textarea.css('display', '');
-      }
-
-      // Generate a unique id
-      var uid = CSF.helper.uid('csf-editor-');
-
-      $textarea.attr('id', uid);
-
-      // Get default editor settings
-      var default_editor_settings = {
-        tinymce: window.tinyMCEPreInit.mceInit.csf_wp_editor,
-        quicktags: window.tinyMCEPreInit.qtInit.csf_wp_editor
-      };
-
-      // Get default editor settings
-      var field_editor_settings = $editor.data('editor-settings');
-
-      // Add on change event handle
-      var editor_on_change = function( editor ) {
-        editor.on('change', CSF.helper.debounce( function() {
-          editor.save();
-          $textarea.trigger('change');
-        }, 250 ) );
-      };
-
-      // Extend editor selector and on change event handler
-      default_editor_settings.tinymce = $.extend( {}, default_editor_settings.tinymce, { selector: '#'+ uid, setup: editor_on_change } );
-
-      // Override editor tinymce settings
-      if( field_editor_settings.tinymce === false ) {
-        default_editor_settings.tinymce = false;
-        $editor.addClass('csf-no-tinymce');
-      }
-
-      // Override editor quicktags settings
-      if( field_editor_settings.quicktags === false ) {
-        default_editor_settings.quicktags = false;
-        $editor.addClass('csf-no-quicktags');
-      }
-
-      // Wait until :visible
-      var interval = setInterval(function () {
-        if( $this.is(':visible') ) {
-          window.wp.editor.initialize(uid, default_editor_settings);
-          clearInterval(interval);
-        }
-      });
-
-      // Add Media buttons
-      if( field_editor_settings.media_buttons && window.csf_media_buttons ) {
-
-        var $editor_buttons = $editor.find('.wp-media-buttons');
-
-        if( $editor_buttons.length ) {
-
-          $editor_buttons.find('.csf-shortcode-button').data('editor-id', uid);
-
-        } else {
-
-          var $media_buttons = $(window.csf_media_buttons);
-
-          $media_buttons.find('.csf-shortcode-button').data('editor-id', uid);
-
-          $editor.prepend( $media_buttons );
-
-        }
-
-      }
-
-    });
-
-  };
-
-  //
-  // Siblings
-  //
-  $.fn.csf_siblings = function() {
-    return this.each( function() {
-
-      var $this     = $(this),
-          $siblings = $this.find('.csf--sibling'),
-          multiple  = $this.data('multiple') || false;
-
-      $siblings.on('click', function() {
-
-        var $sibling = $(this);
-
-        if( multiple ) {
-
-          if( $sibling.hasClass('csf--active') ) {
-            $sibling.removeClass('csf--active');
-            $sibling.find('input').prop('checked', false).trigger('change');
-          } else {
-            $sibling.addClass('csf--active');
-            $sibling.find('input').prop('checked', true).trigger('change');
-          }
-
-        } else {
-
-          $this.find('input').prop('checked', false);
-          $sibling.find('input').prop('checked', true).trigger('change');
-          $sibling.addClass('csf--active').siblings().removeClass('csf--active');
-
-        }
-
       });
 
     });
@@ -2754,31 +2723,6 @@
   };
 
   //
-  // ChosenJS
-  //
-  $.fn.csf_chosen = function() {
-    return this.each( function() {
-
-      var $this       = $(this),
-          $inited     = $this.parent().find('.chosen-container'),
-          is_multi    = $this.attr('multiple') || false,
-          set_width   = is_multi ? '100%' : 'auto',
-          set_options = $.extend({
-            allow_single_deselect: true,
-            disable_search_threshold: 15,
-            width: set_width
-          }, $this.data());
-
-      if( $inited.length ) {
-        $inited.remove();
-      }
-
-      $this.chosen(set_options);
-
-    });
-  };
-
-  //
   // Number (only allow numeric inputs)
   //
   $.fn.csf_number = function() {
@@ -2788,6 +2732,185 @@
 
         if( e.keyCode !== 0 && e.keyCode !== 8 && e.keyCode !== 45 && e.keyCode !== 46 && ( e.keyCode < 48 || e.keyCode > 57 ) ) {
           return false;
+        }
+
+      });
+
+    });
+  };
+
+  //
+  // ChosenJS
+  //
+  $.fn.csf_chosen = function() {
+    return this.each( function() {
+
+      var $this       = $(this),
+          $inited     = $this.parent().find('.chosen-container'),
+          is_sortable = $this.hasClass('csf-chosen-sortable') || false,
+          is_ajax     = $this.hasClass('csf-chosen-ajax') || false,
+          is_multiple = $this.attr('multiple') || false,
+          set_width   = is_multiple ? '100%' : 'auto',
+          set_options = $.extend({
+            allow_single_deselect: true,
+            disable_search_threshold: 10,
+            width: set_width,
+            no_results_text: window.csf_vars.i18n.no_results_text,
+          }, $this.data('chosen-settings'));
+
+      if( $inited.length ) {
+        $inited.remove();
+      }
+
+      // Chosen ajax
+      if( is_ajax ) {
+
+        var set_ajax_options = $.extend({
+          data: {
+            type: 'post',
+            nonce: '',
+          },
+          allow_single_deselect: true,
+          disable_search_threshold: -1,
+          width: '100%',
+          min_length: 3,
+          type_delay: 500,
+          typing_text: window.csf_vars.i18n.typing_text,
+          searching_text: window.csf_vars.i18n.searching_text,
+          no_results_text: window.csf_vars.i18n.no_results_text,
+        }, $this.data('chosen-settings'));
+
+        $this.CSFAjaxChosen(set_ajax_options);
+
+      } else {
+
+        $this.chosen(set_options);
+
+      }
+
+      // Chosen keep options order
+      if( is_multiple ) {
+
+        var $hidden_select = $this.parent().find('.csf-hidden-select');
+        var $hidden_value  = $hidden_select.val() || [];
+
+        $this.on('change', function(obj, result) {
+
+          if( result && result.selected ) {
+            $hidden_select.append( '<option value="'+ result.selected +'" selected="selected">'+ result.selected +'</option>' );
+          } else if( result && result.deselected ) {
+            $hidden_select.find('option[value="'+ result.deselected +'"]').remove();
+          }
+
+          // Force customize refresh
+          if( $hidden_select.children().length === 0 && window.wp.customize !== undefined ) {
+            window.wp.customize.control( $hidden_select.data('customize-setting-link') ).setting.set('');
+          }
+
+          $hidden_select.trigger('change');
+
+        });
+
+        // Chosen order abstract
+        $this.CSFChosenOrder($hidden_value, true);
+
+      }
+
+      // Chosen sortable
+      if( is_sortable ) {
+
+        var $chosen_container = $this.parent().find('.chosen-container');
+        var $chosen_choices   = $chosen_container.find('.chosen-choices');
+
+        $chosen_choices.bind('mousedown', function( event ) {
+          if( $(event.target).is('span') ) {
+            event.stopPropagation();
+          }
+        });
+
+        $chosen_choices.sortable({
+          items: 'li:not(.search-field)',
+          helper: 'orginal',
+          cursor: 'move',
+          placeholder: 'search-choice-placeholder',
+          start: function(e,ui) {
+            ui.placeholder.width( ui.item.innerWidth() );
+            ui.placeholder.height( ui.item.innerHeight() );
+          },
+          update: function( e, ui ) {
+
+            var select_options = '';
+            var chosen_object  = $this.data('chosen');
+            var $prev_select   = $this.parent().find('.csf-hidden-select');
+
+            $chosen_choices.find('.search-choice-close').each( function() {
+              var option_array_index = $(this).data('option-array-index');
+              $.each(chosen_object.results_data, function(index, data) {
+                if( data.array_index === option_array_index ){
+                  select_options += '<option value="'+ data.value +'" selected>'+ data.value +'</option>';
+                }
+              });
+            });
+
+            $prev_select.children().remove();
+            $prev_select.append(select_options);
+            $prev_select.trigger('change');
+
+          }
+        });
+
+      }
+
+    });
+  };
+
+  //
+  // Helper Checkbox Checker
+  //
+  $.fn.csf_checkbox = function() {
+    return this.each( function() {
+
+      var $this     = $(this),
+          $input    = $this.find('.csf--input'),
+          $checkbox = $this.find('.csf--checkbox');
+
+      $checkbox.on('click', function() {
+        $input.val( Number( $checkbox.prop('checked') ) ).trigger('change');
+      });
+
+    });
+  };
+
+  //
+  // Siblings
+  //
+  $.fn.csf_siblings = function() {
+    return this.each( function() {
+
+      var $this     = $(this),
+          $siblings = $this.find('.csf--sibling'),
+          multiple  = $this.data('multiple') || false;
+
+      $siblings.on('click', function() {
+
+        var $sibling = $(this);
+
+        if( multiple ) {
+
+          if( $sibling.hasClass('csf--active') ) {
+            $sibling.removeClass('csf--active');
+            $sibling.find('input').prop('checked', false).trigger('change');
+          } else {
+            $sibling.addClass('csf--active');
+            $sibling.find('input').prop('checked', true).trigger('change');
+          }
+
+        } else {
+
+          $this.find('input').prop('checked', false);
+          $sibling.find('input').prop('checked', true).trigger('change');
+          $sibling.addClass('csf--active').siblings().removeClass('csf--active');
+
         }
 
       });
@@ -2846,7 +2969,7 @@
             $option = $complex.data('option-id'),
             obj     = $input.serializeObjectCSF(),
             data    = ( !$.isEmptyObject(obj) ) ? obj[$unique][$option] : '',
-            control = wp.customize.control($unique +'['+ $option +']');
+            control = window.wp.customize.control($unique +'['+ $option +']');
 
         // clear the value to force refresh.
         control.setting._value = null;
@@ -2902,15 +3025,23 @@
   //
   // Customizer Listener for Reload JS
   //
-  $(document).on('expanded', '.control-section-csf', function() {
+  $(document).on('expanded', '.control-section', function() {
 
-    var $this = $(this);
+    var $this  = $(this);
 
     if( $this.hasClass('open') && !$this.data('inited') ) {
-      $this.csf_dependency();
-      $this.find('.csf-customize-field').csf_reload_script({dependency: false});
-      $this.find('.csf-customize-complex').csf_customizer_listen();
+
+      var $fields  = $this.find('.csf-customize-field');
+      var $complex = $this.find('.csf-customize-complex');
+
+      if( $fields.length ) {
+        $this.csf_dependency();
+        $fields.csf_reload_script({dependency: false});
+        $complex.csf_customizer_listen();
+      }
+
       $this.data('inited', true);
+
     }
 
   });

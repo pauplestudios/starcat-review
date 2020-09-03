@@ -33,7 +33,7 @@ if( ! class_exists( 'CSF_Field_link_color' ) ) {
       );
 
       $color_props = array(
-        'color'    => esc_html__( 'Color', 'csf' ),
+        'color'    => esc_html__( 'Normal', 'csf' ),
         'hover'    => esc_html__( 'Hover', 'csf' ),
         'active'   => esc_html__( 'Active', 'csf' ),
         'visited'  => esc_html__( 'Visited', 'csf' ),

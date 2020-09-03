@@ -663,9 +663,6 @@
 /**
  * 03. 02. Field: accordion
  */
-.csf-field-accordion .csf-field {
-  padding: 20px;
-}
 .csf-field-accordion .csf-accordion-item {
   position: relative;
   margin-bottom: 5px;
@@ -710,6 +707,9 @@
   border: 1px solid #e5e5e5;
   border-top: none;
   background-color: #fff;
+}
+.csf-field-accordion .csf-accordion-content > .csf-field {
+  padding: 15px;
 }
 .csf-field-accordion .csf-accordion-open {
   display: block;
@@ -887,6 +887,10 @@
   overflow-y: auto;
   max-height: 305px;
 }
+.csf-field-checkbox ul ul,
+.csf-field-radio ul ul {
+  max-height: none;
+}
 .csf-field-checkbox .csf--inline-list li,
 .csf-field-radio .csf--inline-list li {
   display: inline-block;
@@ -943,8 +947,8 @@
   border: 1px solid #eee;
   background-color: #fff;
 }
-.csf-field-fieldset .csf-field {
-  padding: 20px;
+.csf-field-fieldset .csf-fieldset-content > .csf-field {
+  padding: 15px;
 }
 
 /**
@@ -1128,9 +1132,6 @@
 /**
  * 03. 14. Field: group
  */
-.csf-field-group .csf-field {
-  padding: 20px;
-}
 .csf-field-group .csf-cloneable-hidden {
   display: none !important;
 }
@@ -1151,6 +1152,9 @@
 .csf-field-group .csf-cloneable-content {
   border: 1px solid #e5e5e5;
   background: #fff;
+}
+.csf-field-group .csf-cloneable-content > .csf-field {
+  padding: 15px;
 }
 .csf-field-group .csf-cloneable-title {
   display: block;
@@ -1422,9 +1426,6 @@
 /**
  * 03. 20. Field: repeater
  */
-.csf-field-repeater .csf-field {
-  padding: 10px;
-}
 .csf-field-repeater .csf-field-text input {
   width: 100%;
 }
@@ -1445,6 +1446,9 @@
   display: table-cell;
   vertical-align: middle;
   background-color: #fff;
+}
+.csf-field-repeater .csf-repeater-content > .csf-field {
+  padding: 15px;
 }
 .csf-field-repeater .csf-repeater-helper {
   width: 100%;
@@ -1497,6 +1501,12 @@
 /**
  * 03. 21. Field: select
  */
+.csf-field-select .csf-fieldset {
+  min-height: 30px;
+}
+.csf-field-select .csf-chosen {
+  display: none;
+}
 .csf-field-select select {
   max-width: 100%;
 }
@@ -1546,9 +1556,6 @@
 /**
  * 03. 23. Field: sortable
  */
-.csf-field-sortable .csf-field {
-  padding: 10px;
-}
 .csf-field-sortable .csf-field-text input {
   width: 100%;
   max-width: 100%;
@@ -1567,6 +1574,9 @@
   display: table-cell;
   vertical-align: middle;
   background-color: #fff;
+}
+.csf-field-sortable .csf--sortable-content > .csf-field {
+  padding: 15px;
 }
 .csf-field-sortable .csf--sortable-helper {
   width: 100%;
@@ -1832,6 +1842,9 @@
   border: 1px solid #eee;
   background: #fff;
 }
+.csf-field-tabbed .csf-tabbed-section > .csf-field {
+  padding: 15px;
+}
 .csf-field-tabbed .csf-tabbed-nav .csf--icon {
   padding-right: 5px;
 }
@@ -1860,6 +1873,7 @@
   border-bottom-color: #fff;
 }
 .csf-field-tabbed .csf-tabbed-nav a:focus {
+  outline: none;
   -moz-box-shadow: none;
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -2209,6 +2223,8 @@
 }
 .csf-field .chosen-container-multi .chosen-choices li.search-choice .search-choice-close:before {
   content: "\f00d";
+  display: inline-block;
+  padding-top: 3px;
 }
 .csf-field .chosen-container-multi .chosen-choices li.search-choice .search-choice-close:hover {
   color: #555;
@@ -2224,6 +2240,13 @@
 }
 .csf-field .chosen-container-single .chosen-single div b:hover {
   color: #555;
+}
+.csf-field .chosen-container-multi .chosen-choices li.search-choice-placeholder {
+  border: 1px dashed #aaa;
+  margin: 3px 5px 3px 0;
+}
+.csf-field .chosen-container-multi .ui-sortable li.search-choice span {
+  cursor: move;
 }
 .csf-field .chosen-container-active.chosen-with-drop .chosen-single div b:before {
   content: "\f106";
@@ -3783,7 +3806,7 @@
 .chosen-container-multi .chosen-choices li.search-choice {
   position: relative;
   margin: 3px 5px 3px 0;
-  padding: 3px 20px 3px 5px;
+  padding: 3px 20px 3px 6px;
   border: 1px solid #aaa;
   max-width: 100%;
   border-radius: 3px;
@@ -3800,12 +3823,13 @@
 
 .chosen-container-multi .chosen-choices li.search-choice span {
   word-wrap: break-word;
+  white-space: nowrap;
 }
 
 .chosen-container-multi .chosen-choices li.search-choice .search-choice-close {
   position: absolute;
-  top: 4px;
-  right: 3px;
+  top: 0;
+  right: 0;
   display: block;
   width: 12px;
   height: 12px;

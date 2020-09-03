@@ -21,7 +21,7 @@ if( ! class_exists( 'CSF_Field_spacing' ) ) {
         'right_icon'         => '<i class="fa fa-long-arrow-right"></i>',
         'bottom_icon'        => '<i class="fa fa-long-arrow-down"></i>',
         'left_icon'          => '<i class="fa fa-long-arrow-left"></i>',
-        'all_text'           => '<i class="fa fa-arrows"></i>',
+        'all_icon'           => '<i class="fa fa-arrows"></i>',
         'top_placeholder'    => esc_html__( 'top', 'csf' ),
         'right_placeholder'  => esc_html__( 'right', 'csf' ),
         'bottom_placeholder' => esc_html__( 'bottom', 'csf' ),
@@ -32,6 +32,7 @@ if( ! class_exists( 'CSF_Field_spacing' ) ) {
         'bottom'             => true,
         'right'              => true,
         'unit'               => true,
+        'show_units'         => true,
         'all'                => false,
         'units'              => array( 'px', '%', 'em' )
       ) );
@@ -54,7 +55,7 @@ if( ! class_exists( 'CSF_Field_spacing' ) ) {
         $placeholder = ( ! empty( $args['all_placeholder'] ) ) ? ' placeholder="'. $args['all_placeholder'] .'"' : '';
 
         echo '<div class="csf--input">';
-        echo ( ! empty( $args['all_text'] ) ) ? '<span class="csf--label csf--label-icon">'. $args['all_text'] .'</span>' : '';
+        echo ( ! empty( $args['all_icon'] ) ) ? '<span class="csf--label csf--label-icon">'. $args['all_icon'] .'</span>' : '';
         echo '<input type="text" name="'. $this->field_name('[all]') .'" value="'. $value['all'] .'"'. $placeholder .' class="csf-number" />';
         echo ( count( $args['units'] ) === 1 && ! empty( $args['unit'] ) ) ? '<span class="csf--label csf--label-unit">'. $args['units'][0] .'</span>' : '';
         echo '</div>';
@@ -85,7 +86,7 @@ if( ! class_exists( 'CSF_Field_spacing' ) ) {
 
       }
 
-      if( ! empty( $args['unit'] ) && count( $args['units'] ) > 1 ) {
+      if( ! empty( $args['unit'] ) && ! empty( $args['show_units'] ) && count( $args['units'] ) > 1 ) {
         echo '<select name="'. $this->field_name('[unit]') .'">';
         foreach( $args['units'] as $unit ) {
           $selected = ( $value['unit'] === $unit ) ? ' selected' : '';

@@ -20,68 +20,67 @@ if( ! class_exists( 'CSF_Options' ) ) {
     public $pre_tabs     = array();
     public $pre_fields   = array();
     public $pre_sections = array();
-
-    // default args
     public $args         = array(
 
       // framework title
-      'framework_title' => 'Codestar Framework <small>by Codestar</small>',
-      'framework_class' => '',
+      'framework_title'         => 'Codestar Framework <small>by Codestar</small>',
+      'framework_class'         => '',
 
       // menu settings
-      'menu_title'      => '',
-      'menu_slug'       => '',
-      'menu_type'       => 'menu',
-      'menu_capability' => 'manage_options',
-      'menu_icon'       => null,
-      'menu_position'   => null,
-      'menu_hidden'     => false,
-      'menu_parent'     => '',
+      'menu_title'              => '',
+      'menu_slug'               => '',
+      'menu_type'               => 'menu',
+      'menu_capability'         => 'manage_options',
+      'menu_icon'               => null,
+      'menu_position'           => null,
+      'menu_hidden'             => false,
+      'menu_parent'             => '',
 
       // menu extras
-      'show_bar_menu'      => true,
-      'show_sub_menu'      => true,
-      'show_network_menu'  => true,
-      'show_in_customizer' => false,
+      'show_bar_menu'           => true,
+      'show_sub_menu'           => true,
+      'show_network_menu'       => true,
+      'show_in_customizer'      => false,
 
-      'show_search'        => true,
-      'show_reset_all'     => true,
-      'show_reset_section' => true,
-      'show_footer'        => true,
-      'show_all_options'   => true,
-      'sticky_header'      => true,
-      'save_defaults'      => true,
-      'ajax_save'          => true,
+      'show_search'             => true,
+      'show_reset_all'          => true,
+      'show_reset_section'      => true,
+      'show_footer'             => true,
+      'show_all_options'        => true,
+      'sticky_header'           => true,
+      'save_defaults'           => true,
+      'ajax_save'               => true,
 
       // admin bar menu settings
       'admin_bar_menu_icon'     => '',
       'admin_bar_menu_priority' => 80,
 
       // footer
-      'footer_text'   => '',
-      'footer_after'  => '',
-      'footer_credit' => '',
+      'footer_text'             => '',
+      'footer_after'            => '',
+      'footer_credit'           => '',
 
       // database model
-      'database'       => '', // options, transient, theme_mod, network
-      'transient_time' => 0,
+      'database'                => '', // options, transient, theme_mod, network
+      'transient_time'          => 0,
 
       // contextual help
       'contextual_help'         => array(),
       'contextual_help_sidebar' => '',
 
       // typography options
-      'enqueue_webfont' => true,
-      'async_webfont'   => false,
+      'enqueue_webfont'         => true,
+      'async_webfont'           => false,
 
       // others
-      'output_css' => true,
+      'output_css'              => true,
 
       // theme
-      'theme' => 'dark',
+      'theme'                   => 'dark',
+      'class'                   => '',
 
       // external default values
-      'defaults' => array(),
+      'defaults'                => array(),
 
     );
 
@@ -225,7 +224,7 @@ if( ! class_exists( 'CSF_Options' ) ) {
 
         $_POST = json_decode( stripslashes( $_POST['data'] ), true );
 
-        if( ! empty( $_POST['csf_options_nonce'] ) && wp_verify_nonce( $_POST['csf_options_nonce'], 'csf_options_nonce' ) ) {
+        if( wp_verify_nonce( csf_get_var( 'csf_options_nonce'. $this->unique ), 'csf_options_nonce' ) ) {
 
           $this->set_options();
 
@@ -270,7 +269,7 @@ if( ! class_exists( 'CSF_Options' ) ) {
     // set options
     public function set_options() {
 
-      if( wp_verify_nonce( csf_get_var( 'csf_options_nonce' ), 'csf_options_nonce' ) ) {
+      if( wp_verify_nonce( csf_get_var( 'csf_options_nonce'. $this->unique ), 'csf_options_nonce' ) ) {
 
         $request    = csf_get_var( $this->unique, array() );
         $transient  = csf_get_var( 'csf_transient' );
@@ -516,8 +515,10 @@ if( ! class_exists( 'CSF_Options' ) ) {
       $ajax_class    = ( $this->args['ajax_save'] ) ? ' csf-save-ajax' : '';
       $sticky_class  = ( $this->args['sticky_header'] ) ? ' csf-sticky-header' : '';
       $wrapper_class = ( $this->args['framework_class'] ) ? ' '. $this->args['framework_class'] : '';
+      $theme         = ( $this->args['theme'] ) ? ' csf-theme-'. $this->args['theme'] : '';
+      $class         = ( $this->args['class'] ) ? ' '. $this->args['class'] : '';
 
-      echo '<div class="csf csf-theme-'. $this->args['theme'] .' csf-options'. $wrapper_class .'" data-slug="'. $this->args['menu_slug'] .'" data-unique="'. $this->unique .'">';
+      echo '<div class="csf csf-options'. $theme . $class . $wrapper_class .'" data-slug="'. $this->args['menu_slug'] .'" data-unique="'. $this->unique .'">';
 
         $notice_class = ( ! empty( $this->notice ) ) ? ' csf-form-show' : '';
         $notice_text  = ( ! empty( $this->notice ) ) ? $this->notice : '';
@@ -536,10 +537,10 @@ if( ! class_exists( 'CSF_Options' ) ) {
 
         echo '<div class="csf-container">';
 
-        echo '<form method="post" action="" enctype="multipart/form-data" id="csf-form">';
+        echo '<form method="post" action="" enctype="multipart/form-data" id="csf-form" autocomplete="off">';
 
         echo '<input type="hidden" class="csf-section-id" name="csf_transient[section]" value="1">';
-        wp_nonce_field( 'csf_options_nonce', 'csf_options_nonce' );
+        wp_nonce_field( 'csf_options_nonce', 'csf_options_nonce'. $this->unique );
 
         echo '<div class="csf-header'. esc_attr( $sticky_class ) .'">';
         echo '<div class="csf-header-inner">';
@@ -552,7 +553,7 @@ if( ! class_exists( 'CSF_Options' ) ) {
 
             echo ( $has_nav && $this->args['show_all_options'] ) ? '<div class="csf-expand-all" title="'. esc_html__( 'show all options', 'csf' ) .'"><i class="fa fa-outdent"></i></div>' : '';
 
-            echo ( $this->args['show_search'] ) ? '<div class="csf-search"><input type="text" placeholder="'. esc_html__( 'Search option(s)', 'csf' ) .'" /></div>' : '';
+            echo ( $this->args['show_search'] ) ? '<div class="csf-search"><input type="text" name="csf-search" placeholder="'. esc_html__( 'Search option(s)', 'csf' ) .'" autocomplete="off" /></div>' : '';
 
             echo '<div class="csf-buttons">';
             echo '<input type="submit" name="'. $this->unique .'[_nonce][save]" class="button button-primary csf-save'. $ajax_class .'" value="'. esc_html__( 'Save', 'csf' ) .'" data-save="'. esc_html__( 'Saving...', 'csf' ) .'">';

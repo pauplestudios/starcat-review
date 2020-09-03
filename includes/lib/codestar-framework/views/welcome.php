@@ -108,6 +108,7 @@ if( ! class_exists( 'CSF_Welcome' ) ) {
       }
 
       if( ! empty( $demo_mode ) ) {
+
         CSF::include_plugin_file( 'samples/options.samples.php' );
 
         if( CSF::$premium ) {

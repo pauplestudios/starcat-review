@@ -20,6 +20,7 @@ if( ! class_exists( 'CSF_Taxonomy_Options' ) ) {
       'taxonomy'       => '',
       'data_type'      => 'serialize',
       'defaults'       => array(),
+      'class'          => '',
     );
 
     // run taxonomy construct
@@ -56,7 +57,7 @@ if( ! class_exists( 'CSF_Taxonomy_Options' ) ) {
     // get default value
     public function get_default( $field ) {
 
-      $default = ( isset( $this->args['defaults'][$field['id']] ) ) ? $this->args['defaults'][$field['id']] : '';
+      $default = ( isset( $field['id'] ) && isset( $this->args['defaults'][$field['id']] ) ) ? $this->args['defaults'][$field['id']] : null;
       $default = ( isset( $field['default'] ) ) ? $field['default'] : $default;
 
       return $default;
@@ -66,7 +67,7 @@ if( ! class_exists( 'CSF_Taxonomy_Options' ) ) {
     // get default value
     public function get_meta_value( $term_id, $field ) {
 
-      $value = '';
+      $value = null;
 
       if( ! empty( $term_id ) && ! empty( $field['id'] ) ) {
 
@@ -78,10 +79,10 @@ if( ! class_exists( 'CSF_Taxonomy_Options' ) ) {
           $value = ( isset( $meta[$field['id']] ) ) ? $meta[$field['id']] : null;
         }
 
-        $default = $this->get_default( $field );
-        $value   = ( isset( $value ) ) ? $value : $default;
-
       }
+
+      $default = $this->get_default( $field );
+      $value   = ( isset( $value ) ) ? $value : $default;
 
       return $value;
 
@@ -96,15 +97,16 @@ if( ! class_exists( 'CSF_Taxonomy_Options' ) ) {
       $classname = ( $is_term ) ? 'edit' : 'add';
       $errors    = ( ! empty( $term_id ) ) ? get_term_meta( $term_id, '_csf_errors', true ) : array();
       $errors    = ( ! empty( $errors ) ) ? $errors : array();
+      $class     = ( $this->args['class'] ) ? ' '. $this->args['class'] : '';
 
       // clear errors
       if( ! empty( $errors ) ) {
         delete_term_meta( $term_id, '_csf_errors' );
       }
 
-      echo '<div class="csf csf-taxonomy csf-taxonomy-'. $classname .'-fields csf-show-all csf-onload">';
+      wp_nonce_field( 'csf_taxonomy_nonce', 'csf_taxonomy_nonce'. $this->unique );
 
-      wp_nonce_field( 'csf_taxonomy_nonce', 'csf_taxonomy_nonce' );
+      echo '<div class="csf csf-taxonomy csf-show-all csf-onload csf-taxonomy-'. $classname .'-fields'. $class .'">';
 
       foreach( $this->sections as $section ) {
 
@@ -137,7 +139,7 @@ if( ! class_exists( 'CSF_Taxonomy_Options' ) ) {
     // save taxonomy form fields
     public function save_taxonomy( $term_id ) {
 
-      if ( wp_verify_nonce( csf_get_var( 'csf_taxonomy_nonce' ), 'csf_taxonomy_nonce' ) ) {
+      if ( wp_verify_nonce( csf_get_var( 'csf_taxonomy_nonce'. $this->unique ), 'csf_taxonomy_nonce' ) ) {
 
         $errors = array();
         $taxonomy = csf_get_var( 'taxonomy' );

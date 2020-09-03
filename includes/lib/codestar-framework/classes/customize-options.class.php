@@ -41,7 +41,7 @@ if( ! class_exists( 'CSF_Customize_Options' ) ) {
       $this->save_defaults();
 
       add_action( 'customize_register', array( &$this, 'add_customize_options' ) );
-      add_action( 'customize_save_after', array( &$this, 'add_customize_save' ) );
+      add_action( 'customize_save_after', array( &$this, 'add_customize_save_after' ) );
 
       // Get options for enqueue actions
       if( is_customize_preview() ) {
@@ -58,7 +58,7 @@ if( ! class_exists( 'CSF_Customize_Options' ) ) {
       return new self( $key, $params );
     }
 
-    public function add_customize_save( $wp_customize ) {
+    public function add_customize_save_after( $wp_customize ) {
       do_action( "csf_{$this->unique}_save_before", $this->get_options(), $this, $wp_customize );
       do_action( "csf_{$this->unique}_saved", $this->get_options(), $this, $wp_customize );
       do_action( "csf_{$this->unique}_save_after", $this->get_options(), $this, $wp_customize );
@@ -173,9 +173,9 @@ if( ! class_exists( 'CSF_Customize_Options' ) ) {
             $panel_id = ( isset( $section['id'] ) ) ? $section['id'] : $this->unique .'-panel-'. $this->priority;
 
             $wp_customize->add_panel( new WP_Customize_Panel_CSF( $wp_customize, $panel_id, array(
-              'title'       => $section['title'],
+              'title'       => ( isset( $section['title'] ) ) ? $section['title'] : null,
+              'description' => ( isset( $section['description'] ) ) ? $section['description'] : null,
               'priority'    => ( isset( $section['priority'] ) ) ? $section['priority'] : null,
-              'description' => ( ! empty( $section['description'] ) ) ? $section['description'] : null,
             ) ) );
 
             $this->priority++;
@@ -209,12 +209,20 @@ if( ! class_exists( 'CSF_Customize_Options' ) ) {
     // add customize section
     public function add_section( $wp_customize, $section_id, $section_args, $panel_id ) {
 
-      $wp_customize->add_section( new WP_Customize_Section_CSF( $wp_customize, $section_id, array(
-        'title'       => $section_args['title'],
-        'description' => ( isset( $section_args['description'] ) ) ? $section_args['description'] : null,
-        'priority'    => ( isset( $section_args['priority'] ) ) ? $section_args['priority'] : null,
-        'panel'       => ( $panel_id ) ? $panel_id : null,
-      ) ) );
+      if( ! empty( $section_args['assign'] ) ) {
+
+        $section_id = $section_args['assign'];
+
+      } else {
+
+        $wp_customize->add_section( new WP_Customize_Section_CSF( $wp_customize, $section_id, array(
+          'title'       => ( isset( $section_args['title'] ) ) ? $section_args['title'] : null,
+          'description' => ( isset( $section_args['description'] ) ) ? $section_args['description'] : null,
+          'priority'    => ( isset( $section_args['priority'] ) ) ? $section_args['priority'] : null,
+          'panel'       => ( $panel_id ) ? $panel_id : null,
+        ) ) );
+
+      }
 
       if( ! empty( $section_args['fields'] ) ) {
 

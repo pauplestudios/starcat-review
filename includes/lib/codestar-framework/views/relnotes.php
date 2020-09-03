@@ -1,5 +1,52 @@
 <?php if ( ! defined( 'ABSPATH' ) ) { die; } // Cannot access directly. ?>
 
+<h3>v2.1.1</h3>
+<ul>
+  <li>Added: Chosen select AJAX search option.</li>
+  <li>Added: Chosen select sortable option.</li>
+  <li>Added: Chosen select keep options order.</li>
+  <li>Added: Users select field options.</li>
+  <li>Fixed: Single shortcode insert issue.</li>
+  <li>Fixed: Taxonomy Framework multiple save issue.</li>
+  <li>Fixed: Widgets Framework chosen select save issue.</li>
+  <li>Fixed: Chosen multiple select refresh issue in Customizer.</li>
+  <li>Fixed: Minor bug fixes and improvements.</li>
+</ul>
+
+<h3>v2.1.0</h3>
+<ul>
+  <li>Added: SSL protocol control for library files.</li>
+  <li>Added: SCSS style files to main files again.</li>
+  <li>Fixed: Default value issue in Taxonomy Framework.</li>
+  <li>Fixed: Customize option refresh/save issue in existing customizer section.</li>
+</ul>
+
+<h3>v2.0.9</h3>
+<ul>
+  <li>Added: Framework fields support for predefined customizer sections.</li>
+  <li>Fixed: Metabox save php notices when using "serialize" and "unserialize" in same time.</li>
+  <li>Fixed: Multiple instances save data issue.</li>
+  <li>Fixed: Spacing field all_icon parameter.</li>
+  <li>Fixed: Admin options show in customizer parameter "show_in_customizer".</li>
+  <li>Improved: Media field specific type of uploads.</li>
+  <li>Improved: Spacing and dimensions fields unit parameter.</li>
+  <li>Improved: "empty_message" parameter for checkbox, radio and select fields.</li>
+</ul>
+
+<h3>v2.0.8</h3>
+<ul>
+  <li>Added: Framework wrapper classname param as "class" for override css styles.</li>
+  <li>Added: Checkbox and Radio field group option like Select field group.</li>
+  <li>Added: Attachment post type metabox support.</li>
+  <li>Fixed: Auto-filled issue for framework search input.</li>
+  <li>Fixed: Spacing field refresh issue in Customizer.</li>
+  <li>Fixed: Radio field checked issue in category id select.</li>
+  <li>Fixed: Metabox single option save issue.</li>
+  <li>Fixed: Metabox wp editor loaded issue.</li>
+  <li>Improved: Dependency hide/show for a text field after the value is written.</li>
+  <li>Improved: Dependency parameter for multiple conditions.</li>
+</ul>
+
 <h3>v2.0.7</h3>
 <ul>
   <li>Added: Profile Options Framework (bonus).</li>

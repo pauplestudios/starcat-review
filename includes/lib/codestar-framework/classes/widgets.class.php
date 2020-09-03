@@ -19,6 +19,7 @@ if( ! class_exists( 'CSF_Widget' ) ) {
       'width'       => '',
       'defaults'    => array(),
       'fields'      => array(),
+      'class'       => '',
     );
 
     public function __construct( $key, $params ) {
@@ -64,7 +65,7 @@ if( ! class_exists( 'CSF_Widget' ) ) {
     // get default value
     public function get_default( $field, $options = array() ) {
 
-      $default = ( isset( $this->args['defaults'][$field['id']] ) ) ? $this->args['defaults'][$field['id']] : '';
+      $default = ( isset( $this->args['defaults'][$field['id']] ) ) ? $this->args['defaults'][$field['id']] : null;
       $default = ( isset( $field['default'] ) ) ? $field['default'] : $default;
       $default = ( isset( $options[$field['id']] ) ) ? $options[$field['id']] : $default;
 
@@ -77,7 +78,9 @@ if( ! class_exists( 'CSF_Widget' ) ) {
 
       if( ! empty( $this->args['fields'] ) ) {
 
-        echo '<div class="csf csf-widgets csf-fields">';
+        $class = ( $this->args['class'] ) ? ' '. $this->args['class'] : '';
+
+        echo '<div class="csf csf-widgets csf-fields'. $class .'">';
 
         foreach( $this->args['fields'] as $field ) {
 
@@ -107,6 +110,13 @@ if( ! class_exists( 'CSF_Widget' ) ) {
 
     // Sanitize widget form values as they are saved.
     public function update( $new_instance, $old_instance ) {
+
+      // auto sanitize
+      foreach( $this->args['fields'] as $field ) {
+        if( ! empty( $field['id'] ) && ( ! isset( $new_instance[$field['id']] ) || is_null( $new_instance[$field['id']] ) ) ) {
+          $new_instance[$field['id']] = '';
+        }
+      }
 
       $new_instance = apply_filters( "csf_{$this->unique}_save", $new_instance, $this->args, $this );
 

@@ -22,7 +22,7 @@ if( ! class_exists( 'CSF_Field_group' ) ) {
         'fields'                 => array(),
         'button_title'           => esc_html__( 'Add New', 'csf' ),
         'accordion_title_prefix' => '',
-        'accordion_title_number'  => false,
+        'accordion_title_number' => false,
         'accordion_title_auto'   => true,
       ) );
 

@@ -24,6 +24,7 @@ if( ! class_exists( 'CSF_Field_dimensions' ) ) {
         'width'              => true,
         'height'             => true,
         'unit'               => true,
+        'show_units'         => true,
         'units'              => array( 'px', '%', 'em' )
       ) );
 
@@ -61,7 +62,7 @@ if( ! class_exists( 'CSF_Field_dimensions' ) ) {
 
       }
 
-      if( ! empty( $args['unit'] ) && count( $args['units'] ) > 1 ) {
+      if( ! empty( $args['unit'] ) && ! empty( $args['show_units'] ) && count( $args['units'] ) > 1 ) {
         echo '<select name="'. $this->field_name('[unit]') .'">';
         foreach( $args['units'] as $unit ) {
           $selected = ( $value['unit'] === $unit ) ? ' selected' : '';

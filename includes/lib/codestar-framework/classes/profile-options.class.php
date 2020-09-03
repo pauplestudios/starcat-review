@@ -17,6 +17,7 @@ if( ! class_exists( 'CSF_Profile_Options' ) ) {
     public $args     = array(
       'data_type'    => 'serialize',
       'defaults'     => array(),
+      'class'        => '',
     );
 
     // run profile construct
@@ -49,7 +50,7 @@ if( ! class_exists( 'CSF_Profile_Options' ) ) {
     // get default value
     public function get_default( $field ) {
 
-      $default = ( isset( $this->args['defaults'][$field['id']] ) ) ? $this->args['defaults'][$field['id']] : '';
+      $default = ( isset( $field['id'] ) && isset( $this->args['defaults'][$field['id']] ) ) ? $this->args['defaults'][$field['id']] : null;
       $default = ( isset( $field['default'] ) ) ? $field['default'] : $default;
 
       return $default;
@@ -59,7 +60,7 @@ if( ! class_exists( 'CSF_Profile_Options' ) ) {
     // get default value
     public function get_meta_value( $user_id, $field ) {
 
-      $value = '';
+      $value = null;
 
       if( ! empty( $user_id ) && ! empty( $field['id'] ) ) {
 
@@ -71,10 +72,10 @@ if( ! class_exists( 'CSF_Profile_Options' ) ) {
           $value = ( isset( $meta[$field['id']] ) ) ? $meta[$field['id']] : null;
         }
 
-        $default = $this->get_default( $field );
-        $value   = ( isset( $value ) ) ? $value : $default;
-
       }
+
+      $default = $this->get_default( $field );
+      $value   = ( isset( $value ) ) ? $value : $default;
 
       return $value;
 
@@ -87,15 +88,16 @@ if( ! class_exists( 'CSF_Profile_Options' ) ) {
       $profile_id = ( $is_profile ) ? $profileuser->ID : 0;
       $errors     = ( ! empty( $profile_id ) ) ? get_user_meta( $profile_id, '_csf_errors', true ) : array();
       $errors     = ( ! empty( $errors ) ) ? $errors : array();
+      $class      = ( $this->args['class'] ) ? ' '. $this->args['class'] : '';
 
       // clear errors
       if( ! empty( $errors ) ) {
         delete_user_meta( $profile_id, '_csf_errors' );
       }
 
-      echo '<div class="csf csf-profile csf-onload">';
+      echo '<div class="csf csf-profile csf-onload'. $class .'">';
 
-      wp_nonce_field( 'csf_profile_nonce', 'csf_profile_nonce' );
+      wp_nonce_field( 'csf_profile_nonce', 'csf_profile_nonce'. $this->unique );
 
       foreach( $this->sections as $section ) {
 
@@ -125,7 +127,7 @@ if( ! class_exists( 'CSF_Profile_Options' ) ) {
     // save profile form fields
     public function save_profile( $user_id ) {
 
-      if ( wp_verify_nonce( csf_get_var( 'csf_profile_nonce' ), 'csf_profile_nonce' ) ) {
+      if ( wp_verify_nonce( csf_get_var( 'csf_profile_nonce'. $this->unique ), 'csf_profile_nonce' ) ) {
 
         $errors = array();
 
@@ -214,7 +216,6 @@ if( ! class_exists( 'CSF_Profile_Options' ) ) {
           do_action( "csf_{$this->unique}_saved", $request, $user_id, $this );
 
           do_action( "csf_{$this->unique}_save_after", $request, $user_id, $this );
-
 
         }
 

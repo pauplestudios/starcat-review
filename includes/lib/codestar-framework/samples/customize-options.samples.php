@@ -149,3 +149,18 @@ CSF::createSection( $prefix, array(
 
   ),
 ) );
+
+//
+// Create a section
+//
+CSF::createSection( $prefix, array(
+  'title'    => 'CSF - Reset & Backup',
+  'priority' => 3,
+  'fields'   => array(
+
+    array(
+      'type'  => 'backup',
+    ),
+
+  ),
+) );

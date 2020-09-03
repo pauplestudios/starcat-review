@@ -23,6 +23,7 @@ if( ! class_exists( 'CSF_Shortcoder' ) ) {
       'insert_title'     => 'Insert Shortcode',
       'show_in_editor'   => true,
       'defaults'         => array(),
+      'class'            => '',
       'gutenberg'        => array(
         'title'          => 'CSF Shortcodes',
         'description'    => 'CSF Shortcode Block',
@@ -114,7 +115,7 @@ if( ! class_exists( 'CSF_Shortcoder' ) ) {
     // get default value
     public function get_default( $field ) {
 
-      $default = ( isset( $field['id'] ) && isset( $this->args['defaults'][$field['id']] ) ) ? $this->args['defaults'][$field['id']] : '';
+      $default = ( isset( $field['id'] ) && isset( $this->args['defaults'][$field['id']] ) ) ? $this->args['defaults'][$field['id']] : null;
       $default = ( isset( $field['default'] ) ) ? $field['default'] : $default;
 
       return $default;
@@ -123,12 +124,13 @@ if( ! class_exists( 'CSF_Shortcoder' ) ) {
 
     public function add_shortcode_modal() {
 
+      $class        = ( $this->args['class'] ) ? ' '. $this->args['class'] : '';
       $has_select   = ( count( $this->pre_tabs ) > 1 ) ? true : false;
       $single_usage = ( ! $has_select ) ? ' csf-shortcode-single' : '';
       $hide_header  = ( ! $has_select ) ? ' hidden' : '';
 
     ?>
-      <div id="csf-modal-<?php echo $this->unique; ?>" class="wp-core-ui csf-modal csf-shortcode<?php echo $single_usage; ?>" data-modal-id="<?php echo $this->unique; ?>" data-nonce="<?php echo wp_create_nonce( 'csf_shortcode_nonce' ); ?>">
+      <div id="csf-modal-<?php echo $this->unique; ?>" class="wp-core-ui csf-modal csf-shortcode<?php echo $single_usage . $class; ?>" data-modal-id="<?php echo $this->unique; ?>" data-nonce="<?php echo wp_create_nonce( 'csf_shortcode_nonce' ); ?>">
         <div class="csf-modal-table">
           <div class="csf-modal-table-cell">
             <div class="csf-modal-overlay"></div>
@@ -274,10 +276,10 @@ if( ! class_exists( 'CSF_Shortcoder' ) ) {
         }
 
       } else {
-        echo '<div class="csf-field csf-text-error">'. esc_html__( 'Security check', 'csf' ) .'</div>';
+        echo '<div class="csf-field csf-text-error">'. esc_html__( 'Error: Nonce verification has failed. Please try again.', 'csf' ) .'</div>';
       }
 
-      wp_send_json_success( array( 'success' => true, 'content' => ob_get_clean() ) );
+      wp_send_json_success( array( 'content' => ob_get_clean() ) );
 
     }
 

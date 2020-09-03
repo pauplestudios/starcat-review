@@ -84,6 +84,7 @@ if( ! class_exists( 'WP_Customize_Control_CSF' ) && class_exists( 'WP_Customize_
         'repeater',
         'sortable',
         'sorter',
+        'spacing',
         'switcher',
         'tabbed',
         'typography'
