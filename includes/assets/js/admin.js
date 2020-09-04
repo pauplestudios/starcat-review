@@ -1,5 +1,8 @@
+var PremiumTease = require("./../admin/premium-tease.js");
+
 var Admin = {
     init: function () {
+        PremiumTease.init();
         this.eventhandlers();
     },
     eventhandlers: function () {
