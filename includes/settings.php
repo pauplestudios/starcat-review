@@ -79,7 +79,8 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 array(
                     'id' => 'comparison_table_settings',
                     'title' => Translations::getStrings('ComparisonTable'),
-                    'icon' => 'fa fa-bell',
+                    'icon' => 'fa fa-table',
+                    'class' => 'some',
                     'fields' => array(
                         array(
                             'type' => 'submessage',

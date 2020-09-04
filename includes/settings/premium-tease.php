@@ -25,7 +25,6 @@ if (!class_exists('\StarcatReview\Includes\Settings\Premium_Tease')) {
         public function csf_framework_override($args)
         {
             if (isset($args) && !empty($args)) {
-                $css_classes = $this->get_css_class_names();
                 $args['class'] = 'scr-csf';
             }
 
@@ -34,31 +33,39 @@ if (!class_exists('\StarcatReview\Includes\Settings\Premium_Tease')) {
 
         public function add_premium_tease_into_sections($sections)
         {
+
             foreach ($sections as $section_key => $section) {
                 // error_log('some : ' . print_r($section, true));
-
+                $sections[$section_key]['class'] = 'scr-csf__section';
                 if ($section['id'] == 'notification_settings' && !SCR_Getter::addons_available_condition()['wn']) {
-                    $sections[$section_key]['fields'] = $this->add_premium_teast_into_fields($section['fields']);
+                    $sections[$section_key] = $this->add_premium_tease_into_section($section);
                 }
 
                 if (in_array($section['id'], array("single_page_settings", "mainpage_settings", 'category_page_settings'))
                     && !SCR_Getter::addons_available_condition()['cpt']) {
-                    $sections[$section_key]['fields'] = $this->add_premium_teast_into_fields($section['fields']);
+                    $sections[$section_key] = $this->add_premium_tease_into_section($section);
                 }
 
                 if ($section['id'] == 'photo_reviews_settings' && !SCR_Getter::addons_available_condition()['pr']) {
-                    $sections[$section_key]['fields'] = $this->add_premium_teast_into_fields($section['fields']);
+                    $sections[$section_key] = $this->add_premium_tease_into_section($section);
                 }
 
                 if ($section['id'] == 'comparison_table_settings' && !SCR_Getter::addons_available_condition()['ct']) {
-                    $sections[$section_key]['fields'] = $this->add_premium_teast_into_fields($section['fields']);
+                    $sections[$section_key] = $this->add_premium_tease_into_section($section);
                 }
 
             }
             return $sections;
         }
 
-        public function add_premium_teast_into_fields($fields = [])
+        protected function add_premium_tease_into_section($section)
+        {
+            $section['class'] = 'scr-csf__section--disable';
+            $section['fields'] = $this->add_premium_tease_into_fields($section['fields']);
+            return $section;
+        }
+
+        public function add_premium_tease_into_fields($fields = [])
         {
             // if (!empty($fields)) {
             foreach ($fields as $field_key => $field) {
