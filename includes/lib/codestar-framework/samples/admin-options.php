@@ -18,7 +18,7 @@ CSF::createOptions( $prefix, array(
 //
 CSF::createSection( $prefix, array(
   'title'  => 'Overview',
-  'icon'   => 'fa fa-rocket',
+  'icon'   => 'fas fa-rocket',
   'fields' => array(
 
     //
@@ -142,7 +142,7 @@ CSF::createSection( $prefix, array(
 CSF::createSection( $prefix, array(
   'id'    => 'basic_fields',
   'title' => 'Basic Fields',
-  'icon'  => 'fa fa-plus-circle',
+  'icon'  => 'fas fa-plus-circle',
 ) );
 
 //
@@ -151,7 +151,7 @@ CSF::createSection( $prefix, array(
 CSF::createSection( $prefix, array(
   'parent'      => 'basic_fields',
   'title'       => 'Text',
-  'icon'        => 'fa fa-square-o',
+  'icon'        => 'far fa-square',
   'description' => 'Visit documentation for more details on this field: <a href="http://codestarframework.com/documentation/#/fields?id=text" target="_blank">Field: text</a>',
   'fields'      => array(
 
@@ -229,7 +229,7 @@ CSF::createSection( $prefix, array(
 CSF::createSection( $prefix, array(
   'parent'      => 'basic_fields',
   'title'       => 'Textarea',
-  'icon'        => 'fa fa-square-o',
+  'icon'        => 'far fa-square',
   'description' => 'Visit documentation for more details on this field: <a href="http://codestarframework.com/documentation/#/fields?id=textarea" target="_blank">Field: textrea</a>',
   'fields'      => array(
 
@@ -285,7 +285,7 @@ CSF::createSection( $prefix, array(
 CSF::createSection( $prefix, array(
   'parent'      => 'basic_fields',
   'title'       => 'Select',
-  'icon'        => 'fa fa-list',
+  'icon'        => 'fas fa-list',
   'description' => 'Visit documentation for more details on this field: <a href="http://codestarframework.com/documentation/#/fields?id=select" target="_blank">Field: select</a>',
   'fields'      => array(
 
@@ -514,6 +514,14 @@ CSF::createSection( $prefix, array(
     array(
       'id'          => 'opt-select-18',
       'type'        => 'select',
+      'title'       => 'Select with post type',
+      'placeholder' => 'Select a post type',
+      'options'     => 'post_types',
+    ),
+
+    array(
+      'id'          => 'opt-select-19',
+      'type'        => 'select',
       'title'       => 'Select with CPT (custom post type) posts',
       'placeholder' => 'Select a post',
       'options'     => 'posts',
@@ -523,7 +531,7 @@ CSF::createSection( $prefix, array(
     ),
 
     array(
-      'id'          => 'opt-select-19',
+      'id'          => 'opt-select-20',
       'type'        => 'select',
       'title'       => 'Select with CPT (custom post type) categories',
       'placeholder' => 'Select a category',
@@ -542,7 +550,7 @@ CSF::createSection( $prefix, array(
 CSF::createSection( $prefix, array(
   'parent'      => 'basic_fields',
   'title'       => 'Checkbox',
-  'icon'        => 'fa fa-check-square',
+  'icon'        => 'fas fa-check-square',
   'description' => 'Visit documentation for more details on this field: <a href="http://codestarframework.com/documentation/#/fields?id=checkbox" target="_blank">Field: checkbox</a>',
   'fields'      => array(
 
@@ -635,7 +643,7 @@ CSF::createSection( $prefix, array(
         'opt-14' => 'Option 14',
         'opt-15' => 'Option 15',
       ),
-      'after'    => '<p class="csf-text-muted">Vertical scroll showing automatically after add many items</p>'
+      'desc'     => 'Vertical scroll showing automatically after add many items',
     ),
 
     array(
@@ -660,7 +668,7 @@ CSF::createSection( $prefix, array(
 CSF::createSection( $prefix, array(
   'parent'      => 'basic_fields',
   'title'       => 'Radio',
-  'icon'        => 'fa fa-dot-circle-o',
+  'icon'        => 'fas fa-dot-circle',
   'description' => 'Visit documentation for more details on this field: <a href="http://codestarframework.com/documentation/#/fields?id=radio" target="_blank">Field: radio</a>',
   'fields'      => array(
 
@@ -738,7 +746,7 @@ CSF::createSection( $prefix, array(
         'opt-14' => 'Option 14',
         'opt-15' => 'Option 15',
       ),
-      'after'    => '<p class="csf-text-muted">Vertical scroll showing automatically after add many items</p>'
+      'desc'     => 'Vertical scroll showing automatically after add many items'
     ),
 
     array(
@@ -763,7 +771,7 @@ CSF::createSection( $prefix, array(
 CSF::createSection( $prefix, array(
   'id'    => 'repeater_fields',
   'title' => 'Repeater Fields',
-  'icon'  => 'fa fa-clone',
+  'icon'  => 'far fa-clone',
 ) );
 
 //
@@ -1264,7 +1272,7 @@ CSF::createSection( $prefix, array(
 CSF::createSection( $prefix, array(
   'id'    => 'combine_fields',
   'title' => 'Combine Fields',
-  'icon'  => 'fa fa-bars',
+  'icon'  => 'fas fa-bars',
 ) );
 
 //
@@ -1395,7 +1403,7 @@ CSF::createSection( $prefix, array(
 
         array(
           'title'  => 'Other 1',
-          'icon'   => 'fa fa-check',
+          'icon'   => 'fas fa-check',
           'fields' => array(
             array(
               'id'    => 'opt-text-1',
@@ -1407,7 +1415,7 @@ CSF::createSection( $prefix, array(
 
         array(
           'title'  => 'Other 2',
-          'icon'   => 'fa fa-star',
+          'icon'   => 'fas fa-star',
           'fields' => array(
             array(
               'id'    => 'opt-text-2',
@@ -1480,7 +1488,7 @@ CSF::createSection( $prefix, array(
       'tabs'  => array(
         array(
           'title'  => 'Fields 1',
-          'icon'   => 'fa fa-check',
+          'icon'   => 'fas fa-check',
           'fields' => array(
             array(
               'id'    => 'opt-text-1',
@@ -1496,7 +1504,7 @@ CSF::createSection( $prefix, array(
         ),
         array(
           'title'  => 'Fields 2',
-          'icon'   => 'fa fa-star',
+          'icon'   => 'fas fa-star',
           'fields' => array(
             array(
               'id'      => 'opt-color-1',
@@ -1512,7 +1520,7 @@ CSF::createSection( $prefix, array(
         ),
         array(
           'title'  => 'Fields 3',
-          'icon'   => 'fa fa-gear',
+          'icon'   => 'fas fa-cog',
           'fields' => array(
             array(
               'id'    => 'opt-textarea-1',
@@ -1612,7 +1620,7 @@ CSF::createSection( $prefix, array(
 CSF::createSection( $prefix, array(
   'id'    => 'media_fields',
   'title' => 'Media and Upload Fields',
-  'icon'  => 'fa fa-upload',
+  'icon'  => 'fas fa-upload',
 ) );
 
 //
@@ -1658,6 +1666,13 @@ CSF::createSection( $prefix, array(
       'library' => 'video',
     ),
 
+    array(
+      'id'      => 'opt-media-6',
+      'type'    => 'media',
+      'title'   => 'Media with only audio type',
+      'library' => 'audio',
+    ),
+
   )
 ) );
 
@@ -1699,6 +1714,14 @@ CSF::createSection( $prefix, array(
       'button_title' => 'Upload Video',
     ),
 
+    array(
+      'id'           => 'opt-upload-5',
+      'type'         => 'upload',
+      'title'        => 'Upload with only audio type',
+      'library'      => 'audio',
+      'button_title' => 'Upload Audio',
+    ),
+
   )
 ) );
 
@@ -1735,7 +1758,7 @@ CSF::createSection( $prefix, array(
 CSF::createSection( $prefix, array(
   'id'    => 'editor_fields',
   'title' => 'Editor Fields',
-  'icon'  => 'fa fa-code',
+  'icon'  => 'fas fa-code',
 ) );
 
 //
@@ -1793,7 +1816,7 @@ CSF::createSection( $prefix, array(
     array(
       'id'       => 'opt-code-editor-3',
       'type'     => 'code_editor',
-      'before'   => '<p class="csf-text-muted"><strong>CSS Editor</strong> It shows full width if there is no field of title and using: theme: mbo and mode: css</p>',
+      'desc'     => '<strong>CSS Editor</strong> It shows full width if there is no field of title and using: theme: mbo and mode: css',
       'settings' => array(
         'theme'  => 'mbo',
         'mode'   => 'css',
@@ -1830,7 +1853,7 @@ CSF::createSection( $prefix, array(
       'id'            => 'opt-wp-editor-2',
       'type'          => 'wp_editor',
       'title'         => 'WP Editor with Custom Height and No Media Buttons',
-      'subtitle'      => 'Settings: height => 100px, media_buttons => false',
+      'subtitle'      => 'Settings:<br />height => 100px,<br />media_buttons => false',
       'height'        => '100px',
       'media_buttons' => false,
     ),
@@ -1839,7 +1862,7 @@ CSF::createSection( $prefix, array(
       'id'            => 'opt-wp-editor-3',
       'type'          => 'wp_editor',
       'title'         => 'WP Editor without QuickTags and Media Buttons',
-      'subtitle'      => 'Settings: height => 100px, media_buttons => false, quicktags => false',
+      'subtitle'      => 'Settings:<br />height => 100px,<br />media_buttons => false,<br />quicktags => false',
       'height'        => '100px',
       'media_buttons' => false,
       'quicktags'     => false,
@@ -1849,7 +1872,7 @@ CSF::createSection( $prefix, array(
       'id'            => 'opt-wp-editor-4',
       'type'          => 'wp_editor',
       'title'         => 'WP Editor without Tinymce and Media Buttons',
-      'subtitle'      => 'Settings: height => 100px, media_buttons => false, tinymce => false',
+      'subtitle'      => 'Settings:<br />height => 100px,<br />media_buttons => false,<br />tinymce => false',
       'height'        => '100px',
       'media_buttons' => false,
       'tinymce'       => false,
@@ -1864,7 +1887,7 @@ CSF::createSection( $prefix, array(
 CSF::createSection( $prefix, array(
   'id'    => 'color_fields',
   'title' => 'Color Fields',
-  'icon'  => 'fa fa-tint',
+  'icon'  => 'fas fa-tint',
 ) );
 
 //
@@ -2059,7 +2082,7 @@ CSF::createSection( $prefix, array(
 CSF::createSection( $prefix, array(
   'id'    => 'design_fields',
   'title' => 'Design Fields',
-  'icon'  => 'fa fa-adjust',
+  'icon'  => 'fas fa-adjust',
 ) );
 
 //
@@ -2302,6 +2325,20 @@ CSF::createSection( $prefix, array(
     ),
 
     array(
+      'id'       => 'opt-spacing-2',
+      'type'     => 'spacing',
+      'title'    => 'Spacing without unit selector',
+      'units'    => array( 'px' ),
+      'default'  => array(
+        'top'    => '50',
+        'right'  => '100',
+        'bottom' => '50',
+        'left'   => '100',
+        'unit'   => 'px',
+      ),
+    ),
+
+    array(
       'id'     => 'opt-spacing-3',
       'type'   => 'spacing',
       'title'  => 'Spacing with only left and right',
@@ -2429,12 +2466,43 @@ CSF::createSection( $prefix, array(
 ) );
 
 //
+// Field: number
+//
+CSF::createSection( $prefix, array(
+  'parent'      => 'design_fields',
+  'title'       => 'Number',
+  'description' => 'Visit documentation for more details on this field: <a href="http://codestarframework.com/documentation/#/fields?id=number" target="_blank">Field: number</a>',
+  'fields'      => array(
+
+    array(
+      'id'      => 'opt-number-1',
+      'type'    => 'number',
+      'title'   => 'Number',
+    ),
+    array(
+      'id'      => 'opt-number-2',
+      'type'    => 'number',
+      'title'   => 'Number with unit',
+      'unit'    => 'px',
+    ),
+    array(
+      'id'      => 'opt-number-3',
+      'type'    => 'number',
+      'title'   => 'Number with default',
+      'unit'    => 'width',
+      'default' => 100,
+    ),
+
+  )
+) );
+
+//
 // Additional Fields
 //
 CSF::createSection( $prefix, array(
   'id'    => 'additional_fields',
   'title' => 'Additional Fields',
-  'icon'  => 'fa fa-asterisk',
+  'icon'  => 'fas fa-asterisk',
 ) );
 
 //
@@ -2443,7 +2511,7 @@ CSF::createSection( $prefix, array(
 CSF::createSection( $prefix, array(
   'parent'      => 'additional_fields',
   'title'       => 'Slider',
-  'icon'        => 'fa fa-sliders',
+  'icon'        => 'fas fa-sliders-h',
   'description' => 'Visit documentation for more details on this field: <a href="http://codestarframework.com/documentation/#/fields?id=slider" target="_blank">Field: slider</a>',
   'fields'      => array(
 
@@ -2489,7 +2557,7 @@ CSF::createSection( $prefix, array(
 CSF::createSection( $prefix, array(
   'parent'      => 'additional_fields',
   'title'       => 'Sorter',
-  'icon'        => 'fa fa-sort-numeric-asc',
+  'icon'        => 'fas fa-sort-numeric-down',
   'description' => 'Visit documentation for more details on this field: <a href="http://codestarframework.com/documentation/#/fields?id=sorter" target="_blank">Field: sorter</a>',
   'fields'      => array(
 
@@ -2553,7 +2621,7 @@ CSF::createSection( $prefix, array(
 CSF::createSection( $prefix, array(
   'parent'      => 'additional_fields',
   'title'       => 'Sortable',
-  'icon'        => 'fa fa-arrows',
+  'icon'        => 'fas fa-arrows-alt',
   'description' => 'Visit documentation for more details on this field: <a href="http://codestarframework.com/documentation/#/fields?id=sortable" target="_blank">Field: sortable</a>',
   'fields'      => array(
 
@@ -2617,7 +2685,7 @@ CSF::createSection( $prefix, array(
 CSF::createSection( $prefix, array(
   'parent'      => 'additional_fields',
   'title'       => 'Switcher',
-  'icon'        => 'fa fa-toggle-on',
+  'icon'        => 'fas fa-toggle-on',
   'description' => 'Visit documentation for more details on this field: <a href="http://codestarframework.com/documentation/#/fields?id=switcher" target="_blank">Field: switcher</a>',
   'fields'      => array(
 
@@ -2667,7 +2735,7 @@ CSF::createSection( $prefix, array(
 CSF::createSection( $prefix, array(
   'parent'      => 'additional_fields',
   'title'       => 'Icons',
-  'icon'        => 'fa fa-star',
+  'icon'        => 'fas fa-star',
   'description' => 'Visit documentation for more details on this field: <a href="http://codestarframework.com/documentation/#/fields?id=icon" target="_blank">Field: icon</a>',
   'fields'      => array(
 
@@ -2681,7 +2749,58 @@ CSF::createSection( $prefix, array(
       'id'      => 'opt-icon-2',
       'type'    => 'icon',
       'title'   => 'Icon with default',
-      'default' => 'fa fa-check',
+      'default' => 'fas fa-check',
+    ),
+
+  )
+) );
+
+//
+// Field: map
+//
+CSF::createSection( $prefix, array(
+  'parent'      => 'additional_fields',
+  'title'       => 'Map',
+  'icon'        => 'fas fa-map-marker',
+  'description' => 'Visit documentation for more details on this field: <a href="http://codestarframework.com/documentation/#/fields?id=map" target="_blank">Field: map</a>',
+  'fields'      => array(
+
+    array(
+      'id'            => 'opt-map-1',
+      'type'          => 'map',
+      'title'         => 'Map',
+    ),
+
+    array(
+      'id'            => 'opt-map-2',
+      'type'          => 'map',
+      'title'         => 'Map with Default',
+      'default'       => array(
+        'address'     => 'New York, United States of America',
+        'latitude'    => '40.7127281',
+        'longitude'   => '-74.0060152',
+        'zoom'        => '12',
+      )
+    ),
+
+    array(
+      'type'          => 'submessage',
+      'style'         => 'info',
+      'content'       => 'Using custom <strong>address_field</strong> field in below example.',
+    ),
+
+    array(
+      'id'            => 'my-address-text',
+      'type'          => 'text',
+      'title'         => 'Address',
+    ),
+
+    array(
+      'id'            => 'opt-map-3',
+      'type'          => 'map',
+      'title'         => 'Map',
+      'desc'          => 'Using custom <strong>address_field</strong> field',
+      'address_field' => 'my-address-text',
     ),
 
   )
@@ -2693,7 +2812,7 @@ CSF::createSection( $prefix, array(
 CSF::createSection( $prefix, array(
   'parent'      => 'additional_fields',
   'title'       => 'Date',
-  'icon'        => 'fa fa-calendar',
+  'icon'        => 'fas fa-calendar',
   'description' => 'Visit documentation for more details on this field: <a href="http://codestarframework.com/documentation/#/fields?id=date" target="_blank">Field: date</a>',
   'fields'      => array(
 
@@ -2744,7 +2863,7 @@ CSF::createSection( $prefix, array(
 CSF::createSection( $prefix, array(
   'parent'      => 'additional_fields',
   'title'       => 'Image Select',
-  'icon'        => 'fa fa-th',
+  'icon'        => 'fas fa-th',
   'description' => 'Visit documentation for more details on this field: <a href="http://codestarframework.com/documentation/#/fields?id=image-select" target="_blank">Field: image_select</a>',
   'fields'      => array(
 
@@ -2816,7 +2935,7 @@ CSF::createSection( $prefix, array(
 CSF::createSection( $prefix, array(
   'parent'      => 'additional_fields',
   'title'       => 'Button Set',
-  'icon'        => 'fa fa-ellipsis-h',
+  'icon'        => 'fas fa-ellipsis-h',
   'description' => 'Visit documentation for more details on this field: <a href="http://codestarframework.com/documentation/#/fields?id=button-set" target="_blank">Field: button_set</a>',
   'fields'      => array(
 
@@ -2836,10 +2955,9 @@ CSF::createSection( $prefix, array(
       'title'      => 'Button Set with default',
       'options'    => array(
         'enabled'  => 'Enabled',
-        'default'  => 'Disabled',
+        ''         => 'Default',
         'disabled' => 'Disabled',
       ),
-      'default'    => 'default'
     ),
 
     array(
@@ -2893,6 +3011,20 @@ CSF::createSection( $prefix, array(
       'default'  => array( 'opt-2', 'opt-4' )
     ),
 
+    array(
+      'id'      => 'opt-button-set-7',
+      'type'    => 'button_set',
+      'title'   => 'Button Set with categories',
+      'options' => 'categories',
+    ),
+
+    array(
+      'id'      => 'opt-button-set-8',
+      'type'    => 'button_set',
+      'title'   => 'Button Set with tags',
+      'options' => 'tags',
+    ),
+
   )
 ) );
 
@@ -2901,7 +3033,7 @@ CSF::createSection( $prefix, array(
 //
 CSF::createSection( $prefix, array(
   'title'       => 'Dependencies',
-  'icon'        => 'fa fa-code-fork',
+  'icon'        => 'fas fa-code-branch',
   'description' => 'Visit documentation for more details: <a href="http://codestarframework.com/documentation/#/faq?id=how-to-use-dependency" target="_blank">How to use dependencies</a>',
   'fields'      => array(
 
@@ -3054,8 +3186,42 @@ CSF::createSection( $prefix, array(
       'dependency' => array( 'opt-depend-image-select-any', 'any', 'red,blue' ),
     ),
 
+    array(
+      'type'    => 'subheading',
+      'content' => 'Visible Dependencies',
+    ),
+
     //
     // Dependency example 7
+    array(
+      'id'          => 'opt-depend-visible-switcher',
+      'type'        => 'switcher',
+      'title'       => 'Switched to (ON)',
+      'label'       => 'Below fields are visibling instead of hiding. Switched to (ON) for use them.',
+    ),
+
+    array(
+      'id'          => 'opt-depend-visible-text',
+      'type'        => 'text',
+      'title'       => 'Visible Text',
+      'dependency'  => array( 'opt-depend-visible-switcher', '==', 'true', '', 'visible' ),
+    ),
+
+    array(
+      'id'          => 'opt-depend-visible-select',
+      'type'        => 'select',
+      'title'       => 'Visible Select',
+      'placeholder' => 'Select an option',
+      'options'     => array(
+        'opt-1'     => 'Option 1',
+        'opt-2'     => 'Option 2',
+        'opt-3'     => 'Option 3',
+      ),
+      'dependency'  => array( 'opt-depend-visible-switcher', '==', 'true', '', 'visible' ),
+    ),
+
+    //
+    // Dependency example 8
     array(
       'type'    => 'subheading',
       'content' => 'Nested Dependencies',
@@ -3089,7 +3255,7 @@ CSF::createSection( $prefix, array(
     ),
 
     //
-    // Dependency example 8
+    // Dependency example 9
     array(
       'type'    => 'subheading',
       'content' => 'Another Nested Dependencies',
@@ -3151,7 +3317,7 @@ CSF::createSection( $prefix, array(
 //
 CSF::createSection( $prefix, array(
   'title'       => 'Validate',
-  'icon'        => 'fa fa-check-circle',
+  'icon'        => 'fas fa-check-circle',
   'description' => 'Visit documentation for more details: <a href="http://codestarframework.com/documentation/#/faq?id=how-to-use-validate" target="_blank">How to use validate</a>',
   'fields'      => array(
 
@@ -3178,7 +3344,6 @@ CSF::createSection( $prefix, array(
       'type'     => 'text',
       'title'    => 'Required validate',
       'subtitle' => 'This text field is required, cannot be pass empty.',
-      'after'    => ' <small class="csf-text-warning">( * required )</small>',
       'default'  => 'Lorem ipsum value',
       'validate' => 'csf_validate_required',
     ),
@@ -3200,7 +3365,7 @@ CSF::createSection( $prefix, array(
 //
 CSF::createSection( $prefix, array(
   'title'       => 'Sanitize',
-  'icon'        => 'fa fa-repeat',
+  'icon'        => 'fas fa-redo',
   'description' => 'Visit documentation for more details: <a href="http://codestarframework.com/documentation/#/faq?id=how-to-use-sanitize" target="_blank">How to use sanitize</a>',
   'fields'      => array(
 
@@ -3228,7 +3393,7 @@ CSF::createSection( $prefix, array(
 //
 CSF::createSection( $prefix, array(
   'title'       => 'Backup',
-  'icon'        => 'fa fa-shield',
+  'icon'        => 'fas fa-shield-alt',
   'description' => 'Visit documentation for more details on this field: <a href="http://codestarframework.com/documentation/#/fields?id=backup" target="_blank">Field: backup</a>',
   'fields'      => array(
 
@@ -3244,7 +3409,7 @@ CSF::createSection( $prefix, array(
 //
 CSF::createSection( $prefix, array(
   'title'       => 'Others',
-  'icon'        => 'fa fa-bolt',
+  'icon'        => 'fas fa-bolt',
   'description' => 'Visit documentation for more details: <a href="http://codestarframework.com/documentation/#/fields?id=others" target="_blank">Others</a>',
   'fields'      => array(
 
@@ -3273,6 +3438,7 @@ CSF::createSection( $prefix, array(
       'type'    => 'content',
       'content' => 'This is a content field',
     ),
+
     array(
       'type'    => 'submessage',
       'style'   => 'info',

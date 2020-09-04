@@ -147,7 +147,7 @@
 
     if( this.is_multiple ) {
 
-      var $hidden_select = this.element.parent().find('.csf-hidden-select');
+      var $hidden_select = this.element.parent().find('.csf-hide-select');
       var $hidden_value  = $hidden_select.val() || [];
 
       this.element.CSFChosenOrder($hidden_value, true);
@@ -1876,7 +1876,7 @@
       if( result ) {
 
         $(controls).each(function() {
-          $(this).removeClass('hidden');
+          $(this).removeClass('csf-depend-on');
         });
 
         $(this.rules).each(function() {
@@ -1886,7 +1886,7 @@
       } else {
 
         $(controls).each(function() {
-          $(this).addClass('hidden');
+          $(this).addClass('csf-depend-on');
         });
 
         $(this.rules).each(function() {
@@ -1979,7 +1979,7 @@
   // Codestar: Added custom patterns for spesific validate
   //
   var patterns = {
-    validate: /^(?!_nonce)[a-zA-Z0-9_-]*(?:\[(?:\d*|(?!_nonce)[a-zA-Z0-9_-]+)\])*$/i,
+    validate: /^(?!(_nonce|_pseudo))[a-zA-Z0-9_-]*(?:\[(?:\d*|(?!(_nonce|_pseudo))[a-zA-Z0-9_-]+)\])*$/i,
     key: /[a-zA-Z0-9_-]+|(?=\[\])/g,
     named: /^[a-zA-Z0-9_-]+$/,
     push: /^$/,

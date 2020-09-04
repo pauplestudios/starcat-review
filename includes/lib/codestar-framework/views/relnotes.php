@@ -1,5 +1,77 @@
 <?php if ( ! defined( 'ABSPATH' ) ) { die; } // Cannot access directly. ?>
 
+<h3>v2.1.7</h3>
+<ul>
+  <li>Fixed: Sortable field append new fields after saved issue.</li>
+  <li>Fixed: Customizer dependency issue after v2.1.6 update.</li>
+  <li>Fixed: Typography field "Normal 400" style embed issue.</li>
+  <li>Updated: Assets library (csf.css to style.css, csf.js to main.js).</li>
+  <li>Improved: Sanitize/Validate callback method.</li>
+  <li>Improved: Global dependency feature.</li>
+</ul>
+
+<h3>v2.1.6</h3>
+<ul>
+  <li>Added: Nav Menu Option Framework (bonus).</li>
+  <li>Added: Section "class" paramter for Admin, Metabox Option Frameworks.</li>
+  <li>Added: Fields with output css feature can be used in Accordion, Tabbed and Fieldset fields.</li>
+  <li>Added: Visible dependency instead of hiding.</li>
+  <li>Fixed: Background field gradient transparent issue.</li>
+  <li>Improved: Admin Option Framework tab anchors (#tab-1,2 etc.) with the actual tab names.</li>
+  <li>Improved: Data sanitization and escaping.</li>
+  <li>Improved: All of framework scripts and styles loads only when needed.</li>
+  <li>Improved: Output css feature and documentation.</li>
+  <li>Improved: Network menus and options integration.</li>
+  <li>Improved: Google web fonts load method.</li>
+  <li>Improved: Some js and css coding.</li>
+</ul>
+
+<h3>v2.1.5</h3>
+<ul>
+  <li>Added: Sub menu item title argument for Admin Option Framework.</li>
+  <li>Added: A parameter "sanitize => false" for allow to script/iframe or any html code.</li>
+  <li>Fixed: Reset section issue for Admin Option Framework.</li>
+  <li>Fixed: A few bugs fixed caused by sanitize have been.</li>
+  <li>Fixed: Output CSS sanitize issue.</li>
+  <li>Updated: "Font Awesome 5 Free" package and added new icons.</li>
+  <li>Improved: Data sanitization and escaping.</li>
+</ul>
+
+<h3>v2.1.4</h3>
+<ul>
+  <li>Added: "Font Awesome 5 Free" package for "Icon" field ( v4 is still can be used ).</li>
+  <li>Added: "Button Set" field custom options types like "Select" field categories, pages etc.</li>
+  <li>Added: New field "callback". This field allows to make custom html output with a function.</li>
+  <li>Added: Data sanitization and escaping for all framework attributes/data.</li>
+  <li>Fixed: Backup field and Ajax-save stripslashes issue.</li>
+  <li>Improved: Form warning message on reset button.</li>
+  <li>Improved: Map search field autocomplete (caching same requests in typing).</li>
+</ul>
+
+<h3>v2.1.3</h3>
+<ul>
+  <li>Added: New field "map".</li>
+  <li>Added: Quick save (ctrl+s,command+s) for Admin Option Framework.</li>
+  <li>Added: Form warning when changed any option for Admin Option Framework.</li>
+  <li>Fixed: Output CSS twice times issue.</li>
+  <li>Updated: Google Web Fonts array.</li>
+  <li>Updated: Customizer Framework samples.</li>
+  <li>Improved: Background field for auto hide/show background attributes.</li>
+</ul>
+
+<h3>v2.1.2</h3>
+<ul>
+  <li>Added: WP 5.3 "Kirk" UI compatibility.</li>
+  <li>Added: Comment Metabox Framework (bonus).</li>
+  <li>Added: New field "number".</li>
+  <li>Fixed: Media field dependency issue.</li>
+  <li>Fixed: Button set field default selected issue.</li>
+  <li>Fixed: Select field empty message issue.</li>
+  <li>Fixed: Multiple chosen select issue in Shortcode Framework.</li>
+  <li>Fixed: Checkbox field confict with Repeater and Group field issue.</li>
+  <li>Fixed: Image Select and Multiple Checkbox fields refresh issue in Customize Framework.</li>
+</ul>
+
 <h3>v2.1.1</h3>
 <ul>
   <li>Added: Chosen select AJAX search option.</li>
@@ -49,7 +121,7 @@
 
 <h3>v2.0.7</h3>
 <ul>
-  <li>Added: Profile Options Framework (bonus).</li>
+  <li>Added: Profile Option Framework (bonus).</li>
   <li>Added: Media field fallback function for easy migration from v1.x to v2.x.</li>
   <li>Fixed: A minor PHP notice in the Shortcode Generate Framework.</li>
   <li>Improved: Link Color field output for given array elements.</li>
@@ -119,7 +191,7 @@
 <ul>
   <li>Added: Page Templates "default" option for spesific metabox hide/show.</li>
   <li>Added: Post Formats "default" option for spesific metabox hide/show.</li>
-  <li>Added: Only allow number inputs for Spacing, Dimensions, Border, Slider, Spinner, Typography etc.</li>
+  <li>Added: Only allow numeric inputs for Spacing, Dimensions, Border, Slider, Spinner, Typography etc.</li>
   <li>Added: ChosenJS custom options support and improved width and css style.</li>
   <li>Fixed: Taxonomy framework jquery triggers. It was not working again after saving. It fixed now.</li>
   <li>Fixed: Code Editor style issue for used inside Group/Repeater.</li>

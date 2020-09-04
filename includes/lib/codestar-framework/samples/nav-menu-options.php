@@ -3,20 +3,20 @@
 //
 // Set a unique slug-like ID
 //
-$prefix = 'csf_demo_customizer';
+$prefix = '_prefix_menu_options';
 
 //
-// Create customize options
+// Create menu options
 //
-CSF::createCustomizeOptions( $prefix );
+CSF::createNavMenuOptions( $prefix, array(
+  'data_type' => 'serialize'
+) );
 
 //
 // Create a section
 //
 CSF::createSection( $prefix, array(
-  'title'    => 'CSF - Overview',
-  'priority' => 1,
-  'fields'   => array(
+  'fields' => array(
 
     //
     // A text field
@@ -38,6 +38,12 @@ CSF::createSection( $prefix, array(
       'id'    => 'opt-upload',
       'type'  => 'upload',
       'title' => 'Upload',
+    ),
+
+    array(
+      'id'    => 'opt-icon',
+      'type'  => 'icon',
+      'title' => 'Icon',
     ),
 
     array(
@@ -85,82 +91,4 @@ CSF::createSection( $prefix, array(
     ),
 
   )
-) );
-
-//
-// Create a section
-//
-CSF::createSection( $prefix, array(
-  'id'       => 'nested_panel',
-  'title'    => 'CSF - Nested Panels',
-  'priority' => 2,
-) );
-
-//
-// Create a section
-//
-CSF::createSection( $prefix, array(
-  'parent'   => 'nested_panel',
-  'title'    => 'Nested Panel 1',
-  'priority' => 3,
-  'fields'   => array(
-
-    array(
-      'id'    => 'opt-text-1',
-      'type'  => 'text',
-      'title' => 'Text',
-    ),
-
-    array(
-      'id'    => 'opt-textarea-1',
-      'type'  => 'textarea',
-      'title' => 'Textarea',
-    ),
-
-  ),
-) );
-
-//
-// Create a section
-//
-CSF::createSection( $prefix, array(
-  'parent'   => 'nested_panel',
-  'title'    => 'Nested Panel 2',
-  'priority' => 4,
-  'fields'   => array(
-
-    array(
-      'id'    => 'opt-color-1',
-      'type'  => 'color',
-      'title' => 'Color 1',
-    ),
-
-    array(
-      'id'    => 'opt-color-2',
-      'type'  => 'color',
-      'title' => 'Color 2',
-    ),
-
-    array(
-      'id'    => 'opt-color-3',
-      'type'  => 'color',
-      'title' => 'Color 3',
-    ),
-
-  ),
-) );
-
-//
-// Create a section
-//
-CSF::createSection( $prefix, array(
-  'title'    => 'CSF - Reset & Backup',
-  'priority' => 3,
-  'fields'   => array(
-
-    array(
-      'type'  => 'backup',
-    ),
-
-  ),
 ) );
