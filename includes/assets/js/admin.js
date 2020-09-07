@@ -1,8 +1,6 @@
-var PremiumTease = require("./../admin/premium-tease.js");
 
 var Admin = {
     init: function () {
-        PremiumTease.init();
         this.eventhandlers();
     },
     eventhandlers: function () {
@@ -55,4 +53,3 @@ jQuery(document).ready(function () {
 });
 
 import "./../admin.scss";
-import { format } from "url";
