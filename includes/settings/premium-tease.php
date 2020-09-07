@@ -20,6 +20,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\Premium_Tease')) {
 
             $prefix = '_scr_category_options';
             // add_filter("csf_{$prefix}_sections", [$this, 'add_premium_tease_into_sections']);
+
         }
 
         public function csf_framework_override($args)
@@ -31,34 +32,35 @@ if (!class_exists('\StarcatReview\Includes\Settings\Premium_Tease')) {
             return $args;
         }
 
-        public function add_premium_tease_into_sections($sections)
+        public function add_premium_tease_into_sections($sections = [])
         {
+            if (!empty($sections)) {
 
-            foreach ($sections as $section_key => $section) {
-                // error_log('some : ' . print_r($section, true));
-                $sections[$section_key]['class'] = 'scr-csf__section';
-                if ($section['id'] == 'notification_settings' && !SCR_Getter::addons_available_condition()['wn']) {
-                    $sections[$section_key] = $this->add_premium_tease_into_section($section);
+                foreach ($sections as $section_key => $section) {
+                    $sections[$section_key]['class'] = 'scr-csf__section';
+                    if ($section['id'] == 'notification_settings' && !SCR_Getter::addons_available_condition()['wn']) {
+                        $sections[$section_key] = $this->add_premium_tease_into_section($section);
+                    }
+
+                    if (in_array($section['id'], array("single_page_settings", "mainpage_settings", 'category_page_settings'))
+                        && !SCR_Getter::addons_available_condition()['cpt']) {
+                        $sections[$section_key] = $this->add_premium_tease_into_section($section);
+                    }
+
+                    if ($section['id'] == 'photo_reviews_settings' && !SCR_Getter::addons_available_condition()['pr']) {
+                        $sections[$section_key] = $this->add_premium_tease_into_section($section);
+                    }
+
+                    if ($section['id'] == 'comparison_table_settings' && !SCR_Getter::addons_available_condition()['ct']) {
+                        $sections[$section_key] = $this->add_premium_tease_into_section($section);
+                    }
+
                 }
-
-                if (in_array($section['id'], array("single_page_settings", "mainpage_settings", 'category_page_settings'))
-                    && !SCR_Getter::addons_available_condition()['cpt']) {
-                    $sections[$section_key] = $this->add_premium_tease_into_section($section);
-                }
-
-                if ($section['id'] == 'photo_reviews_settings' && !SCR_Getter::addons_available_condition()['pr']) {
-                    $sections[$section_key] = $this->add_premium_tease_into_section($section);
-                }
-
-                if ($section['id'] == 'comparison_table_settings' && !SCR_Getter::addons_available_condition()['ct']) {
-                    $sections[$section_key] = $this->add_premium_tease_into_section($section);
-                }
-
             }
             return $sections;
         }
 
-        protected function add_premium_tease_into_section($section)
+        protected function add_premium_tease_into_section($section = [])
         {
             $section['class'] = 'scr-csf__section--disable';
             $section['fields'] = $this->add_premium_tease_into_fields($section['fields']);
@@ -67,19 +69,22 @@ if (!class_exists('\StarcatReview\Includes\Settings\Premium_Tease')) {
 
         public function add_premium_tease_into_fields($fields = [])
         {
-            // if (!empty($fields)) {
-            foreach ($fields as $field_key => $field) {
-                if (isset($field['id']) && !empty($field['id'])) {
-                    $fields[$field_key]['subtitle'] = $this->premium_feature_sub_title();
-                    $fields[$field_key]['class'] = 'scr-csf__field--disable';
-                    $fields[$field_key]['attributes'] = [
-                        'readonly' => 'readonly',
-                        'disabled' => true,
-                    ];
 
+            if (!empty($fields)) {
+                foreach ($fields as $field_key => $field) {
+                    if (isset($field['id']) && !empty($field['id'])) {
+                        $fields[$field_key]['subtitle'] = $this->premium_feature_sub_title();
+                        $fields[$field_key]['class'] = 'scr-csf__field--disable';
+                        $fields[$field_key]['attributes'] = [
+                            'readonly' => 'readonly',
+                            'disabled' => true,
+                        ];
+
+                    }
                 }
             }
-            // }
+
+            $fields = $this->add_premium_tease_callback_field($fields);
 
             return $fields;
         }
@@ -87,6 +92,21 @@ if (!class_exists('\StarcatReview\Includes\Settings\Premium_Tease')) {
         protected function premium_feature_sub_title()
         {
             return '<span style="color: #5cb85c; font-weight: 600;">* ' . __('Premium Feature', SCR_DOMAIN) . '</span>';
+        }
+
+        protected function add_premium_tease_callback_field($fields)
+        {
+            $field_count = count($fields);
+            $premium_callback_field_index = $field_count + 1;
+            $link = scr_fs()->get_account_url();
+            $fields[$premium_callback_field_index] = [
+                'class' => 'scr-csf__premium_callback_field',
+                'type' => 'callback',
+                'function' => 'scr_csf_premium_callback_function',
+                'args' => ['link' => $link],
+            ];
+
+            return $fields;
         }
     }
 }
