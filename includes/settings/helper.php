@@ -232,12 +232,21 @@ if (!function_exists('csf_validate_recaptcha_secret_key')) {
 if (!function_exists('scr_csf_premium_callback_function')) {
     function scr_csf_premium_callback_function($args = [])
     {
-        $link = $args['link'];
+        $addon_link = $args['link'];
+        $addon_name = $args['name'];
+
+        $bundle_link = 'https://starcatwp.com/freemius_product/starcat-reviews-business-bundle/';
+        $bundle_name = 'Go Pro Addons Bundle';
 
         $html = '<div class="scr-csf-premiumtease-container">';
-        $html .= '<a class="ui green labeled icon button" href = "' . $link . '"><i class="sign in alternate large icon"></i> ';
-        $html .= 'Go Premium Addon';
+        $html .= '<a class="ui primary labeled icon small button" href = "' . $addon_link . '"><i class="sign in alternate large icon"></i> ';
+        $html .= sprintf(__('Go Pro %s Addon', SCR_DOMAIN), $addon_name);
         $html .= '</a>';
+
+        $html .= '<a class="ui green labeled icon small button" href = "' . $bundle_link . '" target="_blank"><i class="boxes large icon"></i> ';
+        $html .= $bundle_name;
+        $html .= '</a>';
+
         $html .= '</div>';
 
         echo $html;
