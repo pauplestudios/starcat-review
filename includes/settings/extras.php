@@ -28,7 +28,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\Extras')) {
         {
 
             // if ($this->mp_settings->get_mp_location() == 'archive') {
-            return get_post_type_archive_link(SCR_POST_TYPE);
+            return get_post_type_archive_link('starcat_review');
             // } else {
             //     $post_id = $this->get_mp_selected_page();
             //     return get_permalink($post_id);
