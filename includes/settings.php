@@ -2,8 +2,9 @@
 
 namespace StarcatReview\Includes;
 
+use \StarcatReview\Includes\Settings\Fields as Post_MetBox_Fields;
 use \StarcatReview\Includes\Settings\SCR_Getter;
-use \StarcatReview\Includes\Translations as Translations;
+use \StarcatReview\Includes\Translations;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -12,14 +13,11 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReview\Includes\Settings')) {
     class Settings
     {
+        public $fields;
         public function __construct()
         {
-            add_action('init', [$this, 'init_settings']);
-            if (is_network_admin()) {
-                remove_action('init', [$this, 'init_settings']);
-            }
-
-            $this->fields = new \StarcatReview\Includes\Settings\Fields();
+            $this->init_settings();
+            new \StarcatReview\Includes\Settings\Premium_Tease();
         }
 
         public function init_settings()
@@ -52,33 +50,22 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
                 $this->settings_tabs($prefix);
                 $this->single_post_meta_fields();
+                if (SCR_Getter::addons_available_condition()['cpt']) {
+                    $this->category_meta_fields();
+                }
             }
         }
 
         public function settings_tabs($prefix)
         {
             $this->general_settings($prefix);
-
-            if (SCR_Getter::addons_available_condition()['cpt']) {
-                $this->mainpage_settings($prefix);
-                $this->category_page_settings($prefix);
-                $this->single_page_settings($prefix);
-                $this->category_meta_fields();
-            }
-
+            $this->mainpage_settings($prefix);
+            $this->category_page_settings($prefix);
+            $this->single_page_settings($prefix);
             $this->user_review_settings($prefix);
-
-            if (SCR_Getter::addons_available_condition()['pr']) {
-                $this->photo_reviews_settings($prefix);
-            }
-
-            if (SCR_Getter::addons_available_condition()['wn']) {
-                $this->notification_settings($prefix);
-            }
-
-            if (SCR_Getter::addons_available_condition()['ct']) {
-                $this->ct_settings($prefix);
-            }
+            $this->photo_reviews_settings($prefix);
+            $this->notification_settings($prefix);
+            $this->ct_settings($prefix);
         }
 
         public function ct_settings($prefix)
@@ -89,7 +76,8 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 array(
                     'id' => 'comparison_table_settings',
                     'title' => Translations::getStrings('ComparisonTable'),
-                    'icon' => 'fa fa-bell',
+                    'icon' => 'fa fa-table',
+                    'class' => 'some',
                     'fields' => array(
                         array(
                             'type' => 'submessage',
@@ -1193,7 +1181,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
         public function single_details($prefix, $parent = null)
         {
-            $details_fields = $this->fields->single_details_fields();
+            $details_fields = Post_MetBox_Fields::single_details_fields();
 
             \CSF::createSection(
                 $prefix,
@@ -1208,7 +1196,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
         public function single_rich_snippets($prefix, $parent = null)
         {
-            $fields = $this->fields->rich_snippets_fields();
+            $fields = Post_MetBox_Fields::rich_snippets_fields();
 
             \CSF::createSection(
                 $prefix,
@@ -1224,7 +1212,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         public function single_post_pros($prefix, $parent = null)
         {
 
-            $fields = $this->fields->single_post_prosandcons_fields('pros-list', 'Pros');
+            $fields = Post_MetBox_Fields::single_post_prosandcons_fields('pros-list', 'Pros');
 
             \CSF::createSection($prefix, array(
                 'parent' => $parent,
@@ -1238,7 +1226,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         public function single_post_cons($prefix, $parent = null)
         {
 
-            $fields = $this->fields->single_post_prosandcons_fields('cons-list', 'Cons');
+            $fields = Post_MetBox_Fields::single_post_prosandcons_fields('cons-list', 'Cons');
 
             \CSF::createSection($prefix, array(
                 'parent' => $parent,

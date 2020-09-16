@@ -23,8 +23,11 @@
     $body: $('body'),
     $window: $(window),
     $document: $(document),
-    is_rtl: $('body').hasClass('rtl'),
+    $form_warning: null,
+    is_confirm: false,
+    form_modified: false,
     code_themes: [],
+    is_rtl: $('body').hasClass('rtl'),
   };
 
   //
@@ -54,7 +57,7 @@
       var regex  = new RegExp('('+ CSF.helper.preg_quote(field_id) +')\\[(\\d+)\\]', 'g');
 
       $selector.find(':radio').each(function() {
-        if( this.checked || this.orginal_checked ) {
+        if ( this.checked || this.orginal_checked ) {
           this.orginal_checked = true;
         }
       });
@@ -62,7 +65,7 @@
       $selector.each( function( index ) {
         $(this).find(':input').each(function() {
           this.name = this.name.replace(regex, field_id +'['+ index +']');
-          if( this.orginal_checked ) {
+          if ( this.orginal_checked ) {
             this.checked = true;
           }
         });
@@ -79,81 +82,17 @@
         var context = this, args = arguments;
         var later = function() {
           timeout = null;
-          if( !immediate ) {
+          if ( !immediate ) {
             callback.apply(context, args);
           }
         };
         var callNow = ( immediate && !timeout );
         clearTimeout( timeout );
         timeout = setTimeout( later, threshold );
-        if( callNow ) {
+        if ( callNow ) {
           callback.apply(context, args);
         }
       };
-    },
-
-    //
-    // Get a cookie
-    //
-    get_cookie: function( name ) {
-
-      var e, b, cookie = document.cookie, p = name + '=';
-
-      if( ! cookie ) {
-        return;
-      }
-
-      b = cookie.indexOf( '; ' + p );
-
-      if( b === -1 ) {
-        b = cookie.indexOf(p);
-
-        if( b !== 0 ) {
-          return null;
-        }
-      } else {
-        b += 2;
-      }
-
-      e = cookie.indexOf( ';', b );
-
-      if( e === -1 ) {
-        e = cookie.length;
-      }
-
-      return decodeURIComponent( cookie.substring( b + p.length, e ) );
-
-    },
-
-    //
-    // Set a cookie
-    //
-    set_cookie: function( name, value, expires, path, domain, secure ) {
-
-      var d = new Date();
-
-      if( typeof( expires ) === 'object' && expires.toGMTString ) {
-        expires = expires.toGMTString();
-      } else if( parseInt( expires, 10 ) ) {
-        d.setTime( d.getTime() + ( parseInt( expires, 10 ) * 1000 ) );
-        expires = d.toGMTString();
-      } else {
-        expires = '';
-      }
-
-      document.cookie = name + '=' + encodeURIComponent( value ) +
-        ( expires ? '; expires=' + expires : '' ) +
-        ( path    ? '; path=' + path       : '' ) +
-        ( domain  ? '; domain=' + domain   : '' ) +
-        ( secure  ? '; secure'             : '' );
-
-    },
-
-    //
-    // Remove a cookie
-    //
-    remove_cookie: function( name, path, domain, secure ) {
-      CSF.helper.set_cookie( name, '', -1000, path, domain, secure );
     },
 
   };
@@ -170,7 +109,7 @@
     for( var i = 0; i < clone.length; ++i ) {
       for( var j = 0; j < clone[i].options.length; ++j ) {
 
-        if( clone[i].options[j].selected === true ) {
+        if ( clone[i].options[j].selected === true ) {
           cloned[i].options[j].selected = true;
         }
 
@@ -207,38 +146,46 @@
   $.fn.csf_nav_options = function() {
     return this.each( function() {
 
-      var $nav    = $(this),
-          $links  = $nav.find('a'),
-          $hidden = $nav.closest('.csf').find('.csf-section-id'),
-          $last_section;
+      var $nav   = $(this),
+          $links = $nav.find('a'),
+          $last;
 
-      $(window).on('hashchange', function() {
+      $(window).on('hashchange csf.hashchange', function() {
 
-        var hash  = window.location.hash.match(new RegExp('tab=([^&]*)'));
-        var slug  = hash ? hash[1] : $links.first().attr('href').replace('#tab=', '');
-        var $link = $('#csf-tab-link-'+ slug);
+        var hash  = window.location.hash.replace('#tab=', '');
+        var slug  = hash ? hash : $links.first().attr('href').replace('#tab=', '');
+        var $link = $('[data-tab-id="'+slug+'"]');
 
-        if( $link.length > 0 ) {
+        if ( $link.length ) {
 
-          $link.closest('.csf-tab-depth-0').addClass('csf-tab-active').siblings().removeClass('csf-tab-active');
-          $links.removeClass('csf-section-active');
-          $link.addClass('csf-section-active');
+          $link.closest('.csf-tab-item').addClass('csf-tab-expanded').siblings().removeClass('csf-tab-expanded');
 
-          if( $last_section !== undefined ) {
-            $last_section.hide();
+          if( $link.next().is('ul') ) {
+
+            $link = $link.next().find('li').first().find('a');
+            slug  = $link.data('tab-id');
+
           }
 
-          var $section = $('#csf-section-'+slug);
-          $section.css({display: 'block'});
+          $links.removeClass('csf-active');
+          $link.addClass('csf-active');
+
+          if ( $last ) {
+            $last.hide();
+          }
+
+          var $section = $('[data-section-id="'+slug+'"]');
+
+          $section.show();
           $section.csf_reload_script();
 
-          $hidden.val(slug);
+          $('.csf-section-id').val( $section.index() );
 
-          $last_section = $section;
+          $last = $section;
 
         }
 
-      }).trigger('hashchange');
+      }).trigger('csf.hashchange');
 
     });
   };
@@ -251,46 +198,36 @@
 
       var $nav      = $(this),
           $links    = $nav.find('a'),
-          unique_id = $nav.data('unique'),
-          post_id   = $('#post_ID').val() || 'global',
-          $last_section,
-          $last_link;
+          $sections = $nav.parent().find('.csf-section'),
+          $last;
 
-      $links.on('click', function( e ) {
+      $links.each( function( index ) {
 
-        e.preventDefault();
+        $(this).on('click', function( e ) {
 
-        var $link      = $(this),
-            section_id = $link.data('section');
+          e.preventDefault();
 
-        if( $last_link !== undefined ) {
-          $last_link.removeClass('csf-section-active');
-        }
+          var $link = $(this);
 
-        if( $last_section !== undefined ) {
-          $last_section.hide();
-        }
+          $links.removeClass('csf-active');
+          $link.addClass('csf-active');
 
-        $link.addClass('csf-section-active');
+          if ( $last !== undefined ) {
+            $last.hide();
+          }
 
-        var $section = $('#csf-section-'+section_id);
-        $section.css({display: 'block'});
-        $section.csf_reload_script();
+          var $section = $sections.eq(index);
 
-        CSF.helper.set_cookie('csf-last-metabox-tab-'+ post_id +'-'+ unique_id, section_id);
+          $section.show();
+          $section.csf_reload_script();
 
-        $last_section = $section;
-        $last_link    = $link;
+          $last = $section;
+
+        });
 
       });
 
-      var get_cookie = CSF.helper.get_cookie('csf-last-metabox-tab-'+ post_id +'-'+ unique_id);
-
-      if( get_cookie ) {
-        $nav.find('a[data-section="'+ get_cookie +'"]').trigger('click');
-      } else {
-        $links.first('a').trigger('click');
-      }
+      $links.first().trigger('click');
 
     });
   };
@@ -299,14 +236,14 @@
   // Metabox Page Templates Listener
   //
   $.fn.csf_page_templates = function() {
-    if( this.length ) {
+    if ( this.length ) {
 
       $(document).on('change', '.editor-page-attributes__template select, #page_template', function() {
 
         var maybe_value = $(this).val() || 'default';
 
-        $('.csf-page-templates').removeClass('csf-show').addClass('csf-hide');
-        $('.csf-page-'+maybe_value.toLowerCase().replace(/[^a-zA-Z0-9]+/g,'-')).removeClass('csf-hide').addClass('csf-show');
+        $('.csf-page-templates').removeClass('csf-metabox-show').addClass('csf-metabox-hide');
+        $('.csf-page-'+maybe_value.toLowerCase().replace(/[^a-zA-Z0-9]+/g,'-')).removeClass('csf-metabox-hide').addClass('csf-metabox-show');
 
       });
 
@@ -317,7 +254,7 @@
   // Metabox Post Formats Listener
   //
   $.fn.csf_post_formats = function() {
-    if( this.length ) {
+    if ( this.length ) {
 
       $(document).on('change', '.editor-post-format select, #formatdiv input[name="post_format"]', function() {
 
@@ -326,8 +263,8 @@
         // Fallback for classic editor version
         maybe_value = ( maybe_value === '0' ) ? 'default' : maybe_value;
 
-        $('.csf-post-formats').removeClass('csf-show').addClass('csf-hide');
-        $('.csf-post-format-'+maybe_value).removeClass('csf-hide').addClass('csf-show');
+        $('.csf-post-formats').removeClass('csf-metabox-show').addClass('csf-metabox-hide');
+        $('.csf-post-format-'+maybe_value).removeClass('csf-metabox-hide').addClass('csf-metabox-show');
 
       });
 
@@ -340,31 +277,31 @@
   $.fn.csf_search = function() {
     return this.each( function() {
 
-      var $this    = $(this),
-          $input   = $this.find('input');
+      var $this  = $(this),
+          $input = $this.find('input');
 
       $input.on('change keyup', function() {
 
         var value    = $(this).val(),
             $wrapper = $('.csf-wrapper'),
             $section = $wrapper.find('.csf-section'),
-            $fields  = $section.find('> .csf-field:not(.hidden)'),
+            $fields  = $section.find('> .csf-field:not(.csf-depend-on)'),
             $titles  = $fields.find('> .csf-title, .csf-search-tags');
 
-        if( value.length > 3 ) {
+        if ( value.length > 3 ) {
 
-          $fields.addClass('csf-hidden');
+          $fields.addClass('csf-metabox-hide');
           $wrapper.addClass('csf-search-all');
 
           $titles.each( function() {
 
             var $title = $(this);
 
-            if( $title.text().match( new RegExp('.*?' + value + '.*?', 'i') ) ) {
+            if ( $title.text().match( new RegExp('.*?' + value + '.*?', 'i') ) ) {
 
               var $field = $title.closest('.csf-field');
 
-              $field.removeClass('csf-hidden');
+              $field.removeClass('csf-metabox-hide');
               $field.parent().csf_reload_script();
 
             }
@@ -373,7 +310,7 @@
 
         } else {
 
-          $fields.removeClass('csf-hidden');
+          $fields.removeClass('csf-metabox-hide');
           $wrapper.removeClass('csf-search-all');
 
         }
@@ -403,7 +340,7 @@
                 stickyTop = Math.max(offset, offsetTop - scrollTop ),
                 winWidth  = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 
-            if( stickyTop <= offset && winWidth > 782 ) {
+            if ( stickyTop <= offset && winWidth > 782 ) {
               $inner.css({width: $this.outerWidth()-padding});
               $this.css({height: $this.outerHeight()}).addClass( 'csf-sticky' );
             } else {
@@ -414,7 +351,7 @@
           },
           requestTick = function() {
 
-            if( !ticking ) {
+            if ( !ticking ) {
               requestAnimationFrame( function() {
                 stickyUpdate();
                 ticking = false;
@@ -444,44 +381,50 @@
   $.fn.csf_dependency = function() {
     return this.each( function() {
 
-      var $this     = $(this),
-          ruleset   = $.csf_deps.createRuleset(),
-          depends   = [],
-          is_global = false;
+      var $this   = $(this),
+          $fields = $this.children('[data-controller]');
 
-      $this.children('[data-controller]').each( function() {
+      if( $fields.length ) {
 
-        var $field      = $(this),
-            controllers = $field.data('controller').split('|'),
-            conditions  = $field.data('condition').split('|'),
-            values      = $field.data('value').toString().split('|'),
-            rules       = ruleset;
+        var normal_ruleset = $.csf_deps.createRuleset(),
+            global_ruleset = $.csf_deps.createRuleset(),
+            normal_depends = [],
+            global_depends = [];
 
-        if( $field.data('depend-global') ) {
-          is_global = true;
-        }
+        $fields.each( function() {
 
-        $.each(controllers, function( index, depend_id ) {
+          var $field      = $(this),
+              controllers = $field.data('controller').split('|'),
+              conditions  = $field.data('condition').split('|'),
+              values      = $field.data('value').toString().split('|'),
+              is_global   = $field.data('depend-global') ? true : false,
+              ruleset     = ( is_global ) ? global_ruleset : normal_ruleset;
 
-          var value     = values[index] || '',
-              condition = conditions[index] || conditions[0];
+          $.each(controllers, function( index, depend_id ) {
 
-          rules = rules.createRule('[data-depend-id="'+ depend_id +'"]', condition, value);
+            var value     = values[index] || '',
+                condition = conditions[index] || conditions[0];
 
-          rules.include($field);
+            ruleset = ruleset.createRule('[data-depend-id="'+ depend_id +'"]', condition, value);
 
-          depends.push(depend_id);
+            ruleset.include($field);
+
+            if ( is_global ) {
+              global_depends.push(depend_id);
+            } else {
+              normal_depends.push(depend_id);
+            }
+
+          });
 
         });
 
-      });
+        if ( normal_depends.length ) {
+          $.csf_deps.enable($this, normal_ruleset, normal_depends);
+        }
 
-      if( depends.length ) {
-
-        if( is_global ) {
-          $.csf_deps.enable(CSF.vars.$body, ruleset, depends);
-        } else {
-          $.csf_deps.enable($this, ruleset, depends);
+        if ( global_depends.length ) {
+          $.csf_deps.enable(CSF.vars.$body, global_ruleset, global_depends);
         }
 
       }
@@ -503,13 +446,13 @@
             $icon    = $title.find('.csf-accordion-icon'),
             $content = $title.next();
 
-        if( $icon.hasClass('fa-angle-right') ) {
+        if ( $icon.hasClass('fa-angle-right') ) {
           $icon.removeClass('fa-angle-right').addClass('fa-angle-down');
         } else {
           $icon.removeClass('fa-angle-down').addClass('fa-angle-right');
         }
 
-        if( !$content.data( 'opened' ) ) {
+        if ( !$content.data( 'opened' ) ) {
 
           $content.csf_reload_script();
           $content.data( 'opened', true );
@@ -529,7 +472,7 @@
   $.fn.csf_field_backup = function() {
     return this.each( function() {
 
-      if( window.wp.customize === undefined ) { return; }
+      if ( window.wp.customize === undefined ) { return; }
 
       var base    = this,
           $this   = $(this),
@@ -539,10 +482,10 @@
 
       base.notification = function( message_text ) {
 
-        if( wp.customize.notifications && wp.customize.OverlayNotification ) {
+        if ( wp.customize.notifications && wp.customize.OverlayNotification ) {
 
           // clear if there is any saved data.
-          if( !wp.customize.state('saved').get() ) {
+          if ( !wp.customize.state('saved').get() ) {
             wp.customize.state('changesetStatus').set('trash');
             wp.customize.each( function( setting ) { setting._dirty = false; });
             wp.customize.state('saved').set(true);
@@ -563,7 +506,7 @@
 
         e.preventDefault();
 
-        if( CSF.vars.is_confirm ) {
+        if ( CSF.vars.is_confirm ) {
 
           base.notification( window.csf_vars.i18n.reset_notification );
 
@@ -587,14 +530,14 @@
 
         e.preventDefault();
 
-        if( CSF.vars.is_confirm ) {
+        if ( CSF.vars.is_confirm ) {
 
           base.notification( window.csf_vars.i18n.import_notification );
 
           window.wp.ajax.post( 'csf-import', {
             unique: $import.data('unique'),
             nonce: $import.data('nonce'),
-            import_data: $this.find('.csf-import-data').val()
+            data: $this.find('.csf-import-data').val()
           }).done( function( response ) {
             window.location.reload(true);
           }).fail( function( response ) {
@@ -614,7 +557,7 @@
   //
   $.fn.csf_field_background = function() {
     return this.each( function() {
-      $(this).find('.csf--media').csf_reload_script();
+      $(this).find('.csf--background-image').csf_reload_script();
     });
   };
 
@@ -624,24 +567,24 @@
   $.fn.csf_field_code_editor = function() {
     return this.each( function() {
 
-      if( typeof CodeMirror !== 'function' ) { return; }
+      if ( typeof CodeMirror !== 'function' ) { return; }
 
       var $this       = $(this),
           $textarea   = $this.find('textarea'),
           $inited     = $this.find('.CodeMirror'),
           data_editor = $textarea.data('editor');
 
-      if( $inited.length ) {
+      if ( $inited.length ) {
         $inited.remove();
       }
 
       var interval = setInterval(function () {
-        if( $this.is(':visible') ) {
+        if ( $this.is(':visible') ) {
 
           var code_editor = CodeMirror.fromTextArea( $textarea[0], data_editor );
 
           // load code-mirror theme css.
-          if( data_editor.theme !== 'default' && CSF.vars.code_themes.indexOf(data_editor.theme) === -1 ) {
+          if ( data_editor.theme !== 'default' && CSF.vars.code_themes.indexOf(data_editor.theme) === -1 ) {
 
             var $cssLink = $('<link>');
 
@@ -698,7 +641,7 @@
 
       settings = $.extend({}, settings, defaults);
 
-      if( $inputs.length === 2 ) {
+      if ( $inputs.length === 2 ) {
 
         settings = $.extend({}, settings, {
           onSelect: function( selectedDate ) {
@@ -719,7 +662,7 @@
 
         var $input = $(this);
 
-        if( $input.hasClass('hasDatepicker') ) {
+        if ( $input.hasClass('hasDatepicker') ) {
           $input.removeAttr('id').removeClass('hasDatepicker');
         }
 
@@ -762,10 +705,10 @@
 
         e.preventDefault();
 
-        if( typeof window.wp === 'undefined' || ! window.wp.media || ! window.wp.media.gallery ) { return; }
+        if ( typeof window.wp === 'undefined' || ! window.wp.media || ! window.wp.media.gallery ) { return; }
 
          // Open media with state
-        if( state === 'gallery' ) {
+        if ( state === 'gallery' ) {
 
           wp_media_frame = window.wp.media({
             library: {
@@ -782,7 +725,7 @@
 
           wp_media_frame = window.wp.media.gallery.edit( '[gallery ids="'+ ids +'"]' );
 
-          if( what === 'add' ) {
+          if ( what === 'add' ) {
             wp_media_frame.setState('gallery-library');
           }
 
@@ -796,7 +739,7 @@
           var selectedIds = selection.models.map( function( attachment ) {
 
             var item  = attachment.toJSON();
-            var thumb = ( typeof item.sizes.thumbnail !== 'undefined' ) ? item.sizes.thumbnail.url : item.url;
+            var thumb = ( item.sizes && item.sizes.thumbnail && item.sizes.thumbnail.url ) ? item.sizes.thumbnail.url : item.url;
 
             $list.append('<li><img src="'+ thumb +'"></li>');
 
@@ -844,7 +787,7 @@
           min       = parseInt( $wrapper.data('min') );
 
       // clear accordion arrows if multi-instance
-      if( $wrapper.hasClass('ui-accordion') ) {
+      if ( $wrapper.hasClass('ui-accordion') ) {
         $wrapper.find('.ui-accordion-header-icon').remove();
       }
 
@@ -861,21 +804,21 @@
         animate: false,
         heightStyle: 'content',
         icons: {
-          'header': 'csf-cloneable-header-icon fa fa-angle-right',
-          'activeHeader': 'csf-cloneable-header-icon fa fa-angle-down'
+          'header': 'csf-cloneable-header-icon fas fa-angle-right',
+          'activeHeader': 'csf-cloneable-header-icon fas fa-angle-down'
         },
         activate: function( event, ui ) {
 
           var $panel  = ui.newPanel;
           var $header = ui.newHeader;
 
-          if( $panel.length && !$panel.data( 'opened' ) ) {
+          if ( $panel.length && !$panel.data( 'opened' ) ) {
 
             var $fields = $panel.children();
             var $first  = $fields.first().find(':input').first();
             var $title  = $header.find('.csf-cloneable-value');
 
-            $first.on('keyup', function( event ) {
+            $first.on('change keyup', function( event ) {
               $title.text($first.val());
             });
 
@@ -883,7 +826,7 @@
             $panel.data( 'opened', true );
             $panel.data( 'retry', false );
 
-          } else if( $panel.data( 'retry' ) ) {
+          } else if ( $panel.data( 'retry' ) ) {
 
             $panel.csf_reload_script_retry();
             $panel.data( 'retry', false );
@@ -911,7 +854,7 @@
           CSF.helper.name_nested_replace( $wrapper.children('.csf-cloneable-item'), field_id );
           $wrapper.csf_customizer_refresh();
 
-          if( is_number ) {
+          if ( is_number ) {
             update_title_numbers($wrapper);
           }
 
@@ -926,7 +869,7 @@
 
         $min.hide();
 
-        if( max && (count+1) > max ) {
+        if ( max && (count+1) > max ) {
           $max.show();
           return;
         }
@@ -937,7 +880,7 @@
 
         $cloned_item.removeClass('csf-cloneable-hidden');
 
-        $cloned_item.find(':input').each( function() {
+        $cloned_item.find(':input[name!="_pseudo"]').each( function() {
           this.name = new_field_id + this.name.replace( ( this.name.startsWith('_nonce') ? '_nonce' : unique_id ), '');
         });
 
@@ -951,7 +894,7 @@
         $wrapper.csf_customizer_refresh();
         $wrapper.csf_customizer_listen({closest: true});
 
-        if( is_number ) {
+        if ( is_number ) {
           update_title_numbers($wrapper);
         }
 
@@ -965,7 +908,7 @@
 
         $min.hide();
 
-        if( max && (count+1) > max ) {
+        if ( max && (count+1) > max ) {
           $max.show();
           return;
         }
@@ -996,7 +939,7 @@
         $wrapper.csf_customizer_refresh();
         $wrapper.csf_customizer_listen({closest: true});
 
-        if( is_number ) {
+        if ( is_number ) {
           update_title_numbers($wrapper);
         }
 
@@ -1014,7 +957,7 @@
         $max.hide();
         $min.hide();
 
-        if( min && (count-1) < min ) {
+        if ( min && (count-1) < min ) {
           $min.show();
           return;
         }
@@ -1025,7 +968,7 @@
 
         $wrapper.csf_customizer_refresh();
 
-        if( is_number ) {
+        if ( is_number ) {
           update_title_numbers($wrapper);
         }
 
@@ -1052,15 +995,17 @@
         var $button = $(this);
         var $modal  = $('#csf-modal-icon');
 
-        $modal.show();
+        $modal.removeClass('hidden');
 
         CSF.vars.$icon_target = $this;
 
-        if( !CSF.vars.icon_modal_loaded ) {
+        if ( !CSF.vars.icon_modal_loaded ) {
 
           $modal.find('.csf-modal-loading').show();
 
-          window.wp.ajax.post( 'csf-get-icons', { nonce: $button.data('nonce') } ).done( function( response ) {
+          window.wp.ajax.post( 'csf-get-icons', {
+            nonce: $button.data('nonce')
+          }).done( function( response ) {
 
             $modal.find('.csf-modal-loading').hide();
 
@@ -1068,31 +1013,31 @@
 
             var $load = $modal.find('.csf-modal-load').html( response.content );
 
-            $load.on('click', 'a', function( e ) {
+            $load.on('click', 'i', function( e ) {
 
               e.preventDefault();
 
-              var icon = $(this).data('csf-icon');
+              var icon = $(this).attr('title');
 
               CSF.vars.$icon_target.find('i').removeAttr('class').addClass(icon);
               CSF.vars.$icon_target.find('input').val(icon).trigger('change');
               CSF.vars.$icon_target.find('.csf-icon-preview').removeClass('hidden');
               CSF.vars.$icon_target.find('.csf-icon-remove').removeClass('hidden');
 
-              $modal.hide();
+              $modal.addClass('hidden');
 
             });
 
             $modal.on('change keyup', '.csf-icon-search', function() {
 
               var value  = $(this).val(),
-                  $icons = $load.find('a');
+                  $icons = $load.find('i');
 
               $icons.each( function() {
 
                 var $elem = $(this);
 
-                if( $elem.data('csf-icon').search( new RegExp( value, 'i' ) ) < 0 ) {
+                if ( $elem.attr('title').search( new RegExp( value, 'i' ) ) < 0 ) {
                   $elem.hide();
                 } else {
                   $elem.show();
@@ -1103,26 +1048,145 @@
             });
 
             $modal.on('click', '.csf-modal-close, .csf-modal-overlay', function() {
-
-              $modal.hide();
-
+              $modal.addClass('hidden');
             });
 
+          }).fail( function( response ) {
+            $modal.find('.csf-modal-loading').hide();
+            $modal.find('.csf-modal-load').html( response.error );
+            $modal.on('click', function() {
+              $modal.addClass('hidden');
+            });
           });
-
         }
 
       });
 
       $this.on('click', '.csf-icon-remove', function( e ) {
-
         e.preventDefault();
-
         $this.find('.csf-icon-preview').addClass('hidden');
         $this.find('input').val('').trigger('change');
         $(this).addClass('hidden');
-
       });
+
+    });
+  };
+
+  //
+  // Field: map
+  //
+  $.fn.csf_field_map = function() {
+    return this.each( function() {
+
+      if ( typeof L === 'undefined' ) { return; }
+
+      var $this         = $(this),
+          $map          = $this.find('.csf--map-osm'),
+          $search_input = $this.find('.csf--map-search input'),
+          $latitude     = $this.find('.csf--latitude'),
+          $longitude    = $this.find('.csf--longitude'),
+          $zoom         = $this.find('.csf--zoom'),
+          map_data      = $map.data( 'map' );
+
+      var mapInit = L.map( $map.get(0), map_data);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(mapInit);
+
+      var mapMarker = L.marker(map_data.center,{draggable: true}).addTo(mapInit);
+
+      var update_latlng = function( data ) {
+        $latitude.val( data.lat );
+        $longitude.val( data.lng );
+        $zoom.val( mapInit.getZoom() );
+      };
+
+      mapInit.on( 'click', function ( data ) {
+        mapMarker.setLatLng( data.latlng );
+        update_latlng( data.latlng );
+      });
+
+      mapInit.on( 'zoom', function () {
+        update_latlng( mapMarker.getLatLng() );
+      });
+
+      mapMarker.on( 'drag', function () {
+        update_latlng( mapMarker.getLatLng() );
+      });
+
+      if ( ! $search_input.length ) {
+        $search_input = $( '[data-depend-id="'+ $this.find('.csf--address-field').data( 'address-field' ) +'"]' );
+      }
+
+      var cache = {};
+
+      $search_input.autocomplete({
+        source: function ( request, response ) {
+
+          var term = request.term;
+
+          if ( term in cache ) {
+            response( cache[term] );
+            return;
+          }
+
+          $.get( 'https://nominatim.openstreetmap.org/search', {
+            format: 'json',
+            q: term,
+          }, function( results ) {
+
+            var data;
+
+            if ( results.length ) {
+              data = results.map( function( item ) {
+                return {
+                  value: item.display_name,
+                  label: item.display_name,
+                  lat: item.lat,
+                  lon: item.lon
+                };
+              }, 'json');
+            } else {
+              data = [{
+                value: 'no-data',
+                label: 'No Results.'
+              }];
+            }
+
+            cache[term] = data;
+            response(data);
+
+          });
+
+        },
+        select: function ( event, ui ) {
+
+          if ( ui.item.value === 'no-data' ) { return false; }
+
+          var latLng = L.latLng( ui.item.lat, ui.item.lon );
+
+          mapInit.panTo( latLng );
+          mapMarker.setLatLng( latLng );
+          update_latlng( latLng );
+
+        },
+        create: function (event, ui) {
+          $(this).autocomplete('widget').addClass('csf-map-ui-autocomplate');
+        }
+      });
+
+      var input_update_latlng = function() {
+
+        var latLng = L.latLng( $latitude.val(), $longitude.val() );
+
+        mapInit.panTo( latLng );
+        mapMarker.setLatLng( latLng );
+
+      };
+
+      $latitude.on('change', input_update_latlng );
+      $longitude.on('change', input_update_latlng );
 
     });
   };
@@ -1133,21 +1197,22 @@
   $.fn.csf_field_media = function() {
     return this.each( function() {
 
-      var $this          = $(this),
-          $upload_button = $this.find('.csf--button'),
-          $remove_button = $this.find('.csf--remove'),
-          $library       = $upload_button.data('library') && $upload_button.data('library').split(',') || '',
+      var $this            = $(this),
+          $upload_button   = $this.find('.csf--button'),
+          $remove_button   = $this.find('.csf--remove'),
+          $library         = $upload_button.data('library') && $upload_button.data('library').split(',') || '',
+          $auto_attributes = ( $this.hasClass('csf-assign-field-background') ) ? $this.closest('.csf-field-background').find('.csf--auto-attributes') : false,
           wp_media_frame;
 
       $upload_button.on('click', function( e ) {
 
         e.preventDefault();
 
-        if( typeof window.wp === 'undefined' || ! window.wp.media || ! window.wp.media.gallery ) {
+        if ( typeof window.wp === 'undefined' || ! window.wp.media || ! window.wp.media.gallery ) {
           return;
         }
 
-        if( wp_media_frame ) {
+        if ( wp_media_frame ) {
           wp_media_frame.open();
           return;
         }
@@ -1164,7 +1229,10 @@
           var attributes   = wp_media_frame.state().get('selection').first().attributes;
           var preview_size = $upload_button.data('preview-size') || 'thumbnail';
 
-          $this.find('.csf--url').val( attributes.url );
+          if ( $library.length && $library.indexOf(attributes.subtype) === -1 && $library.indexOf(attributes.type) === -1 ) {
+            return;
+          }
+
           $this.find('.csf--id').val( attributes.id );
           $this.find('.csf--width').val( attributes.width );
           $this.find('.csf--height').val( attributes.height );
@@ -1172,18 +1240,24 @@
           $this.find('.csf--title').val( attributes.title );
           $this.find('.csf--description').val( attributes.description );
 
-          if( typeof attributes.sizes !== 'undefined' && typeof attributes.sizes.thumbnail !== 'undefined' && preview_size === 'thumbnail' ) {
+          if ( typeof attributes.sizes !== 'undefined' && typeof attributes.sizes.thumbnail !== 'undefined' && preview_size === 'thumbnail' ) {
             thumbnail = attributes.sizes.thumbnail.url;
-          } else if( typeof attributes.sizes !== 'undefined' && typeof attributes.sizes.full !== 'undefined' ) {
+          } else if ( typeof attributes.sizes !== 'undefined' && typeof attributes.sizes.full !== 'undefined' ) {
             thumbnail = attributes.sizes.full.url;
           } else {
             thumbnail = attributes.icon;
           }
 
+          if ( $auto_attributes ) {
+            $auto_attributes.removeClass('csf--attributes-hidden');
+          }
+
           $remove_button.removeClass('hidden');
+
           $this.find('.csf--preview').removeClass('hidden');
           $this.find('.csf--src').attr('src', thumbnail);
-          $this.find('.csf--thumbnail').val( thumbnail ).trigger('change');
+          $this.find('.csf--thumbnail').val( thumbnail );
+          $this.find('.csf--url').val( attributes.url ).trigger('change');
 
         });
 
@@ -1192,11 +1266,18 @@
       });
 
       $remove_button.on('click', function( e ) {
+
         e.preventDefault();
+
+        if ( $auto_attributes ) {
+          $auto_attributes.addClass('csf--attributes-hidden');
+        }
+
         $remove_button.addClass('hidden');
-        $this.find('.csf--preview').addClass('hidden');
         $this.find('input').val('');
-        $this.find('.csf--thumbnail').trigger('change');
+        $this.find('.csf--preview').addClass('hidden');
+        $this.find('.csf--url').trigger('change');
+
       });
 
     });
@@ -1247,7 +1328,7 @@
 
         $min.hide();
 
-        if( max && (count+1) > max ) {
+        if ( max && (count+1) > max ) {
           $max.show();
           return;
         }
@@ -1258,7 +1339,7 @@
 
         $cloned_item.removeClass('csf-repeater-hidden');
 
-        $cloned_item.find(':input').each( function() {
+        $cloned_item.find(':input[name!="_pseudo"]').each( function() {
           this.name = new_field_id + this.name.replace( ( this.name.startsWith('_nonce') ? '_nonce' : unique_id ), '');
         });
 
@@ -1281,7 +1362,7 @@
 
         $min.hide();
 
-        if( max && (count+1) > max ) {
+        if ( max && (count+1) > max ) {
           $max.show();
           return;
         }
@@ -1325,7 +1406,7 @@
         $max.hide();
         $min.hide();
 
-        if( min && (count-1) < min ) {
+        if ( min && (count-1) < min ) {
           $min.show();
           return;
         }
@@ -1356,7 +1437,7 @@
           data    = $input.data(),
           value   = $input.val() || 0;
 
-      if( $slider.hasClass('ui-slider') ) {
+      if ( $slider.hasClass('ui-slider') ) {
         $slider.empty();
       }
 
@@ -1371,7 +1452,7 @@
         }
       });
 
-      $input.keyup( function() {
+      $input.on('keyup', function() {
         $slider.slider('value', $input.val());
       });
 
@@ -1384,7 +1465,7 @@
   $.fn.csf_field_sortable = function() {
     return this.each( function() {
 
-      var $sortable = $(this).find('.csf--sortable');
+      var $sortable = $(this).find('.csf-sortable');
 
       $sortable.sortable({
         axis: 'y',
@@ -1396,7 +1477,7 @@
         }
       });
 
-      $sortable.find('.csf--sortable-content').csf_reload_script();
+      $sortable.find('.csf-sortable-content').csf_reload_script();
 
     });
   };
@@ -1419,7 +1500,7 @@
 
           var $el = ui.item.find('input');
 
-          if( ui.item.parent().hasClass('csf-enabled') ) {
+          if ( ui.item.parent().hasClass('csf-enabled') ) {
             $el.attr('name', $el.attr('name').replace('disabled', 'enabled'));
           } else {
             $el.attr('name', $el.attr('name').replace('enabled', 'disabled'));
@@ -1430,7 +1511,7 @@
         }
       });
 
-      if( $disabled ) {
+      if ( $disabled ) {
 
         $disabled.sortable({
           connectWith: $enabled,
@@ -1453,9 +1534,10 @@
 
       var $this   = $(this),
           $input  = $this.find('input'),
-          $inited = $this.find('.ui-spinner-button');
+          $inited = $this.find('.ui-spinner-button'),
+          $unit   = $input.data('unit');
 
-      if( $inited.length ) {
+      if ( $inited.length ) {
         $inited.remove();
       }
 
@@ -1463,11 +1545,15 @@
         max: $input.data('max') || 100,
         min: $input.data('min') || 0,
         step: $input.data('step') || 1,
+        create: function( event, ui ) {
+          if ( $unit.length ) {
+            $this.find('.ui-spinner-up').after('<span class="ui-button-text-only csf--unit">'+ $unit +'</span>');
+          }
+        },
         spin: function (event, ui ) {
           $input.val(ui.value).trigger('change');
         }
       });
-
 
     });
   };
@@ -1485,7 +1571,7 @@
         var value  = 0;
         var $input = $switcher.find('input');
 
-        if( $switcher.hasClass('csf--active') ) {
+        if ( $switcher.hasClass('csf--active') ) {
           $switcher.removeClass('csf--active');
         } else {
           value = 1;
@@ -1507,9 +1593,9 @@
 
       var $this     = $(this),
           $links    = $this.find('.csf-tabbed-nav a'),
-          $sections = $this.find('.csf-tabbed-section');
+          $contents = $this.find('.csf-tabbed-content');
 
-      $sections.eq(0).csf_reload_script();
+      $contents.eq(0).csf_reload_script();
 
       $links.on( 'click', function( e ) {
 
@@ -1517,11 +1603,11 @@
 
         var $link    = $(this),
             index    = $link.index(),
-            $section = $sections.eq(index);
+            $content = $contents.eq(index);
 
         $link.addClass('csf-tabbed-active').siblings().removeClass('csf-tabbed-active');
-        $section.csf_reload_script();
-        $section.removeClass('hidden').siblings().addClass('hidden');
+        $content.csf_reload_script();
+        $content.removeClass('hidden').siblings().addClass('hidden');
 
       });
 
@@ -1562,16 +1648,16 @@
       // Load google font
       base.load_google_font = function( font_family, weight, style ) {
 
-        if( font_family && typeof WebFont === 'object' ) {
+        if ( font_family && typeof WebFont === 'object' ) {
 
           weight = weight ? weight.replace('normal', '') : '';
           style  = style ? style.replace('normal', '') : '';
 
-          if( weight || style ) {
+          if ( weight || style ) {
             font_family = font_family +':'+ weight + style;
           }
 
-          if( loaded_fonts.indexOf( font_family ) === -1 ) {
+          if ( loaded_fonts.indexOf( font_family ) === -1 ) {
             WebFont.load({ google: { families: [font_family] } });
           }
 
@@ -1596,15 +1682,15 @@
           var name = value;
 
           // is_multi
-          if( is_multi ) {
+          if ( is_multi ) {
             selected = ( condition && condition.indexOf(value) !== -1 ) ? ' selected' : '';
           } else {
             selected = ( condition && condition === value ) ? ' selected' : '';
           }
 
-          if( type === 'subset' ) {
+          if ( type === 'subset' ) {
             name = base.sanitize_subset( value );
-          } else if( type === 'style' ){
+          } else if ( type === 'style' ){
             name = base.sanitize_style( value );
           }
 
@@ -1621,16 +1707,18 @@
         //
         //
         // Constants
-        var selected_styles = [];
-        var $typography     = $this.find('.csf--typography');
-        var $type           = $this.find('.csf--type');
-        var unit            = $typography.data('unit');
-        var exclude_fonts   = $typography.data('exclude') ? $typography.data('exclude').split(',') : [];
+        var selected_styles  = [];
+        var $typography      = $this.find('.csf--typography');
+        var $type            = $this.find('.csf--type');
+        var $styles          = $this.find('.csf--block-font-style');
+        var unit             = $typography.data('unit');
+        var line_height_unit = $typography.data('line-height-unit');
+        var exclude_fonts    = $typography.data('exclude') ? $typography.data('exclude').split(',') : [];
 
         //
         //
         // Chosen init
-        if( $this.find('.csf--chosen').length ) {
+        if ( $this.find('.csf--chosen').length ) {
 
           var $chosen_selects = $this.find('select');
 
@@ -1639,7 +1727,7 @@
             var $chosen_select = $(this),
                 $chosen_inited = $chosen_select.parent().find('.chosen-container');
 
-            if( $chosen_inited.length ) {
+            if ( $chosen_inited.length ) {
               $chosen_inited.remove();
             }
 
@@ -1667,7 +1755,7 @@
         $.each(webfonts, function( type, group ) {
 
           // Check for exclude fonts
-          if( exclude_fonts && exclude_fonts.indexOf(type) !== -1 ) { return; }
+          if ( exclude_fonts && exclude_fonts.indexOf(type) !== -1 ) { return; }
 
           opts += '<optgroup label="' + group.label + '">';
 
@@ -1692,7 +1780,7 @@
         // Font style select
         var $font_style_block = $this.find('.csf--block-font-style');
 
-        if( $font_style_block.length ) {
+        if ( $font_style_block.length ) {
 
           var $font_style_select = $this.find('.csf--font-style-select');
           var first_style_value  = $font_style_select.val() ? $font_style_select.val().replace(/normal/g, '' ) : '';
@@ -1704,7 +1792,7 @@
             var style_value = $font_style_select.val();
 
             // set a default value
-            if( !style_value && selected_styles && selected_styles.indexOf('normal') === -1 ) {
+            if ( !style_value && selected_styles && selected_styles.indexOf('normal') === -1 ) {
               style_value = selected_styles[0];
             }
 
@@ -1723,7 +1811,7 @@
           // Extra font style select
           var $extra_font_style_block = $this.find('.csf--block-extra-styles');
 
-          if( $extra_font_style_block.length ) {
+          if ( $extra_font_style_block.length ) {
             var $extra_font_style_select = $this.find('.csf--extra-styles');
             var first_extra_style_value  = $extra_font_style_select.val();
           }
@@ -1734,7 +1822,7 @@
         //
         // Subsets select
         var $subset_block = $this.find('.csf--block-subset');
-        if( $subset_block.length ) {
+        if ( $subset_block.length ) {
           var $subset_select = $this.find('.csf--subset');
           var first_subset_select_value = $subset_select.val();
           var subset_multi_select = $subset_select.data('multiple') || false;
@@ -1751,17 +1839,17 @@
         $font_family_select.on('change csf.change', function( event ) {
 
           // Hide subsets on change
-          if( $subset_block.length ) {
+          if ( $subset_block.length ) {
             $subset_block.addClass('hidden');
           }
 
           // Hide extra font style on change
-          if( $extra_font_style_block.length ) {
+          if ( $extra_font_style_block.length ) {
             $extra_font_style_block.addClass('hidden');
           }
 
           // Hide backup font family on change
-          if( $backup_font_family_block.length ) {
+          if ( $backup_font_family_block.length ) {
             $backup_font_family_block.addClass('hidden');
           }
 
@@ -1769,23 +1857,23 @@
           var value     = $selected.val();
           var type      = $selected.data('type');
 
-          if( type && value ) {
+          if ( type && value ) {
 
             // Show backup fonts if font type google or custom
-            if( ( type === 'google' || type === 'custom' ) && $backup_font_family_block.length ) {
+            if ( ( type === 'google' || type === 'custom' ) && $backup_font_family_block.length ) {
               $backup_font_family_block.removeClass('hidden');
             }
 
             // Appending font style select options
-            if( $font_style_block.length ) {
+            if ( $font_style_block.length ) {
 
               // set styles for multi and normal style selectors
               var styles = defaultstyles;
 
               // Custom or gogle font styles
-              if( type === 'google' && webfonts[type].fonts[value][0] ) {
+              if ( type === 'google' && webfonts[type].fonts[value][0] ) {
                 styles = webfonts[type].fonts[value][0];
-              } else if( type === 'custom' && webfonts[type].fonts[value] ) {
+              } else if ( type === 'custom' && webfonts[type].fonts[value] ) {
                 styles = webfonts[type].fonts[value];
               }
 
@@ -1805,7 +1893,7 @@
               $font_style_block.removeClass('hidden');
 
               // Appending extra font style select options
-              if( type === 'google' && $extra_font_style_block.length && styles.length > 1 ) {
+              if ( type === 'google' && $extra_font_style_block.length && styles.length > 1 ) {
 
                 // Append extra-style select options
                 base.append_select_options( $extra_font_style_select, styles, first_extra_style_value, 'style', true );
@@ -1821,7 +1909,7 @@
             }
 
             // Appending google fonts subsets select options
-            if( type === 'google' && $subset_block.length && webfonts[type].fonts[value][1] ) {
+            if ( type === 'google' && $subset_block.length && webfonts[type].fonts[value][1] ) {
 
               var subsets          = webfonts[type].fonts[value][1];
               var set_auto_subset  = ( subsets.length < 2 && subsets[0] !== 'latin' ) ? subsets[0] : '';
@@ -1840,14 +1928,17 @@
 
           } else {
 
+            // Clear Styles
+            $styles.find(':input').val('');
+
             // Clear subsets options if type and value empty
-            if( $subset_block.length ) {
+            if ( $subset_block.length ) {
               $subset_select.find('option').not(':first-child').remove();
               $subset_select.trigger('chosen:updated');
             }
 
             // Clear font styles options if type and value empty
-            if( $font_style_block.length ) {
+            if ( $font_style_block.length ) {
               $font_style_select.find('option').not(':first-child').remove();
               $font_style_select.trigger('chosen:updated');
             }
@@ -1864,7 +1955,7 @@
         // Preview
         var $preview_block = $this.find('.csf--block-preview');
 
-        if( $preview_block.length ) {
+        if ( $preview_block.length ) {
 
           var $preview = $this.find('.csf--preview');
 
@@ -1888,29 +1979,29 @@
                 custom_style      = $this.find('.csf--custom-style').val(),
                 type              = $this.find('.csf--type').val();
 
-            if( type === 'google' ) {
+            if ( type === 'google' ) {
               base.load_google_font(font_family, font_weight, font_style);
             }
 
             var properties = {};
 
-            if( font_family     ) { properties.fontFamily     = font_family;           }
-            if( font_weight     ) { properties.fontWeight     = font_weight;           }
-            if( font_style      ) { properties.fontStyle      = font_style;            }
-            if( font_variant    ) { properties.fontVariant    = font_variant;          }
-            if( font_size       ) { properties.fontSize       = font_size + unit;      }
-            if( line_height     ) { properties.lineHeight     = line_height + unit;    }
-            if( letter_spacing  ) { properties.letterSpacing  = letter_spacing + unit; }
-            if( word_spacing    ) { properties.wordSpacing    = word_spacing + unit;   }
-            if( text_align      ) { properties.textAlign      = text_align;            }
-            if( text_transform  ) { properties.textTransform  = text_transform;        }
-            if( text_decoration ) { properties.textDecoration = text_decoration;       }
-            if( text_color      ) { properties.color          = text_color;            }
+            if ( font_family     ) { properties.fontFamily     = font_family;                    }
+            if ( font_weight     ) { properties.fontWeight     = font_weight;                    }
+            if ( font_style      ) { properties.fontStyle      = font_style;                     }
+            if ( font_variant    ) { properties.fontVariant    = font_variant;                   }
+            if ( font_size       ) { properties.fontSize       = font_size + unit;               }
+            if ( line_height     ) { properties.lineHeight     = line_height + line_height_unit; }
+            if ( letter_spacing  ) { properties.letterSpacing  = letter_spacing + unit;          }
+            if ( word_spacing    ) { properties.wordSpacing    = word_spacing + unit;            }
+            if ( text_align      ) { properties.textAlign      = text_align;                     }
+            if ( text_transform  ) { properties.textTransform  = text_transform;                 }
+            if ( text_decoration ) { properties.textDecoration = text_decoration;                }
+            if ( text_color      ) { properties.color          = text_color;                     }
 
             $preview.removeAttr('style');
 
             // Customs style attribute
-            if( custom_style ) { $preview.attr('style', custom_style); }
+            if ( custom_style ) { $preview.attr('style', custom_style); }
 
             $preview.css(properties);
 
@@ -1923,7 +2014,7 @@
 
             var $toggle = $preview_block.find('.csf--toggle');
 
-            if( $toggle.hasClass('fa-toggle-off') ) {
+            if ( $toggle.hasClass('fa-toggle-off') ) {
               $toggle.removeClass('fa-toggle-off').addClass('fa-toggle-on');
             } else {
               $toggle.removeClass('fa-toggle-on').addClass('fa-toggle-off');
@@ -1931,7 +2022,7 @@
 
           });
 
-          if( !$preview_block.hasClass('hidden') ) {
+          if ( !$preview_block.hasClass('hidden') ) {
             $this.trigger('change');
           }
 
@@ -1958,7 +2049,7 @@
           wp_media_frame;
 
       $input.on('change', function( e ) {
-        if( $input.val() ) {
+        if ( $input.val() ) {
           $remove_button.removeClass('hidden');
         } else {
           $remove_button.addClass('hidden');
@@ -1969,11 +2060,11 @@
 
         e.preventDefault();
 
-        if( typeof window.wp === 'undefined' || ! window.wp.media || ! window.wp.media.gallery ) {
+        if ( typeof window.wp === 'undefined' || ! window.wp.media || ! window.wp.media.gallery ) {
           return;
         }
 
-        if( wp_media_frame ) {
+        if ( wp_media_frame ) {
           wp_media_frame.open();
           return;
         }
@@ -1985,7 +2076,15 @@
         });
 
         wp_media_frame.on( 'select', function() {
-          $input.val( wp_media_frame.state().get('selection').first().attributes.url ).trigger('change');
+
+          var attributes = wp_media_frame.state().get('selection').first().attributes;
+
+          if ( $library.length && $library.indexOf(attributes.subtype) === -1 && $library.indexOf(attributes.type) === -1 ) {
+            return;
+          }
+
+          $input.val(attributes.url).trigger('change');
+
         });
 
         wp_media_frame.open();
@@ -2002,19 +2101,122 @@
   };
 
   //
+  // Field: wp_editor
+  //
+  $.fn.csf_field_wp_editor = function() {
+    return this.each( function() {
+
+      if ( typeof window.wp.editor === 'undefined' || typeof window.tinyMCEPreInit === 'undefined' || typeof window.tinyMCEPreInit.mceInit.csf_wp_editor === 'undefined' ) {
+        return;
+      }
+
+      var $this     = $(this),
+          $editor   = $this.find('.csf-wp-editor'),
+          $textarea = $this.find('textarea');
+
+      // If there is wp-editor remove it for avoid dupliated wp-editor conflicts.
+      var $has_wp_editor = $this.find('.wp-editor-wrap').length || $this.find('.mce-container').length;
+
+      if ( $has_wp_editor ) {
+        $editor.empty();
+        $editor.append($textarea);
+        $textarea.css('display', '');
+      }
+
+      // Generate a unique id
+      var uid = CSF.helper.uid('csf-editor-');
+
+      $textarea.attr('id', uid);
+
+      // Get default editor settings
+      var default_editor_settings = {
+        tinymce: window.tinyMCEPreInit.mceInit.csf_wp_editor,
+        quicktags: window.tinyMCEPreInit.qtInit.csf_wp_editor
+      };
+
+      // Get default editor settings
+      var field_editor_settings = $editor.data('editor-settings');
+
+      // Add on change event handle
+      var editor_on_change = function( editor ) {
+        editor.on('change', CSF.helper.debounce( function() {
+          editor.save();
+          $textarea.trigger('change');
+        }, 250 ) );
+      };
+
+      // Callback for old wp editor
+      var wpEditor = wp.oldEditor ? wp.oldEditor : wp.editor;
+
+      if ( wpEditor && wpEditor.hasOwnProperty('autop') ) {
+        wp.editor.autop = wpEditor.autop;
+        wp.editor.removep = wpEditor.removep;
+        wp.editor.initialize = wpEditor.initialize;
+      }
+
+      // Extend editor selector and on change event handler
+      default_editor_settings.tinymce = $.extend( {}, default_editor_settings.tinymce, { selector: '#'+ uid, setup: editor_on_change } );
+
+      // Override editor tinymce settings
+      if ( field_editor_settings.tinymce === false ) {
+        default_editor_settings.tinymce = false;
+        $editor.addClass('csf-no-tinymce');
+      }
+
+      // Override editor quicktags settings
+      if ( field_editor_settings.quicktags === false ) {
+        default_editor_settings.quicktags = false;
+        $editor.addClass('csf-no-quicktags');
+      }
+
+      // Wait until :visible
+      var interval = setInterval(function () {
+        if ( $this.is(':visible') ) {
+          window.wp.editor.initialize(uid, default_editor_settings);
+          clearInterval(interval);
+        }
+      });
+
+      // Add Media buttons
+      if ( field_editor_settings.media_buttons && window.csf_media_buttons ) {
+
+        var $editor_buttons = $editor.find('.wp-media-buttons');
+
+        if ( $editor_buttons.length ) {
+
+          $editor_buttons.find('.csf-shortcode-button').data('editor-id', uid);
+
+        } else {
+
+          var $media_buttons = $(window.csf_media_buttons);
+
+          $media_buttons.find('.csf-shortcode-button').data('editor-id', uid);
+
+          $editor.prepend( $media_buttons );
+
+        }
+
+      }
+
+    });
+
+  };
+
+  //
   // Confirm
   //
   $.fn.csf_confirm = function() {
     return this.each( function() {
       $(this).on('click', function( e ) {
 
-        var confirm_text    = $(this).data('confirm') || window.csf_vars.i18n.confirm;
-        var confirm_answer  = confirm( confirm_text );
-        CSF.vars.is_confirm = true;
+        var confirm_text   = $(this).data('confirm') || window.csf_vars.i18n.confirm;
+        var confirm_answer = confirm( confirm_text );
 
-        if( !confirm_answer ) {
+        if ( confirm_answer ) {
+          CSF.vars.is_confirm = true;
+          CSF.vars.form_modified = false;
+        } else {
           e.preventDefault();
-          CSF.vars.is_confirm = false;
           return false;
         }
 
@@ -2053,14 +2255,14 @@
 
       $this.on('click', function( e ) {
 
-        if( !flooding ) {
+        if ( !flooding ) {
 
           var $text  = $this.data('save'),
               $value = $this.val();
 
           $buttons.attr('value', $text);
 
-          if( $this.hasClass('csf-save-ajax') ) {
+          if ( $this.hasClass('csf-save-ajax') ) {
 
             e.preventDefault();
 
@@ -2072,24 +2274,10 @@
             })
             .done( function( response ) {
 
-              clearTimeout(timeout);
-
-              var $result_success = $('.csf-form-success');
-
-              $result_success.empty().append(response.notice).slideDown('fast', function() {
-                timeout = setTimeout( function() {
-                  $result_success.slideUp('fast');
-                }, 2000);
-              });
-
               // clear errors
               $('.csf-error').remove();
 
-              var $append_errors = $('.csf-form-error');
-
-              $append_errors.empty().hide();
-
-              if( Object.keys( response.errors ).length ) {
+              if ( Object.keys( response.errors ).length ) {
 
                 var error_icon = '<i class="csf-label-error csf-error">!</i>';
 
@@ -2099,23 +2287,17 @@
                       $link  = $('#csf-tab-link-'+ ($field.closest('.csf-section').index()+1)),
                       $tab   = $link.closest('.csf-tab-depth-0');
 
-                  $field.closest('.csf-fieldset').append( '<p class="csf-text-error csf-error">'+ error_message +'</p>' );
+                  $field.closest('.csf-fieldset').append( '<p class="csf-error csf-error-text">'+ error_message +'</p>' );
 
-                  if( !$link.find('.csf-error').length ) {
+                  if ( !$link.find('.csf-error').length ) {
                     $link.append( error_icon );
                   }
 
-                  if( !$tab.find('.csf-arrow .csf-error').length ) {
+                  if ( !$tab.find('.csf-arrow .csf-error').length ) {
                     $tab.find('.csf-arrow').append( error_icon );
                   }
 
-                  console.log(error_message);
-
-                  $append_errors.append( '<div>'+ error_icon +' '+ error_message + '</div>' );
-
                 });
-
-                $append_errors.show();
 
               }
 
@@ -2123,10 +2305,26 @@
               $buttons.prop('disabled', false).attr('value', $value);
               flooding = false;
 
+              CSF.vars.form_modified = false;
+              CSF.vars.$form_warning.hide();
+
+              clearTimeout(timeout);
+
+              var $result_success = $('.csf-form-success');
+              $result_success.empty().append(response.notice).fadeIn('fast', function() {
+                timeout = setTimeout( function() {
+                  $result_success.fadeOut('fast');
+                }, 1000);
+              });
+
             })
             .fail( function( response ) {
               alert( response.error );
             });
+
+          } else {
+
+            CSF.vars.form_modified = false;
 
           }
 
@@ -2134,6 +2332,54 @@
 
         flooding = true;
 
+      });
+
+    });
+  };
+
+  //
+  // Option Framework
+  //
+  $.fn.csf_options = function() {
+    return this.each( function() {
+
+      var $this         = $(this),
+          $content      = $this.find('.csf-content'),
+          $form_success = $this.find('.csf-form-success'),
+          $form_warning = $this.find('.csf-form-warning'),
+          $save_button  = $this.find('.csf-header .csf-save');
+
+      CSF.vars.$form_warning = $form_warning;
+
+      // Shows a message white leaving theme options without saving
+      if ( $form_warning.length ) {
+
+        window.onbeforeunload = function() {
+          return ( CSF.vars.form_modified ) ? true : undefined;
+        };
+
+        $content.on('change keypress', ':input', function() {
+          if ( !CSF.vars.form_modified ) {
+            $form_success.hide();
+            $form_warning.fadeIn('fast');
+            CSF.vars.form_modified = true;
+          }
+        });
+
+      }
+
+      if ( $form_success.hasClass('csf-form-show') ) {
+        setTimeout( function() {
+          $form_success.fadeOut('fast');
+        }, 1000);
+      }
+
+      $(document).keydown(function (event) {
+        if ( ( event.ctrlKey || event.metaKey ) && event.which === 83 ) {
+          $save_button.trigger('click');
+          event.preventDefault();
+          return false;
+        }
       });
 
     });
@@ -2148,14 +2394,14 @@
       var $this = $(this),
           $form = $this.parents('form');
 
-      if( $form.attr('id') === 'addtag' ) {
+      if ( $form.attr('id') === 'addtag' ) {
 
         var $submit = $form.find('#submit'),
             $cloned = $this.find('.csf-field').csf_clone();
 
         $submit.on( 'click', function() {
 
-          if( !$form.find('.form-required').hasClass('form-invalid') ) {
+          if ( !$form.find('.form-required').hasClass('form-invalid') ) {
 
             $this.data('inited', false);
 
@@ -2195,7 +2441,7 @@
 
         $.each(shortcode_values, function( shortcode_tag, shortcode_value ) {
 
-          if( shortcode_tag === 'content' ) {
+          if ( shortcode_tag === 'content' ) {
 
             shortcode += ']';
             shortcode += shortcode_value;
@@ -2221,9 +2467,9 @@
 
       var shortcode = '';
 
-      if( shortcode_value !== '' ) {
+      if ( shortcode_value !== '' ) {
 
-        if( typeof shortcode_value === 'object' && !$.isArray( shortcode_value ) ) {
+        if ( typeof shortcode_value === 'object' && !$.isArray( shortcode_value ) ) {
 
           $.each(shortcode_value, function( sub_shortcode_tag, sub_shortcode_value ) {
 
@@ -2236,7 +2482,7 @@
 
             }
 
-            if( sub_shortcode_value !== '' ) {
+            if ( sub_shortcode_value !== '' ) {
               shortcode += ' ' + sub_shortcode_tag.replace('-', '_') + '="' + sub_shortcode_value.toString() + '"';
             }
 
@@ -2258,7 +2504,7 @@
 
       var obj = ( typeof _this[0].name !== 'undefined' ) ? _this[0] : _this;
 
-      if( obj.value.length && typeof obj.selectionStart !== 'undefined' ) {
+      if ( obj.value.length && typeof obj.selectionStart !== 'undefined' ) {
         obj.focus();
         return obj.value.substring( 0, obj.selectionStart ) + currentValue + obj.value.substring( obj.selectionEnd, obj.value.length );
       } else {
@@ -2272,11 +2518,11 @@
 
       var tinymce_editor;
 
-      if( typeof tinymce !== 'undefined' ) {
+      if ( typeof tinymce !== 'undefined' ) {
         tinymce_editor = tinymce.get( editor_id );
       }
 
-      if( tinymce_editor && !tinymce_editor.isHidden() ) {
+      if ( tinymce_editor && !tinymce_editor.isHidden() ) {
         tinymce_editor.execCommand( 'mceInsertContent', false, html );
       } else {
         var $editor = $('#'+editor_id);
@@ -2314,10 +2560,10 @@
         target_id    = $button.data('target-id')    || false;
         gutenberg_id = $button.data('gutenberg-id') || false;
 
-        $modal.show();
+        $modal.removeClass('hidden');
 
         // single usage trigger first shortcode
-        if( $modal.hasClass('csf-shortcode-single') && sc_name === undefined ) {
+        if ( $modal.hasClass('csf-shortcode-single') && sc_name === undefined ) {
           $select.trigger('change');
         }
 
@@ -2335,7 +2581,7 @@
 
         $load.empty();
 
-        if( sc_key ) {
+        if ( sc_key ) {
 
           $loading.show();
 
@@ -2370,8 +2616,10 @@
 
         e.preventDefault();
 
+        if ( $insert.prop('disabled') || $insert.attr('disabled') ) { return; }
+
         var shortcode = '';
-        var serialize = $modal.find('.csf-field:not(.hidden)').find(':input').serializeObjectCSF();
+        var serialize = $modal.find('.csf-field:not(.csf-depend-on)').find(':input:not(.ignore)').serializeObjectCSF();
 
         switch ( sc_view ) {
 
@@ -2405,12 +2653,14 @@
 
         }
 
-        if( gutenberg_id ) {
+        shortcode = ( shortcode === '' ) ? '['+ sc_name +']' : shortcode;
+
+        if ( gutenberg_id ) {
 
           var content = window.csf_gutenberg_props.attributes.hasOwnProperty('shortcode') ? window.csf_gutenberg_props.attributes.shortcode : '';
           window.csf_gutenberg_props.setAttributes({shortcode: content + shortcode});
 
-        } else if( editor_id ) {
+        } else if ( editor_id ) {
 
           base.send_to_editor( shortcode, editor_id );
 
@@ -2421,7 +2671,7 @@
 
         }
 
-        $modal.hide();
+        $modal.addClass('hidden');
 
       });
 
@@ -2450,154 +2700,7 @@
       });
 
       $modal.on('click', '.csf-modal-close, .csf-modal-overlay', function() {
-        $modal.hide();
-      });
-
-    });
-  };
-
-  //
-  // Helper Checkbox Checker
-  //
-  $.fn.csf_checkbox = function() {
-    return this.each( function() {
-
-      var $this     = $(this),
-          $input    = $this.find('.csf--input'),
-          $checkbox = $this.find('.csf--checkbox');
-
-      $checkbox.on('click', function() {
-        $input.val( Number( $checkbox.prop('checked') ) ).trigger('change');
-      });
-
-    });
-  };
-
-  //
-  // Field: wp_editor
-  //
-  $.fn.csf_field_wp_editor = function() {
-    return this.each( function() {
-
-      if( typeof window.wp.editor === 'undefined' || typeof window.tinyMCEPreInit === 'undefined' || typeof window.tinyMCEPreInit.mceInit.csf_wp_editor === 'undefined' ) {
-        return;
-      }
-
-      var $this     = $(this),
-          $editor   = $this.find('.csf-wp-editor'),
-          $textarea = $this.find('textarea');
-
-      // If there is wp-editor remove it for avoid dupliated wp-editor conflicts.
-      var $has_wp_editor = $this.find('.wp-editor-wrap').length || $this.find('.mce-container').length;
-
-      if( $has_wp_editor ) {
-        $editor.empty();
-        $editor.append($textarea);
-        $textarea.css('display', '');
-      }
-
-      // Generate a unique id
-      var uid = CSF.helper.uid('csf-editor-');
-
-      $textarea.attr('id', uid);
-
-      // Get default editor settings
-      var default_editor_settings = {
-        tinymce: window.tinyMCEPreInit.mceInit.csf_wp_editor,
-        quicktags: window.tinyMCEPreInit.qtInit.csf_wp_editor
-      };
-
-      // Get default editor settings
-      var field_editor_settings = $editor.data('editor-settings');
-
-      // Add on change event handle
-      var editor_on_change = function( editor ) {
-        editor.on('change', CSF.helper.debounce( function() {
-          editor.save();
-          $textarea.trigger('change');
-        }, 250 ) );
-      };
-
-      // Extend editor selector and on change event handler
-      default_editor_settings.tinymce = $.extend( {}, default_editor_settings.tinymce, { selector: '#'+ uid, setup: editor_on_change } );
-
-      // Override editor tinymce settings
-      if( field_editor_settings.tinymce === false ) {
-        default_editor_settings.tinymce = false;
-        $editor.addClass('csf-no-tinymce');
-      }
-
-      // Override editor quicktags settings
-      if( field_editor_settings.quicktags === false ) {
-        default_editor_settings.quicktags = false;
-        $editor.addClass('csf-no-quicktags');
-      }
-
-      // Wait until :visible
-      var interval = setInterval(function () {
-        if( $this.is(':visible') ) {
-          window.wp.editor.initialize(uid, default_editor_settings);
-          clearInterval(interval);
-        }
-      });
-
-      // Add Media buttons
-      if( field_editor_settings.media_buttons && window.csf_media_buttons ) {
-
-        var $editor_buttons = $editor.find('.wp-media-buttons');
-
-        if( $editor_buttons.length ) {
-
-          $editor_buttons.find('.csf-shortcode-button').data('editor-id', uid);
-
-        } else {
-
-          var $media_buttons = $(window.csf_media_buttons);
-
-          $media_buttons.find('.csf-shortcode-button').data('editor-id', uid);
-
-          $editor.prepend( $media_buttons );
-
-        }
-
-      }
-
-    });
-
-  };
-
-  //
-  // Siblings
-  //
-  $.fn.csf_siblings = function() {
-    return this.each( function() {
-
-      var $this     = $(this),
-          $siblings = $this.find('.csf--sibling'),
-          multiple  = $this.data('multiple') || false;
-
-      $siblings.on('click', function() {
-
-        var $sibling = $(this);
-
-        if( multiple ) {
-
-          if( $sibling.hasClass('csf--active') ) {
-            $sibling.removeClass('csf--active');
-            $sibling.find('input').prop('checked', false).trigger('change');
-          } else {
-            $sibling.addClass('csf--active');
-            $sibling.find('input').prop('checked', true).trigger('change');
-          }
-
-        } else {
-
-          $this.find('input').prop('checked', false);
-          $sibling.find('input').prop('checked', true).trigger('change');
-          $sibling.addClass('csf--active').siblings().removeClass('csf--active');
-
-        }
-
+        $modal.addClass('hidden');
       });
 
     });
@@ -2606,19 +2709,19 @@
   //
   // WP Color Picker
   //
-  if( typeof Color === 'function' ) {
+  if ( typeof Color === 'function' ) {
 
-    Color.fn.toString = function() {
+    Color.prototype.toString = function() {
 
-      if( this._alpha < 1 ) {
+      if ( this._alpha < 1 ) {
         return this.toCSS('rgba', this._alpha).replace(/\s+/g, '');
       }
 
       var hex = parseInt( this._color, 10 ).toString( 16 );
 
-      if( this.error ) { return ''; }
+      if ( this.error ) { return ''; }
 
-      if( hex.length < 6 ) {
+      if ( hex.length < 6 ) {
         for (var i = 6 - hex.length - 1; i >= 0; i--) {
           hex = '0' + hex;
         }
@@ -2649,7 +2752,7 @@
           $container;
 
       // Destroy and Reinit
-      if( $input.hasClass('wp-color-picker') ) {
+      if ( $input.hasClass('wp-color-picker') ) {
         $input.closest('.wp-picker-container').after($input).remove();
       }
 
@@ -2673,19 +2776,19 @@
                                 '<div class="csf--transparent-slider"></div>' +
                                 '<div class="csf--transparent-offset"></div>' +
                                 '<div class="csf--transparent-text"></div>' +
-                                '<div class="csf--transparent-button button button-small">transparent</div>' +
+                                '<div class="csf--transparent-button">transparent <i class="fas fa-toggle-off"></i></div>' +
                                 '</div>').appendTo( $container.find('.wp-picker-holder') ),
               $transparent_slider = $transparent_wrap.find('.csf--transparent-slider'),
               $transparent_text   = $transparent_wrap.find('.csf--transparent-text'),
               $transparent_offset = $transparent_wrap.find('.csf--transparent-offset'),
               $transparent_button = $transparent_wrap.find('.csf--transparent-button');
 
-          if( $input.val() === 'transparent' ) {
+          if ( $input.val() === 'transparent' ) {
             $container.addClass('csf--transparent-active');
           }
 
           $transparent_button.on('click', function() {
-            if( $input.val() !== 'transparent' ) {
+            if ( $input.val() !== 'transparent' ) {
               $input.val('transparent').trigger('change').removeClass('iris-error');
               $container.addClass('csf--transparent-active');
             } else {
@@ -2737,14 +2840,6 @@
 
               });
 
-              $container.on('click', '.wp-color-result', function() {
-                $transparent_wrap.toggle();
-              });
-
-              $('body').on( 'click.wpcolorpicker', function() {
-                $transparent_wrap.hide();
-              });
-
             }
           });
         }
@@ -2761,33 +2856,170 @@
 
       var $this       = $(this),
           $inited     = $this.parent().find('.chosen-container'),
-          is_multi    = $this.attr('multiple') || false,
-          set_width   = is_multi ? '100%' : 'auto',
+          is_sortable = $this.hasClass('csf-chosen-sortable') || false,
+          is_ajax     = $this.hasClass('csf-chosen-ajax') || false,
+          is_multiple = $this.attr('multiple') || false,
+          set_width   = is_multiple ? '100%' : 'auto',
           set_options = $.extend({
             allow_single_deselect: true,
-            disable_search_threshold: 15,
-            width: set_width
-          }, $this.data());
+            disable_search_threshold: 10,
+            width: set_width,
+            no_results_text: window.csf_vars.i18n.no_results_text,
+          }, $this.data('chosen-settings'));
 
-      if( $inited.length ) {
+      if ( $inited.length ) {
         $inited.remove();
       }
 
-      $this.chosen(set_options);
+      // Chosen ajax
+      if ( is_ajax ) {
+
+        var set_ajax_options = $.extend({
+          data: {
+            type: 'post',
+            nonce: '',
+          },
+          allow_single_deselect: true,
+          disable_search_threshold: -1,
+          width: '100%',
+          min_length: 3,
+          type_delay: 500,
+          typing_text: window.csf_vars.i18n.typing_text,
+          searching_text: window.csf_vars.i18n.searching_text,
+          no_results_text: window.csf_vars.i18n.no_results_text,
+        }, $this.data('chosen-settings'));
+
+        $this.CSFAjaxChosen(set_ajax_options);
+
+      } else {
+
+        $this.chosen(set_options);
+
+      }
+
+      // Chosen keep options order
+      if ( is_multiple ) {
+
+        var $hidden_select = $this.parent().find('.csf-hide-select');
+        var $hidden_value  = $hidden_select.val() || [];
+
+        $this.on('change', function(obj, result) {
+
+          if ( result && result.selected ) {
+            $hidden_select.append( '<option value="'+ result.selected +'" selected="selected">'+ result.selected +'</option>' );
+          } else if ( result && result.deselected ) {
+            $hidden_select.find('option[value="'+ result.deselected +'"]').remove();
+          }
+
+          // Force customize refresh
+          if ( window.wp.customize !== undefined && $hidden_select.children().length === 0 && $hidden_select.data('customize-setting-link') ) {
+            window.wp.customize.control( $hidden_select.data('customize-setting-link') ).setting.set('');
+          }
+
+          $hidden_select.trigger('change');
+
+        });
+
+        // Chosen order abstract
+        $this.CSFChosenOrder($hidden_value, true);
+
+      }
+
+      // Chosen sortable
+      if ( is_sortable ) {
+
+        var $chosen_container = $this.parent().find('.chosen-container');
+        var $chosen_choices   = $chosen_container.find('.chosen-choices');
+
+        $chosen_choices.bind('mousedown', function( event ) {
+          if ( $(event.target).is('span') ) {
+            event.stopPropagation();
+          }
+        });
+
+        $chosen_choices.sortable({
+          items: 'li:not(.search-field)',
+          helper: 'orginal',
+          cursor: 'move',
+          placeholder: 'search-choice-placeholder',
+          start: function(e,ui) {
+            ui.placeholder.width( ui.item.innerWidth() );
+            ui.placeholder.height( ui.item.innerHeight() );
+          },
+          update: function( e, ui ) {
+
+            var select_options = '';
+            var chosen_object  = $this.data('chosen');
+            var $prev_select   = $this.parent().find('.csf-hide-select');
+
+            $chosen_choices.find('.search-choice-close').each( function() {
+              var option_array_index = $(this).data('option-array-index');
+              $.each(chosen_object.results_data, function(index, data) {
+                if ( data.array_index === option_array_index ){
+                  select_options += '<option value="'+ data.value +'" selected>'+ data.value +'</option>';
+                }
+              });
+            });
+
+            $prev_select.children().remove();
+            $prev_select.append(select_options);
+            $prev_select.trigger('change');
+
+          }
+        });
+
+      }
 
     });
   };
 
   //
-  // Number (only allow numeric inputs)
+  // Helper Checkbox Checker
   //
-  $.fn.csf_number = function() {
+  $.fn.csf_checkbox = function() {
     return this.each( function() {
 
-      $(this).on('keypress', function( e ) {
+      var $this     = $(this),
+          $input    = $this.find('.csf--input'),
+          $checkbox = $this.find('.csf--checkbox');
 
-        if( e.keyCode !== 0 && e.keyCode !== 8 && e.keyCode !== 45 && e.keyCode !== 46 && ( e.keyCode < 48 || e.keyCode > 57 ) ) {
-          return false;
+      $checkbox.on('click', function() {
+        $input.val( Number( $checkbox.prop('checked') ) ).trigger('change');
+      });
+
+    });
+  };
+
+  //
+  // Siblings
+  //
+  $.fn.csf_siblings = function() {
+    return this.each( function() {
+
+      var $this     = $(this),
+          $siblings = $this.find('.csf--sibling'),
+          multiple  = $this.data('multiple') || false;
+
+      $siblings.on('click', function() {
+
+        var $sibling = $(this);
+
+        if ( multiple ) {
+
+          if ( $sibling.hasClass('csf--active') ) {
+            $sibling.removeClass('csf--active');
+            $sibling.find('input').prop('checked', false).trigger('change');
+          } else {
+            $sibling.addClass('csf--active');
+            $sibling.find('input').prop('checked', true).trigger('change');
+          }
+
+        } else {
+
+          $this.find('input').prop('checked', false);
+          $sibling.find('input').prop('checked', true).trigger('change');
+          $sibling.addClass('csf--active').siblings().removeClass('csf--active');
+
         }
 
       });
@@ -2819,7 +3051,7 @@
         },
         mouseleave: function() {
 
-          if( $tooltip !== undefined ) {
+          if ( $tooltip !== undefined ) {
             $tooltip.remove();
           }
 
@@ -2839,14 +3071,14 @@
       var $this    = $(this),
           $complex = $this.closest('.csf-customize-complex');
 
-      if( $complex.length ) {
+      if ( $complex.length ) {
 
         var $input  = $complex.find(':input'),
             $unique = $complex.data('unique-id'),
             $option = $complex.data('option-id'),
             obj     = $input.serializeObjectCSF(),
             data    = ( !$.isEmptyObject(obj) ) ? obj[$unique][$option] : '',
-            control = wp.customize.control($unique +'['+ $option +']');
+            control = window.wp.customize.control($unique +'['+ $option +']');
 
         // clear the value to force refresh.
         control.setting._value = null;
@@ -2875,24 +3107,21 @@
 
     return this.each( function() {
 
-      if( window.wp.customize === undefined ) { return; }
+      if ( window.wp.customize === undefined ) { return; }
 
       var $this     = ( settings.closest ) ? $(this).closest('.csf-customize-complex') : $(this),
           $input    = $this.find(':input'),
           unique_id = $this.data('unique-id'),
           option_id = $this.data('option-id');
 
-      if( unique_id === undefined ) { return; }
+      if ( unique_id === undefined ) { return; }
 
       $input.on('change keyup', CSF.helper.debounce( function() {
 
         var obj = $this.find(':input').serializeObjectCSF();
+        var val = ( !$.isEmptyObject(obj) && obj[unique_id] && obj[unique_id][option_id] ) ? obj[unique_id][option_id] : '';
 
-        if( !$.isEmptyObject(obj) && obj[unique_id] ) {
-
-          window.wp.customize.control( unique_id +'['+ option_id +']' ).setting.set( obj[unique_id][option_id] );
-
-        }
+        window.wp.customize.control( unique_id +'['+ option_id +']' ).setting.set( val );
 
       }, 250 ) );
 
@@ -2902,15 +3131,23 @@
   //
   // Customizer Listener for Reload JS
   //
-  $(document).on('expanded', '.control-section-csf', function() {
+  $(document).on('expanded', '.control-section', function() {
 
-    var $this = $(this);
+    var $this  = $(this);
 
-    if( $this.hasClass('open') && !$this.data('inited') ) {
-      $this.csf_dependency();
-      $this.find('.csf-customize-field').csf_reload_script({dependency: false});
-      $this.find('.csf-customize-complex').csf_customizer_listen();
+    if ( $this.hasClass('open') && !$this.data('inited') ) {
+
+      var $fields  = $this.find('.csf-customize-field');
+      var $complex = $this.find('.csf-customize-complex');
+
+      if ( $fields.length ) {
+        $this.csf_dependency();
+        $fields.csf_reload_script({dependency: false});
+        $complex.csf_customizer_listen();
+      }
+
       $this.data('inited', true);
+
     }
 
   });
@@ -2922,7 +3159,7 @@
 
     var window_width = navigator.userAgent.indexOf('AppleWebKit/') > -1 ? CSF.vars.$window.width() : window.innerWidth;
 
-    if( window_width <= 782 && !CSF.vars.onloaded ) {
+    if ( window_width <= 782 && !CSF.vars.onloaded ) {
       $('.csf-section').csf_reload_script();
       CSF.vars.onloaded  = true;
     }
@@ -2933,7 +3170,7 @@
   // Widgets Framework
   //
   $.fn.csf_widgets = function() {
-    if( this.length ) {
+    if ( this.length ) {
 
       $(document).on('widget-added widget-updated', function( event, $widget ) {
         $widget.find('.csf-fields').csf_reload_script();
@@ -2951,6 +3188,25 @@
   };
 
   //
+  // Nav Menu Options Framework
+  //
+  $.fn.csf_nav_menu = function() {
+    return this.each( function() {
+
+      var $navmenu = $(this);
+
+      $navmenu.on('click', 'a.item-edit', function() {
+        $(this).closest('li.menu-item').find('.csf-fields').csf_reload_script();
+      });
+
+      $navmenu.on('sortstop', function( event, ui ) {
+        ui.item.find('.csf-fields').csf_reload_script_retry();
+      });
+
+    });
+  };
+
+  //
   // Retry Plugins
   //
   $.fn.csf_reload_script_retry = function() {
@@ -2958,7 +3214,7 @@
 
       var $this = $(this);
 
-      if( $this.data('inited') ) {
+      if ( $this.data('inited') ) {
         $this.children('.csf-field-wp_editor').csf_field_wp_editor();
       }
 
@@ -2979,7 +3235,7 @@
       var $this = $(this);
 
       // Avoid for conflicts
-      if( !$this.data('inited') ) {
+      if ( !$this.data('inited') ) {
 
         // Field plugins
         $this.children('.csf-field-accordion').csf_field_accordion();
@@ -2992,6 +3248,7 @@
         $this.children('.csf-field-group').csf_field_group();
         $this.children('.csf-field-icon').csf_field_icon();
         $this.children('.csf-field-media').csf_field_media();
+        $this.children('.csf-field-map').csf_field_map();
         $this.children('.csf-field-repeater').csf_field_repeater();
         $this.children('.csf-field-slider').csf_field_slider();
         $this.children('.csf-field-sortable').csf_field_sortable();
@@ -3011,13 +3268,6 @@
         $this.children('.csf-field-link_color').find('.csf-color').csf_color();
         $this.children('.csf-field-typography').find('.csf-color').csf_color();
 
-        // Field allows only number
-        $this.children('.csf-field-dimensions').find('.csf-number').csf_number();
-        $this.children('.csf-field-slider').find('.csf-number').csf_number();
-        $this.children('.csf-field-spacing').find('.csf-number').csf_number();
-        $this.children('.csf-field-spinner').find('.csf-number').csf_number();
-        $this.children('.csf-field-typography').find('.csf-number').csf_number();
-
         // Field chosenjs
         $this.children('.csf-field-select').find('.csf-chosen').csf_chosen();
 
@@ -3032,7 +3282,7 @@
         // Help Tooptip
         $this.children('.csf-field').find('.csf-help').csf_help();
 
-        if( settings.dependency ) {
+        if ( settings.dependency ) {
           $this.csf_dependency();
         }
 
@@ -3051,18 +3301,20 @@
   $(document).ready( function() {
 
     $('.csf-save').csf_save();
-    $('.csf-confirm').csf_confirm();
+    $('.csf-options').csf_options();
+    $('.csf-sticky-header').csf_sticky();
     $('.csf-nav-options').csf_nav_options();
     $('.csf-nav-metabox').csf_nav_metabox();
-    $('.csf-expand-all').csf_expand_all();
-    $('.csf-search').csf_search();
-    $('.csf-sticky-header').csf_sticky();
     $('.csf-taxonomy').csf_taxonomy();
-    $('.csf-shortcode').csf_shortcode();
     $('.csf-page-templates').csf_page_templates();
     $('.csf-post-formats').csf_post_formats();
+    $('.csf-shortcode').csf_shortcode();
+    $('.csf-search').csf_search();
+    $('.csf-confirm').csf_confirm();
+    $('.csf-expand-all').csf_expand_all();
     $('.csf-onload').csf_reload_script();
     $('.widget').csf_widgets();
+    $('#menu-to-edit').csf_nav_menu();
 
   });
 
