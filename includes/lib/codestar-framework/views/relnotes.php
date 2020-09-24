@@ -1,5 +1,16 @@
 <?php if ( ! defined( 'ABSPATH' ) ) { die; } // Cannot access directly. ?>
 
+<h3>v2.1.8</h3>
+<ul>
+  <li>Added: Localized 20+ languages support.</li>
+  <li>Improved: Group/Repeater nested usage feature.</li>
+  <li>Improved: Font Awesome 4 package usage.</li>
+  <li>Updated: "Font Awesome 5 Free" package and added new icons.</li>
+  <li>Updated: Google Web Fonts array.</li>
+  <li>Fixed: Shortcode Framework usage inside plugin issue.</li>
+  <li>Fixed: Spinner and Slider field fractional numbers step validation issue.</li>
+</ul>
+
 <h3>v2.1.7</h3>
 <ul>
   <li>Fixed: Sortable field append new fields after saved issue.</li>

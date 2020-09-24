@@ -23,6 +23,7 @@ Create Review Posts, add reviews to existing post types and enable user reviews.
 * Feature: Premium tease added with Bundle and Addon links
 * Feature: Free version Starcat Review plugin 
 * Fix: Sanitized all $_POST data
+* House-Keeping: Codestar Settings Framework Plugin verion 2.1.8 updated
 * General Fixes
 
 = 0.6.2 =
