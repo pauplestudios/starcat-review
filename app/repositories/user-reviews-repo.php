@@ -210,48 +210,50 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             $props = ['parent' => 0];
 
             if (isset($_POST['post_id']) && !empty($_POST['post_id'])) {
-                $props['post_id'] = $_POST['post_id'];
+                $props['post_id'] = intval($_POST['post_id']);
             }
 
             if (isset($_POST['title']) && !empty($_POST['title'])) {
-                $props['title'] = $_POST['title'];
+                $props['title'] = sanitize_text_field($_POST['title']);
             }
 
             if (isset($_POST['description']) && !empty($_POST['description'])) {
-                $props['description'] = $_POST['description'];
+                $props['description'] = sanitize_textarea_field($_POST['description']);
             }
 
             if (isset($_POST['pros']) && !empty($_POST['pros'])) {
-                $props['pros'] = $this->get_prosandcons($_POST['pros']);
+                $props['pros'] = $this->get_prosandcons(wp_unslash($_POST['pros']));
             }
 
             if (isset($_POST['cons']) && !empty($_POST['cons'])) {
-                $props['cons'] = $this->get_prosandcons($_POST['cons']);
+                $props['cons'] = $this->get_prosandcons(wp_unslash($_POST['cons']));
             }
 
             if (isset($_POST['scores']) && !empty($_POST['scores'])) {
-                $props['rating'] = $this->get_rating($_POST['scores']);
-                $props['stats'] = $this->get_stat($_POST['scores']);
+                $scores = $this->sanitize_array(wp_unslash($_POST['scores']));
+                $props['rating'] = $this->get_rating($scores);
+                $props['stats'] = $this->get_stat($scores);
             }
 
             if (isset($_POST['parent']) && !empty($_POST['parent'])) {
-                $props['parent'] = $_POST['parent'];
+                $props['parent'] = intval($_POST['parent']);
             }
 
             if (isset($_POST['comment_id']) && !empty($_POST['comment_id'])) {
-                $props['comment_id'] = $_POST['comment_id'];
+                $props['comment_id'] = intval($_POST['comment_id']);
             }
 
             if (isset($_POST['methodType']) && !empty($_POST['methodType'])) {
-                $props['methodType'] = $_POST['methodType'];
+                $props['methodType'] = sanitize_text_field($_POST['methodType']);
             }
 
             if (isset($_POST['captcha']) && !empty($_POST['captcha'])) {
-                $props['captcha'] = $_POST['captcha'];
+                $props['captcha'] = sanitize_key($_POST['captcha']);
             }
 
             if (isset($_POST['attachments']) && !empty($_POST['attachments'])) {
-                $props['attachments'] = $_POST['attachments'];
+                // stored attachement ID only when its available
+                $props['attachments'] = $this->sanitize_array(wp_unslash($_POST['attachments']));
             }
 
             $props = apply_filters('scr_form_process_data', $props);
@@ -263,13 +265,13 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
         {
             $data = [];
             if (isset($_POST['comment_id']) && !empty($_POST['comment_id'])) {
-                $data['comment_id'] = $_POST['comment_id'];
+                $data['comment_id'] = intval($_POST['comment_id']);
             }
 
             if (isset($_POST['vote'])) {
                 $data['vote'] = [
                     'user_id' => get_current_user_id(),
-                    'vote' => $_POST['vote'],
+                    'vote' => intval($_POST['vote']),
                 ];
             }
 
@@ -282,8 +284,8 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
 
             if (isset($features) && !empty($features)) {
                 foreach ($features as $key => $value) {
-                    $items[$key] = [
-                        'item' => $value,
+                    $items[intval($key)] = [
+                        'item' => sanitize_text_field($value),
                     ];
                 }
             }
@@ -322,6 +324,19 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             }
 
             return $stats;
+        }
+
+        private function sanitize_array($data)
+        {
+            $sanitized_data = [];
+            if (is_array($data)) {
+                foreach ($data as $array_key => $value) {
+                    $sanitized_data[$array_key] = intval($value);
+                }
+                return $sanitized_data;
+            }
+
+            return $data;
         }
     }
     // END CLASS
