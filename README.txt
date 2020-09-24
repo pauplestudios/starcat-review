@@ -1,6 +1,6 @@
 === Starcat Review - WordPress Reviews & Rating Plugin ===
 Donate link: https://starcatwp.com
-Tags: helpdesk, support, knowledge base, customer, helpie, documentation
+Tags: review, rating, stats, pros and cons, starcat review
 Requires at least: 5.2
 Tested up to: 5.5.1
 Stable tag: 0.6.3
@@ -22,6 +22,7 @@ Create Review Posts, add reviews to existing post types and enable user reviews.
 = 0.6.3 =
 * Feature: Premium tease added with Bundle and Addon links
 * Feature: Free version Starcat Review plugin 
+* Fix: Sanitized all $_POST data
 * General Fixes
 
 = 0.6.2 =
