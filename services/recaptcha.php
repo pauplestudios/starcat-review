@@ -44,7 +44,7 @@ if (!class_exists('\StarcatReview\Services\Recaptcha')) {
         public static function verify()
         {
             $secret_key = SCR_Getter::get('recaptcha_secret_key');
-            $response = $_POST["captcha"];
+            $response = sanitize_key($_POST["captcha"]);
 
             // error_log('verify');
             // error_log('$_POST : ' . print_r($_POST, true));
@@ -54,20 +54,20 @@ if (!class_exists('\StarcatReview\Services\Recaptcha')) {
             $url = 'https://www.google.com/recaptcha/api/siteverify';
             $data = array(
                 'secret' => $secret_key,
-                'response' => $response
+                'response' => $response,
             );
 
             $query = http_build_query($data);
             $options = array(
                 'http' => array(
                     'header' => "Content-Type: application/x-www-form-urlencoded\r\n" .
-                        "Content-Length: " . strlen($query) . "\r\n" .
-                        "User-Agent:MyAgent/1.0\r\n",
+                    "Content-Length: " . strlen($query) . "\r\n" .
+                    "User-Agent:MyAgent/1.0\r\n",
                     'method' => 'POST',
-                    'content' => $query
-                )
+                    'content' => $query,
+                ),
             );
-            $context  = stream_context_create($options);
+            $context = stream_context_create($options);
             $verify = file_get_contents($url, false, $context);
             $captcha_success = json_decode($verify);
 
