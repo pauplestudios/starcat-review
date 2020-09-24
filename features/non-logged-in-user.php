@@ -98,15 +98,15 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
         {
 
             if (isset($_POST['name']) && !empty($_POST['name'])) {
-                $props['name'] = $_POST['name'];
+                $props['name'] = sanitize_text_field($_POST['name']);
             }
 
             if (isset($_POST['email']) && !empty($_POST['email'])) {
-                $props['email'] = $_POST['email'];
+                $props['email'] = sanitize_email($_POST['email']);
             }
 
             if (isset($_POST['website']) && !empty($_POST['website'])) {
-                $props['website'] = $_POST['website'];
+                $props['website'] = esc_url($_POST['website']);
             }
 
             if (isset($_POST['wp-comment-cookies-consent']) && !empty($_POST['wp-comment-cookies-consent'])) {
