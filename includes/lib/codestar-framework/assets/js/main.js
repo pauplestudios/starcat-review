@@ -45,7 +45,7 @@
     // Quote regular expression characters
     //
     preg_quote: function( str ) {
-      return (str+'').replace(/(\[|\-|\])/g, "\\$1");
+      return (str+'').replace(/(\[|\])/g, "\\$1");
     },
 
     //
@@ -54,7 +54,7 @@
     name_nested_replace: function( $selector, field_id ) {
 
       var checks = [];
-      var regex  = new RegExp('('+ CSF.helper.preg_quote(field_id) +')\\[(\\d+)\\]', 'g');
+      var regex  = new RegExp(CSF.helper.preg_quote(field_id +'[\\d+]'), 'g');
 
       $selector.find(':radio').each(function() {
         if ( this.checked || this.orginal_checked ) {
@@ -480,7 +480,7 @@
           $import = $this.find('.csf-import'),
           $reset  = $this.find('.csf-reset');
 
-      base.notification = function( message_text ) {
+      base.notificationOverlay = function() {
 
         if ( wp.customize.notifications && wp.customize.OverlayNotification ) {
 
@@ -493,8 +493,8 @@
 
           // then show a notification overlay
           wp.customize.notifications.add( new wp.customize.OverlayNotification('csf_field_backup_notification', {
-            type: 'info',
-            message: message_text,
+            type: 'default',
+            message: '&nbsp;',
             loading: true
           }));
 
@@ -508,7 +508,7 @@
 
         if ( CSF.vars.is_confirm ) {
 
-          base.notification( window.csf_vars.i18n.reset_notification );
+          base.notificationOverlay();
 
           window.wp.ajax.post('csf-reset', {
             unique: $reset.data('unique'),
@@ -532,7 +532,7 @@
 
         if ( CSF.vars.is_confirm ) {
 
-          base.notification( window.csf_vars.i18n.import_notification );
+          base.notificationOverlay();
 
           window.wp.ajax.post( 'csf-import', {
             unique: $import.data('unique'),
@@ -658,7 +658,7 @@
 
       }
 
-      $inputs.each( function(){
+      $inputs.each( function() {
 
         var $input = $(this);
 
@@ -781,7 +781,6 @@
           $max      = $group.children('.csf-cloneable-max'),
           $min      = $group.children('.csf-cloneable-min'),
           field_id  = $wrapper.data('field-id'),
-          unique_id = $wrapper.data('unique-id'),
           is_number = Boolean( Number( $wrapper.data('title-number') ) ),
           max       = parseInt( $wrapper.data('max') ),
           min       = parseInt( $wrapper.data('min') );
@@ -874,18 +873,12 @@
           return;
         }
 
-        var new_field_id = unique_id + field_id + '['+ count +']';
-
         var $cloned_item = $hidden.csf_clone(true);
 
         $cloned_item.removeClass('csf-cloneable-hidden');
 
         $cloned_item.find(':input[name!="_pseudo"]').each( function() {
-          this.name = new_field_id + this.name.replace( ( this.name.startsWith('_nonce') ? '_nonce' : unique_id ), '');
-        });
-
-        $cloned_item.find('.csf-data-wrapper').each( function(){
-          $(this).attr('data-unique-id', new_field_id );
+          this.name = this.name.replace( '___', '' ).replace( field_id +'[0]', field_id +'['+ count +']' );
         });
 
         $wrapper.append($cloned_item);
@@ -918,20 +911,13 @@
             $cloned_helper  = $parent.children('.csf-cloneable-helper').csf_clone(true),
             $cloned_title   = $parent.children('.csf-cloneable-title').csf_clone(),
             $cloned_content = $parent.children('.csf-cloneable-content').csf_clone(),
-            cloned_regex    = new RegExp('('+ CSF.helper.preg_quote(field_id) +')\\[(\\d+)\\]', 'g');
+            $cloned_item    = $('<div class="csf-cloneable-item" />');
 
-        $cloned_content.find('.csf-data-wrapper').each( function(){
-          var $this = $(this);
-          $this.attr('data-unique-id', $this.attr('data-unique-id').replace(cloned_regex, field_id +'['+ ($parent.index()+1) +']') );
-        });
+        $cloned_item.append($cloned_helper);
+        $cloned_item.append($cloned_title);
+        $cloned_item.append($cloned_content);
 
-        var $cloned = $('<div class="csf-cloneable-item" />');
-
-        $cloned.append($cloned_helper);
-        $cloned.append($cloned_title);
-        $cloned.append($cloned_content);
-
-        $wrapper.children().eq($parent.index()).after($cloned);
+        $wrapper.children().eq($parent.index()).after($cloned_item);
 
         CSF.helper.name_nested_replace( $wrapper.children('.csf-cloneable-item'), field_id );
 
@@ -1298,10 +1284,8 @@
           $max      = $repeater.children('.csf-repeater-max'),
           $min      = $repeater.children('.csf-repeater-min'),
           field_id  = $wrapper.data('field-id'),
-          unique_id = $wrapper.data('unique-id'),
           max       = parseInt( $wrapper.data('max') ),
           min       = parseInt( $wrapper.data('min') );
-
 
       $wrapper.children('.csf-repeater-item').children('.csf-repeater-content').csf_reload_script();
 
@@ -1333,18 +1317,12 @@
           return;
         }
 
-        var new_field_id = unique_id + field_id + '['+ count +']';
-
         var $cloned_item = $hidden.csf_clone(true);
 
         $cloned_item.removeClass('csf-repeater-hidden');
 
         $cloned_item.find(':input[name!="_pseudo"]').each( function() {
-          this.name = new_field_id + this.name.replace( ( this.name.startsWith('_nonce') ? '_nonce' : unique_id ), '');
-        });
-
-        $cloned_item.find('.csf-data-wrapper').each( function(){
-          $(this).attr('data-unique-id', new_field_id );
+          this.name = this.name.replace( '___', '' ).replace( field_id +'[0]', field_id +'['+ count +']' );
         });
 
         $wrapper.append($cloned_item);
@@ -1371,21 +1349,14 @@
             $parent         = $this.parent().parent().parent(),
             $cloned_content = $parent.children('.csf-repeater-content').csf_clone(),
             $cloned_helper  = $parent.children('.csf-repeater-helper').csf_clone(true),
-            cloned_regex    = new RegExp('('+ CSF.helper.preg_quote(field_id) +')\\[(\\d+)\\]', 'g');
+            $cloned_item    = $('<div class="csf-repeater-item" />');
 
-        $cloned_content.find('.csf-data-wrapper').each( function(){
-          var $this = $(this);
-          $this.attr('data-unique-id', $this.attr('data-unique-id').replace(cloned_regex, field_id +'['+ ($parent.index()+1) +']') );
-        });
+        $cloned_item.append($cloned_content);
+        $cloned_item.append($cloned_helper);
 
-        var $cloned = $('<div class="csf-repeater-item" />');
+        $wrapper.children().eq($parent.index()).after($cloned_item);
 
-        $cloned.append($cloned_content);
-        $cloned.append($cloned_helper);
-
-        $wrapper.children().eq($parent.index()).after($cloned);
-
-        $cloned.children('.csf-repeater-content').csf_reload_script();
+        $cloned_item.children('.csf-repeater-content').csf_reload_script();
 
         CSF.helper.name_nested_replace( $wrapper.children('.csf-repeater-item'), field_id );
 
@@ -1444,9 +1415,9 @@
       $slider.slider({
         range: 'min',
         value: value,
-        min: data.min,
-        max: data.max,
-        step: data.step,
+        min: data.min || 0,
+        max: data.max || 100,
+        step: data.step || 1,
         slide: function( e, o ) {
           $input.val( o.value ).trigger('change');
         }
@@ -1535,19 +1506,19 @@
       var $this   = $(this),
           $input  = $this.find('input'),
           $inited = $this.find('.ui-spinner-button'),
-          $unit   = $input.data('unit');
+          data    = $input.data();
 
       if ( $inited.length ) {
         $inited.remove();
       }
 
       $input.spinner({
-        max: $input.data('max') || 100,
-        min: $input.data('min') || 0,
-        step: $input.data('step') || 1,
+        min: data.min || 0,
+        max: data.max || 100,
+        step: data.step || 1,
         create: function( event, ui ) {
-          if ( $unit.length ) {
-            $this.find('.ui-spinner-up').after('<span class="ui-button-text-only csf--unit">'+ $unit +'</span>');
+          if ( data.unit ) {
+            $this.find('.ui-spinner-up').after('<span class="ui-button-text-only csf--unit">'+ data.unit +'</span>');
           }
         },
         spin: function (event, ui ) {
@@ -1722,7 +1693,7 @@
 
           var $chosen_selects = $this.find('select');
 
-          $chosen_selects.each( function(){
+          $chosen_selects.each( function() {
 
             var $chosen_select = $(this),
                 $chosen_inited = $chosen_select.parent().find('.chosen-container');
@@ -2224,7 +2195,7 @@
     });
   };
 
-  $.fn.serializeObject = function(){
+  $.fn.serializeObject = function() {
 
     var obj = {};
 
