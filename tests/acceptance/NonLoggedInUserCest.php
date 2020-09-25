@@ -21,6 +21,7 @@ class NonLoggedInUserCest
 
         $this->settings_non_loggedin($I);
 
+
         $I->amOnPage('/product/album/');
         $I->see('Reviews (0)');
         $I->click('#tab-reviews');
@@ -43,7 +44,8 @@ class NonLoggedInUserCest
 
         $this->can_see_non_logged_in_fields($I);
 
-        $I->submitForm('form.form.scr-user-review',
+        $I->submitForm(
+            'form.form.scr-user-review',
             [
                 'name' => 'Miles Davis',
                 'email' => 'milesdavis@gmail.com',
@@ -56,7 +58,6 @@ class NonLoggedInUserCest
                 'wp-comment-cookies-consent' => 'checked',
             ]
         );
-
     }
 
     private function can_see_non_logged_in_fields($I)
@@ -67,7 +68,6 @@ class NonLoggedInUserCest
         $I->seeElement($formElement . " [name='website']");
         $I->seeElement($formElement . " [name='scores[]']");
         $I->seeElement($formElement . " [name='wp-comment-cookies-consent']");
-
     }
 
     private function dont_see_non_logged_user_fields($I)
@@ -87,7 +87,6 @@ class NonLoggedInUserCest
         ];
 
         $I->haveOptionInDatabase('scr_options', $options);
-
     }
 
     private function insert_review($I, $props)
