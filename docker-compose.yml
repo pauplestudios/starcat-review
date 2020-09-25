@@ -49,3 +49,15 @@ services:
             MYSQL_USER: wp
             MYSQL_PASSWORD: pass
             MYSQL_RANDOM_ROOT_PASSWORD: "1"
+            MYSQL_ROOT_PASSWORD: password
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: phpmyadmin
+        depends_on:
+            - db
+        environment:
+            PMA_HOST: db
+            MYSQL_ROOT_PASSWORD: password
+        restart: always
+        ports:
+            - 8080:80
