@@ -63,3 +63,5 @@ pipelines:
                         # - npm run-script test-build
                         - docker-compose exec -T -w /var/www/html/wp-content/plugins/starcat-review wordpress ./vendor/bin/codecept build
                         - docker-compose exec -T -w /var/www/html/wp-content/plugins/starcat-review wordpress ./vendor/bin/codecept run acceptance -vvv
+                    artifacts:
+                        - '/var/www/html/wp-content/plugins/starcat-review/tests/_output/*.html
