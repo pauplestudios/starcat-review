@@ -23,6 +23,7 @@ class NonLoggedInUserCest
 
 
         $I->amOnPage('/product/album/');
+        $I->see('Album');
         $I->see('Reviews');
         $I->see('Reviews (0)');
         $I->click('#tab-reviews');
