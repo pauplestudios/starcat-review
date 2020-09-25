@@ -24,6 +24,7 @@ class NonLoggedInUserCest
 
         $I->amOnPage('/product/album/');
         $I->see('Album');
+        $I->see('This is a simple, virtual product.');
         $I->see('Reviews');
         $I->see('Reviews (0)');
         $I->click('#tab-reviews');
