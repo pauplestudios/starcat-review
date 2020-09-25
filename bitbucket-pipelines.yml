@@ -1,65 +1,65 @@
 pipelines:
-  default:
-    - step:
-        name: Build
-        image: php:7.3
-        caches:
-          - composer
-        script:
-          - apt-get update && apt-get install -y unzip
-          - apt-get install git -y
-          - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-          - composer install --ignore-platform-reqs
-          - mkdir artifacts/addons
-          - ls artifacts/addons
-          - cp -r vendor/pauple/upgrader includes/lib
-          - cp -r vendor/pauple/widgetry includes/lib
-          - cp -r vendor/pauple/starcat-review-ct artifacts/addons
-          - cp -r vendor/pauple/starcat-review-cpt artifacts/addons
-          - cp -r vendor/pauple/starcat-review-woo-notify artifacts/addons
-          - cp -r vendor/pauple/starcat-review-photo-reviews artifacts/addons
-          - rm -v artifacts/addons/*/*.json
-          - rm -v artifacts/addons/*/*.md
-          - rm -v artifacts/addons/*/*.log
-          - rm -v artifacts/addons/*/*.lock
-          - rm -v artifacts/addons/**/*.zip
-          - ls artifacts/addons
-          - ls artifacts/addons/starcat-review-ct
-          - ls artifacts/addons/starcat-review-cpt
-          - ls artifacts/addons/starcat-review-woo-notify
-          - ls artifacts/addons/starcat-review-photo-reviews
-          - cp -r artifacts/addons/starcat-review-woo-notify includes/lib
-          - cp bitbucket.env .env
-          - cp artifacts/bitbucket-dump.sql artifacts/dump.sql
-          - php -v
-        artifacts:
-          - "**"
-    - parallel:
+    default:
         - step:
-            name: WP Unit Tests ( Latest )
-            services:
-              - docker
-            caches:
-              - docker
-            script:
-              - chmod +x ./bin/setup-pipeline.sh
-              - ./bin/setup-pipeline.sh
-              # - ls /usr/local/include/php
-              # - php -v
-              # - sleep 20
-              # - npm run-script test-wpunit
-              - docker-compose exec -T wordpress  bash -c "cd /var/www/html/wp-content/plugins && ls"
-              - docker-compose exec -T -w /var/www/html/wp-content/plugins/starcat-review wordpress ./vendor/bin/codecept run wpunit
-        - step:
-            name: Acceptance Tests ( Latest )
-            services:
-              - docker
-            caches:
-              - docker
-            script:
-              - chmod +x ./bin/setup-pipeline.sh
-              - ./bin/setup-pipeline.sh
-              # - docker-compose exec -T -w /var/www/html/wp-content/plugins/starcat-review wordpress wp search-replace 'http://127.0.0.1' 'http://localhost'
-              # - npm run-script test-build
-              - docker-compose exec -T -w /var/www/html/wp-content/plugins/starcat-review wordpress ./vendor/bin/codecept build
-              - docker-compose exec -T -w /var/www/html/wp-content/plugins/starcat-review wordpress ./vendor/bin/codecept run acceptance -vvv
+              name: Build
+              image: php:7.3
+              caches:
+                  - composer
+              script:
+                  - apt-get update && apt-get install -y unzip
+                  - apt-get install git -y
+                  - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+                  - composer install --ignore-platform-reqs
+                  - mkdir artifacts/addons
+                  - ls artifacts/addons
+                  - cp -r vendor/pauple/upgrader includes/lib
+                  - cp -r vendor/pauple/widgetry includes/lib
+                  - cp -r vendor/pauple/starcat-review-ct artifacts/addons
+                  - cp -r vendor/pauple/starcat-review-cpt artifacts/addons
+                  - cp -r vendor/pauple/starcat-review-woo-notify artifacts/addons
+                  - cp -r vendor/pauple/starcat-review-photo-reviews artifacts/addons
+                  - rm -v artifacts/addons/*/*.json
+                  - rm -v artifacts/addons/*/*.md
+                  - rm -v artifacts/addons/*/*.log
+                  - rm -v artifacts/addons/*/*.lock
+                  - rm -v artifacts/addons/**/*.zip
+                  - ls artifacts/addons
+                  - ls artifacts/addons/starcat-review-ct
+                  - ls artifacts/addons/starcat-review-cpt
+                  - ls artifacts/addons/starcat-review-woo-notify
+                  - ls artifacts/addons/starcat-review-photo-reviews
+                  - cp -r artifacts/addons/starcat-review-woo-notify includes/lib
+                  - cp bitbucket.env .env
+                  - cp artifacts/dump.sql artifacts/dump.sql
+                  - php -v
+              artifacts:
+                  - "**"
+        - parallel:
+              - step:
+                    name: WP Unit Tests ( Latest )
+                    services:
+                        - docker
+                    caches:
+                        - docker
+                    script:
+                        - chmod +x ./bin/setup-pipeline.sh
+                        - ./bin/setup-pipeline.sh
+                        # - ls /usr/local/include/php
+                        # - php -v
+                        # - sleep 20
+                        # - npm run-script test-wpunit
+                        - docker-compose exec -T wordpress  bash -c "cd /var/www/html/wp-content/plugins && ls"
+                        - docker-compose exec -T -w /var/www/html/wp-content/plugins/starcat-review wordpress ./vendor/bin/codecept run wpunit
+              - step:
+                    name: Acceptance Tests ( Latest )
+                    services:
+                        - docker
+                    caches:
+                        - docker
+                    script:
+                        - chmod +x ./bin/setup-pipeline.sh
+                        - ./bin/setup-pipeline.sh
+                        # - docker-compose exec -T -w /var/www/html/wp-content/plugins/starcat-review wordpress wp search-replace 'http://127.0.0.1' 'http://localhost'
+                        # - npm run-script test-build
+                        - docker-compose exec -T -w /var/www/html/wp-content/plugins/starcat-review wordpress ./vendor/bin/codecept build
+                        - docker-compose exec -T -w /var/www/html/wp-content/plugins/starcat-review wordpress ./vendor/bin/codecept run acceptance -vvv
