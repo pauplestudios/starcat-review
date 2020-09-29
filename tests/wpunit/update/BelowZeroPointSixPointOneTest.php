@@ -121,7 +121,7 @@ class BelowZeroPointSixPointOneTest extends \Codeception\TestCase\WPTestCase
         }
 
         if (isset($_POST['url']) && !empty($_POST['url'])) {
-            $props['url'] = esc_url($_POST['url']);
+            $props['url'] = esc_url_raw($_POST['url']);
         }
 
         update_comment_meta($comment_id, SCR_COMMENT_META, $props);

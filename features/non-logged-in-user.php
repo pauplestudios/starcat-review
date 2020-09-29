@@ -106,7 +106,7 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
             }
 
             if (isset($_POST['website']) && !empty($_POST['website'])) {
-                $props['website'] = esc_url($_POST['website']);
+                $props['website'] = esc_url_raw($_POST['website']);
             }
 
             if (isset($_POST['wp-comment-cookies-consent']) && !empty($_POST['wp-comment-cookies-consent'])) {
