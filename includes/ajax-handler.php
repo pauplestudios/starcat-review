@@ -87,7 +87,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                     echo json_encode("BOT!");
                     wp_die();
                 }
-                error_log('captcha_success : ' . $captcha_success);
+                // error_log('captcha_success : ' . $captcha_success);
             }
 
             $user_review_repo = new \StarcatReview\App\Repositories\User_Reviews_Repo();

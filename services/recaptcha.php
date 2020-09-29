@@ -44,11 +44,9 @@ if (!class_exists('\StarcatReview\Services\Recaptcha')) {
         public static function verify()
         {
             $secret_key = SCR_Getter::get('recaptcha_secret_key');
-            $response = sanitize_key($_POST["captcha"]);
-
+            $response = sanitize_key(wp_unslash($_POST["captcha"]));
             // error_log('verify');
-            // error_log('$_POST : ' . print_r($_POST, true));
-            // error_log('$response : ' . $response);
+            // error_log('verify');
             // error_log('$response : ' . print_r($response, true));
 
             $url = 'https://www.google.com/recaptcha/api/siteverify';
