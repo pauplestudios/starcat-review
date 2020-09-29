@@ -267,7 +267,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
         {
             //get scr resultSets
             //echo "get scr resultSets";
-            $search_key = $_REQUEST['search_key'];
+            $search_key = sanitize_text_field(wp_unslash($_REQUEST['search_key']));
             $comparison_controller = new \StarcatReview\App\Components\Comparison\Controller();
             $scr_search_result_sets = $comparison_controller->get_scr_details($search_key);
             wp_die();
