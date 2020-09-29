@@ -268,7 +268,7 @@ Main Components
     display: inline-block;
     height: 22px;
     width: 110px;
-    background: url(img/comparison-table/cd-star.svg);
+    background: url(./../img/comparison-table/cd-star.svg);
     color: transparent;
 }
 @media only screen and (min-width: 1170px) {
@@ -391,7 +391,7 @@ Main Components
 }
 .cd-products-table .top-info .check::after {
     /* check icon */
-    background: url(img/comparison-table/cd-check.svg) no-repeat center center;
+    background: url(./../img/comparison-table/cd-check.svg) no-repeat center center;
     background-size: 24px 24px;
     opacity: 0;
     -webkit-transition: opacity 0.3s;
@@ -550,7 +550,7 @@ Main Components
     color: transparent;
     height: 60px;
     width: 40px;
-    background: rgba(64, 64, 66, 0.8) url("img/comparison-table/cd-arrow.svg")
+    background: rgba(64, 64, 66, 0.8) url(./../img/comparison-table/cd-check.svg)
         no-repeat center center;
     border-radius: 3px;
     -webkit-transition: background-color 0.3s, opacity 0.3s, visibility 0.3s,

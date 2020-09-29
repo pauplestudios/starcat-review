@@ -234,12 +234,12 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             wp_enqueue_style('flexbox-grid', SCR_URL . "includes/assets/vendors/flexboxgrid.min.css");
 
             /* Application */
-            wp_register_script('starcat-review-script', SCR_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'));
+            wp_register_script('starcat-review-script', SCR_URL . 'includes/assets/bundle/public.bundle.js', array('jquery'));
             wp_localize_script('starcat-review-script', 'scr_ajax', array(
                 'ajax_url' => admin_url('admin-ajax.php'),
                 'ajax_nonce' => wp_create_nonce('starcat-review-ajax-nonce'),
             ));
-            wp_enqueue_script('starcat-review-script', SCR_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'));
+            wp_enqueue_script('starcat-review-script', SCR_URL . 'includes/assets/bundle/public.bundle.js', array('jquery'));
             wp_localize_script('starcat-review-script', 'scr_ajax', array(
                 'ajax_url' => admin_url('admin-ajax.php'),
                 'ajax_nonce' => wp_create_nonce('starcat-review-ajax-nonce'),
@@ -251,7 +251,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
             wp_localize_script('starcat-review-script', 'Translations', Translations::getFormSrings());
 
-            wp_enqueue_style('style-name', SCR_URL . "includes/assets/bundle/main.bundle.css");
+            wp_enqueue_style('style-name', SCR_URL . "includes/assets/bundle/public.bundle.css");
         }
     } // END CLASS
 

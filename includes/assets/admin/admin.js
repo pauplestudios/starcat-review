@@ -52,4 +52,4 @@ jQuery(document).ready(function () {
     Admin.init();
 });
 
-import "./../admin.scss";
+import "./../admin/admin.scss";

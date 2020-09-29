@@ -13,8 +13,8 @@ const FileManagerPlugin = require("filemanager-webpack-plugin");
 
 const webpackConfig = {
     entry: {
-        main: "./includes/assets/js/main.js",
-        admin: "./includes/assets/js/admin.js",
+        admin: "./includes/assets/admin/admin.js",
+        public: "./includes/assets/public/public.js",
     },
     output: {
         filename: "[name].bundle.js",

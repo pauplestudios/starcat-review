@@ -2,30 +2,30 @@
 // @import "styles/vendors/simple-grid.scss";
 
 /* Main */
-@import "styles/templates.scss";
+@import "scss/templates.scss";
 
 /* Components */
-@import "styles/blocks/controls.scss";
-@import "styles/blocks/search.scss";
-@import "styles/blocks/pagination.scss";
-@import "styles/blocks/collection.scss";
+@import "scss/blocks/controls.scss";
+@import "scss/blocks/search.scss";
+@import "scss/blocks/pagination.scss";
+@import "scss/blocks/collection.scss";
 
-@import "styles/components/comparison-table.scss";
-@import "styles/components/categories-list.scss";
-@import "styles/components/single-list.scss";
-@import "styles/components/summary.scss";
-@import "styles/components/form.scss";
-@import "styles/components/listing.scss";
-@import "styles/components/photos-review.scss";
-@import "styles/components/stats.scss";
-@import "styles/components/pros-and-cons.scss";
+@import "scss/components/comparison-table.scss";
+@import "scss/components/categories-list.scss";
+@import "scss/components/single-list.scss";
+@import "scss/components/summary.scss";
+@import "scss/components/form.scss";
+@import "scss/components/listing.scss";
+@import "scss/components/photos-review.scss";
+@import "scss/components/stats.scss";
+@import "scss/components/pros-and-cons.scss";
 
-@import "styles/components/fixes.scss";
+@import "scss/components/fixes.scss";
 
 /*
     Custom comparison-table Styles
 */
-@import "styles/components/compare-table-custom.scss";
+@import "scss/components/compare-table-custom.scss";
 
 /* Overrides for Dev Environment Only */
 // @import "styles/dev.scss";
