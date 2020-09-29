@@ -49,6 +49,9 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
 
         public function photo_reviews()
         {
+            /**
+             * Escape, sanitization and validation done for below $_POST global in its own add_filter callback's
+             */
             $response = apply_filters('scr_photo_reviews/ajax', $_POST);
             echo json_encode($response);
             wp_die();
@@ -58,7 +61,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
         {
 
             if (isset($_GET['search'])) {
-                $search_query = $_GET['search'];
+                $search_query = sanitize_text_field(wp_unslash($_GET['search']));
 
                 // Check the query variable is available
                 // If not, global it so it can be read from
@@ -87,7 +90,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                     echo json_encode("BOT!");
                     wp_die();
                 }
-                error_log('captcha_success : ' . $captcha_success);
+                // error_log('captcha_success : ' . $captcha_success);
             }
 
             $user_review_repo = new \StarcatReview\App\Repositories\User_Reviews_Repo();
@@ -264,7 +267,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
         {
             //get scr resultSets
             //echo "get scr resultSets";
-            $search_key = $_REQUEST['search_key'];
+            $search_key = sanitize_text_field(wp_unslash($_REQUEST['search_key']));
             $comparison_controller = new \StarcatReview\App\Components\Comparison\Controller();
             $scr_search_result_sets = $comparison_controller->get_scr_details($search_key);
             wp_die();

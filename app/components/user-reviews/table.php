@@ -80,28 +80,28 @@ class UR_List_Table extends WP_List_Table
     {
         global $post_id, $comment_status, $search, $comment_type;
 
-        $comment_status = isset($_REQUEST['comment_status']) ? $_REQUEST['comment_status'] : 'all';
+        $comment_status = isset($_REQUEST['comment_status']) ? sanitize_text_field($_REQUEST['comment_status']) : 'all';
         if (!in_array($comment_status, array('all', 'mine', 'moderated', 'approved', 'spam', 'trash'))) {
             $comment_status = 'all';
         }
 
-        $comment_type = ['review', 'starcat_review'];
+        $comment_type = 'review';
 
-        $search = (isset($_REQUEST['s'])) ? $_REQUEST['s'] : '';
+        $search = (isset($_REQUEST['s'])) ? sanitize_text_field(wp_unslash($_REQUEST['s'])) : '';
 
         $post_type = (isset($_REQUEST['post_type'])) ? sanitize_key($_REQUEST['post_type']) : '';
 
-        $user_id = (isset($_REQUEST['user_id'])) ? $_REQUEST['user_id'] : '';
+        $user_id = (isset($_REQUEST['user_id'])) ? intval($_REQUEST['user_id']) : '';
 
-        $orderby = (isset($_REQUEST['orderby'])) ? $_REQUEST['orderby'] : '';
-        $order = (isset($_REQUEST['order'])) ? $_REQUEST['order'] : '';
+        $orderby = (isset($_REQUEST['orderby'])) ? sanitize_text_field($_REQUEST['orderby']) : '';
+        $order = (isset($_REQUEST['order'])) ? sanitize_text_field($_REQUEST['order']) : '';
 
         $comments_per_page = $this->get_per_page($comment_status);
 
         $doing_ajax = wp_doing_ajax();
 
         if (isset($_REQUEST['number'])) {
-            $number = (int) $_REQUEST['number'];
+            $number = intval($_REQUEST['number']);
         } else {
             $number = $comments_per_page + min(8, $comments_per_page); // Grab a few extra
         }
@@ -109,13 +109,13 @@ class UR_List_Table extends WP_List_Table
         $page = $this->get_pagenum();
 
         if (isset($_REQUEST['start'])) {
-            $start = $_REQUEST['start'];
+            $start = sanitize_text_field($_REQUEST['start']);
         } else {
             $start = ($page - 1) * $comments_per_page;
         }
 
         if ($doing_ajax && isset($_REQUEST['offset'])) {
-            $start += $_REQUEST['offset'];
+            $start += sanitize_text_field($_REQUEST['offset']);
         }
 
         $status_map = array(
@@ -987,7 +987,7 @@ if ('top' === $which) {
     public function column_rating($comment)
     {
         $rating = '---';
-        
+
         if (isset($this->comments_of_stats[$comment->comment_ID]) && !empty($this->comments_of_stats[$comment->comment_ID])) {
             $stat_args = array_merge($this->stat_args, ['items' => $this->comments_of_stats[$comment->comment_ID]]);
             $stat_controller = new \StarcatReview\App\Components\Stats\Controller($stat_args);

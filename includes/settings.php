@@ -242,7 +242,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 array(
                     'id' => 'user_review_settings',
                     'title' => Translations::getStrings('UserReviews'),
-                    'icon' => 'fa fa-commenting',
+                    'icon' => 'fa fa-comment',
                     'fields' => array(
 
                         // array(
