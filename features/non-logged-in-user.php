@@ -110,7 +110,7 @@ if (!class_exists('\StarcatReview\Features\Non_Logged_In_User')) {
             }
 
             if (isset($_POST['wp-comment-cookies-consent']) && !empty($_POST['wp-comment-cookies-consent'])) {
-                $props['wp-comment-cookies-consent'] = $_POST['wp-comment-cookies-consent'];
+                $props['wp-comment-cookies-consent'] = isset($_POST['wp-comment-cookies-consent']);
             }
 
             return $props;

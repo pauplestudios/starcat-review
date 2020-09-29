@@ -49,6 +49,9 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
 
         public function photo_reviews()
         {
+            /**
+             * Escape, sanitization and validation done for below $_POST global in its own add_filter callback's
+             */
             $response = apply_filters('scr_photo_reviews/ajax', $_POST);
             echo json_encode($response);
             wp_die();
@@ -58,7 +61,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
         {
 
             if (isset($_GET['search'])) {
-                $search_query = $_GET['search'];
+                $search_query = esc_attr($_GET['search']);
 
                 // Check the query variable is available
                 // If not, global it so it can be read from

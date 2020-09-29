@@ -105,23 +105,23 @@ class BelowZeroPointSixPointOneTest extends \Codeception\TestCase\WPTestCase
         $props = get_comment_meta($comment_id, SCR_COMMENT_META, true);
 
         if (isset($_POST['first_name']) && !empty($_POST['first_name'])) {
-            $props['first_name'] = $_POST['first_name'];
+            $props['first_name'] = sanitize_text_field($_POST['first_name']);
         }
 
         if (isset($_POST['last_name']) && !empty($_POST['last_name'])) {
-            $props['last_name'] = $_POST['last_name'];
+            $props['last_name'] = sanitize_text_field($_POST['last_name']);
         }
 
         if (isset($_POST['user_email']) && !empty($_POST['user_email'])) {
-            $props['user_email'] = $_POST['user_email'];
+            $props['user_email'] = sanitize_email($_POST['user_email']);
         }
 
         if (isset($_POST['author']) && !empty($_POST['author'])) {
-            $props['author'] = $_POST['author'];
+            $props['author'] = sanitize_text_field($_POST['author']);
         }
 
         if (isset($_POST['url']) && !empty($_POST['url'])) {
-            $props['url'] = $_POST['url'];
+            $props['url'] = esc_url($_POST['url']);
         }
 
         update_comment_meta($comment_id, SCR_COMMENT_META, $props);
