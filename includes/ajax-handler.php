@@ -61,7 +61,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
         {
 
             if (isset($_GET['search'])) {
-                $search_query = esc_attr($_GET['search']);
+                $search_query = sanitize_text_field(wp_unslash($_GET['search']));
 
                 // Check the query variable is available
                 // If not, global it so it can be read from
