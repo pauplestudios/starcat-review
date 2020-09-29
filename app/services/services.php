@@ -63,12 +63,12 @@ if (!class_exists('\StarcatReview\App\Services\Services')) {
 
         public function get_can_edit_comment_capabilities($comment)
         {
+            $comment['can_edit'] = false;
             // return if current_user is not a logged-in-user
             if (isset($comment['user_id']) && $comment['user_id'] == 0) {
                 return $comment;
             }
 
-            $comment['can_edit'] = false;
             // Logged-in-users
             if (get_current_user_id() == $comment['user_id']) {
                 $comment['can_edit'] = true;
