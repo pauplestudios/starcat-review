@@ -1,6 +1,8 @@
+var AmplitudeIntegration = require("./js/amplitude-integration.js");
 
 var Admin = {
     init: function () {
+        AmplitudeIntegration.init();
         this.eventhandlers();
     },
     eventhandlers: function () {
