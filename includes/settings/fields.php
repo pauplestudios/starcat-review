@@ -12,7 +12,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\Fields')) {
     class Fields
     {
 
-        public function single_details_fields()
+        public static function single_details_fields()
         {
             return [
                 array(
@@ -48,7 +48,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\Fields')) {
         }
 
         // Features - Main Settings Options
-        public function stats_field()
+        public static function stats_field()
         {
             return
             array(
@@ -93,7 +93,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\Fields')) {
             );
         }
 
-        public function rich_snippets_fields()
+        public static function rich_snippets_fields()
         {
             return array(
                 array(
@@ -112,7 +112,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\Fields')) {
             );
         }
 
-        public function single_post_prosandcons_fields($id = 'pros-list', $title = 'Pros')
+        public static function single_post_prosandcons_fields($id = 'pros-list', $title = 'Pros')
         {
             return array(
                 array(

@@ -1,9 +1,9 @@
 === Starcat Review - WordPress Reviews & Rating Plugin ===
 Donate link: https://starcatwp.com
-Tags: helpdesk, support, knowledge base, customer, helpie, documentation
+Tags: review, rating, stats, pros and cons, starcat review
 Requires at least: 5.2
-Tested up to: 5.5
-Stable tag: 0.6.2
+Tested up to: 5.5.1
+Stable tag: 0.6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,6 +18,13 @@ Create Review Posts, add reviews to existing post types and enable user reviews.
 4. Done. You can now go to Helpie KB Wiki -> Helpie Settings and check out the settings or learn more at https://helpiewp.com/docs/
 
 == Change Log ==
+
+= 0.6.3 =
+* Feature: Premium tease added with Bundle and Addon links
+* Feature: Free version Starcat Review plugin 
+* Fix: Sanitized all $_POST data
+* House-Keeping: Codestar Settings Framework Plugin verion 2.1.8 updated
+* General Fixes
 
 = 0.6.2 =
 * Fix: Ratings Column for post types in the dashboard ratings are not displaying from V0.6
