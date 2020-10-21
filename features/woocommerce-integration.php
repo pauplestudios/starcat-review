@@ -108,6 +108,7 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration')) {
         {
             $comment = get_comment($comment_id);
             $updated = false;
+            
             if ('product' === get_post_type($comment->comment_post_ID) && isset($props['rating']) && !empty($props['rating'])) {
                 update_comment_meta($comment_id, 'rating', round($props['rating'] / 20));
                 $updated = true;
@@ -120,6 +121,9 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration')) {
         {
             $comment = get_comment($comment_id);
             $verified = false;
+            if ( ! $this->is_woocommerce_active() ) {
+                return $comment;
+            }
             if ('product' === get_post_type($comment->comment_post_ID)) {
                 $verified = wc_customer_bought_product($comment->comment_author_email, $comment->user_id, $comment->comment_post_ID);
                 add_comment_meta($comment_id, 'verified', (int) $verified, true);
@@ -130,13 +134,21 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration')) {
         public function get_is_review_from_verified_owner($comment)
         {
             $comment['is_verified_review'] = false;
-
+            if ( ! $this->is_woocommerce_active() ) {
+                return $comment;
+            }
+          
             if ($comment['parent'] == 0 && 'product' === get_post_type($comment['post_ID']) && get_option('woocommerce_review_rating_verification_label') === 'yes') {
                 $is_customer_bought_product = wc_customer_bought_product($comment['email'], $comment['user_id'], $comment['post_ID']);
                 $comment['is_verified_review'] = ($is_customer_bought_product) ? true : false;
             }
+            
 
             return $comment;
+        }
+
+        protected function is_woocommerce_active(){
+            return is_plugin_active( 'woocommerce/woocommerce.php' );
         }
 
     }
