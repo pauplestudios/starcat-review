@@ -869,7 +869,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         }
         public function general_settings($prefix)
         {
-
+            
             \CSF::createSection(
                 $prefix,
                 array(
@@ -903,7 +903,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'query_args' => array(
                                 'post_type' => 'post',
                             ),
-                            'default' => 'post',
+                            'default' => ['post', 'product'],
                         ),
 
                         array(

@@ -1,23 +1,130 @@
-=== Starcat Review - WordPress Reviews & Rating Plugin ===
+=== Starcat Review - WordPress Reviews & Rating Plugin with Woocommerce Integration ===
 Donate link: https://starcatwp.com
-Tags: review, rating, stats, pros and cons, starcat review
+Tags: review, woocommerce reviews, user rating, product review, star ratings, customer reviews, review blogging, schema, reviews, ratings
 Requires at least: 5.2
 Tested up to: 5.5.1
-Stable tag: 0.6.3
+Stable tag: 0.6.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Contributors: essekia, pauple
+
+All-in-one review and rating plugin to add ratings and reviews into any post or page including WooCommerce products reviews
 
 == Description ==
-Create Review Posts, add reviews to existing post types and enable user reviews.
+StarCat Review  is a complete end-to-end [WordPress Review plugin](https://starcatwp.com/wordpress-review-plugin/), to quickly create any type of review website with ease. It also allows you to include a review system in any page or post such as blog posts, custom post types or even your WooCommerce Store.
+
+You can create almost anything from a simple customer review page in a business site to a complete product rating and review website with affiliate links. 
+
+## Features
+
+* Gives you an author review system for review posts
+* Can enable user review and rating for post or pages
+* Change the default WooCommerce reviews 
+* Review Schema for Google Rich Snippets 
+* Ratings can have multi-rating criteria 
+* Admin can reply to user review
+* Users can upvote reviews
+* Review section can have a inline search bar
+* Sorting options for reviews
+* Enable Google reCAPTCHA to submit reviews
+* Limit a user to give only 1 review 
+* Users can edit their reviews
+* Allow logged in or non-logged in users to submit a review
+* Approve user reviews manually
+* Customizable rating system with custom rating icon option
+
+
+[See Demo](https://demo.pauple.com/starcat-reviews/)
+[See the Getting Started Guide](https://starcatwp.com/getting-started/)
+[See Documentation](https://paupledocs.gitbook.io/starcat-documentation/)
+
+## Author review to create review post**
+Allows Author (anyone with backend access) to give editorial reviews in posts and pages. This feature is useful for review bloggers and for sites who give editorial reviews. 
+To extend this feature you can upgrade to Review Post Type add-on (PRO) that will give you a Review CPT.
+
+**Include reviews anywhere**
+It works similar to WP post rating plugins but it is more powerful and allows you to include the review system into any post or pages even with custom post types. 
+
+## Engaging and customizable user rating and review system
+
+It has an easy to use user rating and review system and users can give reviews as easily as posting a comment in WordPress. You user reviews can have:
+* Show overall rating stats
+* Multiple rating criteria
+* Pros and Cons
+* Review search bar
+* Review sorting 
+* Helpful review voting
+
+**Have full-control over the reviews**
+You get full control over the review and you can:
+* Allow registered or unregistered (logged in or non-logged in) users to submit reviews
+* Approve user reviews manually (review moderation)
+* The admin can reply to user reviews
+* Can limit a user to give 1 review 
+* Customize the user review form
+* Change the rating icon or upload custom icon, change the color of icon or the labels
+
+**Google reCAPTCHA for Reviews**
+Can enable Google reCAPTCHA for users before submitting reviews. This could stop spam and fake reviews
+
+## WooCommerce integration for product reviews
+It is a [customer review plugin](https://starcatwp.com/woocommerce-review-plugin/) that has full integration with WooCommerce to replace the default product reviews with an advanced ratings and review system. 
+You can upgrade to WooCommerce Notifications PRO add-on to send review reminder emails for WooCommerce customers to give product reviews. 
+
+## Rank higher in Google with Review Schema 
+Implements Review Schema markup (from schema.org) on your pages so that user ratings can be displayed in Google SERPs as Rich Snippets. It could increase your click-through rate and your page ranking in Google.
+
+## Premium Add-ons
+**[Review Post Type Add-on](https://starcatwp.com/freemius_product/review-post-type-add-on/) -** Gives you a Review custom post type to create a full-fledged review website with pages such as: 
+* Review Main Page
+* Review Category Page 
+* Review Archive Page and 
+* Single Review Post
+This add-on also comes with a **Review Sidebar and Review Listing widget**
+
+**[Comparison Table Add-on](https://starcatwp.com/freemius_product/comparison-table-add-on/) -** Allows you to create a comparison table and embed it using shortcodes on any post or page to create product comparison posts and pages. 
+
+**[Photo Reviews Add-on](https://starcatwp.com/freemius_product/photo-reviews-add-on/) -**Allows users to attach the images and other media files along with their review and rating. You can use it in your eCommerce store as WooCommerce photo reviews to show social proof to customers
+
+**[WooCommerce Notification Add-on](https://starcatwp.com/freemius_product/woocommerce-notification-add-on/) -**You can automatically send review reminder emails to  notify customers to write a product review. 
+
+Premium Add-on Bundles
+You can get the premium add-ons in bundled pricing. 
+*   **_[Personal bundle](https://starcatwp.com/freemius_product/starcat-reviews-personal-bundle/)_:** Photo Reviews and WooCommerce Notifications add-ons
+*   **_[Business bundle](https://starcatwp.com/freemius_product/starcat-reviews-business-bundle/)_:** All premium add-ons including Reviews CPT, Comparison Table,  Photo Reviews and WooCommerce Notifications add-ons
+
+## Who can use this review plugin?
+
+* Anyone who wants to add review posts to your existing blogs where you can add review posts within your blog
+* People who want to include a user review system in any page or post and receive ratings and reviews from users and customers
+* Those who want to have editorial reviews and user generated reviews on the same post
+* If you want to create niche review websites like Movie review website, Hosting review website, Makeup review website, Business review website, etc.,
+* Very useful for review bloggers look for a WordPress product review plugin to create  product review blogs and earn affiliate commission by writing product reviews. 
+* It can use used as a WordPress book review plugin for starting a book blog with WordPress since book bloggers write book reviews and recommendations
+
 
 == Installation ==
  
-1. Upload the plugin to your website.
-2. Activate it.
-3. Enter the license key you received after the purchase and activate it.
-4. Done. You can now go to Helpie KB Wiki -> Helpie Settings and check out the settings or learn more at https://helpiewp.com/docs/
+1. Upload the entire `starcat review` folder to the `/wp-content/plugins/` directory.
+2. Activate the plugin through the **Plugins** screen (**Plugins > Installed Plugins**).
+
+== Screenshots ==
+
+1. User review with Multi-criteria, Reply, Voting, Pros & Cons, Search and Sort
+2. Google reCAPTCHA to submit reviews
+3. Review settings page
+4. User review settings
+5. Author rating and review in post
+6. Review CPT - Single Post (PRO)
+7. Comparison Table (PRO)
+8. Photo Reviews - User Generated (PRO)
+9. Review Reminder Email for WooCommerce (PRO)
 
 == Change Log ==
+
+= 0.6.4 =
+* Feature: Automatically add reviews to woocommerce
+* Fix: Issue where deactivating woocommerce causes Fatal Error
 
 = 0.6.3 =
 * Feature: Premium tease added with Bundle and Addon links

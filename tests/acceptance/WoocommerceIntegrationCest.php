@@ -1,5 +1,5 @@
 <?php
-class WCVerifiedOwnersCest
+class WoocommerceIntegrationCest
 {
     public function _before(AcceptanceTester $I)
     {
