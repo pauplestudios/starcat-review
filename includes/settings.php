@@ -16,6 +16,10 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         public $fields;
         public function __construct()
         {
+            add_action('init', [$this, 'init']);
+        }
+
+        public function init(){
             $this->init_settings();
             new \StarcatReview\Includes\Settings\Premium_Tease();
         }
@@ -869,6 +873,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         }
         public function general_settings($prefix)
         {
+            $post_types = $this->get_excluded_post_types();
             
             \CSF::createSection(
                 $prefix,
@@ -898,12 +903,12 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'title' => __('Where to include reviews?', SCR_DOMAIN),
                             'chosen' => true,
                             'placeholder' => 'Select post types',
-                            'options' => 'post_types',
+                            'options' => $post_types,
                             'multiple' => true,
                             'query_args' => array(
                                 'post_type' => 'post',
                             ),
-                            'default' => ['post', 'product'],
+                            'default' => ['post'],
                         ),
 
                         array(
@@ -1320,6 +1325,24 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             }
 
             return $stats_list;
+        }
+
+        public function get_excluded_post_types(){
+            $options = array();
+            $post_types = get_post_types( array( 'show_in_nav_menus' => true ), 'objects' );
+            if(empty($post_types)){
+                return $options;
+            }
+            // define excluded post types
+            $excluded_post_types = ['product'];
+
+            foreach ( $post_types as $post_type ) {
+                if(!in_array($post_type->name,$excluded_post_types)){
+                    $options[$post_type->name] = $post_type->labels->name;
+                }
+            }
+
+            return $options;
         }
     } // END CLASS
 }
