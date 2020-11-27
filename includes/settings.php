@@ -59,6 +59,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         public function settings_tabs($prefix)
         {
             $this->general_settings($prefix);
+            $this->woocommerce_settings($prefix);
             $this->mainpage_settings($prefix);
             $this->category_page_settings($prefix);
             $this->single_page_settings($prefix);
@@ -1321,5 +1322,18 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
             return $stats_list;
         }
+
+        public function woocommerce_settings($prefix){
+            \CSF::createSection(
+                $prefix,
+                array(
+                    'id' => 'woocommerce_settings',
+                    'title' => Translations::getStrings('WoocommerceSettings'),
+                    'icon' => 'fa fa-shopping-cart',
+                    'fields' => array()
+                )
+            );
+        }
+
     } // END CLASS
 }
