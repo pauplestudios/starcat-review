@@ -1330,7 +1330,220 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                     'id' => 'woocommerce_settings',
                     'title' => Translations::getStrings('WoocommerceSettings'),
                     'icon' => 'fa fa-shopping-cart',
-                    'fields' => array()
+                    'fields' => array(
+                        array(
+                            'id' => 'enable-reviews-on-woocommerce',
+                            'type' => 'switcher',
+                            'title' => __('Enable Starcat Reviews for Woocommerce', SCR_DOMAIN),
+                            'default' => true,
+                        ),
+                        array(
+                            'id' => 'woo_ur_who_can_review',
+                            'type' => 'select',
+                            'title' => __('Who Can Review', SCR_DOMAIN),
+                            'desc' => __('Selecting Everyone will let even Non Logged-in Users add reviews', SCR_DOMAIN),
+                            'options' => array(
+                                'logged_in' => __('Logged In Users', SCR_DOMAIN),
+                                'everyone' => __('Everyone', SCR_DOMAIN),
+                            ),
+                            'default' => 'logged_in',
+                        ),
+                        array(
+                            'id' => 'woo_enable-pros-cons',
+                            'type' => 'switcher',
+                            'title' => __('Enable Pros and Cons', SCR_DOMAIN),
+                            'default' => true,
+                        ),
+                        array(
+                            'id' => 'woo_enable_voting',
+                            'type' => 'switcher',
+                            'title' => __('Voting', SCR_DOMAIN),
+                            'default' => true,
+                        ),
+                        array(
+                            'id' => 'woo_show_form_title',
+                            'type' => 'switcher',
+                            'title' => __('Show Form Title', SCR_DOMAIN),
+                            'default' => true,
+                        ),
+
+                        array(
+                            'id' => 'woo-stats-subheading',
+                            'type' => 'subheading',
+                            'content' => __('Stats', SCR_DOMAIN),
+                        ),
+
+                        array(
+                            'type' => 'submessage',
+                            // 'style'   => 'info',
+                            'content' => __("You can rate each of these stats in the edit post page(author rating). And if you have enabled 'user review', your users can rate them from the front end", SCR_DOMAIN),
+                        ),
+
+                        array(
+                            'id' => 'woo-stat-singularity',
+                            'type' => 'select',
+                            'title' => __('Single or Multiple Stat', SCR_DOMAIN),
+                            'options' => array(
+                                'single' => __('Single', SCR_DOMAIN),
+                                'multiple' => __('Multiple', SCR_DOMAIN),
+                            ),
+                            'default' => 'single',
+                        ),
+
+                        array(
+                            'type' => 'submessage',
+                            'style' => 'info',
+                            'content' => __('The first stat is always considered as the primary stat ( highlighted by blue color ), When you change from multiple stat to single stat values from the primary stat are used.', SCR_DOMAIN),
+                            'dependency' => array('woo-stat-singularity', '==', 'multiple'),
+                        ),
+
+                        array(
+                            'id' => 'woo_global_stats',
+                            'type' => 'repeater',
+                            'title' => __('Stats', SCR_DOMAIN),
+                            'fields' => array(
+                                array(
+                                    'id' => 'stat_name',
+                                    'type' => 'text',
+                                    'placeholder' => __('Feature', SCR_DOMAIN),
+                                ),
+                            ),
+                            'min' => 1,
+                            'default' => array(
+                                array(
+                                    'stat_name' => 'Feature',
+                                ),
+                            ),
+                            'dependency' => array('woo-stat-singularity', '==', 'multiple'),
+                        ),
+
+                        array(
+                            'id' => 'woo-stats-source-type',
+                            'type' => 'select',
+                            'title' => __('Source Type', SCR_DOMAIN),
+                            'options' => array(
+                                'icon' => __('Icon', SCR_DOMAIN),
+                                'image' => __('Image', SCR_DOMAIN),
+                            ),
+                            // 'dependency' => array('stats-type', '==', 'star'),
+                            'default' => 'icon',
+                        ),
+
+                        array(
+                            'id' => 'woo-stats-show-rating-label',
+                            'type' => 'switcher',
+                            'title' => __('Show Rating Label', SCR_DOMAIN),
+                            'default' => true,
+                        ),
+
+                        array(
+                            'id' => 'woo-stats-icons',
+                            'type' => 'icon_dropdown',
+                            'title' => __('Icons', SCR_DOMAIN),
+                            // 'dependency' => array('stats-source-type|stats-type', '==|==', 'icon|star'),
+                            'dependency' => array('woo-stats-source-type', '==', 'icon'),
+                            'default' => 'star',
+                        ),
+                        array(
+                            'id' => 'woo-stats-icons-color',
+                            'type' => 'color',
+                            'title' => __('Icons Color', SCR_DOMAIN),
+                            'dependency' => array('woo-stats-source-type', '==', 'icon'),
+                            'output' => array('.review-list .review-item-stars i', '.review-list .reviewed-item-stars i', '.reviewed-list .review-item-stars i', '.reviewed-list .reviewed-item-stars i'),
+                            'output_mode' => 'color',
+                            'default' => '#e7711b',
+                        ),
+                        array(
+                            'id' => 'woo-stats-icons-label-color',
+                            'type' => 'color',
+                            'title' => __('Icons Label Color', SCR_DOMAIN),
+                            'dependency' => array('stats-source-type', '==', 'icon'),
+                            'output' => array('.review-list .reviewed-item .reviewed-item-label__score', '.review-list .reviewed-item .reviewed-item-label__score', '.reviewed-list .reviewed-item .reviewed-item-label__score', '.reviewed-list .reviewed-item .reviewed-item-label__score'),
+                            'output_mode' => 'color',
+                            'default' => '#0274be',
+                        ),
+
+                        array(
+                            'id' => 'woo-stats-images',
+                            'type' => 'fieldset',
+                            'title' => __('Images', SCR_DOMAIN),
+                            // 'dependency' => array('stats-source-type|stats-type', '==|==', 'image|star'),
+                            'dependency' => array('woo-stats-source-type', '==', 'image'),
+                            'fields' => array(
+                                array(
+                                    'id' => 'image',
+                                    'type' => 'media',
+                                    'title' => __('Image', SCR_DOMAIN),
+                                    'library' => 'image',
+                                    'placeholder' => 'http://',
+                                    'default' => [
+                                        'url' => SCR_URL . 'includes/assets/img/tomato.png',
+                                        'thumbnail' => SCR_URL . 'includes/assets/img/tomato.png',
+                                    ],
+                                ),
+                                array(
+                                    'id' => 'image-outline',
+                                    'type' => 'media',
+                                    'title' => __('Outline Image', SCR_DOMAIN),
+                                    'library' => 'image',
+                                    'placeholder' => 'http://',
+                                    'default' => [
+                                        'url' => SCR_URL . 'includes/assets/img/tomato-outline.png',
+                                        'thumbnail' => SCR_URL . 'includes/assets/img/tomato-outline.png',
+                                    ],
+                                ),
+
+                                array(
+                                    'type' => 'submessage',
+                                    'style' => 'info',
+                                    'content' => __('Image size below 50 * 50 is enough', SCR_DOMAIN),
+                                ),
+                            ),
+                        ),
+
+                        array(
+                            'id' => 'woo-stats-steps',
+                            'type' => 'select',
+                            'title' => __('Steps', SCR_DOMAIN),
+                            'options' => array(
+                                // 'precise' => 'Precise',
+                                'half' => __('Half', SCR_DOMAIN),
+                                'full' => __('Full', SCR_DOMAIN),
+                            ),
+                            'default' => 'half',
+                        ),
+
+                        array(
+                            'id' => 'woo-captcha-subheading',
+                            'type' => 'subheading',
+                            'content' => __('Google reCAPTCHA', SCR_DOMAIN),
+                        ),
+                        
+                        array(
+                            'id' => 'woo_show_captcha',
+                            'type' => 'switcher',
+                            'title' => __('Show reCAPTCHA (v2 checkbox)', SCR_DOMAIN),
+                            'default' => false,
+                            'desc' => sprintf(__('Register for reCAPTCHA v2 at %s to get your site key and secret key. Make sure to add your domain name in the settings at the reCAPTCHA website. Read More at %s. %s reCAPTCHA v3 will not work, just v2. v3 will be added soon.', SCR_DOMAIN), '<a href="https://www.google.com/recaptcha">https://www.google.com/recaptcha</a>', '<a href="https://paupledocs.gitbook.io/starcat-documentation/">Starcat Reviews - Docs</a>', '<strong>' . __('Note', SCR_DOMAIN) . '</strong> : '),
+                        ),
+
+                        array(
+                            'id' => 'woo_recaptcha_site_key',
+                            'type' => 'text',
+                            'title' => __('reCAPTCHA Site Key', SCR_DOMAIN),
+                            'dependency' => array('woo_show_captcha', '==', 'true'),
+                            'validate' => 'csf_validate_recaptcha_site_key',
+                        ),
+
+                        array(
+                            'id' => 'woo_recaptcha_secret_key',
+                            'type' => 'text',
+                            'title' => __('reCAPTCHA Secret Key', SCR_DOMAIN),
+                            'default' => '',
+                            'dependency' => array('woo_show_captcha', '==', 'true'),
+                            'validate' => 'csf_validate_recaptcha_secret_key',
+                        ),
+                    )
                 )
             );
         }
