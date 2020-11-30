@@ -27,3 +27,5 @@ includes/assets/vendors/semantic/bundle/themes/github/
 includes/assets/vendors/semantic/bundle/themes/material/
 includes/assets/vendors/semantic/bundle/semantic.css
 includes/assets/vendors/semantic/bundle/semantic.js
+
+includes/lib/freemius

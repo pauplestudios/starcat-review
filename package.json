@@ -8,7 +8,7 @@
         "build_semantic": "cd includes/assets/vendors/semantic && gulp build && cd ../../../../",
         "build_addons": "chmod +x bin/addons.sh && bash bin/addons.sh",
         "docker-destroy": "chmod +x bin/docker-destroy.sh && bash bin/docker-destroy.sh && docker volume prune",
-        "build": "cross-env NODE_ENV=production ./node_modules/.bin/webpack --mode=production",
+        "build": "composer update && cross-env NODE_ENV=production ./node_modules/.bin/webpack --mode=production",
         "start": "./node_modules/.bin/webpack --mode=development --watch",
         "build_test": "cross-env NODE_ENV=test ./node_modules/.bin/webpack",
         "lint": "esw webpack.config.* src tools --color",
