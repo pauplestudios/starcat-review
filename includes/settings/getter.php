@@ -83,6 +83,32 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'stats-animate' => false,
                 'stats-no-rated-message' => 'Not Rated Yet !!!',
 
+                // Woocommerce Settings
+
+                'enable_reviews_on_woocommerce' => true,
+                'woo_ur_who_can_review' => 'logged_in',
+                'woo_enable_pros_cons' => true,
+                'woo_enable_voting' => true,
+                'woo_show_form_title' => true,
+                'woo_stat_singularity' => 'single',
+                'woo_global_stats'  =>  ['stat_name' => 'Feature'],
+                'woo_stats_source_type' => 'icon',
+                'woo_stats_show_rating_label' => true,
+                'woo_stats_icons'   => 'star',
+                'woo_stats_images' => [
+                    'image' => [
+                        'url' => SCR_URL . 'includes/assets/img/tomato.png',
+                        'thumbnail' => SCR_URL . 'includes/assets/img/tomato.png',
+                    ],
+
+                    'image_outline' => [
+                        'url' => SCR_URL . 'includes/assets/img/tomato-outline.png',
+                        'thumbnail' => SCR_URL . 'includes/assets/img/tomato-outline.png',
+                    ],
+                ],
+                'woo_stats_steps'   => 'half',
+                'woo_show_captcha'  => true,
+                
                 // Mainpage Settings Start
                 'mp_slug' => 'reviews',
                 'mp_meta_title' => 'Reviews',
