@@ -1332,7 +1332,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                     'icon' => 'fa fa-shopping-cart',
                     'fields' => array(
                         array(
-                            'id' => 'enable-reviews-on-woocommerce',
+                            'id' => 'enable_reviews_on_woocommerce',
                             'type' => 'switcher',
                             'title' => __('Enable Starcat Reviews for Woocommerce', SCR_DOMAIN),
                             'default' => true,
@@ -1349,7 +1349,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'default' => 'logged_in',
                         ),
                         array(
-                            'id' => 'woo_enable-pros-cons',
+                            'id' => 'woo_enable_pros_cons',
                             'type' => 'switcher',
                             'title' => __('Enable Pros and Cons', SCR_DOMAIN),
                             'default' => true,
@@ -1368,7 +1368,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         ),
 
                         array(
-                            'id' => 'woo-stats-subheading',
+                            'id' => 'woo_stats_subheading',
                             'type' => 'subheading',
                             'content' => __('Stats', SCR_DOMAIN),
                         ),
@@ -1380,7 +1380,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         ),
 
                         array(
-                            'id' => 'woo-stat-singularity',
+                            'id' => 'woo_stat_singularity',
                             'type' => 'select',
                             'title' => __('Single or Multiple Stat', SCR_DOMAIN),
                             'options' => array(
@@ -1394,7 +1394,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'type' => 'submessage',
                             'style' => 'info',
                             'content' => __('The first stat is always considered as the primary stat ( highlighted by blue color ), When you change from multiple stat to single stat values from the primary stat are used.', SCR_DOMAIN),
-                            'dependency' => array('woo-stat-singularity', '==', 'multiple'),
+                            'dependency' => array('woo_stat_singularity', '==', 'multiple'),
                         ),
 
                         array(
@@ -1414,11 +1414,11 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                                     'stat_name' => 'Feature',
                                 ),
                             ),
-                            'dependency' => array('woo-stat-singularity', '==', 'multiple'),
+                            'dependency' => array('woo_stat_singularity', '==', 'multiple'),
                         ),
 
                         array(
-                            'id' => 'woo-stats-source-type',
+                            'id' => 'woo_stats_source_type',
                             'type' => 'select',
                             'title' => __('Source Type', SCR_DOMAIN),
                             'options' => array(
@@ -1430,45 +1430,45 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         ),
 
                         array(
-                            'id' => 'woo-stats-show-rating-label',
+                            'id' => 'woo_stats_show_rating_label',
                             'type' => 'switcher',
                             'title' => __('Show Rating Label', SCR_DOMAIN),
                             'default' => true,
                         ),
 
                         array(
-                            'id' => 'woo-stats-icons',
+                            'id' => 'woo_stats_icons',
                             'type' => 'icon_dropdown',
                             'title' => __('Icons', SCR_DOMAIN),
                             // 'dependency' => array('stats-source-type|stats-type', '==|==', 'icon|star'),
-                            'dependency' => array('woo-stats-source-type', '==', 'icon'),
+                            'dependency' => array('woo_stats_source_type', '==', 'icon'),
                             'default' => 'star',
                         ),
                         array(
-                            'id' => 'woo-stats-icons-color',
+                            'id' => 'woo_stats_icons_color',
                             'type' => 'color',
                             'title' => __('Icons Color', SCR_DOMAIN),
-                            'dependency' => array('woo-stats-source-type', '==', 'icon'),
+                            'dependency' => array('woo_stats_source_type', '==', 'icon'),
                             'output' => array('.review-list .review-item-stars i', '.review-list .reviewed-item-stars i', '.reviewed-list .review-item-stars i', '.reviewed-list .reviewed-item-stars i'),
                             'output_mode' => 'color',
                             'default' => '#e7711b',
                         ),
                         array(
-                            'id' => 'woo-stats-icons-label-color',
+                            'id' => 'woo_stats_icons_label_color',
                             'type' => 'color',
                             'title' => __('Icons Label Color', SCR_DOMAIN),
-                            'dependency' => array('stats-source-type', '==', 'icon'),
+                            'dependency' => array('woo_stats_source_type', '==', 'icon'),
                             'output' => array('.review-list .reviewed-item .reviewed-item-label__score', '.review-list .reviewed-item .reviewed-item-label__score', '.reviewed-list .reviewed-item .reviewed-item-label__score', '.reviewed-list .reviewed-item .reviewed-item-label__score'),
                             'output_mode' => 'color',
                             'default' => '#0274be',
                         ),
 
                         array(
-                            'id' => 'woo-stats-images',
+                            'id' => 'woo_stats_images',
                             'type' => 'fieldset',
                             'title' => __('Images', SCR_DOMAIN),
                             // 'dependency' => array('stats-source-type|stats-type', '==|==', 'image|star'),
-                            'dependency' => array('woo-stats-source-type', '==', 'image'),
+                            'dependency' => array('woo_stats_source_type', '==', 'image'),
                             'fields' => array(
                                 array(
                                     'id' => 'image',
@@ -1482,7 +1482,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                                     ],
                                 ),
                                 array(
-                                    'id' => 'image-outline',
+                                    'id' => 'image_outline',
                                     'type' => 'media',
                                     'title' => __('Outline Image', SCR_DOMAIN),
                                     'library' => 'image',
@@ -1502,7 +1502,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         ),
 
                         array(
-                            'id' => 'woo-stats-steps',
+                            'id' => 'woo_stats_steps',
                             'type' => 'select',
                             'title' => __('Steps', SCR_DOMAIN),
                             'options' => array(
@@ -1514,7 +1514,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         ),
 
                         array(
-                            'id' => 'woo-captcha-subheading',
+                            'id' => 'woo_captcha_subheading',
                             'type' => 'subheading',
                             'content' => __('Google reCAPTCHA', SCR_DOMAIN),
                         ),
