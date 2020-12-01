@@ -49,8 +49,9 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
             $html .= $this->get_wrapper_html();
             $html .= $this->get_result_html($value);
 
-            /** The usage of this stat identifier key is avoid the stats feature names has a Special Characters.
-             *  Don't use Semantic-UI RegExp identifier key has a Special Characters. */
+            /** Don't use the Semantic-UI RegExp identifier key that has Special Characters for validating Semantic-UI input fields
+             *  The stat_identifier_key is a unique id and doesn't have a Special Characters in that key. This Key used for validating the input fields.
+             */
 
             $stat_identifier_key = $this->get_stat_identifier_key($key);
 
