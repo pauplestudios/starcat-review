@@ -873,7 +873,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         }
         public function general_settings($prefix)
         {
-            $post_types = $this->get_excluded_post_types();
+            $post_types = $this->get_post_types(['product']);
             
             \CSF::createSection(
                 $prefix,
@@ -1327,15 +1327,13 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             return $stats_list;
         }
 
-        public function get_excluded_post_types(){
+        public function get_post_types($excluded_post_types){
             $options = array();
             $post_types = get_post_types( array( 'show_in_nav_menus' => true ), 'objects' );
             if(empty($post_types)){
                 return $options;
             }
-            // define excluded post types
-            $excluded_post_types = ['product'];
-
+            
             foreach ( $post_types as $post_type ) {
                 if(!in_array($post_type->name,$excluded_post_types)){
                     $options[$post_type->name] = $post_type->labels->name;
