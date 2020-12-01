@@ -98,7 +98,7 @@ if ( ! class_exists( 'CSF_Fields' ) ) {
       } else {
         $option  = '';
       }
-      error_log('[$type] : ' .$type );
+      
       // switch type
       switch( $type ) {
 
@@ -230,7 +230,6 @@ if ( ! class_exists( 'CSF_Fields' ) ) {
         case 'post_types':
 
           $post_types = get_post_types( array( 'show_in_nav_menus' => true ), 'objects' );
-          error_log('[$post_types] : ' . print_r($post_types, true));
           if ( ! is_wp_error( $post_types ) && ! empty( $post_types ) ) {
             foreach ( $post_types as $post_type ) {
               $options[$post_type->name] = $post_type->labels->name;
