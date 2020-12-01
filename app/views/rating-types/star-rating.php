@@ -2,6 +2,8 @@
 
 namespace StarcatReview\App\Views\Rating_Types;
 
+use \StarcatReview\Includes\Settings\SCR_Getter;
+
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -24,7 +26,6 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
                 $html .= '<ul class="reviewed-list"
                 data-animate="' . $this->props['collection']['animate'] . '"
             >';
-
                 foreach ($this->props['items'] as $key => $stat) {
                     $html .= $this->get_reviewed_stat($key, $stat['rating'], $stat['score']);
                 }
@@ -47,7 +48,13 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
             >';
             $html .= $this->get_wrapper_html();
             $html .= $this->get_result_html($value);
-            $html .= '<input type="hidden" name="scores[' . strtolower($key) . ']"  value="' . $value . '">';
+
+            /** The usage of this stat identifier key is avoid the stats feature names has a Special Characters.
+             *  Don't use Semantic-UI RegExp identifier key has a Special Characters. */
+
+            $stat_identifier_key = $this->get_stat_identifier_key($key);
+
+            $html .= '<input type="hidden" id="'. $stat_identifier_key .'" name="scores[' . strtolower($key) . ']"  value="' . $value . '">';
             $html .= '</div>';
 
             if ($this->props['collection']['show_rating_label']) {
@@ -120,6 +127,19 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
             $html .= '</div>';
 
             return $html;
+        }
+
+        public function get_stat_identifier_key($key){
+            $global_stats = SCR_Getter::get('global_stats');
+            
+            foreach($global_stats as $index => $stat){
+                if(strtolower($stat['stat_name']) == $key){
+                    $identifier_key = 'scr-stat-rating-'.$index;
+                    return $identifier_key;
+                }   
+            }
+
+            return false; 
         }
     }
 }
