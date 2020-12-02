@@ -101,7 +101,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                         'thumbnail' => SCR_URL . 'includes/assets/img/tomato.png',
                     ],
 
-                    'image_outline' => [
+                    'image-outline' => [
                         'url' => SCR_URL . 'includes/assets/img/tomato-outline.png',
                         'thumbnail' => SCR_URL . 'includes/assets/img/tomato-outline.png',
                     ],
@@ -196,7 +196,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
         {
             $type = SCR_Getter::get('stats-type');
             $limit = ($type == 'star') ? SCR_Getter::get('stats-stars-limit') : SCR_Getter::get('stats-bars-limit');
-
+            
             $args = [
                 'global_stats' => SCR_Getter::get('global_stats'),
                 'singularity' => SCR_Getter::get('stat-singularity'),
@@ -210,6 +210,27 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'animate' => SCR_Getter::get('stats-animate'),
                 'no_rated_message' => SCR_Getter::get('stats-no-rated-message'),
             ];
+
+            /** Get the woocommerce default settings, if current post_type has a product.  */
+            $args = self::get_woo_stat_default_args($args);
+
+            return $args;
+        }
+
+        public static function get_woo_stat_default_args($args){
+            global $product;
+
+            if(empty($product) && !is_singular('product')){
+                return $args;
+            }
+            
+            $args['global_stats']   = SCR_Getter::get('woo_global_stats');
+            $args['singularity']    = SCR_Getter::get('woo_stat_singularity');
+            $args['source_type']    = SCR_Getter::get('woo_stats_source_type');
+            $args['show_rating_label']  = SCR_Getter::get('woo_stats_show_rating_label');
+            $args['icons']  = SCR_Getter::get('woo_stats_icons');
+            $args['images']  = SCR_Getter::get('woo_stats_images');
+            $args['steps']  = SCR_Getter::get('woo_stats_steps');
 
             return $args;
         }
@@ -257,6 +278,8 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'cpt' => "SCR_CPT__FILE__",
             ];
         }
+
+        
 
     } // END CLASS
 }
