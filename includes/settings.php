@@ -1487,7 +1487,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                                     ],
                                 ),
                                 array(
-                                    'id' => 'image_outline',
+                                    'id' => 'image-outline',
                                     'type' => 'media',
                                     'title' => __('Outline Image', SCR_DOMAIN),
                                     'library' => 'image',
