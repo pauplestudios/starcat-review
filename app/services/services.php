@@ -42,8 +42,8 @@ if (!class_exists('\StarcatReview\App\Services\Services')) {
 
             // error_log('given_stats : ' . print_r($given_stats, true));
 
-            $global_stats = SCR_Getter::get('global_stats');
-            $singularity = SCR_Getter::get('stat-singularity');
+            $global_stats = SCR_Getter::get_global_stats();
+            $singularity = SCR_Getter::get_stat_singularity();
 
             if ($singularity == 'single') {
                 $global_stats = [$global_stats[0]];
@@ -131,7 +131,6 @@ if (!class_exists('\StarcatReview\App\Services\Services')) {
             global $post;
             $who_can_review = SCR_Getter::get('ur_who_can_review');
             if(is_singular('product') && isset($post) && $post->post_type == 'product'){
-                error_log(' Echo 88888 ');
                 $who_can_review = SCR_Getter::get('woo_ur_who_can_review');
             }
             return $who_can_review;

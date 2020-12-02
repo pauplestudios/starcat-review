@@ -279,7 +279,23 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
             ];
         }
 
-        
+        public static function get_global_stats(){
+            global $post;
+            $global_stats = SCR_Getter::get('global_stats');
+            if(is_singular('product') && isset($post) && $post->post_type == 'product'){
+                $global_stats = SCR_Getter::get('woo_global_stats');
+            }
+            return $global_stats;
+        } 
+
+        public static function get_stat_singularity(){
+            global $post;
+            $singularity = SCR_Getter::get('stat-singularity');
+            if(is_singular('product') && isset($post) && $post->post_type == 'product'){
+                $singularity = SCR_Getter::get('woo_stat_singularity');
+            }
+            return $singularity;
+        }
 
     } // END CLASS
 }

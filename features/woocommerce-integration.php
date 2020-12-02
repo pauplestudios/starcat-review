@@ -78,8 +78,8 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration')) {
 
         public function convert_product_rating_to_stat($comment_id)
         {
-            $global_stats = SCR_Getter::get('global_stats');
-            $singularity = SCR_Getter::get('stat-singularity');
+            $global_stats = SCR_Getter::get_global_stats();
+            $singularity = SCR_Getter::get_stat_singularity();
 
             $rating = get_comment_meta($comment_id, 'rating', true);
             $is_rating_available = isset($rating) && !empty($rating) ? true : false;

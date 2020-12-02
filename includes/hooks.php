@@ -246,7 +246,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             ));
             // You Can Access these object from javascript
             wp_localize_script('starcat-review-script', 'SCROptions', [
-                'global_stats' => SCR_Getter::get('global_stats'),
+                'global_stats' => SCR_Getter::get_global_stats(),
             ]);
 
             wp_localize_script('starcat-review-script', 'Translations', Translations::getFormSrings());
