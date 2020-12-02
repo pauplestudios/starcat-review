@@ -1272,8 +1272,8 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         {
             $stats_list = [];
 
-            $stats = SCR_Getter::get('global_stats');
-            $singularity = SCR_Getter::get('stat-singularity');
+            $stats = SCR_Getter::get_global_stats();
+            $singularity = SCR_Getter::get_stat_singularity();
 
             if (isset($stats) && !empty($stats)) {
                 $stats_list[] = array(

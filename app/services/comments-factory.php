@@ -126,9 +126,9 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
             }
 
             $post_id = isset($args['post_id']) ? $args['post_id'] : get_the_ID();
-
             // WooCommerce product post_type Only
-            if (get_post_type($post_id) == 'product' && !$this->is_set($stat_item) && in_array('product', SCR_Getter::reviews_enabled_post_types(), true)) {
+            if (get_post_type($post_id) == 'product' && !$this->is_set($stat_item) && SCR_Getter::get('enable_reviews_on_woocommerce')) {
+                
                 $rating = apply_filters('scr_woocommerce_integration/convert_product_rating_to_stat', $comment_id);
 
                 if ($this->is_set($rating) && is_array($rating)) {
