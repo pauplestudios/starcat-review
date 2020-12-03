@@ -123,7 +123,6 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             wp_localize_script('starcat-review-script', 'SCROptions', ['enable_prosandcons' => SCR_Getter::get('enable-pros-cons')]);
 
             // Additional Dashboard Column fields
-
             foreach ($this->get_review_enabled_post_types() as $post_type) {
                 add_filter("manage_{$post_type}_posts_columns", array($this, 'manage_cpt_custom_columns'), 10);
                 add_action("manage_{$post_type}_posts_custom_column", array($this, 'manage_cpt_custom_column'), 10, 2);
@@ -222,6 +221,10 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             $post_types = SCR_Getter::get('review_enable_post-types');
             $enabled_post_types = is_string($post_types) ? [0 => $post_types] : $post_types;
 
+            if(is_plugin_active( 'woocommerce/woocommerce.php' ) && SCR_Getter::get('enable_reviews_on_woocommerce')){
+                array_push($enabled_post_types,'product');
+            }
+           
             return $enabled_post_types;
         }
 
