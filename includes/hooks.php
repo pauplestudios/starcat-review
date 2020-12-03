@@ -70,7 +70,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             /* Checks for single template by post type */
 
             if (isset($post) && !empty($post)) {
-                $review_enabled_post_types = SCR::get_review_enabled_post_types();
+                $review_enabled_post_types = SCR_Getter::get_review_enabled_post_types();
 
                 foreach ($review_enabled_post_types as $post_type) {
 
@@ -125,7 +125,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             wp_localize_script('starcat-review-script', 'SCROptions', ['enable_prosandcons' => SCR_Getter::get('enable-pros-cons')]);
 
             // Additional Dashboard Column fields
-            $review_enabled_post_types = SCR::get_review_enabled_post_types();
+            $review_enabled_post_types = SCR_Getter::get_review_enabled_post_types();
             foreach ($review_enabled_post_types as $post_type) {
                 add_filter("manage_{$post_type}_posts_columns", array($this, 'manage_cpt_custom_columns'), 10);
                 add_action("manage_{$post_type}_posts_custom_column", array($this, 'manage_cpt_custom_column'), 10, 2);
