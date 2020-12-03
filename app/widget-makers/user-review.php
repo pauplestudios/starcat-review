@@ -20,6 +20,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
         public function get_view()
         {
             $args = $this->get_default_args();
+            error_log('[get_default_args] : ' . print_r($args, true));
             $form_view = $this->form_controller->get_view($args);
             $ur_controller = new \StarcatReview\App\Components\User_Reviews\Controller();
             $reviews_list_view = $ur_controller->get_view($args);
@@ -65,6 +66,8 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
                 'show_captcha' => SCR_Getter::get('ur_show_captcha'),
                 'current_user_id' => get_current_user_id(),
             ];
+            /** check the current page has product post_type then updating the $args, what configured in woo-settings based. */
+            $args = $this->get_default_woocommerce_args($args);
 
             $args = array_merge($stat_args, $args);
 
@@ -91,6 +94,19 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             $commentsItems = (isset($args['items']['comments']) && !empty($args['items']['comments'])) ? $args['items']['comments'] : [];
             $args['capability'] = apply_filters('scr_capabilities_args', $commentsItems);
 
+            return $args;
+        }
+
+        public function get_default_woocommerce_args($args){
+            global $post;
+            if(!is_singular('product') && isset($post) && $post->post_type <> 'product'){
+                return $args;
+            }
+           
+            $args['enable_pros_cons']   = SCR_Getter::get('woo_enable_pros_cons'); 
+            $args['enable_voting']      = SCR_Getter::get('woo_enable_voting');
+            $args['show_form_title']    = SCR_Getter::get('woo_show_form_title');
+            $args['show_captcha']       = SCR_Getter::get('woo_show_captcha');
             return $args;
         }
     }
