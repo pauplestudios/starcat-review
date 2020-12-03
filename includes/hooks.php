@@ -70,7 +70,9 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             /* Checks for single template by post type */
 
             if (isset($post) && !empty($post)) {
-                foreach ($this->get_review_enabled_post_types() as $post_type) {
+                $review_enabled_post_types = SCR::get_review_enabled_post_types();
+
+                foreach ($review_enabled_post_types as $post_type) {
 
                     if ($post->post_type == $post_type && is_single()) {
 
@@ -123,7 +125,8 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             wp_localize_script('starcat-review-script', 'SCROptions', ['enable_prosandcons' => SCR_Getter::get('enable-pros-cons')]);
 
             // Additional Dashboard Column fields
-            foreach ($this->get_review_enabled_post_types() as $post_type) {
+            $review_enabled_post_types = SCR::get_review_enabled_post_types();
+            foreach ($review_enabled_post_types as $post_type) {
                 add_filter("manage_{$post_type}_posts_columns", array($this, 'manage_cpt_custom_columns'), 10);
                 add_action("manage_{$post_type}_posts_custom_column", array($this, 'manage_cpt_custom_column'), 10, 2);
                 add_action("manage_edit-{$post_type}_sortable_columns", array($this, 'sort_posts_custom_column'), 10, 1);
@@ -214,18 +217,6 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         {
             $reviews_builder = new \StarcatReview\App\Builders\Review_Builder();
             return $reviews_builder->get_reviews();
-        }
-
-        public function get_review_enabled_post_types()
-        {
-            $post_types = SCR_Getter::get('review_enable_post-types');
-            $enabled_post_types = is_string($post_types) ? [0 => $post_types] : $post_types;
-
-            if(is_plugin_active( 'woocommerce/woocommerce.php' ) && SCR_Getter::get('enable_reviews_on_woocommerce')){
-                array_push($enabled_post_types,'product');
-            }
-           
-            return $enabled_post_types;
         }
 
         public function enqueue_scripts()

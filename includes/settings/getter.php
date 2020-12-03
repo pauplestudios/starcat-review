@@ -282,7 +282,8 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
         public static function get_global_stats(){
             global $post;
             $global_stats = SCR_Getter::get('global_stats');
-            if(is_singular('product') && isset($post) && $post->post_type == 'product'){
+            $admin_post_type = isset($_GET['post_type']) ? $_GET['post_type'] : 'post';
+            if( $admin_post_type == 'product' || (is_singular('product') && isset($post) && $post->post_type == 'product')){
                 $global_stats = SCR_Getter::get('woo_global_stats');
             }
             return $global_stats;
@@ -291,10 +292,24 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
         public static function get_stat_singularity(){
             global $post;
             $singularity = SCR_Getter::get('stat-singularity');
-            if(is_singular('product') && isset($post) && $post->post_type == 'product'){
+            $admin_post_type = isset($_GET['post_type']) ? $_GET['post_type'] : 'post';
+            if( $admin_post_type == 'product' || (is_singular('product') && isset($post) && $post->post_type == 'product')){
+                error_log('*** Woo Stat Type ***');
                 $singularity = SCR_Getter::get('woo_stat_singularity');
             }
             return $singularity;
+        }
+
+        public static function get_review_enabled_post_types()
+        {
+            $post_types = self::get('review_enable_post-types');
+            $enabled_post_types = is_string($post_types) ? [0 => $post_types] : $post_types;
+
+            if(is_plugin_active( 'woocommerce/woocommerce.php' ) && self::get('enable_reviews_on_woocommerce')){
+                array_push($enabled_post_types,'product');
+            }
+           
+            return $enabled_post_types;
         }
 
     } // END CLASS

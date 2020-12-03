@@ -1131,9 +1131,9 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         /* Single Post - Meta Data Options */
         public function single_post_meta_fields()
         {
-            $locations = SCR_Getter::get('review_enable_post-types');
+            $locations = SCR_Getter::get_review_enabled_post_types();
             $prefix = SCR_POST_META;
-
+            
             \CSF::createMetabox($prefix, array(
                 'title' => __('Starcat Review', SCR_DOMAIN),
                 'post_type' => $locations,
@@ -1274,7 +1274,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
             $stats = SCR_Getter::get_global_stats();
             $singularity = SCR_Getter::get_stat_singularity();
-
+            
             if (isset($stats) && !empty($stats)) {
                 $stats_list[] = array(
                     'type' => 'submessage',
