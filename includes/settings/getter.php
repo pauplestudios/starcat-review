@@ -280,21 +280,17 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
         }
 
         public static function get_global_stats(){
-            global $post;
             $global_stats = SCR_Getter::get('global_stats');
-            $admin_post_type = isset($_GET['post_type']) ? $_GET['post_type'] : 'post';
-            if( $admin_post_type == 'product' || (is_singular('product') && isset($post) && $post->post_type == 'product')){
+            if( self::is_admin_product_page() || is_singular('product')){
                 $global_stats = SCR_Getter::get('woo_global_stats');
             }
             return $global_stats;
         } 
 
         public static function get_stat_singularity(){
-            global $post;
+
             $singularity = SCR_Getter::get('stat-singularity');
-            $admin_post_type = isset($_GET['post_type']) ? $_GET['post_type'] : 'post';
-            if( $admin_post_type == 'product' || (is_singular('product') && isset($post) && $post->post_type == 'product')){
-                error_log('*** Woo Stat Type ***');
+            if( self::is_admin_product_page() || is_singular('product')){
                 $singularity = SCR_Getter::get('woo_stat_singularity');
             }
             return $singularity;
@@ -311,6 +307,19 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
            
             return $enabled_post_types;
         }
+
+        public static function is_admin_product_page(){
+            if(is_admin()){
+                $admin_post_type    = isset($_GET['post_type']) ? $_GET['post_type'] : 'post';
+                $post_id            = isset($_GET['post']) ? $_GET['post'] : 0;
+                $post   =   get_post($post_id);
+                if($admin_post_type == 'product' || (isset($post) && $post->post_type == 'product')){
+                    return true;
+                }
+            }
+            return false;
+        }
+
 
     } // END CLASS
 }
