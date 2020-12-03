@@ -280,16 +280,22 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
         }
 
         public static function get_global_stats(){
+            /** get default global stats based on general settings */
             $global_stats = SCR_Getter::get('global_stats');
+
+            /** if the current page is product then, retrieve the global stats based on woo-commerce settings */
             if( self::is_admin_product_page() || is_singular('product')){
                 $global_stats = SCR_Getter::get('woo_global_stats');
             }
+
             return $global_stats;
         } 
 
         public static function get_stat_singularity(){
-
+            /** get default stats type based on general settings */
             $singularity = SCR_Getter::get('stat-singularity');
+
+            /** if the current page is product then, get default stat type in woo-commerce settings */
             if( self::is_admin_product_page() || is_singular('product')){
                 $singularity = SCR_Getter::get('woo_stat_singularity');
             }
@@ -300,7 +306,6 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
         {
             $post_types = self::get('review_enable_post-types');
             $enabled_post_types = is_string($post_types) ? [0 => $post_types] : $post_types;
-
             if(is_plugin_active( 'woocommerce/woocommerce.php' ) && self::get('enable_reviews_on_woocommerce')){
                 array_push($enabled_post_types,'product');
             }
@@ -309,6 +314,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
         }
 
         public static function is_admin_product_page(){
+            /** Check if the current admin page is a product add (or) edit page in wp  */
             if(is_admin()){
                 $admin_post_type    = isset($_GET['post_type']) ? $_GET['post_type'] : 'post';
                 $post_id            = isset($_GET['post']) ? $_GET['post'] : 0;
