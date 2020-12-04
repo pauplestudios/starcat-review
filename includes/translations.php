@@ -32,6 +32,7 @@ if (!class_exists('\StarcatReview\Includes\Translations')) {
         {
             return [
                 'GeneralSettings' => __('General Settings', SCR_DOMAIN),
+                'WoocommerceSettings' => __('Woocommerce Settings', SCR_DOMAIN),
                 'MainPage' => __('Main Page', SCR_DOMAIN),
                 'CategoryPage' => __('Category Page', SCR_DOMAIN),
                 'SinglePage' => __('Single Page', SCR_DOMAIN),

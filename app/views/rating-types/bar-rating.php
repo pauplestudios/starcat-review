@@ -42,8 +42,11 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Bar_Rating')) {
                 title="' . $this->props['collection']['no_rated_message'] . '"
                 result                
             >';
+
+            $stat_identifier_key = $this->get_stat_identifier_key($key);
+
             $html .= $this->get_bars_box_html();
-            $html .= '<input type="hidden" name="scores[' . strtolower($key) . ']"  value="' . $value . '">';
+            $html .= '<input type="hidden" id="'.$stat_identifier_key.'" name="scores[' . strtolower($key) . ']"  value="' . $value . '">';
             $html .= '</div>';
 
             $html .= '<div class="review-item-label">';
@@ -93,6 +96,19 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Bar_Rating')) {
             $html .= '<div class="bars-score"> ' . $score . '</div>';
             $html .= '</div>';
             return $html;
+        }
+
+        public function get_stat_identifier_key($key){
+            $global_stats = SCR_Getter::get('global_stats');
+            
+            foreach($global_stats as $index => $stat){
+                if(strtolower($stat['stat_name']) == $key){
+                    $identifier_key = 'scr-stat-rating-'.$index;
+                    return $identifier_key;
+                }   
+            }
+
+            return false; 
         }
     }
 }
