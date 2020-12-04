@@ -298,7 +298,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
         {
             $post_types = self::get('review_enable_post-types');
             $enabled_post_types = is_string($post_types) ? [0 => $post_types] : $post_types;
-            if(is_plugin_active( 'woocommerce/woocommerce.php' ) && self::get('enable_reviews_on_woocommerce')){
+            if(self::is_woocommerce_plugin_active()){
                 array_push($enabled_post_types,'product');
             }
            
@@ -318,6 +318,12 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
             return false;
         }
 
+        public static function is_woocommerce_plugin_active(){
+            if(is_plugin_active( 'woocommerce/woocommerce.php' ) && self::get('enable_reviews_on_woocommerce')){
+                return true;
+            }
+            return false;
+        }
 
     } // END CLASS
 }
