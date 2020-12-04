@@ -36,7 +36,7 @@ class CoreTest extends \Codeception\TestCase\WPTestCase
     public function test_create_article()
     {
         $id = wp_insert_post(array('post_title' => 'Test Create Article', 'post_type' => 'pauple_helpie', 'post_content' => 'Test CPT text'));
-        $this->assertInternalType("int", $id);
+        $this->assertIsInt($id);
     }
 
     public function create_new_user()
