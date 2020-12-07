@@ -16,10 +16,6 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         public $fields;
         public function __construct()
         {
-            add_action('init', [$this, 'init']);
-        }
-
-        public function init(){
             $this->init_settings();
             new \StarcatReview\Includes\Settings\Premium_Tease();
         }
