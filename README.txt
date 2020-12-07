@@ -17,11 +17,10 @@ You can create almost anything from a simple customer review page in a business 
 
 ## Features
 
+* Change the default WooCommerce reviews with custom settings 
+* Ratings can have multi-rating criteria
 * Gives you an author review system for review posts
-* Can enable user review and rating for post or pages
-* Change the default WooCommerce reviews 
-* Review Schema for Google Rich Snippets 
-* Ratings can have multi-rating criteria 
+* Can enable user review and rating for post or pages 
 * Admin can reply to user review
 * Users can upvote reviews
 * Review section can have a inline search bar
@@ -32,11 +31,15 @@ You can create almost anything from a simple customer review page in a business 
 * Allow logged in or non-logged in users to submit a review
 * Approve user reviews manually
 * Customizable rating system with custom rating icon option
-
+Review Schema for Google Rich Snippets 
 
 [See Demo](https://demo.pauple.com/starcat-reviews/)
 [See the Getting Started Guide](https://starcatwp.com/getting-started/)
 [See Documentation](https://paupledocs.gitbook.io/starcat-documentation/)
+
+## WooCommerce integration for product reviews
+It is a [customer review plugin](https://starcatwp.com/woocommerce-review-plugin/) that has full integration with WooCommerce to replace the default product reviews with an advanced ratings and review system. 
+You can upgrade to WooCommerce Notifications PRO add-on to send review reminder emails for WooCommerce customers to give product reviews. 
 
 ## Author review to create review post**
 Allows Author (anyone with backend access) to give editorial reviews in posts and pages. This feature is useful for review bloggers and for sites who give editorial reviews. 
@@ -66,10 +69,6 @@ You get full control over the review and you can:
 
 **Google reCAPTCHA for Reviews**
 Can enable Google reCAPTCHA for users before submitting reviews. This could stop spam and fake reviews
-
-## WooCommerce integration for product reviews
-It is a [customer review plugin](https://starcatwp.com/woocommerce-review-plugin/) that has full integration with WooCommerce to replace the default product reviews with an advanced ratings and review system. 
-You can upgrade to WooCommerce Notifications PRO add-on to send review reminder emails for WooCommerce customers to give product reviews. 
 
 ## Rank higher in Google with Review Schema 
 Implements Review Schema markup (from schema.org) on your pages so that user ratings can be displayed in Google SERPs as Rich Snippets. It could increase your click-through rate and your page ranking in Google.
