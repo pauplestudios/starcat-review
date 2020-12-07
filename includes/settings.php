@@ -62,8 +62,8 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
         public function settings_tabs($prefix)
         {
-            $this->general_settings($prefix);
             $this->woocommerce_settings($prefix);
+            $this->general_settings($prefix);
             $this->mainpage_settings($prefix);
             $this->category_page_settings($prefix);
             $this->single_page_settings($prefix);
