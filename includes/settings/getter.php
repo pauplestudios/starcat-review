@@ -276,7 +276,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
             $global_stats = SCR_Getter::get('global_stats');
 
             /** if the current page is product then, retrieve the global stats based on woo-commerce settings */
-            if( self::is_admin_product_page() || is_singular('product')){
+            if( self::is_admin_product_page() || self::is_single_product_post()){
                 $global_stats = SCR_Getter::get('woo_global_stats');
             }
 
@@ -288,7 +288,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
             $singularity = SCR_Getter::get('stat-singularity');
 
             /** if the current page is product then, get default stat type in woo-commerce settings */
-            if( self::is_admin_product_page() || is_singular('product')){
+            if( self::is_admin_product_page() || self::is_single_product_post()){
                 $singularity = SCR_Getter::get('woo_stat_singularity');
             }
             return $singularity;
@@ -324,6 +324,14 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
             }
             return false;
         }
+
+        public static function is_single_product_post(){
+            global $post;
+            if(isset($post) && $post->post_type == 'product' && is_singular('product')){
+                return true;
+            }
+            return false;
+        } 
 
     } // END CLASS
 }

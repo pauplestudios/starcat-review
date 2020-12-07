@@ -128,9 +128,8 @@ if (!class_exists('\StarcatReview\App\Services\Services')) {
         }
 
         public function get_who_can_review(){
-            global $post;
             $who_can_review = SCR_Getter::get('ur_who_can_review');
-            if(is_singular('product') && isset($post) && $post->post_type == 'product'){
+            if(SCR_Getter::is_single_product_post()){
                 $who_can_review = SCR_Getter::get('woo_ur_who_can_review');
             }
             return $who_can_review;
