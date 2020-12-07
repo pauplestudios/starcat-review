@@ -11,8 +11,8 @@ class NotificationTest extends \Codeception\TestCase\WPTestCase
 
     public function test_add_order_to_schedule()
     {
-        require_once SCR_PATH . '/includes/lib/starcat-review-woo-notify/includes/notification/notification.php';
-        require_once SCR_PATH . '/includes/lib/starcat-review-woo-notify/includes/notification/notification-test-data.php';
+        require_once SCR_PATH . '/vendor/pauple/starcat-review-woo-notify/includes/notification/notification.php';
+        require_once SCR_PATH . '/vendor/pauple/starcat-review-woo-notify/includes/notification/notification-test-data.php';
 
         $this->Data = new \StarcatReviewNotification\Includes\Notification\Notification_Test_Data();
         $Notification = new \StarcatReviewNotification\Includes\Notification\Notification($this->Data);
@@ -38,8 +38,9 @@ class NotificationTest extends \Codeception\TestCase\WPTestCase
 
     public function test_run_schedule()
     {
-        require_once SCR_PATH . '/includes/lib/starcat-review-woo-notify/includes/notification/notification.php';
-        require_once SCR_PATH . '/includes/lib/starcat-review-woo-notify/includes/notification/notification-test-data.php';
+        require_once SCR_PATH . '/vendor/pauple/starcat-review-woo-notify/includes/notification/notification.php';
+        require_once SCR_PATH . '/vendor/pauple/starcat-review-woo-notify/includes/notification/notification-test-data.php';
+
         $this->Data = new \StarcatReviewNotification\Includes\Notification\Notification_Test_Data();
         $Notification = new \StarcatReviewNotification\Includes\Notification\Notification($this->Data);
 
