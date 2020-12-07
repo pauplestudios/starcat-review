@@ -83,6 +83,32 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'stats-animate' => false,
                 'stats-no-rated-message' => 'Not Rated Yet !!!',
 
+                // Woocommerce Settings
+
+                'enable_reviews_on_woocommerce' => true,
+                'woo_ur_who_can_review' => 'logged_in',
+                'woo_enable_pros_cons' => true,
+                'woo_enable_voting' => true,
+                'woo_show_form_title' => true,
+                'woo_stat_singularity' => 'single',
+                'woo_global_stats'  =>  ['stat_name' => 'Feature'],
+                'woo_stats_source_type' => 'icon',
+                'woo_stats_show_rating_label' => true,
+                'woo_stats_icons'   => 'star',
+                'woo_stats_images' => [
+                    'image' => [
+                        'url' => SCR_URL . 'includes/assets/img/tomato.png',
+                        'thumbnail' => SCR_URL . 'includes/assets/img/tomato.png',
+                    ],
+
+                    'image-outline' => [
+                        'url' => SCR_URL . 'includes/assets/img/tomato-outline.png',
+                        'thumbnail' => SCR_URL . 'includes/assets/img/tomato-outline.png',
+                    ],
+                ],
+                'woo_stats_steps'   => 'half',
+                'woo_show_captcha'  => true,
+                
                 // Mainpage Settings Start
                 'mp_slug' => 'reviews',
                 'mp_meta_title' => 'Reviews',
@@ -170,7 +196,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
         {
             $type = SCR_Getter::get('stats-type');
             $limit = ($type == 'star') ? SCR_Getter::get('stats-stars-limit') : SCR_Getter::get('stats-bars-limit');
-
+            
             $args = [
                 'global_stats' => SCR_Getter::get('global_stats'),
                 'singularity' => SCR_Getter::get('stat-singularity'),
@@ -185,15 +211,28 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'no_rated_message' => SCR_Getter::get('stats-no-rated-message'),
             ];
 
+            /** Get the woocommerce default settings, if current post_type has a product.  */
+            $args = self::get_woo_stat_default_args($args);
+
             return $args;
         }
 
-        public static function reviews_enabled_post_types()
-        {
-            $post_types = SCR_Getter::get('review_enable_post-types');
-            $enabled_post_types = is_string($post_types) ? [0 => $post_types] : $post_types;
+        public static function get_woo_stat_default_args($args){
+            global $product;
 
-            return $enabled_post_types;
+            if(empty($product) && !is_singular('product')){
+                return $args;
+            }
+            
+            $args['global_stats']   = SCR_Getter::get('woo_global_stats');
+            $args['singularity']    = SCR_Getter::get('woo_stat_singularity');
+            $args['source_type']    = SCR_Getter::get('woo_stats_source_type');
+            $args['show_rating_label']  = SCR_Getter::get('woo_stats_show_rating_label');
+            $args['icons']  = SCR_Getter::get('woo_stats_icons');
+            $args['images']  = SCR_Getter::get('woo_stats_images');
+            $args['steps']  = SCR_Getter::get('woo_stats_steps');
+
+            return $args;
         }
 
         public static function addons_available_condition()
@@ -231,6 +270,68 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'cpt' => "SCR_CPT__FILE__",
             ];
         }
+
+        public static function get_global_stats(){
+            /** get default global stats based on general settings */
+            $global_stats = SCR_Getter::get('global_stats');
+
+            /** if the current page is product then, retrieve the global stats based on woo-commerce settings */
+            if( self::is_admin_product_page() || self::is_single_product_post()){
+                $global_stats = SCR_Getter::get('woo_global_stats');
+            }
+
+            return $global_stats;
+        } 
+
+        public static function get_stat_singularity(){
+            /** get default stats type based on general settings */
+            $singularity = SCR_Getter::get('stat-singularity');
+
+            /** if the current page is product then, get default stat type in woo-commerce settings */
+            if( self::is_admin_product_page() || self::is_single_product_post()){
+                $singularity = SCR_Getter::get('woo_stat_singularity');
+            }
+            return $singularity;
+        }
+
+        public static function get_review_enabled_post_types()
+        {
+            $post_types = self::get('review_enable_post-types');
+            $enabled_post_types = is_string($post_types) ? [0 => $post_types] : $post_types;
+            if(self::is_woocommerce_plugin_active()){
+                array_push($enabled_post_types,'product');
+            }
+           
+            return $enabled_post_types;
+        }
+
+        public static function is_admin_product_page(){
+            /** Check if the current admin page is a product add (or) edit page in wp  */
+            if(is_admin()){
+                $admin_post_type    = isset($_GET['post_type']) ? $_GET['post_type'] : 'post';
+                $post_id            = isset($_GET['post']) ? $_GET['post'] : 0;
+                $post   =   get_post($post_id);
+                if($admin_post_type == 'product' || (isset($post) && $post->post_type == 'product')){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static function is_woocommerce_plugin_active(){
+            if(is_plugin_active( 'woocommerce/woocommerce.php' ) && self::get('enable_reviews_on_woocommerce')){
+                return true;
+            }
+            return false;
+        }
+
+        public static function is_single_product_post(){
+            global $post;
+            if(isset($post) && $post->post_type == 'product' && is_singular('product')){
+                return true;
+            }
+            return false;
+        } 
 
     } // END CLASS
 }
