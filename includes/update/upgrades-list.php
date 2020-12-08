@@ -52,9 +52,11 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
         }
 
         public function upgrade_v07(){
+
+            error_log('*** Init V0.7 Migration Process ***');
             $option_name = 'scr_options';
             $settings = get_option($option_name);
-
+            error_log('[Before settings] : ' . print_r($settings, true));
             /* Set new version for verification later */
             $settings['last_version'] = '0.7';
 
@@ -63,15 +65,16 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
             error_log('[$review_enabled_post_types] : ' . print_r($review_enabled_post_types, true));
 
             if(in_array('product',$review_enabled_post_types)){
-
+                error_log('*** Echo 1 ***');
                 // Get the product post_type index value 
                 $index_of_product =  array_search('product',$review_enabled_post_types);
 
                 // check and remove the product type from review_enabled_post_types option.
                 if(isset($review_enabled_post_types[$index_of_product]) && $review_enabled_post_types[$index_of_product] == 'product'){
                     unset($review_enabled_post_types[$index_of_product]);
-                    
-                    // re-index the post_types 
+                    error_log('*** Updating re-indexing  ***');
+                    error_log('[review_enabled_post_types] : ' . print_r($review_enabled_post_types, true));
+                    // re-index the post_types  
                     $settings['review_enable_post-types']      = array_values($review_enabled_post_types); 
                 } 
 
@@ -96,14 +99,13 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
             
             $result = update_option($option_name, $settings);
             $updated_option = get_option($option_name);
-
+            error_log('[updated_option] : ' . print_r($updated_option, true));
             if (isset($updated_option['last_version']) && $updated_option['last_version'] == '0.7') {
                 error_log('*** Starcat Reviews Migrated to v0.7  ***');
                 $result = true;
             }
 
             return $result;
-
         }
 
         /* Non-logged-in authors info review and replies support */

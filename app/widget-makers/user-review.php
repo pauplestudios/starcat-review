@@ -20,7 +20,6 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
         public function get_view()
         {
             $args = $this->get_default_args();
-            error_log('[get_default_args] : ' . print_r($args, true));
             $form_view = $this->form_controller->get_view($args);
             $ur_controller = new \StarcatReview\App\Components\User_Reviews\Controller();
             $reviews_list_view = $ur_controller->get_view($args);
