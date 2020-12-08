@@ -217,7 +217,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html = '<div class="links">';
 
             $can_reply = $this->capability['can_user_reply'];
-            $can_edit_comment = $comment['can_edit'];
+            $can_edit_comment = isset($comment['can_edit']) && !empty($comment['can_edit']) ? $comment['can_edit'] : ''; 
 
             if ($can_reply) {
                 $html .= '<a class="reply_link"><i class="reply icon"></i> ' . __('REPLY', SCR_DOMAIN) . '</a>';
