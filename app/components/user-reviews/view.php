@@ -65,7 +65,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= $this->get_content_text($comment);
             $html .= $this->get_content_moderation_info($comment);
             $html .= $this->get_content_actions($comment);
-
+            
             // 1 level indentation of comment childrens
             if ($comment['parent'] == 0 && isset($comment['childrens']) && !empty($comment['childrens'])) {
                 foreach ($comment['childrens'] as $child_comment) {
@@ -202,7 +202,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
         }
 
         protected function get_content_actions($comment)
-        {
+        {   
             $html = '';
             $html .= '<div class="actions">';
             $html .= $this->get_action_links($comment);
@@ -217,8 +217,8 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html = '<div class="links">';
 
             $can_reply = $this->capability['can_user_reply'];
-            $can_edit_comment = $comment['can_edit'];
-
+            $can_edit_comment = isset($comment['can_edit']) && !empty($comment['can_edit']) ? $comment['can_edit'] : ''; 
+            
             if ($can_reply) {
                 $html .= '<a class="reply_link"><i class="reply icon"></i> ' . __('REPLY', SCR_DOMAIN) . '</a>';
             }
