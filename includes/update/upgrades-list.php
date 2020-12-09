@@ -53,6 +53,8 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
 
         public function upgrade_v07(){
 
+            
+
             $option_name = 'scr_options';
             $settings = get_option($option_name);
             /* Set new version for verification later */
