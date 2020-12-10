@@ -13,12 +13,20 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Summary')) {
     {
         public function get_view()
         {
+
+            $enable_pros_cons = SCR_Getter::get('enable-pros-cons');
+            if(SCR_Getter::is_admin_product_page() || SCR_Getter::is_single_product_post()){
+                $enable_pros_cons = SCR_Getter::get('woo_enable_pros_cons');
+            }
+
             $args = [
                 'enable-author-review' => SCR_Getter::get('enable-author-review'),
-                'enable_pros_cons' => SCR_Getter::get('enable-pros-cons'),
+                'enable_pros_cons' => $enable_pros_cons,
                 'review_count' => scr_get_user_reviews_count(get_the_ID()),
             ];
             $args = array_merge($args, $this->get_default_args());
+
+            error_log('[$argsargs] : ' . print_r($args, true));
             $summary = new \StarcatReview\App\Components\Summary\Controller();
             $view = $summary->get_view($args);
 
