@@ -3,6 +3,7 @@
 namespace StarcatReview\App\Components\Form;
 
 use \StarcatReview\Services\Recaptcha as Recaptcha;
+use \StarcatReview\Includes\Settings\SCR_Getter;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -143,8 +144,10 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
 
         protected function get_user_review_stats()
         {
+            $woo_stats_class = SCR_Getter::is_single_product_post() ? 'woo-stats' : '';
+
             $html = '';
-            $html .= '<ul class="review-list"
+            $html .= '<ul class="review-list '.$woo_stats_class.'"
                 data-type="' . $this->props['collection']['stats_args']['type'] . '"
                 data-limit="' . $this->props['collection']['stats_args']['limit'] . '"
                 data-steps="' . $this->props['collection']['stats_args']['steps'] . '"
