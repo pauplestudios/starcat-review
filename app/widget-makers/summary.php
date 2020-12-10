@@ -21,7 +21,6 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Summary')) {
             ];
             $args = array_merge($args, $this->get_default_args());
 
-            error_log('[$argsargs] : ' . print_r($args, true));
             $summary = new \StarcatReview\App\Components\Summary\Controller();
             $view = $summary->get_view($args);
 
