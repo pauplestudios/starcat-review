@@ -20,7 +20,7 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
             $identical = 'stats';
             $comments = [];
             $comment_ids = $this->get_comments_ids($query_args);
-
+            error_log('[$use_cases] : ' . print_r($use_cases, true));
             if ($this->is_set($comment_ids)) {
                 foreach ($comment_ids as $comment_id) {
 
@@ -34,7 +34,7 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
                             $item = $this->get_stat($query_args, $comment_id, $review);
                         }
 
-                        if ($case == 'prosandcons' && SCR_Getter::get('enable-pros-cons')) {
+                        if ($case == 'prosandcons' && SCR_Getter::is_enabled_pros_cons()) {
                             $item = $this->get_proandcon($review);
                         }
 

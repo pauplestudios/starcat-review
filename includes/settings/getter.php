@@ -219,11 +219,12 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
 
         public static function get_woo_stat_default_args($args){
             global $product;
-
+            error_log('*** Echo 2 ***');
             if(empty($product) && !is_singular('product')){
                 return $args;
             }
-            
+            error_log('*** Echo 3 ***');
+            error_log(' Before $args]: ' . print_r($args, true));
             $args['global_stats']   = SCR_Getter::get('woo_global_stats');
             $args['singularity']    = SCR_Getter::get('woo_stat_singularity');
             $args['source_type']    = SCR_Getter::get('woo_stats_source_type');
@@ -231,7 +232,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
             $args['icons']  = SCR_Getter::get('woo_stats_icons');
             $args['images']  = SCR_Getter::get('woo_stats_images');
             $args['steps']  = SCR_Getter::get('woo_stats_steps');
-
+            error_log(' After $args]: ' . print_r($args, true));
             return $args;
         }
 
@@ -320,6 +321,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
 
         public static function is_woocommerce_plugin_active(){
             if(is_plugin_active( 'woocommerce/woocommerce.php' ) && self::get('enable_reviews_on_woocommerce')){
+                error_log('*** Woocommerce Enabled. ***');
                 return true;
             }
             return false;
@@ -332,6 +334,14 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
             }
             return false;
         } 
+
+        public static function is_enabled_pros_cons(){
+            $enable_pros_cons = SCR_Getter::get('enable-pros-cons');
+            if(self::is_admin_product_page() || self::is_single_product_post()){
+                $enable_pros_cons = SCR_Getter::get('woo_enable_pros_cons');
+            }
+            return $enable_pros_cons;
+        }
 
     } // END CLASS
 }
