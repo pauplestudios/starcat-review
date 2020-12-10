@@ -144,7 +144,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
 
         protected function get_user_review_stats()
         {
-            $woo_stats_class = SCR_Getter::is_single_product_post() ? 'woo-stats' : '';
+            $woo_stats_class = SCR_Getter::is_single_product_post() || SCR_Getter::is_admin_product_page() ? 'woo-stats' : '';
 
             $html = '';
             $html .= '<ul class="review-list '.$woo_stats_class.'"

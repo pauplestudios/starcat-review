@@ -21,7 +21,7 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
         public function get_view()
         {
             $html = '';
-            $woo_stats_class = SCR_Getter::is_single_product_post() ? 'woo-stats' : '';
+            $woo_stats_class = SCR_Getter::is_single_product_post() || SCR_Getter::is_admin_product_page() ? 'woo-stats' : '';
             if (isset($this->props['items']) && !empty($this->props['items'])) {
 
                 $html .= '<ul class="reviewed-list '.$woo_stats_class.'"
