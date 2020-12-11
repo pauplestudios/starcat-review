@@ -13,7 +13,6 @@ if (!class_exists('\StarcatReview\Features\Woocommerce_Integration')) {
     {
         public function __construct()
         {
-            error_log('*** WooCommerce Integrations ***');
             if ( SCR_Getter::is_woocommerce_plugin_active()) {
                 // Overriding the Existing product and other popular WC addons template by adding 99 as filter priotiry
                 add_filter('comments_template', [$this, 'comments_template_loader'], 99);

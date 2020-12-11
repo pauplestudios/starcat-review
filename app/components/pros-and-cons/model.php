@@ -15,7 +15,6 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\Model')) {
                 'collection' => $this->get_collection($args),
                 'items' => $this->get_items($args),
             ];
-
             return $view_props;
         }
 
@@ -39,8 +38,12 @@ if (!class_exists('\StarcatReview\App\Components\ProsAndCons\Model')) {
             if ($this->is_empty($args['items'])) {
                 return [];
             }
-            $pros = isset($args['items']['pros-list']) ? $args['items']['pros-list'] : $args['items']['pros'];
-            $cons = isset($args['items']['cons-list']) ? $args['items']['cons-list'] : $args['items']['cons'];
+
+            $pros = isset($args['items']['pros']) ? $$args['items']['pros'] : [];
+            $cons = isset($args['items']['cons']) ? $$args['items']['cons'] : [];
+
+            $pros = isset($args['items']['pros-list']) ? $args['items']['pros-list'] : $pros;
+            $cons = isset($args['items']['cons-list']) ? $args['items']['cons-list'] : $cons;
 
             $itemsProps = [
                 'pros' => $this->get_list($pros),

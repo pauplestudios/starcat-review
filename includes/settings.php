@@ -1445,12 +1445,13 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'dependency' => array('woo_stats_source_type', '==', 'icon'),
                             'default' => 'star',
                         ),
+                        
                         array(
                             'id' => 'woo_stats_icons_color',
                             'type' => 'color',
                             'title' => __('Icons Color', SCR_DOMAIN),
                             'dependency' => array('woo_stats_source_type', '==', 'icon'),
-                            'output' => array('.review-list .review-item-stars i', '.review-list .reviewed-item-stars i', '.reviewed-list .review-item-stars i', '.reviewed-list .reviewed-item-stars i'),
+                            'output' => array('.review-list.woo-stats .review-item-stars i', '.review-list.woo-stats .reviewed-item-stars i', '.reviewed-list.woo-stats .review-item-stars i', '.reviewed-list.woo-stats .reviewed-item-stars i'),
                             'output_mode' => 'color',
                             'default' => '#e7711b',
                         ),
@@ -1459,7 +1460,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'type' => 'color',
                             'title' => __('Icons Label Color', SCR_DOMAIN),
                             'dependency' => array('woo_stats_source_type', '==', 'icon'),
-                            'output' => array('.review-list .reviewed-item .reviewed-item-label__score', '.review-list .reviewed-item .reviewed-item-label__score', '.reviewed-list .reviewed-item .reviewed-item-label__score', '.reviewed-list .reviewed-item .reviewed-item-label__score'),
+                            'output' => array('.review-list.woo-stats .reviewed-item .reviewed-item-label__score', '.review-list.woo-stats .reviewed-item .reviewed-item-label__score', '.reviewed-list.woo-stats .reviewed-item .reviewed-item-label__score', '.reviewed-list.woo-stats .reviewed-item .reviewed-item-label__score'),
                             'output_mode' => 'color',
                             'default' => '#0274be',
                         ),
