@@ -140,7 +140,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                 'order' => 'ASC',
                 'orderby' => 'menu_order',
             );
-            $get_global_stats = SCR_Getter::get('global_stats');
+            $get_global_stats = SCR_Getter::get_global_stats();
             $global_stats = array();
             if (count($get_global_stats) > 0) {
                 foreach ($get_global_stats as $stat) {

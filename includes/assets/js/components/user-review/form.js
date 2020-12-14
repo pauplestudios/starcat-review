@@ -209,7 +209,8 @@ var Form = {
     ratingRules: function (rules) {
         if (SCROptions.global_stats) {
             jQuery(SCROptions.global_stats).each(function (index, item) {
-                var identifier = "scores[" + item.stat_name.toLowerCase() + "]";
+                // var identifier = "scores[" + item.stat_name.toLowerCase() + "]";
+                var identifier = "scr-stat-rating-"+index;
                 rules[identifier] = {
                     identifier: identifier,
                     rules: [

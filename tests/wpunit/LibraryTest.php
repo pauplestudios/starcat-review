@@ -3,14 +3,14 @@
 class LibraryTest extends \Codeception\TestCase\WPTestCase
 {
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->get_upgrades_list_stub();
         parent::setUp();
         // $this->reset_options();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
     }

@@ -4,12 +4,12 @@
 class BelowZeroPointSixPointOneTest extends \Codeception\TestCase\WPTestCase
 {
 
-    public function setUp()
+    public function setUp(): void
     {
         // parent::setUp();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         // parent::tearDown();
     }
