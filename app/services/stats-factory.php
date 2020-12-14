@@ -27,7 +27,7 @@ if (!class_exists('\StarcatReview\App\Services\Stats_Factory')) {
             if ($type == 'author_stat') {
                 return $author_stat;
             }
-            $comments_of_stats = scr_get_comments_args(['stats'], ['post_id' => $post_id]);
+            $comments_of_stats = scr_get_comments_args(['stats'], ['post_id' => $post_id,'status' => 'approve']);
             $comment_stat = $this->get_comment_stat($comments_of_stats);
             if ($type == 'comment_stat') {
                 return $comment_stat;
