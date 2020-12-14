@@ -70,7 +70,9 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             /* Checks for single template by post type */
 
             if (isset($post) && !empty($post)) {
-                foreach ($this->get_review_enabled_post_types() as $post_type) {
+                $review_enabled_post_types = SCR_Getter::get_review_enabled_post_types();
+
+                foreach ($review_enabled_post_types as $post_type) {
 
                     if ($post->post_type == $post_type && is_single()) {
 
@@ -123,8 +125,8 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             wp_localize_script('starcat-review-script', 'SCROptions', ['enable_prosandcons' => SCR_Getter::get('enable-pros-cons')]);
 
             // Additional Dashboard Column fields
-
-            foreach ($this->get_review_enabled_post_types() as $post_type) {
+            $review_enabled_post_types = SCR_Getter::get_review_enabled_post_types();
+            foreach ($review_enabled_post_types as $post_type) {
                 add_filter("manage_{$post_type}_posts_columns", array($this, 'manage_cpt_custom_columns'), 10);
                 add_action("manage_{$post_type}_posts_custom_column", array($this, 'manage_cpt_custom_column'), 10, 2);
                 add_action("manage_edit-{$post_type}_sortable_columns", array($this, 'sort_posts_custom_column'), 10, 1);
@@ -217,14 +219,6 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             return $reviews_builder->get_reviews();
         }
 
-        public function get_review_enabled_post_types()
-        {
-            $post_types = SCR_Getter::get('review_enable_post-types');
-            $enabled_post_types = is_string($post_types) ? [0 => $post_types] : $post_types;
-
-            return $enabled_post_types;
-        }
-
         public function enqueue_scripts()
         {
             /* Vendors */
@@ -246,7 +240,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             ));
             // You Can Access these object from javascript
             wp_localize_script('starcat-review-script', 'SCROptions', [
-                'global_stats' => SCR_Getter::get('global_stats'),
+                'global_stats' => SCR_Getter::get_global_stats(),
             ]);
 
             wp_localize_script('starcat-review-script', 'Translations', Translations::getFormSrings());

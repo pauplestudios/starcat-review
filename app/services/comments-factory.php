@@ -20,7 +20,7 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
             $identical = 'stats';
             $comments = [];
             $comment_ids = $this->get_comments_ids($query_args);
-
+            
             if ($this->is_set($comment_ids)) {
                 foreach ($comment_ids as $comment_id) {
 
@@ -34,7 +34,7 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
                             $item = $this->get_stat($query_args, $comment_id, $review);
                         }
 
-                        if ($case == 'prosandcons' && SCR_Getter::get('enable-pros-cons')) {
+                        if ($case == 'prosandcons' && SCR_Getter::is_enabled_pros_cons()) {
                             $item = $this->get_proandcon($review);
                         }
 
@@ -126,9 +126,9 @@ if (!class_exists('\StarcatReview\App\Services\Comments_Factory')) {
             }
 
             $post_id = isset($args['post_id']) ? $args['post_id'] : get_the_ID();
-
             // WooCommerce product post_type Only
-            if (get_post_type($post_id) == 'product' && !$this->is_set($stat_item) && in_array('product', SCR_Getter::reviews_enabled_post_types(), true)) {
+            if (get_post_type($post_id) == 'product' && !$this->is_set($stat_item) && SCR_Getter::get('enable_reviews_on_woocommerce')) {
+                
                 $rating = apply_filters('scr_woocommerce_integration/convert_product_rating_to_stat', $comment_id);
 
                 if ($this->is_set($rating) && is_array($rating)) {

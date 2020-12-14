@@ -42,8 +42,8 @@ if (!class_exists('\StarcatReview\App\Services\Services')) {
 
             // error_log('given_stats : ' . print_r($given_stats, true));
 
-            $global_stats = SCR_Getter::get('global_stats');
-            $singularity = SCR_Getter::get('stat-singularity');
+            $global_stats = SCR_Getter::get_global_stats();
+            $singularity = SCR_Getter::get_stat_singularity();
 
             if ($singularity == 'single') {
                 $global_stats = [$global_stats[0]];
@@ -88,7 +88,7 @@ if (!class_exists('\StarcatReview\App\Services\Services')) {
             $is_logged_in_user = is_user_logged_in() ? true : false;
             $is_non_logged_in_user = !$is_logged_in_user ? true : false;
 
-            $who_can_review = SCR_Getter::get('ur_who_can_review');
+            $who_can_review = $this->get_who_can_review();
             $can_same_user_leave_multiple_review = SCR_Getter::get('ur_allow_same_user_can_leave_multiple_reviews');
 
             $is_logged_in_user_can_review = ($is_logged_in_user && ($who_can_review == ('everyone' || 'logged_in'))) ? true : false;
@@ -125,6 +125,14 @@ if (!class_exists('\StarcatReview\App\Services\Services')) {
             // error_log('capability : ' . print_r($capability, true));
 
             return $capability;
+        }
+
+        public function get_who_can_review(){
+            $who_can_review = SCR_Getter::get('ur_who_can_review');
+            if(SCR_Getter::is_single_product_post()){
+                $who_can_review = SCR_Getter::get('woo_ur_who_can_review');
+            }
+            return $who_can_review;
         }
 
     } // END CLASS

@@ -2,6 +2,8 @@
 
 namespace StarcatReview\App\Views\Rating_Types;
 
+use \StarcatReview\Includes\Settings\SCR_Getter;
+
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -19,12 +21,12 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
         public function get_view()
         {
             $html = '';
+            $woo_stats_class = SCR_Getter::is_single_product_post() || SCR_Getter::is_admin_product_page() ? 'woo-stats' : '';
             if (isset($this->props['items']) && !empty($this->props['items'])) {
 
-                $html .= '<ul class="reviewed-list"
+                $html .= '<ul class="reviewed-list '.$woo_stats_class.'"
                 data-animate="' . $this->props['collection']['animate'] . '"
             >';
-
                 foreach ($this->props['items'] as $key => $stat) {
                     $html .= $this->get_reviewed_stat($key, $stat['rating'], $stat['score']);
                 }
@@ -47,7 +49,14 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
             >';
             $html .= $this->get_wrapper_html();
             $html .= $this->get_result_html($value);
-            $html .= '<input type="hidden" name="scores[' . strtolower($key) . ']"  value="' . $value . '">';
+
+            /** Don't use the Semantic-UI RegExp identifier key that has Special Characters for validating Semantic-UI input fields
+             *  The stat_identifier_key is a unique id and doesn't have a Special Characters in that key. This Key used for validating the input fields.
+             */
+
+            $stat_identifier_key = $this->get_stat_identifier_key($key);
+
+            $html .= '<input type="hidden" id="'. $stat_identifier_key .'" name="scores[' . strtolower($key) . ']"  value="' . $value . '">';
             $html .= '</div>';
 
             if ($this->props['collection']['show_rating_label']) {
@@ -120,6 +129,19 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
             $html .= '</div>';
 
             return $html;
+        }
+
+        public function get_stat_identifier_key($key){
+            $global_stats = SCR_Getter::get('global_stats');
+            
+            foreach($global_stats as $index => $stat){
+                if(strtolower($stat['stat_name']) == $key){
+                    $identifier_key = 'scr-stat-rating-'.$index;
+                    return $identifier_key;
+                }   
+            }
+
+            return false; 
         }
     }
 }
