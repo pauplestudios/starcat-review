@@ -20,7 +20,7 @@ if (!class_exists('\StarcatReview\Services\Recaptcha')) {
 
         public static function load_v2_html()
         {
-            $site_key = SCR_Getter::get('recaptcha_site_key');
+            $site_key = SCR_Getter::get_recaptcha_site_key();
 
             $html = '';
             $html .= self::js_script();
@@ -43,11 +43,27 @@ if (!class_exists('\StarcatReview\Services\Recaptcha')) {
 
         public static function verify()
         {
+            $post_id  = isset($_POST['post_id']) && !empty($_POST['post_id']) ? $_POST['post_id'] : 0;
+            $post = get_post($post_id);
             $secret_key = SCR_Getter::get('recaptcha_secret_key');
-            $response = sanitize_key(wp_unslash($_POST["captcha"]));
+            if(isset($post) && $post->post_type == 'product'){
+                error_log('*** WC3 ***');
+                $secret_key = SCR_Getter::get('woo_recaptcha_secret_key');
+            }
+            error_log('[$secret_key] : ' .$secret_key );
+            
+            error_log('Requests : ' . print_r($_REQUEST, true));
+            
+            $captcha = isset($_POST["captcha"]) &&  !empty($_POST["captcha"]) ? $_POST["captcha"] : '';
+            if(empty($captcha)){
+                return false;
+            } 
+            
+            $response = sanitize_key(wp_unslash($captcha));
+            // $response = sanitize_key($captcha);
             // error_log('verify');
             // error_log('verify');
-            // error_log('$response : ' . print_r($response, true));
+            error_log('$response : ' . print_r($response, true));
 
             $url = 'https://www.google.com/recaptcha/api/siteverify';
             $data = array(
@@ -56,6 +72,7 @@ if (!class_exists('\StarcatReview\Services\Recaptcha')) {
             );
 
             $query = http_build_query($data);
+            error_log('[$query] : ' .$query );
             $options = array(
                 'http' => array(
                     'header' => "Content-Type: application/x-www-form-urlencoded\r\n" .
@@ -65,10 +82,12 @@ if (!class_exists('\StarcatReview\Services\Recaptcha')) {
                     'content' => $query,
                 ),
             );
+
             $context = stream_context_create($options);
             $verify = file_get_contents($url, false, $context);
+            error_log('[verify] : ' .$verify );
             $captcha_success = json_decode($verify);
-
+            error_log('captcha : ' . print_r($captcha_success, true));
             if ($captcha_success->success == false) {
                 // echo "<p>You are a bot! Go away!</p>";
                 $captcha_success = false;

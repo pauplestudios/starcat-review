@@ -84,9 +84,18 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
 
         public function user_review_submission()
         {
-            if (SCR_Getter::get('ur_show_captcha')) {
+            $post_id  = isset($_POST['post_id']) && !empty($_POST['post_id']) ? $_POST['post_id'] : 0;
+            $post = get_post($post_id);
+            $is_enabled_captcha = SCR_Getter::get('ur_show_captcha');
+            if(isset($post) && $post->post_type == 'product'){
+                $is_enabled_captcha = SCR_Getter::get('woo_show_captcha');
+            }
+
+            if ($is_enabled_captcha) {
                 $captcha_success = Recaptcha::verify();
+                error_log('captcha_success : ' .$captcha_success );
                 if ($captcha_success == false) {
+                    error_log('*** captcha Failed ***');
                     echo json_encode("BOT!");
                     wp_die();
                 }
