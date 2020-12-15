@@ -49,7 +49,7 @@ if (!class_exists('\StarcatReview\Services\Recaptcha')) {
             if(isset($post) && $post->post_type == 'product'){
                 $secret_key = SCR_Getter::get('woo_recaptcha_secret_key');
             }
-            
+            // don't sanitize the captcha response data.
             $captcha_response = isset($_POST["captcha"]) &&  !empty($_POST["captcha"]) ? $_POST["captcha"] : '';
             if(empty($captcha_response)){
                 return false;
