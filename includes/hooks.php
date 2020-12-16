@@ -23,7 +23,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             add_action('admin_init', array($this, 'load_admin_hooks'));
 
             /*  Reviews Enqueing Script Action hook */
-            add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
+            add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'), 11);
 
             /*  Reviews Shortcode */
             // require_once SCR_PATH . 'includes/shortcodes.php';
@@ -223,29 +223,23 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         {
             /* Vendors */
             wp_enqueue_style('semantic-css', SCR_URL . "includes/assets/vendors/semantic/bundle/semantic.min.css");
-            wp_enqueue_script('semantic-js', SCR_URL . 'includes/assets/vendors/semantic/bundle/semantic.min.js', array('jquery'));
-
             wp_enqueue_style('flexbox-grid', SCR_URL . "includes/assets/vendors/flexboxgrid.min.css");
+            wp_enqueue_style('starcat-review-css', SCR_URL . "includes/assets/bundle/main.bundle.css");
+
+            wp_enqueue_script('semantic-js', SCR_URL . 'includes/assets/vendors/semantic/bundle/semantic.min.js', array('jquery'), SCR_VERSION, true);
 
             /* Application */
-            wp_register_script('starcat-review-script', SCR_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'));
-            wp_localize_script('starcat-review-script', 'scr_ajax', array(
-                'ajax_url' => admin_url('admin-ajax.php'),
-                'ajax_nonce' => wp_create_nonce('starcat-review-ajax-nonce'),
-            ));
-            wp_enqueue_script('starcat-review-script', SCR_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'));
-            wp_localize_script('starcat-review-script', 'scr_ajax', array(
-                'ajax_url' => admin_url('admin-ajax.php'),
-                'ajax_nonce' => wp_create_nonce('starcat-review-ajax-nonce'),
-            ));
+            wp_enqueue_script('starcat-review-js', SCR_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'), SCR_VERSION, true);
             // You Can Access these object from javascript
-            wp_localize_script('starcat-review-script', 'SCROptions', [
+            wp_localize_script('starcat-review-js', 'SCROptions', [
                 'global_stats' => SCR_Getter::get_global_stats(),
             ]);
+            wp_localize_script('starcat-review-js', 'Translations', Translations::getFormSrings());
+            wp_localize_script('starcat-review-js', 'scr_ajax', array(
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'ajax_nonce' => wp_create_nonce('starcat-review-ajax-nonce'),
+            ));
 
-            wp_localize_script('starcat-review-script', 'Translations', Translations::getFormSrings());
-
-            wp_enqueue_style('style-name', SCR_URL . "includes/assets/bundle/main.bundle.css");
         }
     } // END CLASS
 
