@@ -30,7 +30,7 @@ var Form = {
         SCRForm.form({
             fields: formFields,
             onSuccess: function (event, fields) {
-                var imageValidation = Form.imageValidation();
+                var imageValidation = Form.imageValidation(SCRForm);
                 if(imageValidation.status == 2){
                     alert(imageValidation.message);
                     return false;
@@ -47,55 +47,55 @@ var Form = {
 
     submission: function (SCRForm, fields) {
         var form_data = Form.getProps(SCRForm, fields);
-        // SCRForm.find(".submit.button").addClass("loading");
-        // // Ajax Post Submiting        
-        // jQuery.ajax({
-        //     type: "post",
-        //     url: scr_ajax.ajax_url,
-        //     cache: false,
-        //     data: form_data,
-        //     processData: false, // Preventing default data parse behavior                        
-        //     contentType: false,
-        //     success: function (results) {
-        //         if (results.alert) {
-        //             alert(results.alert);
-        //             // Reloading the page
-        //             window.location.reload();
-        //         }
-        //         results = JSON.parse(results);
+        SCRForm.find(".submit.button").addClass("loading");
+        // Ajax Post Submiting        
+        jQuery.ajax({
+            type: "post",
+            url: scr_ajax.ajax_url,
+            cache: false,
+            data: form_data,
+            processData: false, // Preventing default data parse behavior                        
+            contentType: false,
+            success: function (results) {
+                if (results.alert) {
+                    alert(results.alert);
+                    // Reloading the page
+                    window.location.reload();
+                }
+                results = JSON.parse(results);
 
 
-        //         // Success Message
-        //         var msgProps = {
-        //             type: "positive",
-        //             title: Translations.reviewSuccessTitle,
-        //             description: Translations.reviewSuccessDescription,
-        //         };
+                // Success Message
+                var msgProps = {
+                    type: "positive",
+                    title: Translations.reviewSuccessTitle,
+                    description: Translations.reviewSuccessDescription,
+                };
 
-        //         SCRForm.html(Form.getMessageTemplate(msgProps));
+                SCRForm.html(Form.getMessageTemplate(msgProps));
 
-        //         // Reviewed item prepending to Reviews List
-        //         // jQuery("#scr-cat-collection").prepend(
-        //         //     Form.getReviewTemplate(props.title, props.description)
-        //         // );
+                // Reviewed item prepending to Reviews List
+                // jQuery("#scr-cat-collection").prepend(
+                //     Form.getReviewTemplate(props.title, props.description)
+                // );
                 
-        //         // Reloading the page
-        //         // setInterval("window.location.reload()", 5000);
-        //     }
-        // }).fail(function (response) {
-        //     console.log("!!! Submision Failed !!!");
-        //     console.log(response);
-        //     // Fail Message
-        //     var msgProps = {
-        //         type: "negative",
-        //         title: Translations.reviewFailTitle,
-        //         description: Translations.reviewFailDescription,
-        //     };
-        //     SCRForm.html(Form.getMessageTemplate(msgProps));
+                // Reloading the page
+                setInterval("window.location.reload()", 5000);
+            }
+        }).fail(function (response) {
+            console.log("!!! Submision Failed !!!");
+            console.log(response);
+            // Fail Message
+            var msgProps = {
+                type: "negative",
+                title: Translations.reviewFailTitle,
+                description: Translations.reviewFailDescription,
+            };
+            SCRForm.html(Form.getMessageTemplate(msgProps));
 
-        //     // Reloading the page
-        //     // setInterval("window.location.reload()", 5000);
-        // }, JSON);
+            // Reloading the page
+            setInterval("window.location.reload()", 5000);
+        }, JSON);
     },
 
     getProps: function (submittingForm, fields) {
@@ -253,13 +253,16 @@ var Form = {
 
         return template;
     },
-    imageValidation: function (){
+    imageValidation: function (SCRForm){
         var filesCount = 0;
         var files = [];
         if(SCROptions.required_options.pr_require_photo == 1){
             var uploadField = document.getElementById('scr_pr_image_upload');
             files = (uploadField) ? uploadField.files : [];
-            if(files.length == 0){
+            var uploadedImageGroup = SCRForm.find('.field .images.scr_pr_uploaded_image_group');
+            var uploadedImages = uploadedImageGroup.find('.deleteable.image').length;
+           
+            if(files.length == 0 && uploadedImages == 0){
                 return {
                     status: 2,
                     res_type: 'PHOTO_REQUIRED',
