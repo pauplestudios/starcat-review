@@ -31,8 +31,8 @@ var Form = {
             fields: formFields,
             onSuccess: function (event, fields) {
                 var imageValidation = Form.imageValidation();
-                if(imageValidation == false){
-                    alert('Photo is Required');
+                if(imageValidation.status == 2){
+                    alert(imageValidation.message);
                     return false;
                 }
                 event.preventDefault();
@@ -254,14 +254,34 @@ var Form = {
         return template;
     },
     imageValidation: function (){
+        var filesCount = 0;
+        var files = [];
         if(SCROptions.required_options.pr_require_photo == 1){
             var uploadField = document.getElementById('scr_pr_image_upload');
-            var files = (uploadField) ? uploadField.files : [];
+            files = (uploadField) ? uploadField.files : [];
             if(files.length == 0){
-                return false;
+                return {
+                    status: 2,
+                    res_type: 'PHOTO_REQUIRED',
+                    message: 'Photo is Required'
+                };
             }
+            filesCount = files.length;
         }
-        return true;
+       
+        // Checking Files Quantities
+        if(filesCount > SCROptions.required_options.pr_photo_quantity){
+            return {
+                status: 2,
+                res_type: 'MAX_LIMIT_EXISTS',
+                message: 'Maximum number of files allowed is '+SCROptions.required_options.pr_photo_quantity
+            };
+        }
+
+        return {
+            status: 1,
+            res_type: 'SUCCESS'
+        };
     }
 };
 
