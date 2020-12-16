@@ -20,7 +20,7 @@ if (!class_exists('\StarcatReview\Services\Recaptcha')) {
 
         public static function load_v2_html()
         {
-            $site_key = SCR_Getter::get('recaptcha_site_key');
+            $site_key = SCR_Getter::get_recaptcha_site_key();
 
             $html = '';
             $html .= self::js_script();
@@ -43,16 +43,22 @@ if (!class_exists('\StarcatReview\Services\Recaptcha')) {
 
         public static function verify()
         {
+            $post_id  = isset($_POST['post_id']) && !empty($_POST['post_id']) ? $_POST['post_id'] : 0;
+            $post = get_post($post_id);
             $secret_key = SCR_Getter::get('recaptcha_secret_key');
-            $response = sanitize_key(wp_unslash($_POST["captcha"]));
-            // error_log('verify');
-            // error_log('verify');
-            // error_log('$response : ' . print_r($response, true));
-
+            if(isset($post) && $post->post_type == 'product'){
+                $secret_key = SCR_Getter::get('woo_recaptcha_secret_key');
+            }
+            // don't sanitize the captcha response data.
+            $captcha_response = isset($_POST["captcha"]) &&  !empty($_POST["captcha"]) ? $_POST["captcha"] : '';
+            if(empty($captcha_response)){
+                return false;
+            } 
+            
             $url = 'https://www.google.com/recaptcha/api/siteverify';
             $data = array(
                 'secret' => $secret_key,
-                'response' => $response,
+                'response' => $captcha_response,
             );
 
             $query = http_build_query($data);
@@ -65,10 +71,10 @@ if (!class_exists('\StarcatReview\Services\Recaptcha')) {
                     'content' => $query,
                 ),
             );
+
             $context = stream_context_create($options);
             $verify = file_get_contents($url, false, $context);
             $captcha_success = json_decode($verify);
-
             if ($captcha_success->success == false) {
                 // echo "<p>You are a bot! Go away!</p>";
                 $captcha_success = false;
