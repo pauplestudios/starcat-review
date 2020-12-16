@@ -3,6 +3,7 @@ formSubmitted = false;
 var Form = {
     init: function () {
         this.eventListener();
+        
         console.log("Submission JS Loaded !!!");
     },
 
@@ -29,12 +30,16 @@ var Form = {
         SCRForm.form({
             fields: formFields,
             onSuccess: function (event, fields) {
+                var imageValidation = Form.imageValidation();
+                if(imageValidation == false){
+                    alert('Photo is Required');
+                    return false;
+                }
                 event.preventDefault();
                 if (formSubmitted) {
                     return;
                 }
                 formSubmitted = true;
-
                 Form.submission(SCRForm, fields);
             },
         });
@@ -42,7 +47,6 @@ var Form = {
 
     submission: function (SCRForm, fields) {
         var form_data = Form.getProps(SCRForm, fields);
-
         SCRForm.find(".submit.button").addClass("loading");
         // Ajax Post Submiting        
         jQuery.ajax({
@@ -53,7 +57,6 @@ var Form = {
             processData: false, // Preventing default data parse behavior                        
             contentType: false,
             success: function (results) {
-
                 if (results.alert) {
                     alert(results.alert);
                     // Reloading the page
@@ -75,9 +78,9 @@ var Form = {
                 // jQuery("#scr-cat-collection").prepend(
                 //     Form.getReviewTemplate(props.title, props.description)
                 // );
-
+                
                 // Reloading the page
-                setInterval("window.location.reload()", 5000);
+                // setInterval("window.location.reload()", 5000);
             }
         }).fail(function (response) {
             console.log("!!! Submision Failed !!!");
@@ -91,7 +94,7 @@ var Form = {
             SCRForm.html(Form.getMessageTemplate(msgProps));
 
             // Reloading the page
-            setInterval("window.location.reload()", 5000);
+            // setInterval("window.location.reload()", 5000);
         }, JSON);
     },
 
@@ -250,6 +253,16 @@ var Form = {
 
         return template;
     },
+    imageValidation: function (){
+        if(SCROptions.required_options.pr_require_photo == 1){
+            var uploadField = document.getElementById('scr_pr_image_upload');
+            var files = (uploadField) ? uploadField.files : [];
+            if(files.length == 0){
+                return false;
+            }
+        }
+        return true;
+    }
 };
 
 module.exports = Form;
