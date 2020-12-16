@@ -47,55 +47,55 @@ var Form = {
 
     submission: function (SCRForm, fields) {
         var form_data = Form.getProps(SCRForm, fields);
-        SCRForm.find(".submit.button").addClass("loading");
-        // Ajax Post Submiting        
-        jQuery.ajax({
-            type: "post",
-            url: scr_ajax.ajax_url,
-            cache: false,
-            data: form_data,
-            processData: false, // Preventing default data parse behavior                        
-            contentType: false,
-            success: function (results) {
-                if (results.alert) {
-                    alert(results.alert);
-                    // Reloading the page
-                    window.location.reload();
-                }
-                results = JSON.parse(results);
+        // SCRForm.find(".submit.button").addClass("loading");
+        // // Ajax Post Submiting        
+        // jQuery.ajax({
+        //     type: "post",
+        //     url: scr_ajax.ajax_url,
+        //     cache: false,
+        //     data: form_data,
+        //     processData: false, // Preventing default data parse behavior                        
+        //     contentType: false,
+        //     success: function (results) {
+        //         if (results.alert) {
+        //             alert(results.alert);
+        //             // Reloading the page
+        //             window.location.reload();
+        //         }
+        //         results = JSON.parse(results);
 
 
-                // Success Message
-                var msgProps = {
-                    type: "positive",
-                    title: Translations.reviewSuccessTitle,
-                    description: Translations.reviewSuccessDescription,
-                };
+        //         // Success Message
+        //         var msgProps = {
+        //             type: "positive",
+        //             title: Translations.reviewSuccessTitle,
+        //             description: Translations.reviewSuccessDescription,
+        //         };
 
-                SCRForm.html(Form.getMessageTemplate(msgProps));
+        //         SCRForm.html(Form.getMessageTemplate(msgProps));
 
-                // Reviewed item prepending to Reviews List
-                // jQuery("#scr-cat-collection").prepend(
-                //     Form.getReviewTemplate(props.title, props.description)
-                // );
+        //         // Reviewed item prepending to Reviews List
+        //         // jQuery("#scr-cat-collection").prepend(
+        //         //     Form.getReviewTemplate(props.title, props.description)
+        //         // );
                 
-                // Reloading the page
-                // setInterval("window.location.reload()", 5000);
-            }
-        }).fail(function (response) {
-            console.log("!!! Submision Failed !!!");
-            console.log(response);
-            // Fail Message
-            var msgProps = {
-                type: "negative",
-                title: Translations.reviewFailTitle,
-                description: Translations.reviewFailDescription,
-            };
-            SCRForm.html(Form.getMessageTemplate(msgProps));
+        //         // Reloading the page
+        //         // setInterval("window.location.reload()", 5000);
+        //     }
+        // }).fail(function (response) {
+        //     console.log("!!! Submision Failed !!!");
+        //     console.log(response);
+        //     // Fail Message
+        //     var msgProps = {
+        //         type: "negative",
+        //         title: Translations.reviewFailTitle,
+        //         description: Translations.reviewFailDescription,
+        //     };
+        //     SCRForm.html(Form.getMessageTemplate(msgProps));
 
-            // Reloading the page
-            // setInterval("window.location.reload()", 5000);
-        }, JSON);
+        //     // Reloading the page
+        //     // setInterval("window.location.reload()", 5000);
+        // }, JSON);
     },
 
     getProps: function (submittingForm, fields) {
@@ -277,6 +277,21 @@ var Form = {
                 message: 'Maximum number of files allowed is '+SCROptions.required_options.pr_photo_quantity
             };
         }
+
+        // photo max file size checking
+        var maxPhotoSize =  SCROptions.required_options.pr_photo_size;
+        for(ii = 0; ii < filesCount; ii++){
+            var size = files[ii].size;
+            var fileSize = Math.round((size / 1024));    
+            if(fileSize > maxPhotoSize){
+                return {
+                    status: 2,
+                    res_type: 'MAX_LIMIT_EXISTS',
+                    message: 'Max size allowed: '+maxPhotoSize+'kB'
+                };
+            }
+        }
+
 
         return {
             status: 1,
