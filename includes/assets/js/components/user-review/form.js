@@ -300,7 +300,7 @@ var Form = {
             if(fileSize > maxPhotoSize){
                 return {
                     status: 2,
-                    res_type: 'MAX_LIMIT_EXISTS',
+                    res_type: 'MAX_FILE_SIZE_EXISTS',
                     message: 'Max size allowed: '+maxPhotoSize+'kB'
                 };
             }
