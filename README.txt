@@ -124,9 +124,6 @@ You can get the premium add-ons in bundled pricing.
 = 0.7.1 =
 * Fix: User review is not getting published if the Re-captcha option is enabled
 * Fix: User Rating are published even before the review is approved
-* Fix: User Review form submission Conflict with Elementor plugin
-* Fix: User Review gets submitted even when Photos are not uploaded (photo attachment is required)
-
 
 = 0.7 =
 * Feature: Added a Seperate Woocommerce Settings for reviewing Woo-Products
