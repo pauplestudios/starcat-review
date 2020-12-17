@@ -31,7 +31,7 @@ var Form = {
             fields: formFields,
             onSuccess: function (event, fields) {
                 var imageValidation = Form.imageValidation(SCRForm);
-                if(imageValidation.status == 2){
+                if(imageValidation.status === 'failed'){
                     alert(imageValidation.message);
                     return false;
                 }
@@ -60,7 +60,7 @@ var Form = {
 
                 // Photo Reviews json response 
                 if(results.addon === 'SCR_PR'){
-                    if(results.status == 2){
+                    if(results.status === 'failed'){
                         alert(results.message);    
                         // Reloading the page
                         window.location.reload();
@@ -273,8 +273,7 @@ var Form = {
         if(SCROptions.required_options.pr_require_photo == 1){
             if(filesCount == 0 && uploadedImages == 0){
                 return {
-                    status: 2,
-                    res_type: 'PHOTO_REQUIRED',
+                    status: 'failed',
                     message: 'Photo is Required'
                 };
             }
@@ -283,8 +282,7 @@ var Form = {
         // Checking Files Quantities
         if(filesCount > SCROptions.required_options.pr_photo_quantity){
             return {
-                status: 2,
-                res_type: 'MAX_LIMIT_EXISTS',
+                status: 'failed',
                 message: 'Maximum number of files allowed is '+SCROptions.required_options.pr_photo_quantity
             };
         }
@@ -299,24 +297,22 @@ var Form = {
             var fileType = files[ii].type;
             if(fileSize > maxPhotoSize){
                 return {
-                    status: 2,
-                    res_type: 'MAX_FILE_SIZE_EXISTS',
+                    status: 'failed',
                     message: 'Max size allowed: '+maxPhotoSize+'kB'
                 };
             }
 
             if(allowedFileFormats.indexOf(fileType) == -1){
                 return {
-                    status: 2,
-                    res_type: 'INVALID_FILE_FORMATS',
+                    status: 'failed',
                     message: 'Only JPG, JPEG, BMP, PNG and GIF are allowed'
                 };
             }
         }
 
         return {
-            status: 1,
-            res_type: 'SUCCESS'
+            status: 'success',
+            message: 'Pass the attachment validations'
         };
     }
 };
