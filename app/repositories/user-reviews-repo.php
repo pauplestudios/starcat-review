@@ -33,6 +33,10 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 return 0;
             }
 
+            do_action('scr_photo_reviews/validate_attachments', $props);
+
+            error_log('Validation done : ');
+
             // 2. Proceed only in $user_can_review == true . Store new comment.
             $user = get_user_by('id', get_current_user_id());
             $comment_data = $this->build_and_get_comment_data($user, $props);
@@ -99,6 +103,8 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             $can_approve = $this->current_user->can_user_directly_publish_reviews();
             $comment_id = $props['comment_id'];
 
+            do_action('scr_photo_reviews/validate_attachments', $props);
+            
             $user = $this->get_non_logged_in_user($props);
 
             $commenter_name = $user->comment_author;
