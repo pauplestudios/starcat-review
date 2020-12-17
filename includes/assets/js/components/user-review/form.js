@@ -57,10 +57,15 @@ var Form = {
             processData: false, // Preventing default data parse behavior                        
             contentType: false,
             success: function (results) {
-                if (results.alert) {
-                    alert(results.alert);
-                    // Reloading the page
-                    window.location.reload();
+
+                // Photo Reviews json response 
+                if(results.addon === 'SCR_PR'){
+                    if(results.status == 2){
+                        alert(results.message);    
+                        // Reloading the page
+                        window.location.reload();
+                        return false;
+                    }
                 }
                 results = JSON.parse(results);
 
