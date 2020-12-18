@@ -96,6 +96,8 @@ class UR_List_Table extends WP_List_Table
         $orderby = (isset($_REQUEST['orderby'])) ? sanitize_text_field($_REQUEST['orderby']) : '';
         $order = (isset($_REQUEST['order'])) ? sanitize_text_field($_REQUEST['order']) : '';
 
+        $this->process_bulk_action();
+
         $comments_per_page = $this->get_per_page($comment_status);
 
         $doing_ajax = wp_doing_ajax();
@@ -146,8 +148,11 @@ class UR_List_Table extends WP_List_Table
          * @param array $args An array of get_comments() arguments.
          */
         $args = apply_filters('comments_list_table_query_args', $args);
-
+        error_log('[$args] : ' . print_r($args, true));
+        
         $_comments = get_comments($args);
+        error_log('[$_comments] : ' . print_r($_comments, true));
+        
         if (is_array($_comments)) {
             update_comment_cache($_comments);
 
@@ -451,14 +456,14 @@ class UR_List_Table extends WP_List_Table
             $has_items = $this->has_items();
         }
         ?>
-		<div class="alignleft actions">
-		<?php
+<div class="alignleft actions">
+    <?php
 if ('top' === $which) {
             ?>
-	<label class="screen-reader-text" for="filter-by-comment-type"><?php _e('Filter by comment type');?></label>
-	<select id="filter-by-comment-type" name="comment_type">
-		<option value=""><?php _e('All comment types');?></option>
-			<?php
+    <label class="screen-reader-text" for="filter-by-comment-type"><?php _e('Filter by comment type');?></label>
+    <select id="filter-by-comment-type" name="comment_type">
+        <option value=""><?php _e('All comment types');?></option>
+        <?php
 /**
              * Filters the comment types dropdown menu.
              *
@@ -478,8 +483,8 @@ if ('top' === $which) {
                 echo "\t" . '<option value="' . esc_attr($type) . '"' . selected($comment_type, $type, false) . ">$label</option>\n";
             }
             ?>
-	</select>
-			<?php
+    </select>
+    <?php
 /**
              * Fires just before the Filter submit button for comment types.
              *
@@ -558,6 +563,7 @@ if ('top' === $which) {
         );
     }
 
+    
     /**
      * Get the name of the default primary column.
      *
@@ -586,19 +592,19 @@ if ('top' === $which) {
         $this->screen->render_screen_reader_content('heading_list');
 
         ?>
-<table class="wp-list-table <?php echo implode(' ', $this->get_table_classes()); ?>">
-	<thead>
-	<tr>
-		<?php $this->print_column_headers();?>
-	</tr>
-	</thead>
+    <table class="wp-list-table <?php echo implode(' ', $this->get_table_classes()); ?>">
+        <thead>
+            <tr>
+                <?php $this->print_column_headers();?>
+            </tr>
+        </thead>
 
-	<tbody id="the-comment-list" data-wp-lists="list:comment">
-		<?php $this->display_rows_or_placeholder();?>
-	</tbody>
+        <tbody id="the-comment-list" data-wp-lists="list:comment">
+            <?php $this->display_rows_or_placeholder();?>
+        </tbody>
 
-	<tbody id="the-extra-comment-list" data-wp-lists="list:comment" style="display: none;">
-		<?php
+        <tbody id="the-extra-comment-list" data-wp-lists="list:comment" style="display: none;">
+            <?php
 /*
          * Back up the items to restore after printing the extra items markup.
          * The extra items may be empty, which will prevent the table nav from displaying later.
@@ -608,16 +614,16 @@ if ('top' === $which) {
         $this->display_rows_or_placeholder();
         $this->items = $items;
         ?>
-	</tbody>
+        </tbody>
 
-	<tfoot>
-	<tr>
-		<?php $this->print_column_headers(false);?>
-	</tr>
-	</tfoot>
+        <tfoot>
+            <tr>
+                <?php $this->print_column_headers(false);?>
+            </tr>
+        </tfoot>
 
-</table>
-		<?php
+    </table>
+    <?php
 
         $this->display_tablenav('bottom');
     }
@@ -858,9 +864,11 @@ if ('top' === $which) {
     {
         if ($this->user_can) {
             ?>
-		<label class="screen-reader-text" for="cb-select-<?php echo $comment->comment_ID; ?>"><?php _e('Select comment');?></label>
-		<input id="cb-select-<?php echo $comment->comment_ID; ?>" type="checkbox" name="delete_comments[]" value="<?php echo $comment->comment_ID; ?>" />
-			<?php
+    <label class="screen-reader-text"
+        for="cb-select-<?php echo $comment->comment_ID; ?>"><?php _e('Select comment');?></label>
+    <input id="cb-select-<?php echo $comment->comment_ID; ?>" type="checkbox" name="delete_comments[]"
+        value="<?php echo $comment->comment_ID; ?>" />
+    <?php
 }
     }
 
@@ -892,14 +900,14 @@ if ('top' === $which) {
             /** This filter is documented in wp-admin/includes/comment.php */
             $comment_content = apply_filters('comment_edit_pre', $comment->comment_content);
             ?>
-		<div id="inline-<?php echo $comment->comment_ID; ?>" class="hidden">
-			<textarea class="comment" rows="1" cols="1"><?php echo esc_textarea($comment_content); ?></textarea>
-			<div class="author-email"><?php echo esc_attr($comment->comment_author_email); ?></div>
-			<div class="author"><?php echo esc_attr($comment->comment_author); ?></div>
-			<div class="author-url"><?php echo esc_attr($comment->comment_author_url); ?></div>
-			<div class="comment_status"><?php echo $comment->comment_approved; ?></div>
-		</div>
-			<?php
+    <div id="inline-<?php echo $comment->comment_ID; ?>" class="hidden">
+        <textarea class="comment" rows="1" cols="1"><?php echo esc_textarea($comment_content); ?></textarea>
+        <div class="author-email"><?php echo esc_attr($comment->comment_author_email); ?></div>
+        <div class="author"><?php echo esc_attr($comment->comment_author); ?></div>
+        <div class="author-url"><?php echo esc_attr($comment->comment_author_url); ?></div>
+        <div class="comment_status"><?php echo $comment->comment_approved; ?></div>
+    </div>
+    <?php
 }
     }
 
@@ -1107,13 +1115,16 @@ class UR_List_Table_Controller
         $html = '<div class="wrap reviews-comment-wrap">';
         $html .= '<h1 class="wp-heading-inline"> ' . __("User Reviews", SCR_DOMAIN) . '</h1>';
         $html .= '<hr class="wp-header-end">';
-
+        $html .= '<form id="scr-user-comments-form" method="POST">';
+        $html .= '<input type="hidden" name="page" value="'.$_REQUEST['page'].'"/>';
+        
         ob_start();
         $this->ur_table->prepare_items();
         $this->ur_table->get_views();
         $this->ur_table->display();
         $html .= ob_get_contents();
         ob_end_clean();
+        $html .= '</form>';
         $html .= '</div>';
 
         echo $html;
@@ -1175,6 +1186,11 @@ class UR_List_Table_Controller
         }
 
         return $count;
+    }
+
+    public function process_bulk_action(){
+        global $wpdb;
+        // user-reviews bulk options process
     }
 }
 
