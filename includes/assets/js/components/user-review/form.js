@@ -3,7 +3,7 @@ formSubmitted = false;
 var Form = {
     init: function () {
         this.eventListener();
-        
+
         console.log("Submission JS Loaded !!!");
     },
 
@@ -31,7 +31,7 @@ var Form = {
             fields: formFields,
             onSuccess: function (event, fields) {
                 var imageValidation = Form.imageValidation(SCRForm);
-                if(imageValidation.status === 'failed'){
+                if (imageValidation.status === "failed") {
                     alert(imageValidation.message);
                     return false;
                 }
@@ -48,59 +48,59 @@ var Form = {
     submission: function (SCRForm, fields) {
         var form_data = Form.getProps(SCRForm, fields);
         SCRForm.find(".submit.button").addClass("loading");
-        // Ajax Post Submiting        
-        jQuery.ajax({
-            type: "post",
-            url: scr_ajax.ajax_url,
-            cache: false,
-            data: form_data,
-            processData: false, // Preventing default data parse behavior                        
-            contentType: false,
-            success: function (results) {
-
-                // Photo Reviews json response 
-                if(results.addon === 'SCR_PR'){
-                    if(results.status === 'failed'){
-                        alert(results.message);    
-                        // Reloading the page
-                        window.location.reload();
-                        return false;
+        // Ajax Post Submiting
+        jQuery
+            .ajax({
+                type: "post",
+                url: scr_ajax.ajax_url,
+                cache: false,
+                data: form_data,
+                processData: false, // Preventing default data parse behavior
+                contentType: false,
+                success: function (results) {
+                    // Photo Reviews json response
+                    if (results.addon === "SCR_PR") {
+                        if (results.status === "failed") {
+                            alert(results.message);
+                            // Reloading the page
+                            window.location.reload();
+                            return false;
+                        }
                     }
-                }
-                results = JSON.parse(results);
+                    results = JSON.parse(results);
 
+                    // Success Message
+                    var msgProps = {
+                        type: "positive",
+                        title: Translations.reviewSuccessTitle,
+                        description: Translations.reviewSuccessDescription,
+                    };
 
-                // Success Message
+                    SCRForm.html(Form.getMessageTemplate(msgProps));
+
+                    // Reviewed item prepending to Reviews List
+                    // jQuery("#scr-cat-collection").prepend(
+                    //     Form.getReviewTemplate(props.title, props.description)
+                    // );
+
+                    // Reloading the page
+                    setInterval("window.location.reload()", 5000);
+                },
+            })
+            .fail(function (response) {
+                console.log("!!! Submision Failed !!!");
+                console.log(response);
+                // Fail Message
                 var msgProps = {
-                    type: "positive",
-                    title: Translations.reviewSuccessTitle,
-                    description: Translations.reviewSuccessDescription,
+                    type: "negative",
+                    title: Translations.reviewFailTitle,
+                    description: Translations.reviewFailDescription,
                 };
-
                 SCRForm.html(Form.getMessageTemplate(msgProps));
 
-                // Reviewed item prepending to Reviews List
-                // jQuery("#scr-cat-collection").prepend(
-                //     Form.getReviewTemplate(props.title, props.description)
-                // );
-                
                 // Reloading the page
                 setInterval("window.location.reload()", 5000);
-            }
-        }).fail(function (response) {
-            console.log("!!! Submision Failed !!!");
-            console.log(response);
-            // Fail Message
-            var msgProps = {
-                type: "negative",
-                title: Translations.reviewFailTitle,
-                description: Translations.reviewFailDescription,
-            };
-            SCRForm.html(Form.getMessageTemplate(msgProps));
-
-            // Reloading the page
-            setInterval("window.location.reload()", 5000);
-        }, JSON);
+            }, JSON);
     },
 
     getProps: function (submittingForm, fields) {
@@ -111,8 +111,8 @@ var Form = {
         fields.methodType = submittingForm.attr("data-method");
 
         var form_data = new FormData();
-        var uploadField = document.getElementById('scr_pr_image_upload');
-        var files = (uploadField) ? uploadField.files : [];
+        var uploadField = document.getElementById("scr_pr_image_upload");
+        var files = uploadField ? uploadField.files : [];
 
         console.log("Files Length : ");
         console.log(files.length);
@@ -145,7 +145,7 @@ var Form = {
                 identifier: "email",
                 rules: [
                     {
-                        type: 'email',
+                        type: "email",
                         prompt: "Please enter your E-mail",
                     },
                 ],
@@ -218,7 +218,7 @@ var Form = {
         if (SCROptions.global_stats) {
             jQuery(SCROptions.global_stats).each(function (index, item) {
                 // var identifier = "scores[" + item.stat_name.toLowerCase() + "]";
-                var identifier = "scr-stat-rating-"+index;
+                var identifier = "scr-stat-rating-" + index;
                 rules[identifier] = {
                     identifier: identifier,
                     rules: [
@@ -258,63 +258,74 @@ var Form = {
 
         return template;
     },
-    imageValidation: function (SCRForm){
+    imageValidation: function (SCRForm) {
         var filesCount = 0;
         var files = [];
-        var uploadField = document.getElementById('scr_pr_image_upload');
-        files = (uploadField) ? uploadField.files : [];
+        var uploadField = document.getElementById("scr_pr_image_upload");
+        files = uploadField ? uploadField.files : [];
         filesCount = files.length;
 
-        var uploadedImageGroup = SCRForm.find('.field .images.scr_pr_uploaded_image_group');
-        var uploadedImages = uploadedImageGroup.find('.deleteable.image').length;
-       
+        var uploadedImageGroup = SCRForm.find(
+            ".field .images.scr_pr_uploaded_image_group"
+        );
+        var uploadedImages = uploadedImageGroup.find(".deleteable.image")
+            .length;
+
         filesCount = parseInt(uploadedImages) + parseInt(filesCount);
-        
-        if(SCROptions.required_options.pr_require_photo == 1){
-            if(filesCount == 0 && uploadedImages == 0){
+
+        if (SCROptions.required_options.pr_require_photo == 1) {
+            if (filesCount == 0 && uploadedImages == 0) {
                 return {
-                    status: 'failed',
-                    message: 'Photo is Required'
+                    status: "failed",
+                    message: "Photo is Required",
                 };
             }
         }
 
         // Checking Files Quantities
-        if(filesCount > SCROptions.required_options.pr_photo_quantity){
+        if (filesCount > SCROptions.required_options.pr_photo_quantity) {
             return {
-                status: 'failed',
-                message: 'Maximum number of files allowed is '+SCROptions.required_options.pr_photo_quantity
+                status: "failed",
+                message:
+                    "Maximum number of files allowed is " +
+                    SCROptions.required_options.pr_photo_quantity,
             };
         }
 
-        var allowedFileFormats = ['image/jpg','image/jpeg','image/bmp','image/png','image/gif'];
+        var allowedFileFormats = [
+            "image/jpg",
+            "image/jpeg",
+            "image/bmp",
+            "image/png",
+            "image/gif",
+        ];
 
         // photo max file size checking
-        var maxPhotoSize =  SCROptions.required_options.pr_photo_size;
-        for(ii = 0; ii < files.length; ii++){
+        var maxPhotoSize = SCROptions.required_options.pr_photo_size;
+        for (ii = 0; ii < files.length; ii++) {
             var size = files[ii].size;
-            var fileSize = Math.round((size / 1024));    
+            var fileSize = Math.round(size / 1024);
             var fileType = files[ii].type;
-            if(fileSize > maxPhotoSize){
+            if (fileSize > maxPhotoSize) {
                 return {
-                    status: 'failed',
-                    message: 'Max size allowed: '+maxPhotoSize+'kB'
+                    status: "failed",
+                    message: "Max size allowed: " + maxPhotoSize + "kB",
                 };
             }
 
-            if(allowedFileFormats.indexOf(fileType) == -1){
+            if (allowedFileFormats.indexOf(fileType) == -1) {
                 return {
-                    status: 'failed',
-                    message: 'Only JPG, JPEG, BMP, PNG and GIF are allowed'
+                    status: "failed",
+                    message: "Only JPG, JPEG, BMP, PNG and GIF are allowed",
                 };
             }
         }
 
         return {
-            status: 'success',
-            message: 'Pass the attachment validations'
+            status: "success",
+            message: "Pass the attachment validations",
         };
-    }
+    },
 };
 
 module.exports = Form;
