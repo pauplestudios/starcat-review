@@ -222,20 +222,21 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         public function enqueue_scripts()
         {
             /* Vendors */
-            wp_enqueue_style('semantic-css', SCR_URL . "includes/assets/vendors/semantic/bundle/semantic.min.css");
+            wp_enqueue_style('semantic', SCR_URL . "includes/assets/vendors/semantic/bundle/semantic.min.css");
             wp_enqueue_style('flexbox-grid', SCR_URL . "includes/assets/vendors/flexboxgrid.min.css");
-            wp_enqueue_style('starcat-review-css', SCR_URL . "includes/assets/bundle/main.bundle.css");
+            wp_enqueue_style('starcat-review', SCR_URL . "includes/assets/bundle/main.bundle.css");
 
-            wp_enqueue_script('semantic-js', SCR_URL . 'includes/assets/vendors/semantic/bundle/semantic.min.js', array('jquery'), SCR_VERSION, true);
+            wp_enqueue_script('semantic', SCR_URL . 'includes/assets/vendors/semantic/bundle/semantic.min.js', array('jquery'), SCR_VERSION, true);
 
             /* Application */
-            wp_enqueue_script('starcat-review-js', SCR_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'), SCR_VERSION, true);
+            wp_register_script('starcat-review', SCR_URL . 'includes/assets/bundle/main.bundle.js');
+            wp_enqueue_script('starcat-review', SCR_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'), SCR_VERSION, true);
             // You Can Access these object from javascript
-            wp_localize_script('starcat-review-js', 'SCROptions', [
+            wp_localize_script('starcat-review', 'SCROptions', [
                 'global_stats' => SCR_Getter::get_global_stats(),
             ]);
-            wp_localize_script('starcat-review-js', 'Translations', Translations::getFormSrings());
-            wp_localize_script('starcat-review-js', 'scr_ajax', array(
+            wp_localize_script('starcat-review', 'Translations', Translations::getFormSrings());
+            wp_localize_script('starcat-review', 'scr_ajax', array(
                 'ajax_url' => admin_url('admin-ajax.php'),
                 'ajax_nonce' => wp_create_nonce('starcat-review-ajax-nonce'),
             ));
