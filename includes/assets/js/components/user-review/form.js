@@ -259,6 +259,14 @@ var Form = {
         return template;
     },
     imageValidation: function (SCRForm) {
+        /**
+         * check if photo review is active or not.
+         * If activate then only validate the attachement, based on settings.else no need to validate.
+         *
+         *  */
+        if (!SCROptions.required_options.active_on_scr_pr) {
+            return true;
+        }
         var filesCount = 0;
         var files = [];
         var uploadField = document.getElementById("scr_pr_image_upload");
