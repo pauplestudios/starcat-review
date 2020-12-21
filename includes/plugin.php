@@ -75,7 +75,8 @@ if (!class_exists('\Starcat_Review')) {
             $upgrades::init();
 
             // Dashboard User review Table
-            require_once SCR_PATH . '/app/components/user-reviews/table.php';
+            // require_once SCR_PATH . '/app/components/user-reviews/table.php';
+            require_once SCR_PATH . '/app/components/user-reviews/temp-table.php';
 
             /* New Features */
             $Non_Logged_In_User = new \StarcatReview\Features\Non_Logged_In_User();
