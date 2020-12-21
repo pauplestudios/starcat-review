@@ -5,14 +5,14 @@
  * Plugin Name: Starcat Review
  * Plugin URI: https://starcatwp.com/
  * Description: Adds Author and User Reviews to any post_type
- * Version: 0.7
+ * Version: 0.7.1
  * Author: StarcatWP
  * Author URI: https://starcatwp.com/
  * Text Domain: starcat-review
  * Domain Path: /languages
  *
  * WC requires at least: 3.0
- * WC tested up to: 4.4
+ * WC tested up to: 4.8.0
  *
  */
 
@@ -26,7 +26,7 @@ if (function_exists('scr_fs')) {
 
     if (!class_exists('SCR_Plugin')) {
 
-        define('SCR_VERSION', '0.7');
+        define('SCR_VERSION', '0.7.1');
         define('SCR_DOMAIN', 'starcat-review');
         define('SCR_COMMENT_TYPE', 'review');
         define('SCR__FILE__', __FILE__);
