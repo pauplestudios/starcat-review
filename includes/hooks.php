@@ -241,7 +241,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             // You Can Access these object from javascript
             wp_localize_script('starcat-review-script', 'SCROptions', [
                 'global_stats' => SCR_Getter::get_global_stats(),
-                'required_options' => $this->get_scr_required_options() 
+                'required_options' => $this->get_scr_required_options()
             ]);
 
             wp_localize_script('starcat-review-script', 'Translations', Translations::getFormSrings());
@@ -251,10 +251,15 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
         public function get_scr_required_options(){
             $required_options = array(
+                'active_on_scr_pr' => 0,
                 'pr_require_photo'  => SCR_Getter::get('pr_require_photo'),
                 'pr_photo_size'     => SCR_Getter::get('pr_photo_size'),
                 'pr_photo_quantity' => SCR_Getter::get('pr_photo_quantity'),
             );
+
+            if(is_plugin_active('starcat-reviews-photo-reviews/starcat-review-photo-reviews.php')){
+                $required_options['active_on_scr_pr'] = 1;
+            }
             return $required_options;
         }
     } // END CLASS
