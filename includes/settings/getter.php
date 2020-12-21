@@ -338,5 +338,12 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
             return $enable_pros_cons;
         }
 
+        public static function get_recaptcha_site_key(){
+            $site_key = SCR_Getter::get('recaptcha_site_key');
+            if(self::is_single_product_post()){
+                $site_key = SCR_Getter::get('woo_recaptcha_site_key');
+            }
+            return $site_key;
+        }
     } // END CLASS
 }
