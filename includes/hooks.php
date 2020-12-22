@@ -242,7 +242,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             wp_localize_script('starcat-review-script', 'SCROptions', [
                 'global_stats' => SCR_Getter::get_global_stats(),
                 'required_options' => $this->get_scr_required_options(),
-                'addons'    => SCR_Getter::get_scr_addons_status()
+                'addons'    => SCR_Getter::addons_available_condition()
             ]);
 
             wp_localize_script('starcat-review-script', 'Translations', Translations::getFormSrings());

@@ -263,8 +263,8 @@ var Form = {
          * check if photo review is active or not.
          * If activate then only validate the attachement, based on settings.else no need to validate.
          *
-         *  */
-        if (!SCROptions.addons.starcat_review_pr) {
+         * */
+        if (!SCROptions.addons.pr) {
             return true;
         }
         var filesCount = 0;
