@@ -109,11 +109,6 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
         public function load_admin_hooks()
         {
-            // $admin = new \StarcatReview\Includes\Admin($this->plugin_domain, $this->version);
-
-            /* remove 'helpdesk_cateory' taxonomy submenu from Starcat Review Menu */
-            // $admin->remove_kb_category_submenu();
-
             /* Vendors */
             wp_register_style('semantic', SCR_URL . "includes/assets/vendors/semantic/bundle/semantic.min.css", [], SCR_VERSION);
             wp_enqueue_style('semantic');
@@ -121,6 +116,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             wp_register_script('semantic', SCR_URL . 'includes/assets/vendors/semantic/bundle/semantic.min.js', array('jquery'), SCR_VERSION, true);
             wp_enqueue_script('semantic');
 
+            /* Application */
             wp_register_style('starcat-review', SCR_URL . 'includes/assets/bundle/admin.bundle.css', [], SCR_VERSION);
             wp_enqueue_style('starcat-review');
 
@@ -234,13 +230,13 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             wp_register_style('flexbox-grid', SCR_URL . "includes/assets/vendors/flexboxgrid.min.css", [], SCR_VERSION);
             wp_enqueue_style('flexbox-grid');
 
-            wp_register_style('starcat-review', SCR_URL . "includes/assets/bundle/main.bundle.css", [], SCR_VERSION);
-            wp_enqueue_style('starcat-review');
-
             wp_register_script('semantic', SCR_URL . 'includes/assets/vendors/semantic/bundle/semantic.min.js', array('jquery'), SCR_VERSION, true);
             wp_enqueue_script('semantic');
 
             /* Application */
+            wp_register_style('starcat-review', SCR_URL . "includes/assets/bundle/main.bundle.css", [], SCR_VERSION);
+            wp_enqueue_style('starcat-review');
+
             wp_register_script('starcat-review', SCR_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'), SCR_VERSION, true);
             wp_enqueue_script('starcat-review');
 
