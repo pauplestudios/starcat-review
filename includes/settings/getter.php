@@ -345,5 +345,36 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
             }
             return $site_key;
         }
+
+        public static function get_scr_addons_status(){
+            $addons = scr_fs()->get_addons();
+            $scr_addons_status = [];
+
+            if(isset($addons) && empty($addons)){
+                return $scr_addons_status;
+            }
+            
+            foreach($addons as $addon){
+                $basename = scr_fs()->get_addon_basename( $addon->id );
+                $is_addon_installed = file_exists( fs_normalize_path( WP_PLUGIN_DIR . '/' . $basename ) );
+                
+                $is_addon_activated = $is_addon_installed ?
+                    scr_fs()->is_addon_activated( $addon->id ) :
+                    false;
+                
+                $is_plugin_active = (
+                    $is_addon_activated ||
+                    isset( $active_plugins_directories_map[ dirname( $basename ) ] )
+                );
+                
+                $is_plugin_active = $is_plugin_active == true ? 1 : 0;
+                
+                $addon_slug = str_replace("-","_",$addon->slug);
+
+                $scr_addons_status[$addon_slug] = $is_plugin_active; 
+            }
+
+            return $scr_addons_status;
+        }
     } // END CLASS
 }
