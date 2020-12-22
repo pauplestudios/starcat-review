@@ -264,7 +264,7 @@ var Form = {
          * If activate then only validate the attachement, based on settings.else no need to validate.
          *
          *  */
-        if (!SCROptions.required_options.active_on_scr_pr) {
+        if (!SCROptions.addons.starcat_review_pr) {
             return true;
         }
         var filesCount = 0;
