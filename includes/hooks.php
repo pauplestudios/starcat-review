@@ -256,11 +256,37 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
                 'pr_photo_size'     => SCR_Getter::get('pr_photo_size'),
                 'pr_photo_quantity' => SCR_Getter::get('pr_photo_quantity'),
             );
-
-            if(is_plugin_active('starcat-reviews-photo-reviews/starcat-review-photo-reviews.php')){
-                $required_options['active_on_scr_pr'] = 1;
-            }
+            $is_active_on_scr_pr = $this->is_active_on_scr_pr_addon();
+            $required_options['active_on_scr_pr'] = $is_active_on_scr_pr; 
             return $required_options;
+        }
+
+        public function is_active_on_scr_pr_addon(){
+            $is_active = 0;
+            $addons = scr_fs()->get_addons();
+            $scr_pr_slug = 'starcat-review-pr';
+            if(isset($addons) && !empty($addons)){
+                foreach($addons as $addon){
+                    if($addon->slug == $scr_pr_slug){
+                        $basename = scr_fs()->get_addon_basename( $addon->id );
+                        $is_addon_installed = file_exists( fs_normalize_path( WP_PLUGIN_DIR . '/' . $basename ) );
+                        
+                        $is_addon_activated = $is_addon_installed ?
+                            scr_fs()->is_addon_activated( $addon->id ) :
+                            false;
+                        
+                        $is_plugin_active = (
+                            $is_addon_activated ||
+                            isset( $active_plugins_directories_map[ dirname( $basename ) ] )
+                        );
+                        
+                        if($is_plugin_active){
+                            $is_active = 1;
+                        }
+                    }
+                }
+            }
+            return $is_active;
         }
     } // END CLASS
 
