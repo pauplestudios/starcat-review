@@ -33,7 +33,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 return 0;
             }
 
-            $required_attachment_validation = $this->check_attachment_validation($props);
+            $required_attachment_validation = $this->need_of_attachments_validation($props);
 
             if($required_attachment_validation){
                 // validation for sumbmitting review attachments
@@ -106,7 +106,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             $can_approve = $this->current_user->can_user_directly_publish_reviews();
             $comment_id = $props['comment_id'];
 
-            $required_attachment_validation = $this->check_attachment_validation($props);
+            $required_attachment_validation = $this->need_of_attachments_validation($props);
             
             if($required_attachment_validation){
                 // validation for sumbmitting review attachments
@@ -357,7 +357,7 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             return $data;
         }
 
-        public function check_attachment_validation($props){
+        public function need_of_attachments_validation($props){
             if(isset($props['form_action_type']) && $props['form_action_type'] == 'reply'){
                 return false;
             }
