@@ -307,7 +307,6 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             ),
                             'default' => 'logged_in',
                         ),
-
                         array(
                             'id' => 'ur_auto_approve',
                             'type' => 'switcher',
@@ -914,7 +913,12 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'title' => __('Enable author review', SCR_DOMAIN),
                             'default' => true,
                         ),
-
+                        array(
+                            'id' => 'enable_user_reviews',
+                            'type' => 'switcher',
+                            'title' => __('Enable Users Reviews', SCR_DOMAIN),
+                            'default' => true,
+                        ),
                         array(
                             'id' => 'enable-pros-cons',
                             'type' => 'switcher',
@@ -1336,6 +1340,12 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'id' => 'enable_reviews_on_woocommerce',
                             'type' => 'switcher',
                             'title' => __('Enable Starcat Reviews for Woocommerce', SCR_DOMAIN),
+                            'default' => true,
+                        ),
+                        array(
+                            'id' => 'woo_enable_user_reviews',
+                            'type' => 'switcher',
+                            'title' => __('Enable Users Reviews for Woocommerce', SCR_DOMAIN),
                             'default' => true,
                         ),
                         array(

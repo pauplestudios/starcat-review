@@ -20,10 +20,14 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
         public function get_view()
         {
             $args = $this->get_default_args();
-            $form_view = $this->form_controller->get_view($args);
+            $form_view = '';
+            
+            if(isset($args['enable_user_reviews']) && $args['enable_user_reviews'] == 1){
+                $form_view = $this->form_controller->get_view($args);
+            }
             $ur_controller = new \StarcatReview\App\Components\User_Reviews\Controller();
             $reviews_list_view = $ur_controller->get_view($args);
-
+            
             $wrapper_start_html = '<div id="scr-controlled-list" class="scr-user-controlled-list" data-collectionprops="{<pagination<:true,<page<:9,<type<:2}">';
             $this->controls_builder = new \StarcatReview\App\Builders\Controls_Builder('user_review');
 
@@ -35,7 +39,6 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             $controls_view = $this->controls_builder->get_controls($args);
 
             $view = $form_view . $wrapper_start_html . $controls_view . $reviews_list_view . '</div>';
-
             return $view;
         }
 
@@ -52,6 +55,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
 
             $args = [
                 'post_id' => get_the_ID(),
+                'enable_user_reviews'    => SCR_Getter::get('enable_user_reviews'),
                 'enable_pros_cons' => SCR_Getter::get('enable-pros-cons'),
                 'enable_photo_reviews' => SCR_Getter::get('pr_enable'),
                 'show_list_title' => SCR_Getter::get('ur_show_list_title'),
@@ -106,6 +110,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             $args['enable_voting']      = SCR_Getter::get('woo_enable_voting');
             $args['show_form_title']    = SCR_Getter::get('woo_show_form_title');
             $args['show_captcha']       = SCR_Getter::get('woo_show_captcha');
+            $args['enable_user_reviews']  = SCR_Getter::get('woo_enable_user_reviews');
             return $args;
         }
     }

@@ -58,6 +58,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 // General Settings Start
                 'template_source' => 'theme',
                 'enable-author-review' => true,
+                'enable_user_reviews'    => true,
                 'enable-pros-cons' => true,
                 'review_enable_post-types' => ['post'],
                 'global_stats' => ['stat_name' => 'Feature'],
@@ -88,6 +89,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'enable_reviews_on_woocommerce' => true,
                 'woo_ur_who_can_review' => 'logged_in',
                 'woo_enable_pros_cons' => true,
+                'woo_enable_user_reviews'   => true,
                 'woo_enable_voting' => true,
                 'woo_show_form_title' => true,
                 'woo_stat_singularity' => 'single',
