@@ -211,6 +211,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'limit' => $limit,
                 'animate' => SCR_Getter::get('stats-animate'),
                 'no_rated_message' => SCR_Getter::get('stats-no-rated-message'),
+                'enable_user_reviews'   => SCR_Getter::get('enable_user_reviews'),
             ];
 
             /** Get the woocommerce default settings, if current post_type has a product.  */
@@ -231,6 +232,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
             $args['icons']  = SCR_Getter::get('woo_stats_icons');
             $args['images']  = SCR_Getter::get('woo_stats_images');
             $args['steps']  = SCR_Getter::get('woo_stats_steps');
+            $args['enable_user_reviews']   = SCR_Getter::get('woo_enable_user_reviews');
             return $args;
         }
 
