@@ -20,11 +20,12 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
         public function get_view()
         {
             $args = $this->get_default_args();
-            $form_view = '';
-            
-            if(isset($args['enable_user_reviews']) && $args['enable_user_reviews'] == 1){
-                $form_view = $this->form_controller->get_view($args);
+            error_log('[$args] : ' . print_r($args, true));
+            $view = '';
+            if(isset($args['enable_user_reviews']) && empty($args['enable_user_reviews'])){
+                return $view;
             }
+            $form_view = $this->form_controller->get_view($args);
             $ur_controller = new \StarcatReview\App\Components\User_Reviews\Controller();
             $reviews_list_view = $ur_controller->get_view($args);
             
@@ -105,7 +106,6 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             if(!is_singular('product') && isset($post) && $post->post_type <> 'product'){
                 return $args;
             }
-           
             $args['enable_pros_cons']   = SCR_Getter::get('woo_enable_pros_cons'); 
             $args['enable_voting']      = SCR_Getter::get('woo_enable_voting');
             $args['show_form_title']    = SCR_Getter::get('woo_show_form_title');
