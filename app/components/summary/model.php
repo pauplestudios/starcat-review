@@ -27,6 +27,7 @@ if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
 
         public function get_collectionProps($args)
         {
+           
             $collection = [
                 'users_title' => sprintf(__('Users Rating (%d)', SCR_DOMAIN), $args['review_count']),
                 'author_title' => __('Author Rating', SCR_DOMAIN),
@@ -35,6 +36,7 @@ if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
                 // 'show' => 'both',
                 'is_enable_author' => $args['enable-author-review'],
                 'is_enable_prosandcons' => $args['enable_pros_cons'],
+                'enable_user_reviews' => $args['enable_user_reviews']
             ];
 
             return $collection;
