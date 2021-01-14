@@ -3,7 +3,7 @@ Donate link: https://starcatwp.com
 Tags: review, woocommerce reviews, user rating, product review, star ratings, customer reviews, review blogging, schema, reviews, ratings
 Requires at least: 5.2
 Tested up to: 5.6
-Stable tag: 0.7.2
+Stable tag: 0.7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Contributors: essekia, pauple
@@ -121,7 +121,10 @@ You can get the premium add-ons in bundled pricing.
 
 == Change Log ==
 
-= 0.7.1 =
+= 0.7.3 =
+* Feature: Option to disable the user reviews completely
+
+= 0.7.2 =
 * Fix: Starcat Review Conflict with Elementor plugin
 * Fix: User Review gets submitted even when Photos are not uploaded
 
