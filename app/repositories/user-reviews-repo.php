@@ -33,6 +33,13 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 return 0;
             }
 
+            $required_attachment_validation = $this->need_of_attachments_validation($props);
+
+            if($required_attachment_validation){
+                // validation for sumbmitting review attachments
+                do_action('scr_photo_reviews/validate_attachments', $props);
+            }
+            
             // 2. Proceed only in $user_can_review == true . Store new comment.
             $user = get_user_by('id', get_current_user_id());
             $comment_data = $this->build_and_get_comment_data($user, $props);
@@ -99,6 +106,13 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             $can_approve = $this->current_user->can_user_directly_publish_reviews();
             $comment_id = $props['comment_id'];
 
+            $required_attachment_validation = $this->need_of_attachments_validation($props);
+            
+            if($required_attachment_validation){
+                // validation for sumbmitting review attachments
+                do_action('scr_photo_reviews/validate_attachments', $props);
+            }
+            
             $user = $this->get_non_logged_in_user($props);
 
             $commenter_name = $user->comment_author;
@@ -256,6 +270,10 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
                 $props['attachments'] = $this->sanitize_array(wp_unslash($_POST['attachments']));
             }
 
+            if(isset($_POST['form_action_type']) && !empty($_POST['form_action_type'])){
+                $props['form_action_type'] = sanitize_text_field($_POST['form_action_type']);
+            }
+
             $props = apply_filters('scr_form_process_data', $props);
 
             return $props;
@@ -337,6 +355,13 @@ if (!class_exists('\StarcatReview\App\Repositories\User_Reviews_Repo')) {
             }
 
             return $data;
+        }
+
+        public function need_of_attachments_validation($props){
+            if(isset($props['form_action_type']) && $props['form_action_type'] == 'reply'){
+                return false;
+            }
+            return true;
         }
     }
     // END CLASS

@@ -81,6 +81,8 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
 
         public function get_child_item($comment)
         {
+            $can_edit = isset($comment['can_edit']) ? $comment['can_edit'] : false;
+
             $html = '<div class="comment" id="' . $comment['ID'] . '" data-comment-parent-id ="' . $comment['parent'] . '" >';
             $html .= $this->get_avatar($comment);
 
@@ -91,7 +93,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
 
             $html .= '<div class="actions">';
             $html .= '<div class="links">';
-            if ($comment['can_edit']) {
+            if ($can_edit) {
                 $html .= '<a class="reply_edit_link"><i class="edit icon"></i> ' . __('EDIT', SCR_DOMAIN) . '</a>';
             }
             $html .= '</div></div>';

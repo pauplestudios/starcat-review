@@ -37,10 +37,7 @@ var Reply = {
 
             jQuery(".comment .content .text").show();
             // Hide clicked review link
-            replyLink
-                .parent()
-                .parent()
-                .hide();
+            replyLink.parent().parent().hide();
 
             var parent = replyLink.closest(".comment").attr("id");
             // console.log(link.closest(".comment").find.children().length);
@@ -77,14 +74,13 @@ var Reply = {
 
             // Remove all reviews list forms except clonned form
             jQuery(selectors.userReviews)
-                .find(".form").hide().find(selectors.replyForm)
+                .find(".form")
+                .hide()
+                .find(selectors.replyForm)
                 .remove();
 
             // Hide clicked review link
-            editLink
-                .parent()
-                .parent()
-                .hide();
+            editLink.parent().parent().hide();
 
             jQuery(".comment .content .text").show();
             // Clicked link closest review content
@@ -184,15 +180,12 @@ var Reply = {
                 var props = thisModule.getProps(replyForm, fields);
                 props.comment_id = editProps.comment_id;
                 props.methodType = editProps.methodType;
-                // console.log(props);
+                props.form_action_type = "reply";
                 editProps.reviewContent.text(props.description);
-
                 links.show();
                 editProps.reviewContent.show();
 
-                jQuery(this)
-                    .closest("form.form")
-                    .remove();
+                jQuery(this).closest("form.form").remove();
 
                 jQuery
                     .post(scr_ajax.ajax_url, props, function (results) {
@@ -223,15 +216,14 @@ var Reply = {
                 reviewContent.show();
             }
 
-            jQuery(this)
-                .closest(selectors.replyForm)
-                .remove();
+            jQuery(this).closest(selectors.replyForm).remove();
         });
     },
 
     submit: function (form, fields) {
         var props = this.getProps(form, fields);
         // console.log(props);
+        props.form_action_type = "reply";
 
         jQuery
             .post(scr_ajax.ajax_url, props, function (results) {
