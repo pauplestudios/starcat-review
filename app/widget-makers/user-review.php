@@ -20,7 +20,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
         public function get_view()
         {
             $args = $this->get_default_args();
-            error_log('[$args] : ' . print_r($args, true));
+            
             $view = '';
             if(isset($args['enable_user_reviews']) && empty($args['enable_user_reviews'])){
                 return $view;
