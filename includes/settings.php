@@ -1342,12 +1342,12 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'title' => __('Enable Starcat Reviews for Woocommerce', SCR_DOMAIN),
                             'default' => true,
                         ),
-                        array(
-                            'id' => 'woo_enable_user_reviews',
-                            'type' => 'switcher',
-                            'title' => __('Enable Users Reviews for Woocommerce', SCR_DOMAIN),
-                            'default' => true,
-                        ),
+                        // array(
+                        //     'id' => 'woo_enable_user_reviews',
+                        //     'type' => 'switcher',
+                        //     'title' => __('Enable Users Reviews for Woocommerce', SCR_DOMAIN),
+                        //     'default' => true,
+                        // ),
                         array(
                             'id' => 'woo_ur_who_can_review',
                             'type' => 'select',

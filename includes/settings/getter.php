@@ -89,7 +89,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'enable_reviews_on_woocommerce' => true,
                 'woo_ur_who_can_review' => 'logged_in',
                 'woo_enable_pros_cons' => true,
-                'woo_enable_user_reviews'   => true,
+                // 'woo_enable_user_reviews'   => true,
                 'woo_enable_voting' => true,
                 'woo_show_form_title' => true,
                 'woo_stat_singularity' => 'single',
@@ -232,7 +232,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
             $args['icons']  = SCR_Getter::get('woo_stats_icons');
             $args['images']  = SCR_Getter::get('woo_stats_images');
             $args['steps']  = SCR_Getter::get('woo_stats_steps');
-            $args['enable_user_reviews']   = SCR_Getter::get('woo_enable_user_reviews');
+            $args['enable_user_reviews']   = true;
             return $args;
         }
 

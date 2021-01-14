@@ -110,7 +110,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             $args['enable_voting']      = SCR_Getter::get('woo_enable_voting');
             $args['show_form_title']    = SCR_Getter::get('woo_show_form_title');
             $args['show_captcha']       = SCR_Getter::get('woo_show_captcha');
-            $args['enable_user_reviews']  = SCR_Getter::get('woo_enable_user_reviews');
+            $args['enable_user_reviews']  = true;
             return $args;
         }
     }
