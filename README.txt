@@ -126,7 +126,8 @@ You can get the premium add-ons in bundled pricing.
 == Change Log ==
 
 = 0.7.3 =
-* Feature: Option to disable the user reviews completely
+* Fix: Reply to an user review is not getting submitted if the Re-captcha option is enabled 
+* Feature: Option to disable the user review completely
 
 = 0.7.2 =
 * Fix: Starcat Review Conflict with Elementor plugin
