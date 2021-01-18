@@ -33,6 +33,9 @@ You can create almost anything from a simple customer review page in a business 
 * Customizable rating system with custom rating icon option
 Review Schema for Google Rich Snippets 
 
+*Note* :We have launched a new free WordPress responsive table plugin called [Tablesome](https://wordpress.org/plugins/tablesome/) to quickly create tables with unlimited rows and columns.
+So do give it a try, if you want to create beautiful tables in WordPress. 
+
 [See Demo](https://demo.pauple.com/starcat-reviews/)
 [See the Getting Started Guide](https://starcatwp.com/getting-started/)
 [See Documentation](https://paupledocs.gitbook.io/starcat-documentation/)
@@ -41,8 +44,9 @@ Review Schema for Google Rich Snippets
 It is a [customer review plugin](https://starcatwp.com/woocommerce-review-plugin/) that has full integration with WooCommerce to replace the default product reviews with an advanced ratings and review system. 
 You can upgrade to WooCommerce Notifications PRO add-on to send review reminder emails for WooCommerce customers to give product reviews. 
 
-## Author review to create review post**
+## Author review to create review post
 Allows Author (anyone with backend access) to give editorial reviews in posts and pages. This feature is useful for review bloggers and for sites who give editorial reviews. 
+You can disable user reviews for posts and have only author review or you can have both in a post. 
 To extend this feature you can upgrade to Review Post Type add-on (PRO) that will give you a Review CPT.
 
 **Include reviews anywhere**
