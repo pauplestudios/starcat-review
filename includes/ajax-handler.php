@@ -91,7 +91,8 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
                 $is_enabled_captcha = SCR_Getter::get('woo_show_captcha');
             }
 
-            if ($is_enabled_captcha) {
+            $is_reply_form = (isset($_POST['form_action_type']) && $_POST['form_action_type'] == 'reply') ? true : false;
+            if ($is_enabled_captcha && !$is_reply_form) {
                 $captcha_success = Recaptcha::verify();
                 error_log('captcha_success : ' .$captcha_success );
                 if ($captcha_success == false) {
