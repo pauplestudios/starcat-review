@@ -23,15 +23,19 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
                 $html .= $this->get_column($props['collection']['author_title'], $props['items']['author_stat']);
             }
 
-            $html .= $this->get_column($props['collection']['users_title'], $props['items']['comment_stat']);
+            /*** Enable/Disable the overall users ratings stats content */
+            if(isset($props['collection']['enable_user_reviews']) && $props['collection']['enable_user_reviews'] == true){
+           
+                $html .= $this->get_column($props['collection']['users_title'], $props['items']['comment_stat']);
 
-            if ($props['collection']['is_enable_author'] && $props['collection']['is_enable_prosandcons']) {
-                $prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller();
-                $html .= $prosandcons->get_view($props);
+                if ($props['collection']['is_enable_author'] && $props['collection']['is_enable_prosandcons']) {
+                    $prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller();
+                    $html .= $prosandcons->get_view($props);
+                }
+        
+               $html .= $this->get_all_attachments($props);
             }
-
-            $html .= $this->get_all_attachments($props);
-
+            
             $html .= '</div></div>';
 
             return $html;
