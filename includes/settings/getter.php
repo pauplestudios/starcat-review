@@ -58,6 +58,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 // General Settings Start
                 'template_source' => 'theme',
                 'enable-author-review' => true,
+                'enable_user_reviews'    => true,
                 'enable-pros-cons' => true,
                 'review_enable_post-types' => ['post'],
                 'global_stats' => ['stat_name' => 'Feature'],
@@ -88,6 +89,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'enable_reviews_on_woocommerce' => true,
                 'woo_ur_who_can_review' => 'logged_in',
                 'woo_enable_pros_cons' => true,
+                // 'woo_enable_user_reviews'   => true,
                 'woo_enable_voting' => true,
                 'woo_show_form_title' => true,
                 'woo_stat_singularity' => 'single',
@@ -209,6 +211,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'limit' => $limit,
                 'animate' => SCR_Getter::get('stats-animate'),
                 'no_rated_message' => SCR_Getter::get('stats-no-rated-message'),
+                'enable_user_reviews'   => SCR_Getter::get('enable_user_reviews'),
             ];
 
             /** Get the woocommerce default settings, if current post_type has a product.  */
@@ -229,6 +232,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
             $args['icons']  = SCR_Getter::get('woo_stats_icons');
             $args['images']  = SCR_Getter::get('woo_stats_images');
             $args['steps']  = SCR_Getter::get('woo_stats_steps');
+            $args['enable_user_reviews']   = true;
             return $args;
         }
 

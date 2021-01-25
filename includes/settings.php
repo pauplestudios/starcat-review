@@ -307,7 +307,12 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             ),
                             'default' => 'logged_in',
                         ),
-
+                        array(
+                            'id' => 'enable_user_reviews',
+                            'type' => 'switcher',
+                            'title' => __('Enable Users Reviews', SCR_DOMAIN),
+                            'default' => true,
+                        ),
                         array(
                             'id' => 'ur_auto_approve',
                             'type' => 'switcher',
@@ -315,7 +320,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'desc' => __("Publish the submitted review directly. Don't ask for approval", SCR_DOMAIN),
                             'default' => false,
                         ),
-
+                       
                         array(
                             'id' => 'ur_allow_same_user_can_leave_multiple_reviews',
                             'type' => 'switcher',
@@ -914,7 +919,6 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'title' => __('Enable author review', SCR_DOMAIN),
                             'default' => true,
                         ),
-
                         array(
                             'id' => 'enable-pros-cons',
                             'type' => 'switcher',
@@ -1338,6 +1342,12 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'title' => __('Enable Starcat Reviews for Woocommerce', SCR_DOMAIN),
                             'default' => true,
                         ),
+                        // array(
+                        //     'id' => 'woo_enable_user_reviews',
+                        //     'type' => 'switcher',
+                        //     'title' => __('Enable Users Reviews for Woocommerce', SCR_DOMAIN),
+                        //     'default' => true,
+                        // ),
                         array(
                             'id' => 'woo_ur_who_can_review',
                             'type' => 'select',
