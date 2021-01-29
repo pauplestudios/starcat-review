@@ -23,10 +23,12 @@ if (!class_exists('\StarcatReview\Services\Recaptcha')) {
             $site_key = SCR_Getter::get_recaptcha_site_key();
 
             $html = '';
+            $html .= '<div class="field src-recaptcha">';
             $html .= self::js_script();
             $html .= '<script src="https://www.google.com/recaptcha/api.js" async defer></script>';
-            $html .= '<div class="g-recaptcha" data-callback="starcat_recaptcha_callback" data-sitekey="' . $site_key . '"></div><br>';
+            $html .= '<div class="g-recaptcha" data-callback="starcat_recaptcha_callback" data-sitekey="' . $site_key . '"></div>';
             $html .= '<input type="hidden" id="captcha" name="captcha" value="">';
+            $html .= '</div>';
             return $html;
         }
 
