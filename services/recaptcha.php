@@ -35,7 +35,7 @@ if (!class_exists('\StarcatReview\Services\Recaptcha')) {
             $html = '';
             $html .= '<script>function starcat_recaptcha_callback(response) { ';
             $html .= 'console.log("response:"); console.log(response);';
-            $html .= 'jQuery("form.scr-user-review.active #captcha").val(response);';
+            $html .= 'jQuery("form.scr-user-review #captcha").val(response);';
             $html .= '}</script>';
 
             return $html;
