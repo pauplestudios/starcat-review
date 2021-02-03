@@ -52,7 +52,6 @@ if (!class_exists('\StarcatReview\Services\Recaptcha')) {
                 $secret_key = SCR_Getter::get('woo_recaptcha_secret_key');
             }
             // don't sanitize the captcha response data.
-            error_log('[$post] : ' . print_r($_POST, true));
             $captcha_response = isset($_POST["src_recaptcha"]) &&  !empty($_POST["src_recaptcha"]) ? $_POST["src_recaptcha"] : '';
             if(empty($captcha_response)){
                 return false;
