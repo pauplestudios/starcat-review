@@ -2,8 +2,8 @@
 Donate link: https://starcatwp.com
 Tags: review, woocommerce reviews, user rating, product review, star ratings, customer reviews, review blogging, schema, reviews, ratings
 Requires at least: 5.2
-Tested up to: 5.6
-Stable tag: 0.7.3
+Tested up to: 5.6.1
+Stable tag: 0.7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Contributors: essekia, pauple
@@ -124,6 +124,10 @@ You can get the premium add-ons in bundled pricing.
 9. Review Reminder Email for WooCommerce (PRO)
 
 == Change Log ==
+
+= 0.7.4 =
+* Fix: Remove email address showing from review in html
+* General Fixes
 
 = 0.7.3 =
 * Fix: Reply to an user review is not getting submitted if the Re-captcha option is enabled 
