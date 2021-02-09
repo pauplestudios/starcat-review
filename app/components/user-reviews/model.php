@@ -49,6 +49,10 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
 
                     // Childrens of comments
                     $items[$comment['ID']]['childrens'] = scr_get_comments_args(['comments'], ['parent' => $comment['ID']]);
+
+                    // #SR-368 GDPR Complaint: reviewiers email's should not be rendering in website
+                    unset($items[$comment['ID']]['email']);
+                    // error_log('items[$comment["ID"]] : ' . print_r($items[$comment['ID']], true));
                 }
             }
 
@@ -65,7 +69,7 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
 
             if (isset($items['comments'][$comment_id]) && !empty($items['comments'][$comment_id])) {
                 $item['props']['user']['name'] = $items['comments'][$comment_id]['author'];
-                $item['props']['user']['email'] = $items['comments'][$comment_id]['email'];
+                // $item['props']['user']['email'] = $items['comments'][$comment_id]['email'];
                 $item['props']['user']['website'] = $items['comments'][$comment_id]['website'];
             }
 
