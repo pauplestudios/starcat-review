@@ -264,9 +264,13 @@ var Form = {
          * If activate then only validate the attachement, based on settings.else no need to validate.
          *
          * */
-        if (!SCROptions.addons.pr) {
+        if (
+            !SCROptions.addons.pr ||
+            SCROptions.required_options.pr_enable == 0
+        ) {
             return true;
         }
+
         var filesCount = 0;
         var files = [];
         var uploadField = document.getElementById("scr_pr_image_upload");
