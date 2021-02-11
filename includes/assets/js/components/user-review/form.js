@@ -3,7 +3,7 @@ formSubmitted = false;
 var Form = {
     init: function () {
         this.eventListener();
-
+        console.log("formSubmitted" + formSubmitted);
         console.log("Submission JS Loaded !!!");
     },
 
@@ -27,8 +27,12 @@ var Form = {
     formValidation: function (fields) {
         var SCRForm = jQuery(".scr-user-review");
         var formFields = fields ? fields : Form.getRules();
-        SCRForm.form({
+        // console.log("*** formFields ***");
+        // console.log(formFields);
+        SCRForm.formX({
             fields: formFields,
+            inline: true,
+            on: "blur",
             onSuccess: function (event, fields) {
                 var imageValidation = Form.imageValidation(SCRForm);
                 if (imageValidation.status === "failed") {
@@ -42,6 +46,14 @@ var Form = {
                 formSubmitted = true;
                 Form.submission(SCRForm, fields);
             },
+            errors: {
+                method: "The method you called is not defined.",
+            },
+            // onFailure: function (formErrors, fields) {
+            //     console.log("On Failure");
+            //     console.log(formErrors);
+            //     console.log(fields);
+            // },
         });
     },
 
@@ -198,12 +210,12 @@ var Form = {
                 ],
             },
 
-            captcha: {
-                identifier: "captcha",
+            src_recaptcha: {
+                identifier: "src_recaptcha",
                 rules: [
                     {
                         type: "empty",
-                        prompt: "Please select or type a con",
+                        prompt: "Please verify the reCaptcha",
                     },
                 ],
             },

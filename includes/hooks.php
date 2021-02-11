@@ -23,7 +23,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             add_action('admin_init', array($this, 'load_admin_hooks'));
 
             /*  Reviews Enqueing Script Action hook */
-            add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'), 11);
+            add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
 
             /*  Reviews Shortcode */
             // require_once SCR_PATH . 'includes/shortcodes.php';
