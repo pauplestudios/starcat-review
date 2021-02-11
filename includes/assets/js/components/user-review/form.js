@@ -27,8 +27,8 @@ var Form = {
     formValidation: function (fields) {
         var SCRForm = jQuery(".scr-user-review");
         var formFields = fields ? fields : Form.getRules();
-        console.log("*** formFields ***");
-        console.log(formFields);
+        // console.log("*** formFields ***");
+        // console.log(formFields);
         SCRForm.formX({
             fields: formFields,
             inline: true,
