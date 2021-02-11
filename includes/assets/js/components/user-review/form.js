@@ -29,7 +29,7 @@ var Form = {
         var formFields = fields ? fields : Form.getRules();
         console.log("*** formFields ***");
         console.log(formFields);
-        SCRForm.form({
+        SCRForm.formX({
             fields: formFields,
             inline: true,
             on: "blur",
