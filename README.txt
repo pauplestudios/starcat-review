@@ -126,7 +126,8 @@ You can get the premium add-ons in bundled pricing.
 == Change Log ==
 
 = 0.7.4 =
-* Fix: Remove email address showing from review in html
+* Fix: Remove email address showing from review in the page html
+* Fix: Elementor and WCFM - WooCommerce Frontend Manager plugin conflicts
 * General Fixes
 
 = 0.7.3 =
