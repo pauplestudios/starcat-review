@@ -18,7 +18,7 @@
 				? self
 				: Function("return this")();
 
-	$.fn.form = function (parameters) {
+	$.fn.formX = function (parameters) {
 		var $allModules = $(this),
 			moduleSelector = $allModules.selector || "",
 			time = new Date().getTime(),
@@ -514,12 +514,12 @@
 								settings = $.extend(
 									true,
 									{},
-									$.fn.form.settings,
+									$.fn.formX.settings,
 									legacyParameters
 								);
 								validation = $.extend(
 									{},
-									$.fn.form.settings.defaults,
+									$.fn.formX.settings.defaults,
 									parameters
 								);
 								module.error(settings.error.oldSyntax, element);
@@ -541,12 +541,12 @@
 								settings = $.extend(
 									true,
 									{},
-									$.fn.form.settings,
+									$.fn.formX.settings,
 									parameters
 								);
 								validation = $.extend(
 									{},
-									$.fn.form.settings.defaults,
+									$.fn.formX.settings.defaults,
 									settings.fields
 								);
 								module.verbose(
@@ -556,8 +556,8 @@
 								);
 							}
 						} else {
-							settings = $.fn.form.settings;
-							validation = $.fn.form.settings.defaults;
+							settings = $.fn.formX.settings;
+							validation = $.fn.formX.settings.defaults;
 							module.verbose(
 								"Using default form validation",
 								validation,
@@ -1319,7 +1319,7 @@
 		return returnedValue !== undefined ? returnedValue : this;
 	};
 
-	$.fn.form.settings = {
+	$.fn.formX.settings = {
 		name: "Form",
 		namespace: "form",
 
@@ -1466,12 +1466,12 @@
 
 			// is most likely an email
 			email: function (value) {
-				return $.fn.form.settings.regExp.email.test(value);
+				return $.fn.formX.settings.regExp.email.test(value);
 			},
 
 			// value is most likely url
 			url: function (value) {
-				return $.fn.form.settings.regExp.url.test(value);
+				return $.fn.formX.settings.regExp.url.test(value);
 			},
 
 			// matches specified regExp
@@ -1479,7 +1479,7 @@
 				if (regExp instanceof RegExp) {
 					return value.match(regExp);
 				}
-				var regExpParts = regExp.match($.fn.form.settings.regExp.flags),
+				var regExpParts = regExp.match($.fn.formX.settings.regExp.flags),
 					flags;
 				// regular expression specified as /baz/gi (flags)
 				if (regExpParts) {
@@ -1491,7 +1491,7 @@
 
 			// is valid integer or matches range
 			integer: function (value, range) {
-				var intRegExp = $.fn.form.settings.regExp.integer,
+				var intRegExp = $.fn.formX.settings.regExp.integer,
 					min,
 					max,
 					parts;
@@ -1519,12 +1519,12 @@
 
 			// is valid number (with decimal)
 			decimal: function (value) {
-				return $.fn.form.settings.regExp.decimal.test(value);
+				return $.fn.formX.settings.regExp.decimal.test(value);
 			},
 
 			// is valid number
 			number: function (value) {
-				return $.fn.form.settings.regExp.number.test(value);
+				return $.fn.formX.settings.regExp.number.test(value);
 			},
 
 			// is value (case insensitive)
@@ -1557,28 +1557,28 @@
 			// value contains text (insensitive)
 			contains: function (value, text) {
 				// escape regex characters
-				text = text.replace($.fn.form.settings.regExp.escape, "\\$&");
+				text = text.replace($.fn.formX.settings.regExp.escape, "\\$&");
 				return value.search(new RegExp(text, "i")) !== -1;
 			},
 
 			// value contains text (case sensitive)
 			containsExactly: function (value, text) {
 				// escape regex characters
-				text = text.replace($.fn.form.settings.regExp.escape, "\\$&");
+				text = text.replace($.fn.formX.settings.regExp.escape, "\\$&");
 				return value.search(new RegExp(text)) !== -1;
 			},
 
 			// value contains text (insensitive)
 			doesntContain: function (value, text) {
 				// escape regex characters
-				text = text.replace($.fn.form.settings.regExp.escape, "\\$&");
+				text = text.replace($.fn.formX.settings.regExp.escape, "\\$&");
 				return value.search(new RegExp(text, "i")) === -1;
 			},
 
 			// value contains text (case sensitive)
 			doesntContainExactly: function (value, text) {
 				// escape regex characters
-				text = text.replace($.fn.form.settings.regExp.escape, "\\$&");
+				text = text.replace($.fn.formX.settings.regExp.escape, "\\$&");
 				return value.search(new RegExp(text)) === -1;
 			},
 
