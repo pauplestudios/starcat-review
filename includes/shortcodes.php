@@ -15,7 +15,9 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
             add_shortcode('starcat_review_list', array($this, 'reviews_list'));
             add_shortcode('starcat_review_comparison_table', array($this, 'comparison_table'));
 
+            add_shortcode('starcat_review_summary', array($this, 'review_summary'));
             add_shortcode('starcat_review_user_review_form', array($this, 'user_review_form'));
+            add_shortcode('starcat_review_user_review_list', array($this, 'user_review_list'));
         }
 
         public function comparison_table($atts)
@@ -42,6 +44,20 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
             $defaults = $ur_controller->get_user_review_default_args();
             $args = shortcode_atts($defaults, $atts);
             return $form_controller->get_view($args);
+        }
+
+        public function user_review_list($atts)
+        {
+            $ur_controller = new \StarcatReview\App\Widget_Makers\User_Review();
+            $defaults = $ur_controller->get_user_review_default_args();
+            $args = shortcode_atts($defaults, $atts);
+            $review_list_view = $ur_controller->get_user_review_list_view($args);
+            return $review_list_view;
+        }
+
+        public function review_summary($atts)
+        {
+
         }
     } // END CLASS
 

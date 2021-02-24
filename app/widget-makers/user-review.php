@@ -26,6 +26,13 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
                 return $view;
             }
             $form_view = $this->form_controller->get_view($args);
+            $user_review_view = $this->get_user_review_list_view($args);
+            $view = $form_view . $user_review_view;
+            return $view;
+        }
+
+        public function get_user_review_list_view($args)
+        {
             $ur_controller = new \StarcatReview\App\Components\User_Reviews\Controller();
             $reviews_list_view = $ur_controller->get_view($args);
 
@@ -38,8 +45,8 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review')) {
             ];
 
             $controls_view = $this->controls_builder->get_controls($args);
+            $view = $wrapper_start_html . $controls_view . $reviews_list_view . '</div>';
 
-            $view = $form_view . $wrapper_start_html . $controls_view . $reviews_list_view . '</div>';
             return $view;
         }
 
