@@ -23,10 +23,12 @@ if (!class_exists('\StarcatReview\Services\Recaptcha')) {
             $site_key = SCR_Getter::get_recaptcha_site_key();
 
             $html = '';
+            $html .= '<div class="field">';
             $html .= self::js_script();
             $html .= '<script src="https://www.google.com/recaptcha/api.js" async defer></script>';
-            $html .= '<div class="g-recaptcha" data-callback="starcat_recaptcha_callback" data-sitekey="' . $site_key . '"></div><br>';
-            $html .= '<input type="hidden" id="captcha" name="captcha" value="">';
+            $html .= '<div class="g-recaptcha" data-callback="starcat_recaptcha_callback" data-sitekey="' . $site_key . '"></div>';
+            $html .= '<input type="hidden" id="src_recaptcha" name="src_recaptcha" value="">';
+            $html .= '</div>';
             return $html;
         }
 
@@ -35,7 +37,7 @@ if (!class_exists('\StarcatReview\Services\Recaptcha')) {
             $html = '';
             $html .= '<script>function starcat_recaptcha_callback(response) { ';
             $html .= 'console.log("response:"); console.log(response);';
-            $html .= 'jQuery("form.scr-user-review.active #captcha").val(response);';
+            $html .= 'jQuery("form.scr-user-review #src_recaptcha").val(response);';
             $html .= '}</script>';
 
             return $html;
@@ -50,7 +52,7 @@ if (!class_exists('\StarcatReview\Services\Recaptcha')) {
                 $secret_key = SCR_Getter::get('woo_recaptcha_secret_key');
             }
             // don't sanitize the captcha response data.
-            $captcha_response = isset($_POST["captcha"]) &&  !empty($_POST["captcha"]) ? $_POST["captcha"] : '';
+            $captcha_response = isset($_POST["src_recaptcha"]) &&  !empty($_POST["src_recaptcha"]) ? $_POST["src_recaptcha"] : '';
             if(empty($captcha_response)){
                 return false;
             } 

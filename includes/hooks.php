@@ -23,7 +23,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             add_action('admin_init', array($this, 'load_admin_hooks'));
 
             /*  Reviews Enqueing Script Action hook */
-            add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'), 11);
+            add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
 
             /*  Reviews Shortcode */
             // require_once SCR_PATH . 'includes/shortcodes.php';
@@ -244,7 +244,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             wp_localize_script('starcat-review', 'SCROptions', [
                 'global_stats' => SCR_Getter::get_global_stats(),
                 'required_options' => $this->get_scr_required_options(),
-                'addons'    => SCR_Getter::addons_available_condition()
+                'addons' => SCR_Getter::addons_available_condition(),
             ]);
             wp_localize_script('starcat-review', 'Translations', Translations::getFormSrings());
             wp_localize_script('starcat-review', 'scr_ajax', array(
@@ -254,16 +254,17 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
         }
 
-        public function get_scr_required_options(){
+        public function get_scr_required_options()
+        {
             $required_options = array(
-                'pr_require_photo'  => SCR_Getter::get('pr_require_photo'),
-                'pr_photo_size'     => SCR_Getter::get('pr_photo_size'),
+                'pr_enable' => SCR_Getter::get('pr_enable'),
+                'pr_require_photo' => SCR_Getter::get('pr_require_photo'),
+                'pr_photo_size' => SCR_Getter::get('pr_photo_size'),
                 'pr_photo_quantity' => SCR_Getter::get('pr_photo_quantity'),
             );
             return $required_options;
         }
 
-        
     } // END CLASS
 
 }

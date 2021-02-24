@@ -152,7 +152,7 @@ var Reply = {
         var replyForm = jQuery(selectors.replyForm);
         var placeholderContent = this.getPlaceholderContent();
 
-        jQuery(replyForm).form({
+        jQuery(replyForm).formX({
             fields: {
                 description: "empty",
             },
@@ -170,7 +170,7 @@ var Reply = {
         var links = jQuery(selectors.links);
         // var placeholderContent = this.getPlaceholderContent();
 
-        jQuery(replyForm).form({
+        jQuery(replyForm).formX({
             fields: {
                 description: "empty",
             },
