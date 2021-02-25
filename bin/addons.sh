@@ -13,5 +13,6 @@ cd ../../../../
 cd vendor/pauple/starcat-review-photo-reviews && yarn copyfiles
 cd dist && cpy * ../../../../artifacts/addons/starcat-review-photo-reviews --parents
 bestzip ../../../../starcat-review-cpt.zip *
+cd ../../../../
 cpy vendor/pauple/upgrader/*.php includes/lib/upgrader
 cpy vendor/pauple/widgetry/*.php includes/lib/widgetry
