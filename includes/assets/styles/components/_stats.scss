@@ -120,36 +120,3 @@ $graylight: #e7e7e7;
     }
 }
 
-.scr-new-icon {
-    display: inline-block !important;
-    position: relative !important;
-    color: #ddd;
-    font-size: 15px;
-}
-
-.scr-new-icon:not(:last-child):after {
-    font-family: FontAwesome;
-    content: "\f005";
-    position: absolute;
-    left: 0;
-    top: 0;
-    // width: 100%;
-    overflow: hidden;
-    color: #f80;
-}
-
-// .scr-new-icon:last-child:after {
-//     font-family: FontAwesome;
-//     content: "\f005";
-//     position: absolute;
-//     left: 0;
-//     top: 0;
-//     width: 60%;
-//     overflow: hidden;
-//     color: #f80;
-//     //width: attr(data-width);
-// }
-
-.icons-row {
-    position: relative;
-}

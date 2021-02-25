@@ -1,0 +1,83 @@
+.scr-icons-row {
+    position: relative;
+
+    .scr-new-icon {
+        display: inline-block !important;
+        position: relative !important;
+        color: #ddd;
+        font-size: 15px;
+    }
+}
+
+// Generates Partial Icons
+@mixin icon_selector($icon_code, $width, $icon_class, $width_number) {
+    .scr-new-icon.#{$icon_class}.rating-#{$width_number}:after {
+        font-family: FontAwesome;
+        position: absolute;
+        left: 0;
+        top: 0;
+        overflow: hidden;
+        color: #f80;
+        width: #{$width};
+        content: $icon_code;
+    }
+}
+
+// Generates Full Icons
+@mixin icon_selector_full($icon_code, $icon_class) {
+    .scr-new-icon.#{$icon_class}:after {
+        font-family: FontAwesome;
+        position: absolute;
+        left: 0;
+        top: 0;
+        overflow: hidden;
+        color: #f80;
+        width: 100%;
+        content: $icon_code;
+    }
+}
+
+// Combinations
+
+// 1. Stars
+@include icon_selector("\f005", 35%, "fa-star", 25);
+@include icon_selector("\f005", 50%, "fa-star", 50);
+@include icon_selector("\f005", 70%, "fa-star", 75);
+@include icon_selector_full("\f005", "fa-star");
+
+// 2. Thumbs up
+@include icon_selector("\f164", 35%, "fa-thumbs-up", 25);
+@include icon_selector("\f164", 50%, "fa-thumbs-up", 50);
+@include icon_selector("\f164", 70%, "fa-thumbs-up", 75);
+@include icon_selector_full("\f164", "fa-thumbs-up");
+
+// @mixin icon($icon_code, $width) {
+//     font-family: FontAwesome;
+//     position: absolute;
+//     left: 0;
+//     top: 0;
+//     overflow: hidden;
+//     color: #f80;
+//     width: $width;
+//     content: $icon_code;
+// }
+
+// .scr-new-icon:not(:last-child):after {
+//     @include icon("\f005", 100%);
+// }
+
+// .scr-new-icon[data-rating="25"]:after {
+//     @include icon("\f005", 35%);
+// }
+
+// .scr-new-icon[data-rating="50"]:after {
+//     @include icon("\f005", 50%);
+// }
+
+// .scr-new-icon[data-rating="75"]:after {
+//     @include icon("\f005", 70%);
+// }
+
+// .scr-new-icon[data-rating="100"]:after {
+//     @include icon("\f005", 100%);
+// }

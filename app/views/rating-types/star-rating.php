@@ -139,30 +139,16 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
 
         protected function get_row_of_icons()
         {
-            $html = '<div class="icons-row" style="">';
-            // $html .= '<span class="scr-container">';
+            $html = '<div class="scr-icons-row" style="">';
+
             $html .= '<span class="scr-new-icon fa fa-star"></span>';
-            // $html .= '<span class="fake-after fa fa-star"></span>';
-            // $html .= "</span>";
-            $html .= '<span class="scr-new-icon fa fa-star"></span>';
-            $html .= '<span class="scr-new-icon fa fa-star"></span>';
-            $html .= '<span class="scr-new-icon fa fa-star"></span>';
-            $html .= '<span class="scr-new-icon  fa fa-star"></span>';
+            $html .= '<span  class="scr-new-icon rating-75 fa fa-thumbs-up"></span>';
+            $html .= '<span class="scr-new-icon rating-75 fa fa-star"></span>';
+            $html .= '<span class="scr-new-icon rating-25 fa fa-star"></span>';
+            $html .= '<span class="scr-new-icon rating-50 fa fa-star"></span>';
+
             $html .= "</div>";
 
-            $html .=  '<style> 
-            .icons-row .scr-new-icon:last-child:after {
-                font-family: FontAwesome;
-                content: "\f005";
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 30%;
-                overflow: hidden;
-                color: #f80;
-            }
-            
-            </style>';
 
             return $html;
         }
