@@ -14,8 +14,71 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
         public function __construct($viewProps)
         {
             $this->props = $viewProps;
-            // error_log('viewProps : ' . print_r($viewProps, true));
+            error_log('viewProps : ' . print_r($viewProps, true));
+        }
 
+
+        public function get_view()
+        {
+            $html = '';
+            $woo_stats_class = SCR_Getter::is_single_product_post() || SCR_Getter::is_admin_product_page() ? 'woo-stats' : '';
+            if (isset($this->props['items']) && !empty($this->props['items'])) {
+
+                $html .= '<div>';
+                foreach ($this->props['items'] as $key => $stat) {
+                    // $html .= $this->get_reviewed_stat($key, $stat['rating'], $stat['score']);
+                    $html .= $this->get_row_of_icons($stat);
+                }
+
+                $html .= '</div>';
+            }
+
+            return $html;
+        }
+
+
+        protected function get_row_of_icons($stat)
+        {
+            $icon = $this->props['collection']['icon'];
+
+            error_log('icon: ' . $icon);
+
+            error_log('stat: ');
+            error_log('$stat : ' . print_r($stat, true));
+
+            $score = $stat['score'];
+            // $score = 4.4; // testing only 
+            $limit = $this->props['collection']['limit'];
+
+            $html = '<div class="scr-icons-row" style="">';
+
+            for ($ii = 1; $ii <= $limit; $ii++) {
+                $classes = $this->get_additional_icon_classes($score, $ii);
+                $html .= '<span class="scr-new-icon fa fa-star ' . $classes . '"></span>';
+            }
+
+            $html .= "<span>" . $score . "</span>";
+
+            $html .= "</div>";
+
+
+            return $html;
+        }
+
+        public function get_additional_icon_classes($score, $ii)
+        {
+            if ($ii <= floor($score)) {
+                return 'rating-100';
+            } else {
+                $rating = ($score - floor($score)) * 100;
+                $rounded_rating = $this->roundUpToAny($rating, 25);
+                return 'rating-' . $rounded_rating;
+            }
+        }
+
+        private function roundUpToAny($number, $rounding_factor = 25)
+        {
+            return round($number / $rounding_factor) * $rounding_factor;
         }
 
         public function get_view_good()
@@ -37,23 +100,7 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
             return $html;
         }
 
-        public function get_view()
-        {
-            $html = '';
-            $woo_stats_class = SCR_Getter::is_single_product_post() || SCR_Getter::is_admin_product_page() ? 'woo-stats' : '';
-            if (isset($this->props['items']) && !empty($this->props['items'])) {
 
-                $html .= '<div>';
-                foreach ($this->props['items'] as $key => $stat) {
-                    // $html .= $this->get_reviewed_stat($key, $stat['rating'], $stat['score']);
-                    $html .= $this->get_row_of_icons();
-                }
-
-                $html .= '</div>';
-            }
-
-            return $html;
-        }
 
 
 
@@ -69,7 +116,7 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
             >';
             // $html .= $this->get_wrapper_html();
             // $html .= $this->get_result_html($value);
-            $html .= $this->get_row_of_icons();
+            // $html .= $this->get_row_of_icons();
 
             /** Don't use the Semantic-UI RegExp identifier key that has Special Characters for validating Semantic-UI input fields
              *  The stat_identifier_key is a unique id and doesn't have a Special Characters in that key. This Key used for validating the input fields.
@@ -105,7 +152,7 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
             // $html .= $this->get_wrapper_html();
             // $html .= $this->get_result_html($value);
 
-            $html .= $this->get_row_of_icons();
+            // $html .= $this->get_row_of_icons();
 
 
             $html .= '<input type="hidden" name="scores[' . strtolower($key) . ']"  value="' . $value . '">';
@@ -137,21 +184,8 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
             return $html;
         }
 
-        protected function get_row_of_icons()
-        {
-            $html = '<div class="scr-icons-row" style="">';
-
-            $html .= '<span class="scr-new-icon fa fa-star"></span>';
-            $html .= '<span  class="scr-new-icon rating-75 fa fa-thumbs-up"></span>';
-            $html .= '<span class="scr-new-icon rating-75 fa fa-star"></span>';
-            $html .= '<span class="scr-new-icon rating-25 fa fa-star"></span>';
-            $html .= '<span class="scr-new-icon rating-50 fa fa-star"></span>';
-
-            $html .= "</div>";
 
 
-            return $html;
-        }
         protected function get_result_html($value)
         {
             $icon = $this->props['collection']['icon'];
