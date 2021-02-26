@@ -1020,7 +1020,12 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'type' => 'color',
                             'title' => __('Icons Color', SCR_DOMAIN),
                             'dependency' => array('stats-source-type', '==', 'icon'),
-                            'output' => array('.review-list .review-item-stars i', '.review-list .reviewed-item-stars i', '.reviewed-list .review-item-stars i', '.reviewed-list .reviewed-item-stars i'),
+                            'output' => array(
+                                '.review-list .scr-icon:after',
+                                '.review-list .scr-icon:after',
+                                '.reviewed-list .scr-icon:after',
+                                '.reviewed-list .scr-icon:after'
+                            ),
                             'output_mode' => 'color',
                             'default' => '#e7711b',
                         ),
@@ -1461,7 +1466,12 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'type' => 'color',
                             'title' => __('Icons Color', SCR_DOMAIN),
                             'dependency' => array('woo_stats_source_type', '==', 'icon'),
-                            'output' => array('.review-list.woo-stats .review-item-stars i', '.review-list.woo-stats .reviewed-item-stars i', '.reviewed-list.woo-stats .review-item-stars i', '.reviewed-list.woo-stats .reviewed-item-stars i'),
+                            'output' => array(
+                                '.review-list.woo-stats .review-item-stars .scr-icon:after',
+                                '.review-list.woo-stats .scr-icon:after',
+                                '.reviewed-list.woo-stats .scr-icon:after',
+                                '.reviewed-list.woo-stats .scr-icon:after'
+                            ),
                             'output_mode' => 'color',
                             'default' => '#e7711b',
                         ),

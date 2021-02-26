@@ -41,7 +41,8 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
 
         protected function get_row_of_icons($score)
         {
-            $icon = $this->props['collection']['icon'];
+            $icon = $this->props['collection']['icons'];
+            $icon = str_replace(' ', '-', strtolower($icon)); // convert spaced classes to dashed
 
             error_log('icon: ' . $icon);
 
@@ -56,7 +57,7 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
 
             for ($ii = 1; $ii <= $limit; $ii++) {
                 $classes = $this->get_additional_icon_classes($score, $ii);
-                $html .= '<span class="scr-icon fa fa-star ' . $classes . '"></span>';
+                $html .= '<span class="scr-icon fas fa-' . $icon . ' '  . $classes . '"></span>';
             }
 
             // $html .= "<span>" . $score . "</span>";

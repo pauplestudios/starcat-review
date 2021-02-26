@@ -240,7 +240,12 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             wp_register_script('starcat-review', SCR_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'), SCR_VERSION, true);
             wp_enqueue_script('starcat-review');
 
-            wp_enqueue_style('load-fa', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css');
+            $vendor_url = SCR_URL . 'includes/assets/vendors/';
+            // Fontawesome from Codestar
+            wp_enqueue_style('fa5', $vendor_url . 'fontawesome/all.min.css', array(), '5.13.0', 'all');
+            // wp_enqueue_style('fa5-v4-shims', 'fontawesome/v4-shims.min.css', array(), '5.13.0', 'shim');
+
+            // wp_enqueue_style('load-fa', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css');
 
             // You Can Access these object from javascript
             wp_localize_script('starcat-review', 'SCROptions', [

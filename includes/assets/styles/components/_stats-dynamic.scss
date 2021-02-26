@@ -12,7 +12,7 @@
 // Generates Partial Icons
 @mixin icon_selector($icon_code, $width, $icon_class, $width_number) {
     .scr-icon.#{$icon_class}.rating-#{$width_number}:after {
-        font-family: FontAwesome;
+        font-family: Icons;
         position: absolute;
         left: 0;
         top: 0;
@@ -26,7 +26,7 @@
 // Generates Full Icons
 @mixin icon_selector_full($icon_code, $icon_class) {
     .scr-icon.#{$icon_class}:after {
-        font-family: FontAwesome;
+        font-family: Icons;
         position: absolute;
         left: 0;
         top: 0;
@@ -37,9 +37,9 @@
     }
 }
 
-.scr-icon:after {
-    color: #f80;
-}
+// .scr-icon:after {
+//     color: #f80;
+// }
 
 // Combinations
 
@@ -55,6 +55,183 @@
 @include icon_selector("\f164", 50%, "fa-thumbs-up", 50);
 @include icon_selector("\f164", 70%, "fa-thumbs-up", 75);
 @include icon_selector("\f164", 100%, "fa-thumbs-up", 100);
+
+// 3. Heart
+@include icon_selector("\f004", 35%, "fa-heart", 25);
+@include icon_selector("\f004", 50%, "fa-heart", 50);
+@include icon_selector("\f004", 70%, "fa-heart", 75);
+@include icon_selector("\f004", 100%, "fa-heart", 100);
+
+// 4. Square
+@include icon_selector("\f0c8", 35%, "fa-square", 25);
+@include icon_selector("\f0c8", 50%, "fa-square", 50);
+@include icon_selector("\f0c8", 70%, "fa-square", 75);
+@include icon_selector("\f0c8", 100%, "fa-square", 100);
+
+// 5. Circle
+@include icon_selector("\f111", 35%, "fa-circle", 25);
+@include icon_selector("\f111", 50%, "fa-circle", 50);
+@include icon_selector("\f111", 70%, "fa-circle", 75);
+@include icon_selector("\f111", 100%, "fa-circle", 100);
+
+// 6. User
+@include icon_selector("\f007", 35%, "fa-user", 25);
+@include icon_selector("\f007", 50%, "fa-user", 50);
+@include icon_selector("\f007", 70%, "fa-user", 75);
+@include icon_selector("\f007", 100%, "fa-user", 100);
+
+// 7. Bookmark
+@include icon_selector("\f02e", 35%, "fa-bookmark", 25);
+@include icon_selector("\f02e", 50%, "fa-bookmark", 50);
+@include icon_selector("\f02e", 70%, "fa-bookmark", 75);
+@include icon_selector("\f02e", 100%, "fa-bookmark", 100);
+
+// 8. Compass
+@include icon_selector("\f14e", 35%, "fa-compass", 25);
+@include icon_selector("\f14e", 50%, "fa-compass", 50);
+@include icon_selector("\f14e", 70%, "fa-compass", 75);
+@include icon_selector("\f14e", 100%, "fa-compass", 100);
+
+// 9. Trash Alternate
+@include icon_selector("\f1f8", 35%, "fa-trash", 25);
+@include icon_selector("\f1f8", 50%, "fa-trash", 50);
+@include icon_selector("\f1f8", 70%, "fa-trash", 75);
+@include icon_selector("\f1f8", 100%, "fa-trash", 100);
+
+// 10. Bell
+@include icon_selector("\f0f3", 35%, "fa-bell", 25);
+@include icon_selector("\f0f3", 50%, "fa-bell", 50);
+@include icon_selector("\f0f3", 70%, "fa-bell", 75);
+@include icon_selector("\f0f3", 100%, "fa-bell", 100);
+
+// 11. Lightbulb
+@include icon_selector("\f0eb", 35%, "fa-lightbulb", 25);
+@include icon_selector("\f0eb", 50%, "fa-lightbulb", 50);
+@include icon_selector("\f0eb", 70%, "fa-lightbulb", 75);
+@include icon_selector("\f0eb", 100%, "fa-lightbulb", 100);
+
+// 12. Clock
+@include icon_selector("\f017", 35%, "fa-clock", 25);
+@include icon_selector("\f017", 50%, "fa-clock", 50);
+@include icon_selector("\f017", 70%, "fa-clock", 75);
+@include icon_selector("\f017", 100%, "fa-clock", 100);
+
+// 13. Hourglass
+@include icon_selector("\f254", 35%, "fa-hourglass", 25);
+@include icon_selector("\f254", 50%, "fa-hourglass", 50);
+@include icon_selector("\f254", 70%, "fa-hourglass", 75);
+@include icon_selector("\f254", 100%, "fa-hourglass", 100);
+
+// 14. Gem
+
+@include icon_selector("\f3a5", 35%, "fa-gem", 25);
+@include icon_selector("\f3a5", 50%, "fa-gem", 50);
+@include icon_selector("\f3a5", 70%, "fa-gem", 75);
+@include icon_selector("\f3a5", 100%, "fa-gem", 100);
+
+// 15. Map
+@include icon_selector("\f279", 35%, "fa-map", 25);
+@include icon_selector("\f279", 50%, "fa-map", 50);
+@include icon_selector("\f279", 70%, "fa-map", 75);
+@include icon_selector("\f279", 100%, "fa-map", 100);
+
+// 16. Sticky Note
+// FIX: Not working
+@include icon_selector("\f249", 35%, "fa-sticky-note", 25);
+@include icon_selector("\f249", 50%, "fa-sticky-note", 50);
+@include icon_selector("\f249", 70%, "fa-sticky-note", 75);
+@include icon_selector("\f249", 100%, "fa-sticky-note", 100);
+
+// 17. Sun
+@include icon_selector("\f185", 35%, "fa-sun", 25);
+@include icon_selector("\f185", 50%, "fa-sun", 50);
+@include icon_selector("\f185", 70%, "fa-sun", 75);
+@include icon_selector("\f185", 100%, "fa-sun", 100);
+
+// 18. Lemon
+@include icon_selector("\f094", 35%, "fa-lemon", 25);
+@include icon_selector("\f094", 50%, "fa-lemon", 50);
+@include icon_selector("\f094", 70%, "fa-lemon", 75);
+@include icon_selector("\f094", 100%, "fa-lemon", 100);
+
+// 19. Comment
+@include icon_selector("\f075", 35%, "fa-comment", 25);
+@include icon_selector("\f075", 50%, "fa-comment", 50);
+@include icon_selector("\f075", 70%, "fa-comment", 75);
+@include icon_selector("\f075", 100%, "fa-comment", 100);
+
+// 20. Comments
+@include icon_selector("\f086", 35%, "fa-comments", 25);
+@include icon_selector("\f086", 50%, "fa-comments", 50);
+@include icon_selector("\f086", 70%, "fa-comments", 75);
+@include icon_selector("\f086", 100%, "fa-comments", 100);
+
+// 21. File
+@include icon_selector("\f15b", 35%, "fa-file", 25);
+@include icon_selector("\f15b", 50%, "fa-file", 50);
+@include icon_selector("\f15b", 70%, "fa-file", 75);
+@include icon_selector("\f15b", 100%, "fa-file", 100);
+
+// 22. Folder
+@include icon_selector("\f07b", 35%, "fa-folder", 25);
+@include icon_selector("\f07b", 50%, "fa-folder", 50);
+@include icon_selector("\f07b", 70%, "fa-folder", 75);
+@include icon_selector("\f07b", 100%, "fa-folder", 100);
+
+// 23. Envelope
+@include icon_selector("\f0e0", 35%, "fa-envelope", 25);
+@include icon_selector("\f0e0", 50%, "fa-envelope", 50);
+@include icon_selector("\f0e0", 70%, "fa-envelope", 75);
+@include icon_selector("\f0e0", 100%, "fa-envelope", 100);
+
+// 24. Hdd
+@include icon_selector("\f0a0", 35%, "fa-hdd", 25);
+@include icon_selector("\f0a0", 50%, "fa-hdd", 50);
+@include icon_selector("\f0a0", 70%, "fa-hdd", 75);
+@include icon_selector("\f0a0", 100%, "fa-hdd", 100);
+
+// 25. Paper Plane
+@include icon_selector("\f1d8", 35%, "fa-paper-plane", 25);
+@include icon_selector("\f1d8", 50%, "fa-paper-plane", 50);
+@include icon_selector("\f1d8", 70%, "fa-paper-plane", 75);
+@include icon_selector("\f1d8", 100%, "fa-paper-plane", 100);
+
+// 26. Handshake
+@include icon_selector("\f2b5", 35%, "fa-handshake", 25);
+@include icon_selector("\f2b5", 50%, "fa-handshake", 50);
+@include icon_selector("\f2b5", 70%, "fa-handshake", 75);
+@include icon_selector("\f2b5", 100%, "fa-handshake", 100);
+
+// 27. Thumbs up
+@include icon_selector("\f164", 35%, "fa-thumbsup", 25);
+@include icon_selector("\f164", 50%, "fa-thumbsup", 50);
+@include icon_selector("\f164", 70%, "fa-thumbsup", 75);
+@include icon_selector("\f164", 100%, "fa-thumbsup", 100);
+
+// 28. Thumbs down
+@include icon_selector("\f165", 35%, "fa-thumbs-down", 25);
+@include icon_selector("\f165", 50%, "fa-thumbs-down", 50);
+@include icon_selector("\f165", 70%, "fa-thumbs-down", 75);
+@include icon_selector("\f165", 100%, "fa-thumbs-down", 100);
+
+// 29. Meh
+@include icon_selector("\f11a", 35%, "fa-meh", 25);
+@include icon_selector("\f11a", 50%, "fa-meh", 50);
+@include icon_selector("\f11a", 70%, "fa-meh", 75);
+@include icon_selector("\f11a", 100%, "fa-meh", 100);
+
+// 30. Smile
+@include icon_selector("\f118", 35%, "fa-smile", 25);
+@include icon_selector("\f118", 50%, "fa-smile", 50);
+@include icon_selector("\f118", 70%, "fa-smile", 75);
+@include icon_selector("\f118", 100%, "fa-smile", 100);
+
+// 31. Frown
+@include icon_selector("\f119", 35%, "fa-frown", 25);
+@include icon_selector("\f119", 50%, "fa-frown", 50);
+@include icon_selector("\f119", 70%, "fa-frown", 75);
+@include icon_selector("\f119", 100%, "fa-frown", 100);
+
 // @include icon_selector_full("\f164", "fa-thumbs-up");
 
 // @mixin icon($icon_code, $width) {
