@@ -17,36 +17,38 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
             error_log('viewProps : ' . print_r($viewProps, true));
         }
 
-
         public function get_view()
         {
             $html = '';
             $woo_stats_class = SCR_Getter::is_single_product_post() || SCR_Getter::is_admin_product_page() ? 'woo-stats' : '';
             if (isset($this->props['items']) && !empty($this->props['items'])) {
 
-                $html .= '<div>';
+                $html .= '<ul class="reviewed-list ' . $woo_stats_class . '"
+                data-animate="' . $this->props['collection']['animate'] . '"
+            >';
                 foreach ($this->props['items'] as $key => $stat) {
-                    // $html .= $this->get_reviewed_stat($key, $stat['rating'], $stat['score']);
-                    $html .= $this->get_row_of_icons($stat);
+                    $html .= $this->get_reviewed_stat($key, $stat['rating'], $stat['score']);
                 }
 
-                $html .= '</div>';
+                $html .= '</ul>';
             }
 
             return $html;
         }
 
 
-        protected function get_row_of_icons($stat)
+
+
+        protected function get_row_of_icons($score)
         {
             $icon = $this->props['collection']['icon'];
 
             error_log('icon: ' . $icon);
 
             error_log('stat: ');
-            error_log('$stat : ' . print_r($stat, true));
+            error_log('$score : ' . $score);
 
-            $score = $stat['score'];
+            // $score = $stat['score'];
             // $score = 4.4; // testing only 
             $limit = $this->props['collection']['limit'];
 
@@ -57,7 +59,7 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
                 $html .= '<span class="scr-new-icon fa fa-star ' . $classes . '"></span>';
             }
 
-            $html .= "<span>" . $score . "</span>";
+            // $html .= "<span>" . $score . "</span>";
 
             $html .= "</div>";
 
@@ -81,27 +83,26 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
             return round($number / $rounding_factor) * $rounding_factor;
         }
 
-        public function get_view_good()
+
+
+
+        public function get_view_new()
         {
             $html = '';
             $woo_stats_class = SCR_Getter::is_single_product_post() || SCR_Getter::is_admin_product_page() ? 'woo-stats' : '';
             if (isset($this->props['items']) && !empty($this->props['items'])) {
 
-                $html .= '<ul class="reviewed-list ' . $woo_stats_class . '"
-                data-animate="' . $this->props['collection']['animate'] . '"
-            >';
+                $html .= '<div>';
                 foreach ($this->props['items'] as $key => $stat) {
                     $html .= $this->get_reviewed_stat($key, $stat['rating'], $stat['score']);
+                    // $html .= $this->get_row_of_icons($stat['score']);
                 }
 
-                $html .= '</ul>';
+                $html .= '</div>';
             }
 
             return $html;
         }
-
-
-
 
 
         public function get_review_stat($key, $value, $score)
@@ -116,7 +117,7 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
             >';
             // $html .= $this->get_wrapper_html();
             // $html .= $this->get_result_html($value);
-            // $html .= $this->get_row_of_icons();
+            $html .= $this->get_row_of_icons($score);
 
             /** Don't use the Semantic-UI RegExp identifier key that has Special Characters for validating Semantic-UI input fields
              *  The stat_identifier_key is a unique id and doesn't have a Special Characters in that key. This Key used for validating the input fields.
@@ -152,7 +153,7 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
             // $html .= $this->get_wrapper_html();
             // $html .= $this->get_result_html($value);
 
-            // $html .= $this->get_row_of_icons();
+            $html .= $this->get_row_of_icons($score);
 
 
             $html .= '<input type="hidden" name="scores[' . strtolower($key) . ']"  value="' . $value . '">';
