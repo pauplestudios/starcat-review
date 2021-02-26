@@ -93,7 +93,6 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                     ),
                 )
             );
-
         }
 
         public function notification_settings($prefix)
@@ -320,7 +319,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'desc' => __("Publish the submitted review directly. Don't ask for approval", SCR_DOMAIN),
                             'default' => false,
                         ),
-                       
+
                         array(
                             'id' => 'ur_allow_same_user_can_leave_multiple_reviews',
                             'type' => 'switcher',
@@ -731,9 +730,9 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'type' => 'content',
                             'content' => '<div class="button-container">'
-                            . '<span><b>' . __('Where is my main page?', SCR_DOMAIN) . '</b></span>'
-                            . '<br>'
-                            . $main_page_button . '<span>' . __('Save and Refresh Page if you changed it.', SCR_DOMAIN) . '</span></div>',
+                                . '<span><b>' . __('Where is my main page?', SCR_DOMAIN) . '</b></span>'
+                                . '<br>'
+                                . $main_page_button . '<span>' . __('Save and Refresh Page if you changed it.', SCR_DOMAIN) . '</span></div>',
                         ),
                         array(
                             'type' => 'subheading',
@@ -876,7 +875,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         public function general_settings($prefix)
         {
             $post_types = $this->get_post_types(['product']);
-            
+
             \CSF::createSection(
                 $prefix,
                 array(
@@ -988,17 +987,17 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'default' => 'star',
                         ),
 
-                        array(
-                            'id' => 'stats-source-type',
-                            'type' => 'select',
-                            'title' => __('Source Type', SCR_DOMAIN),
-                            'options' => array(
-                                'icon' => __('Icon', SCR_DOMAIN),
-                                'image' => __('Image', SCR_DOMAIN),
-                            ),
-                            // 'dependency' => array('stats-type', '==', 'star'),
-                            'default' => 'icon',
-                        ),
+                        // array(
+                        //     'id' => 'stats-source-type',
+                        //     'type' => 'select',
+                        //     'title' => __('Source Type', SCR_DOMAIN),
+                        //     'options' => array(
+                        //         'icon' => __('Icon', SCR_DOMAIN),
+                        //         'image' => __('Image', SCR_DOMAIN),
+                        //     ),
+                        //     // 'dependency' => array('stats-type', '==', 'star'),
+                        //     'default' => 'icon',
+                        // ),
 
                         array(
                             'id' => 'stats-show-rating-label',
@@ -1012,14 +1011,14 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'type' => 'icon_dropdown',
                             'title' => __('Icons', SCR_DOMAIN),
                             // 'dependency' => array('stats-source-type|stats-type', '==|==', 'icon|star'),
-                            'dependency' => array('stats-source-type', '==', 'icon'),
+                            // 'dependency' => array('stats-source-type', '==', 'icon'),
                             'default' => 'star',
                         ),
                         array(
                             'id' => 'stats-icons-color',
                             'type' => 'color',
                             'title' => __('Icons Color', SCR_DOMAIN),
-                            'dependency' => array('stats-source-type', '==', 'icon'),
+                            // 'dependency' => array('stats-source-type', '==', 'icon'),
                             'output' => array(
                                 '.review-list .scr-icon:after',
                                 '.review-list .scr-icon:after',
@@ -1033,49 +1032,49 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'id' => 'stats-icons-label-color',
                             'type' => 'color',
                             'title' => __('Icons Label Color', SCR_DOMAIN),
-                            'dependency' => array('stats-source-type', '==', 'icon'),
+                            // 'dependency' => array('stats-source-type', '==', 'icon'),
                             'output' => array('.review-list .reviewed-item .reviewed-item-label__score', '.review-list .reviewed-item .reviewed-item-label__score', '.reviewed-list .reviewed-item .reviewed-item-label__score', '.reviewed-list .reviewed-item .reviewed-item-label__score'),
                             'output_mode' => 'color',
                             'default' => '#0274be',
                         ),
 
-                        array(
-                            'id' => 'stats-images',
-                            'type' => 'fieldset',
-                            'title' => __('Images', SCR_DOMAIN),
-                            // 'dependency' => array('stats-source-type|stats-type', '==|==', 'image|star'),
-                            'dependency' => array('stats-source-type', '==', 'image'),
-                            'fields' => array(
-                                array(
-                                    'id' => 'image',
-                                    'type' => 'media',
-                                    'title' => __('Image', SCR_DOMAIN),
-                                    'library' => 'image',
-                                    'placeholder' => 'http://',
-                                    'default' => [
-                                        'url' => SCR_URL . 'includes/assets/img/tomato.png',
-                                        'thumbnail' => SCR_URL . 'includes/assets/img/tomato.png',
-                                    ],
-                                ),
-                                array(
-                                    'id' => 'image-outline',
-                                    'type' => 'media',
-                                    'title' => __('Outline Image', SCR_DOMAIN),
-                                    'library' => 'image',
-                                    'placeholder' => 'http://',
-                                    'default' => [
-                                        'url' => SCR_URL . 'includes/assets/img/tomato-outline.png',
-                                        'thumbnail' => SCR_URL . 'includes/assets/img/tomato-outline.png',
-                                    ],
-                                ),
+                        // array(
+                        //     'id' => 'stats-images',
+                        //     'type' => 'fieldset',
+                        //     'title' => __('Images', SCR_DOMAIN),
+                        //     // 'dependency' => array('stats-source-type|stats-type', '==|==', 'image|star'),
+                        //     'dependency' => array('stats-source-type', '==', 'image'),
+                        //     'fields' => array(
+                        //         array(
+                        //             'id' => 'image',
+                        //             'type' => 'media',
+                        //             'title' => __('Image', SCR_DOMAIN),
+                        //             'library' => 'image',
+                        //             'placeholder' => 'http://',
+                        //             'default' => [
+                        //                 'url' => SCR_URL . 'includes/assets/img/tomato.png',
+                        //                 'thumbnail' => SCR_URL . 'includes/assets/img/tomato.png',
+                        //             ],
+                        //         ),
+                        //         array(
+                        //             'id' => 'image-outline',
+                        //             'type' => 'media',
+                        //             'title' => __('Outline Image', SCR_DOMAIN),
+                        //             'library' => 'image',
+                        //             'placeholder' => 'http://',
+                        //             'default' => [
+                        //                 'url' => SCR_URL . 'includes/assets/img/tomato-outline.png',
+                        //                 'thumbnail' => SCR_URL . 'includes/assets/img/tomato-outline.png',
+                        //             ],
+                        //         ),
 
-                                array(
-                                    'type' => 'submessage',
-                                    'style' => 'info',
-                                    'content' => __('Image size below 50 * 50 is enough', SCR_DOMAIN),
-                                ),
-                            ),
-                        ),
+                        //         array(
+                        //             'type' => 'submessage',
+                        //             'style' => 'info',
+                        //             'content' => __('Image size below 50 * 50 is enough', SCR_DOMAIN),
+                        //         ),
+                        //     ),
+                        // ),
 
                         // array(
                         //     'id'      => 'stats-bars-limit',
@@ -1138,7 +1137,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         {
             $locations = SCR_Getter::get_review_enabled_post_types();
             $prefix = SCR_POST_META;
-            
+
             \CSF::createMetabox($prefix, array(
                 'title' => __('Starcat Review', SCR_DOMAIN),
                 'post_type' => $locations,
@@ -1279,7 +1278,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
             $stats = SCR_Getter::get_global_stats();
             $singularity = SCR_Getter::get_stat_singularity();
-            
+
             if (isset($stats) && !empty($stats)) {
                 $stats_list[] = array(
                     'type' => 'submessage',
@@ -1333,7 +1332,8 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             return $stats_list;
         }
 
-        public function woocommerce_settings($prefix){
+        public function woocommerce_settings($prefix)
+        {
             \CSF::createSection(
                 $prefix,
                 array(
@@ -1433,17 +1433,17 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'dependency' => array('woo_stat_singularity', '==', 'multiple'),
                         ),
 
-                        array(
-                            'id' => 'woo_stats_source_type',
-                            'type' => 'select',
-                            'title' => __('Source Type', SCR_DOMAIN),
-                            'options' => array(
-                                'icon' => __('Icon', SCR_DOMAIN),
-                                'image' => __('Image', SCR_DOMAIN),
-                            ),
-                            // 'dependency' => array('stats-type', '==', 'star'),
-                            'default' => 'icon',
-                        ),
+                        // array(
+                        //     'id' => 'woo_stats_source_type',
+                        //     'type' => 'select',
+                        //     'title' => __('Source Type', SCR_DOMAIN),
+                        //     'options' => array(
+                        //         'icon' => __('Icon', SCR_DOMAIN),
+                        //         'image' => __('Image', SCR_DOMAIN),
+                        //     ),
+                        //     // 'dependency' => array('stats-type', '==', 'star'),
+                        //     'default' => 'icon',
+                        // ),
 
                         array(
                             'id' => 'woo_stats_show_rating_label',
@@ -1457,15 +1457,15 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'type' => 'icon_dropdown',
                             'title' => __('Icons', SCR_DOMAIN),
                             // 'dependency' => array('stats-source-type|stats-type', '==|==', 'icon|star'),
-                            'dependency' => array('woo_stats_source_type', '==', 'icon'),
+                            // 'dependency' => array('woo_stats_source_type', '==', 'icon'),
                             'default' => 'star',
                         ),
-                        
+
                         array(
                             'id' => 'woo_stats_icons_color',
                             'type' => 'color',
                             'title' => __('Icons Color', SCR_DOMAIN),
-                            'dependency' => array('woo_stats_source_type', '==', 'icon'),
+                            // 'dependency' => array('woo_stats_source_type', '==', 'icon'),
                             'output' => array(
                                 '.review-list.woo-stats .review-item-stars .scr-icon:after',
                                 '.review-list.woo-stats .scr-icon:after',
@@ -1479,49 +1479,49 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'id' => 'woo_stats_icons_label_color',
                             'type' => 'color',
                             'title' => __('Icons Label Color', SCR_DOMAIN),
-                            'dependency' => array('woo_stats_source_type', '==', 'icon'),
+                            // 'dependency' => array('woo_stats_source_type', '==', 'icon'),
                             'output' => array('.review-list.woo-stats .reviewed-item .reviewed-item-label__score', '.review-list.woo-stats .reviewed-item .reviewed-item-label__score', '.reviewed-list.woo-stats .reviewed-item .reviewed-item-label__score', '.reviewed-list.woo-stats .reviewed-item .reviewed-item-label__score'),
                             'output_mode' => 'color',
                             'default' => '#0274be',
                         ),
 
-                        array(
-                            'id' => 'woo_stats_images',
-                            'type' => 'fieldset',
-                            'title' => __('Images', SCR_DOMAIN),
-                            // 'dependency' => array('stats-source-type|stats-type', '==|==', 'image|star'),
-                            'dependency' => array('woo_stats_source_type', '==', 'image'),
-                            'fields' => array(
-                                array(
-                                    'id' => 'image',
-                                    'type' => 'media',
-                                    'title' => __('Image', SCR_DOMAIN),
-                                    'library' => 'image',
-                                    'placeholder' => 'http://',
-                                    'default' => [
-                                        'url' => SCR_URL . 'includes/assets/img/tomato.png',
-                                        'thumbnail' => SCR_URL . 'includes/assets/img/tomato.png',
-                                    ],
-                                ),
-                                array(
-                                    'id' => 'image-outline',
-                                    'type' => 'media',
-                                    'title' => __('Outline Image', SCR_DOMAIN),
-                                    'library' => 'image',
-                                    'placeholder' => 'http://',
-                                    'default' => [
-                                        'url' => SCR_URL . 'includes/assets/img/tomato-outline.png',
-                                        'thumbnail' => SCR_URL . 'includes/assets/img/tomato-outline.png',
-                                    ],
-                                ),
+                        // array(
+                        //     'id' => 'woo_stats_images',
+                        //     'type' => 'fieldset',
+                        //     'title' => __('Images', SCR_DOMAIN),
+                        //     // 'dependency' => array('stats-source-type|stats-type', '==|==', 'image|star'),
+                        //     'dependency' => array('woo_stats_source_type', '==', 'image'),
+                        //     'fields' => array(
+                        //         array(
+                        //             'id' => 'image',
+                        //             'type' => 'media',
+                        //             'title' => __('Image', SCR_DOMAIN),
+                        //             'library' => 'image',
+                        //             'placeholder' => 'http://',
+                        //             'default' => [
+                        //                 'url' => SCR_URL . 'includes/assets/img/tomato.png',
+                        //                 'thumbnail' => SCR_URL . 'includes/assets/img/tomato.png',
+                        //             ],
+                        //         ),
+                        //         array(
+                        //             'id' => 'image-outline',
+                        //             'type' => 'media',
+                        //             'title' => __('Outline Image', SCR_DOMAIN),
+                        //             'library' => 'image',
+                        //             'placeholder' => 'http://',
+                        //             'default' => [
+                        //                 'url' => SCR_URL . 'includes/assets/img/tomato-outline.png',
+                        //                 'thumbnail' => SCR_URL . 'includes/assets/img/tomato-outline.png',
+                        //             ],
+                        //         ),
 
-                                array(
-                                    'type' => 'submessage',
-                                    'style' => 'info',
-                                    'content' => __('Image size below 50 * 50 is enough', SCR_DOMAIN),
-                                ),
-                            ),
-                        ),
+                        //         array(
+                        //             'type' => 'submessage',
+                        //             'style' => 'info',
+                        //             'content' => __('Image size below 50 * 50 is enough', SCR_DOMAIN),
+                        //         ),
+                        //     ),
+                        // ),
 
                         array(
                             'id' => 'woo_stats_steps',
@@ -1540,7 +1540,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'type' => 'subheading',
                             'content' => __('Google reCAPTCHA', SCR_DOMAIN),
                         ),
-                        
+
                         array(
                             'id' => 'woo_show_captcha',
                             'type' => 'switcher',
@@ -1570,15 +1570,16 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             );
         }
 
-        public function get_post_types($excluded_post_types){
+        public function get_post_types($excluded_post_types)
+        {
             $options = array();
-            $post_types = get_post_types( array( 'show_in_nav_menus' => true ), 'objects' );
-            if(empty($post_types)){
+            $post_types = get_post_types(array('show_in_nav_menus' => true), 'objects');
+            if (empty($post_types)) {
                 return $options;
             }
-            
-            foreach ( $post_types as $post_type ) {
-                if(!in_array($post_type->name,$excluded_post_types)){
+
+            foreach ($post_types as $post_type) {
+                if (!in_array($post_type->name, $excluded_post_types)) {
                     $options[$post_type->name] = $post_type->labels->name;
                 }
             }
