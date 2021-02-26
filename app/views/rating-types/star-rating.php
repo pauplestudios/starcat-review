@@ -14,7 +14,7 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
         public function __construct($viewProps)
         {
             $this->props = $viewProps;
-            error_log('viewProps : ' . print_r($viewProps, true));
+            // error_log('viewProps : ' . print_r($viewProps, true));
         }
 
         public function get_view()
@@ -44,12 +44,10 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
             $icon = $this->props['collection']['icons'];
             $icon = str_replace(' ', '-', strtolower($icon)); // convert spaced classes to dashed
 
-            error_log('icon: ' . $icon);
+            // error_log('icon: ' . $icon);
+            // error_log('stat: ');
+            // error_log('$score : ' . $score);
 
-            error_log('stat: ');
-            error_log('$score : ' . $score);
-
-            // $score = $stat['score'];
             // $score = 4.4; // testing only 
             $limit = $this->props['collection']['limit'];
 
@@ -60,10 +58,7 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
                 $html .= '<span class="scr-icon fas fa-' . $icon . ' '  . $classes . '"></span>';
             }
 
-            // $html .= "<span>" . $score . "</span>";
-
             $html .= "</div>";
-
 
             return $html;
         }
