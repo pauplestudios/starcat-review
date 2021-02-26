@@ -70,10 +70,13 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
 
         public function get_additional_icon_classes($score, $ii)
         {
-            if ($ii <= floor($score)) {
+            $floorScore = floor($score);
+            $isLastPartialIcon = (($floorScore < $ii) && ($ii == $floorScore + 1));
+
+            if ($ii <=  $floorScore) {
                 return 'rating-100';
-            } else {
-                $rating = ($score - floor($score)) * 100;
+            } else if ($isLastPartialIcon) {
+                $rating = ($score -  $floorScore) * 100;
                 $rounded_rating = $this->roundUpToAny($rating, 25);
                 return 'rating-' . $rounded_rating;
             }
@@ -82,27 +85,6 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
         private function roundUpToAny($number, $rounding_factor = 25)
         {
             return round($number / $rounding_factor) * $rounding_factor;
-        }
-
-
-
-
-        public function get_view_new()
-        {
-            $html = '';
-            $woo_stats_class = SCR_Getter::is_single_product_post() || SCR_Getter::is_admin_product_page() ? 'woo-stats' : '';
-            if (isset($this->props['items']) && !empty($this->props['items'])) {
-
-                $html .= '<div>';
-                foreach ($this->props['items'] as $key => $stat) {
-                    $html .= $this->get_reviewed_stat($key, $stat['rating'], $stat['score']);
-                    // $html .= $this->get_row_of_icons($stat['score']);
-                }
-
-                $html .= '</div>';
-            }
-
-            return $html;
         }
 
 
