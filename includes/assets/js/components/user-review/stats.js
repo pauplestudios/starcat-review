@@ -151,7 +151,7 @@ var Stats = {
         // Remove previous rating classes
         that.removeRatingClasses(item);
         
-        item.find('.scr-new-icon').each(function(){
+        item.find('.scr-icon').each(function(){
             var isLastParitalIcon = (scoreFloor < ii) && (ii == scoreFloor + 1); // the last icon which is partial
 
 
@@ -174,7 +174,7 @@ var Stats = {
     },
 
     removeRatingClasses(item){
-        item.find('.scr-new-icon').removeClass (function (index, className) {
+        item.find('.scr-icon').removeClass (function (index, className) {
             return (className.match (/(^|\s)rating-\S+/g) || []).join(' ');
         });
     },

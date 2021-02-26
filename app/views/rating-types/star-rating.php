@@ -56,7 +56,7 @@ if (!class_exists('\StarcatReview\App\Views\Rating_Types\Star_Rating')) {
 
             for ($ii = 1; $ii <= $limit; $ii++) {
                 $classes = $this->get_additional_icon_classes($score, $ii);
-                $html .= '<span class="scr-new-icon fa fa-star ' . $classes . '"></span>';
+                $html .= '<span class="scr-icon fa fa-star ' . $classes . '"></span>';
             }
 
             // $html .= "<span>" . $score . "</span>";
