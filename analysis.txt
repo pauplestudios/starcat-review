@@ -1,0 +1,521 @@
+app\abstracts\widget-model.php:12 PhanUnusedPublicNoOverrideMethodParameter Parameter $fields_model is never used
+app\abstracts\widget-model.php:20 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Abstracts\Widget_Model->fields_model
+app\abstracts\widget-model.php:26 PhanUndeclaredMethod Call to undeclared method \StarcatReview\App\Abstracts\Widget_Model::get_collection_props
+app\abstracts\widget-model.php:27 PhanUndeclaredMethod Call to undeclared method \StarcatReview\App\Abstracts\Widget_Model::get_items_props
+app\abstracts\widget-model.php:50 PhanUnreferencedProtectedMethod Possibly zero references to protected method \StarcatReview\App\Abstracts\Widget_Model::append_fallbacks()
+app\abstracts\widget-model.php:50 PhanUnusedProtectedNoOverrideMethodParameter Parameter $args is never used
+app\abstracts\widget-model.php:54 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Abstracts\Widget_Model->fields_model
+app\abstracts\widget-model.php:61 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Abstracts\Widget_Model->fields_model
+app\abstracts\widget-model.php:64 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\App\Abstracts\Widget_Model::get_style_config()
+app\abstracts\widget-model.php:66 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Abstracts\Widget_Model->style_config
+app\builders\controls-builder.php:32 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Builders\Controls_Builder->controls
+app\builders\controls-builder.php:73 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Builders\Controls_Builder->semantic
+app\builders\controls-builder.php:74 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Builders\Controls_Builder->listjs
+app\builders\controls-builder.php:84 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Builders\Controls_Builder->controls
+app\builders\review-builder.php:16 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Builders\Review_Builder->summary
+app\builders\review-builder.php:17 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Builders\Review_Builder->user_review
+app\builders\review-builder.php:27 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Builders\Review_Builder->summary
+app\builders\review-builder.php:28 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Builders\Review_Builder->user_review
+app\components\breadcrumbs\controller.php:17 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Breadcrumbs\Controller->view
+app\components\breadcrumbs\controller.php:41 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Breadcrumbs\Controller->view
+app\components\breadcrumbs\controller.php:44 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Breadcrumbs\Controller->view
+app\components\breadcrumbs\model.php:14 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Breadcrumbs\Model->extras
+app\components\breadcrumbs\model.php:24 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Breadcrumbs\Model->extras
+app\components\breadcrumbs\model.php:59 PhanUnusedVariable Unused definition of variable $term_info
+app\components\breadcrumbs\model.php:161 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\App\Components\Breadcrumbs\Model::get_style_config()
+app\components\comparison\controller.php:14 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Comparison\Controller->model
+app\components\comparison\controller.php:15 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Comparison\Controller->view
+app\components\comparison\controller.php:21 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Comparison\Controller->model
+app\components\comparison\controller.php:24 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Comparison\Controller->view
+app\components\comparison\controller.php:27 PhanUnusedPublicNoOverrideMethodParameter Parameter $search_key is never used
+app\components\comparison\controller.php:30 PhanUnusedVariable Unused definition of variable $search_post_data
+app\components\comparison\controller.php:33 PhanTypeMismatchArgumentInternal Argument 2 ($flags) is true of type true but \json_encode() takes int
+app\components\comparison\model.php:81 PhanUnreferencedProtectedMethod Possibly zero references to protected method \StarcatReview\App\Components\Comparison\Model::get_stats_list()
+app\components\comparison\view.php:13 PhanUnreferencedPrivateProperty Possibly zero references to private property \StarcatReview\App\Components\Comparison\View->html
+app\components\comparison\view.php:35 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\App\Components\Comparison\View::get_header()
+app\components\comparison\view.php:79 PhanUnusedVariable Unused definition of variable $key
+app\components\comparison\view.php:186 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\App\Components\Comparison\View::add_product_btn()
+app\components\form\controller.php:14 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\Controller->model
+app\components\form\controller.php:19 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\Controller->model
+app\components\form\controller.php:30 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\Controller->model
+app\components\form\model.php:14 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\Model->collection
+app\components\form\model.php:15 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\Model->items
+app\components\form\model.php:18 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\Model->collection
+app\components\form\model.php:19 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\Model->items
+app\components\form\model.php:70 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\Model->collection
+app\components\form\model.php:90 PhanTypeArraySuspiciousNull Suspicious array access to $collection['stats_args']['images'] of type null
+app\components\form\model.php:90 PhanTypeArraySuspiciousNull Suspicious array access to $collection['stats_args']['images']['image-outline'] of type null
+app\components\form\model.php:90 PhanTypeInvalidDimOffset Invalid offset "images" of $collection['stats_args'] of array type array{icon:mixed|string}
+app\components\form\model.php:92 PhanTypeInvalidDimOffset Invalid offset "source_type" of $collection['stats_args'] of array type array{icon:mixed|string,outline_icon:null|string}
+app\components\form\model.php:93 PhanTypeInvalidDimOffset Invalid offset "icons" of $collection['stats_args'] of array type array{icon:mixed|string,outline_icon:null|string}
+app\components\form\model.php:93 PhanTypeSuspiciousStringExpression Suspicious type null of a variable or expression $collection['stats_args']['icons'] used to build a string. (Expected type to be able to cast to a string)
+app\components\form\model.php:94 PhanTypeInvalidDimOffset Invalid offset "icons" of $collection['stats_args'] of array type array{icon:' icon',outline_icon:null|string}
+app\components\form\model.php:94 PhanTypeSuspiciousStringExpression Suspicious type null of a variable or expression $collection['stats_args']['icons'] used to build a string. (Expected type to be able to cast to a string)
+app\components\form\view.php:17 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\View->props
+app\components\form\view.php:18 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\View->capability
+app\components\form\view.php:31 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\View->props
+app\components\form\view.php:34 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\View->capability
+app\components\form\view.php:45 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\View->props
+app\components\form\view.php:50 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\View->props
+app\components\form\view.php:56 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\View->props
+app\components\form\view.php:63 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\View->props
+app\components\form\view.php:69 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\View->props
+app\components\form\view.php:76 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\View->props
+app\components\form\view.php:80 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\View->props
+app\components\form\view.php:86 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\View->props
+app\components\form\view.php:87 PhanUndeclaredClassMethod Call to method load_v2_html from undeclared class \StarcatReview\Services\Recaptcha
+app\components\form\view.php:110 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\View->props
+app\components\form\view.php:116 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\View->props
+app\components\form\view.php:122 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\View->props
+app\components\form\view.php:128 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\View->props
+app\components\form\view.php:132 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\View->props
+app\components\form\view.php:133 PhanUndeclaredClassMethod Call to method load_v2_html from undeclared class \StarcatReview\Services\Recaptcha
+app\components\form\view.php:142 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\View->props
+app\components\form\view.php:151 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\View->props
+app\components\form\view.php:152 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\View->props
+app\components\form\view.php:153 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\View->props
+app\components\form\view.php:154 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\View->props
+app\components\form\view.php:158 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\View->props
+app\components\form\view.php:159 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\View->props
+app\components\form\view.php:165 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\View->props
+app\components\form\view.php:187 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\View->props
+app\components\form\view.php:187 PhanUndeclaredVariableDim Variable $rating_args was undeclared, but array fields are being added to it.
+app\components\form\view.php:196 PhanUnreferencedProtectedMethod Possibly zero references to protected method \StarcatReview\App\Components\Form\View::get_bar_rating()
+app\components\form\view.php:198 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Form\View->bar_rating
+app\components\listing\controller.php:14 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Listing\Controller->model
+app\components\listing\controller.php:15 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Listing\Controller->view
+app\components\listing\controller.php:20 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Listing\Controller->model
+app\components\listing\controller.php:21 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Listing\Controller->view (Did you mean $viewProps)
+app\components\listing\model.php:16 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Listing\Model->cat_posts_repo
+app\components\listing\model.php:62 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Listing\Model->cat_posts_repo
+app\components\listing\view.php:13 PhanUnreferencedPrivateProperty Possibly zero references to private property \StarcatReview\App\Components\Listing\View->html
+app\components\listing\view.php:18 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Listing\View->card
+app\components\listing\view.php:19 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Listing\View->controls_builder
+app\components\listing\view.php:30 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Listing\View->controls_builder
+app\components\listing\view.php:80 PhanUnusedVariable Unused definition of variable $key
+app\components\listing\view.php:98 PhanUnusedPrivateMethodParameter Parameter $ii is never used
+app\components\listing\view.php:100 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Listing\View->card
+app\components\listing\view.php:103 PhanUnreferencedPrivateMethod Possibly zero references to private method \StarcatReview\App\Components\Listing\View::get_excerpt()
+app\components\pros-and-cons\controller.php:14 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\ProsAndCons\Controller->model
+app\components\pros-and-cons\controller.php:15 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\ProsAndCons\Controller->view
+app\components\pros-and-cons\controller.php:20 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\ProsAndCons\Controller->model
+app\components\pros-and-cons\controller.php:21 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\ProsAndCons\Controller->view
+app\components\pros-and-cons\controller.php:26 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\ProsAndCons\Controller->model
+app\components\pros-and-cons\controller.php:29 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\ProsAndCons\Controller->view
+app\components\pros-and-cons\model.php:60 PhanUnusedVariable Unused definition of variable $key
+app\components\pros-and-cons\model.php:98 PhanUnreferencedPrivateMethod Possibly zero references to private method \StarcatReview\App\Components\ProsAndCons\Model::get_prosandcon_title()
+app\components\pros-and-cons\model.php:116 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\ProsAndCons\Model->items
+app\components\pros-and-cons\model.php:117 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\ProsAndCons\Model->items
+app\components\pros-and-cons\model.php:122 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\ProsAndCons\Model->items
+app\components\pros-and-cons\model.php:126 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\ProsAndCons\Model->items
+app\components\pros-and-cons\view.php:14 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\ProsAndCons\View->items
+app\components\pros-and-cons\view.php:25 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\ProsAndCons\View->items
+app\components\pros-and-cons\view.php:26 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\ProsAndCons\View->items
+app\components\pros-and-cons\view.php:38 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\ProsAndCons\View->collection
+app\components\pros-and-cons\view.php:69 PhanUnusedVariable Unused definition of variable $options
+app\components\pros-and-cons\view.php:80 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\ProsAndCons\View->collection
+app\components\pros-and-cons\view.php:80 PhanUnusedVariable Unused definition of variable $data_props
+app\components\pros-and-cons\view.php:112 PhanUnusedPrivateMethodParameter Parameter $options is never used
+app\components\pros-and-cons\view.php:120 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\ProsAndCons\View->collection
+app\components\pros-and-cons\view.php:140 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\ProsAndCons\View->items
+app\components\pros-and-cons\view.php:144 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\ProsAndCons\View->items
+app\components\pros-and-cons\view.php:145 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\ProsAndCons\View->items
+app\components\schema-reviews\controller.php:38 PhanUnusedVariable Unused definition of variable $email_service
+app\components\schema-reviews\controller.php:40 PhanUnusedVariable Unused definition of variable $mail_args
+app\components\stats\controller.php:14 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Stats\Controller->model
+app\components\stats\controller.php:15 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Stats\Controller->model
+app\components\stats\controller.php:15 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Stats\Controller->viewProps
+app\components\stats\controller.php:16 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Stats\Controller->view
+app\components\stats\controller.php:16 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Stats\Controller->viewProps
+app\components\stats\controller.php:21 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Stats\Controller->view
+app\components\stats\controller.php:26 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Stats\Controller->view
+app\components\stats\controller.php:26 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Stats\Controller->viewProps
+app\components\stats\controller.php:29 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\App\Components\Stats\Controller::get_column_rating()
+app\components\stats\model.php:14 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Stats\Model->collection
+app\components\stats\model.php:15 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Stats\Model->items
+app\components\stats\model.php:18 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Stats\Model->collection
+app\components\stats\model.php:19 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Stats\Model->items
+app\components\stats\model.php:54 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Stats\Model->collection
+app\components\stats\model.php:57 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Stats\Model->collection
+app\components\stats\model.php:97 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Stats\Model->collection
+app\components\stats\view.php:14 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Stats\View->viewProps (Did you mean $viewProps)
+app\components\stats\view.php:19 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Stats\View->viewProps
+app\components\stats\view.php:23 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Stats\View->star_rating
+app\components\stats\view.php:24 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Stats\View->star_rating
+app\components\stats\view.php:26 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Stats\View->bar_rating
+app\components\stats\view.php:27 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Stats\View->bar_rating
+app\components\stats\view.php:29 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Stats\View->circle_rating
+app\components\stats\view.php:30 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Stats\View->circle_rating
+app\components\stats\view.php:32 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Stats\View->star_rating
+app\components\stats\view.php:33 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Stats\View->star_rating
+app\components\summary\controller.php:14 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Summary\Controller->model
+app\components\summary\controller.php:15 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Summary\Controller->view
+app\components\summary\controller.php:20 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Summary\Controller->model
+app\components\summary\controller.php:21 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\Summary\Controller->view
+app\components\user-reviews\controller.php:14 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\User_Reviews\Controller->model
+app\components\user-reviews\controller.php:15 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\User_Reviews\Controller->view
+app\components\user-reviews\controller.php:20 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\User_Reviews\Controller->model
+app\components\user-reviews\controller.php:21 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\User_Reviews\Controller->view (Did you mean $viewProps)
+app\components\user-reviews\controller.php:29 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\User_Reviews\Controller->view
+app\components\user-reviews\model.php:14 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\User_Reviews\Model->args (Did you mean $args)
+app\components\user-reviews\model.php:77 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\User_Reviews\Model->args
+app\components\user-reviews\table.php:9 PhanUndeclaredExtendedClass Class extends undeclared class \WP_List_Table (Did you mean class \UR_List_Table)
+app\components\user-reviews\table.php:12 PhanReadOnlyPublicProperty Possibly zero write references to public property \UR_List_Table->checkbox
+app\components\user-reviews\table.php:45 PhanUndeclaredClass Reference to undeclared class \WP_List_Table (Did you mean class \UR_List_Table)
+app\components\user-reviews\table.php:58 PhanUnreferencedPublicMethod Possibly zero references to public method \UR_List_Table::floated_admin_avatar()
+app\components\user-reviews\table.php:68 PhanUnreferencedPublicMethod Possibly zero references to public method \UR_List_Table::ajax_user_can()
+app\components\user-reviews\table.php:109 PhanUndeclaredMethod Call to undeclared method \UR_List_Table::get_pagenum
+app\components\user-reviews\table.php:154 PhanUndeclaredProperty Reference to undeclared property \UR_List_Table->items
+app\components\user-reviews\table.php:173 PhanUndeclaredMethod Call to undeclared method \UR_List_Table::set_pagination_args
+app\components\user-reviews\table.php:187 PhanUndeclaredMethod Call to undeclared method \UR_List_Table::get_items_per_page
+app\components\user-reviews\table.php:202 PhanUnreferencedPublicMethod Possibly zero references to public method \UR_List_Table::no_items()
+app\components\user-reviews\table.php:409 PhanUnreferencedProtectedMethod Possibly zero references to protected method \UR_List_Table::get_bulk_actions()
+app\components\user-reviews\table.php:445 PhanUnreferencedProtectedMethod Possibly zero references to protected method \UR_List_Table::extra_tablenav()
+app\components\user-reviews\table.php:451 PhanUndeclaredMethod Call to undeclared method \UR_List_Table::has_items
+app\components\user-reviews\table.php:511 PhanUnreferencedPublicMethod Possibly zero references to public method \UR_List_Table::current_action()
+app\components\user-reviews\table.php:517 PhanUndeclaredClass Reference to undeclared class \WP_List_Table (Did you mean class \UR_List_Table)
+app\components\user-reviews\table.php:525 PhanUnreferencedPublicMethod Possibly zero references to public method \UR_List_Table::get_columns()
+app\components\user-reviews\table.php:552 PhanUnreferencedProtectedMethod Possibly zero references to protected method \UR_List_Table::get_sortable_columns()
+app\components\user-reviews\table.php:568 PhanUnreferencedProtectedMethod Possibly zero references to protected method \UR_List_Table::get_default_primary_column_name()
+app\components\user-reviews\table.php:584 PhanUndeclaredMethod Call to undeclared method \UR_List_Table::display_tablenav
+app\components\user-reviews\table.php:586 PhanUndeclaredProperty Reference to undeclared property \UR_List_Table->screen
+app\components\user-reviews\table.php:589 PhanUndeclaredMethod Call to undeclared method \UR_List_Table::get_table_classes
+app\components\user-reviews\table.php:592 PhanUndeclaredMethod Call to undeclared method \UR_List_Table::print_column_headers
+app\components\user-reviews\table.php:597 PhanUndeclaredMethod Call to undeclared method \UR_List_Table::display_rows_or_placeholder
+app\components\user-reviews\table.php:606 PhanUndeclaredProperty Reference to undeclared property \UR_List_Table->items
+app\components\user-reviews\table.php:607 PhanUndeclaredProperty Reference to undeclared property \UR_List_Table->items (Did you mean $items)
+app\components\user-reviews\table.php:608 PhanUndeclaredMethod Call to undeclared method \UR_List_Table::display_rows_or_placeholder
+app\components\user-reviews\table.php:609 PhanUndeclaredProperty Reference to undeclared property \UR_List_Table->items (Did you mean $items)
+app\components\user-reviews\table.php:615 PhanUndeclaredMethod Call to undeclared method \UR_List_Table::print_column_headers
+app\components\user-reviews\table.php:622 PhanUndeclaredMethod Call to undeclared method \UR_List_Table::display_tablenav
+app\components\user-reviews\table.php:631 PhanUndeclaredTypeParameter Parameter $item has undeclared type \WP_Comment
+app\components\user-reviews\table.php:631 PhanUnreferencedPublicMethod Possibly zero references to public method \UR_List_Table::single_row()
+app\components\user-reviews\table.php:649 PhanUndeclaredMethod Call to undeclared method \UR_List_Table::single_row_columns
+app\components\user-reviews\table.php:667 PhanUndeclaredTypeParameter Parameter $comment has undeclared type \WP_Comment
+app\components\user-reviews\table.php:667 PhanUnreferencedProtectedMethod Possibly zero references to protected method \UR_List_Table::handle_row_actions()
+app\components\user-reviews\table.php:857 PhanUndeclaredTypeParameter Parameter $comment has undeclared type \WP_Comment
+app\components\user-reviews\table.php:857 PhanUnreferencedPublicMethod Possibly zero references to public method \UR_List_Table::column_cb()
+app\components\user-reviews\table.php:870 PhanUndeclaredTypeParameter Parameter $comment has undeclared type \WP_Comment
+app\components\user-reviews\table.php:870 PhanUnreferencedPublicMethod Possibly zero references to public method \UR_List_Table::column_comment()
+app\components\user-reviews\table.php:911 PhanUndeclaredTypeParameter Parameter $comment has undeclared type \WP_Comment
+app\components\user-reviews\table.php:959 PhanUndeclaredTypeParameter Parameter $comment has undeclared type \WP_Comment
+app\components\user-reviews\table.php:959 PhanUnreferencedPublicMethod Possibly zero references to public method \UR_List_Table::column_date()
+app\components\user-reviews\table.php:987 PhanUndeclaredTypeParameter Parameter $comment has undeclared type \WP_Comment
+app\components\user-reviews\table.php:987 PhanUnreferencedPublicMethod Possibly zero references to public method \UR_List_Table::column_rating()
+app\components\user-reviews\table.php:1003 PhanUndeclaredTypeParameter Parameter $comment has undeclared type \WP_Comment
+app\components\user-reviews\table.php:1003 PhanUnreferencedPublicMethod Possibly zero references to public method \UR_List_Table::column_response()
+app\components\user-reviews\table.php:1003 PhanUnusedPublicNoOverrideMethodParameter Parameter $comment is never used
+app\components\user-reviews\table.php:1038 PhanUndeclaredMethod Call to undeclared method \UR_List_Table::comments_bubble
+app\components\user-reviews\table.php:1050 PhanUndeclaredTypeParameter Parameter $comment has undeclared type \WP_Comment
+app\components\user-reviews\table.php:1050 PhanUnreferencedPublicMethod Possibly zero references to public method \UR_List_Table::column_default()
+app\components\user-reviews\table.php:1081 PhanUnreferencedPublicMethod Possibly zero references to public method \UR_List_Table_Controller::set_screen()
+app\components\user-reviews\table.php:1081 PhanUnusedPublicNoOverrideMethodParameter Parameter $option is never used
+app\components\user-reviews\table.php:1081 PhanUnusedPublicNoOverrideMethodParameter Parameter $status is never used
+app\components\user-reviews\table.php:1086 PhanUnreferencedPublicMethod Possibly zero references to public method \UR_List_Table_Controller::plugin_menu()
+app\components\user-reviews\table.php:1105 PhanUnreferencedPublicMethod Possibly zero references to public method \UR_List_Table_Controller::plugin_settings_page()
+app\components\user-reviews\table.php:1125 PhanUnreferencedPublicMethod Possibly zero references to public method \UR_List_Table_Controller::screen_option()
+app\components\user-reviews\table.php:1181 PhanUnreferencedClosure Possibly zero references to Closure()
+app\components\user-reviews\view.php:16 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\User_Reviews\View->itemProps
+app\components\user-reviews\view.php:17 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\User_Reviews\View->collection
+app\components\user-reviews\view.php:18 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\User_Reviews\View->capability
+app\components\user-reviews\view.php:20 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\User_Reviews\View->collection
+app\components\user-reviews\view.php:21 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\User_Reviews\View->collection
+app\components\user-reviews\view.php:46 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\User_Reviews\View->collection
+app\components\user-reviews\view.php:201 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\User_Reviews\View->collection
+app\components\user-reviews\view.php:223 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\User_Reviews\View->capability
+app\components\user-reviews\view.php:251 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\User_Reviews\View->capability
+app\components\user-reviews\view.php:251 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\User_Reviews\View->collection
+app\components\user-reviews\view.php:272 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Components\User_Reviews\View->collection
+app\repositories\category-posts-repo.php:15 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\App\Repositories\Category_Posts_Repo::get_category_posts()
+app\repositories\category-posts-repo.php:27 PhanUndeclaredClassMethod Call to method __construct from undeclared class \WP_Query
+app\repositories\category-posts-repo.php:29 PhanUndeclaredClassMethod Call to method have_posts from undeclared class \WP_Query
+app\repositories\category-posts-repo.php:30 PhanUndeclaredClassMethod Call to method have_posts from undeclared class \WP_Query
+app\repositories\category-posts-repo.php:32 PhanUndeclaredClassMethod Call to method the_post from undeclared class \WP_Query
+app\repositories\user-reviews-repo.php:14 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Repositories\User_Reviews_Repo->current_user
+app\repositories\user-reviews-repo.php:27 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Repositories\User_Reviews_Repo->current_user
+app\repositories\user-reviews-repo.php:28 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Repositories\User_Reviews_Repo->current_user
+app\repositories\user-reviews-repo.php:70 PhanUnusedPublicNoOverrideMethodParameter Parameter $user is never used
+app\repositories\user-reviews-repo.php:72 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Repositories\User_Reviews_Repo->current_user
+app\repositories\user-reviews-repo.php:77 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Repositories\User_Reviews_Repo->current_user
+app\repositories\user-reviews-repo.php:106 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Repositories\User_Reviews_Repo->current_user
+app\repositories\user-reviews-repo.php:122 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Repositories\User_Reviews_Repo->current_user
+app\repositories\user-reviews-repo.php:193 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Repositories\User_Reviews_Repo->current_user
+app\repositories\user-reviews-repo.php:321 PhanUnusedVariable Unused definition of variable $key
+app\repositories\user-reviews-repo.php:326 PhanUnusedVariable Unused definition of variable $rating
+app\services\comments-factory.php:18 PhanParamReqAfterOpt Required parameter ($query_args) follows optional (array|mixed $use_cases = [])
+app\services\comments-factory.php:18 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\App\Services\Comments_Factory::get_comments_args()
+app\services\comments-factory.php:71 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\App\Services\Comments_Factory::get_comment()
+app\services\comments-factory.php:73 PhanUnusedVariable Unused definition of variable $comment
+app\services\comments-factory.php:104 PhanUnusedVariable Unused definition of variable $comment_ids
+app\services\email-notifications.php:13 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\App\Services\Email_Notifications::default_args()
+app\services\email-notifications.php:22 PhanUnusedVariable Unused definition of variable $mail_args
+app\services\email-notifications.php:25 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\App\Services\Email_Notifications::send_mail()
+app\services\email-notifications.php:29 PhanUnusedVariable Unused definition of variable $to_address
+app\services\email-notifications.php:30 PhanUnusedVariable Unused definition of variable $subject
+app\services\email-notifications.php:31 PhanUnusedVariable Unused definition of variable $mail_content
+app\services\email-notifications.php:32 PhanUnusedVariable Unused definition of variable $disclaimer
+app\services\email-notifications.php:33 PhanUnusedVariable Unused definition of variable $attachments
+app\services\email-notifications.php:37 PhanUnusedVariable Unused definition of variable $headers
+app\services\review-schema.php:29 PhanUnusedVariable Unused definition of variable $get_overall_ratings (Did you mean $get_overall_ratings_score)
+app\services\review-schema.php:34 PhanUnusedVariable Unused definition of variable $rating
+app\services\review-schema.php:119 PhanUnreferencedProtectedMethod Possibly zero references to protected method \StarcatReview\App\Services\Review_Schema::get_reviews_schema()
+app\services\review-schema.php:126 PhanUndeclaredClassMethod Call to method review from undeclared class \Spatie\SchemaOrg\Schema
+app\services\review-schema.php:131 PhanUndeclaredClassMethod Call to method rating from undeclared class \Spatie\SchemaOrg\Schema
+app\services\review-schema.php:137 PhanUndeclaredClassMethod Call to method person from undeclared class \Spatie\SchemaOrg\Schema
+app\services\review-schema.php:145 PhanUnreferencedProtectedMethod Possibly zero references to protected method \StarcatReview\App\Services\Review_Schema::get_article_schema()
+app\services\review-schema.php:145 PhanUnusedProtectedNoOverrideMethodParameter Parameter $args is never used
+app\services\review-schema.php:150 PhanUnreferencedProtectedMethod Possibly zero references to protected method \StarcatReview\App\Services\Review_Schema::get_breadcrump_schema()
+app\services\review-schema.php:150 PhanUnusedProtectedNoOverrideMethodParameter Parameter $args is never used
+app\services\review-schema.php:155 PhanUnreferencedProtectedMethod Possibly zero references to protected method \StarcatReview\App\Services\Review_Schema::get_publisher_schema()
+app\services\review-schema.php:155 PhanUnusedProtectedNoOverrideMethodParameter Parameter $args is never used
+app\services\review-schema.php:158 PhanUnusedVariable Unused definition of variable $org_logo
+app\services\review-schema.php:159 PhanUndeclaredClassMethod Call to method organization from undeclared class \Spatie\SchemaOrg\Schema
+app\services\services.php:35 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\App\Services\Services::get_allowed_stat()
+app\services\services.php:64 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\App\Services\Services::get_can_edit_comment_capabilities()
+app\services\services.php:80 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\App\Services\Services::get_capabilities_args()
+app\services\stats-factory.php:24 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\App\Services\Stats_Factory::get_stat_args()
+app\services\stats-factory.php:39 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\App\Services\Stats_Factory::get_single_stat()
+app\templates\reviews-template.php:27 PhanNoopNew Unused result of new object creation expression in new reviews_template() (this may be called for the side effects of the non-empty constructor or destructor)
+app\views\blocks.php:14 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Blocks->collection
+app\views\blocks\blog-collection.php:25 PhanUnusedVariable Unused definition of variable $key
+app\views\blocks\card.php:15 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Blocks\Card->props
+app\views\blocks\card.php:19 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Blocks\Card->props
+app\views\blocks\card.php:65 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Blocks\Card->props
+app\views\blocks\enhanced-card.php:18 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Blocks\Enhanced_Card->props
+app\views\blocks\enhanced-card.php:21 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Blocks\Enhanced_Card->props
+app\views\blocks\enhanced-card.php:34 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Blocks\Enhanced_Card->props
+app\views\blocks\enhanced-card.php:34 PhanUnusedVariable Unused definition of variable $key
+app\views\blocks\enhanced-card.php:65 PhanUnreferencedProtectedMethod Possibly zero references to protected method \StarcatReview\App\Views\Blocks\Enhanced_Card::show_item()
+app\views\blocks\enhanced-card.php:68 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Blocks\Enhanced_Card->props
+app\views\blocks\list-controls-listjs.php:33 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\App\Views\Blocks\List_Controls_Listjs::search()
+app\views\blocks\list-controls-listjs.php:41 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\App\Views\Blocks\List_Controls_Listjs::sort_button()
+app\views\blocks\list-controls-semantic.php:22 PhanParamTooFew Call with 0 arg(s) to \StarcatReview\App\Views\Blocks\List_Controls_Semantic::dropdown($props) which requires 1 arg(s) defined at app\views\blocks\list-controls-semantic.php:41
+app\views\blocks\list-controls-semantic.php:24 PhanParamTooFew Call with 0 arg(s) to \StarcatReview\App\Views\Blocks\List_Controls_Semantic::radio_group($props) which requires 1 arg(s) defined at app\views\blocks\list-controls-semantic.php:74
+app\views\blocks\list-controls-semantic.php:29 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\App\Views\Blocks\List_Controls_Semantic::search_dropdown()
+app\views\blocks\simple-collection.php:22 PhanUnusedVariable Unused definition of variable $columns
+app\views\blocks\simple-collection.php:25 PhanUnusedVariable Unused definition of variable $key
+app\views\blocks\simple-collection.php:35 PhanUnusedVariable Unused definition of variable $count
+app\views\rating-types\bar-rating.php:14 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Bar_Rating->props
+app\views\rating-types\bar-rating.php:15 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Bar_Rating->limit
+app\views\rating-types\bar-rating.php:21 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Bar_Rating->props
+app\views\rating-types\bar-rating.php:24 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Bar_Rating->props
+app\views\rating-types\bar-rating.php:27 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Bar_Rating->props
+app\views\rating-types\bar-rating.php:42 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Bar_Rating->props
+app\views\rating-types\bar-rating.php:55 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Bar_Rating->props
+app\views\rating-types\bar-rating.php:70 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Bar_Rating->props
+app\views\rating-types\bar-rating.php:79 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Bar_Rating->props
+app\views\rating-types\bar-rating.php:91 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Bar_Rating->props
+app\views\rating-types\bar-rating.php:92 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Bar_Rating->props
+app\views\rating-types\bar-rating.php:102 PhanUndeclaredClassMethod Call to method get from undeclared class \StarcatReview\App\Views\Rating_Types\SCR_Getter (Did you mean class \StarcatReview\Includes\Settings\SCR_Getter)
+app\views\rating-types\circle-rating.php:14 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Circle_Rating->var (Did you mean $var)
+app\views\rating-types\star-rating.php:16 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Star_Rating->props
+app\views\rating-types\star-rating.php:25 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Star_Rating->props
+app\views\rating-types\star-rating.php:28 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Star_Rating->props
+app\views\rating-types\star-rating.php:30 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Star_Rating->props
+app\views\rating-types\star-rating.php:47 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Star_Rating->props
+app\views\rating-types\star-rating.php:62 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Star_Rating->props
+app\views\rating-types\star-rating.php:75 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Star_Rating->props
+app\views\rating-types\star-rating.php:82 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Star_Rating->props
+app\views\rating-types\star-rating.php:89 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Star_Rating->props
+app\views\rating-types\star-rating.php:100 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Star_Rating->props
+app\views\rating-types\star-rating.php:104 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Star_Rating->props
+app\views\rating-types\star-rating.php:107 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Star_Rating->props
+app\views\rating-types\star-rating.php:117 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Star_Rating->props
+app\views\rating-types\star-rating.php:121 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Star_Rating->props
+app\views\rating-types\star-rating.php:123 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Star_Rating->props
+app\views\rating-types\star-rating.php:126 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Rating_Types\Star_Rating->props
+app\views\review-categories.php:15 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Review_Categories->blocks
+app\views\review-categories.php:25 PhanUnusedVariable Unused definition of variable $key
+app\views\review-categories.php:36 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Review_Categories->blocks
+app\views\reviews-list.php:21 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Reviews_List->model
+app\views\single-review.php:12 PhanUnreferencedPrivateProperty Possibly zero references to private property \StarcatReview\App\Views\Single_Review->html
+app\views\single-review.php:16 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Single_Review->ID
+app\views\single-review.php:17 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Single_Review->model
+app\views\single-review.php:18 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Single_Review->reviews_builder
+app\views\single-review.php:29 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Single_Review->model
+app\views\single-review.php:30 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Single_Review->model
+app\views\single-review.php:31 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Views\Single_Review->reviews_builder
+app\widget-makers\category-listing\controller.php:7 PhanUnreferencedUseNormal Possibly zero references to use statement for classlike/namespace SCR_Getter (\StarcatReview\Includes\Settings\SCR_Getter)
+app\widget-makers\category-listing\controller.php:21 PhanUnusedVariable Unused definition of variable $component_args
+app\widget-makers\category-listing\controller.php:46 PhanUnusedVariable Unused definition of variable $key
+app\widget-makers\comparison\loader.php:14 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\App\Widget_Makers\Comparison\Loader::load()
+app\widget-makers\comparison\loader.php:26 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\App\Widget_Makers\Comparison\Loader::register_widget()
+app\widget-makers\comparison\loader.php:37 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\App\Widget_Makers\Comparison\Loader::register_elementor_widget()
+app\widget-makers\comparison\loader.php:44 PhanUndeclaredClassMethod Call to method instance from undeclared class \Elementor\Plugin
+app\widget-makers\comparison\loader.php:87 PhanUnreferencedProtectedMethod Possibly zero references to protected method \StarcatReview\App\Widget_Makers\Comparison\Loader::get_collection_props()
+app\widget-makers\comparison\loader.php:87 PhanUnusedProtectedNoOverrideMethodParameter Parameter $args is never used
+app\widget-makers\comparison\loader.php:90 PhanUnreferencedProtectedMethod Possibly zero references to protected method \StarcatReview\App\Widget_Makers\Comparison\Loader::execute_methods_with_queries()
+app\widget-makers\comparison\loader.php:90 PhanUnusedProtectedNoOverrideMethodParameter Parameter $args is never used
+app\widget-makers\comparison\loader.php:137 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\App\Widget_Makers\Comparison\Loader::get_style_config()
+app\widget-makers\comparison\widget.php:14 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\App\Widget_Makers\Comparison\Widget::load()
+app\widget-makers\comparison\widget.php:61 PhanUndeclaredVariableDim Variable $component_args was undeclared, but array fields are being added to it.
+app\widget-makers\comparison\widget.php:87 PhanUndeclaredClassMethod Call to method __construct from undeclared class \WP_Query
+app\widget-makers\comparison\widget.php:89 PhanUndeclaredClassMethod Call to method have_posts from undeclared class \WP_Query
+app\widget-makers\comparison\widget.php:108 PhanUnusedProtectedNoOverrideMethodParameter Parameter $args is never used
+app\widget-makers\comparison\widget.php:152 PhanUnreferencedProtectedMethod Possibly zero references to protected method \StarcatReview\App\Widget_Makers\Comparison\Widget::get_collection_props()
+app\widget-makers\comparison\widget.php:152 PhanUnusedProtectedNoOverrideMethodParameter Parameter $args is never used
+app\widget-makers\comparison\widget.php:155 PhanUnreferencedProtectedMethod Possibly zero references to protected method \StarcatReview\App\Widget_Makers\Comparison\Widget::execute_methods_with_queries()
+app\widget-makers\comparison\widget.php:155 PhanUnusedProtectedNoOverrideMethodParameter Parameter $args is never used
+app\widget-makers\comparison\widget.php:191 PhanParamTooMany Call with 1 arg(s) to \StarcatReview\App\Widget_Makers\Comparison\Widget::get_src_posts() which only takes 0 arg(s) defined at app\widget-makers\comparison\widget.php:234
+app\widget-makers\comparison\widget.php:244 PhanUndeclaredClassMethod Call to method __construct from undeclared class \WP_Query
+app\widget-makers\comparison\widget.php:246 PhanUndeclaredClassMethod Call to method have_posts from undeclared class \WP_Query
+app\widget-makers\comparison\widget.php:257 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\App\Widget_Makers\Comparison\Widget::get_style_config()
+app\widget-makers\review-listing\controller.php:18 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Widget_Makers\Review_Listing\Controller->fields_model
+app\widget-makers\review-listing\controller.php:19 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Widget_Makers\Review_Listing\Controller->style_config
+app\widget-makers\review-listing\controller.php:23 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\App\Widget_Makers\Review_Listing\Controller::load()
+app\widget-makers\review-listing\controller.php:53 PhanUnusedVariable Unused definition of variable $key
+app\widget-makers\review-listing\controller.php:81 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Widget_Makers\Review_Listing\Controller->fields_model
+app\widget-makers\review-listing\controller.php:98 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\App\Widget_Makers\Review_Listing\Controller::get_style_config()
+app\widget-makers\review-listing\controller.php:100 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Widget_Makers\Review_Listing\Controller->style_config
+app\widget-makers\review-listing\controller.php:129 PhanUndeclaredClassMethod Call to method __construct from undeclared class \WP_Query
+app\widget-makers\review-listing\controller.php:131 PhanUndeclaredClassMethod Call to method have_posts from undeclared class \WP_Query
+app\widget-makers\review-listing\controller.php:132 PhanUndeclaredClassMethod Call to method have_posts from undeclared class \WP_Query
+app\widget-makers\review-listing\controller.php:134 PhanUndeclaredClassMethod Call to method the_post from undeclared class \WP_Query
+app\widget-makers\review-listing\controller.php:145 PhanUnusedVariable Unused definition of variable $key
+app\widget-makers\user-review.php:16 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Widget_Makers\User_Review->form_controller
+app\widget-makers\user-review.php:17 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Widget_Makers\User_Review->reviews_controller
+app\widget-makers\user-review.php:28 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Widget_Makers\User_Review->form_controller
+app\widget-makers\user-review.php:33 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Widget_Makers\User_Review->controls_builder
+app\widget-makers\user-review.php:40 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Widget_Makers\User_Review->controls_builder
+app\widget-makers\user-review.php:46 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\App\Widget_Makers\User_Review::get_form_fields()
+app\widget-makers\user-review.php:49 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\App\Widget_Makers\User_Review->form_controller
+features\non-logged-in-user.php:28 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Features\Non_Logged_In_User::init_hook()
+features\non-logged-in-user.php:46 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Features\Non_Logged_In_User::get_can_edit_comment_capabilities()
+features\non-logged-in-user.php:66 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Features\Non_Logged_In_User::can_view_comment()
+features\non-logged-in-user.php:97 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Features\Non_Logged_In_User::process_form()
+features\non-logged-in-user.php:119 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Features\Non_Logged_In_User::has_current_user_already_reviewed()
+features\non-logged-in-user.php:139 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Features\Non_Logged_In_User::form_modification()
+features\non-logged-in-user.php:139 PhanUnusedPublicNoOverrideMethodParameter Parameter $review is never used
+features\non-logged-in-user.php:165 PhanParamReqAfterOpt Required parameter ($review) follows optional (mixed|string $html = '')
+features\non-logged-in-user.php:165 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Features\Non_Logged_In_User::form_comment_consent_modification()
+features\non-logged-in-user.php:165 PhanUnusedPublicNoOverrideMethodParameter Parameter $review is never used
+features\woocommerce-integration.php:33 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Features\Woocommerce_Integration::comments_template_loader()
+features\woocommerce-integration.php:46 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Features\Woocommerce_Integration::woocommerce_rating_display()
+features\woocommerce-integration.php:54 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Features\Woocommerce_Integration::woocommerce_review_display_overall_rating()
+features\woocommerce-integration.php:76 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Features\Woocommerce_Integration::convert_product_rating_to_stat()
+features\woocommerce-integration.php:104 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Features\Woocommerce_Integration::add_rating_meta()
+features\woocommerce-integration.php:117 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Features\Woocommerce_Integration::add_comment_purchase_verification()
+features\woocommerce-integration.php:131 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Features\Woocommerce_Integration::get_is_review_from_verified_owner()
+includes\actions.php:21 PhanUndeclaredTypeParameter Parameter $query has undeclared type \WP_Comment_Query
+includes\actions.php:21 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Actions::exclude_from_comments()
+includes\ajax-handler.php:50 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Ajax_Handler::photo_reviews()
+includes\ajax-handler.php:60 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Ajax_Handler::scr_listing_action()
+includes\ajax-handler.php:68 PhanUndeclaredVariable Variable $wp_query is undeclared
+includes\ajax-handler.php:69 PhanUnusedVariableGlobal Unreferenced definition of variable $wp_query as a global variable
+includes\ajax-handler.php:77 PhanUndeclaredClassMethod Call to method __construct from undeclared class \StarcatReview\Includes\WP_Query
+includes\ajax-handler.php:85 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Ajax_Handler::user_review_submission()
+includes\ajax-handler.php:96 PhanUndeclaredClassMethod Call to method verify from undeclared class \StarcatReview\Services\Recaptcha
+includes\ajax-handler.php:121 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Ajax_Handler::vote_handler()
+includes\ajax-handler.php:127 PhanTypePossiblyInvalidDimOffset Possibly invalid offset 'comment_id' of $props of array type array{comment_id?:int,vote?:array{user_id:mixed,vote:int}}
+includes\ajax-handler.php:134 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Ajax_Handler::delete_review_attachment()
+includes\ajax-handler.php:136 PhanUndeclaredClassMethod Call to method __construct from undeclared class \StarcatReviewPhotoReviews\Includes\Repository
+includes\ajax-handler.php:137 PhanUndeclaredClassMethod Call to method get_processing_attachment_data from undeclared class \StarcatReviewPhotoReviews\Includes\Repository
+includes\ajax-handler.php:138 PhanUndeclaredClassMethod Call to method delete_attachment from undeclared class \StarcatReviewPhotoReviews\Includes\Repository
+includes\ajax-handler.php:143 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Ajax_Handler::search_posts()
+includes\ajax-handler.php:161 PhanUndeclaredClassMethod Call to method __construct from undeclared class \WP_Query
+includes\ajax-handler.php:163 PhanUndeclaredClassMethod Call to method have_posts from undeclared class \WP_Query
+includes\ajax-handler.php:276 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Ajax_Handler::get_scr_results()
+includes\ajax-handler.php:282 PhanUnusedVariable Unused definition of variable $scr_search_result_sets
+includes\autoloader.php:29 PhanReadOnlyPrivateProperty Possibly zero write references to private property \StarcatReview\Autoloader::$classes_map
+includes\autoloader.php:43 PhanReadOnlyPrivateProperty Possibly zero write references to private property \StarcatReview\Autoloader::$classes_aliases
+includes\autoloader.php:72 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Autoloader::get_classes_aliases()
+includes\functions.php:7 PhanUndeclaredVariableDim Variable $args was undeclared, but array fields are being added to it.
+includes\hooks.php:41 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Hooks::init_hook()
+includes\hooks.php:47 PhanNoopNew Unused result of new object creation expression in new \StarcatReview\Features\Woocommerce_Integration() (this may be called for the side effects of the non-empty constructor or destructor)
+includes\hooks.php:50 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Hooks::register_sidebar()
+includes\hooks.php:66 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Hooks::scr_schema_reviews()
+includes\hooks.php:83 PhanUnusedVariable Unused definition of variable $check_schema
+includes\hooks.php:95 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Hooks::plugins_loaded_action()
+includes\hooks.php:103 PhanUnusedVariable Unused definition of variable $shortcodes
+includes\hooks.php:107 PhanNoopNew Unused result of new object creation expression in new \StarcatReview\Includes\Actions() (this may be called for the side effects of the non-empty constructor or destructor)
+includes\hooks.php:110 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Hooks::load_admin_hooks()
+includes\hooks.php:141 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Hooks::manage_cpt_custom_columns()
+includes\hooks.php:152 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Hooks::manage_cpt_custom_column()
+includes\hooks.php:164 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Hooks::sort_posts_custom_column()
+includes\hooks.php:170 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Hooks::sort_cpt_custom_column_order()
+includes\hooks.php:204 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Hooks::content_filter()
+includes\hooks.php:224 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Hooks::enqueue_scripts()
+includes\plugin.php:25 PhanNoopNew Unused result of new object creation expression in new \StarcatReview\Includes\Hooks() (this may be called for the side effects of the non-empty constructor or destructor)
+includes\plugin.php:30 PhanUnreferencedPublicMethod Possibly zero references to public method \Starcat_Review::activate_plugin_name()
+includes\plugin.php:48 PhanUnreferencedPublicMethod Possibly zero references to public method \Starcat_Review::deactivate_plugin_name()
+includes\plugin.php:71 PhanUnusedVariable Unused definition of variable $settings
+includes\plugin.php:81 PhanUnusedVariable Unused definition of variable $Non_Logged_In_User
+includes\plugin.php:84 PhanUndeclaredClassMethod Call to method __construct from undeclared class \StarcatReview\Services\Recaptcha
+includes\plugin.php:84 PhanUnusedVariable Unused definition of variable $recaptcha
+includes\plugin.php:103 PhanNoopNew Unused result of new object creation expression in new Starcat_Review() (this may be called for the side effects of the non-empty constructor or destructor)
+includes\settings.php:16 PhanUnreferencedPublicProperty Possibly zero references to public property \StarcatReview\Includes\Settings->fields
+includes\settings.php:20 PhanNoopNew Unused result of new object creation expression in new \StarcatReview\Includes\Settings\Premium_Tease() (this may be called for the side effects of the non-empty constructor or destructor)
+includes\settings.php:215 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Settings::comparison_table_settings()
+includes\settings.php:1155 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Settings::single_post_settings_features()
+includes\settings.php:1188 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Settings::single_details()
+includes\settings.php:1203 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Settings::single_rich_snippets()
+includes\settings\fields.php:51 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Settings\Fields::stats_field()
+includes\settings\getter.php:49 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Settings\SCR_Getter::get_settings()
+includes\settings\getter.php:345 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Settings\SCR_Getter::get_recaptcha_site_key()
+includes\settings\helper.php:10 PhanUnreferencedClass Possibly zero references to class \CSF_Field_icon_dropdown
+includes\settings\helper.php:17 PhanUnreferencedPublicMethod Possibly zero references to public method \CSF_Field_icon_dropdown::render()
+includes\settings\helper.php:29 PhanUndeclaredProperty Reference to undeclared property \CSF_Field_icon_dropdown->value
+includes\settings\helper.php:196 PhanUnreferencedFunction Possibly zero references to function \csf_validate_stat_numeric()
+includes\settings\helper.php:214 PhanUnreferencedFunction Possibly zero references to function \csf_validate_recaptcha_site_key()
+includes\settings\helper.php:224 PhanUnreferencedFunction Possibly zero references to function \csf_validate_recaptcha_secret_key()
+includes\settings\helper.php:233 PhanUnreferencedFunction Possibly zero references to function \scr_csf_premium_callback_function()
+includes\settings\premium-tease.php:25 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Settings\Premium_Tease::csf_framework_override()
+includes\settings\premium-tease.php:34 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Settings\Premium_Tease::add_premium_tease_into_sections()
+includes\settings\premium-tease.php:41 PhanTypePossiblyInvalidDimOffset Possibly invalid offset 'wn' of SCR_Getter::addons_available_condition() of array type array{wn?:false|true}|non-empty-associative-array<false>|non-empty-associative-array<true>
+includes\settings\premium-tease.php:62 PhanParamReqAfterOpt Required parameter ($addon_info) follows optional (array|mixed $section = [])
+includes\settings\premium-tease.php:69 PhanParamReqAfterOpt Required parameter ($addon_info) follows optional (array|mixed $fields = [])
+includes\shortcodes.php:5 PhanUnreferencedUseNormal Possibly zero references to use statement for classlike/namespace Category_Posts_Repo (\StarcatReview\App\Repositories\Category_Posts_Repo)
+includes\shortcodes.php:12 PhanRedefineClass Class \StarcatReview\Includes\Shortcodes defined at includes\shortcodes.php:12 was previously defined as Class \StarcatReview\Includes\Shortcodes at includes\lib\cpt-addon\includes\shortcodes.php:11
+includes\shortcodes.php:21 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Shortcodes,1::comparison_table()
+includes\shortcodes.php:28 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Shortcodes,1::reviews_list()
+includes\update\upgrades-list.php:15 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Update\Upgrades_List::get_upgrades()
+includes\update\upgrades-list.php:26 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Update\Upgrades_List::upgrade_v02()
+includes\update\upgrades-list.php:45 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Update\Upgrades_List::upgrade_v061()
+includes\update\upgrades-list.php:48 PhanUnusedVariable Unused definition of variable $part1_result
+includes\update\upgrades-list.php:49 PhanUnusedVariable Unused definition of variable $part2_result
+includes\update\upgrades-list.php:54 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Update\Upgrades_List::upgrade_v07()
+includes\update\upgrades-list.php:156 PhanUnusedVariable Unused definition of variable $query_args
+includes\utils.php:10 PhanUnreferencedClass Possibly zero references to class \StarcatReview\Includes\Utils
+includes\utils.php:16 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Utils::get_reviews_data()
+includes\utils.php:26 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Utils::get_acf_group()
+includes\utils\fake-pages.php:37 PhanUndeclaredVariableDim Variable $fake_pages was undeclared, but array fields are being added to it.
+includes\utils\fake-pages.php:52 PhanUnreferencedPublicMethod Possibly zero references to public method \SCRFakePages::fake_pages()
+includes\utils\fake-pages.php:57 PhanUnusedVariableValueOfForeachWithKey Unused definition of variable $fp as the value of a foreach loop that included keys
+includes\utils\fake-pages.php:71 PhanTypeArraySuspicious Suspicious array access to $posts of type null
+includes\utils\fake-pages.php:117 PhanNoopNew Unused result of new object creation expression in new SCRFakePages() (this may be called for the side effects of the non-empty constructor or destructor)
+includes\utils\review-data.php:5 PhanUnreferencedPublicMethod Possibly zero references to public method \ReviewData::get_stats_data()
+includes\utils\review-data.php:198 PhanNoopNewNoSideEffects Unused result of new object creation expression in new ReviewData() (this is likely free of side effects - there is no known non-empty constructor or destructor)
+includes\utils\test-helpers.php:11 PhanUnreferencedClass Possibly zero references to class \StarcatReview\Includes\Utils\Test_Helpers
+includes\utils\test-helpers.php:15 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\Includes\Utils\Test_Helpers->users
+includes\utils\test-helpers.php:16 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\Includes\Utils\Test_Helpers->post (Did you mean $_POST)
+includes\utils\test-helpers.php:20 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Utils\Test_Helpers::executeMethod()
+includes\utils\test-helpers.php:30 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Utils\Test_Helpers::create_new_user()
+includes\utils\test-helpers.php:32 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\Includes\Utils\Test_Helpers->users
+includes\utils\test-helpers.php:35 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Utils\Test_Helpers::get_page_title_for_slug()
+includes\utils\test-helpers.php:42 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Utils\Test_Helpers::does_page_exist()
+includes\utils\test-helpers.php:48 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Utils\Test_Helpers::insert_term_with_post()
+includes\utils\test-helpers.php:50 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\Includes\Utils\Test_Helpers->post (Did you mean $post_type or $post_title or $post_content or $_POST)
+includes\utils\test-helpers.php:53 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Utils\Test_Helpers::insert_post_to_child_term()
+includes\utils\test-helpers.php:55 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\Includes\Utils\Test_Helpers->post (Did you mean $post_type or $_POST)
+includes\utils\test-helpers.php:58 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Utils\Test_Helpers::insert_post_with_term()
+includes\utils\test-helpers.php:60 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\Includes\Utils\Test_Helpers->post (Did you mean $post_type or $post_title or $post_content or $_POST)
+includes\widgets\blocks\register-blocks.php:10 PhanUnreferencedClass Possibly zero references to class \StarcatReview\Includes\Widgets\Blocks\Register_Blocks
+includes\widgets\blocks\register-blocks.php:15 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\Includes\Widgets\Blocks\Register_Blocks->fields (Did you mean $fields)
+includes\widgets\blocks\register-blocks.php:16 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\Includes\Widgets\Blocks\Register_Blocks->fields (Did you mean $fields)
+includes\widgets\blocks\register-blocks.php:17 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\Includes\Widgets\Blocks\Register_Blocks->style_config (Did you mean $style_config)
+includes\widgets\blocks\register-blocks.php:24 PhanUnusedVariable Unused definition of variable $key
+includes\widgets\blocks\register-blocks.php:31 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\Includes\Widgets\Blocks\Register_Blocks->fields
+includes\widgets\blocks\register-blocks.php:39 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Widgets\Blocks\Register_Blocks::load()
+includes\widgets\blocks\register-blocks.php:49 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\Includes\Widgets\Blocks\Register_Blocks->fields
+includes\widgets\blocks\register-blocks.php:54 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Widgets\Blocks\Register_Blocks::starcat_review_block_assets()
+includes\widgets\blocks\register-blocks.php:64 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Widgets\Blocks\Register_Blocks::starcat_review_block()
+includes\widgets\blocks\register-blocks.php:72 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\Includes\Widgets\Blocks\Register_Blocks->fields
+includes\widgets\blocks\register-blocks.php:75 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Widgets\Blocks\Register_Blocks::render()
+includes\widgets\blocks\register-blocks.php:82 PhanUndeclaredClassMethod Call to method __construct from undeclared class \StarcatReview\Features\Faq\Faq
+includes\widgets\blocks\register-blocks.php:90 PhanUndeclaredClassMethod Call to method get_view from undeclared class \StarcatReview\Features\Faq\Faq
+includes\widgets\blocks\register-blocks.php:100 PhanUndeclaredProperty Reference to undeclared property \StarcatReview\Includes\Widgets\Blocks\Register_Blocks->style_config
+includes\widgets\blocks\register-blocks.php:109 PhanUnusedVariable Unused definition of variable $key (Did you mean $key1)
+includes\widgets\register-elementor-widgets.php:17 PhanUnreferencedPublicMethod Possibly zero references to public method \StarcatReview\Includes\Widgets\Register_Elementor_Widgets::register()
+includes\widgets\register-elementor-widgets.php:32 PhanUndeclaredClassMethod Call to method instance from undeclared class \Elementor\Plugin
+includes\widgets\register-widgets.php:15 PhanUnreferencedClosure Possibly zero references to Closure()
+includes\widgets\register-widgets.php:30 PhanUnreferencedClosure Possibly zero references to Closure()
