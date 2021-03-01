@@ -150,7 +150,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             wp_enqueue_script('semantic');
 
 
-            wp_enqueue_style('fa5', $vendor_url . 'fontawesome/all.min.css', array(), '5.13.0', 'all');
+            wp_enqueue_style('fa5', $vendor_url . 'fontawesome/js/all.min.css', array(), '5.13.0', 'all');
             // wp_enqueue_style('fa5-v4-shims', 'fontawesome/v4-shims.min.css', array(), '5.13.0', 'shim');
         }
 
