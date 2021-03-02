@@ -25,20 +25,6 @@
     }
 }
 
-// Generates Full Icons
-@mixin icon_selector_full($icon_code, $icon_class) {
-    .scr-icon.#{$icon_class}:after {
-        font-family: Icons;
-        position: absolute;
-        left: 0;
-        top: 0;
-        overflow: hidden;
-        // color: #f80;
-        width: 100%;
-        content: $icon_code;
-    }
-}
-
 .scr-icon:after {
     color: #f80;
 }
@@ -50,7 +36,7 @@
 @include icon_selector("\f005", 50%, "fa-star", 50);
 @include icon_selector("\f005", 70%, "fa-star", 75);
 @include icon_selector("\f005", 100%, "fa-star", 100);
-// @include icon_selector_full("\f005", "fa-star");
+
 
 // 2. Thumbs up
 @include icon_selector("\f164", 35%, "fa-thumbs-up", 25);
@@ -233,8 +219,6 @@
 @include icon_selector("\f119", 50%, "fa-frown", 50);
 @include icon_selector("\f119", 70%, "fa-frown", 75);
 @include icon_selector("\f119", 100%, "fa-frown", 100);
-
-// @include icon_selector_full("\f164", "fa-thumbs-up");
 
 // @mixin icon($icon_code, $width) {
 //     font-family: FontAwesome;
