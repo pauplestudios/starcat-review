@@ -2,8 +2,8 @@
 
 namespace StarcatReview\App\Components\Form;
 
-use \StarcatReview\Services\Recaptcha as Recaptcha;
 use \StarcatReview\Includes\Settings\SCR_Getter;
+use \StarcatReview\Services\Recaptcha as Recaptcha;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -33,9 +33,11 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             // User Already Reviewed or Not Logged in User
             $hide_form = !$this->capability['can_user_review'];
 
-            if ($hide_form) {
-                $display = 'style="display: none"';
-            }
+            $display = '';
+            /** NOTE: dont hide form, if found shortcode form shortcode  */
+            // if ($hide_form) {
+            //     $display = 'style="display: none"';
+            // }
 
             $html = '<form
             class="ui form scr-user-review ' . $class . '"
@@ -147,7 +149,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             $woo_stats_class = SCR_Getter::is_single_product_post() || SCR_Getter::is_admin_product_page() ? 'woo-stats' : '';
 
             $html = '';
-            $html .= '<ul class="review-list '.$woo_stats_class.'"
+            $html .= '<ul class="review-list ' . $woo_stats_class . '"
                 data-type="' . $this->props['collection']['stats_args']['type'] . '"
                 data-limit="' . $this->props['collection']['stats_args']['limit'] . '"
                 data-steps="' . $this->props['collection']['stats_args']['steps'] . '"
