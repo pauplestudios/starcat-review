@@ -730,9 +730,9 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'type' => 'content',
                             'content' => '<div class="button-container">'
-                                . '<span><b>' . __('Where is my main page?', SCR_DOMAIN) . '</b></span>'
-                                . '<br>'
-                                . $main_page_button . '<span>' . __('Save and Refresh Page if you changed it.', SCR_DOMAIN) . '</span></div>',
+                            . '<span><b>' . __('Where is my main page?', SCR_DOMAIN) . '</b></span>'
+                            . '<br>'
+                            . $main_page_button . '<span>' . __('Save and Refresh Page if you changed it.', SCR_DOMAIN) . '</span></div>',
                         ),
                         array(
                             'type' => 'subheading',
@@ -1023,7 +1023,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                                 '.review-list .scr-icon:after',
                                 '.review-list .scr-icon:after',
                                 '.reviewed-list .scr-icon:after',
-                                '.reviewed-list .scr-icon:after'
+                                '.reviewed-list .scr-icon:after',
                             ),
                             'output_mode' => 'color',
                             'default' => '#e7711b',
@@ -1470,7 +1470,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                                 '.review-list.woo-stats .review-item-stars .scr-icon:after',
                                 '.review-list.woo-stats .scr-icon:after',
                                 '.reviewed-list.woo-stats .scr-icon:after',
-                                '.reviewed-list.woo-stats .scr-icon:after'
+                                '.reviewed-list.woo-stats .scr-icon:after',
                             ),
                             'output_mode' => 'color',
                             'default' => '#e7711b',
@@ -1565,7 +1565,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'dependency' => array('woo_show_captcha', '==', 'true'),
                             'validate' => 'csf_validate_recaptcha_secret_key',
                         ),
-                    )
+                    ),
                 )
             );
         }
