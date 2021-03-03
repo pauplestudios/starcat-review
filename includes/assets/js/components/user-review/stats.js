@@ -51,6 +51,7 @@ var Stats = {
     },
 
     getRatingStat: function (ratingElement, resultElement, props) {
+        var that = this;
         jQuery(ratingElement)
             .on("mousemove touchmove", function (e) {
                 var element = jQuery(this);
@@ -82,6 +83,9 @@ var Stats = {
                 // Update Width
                 element.find(resultElement).width(statWidth + "%");
 
+                // Update icons
+                that.addStatClassesBasedOnScore(element, score);
+
                 // Update Titlescore if it rendered
                 element
                     // .attr("title", score + " / " + props.limit)
@@ -106,6 +110,9 @@ var Stats = {
                 // Update Width
                 element.find(resultElement).width(value + "%");
 
+                // Update icons
+                that.addStatClassesBasedOnScore(element, score);
+
                 // Update Title and score
                 score =
                     score != 0
@@ -127,6 +134,49 @@ var Stats = {
                 // Update Hidden Input Value
                 element.find("input").val(value);
             });
+    },
+
+    addStatClassesBasedOnScore: function(item, score){
+        var that = this;
+        console.log("addStatClassesBasedOnScore() score: " + score);
+        var ii = 1;
+
+        // var score = 3.6; // test only
+        var scoreFloor = Math.floor(score);
+
+        
+        // console.log("score: " + score);
+        // console.log("scoreFloor: " + scoreFloor);
+
+        // Remove previous rating classes
+        that.removeRatingClasses(item);
+        
+        item.find('.scr-icon').each(function(){
+            var isLastParitalIcon = (scoreFloor < ii) && (ii == scoreFloor + 1); // the last icon which is partial
+
+
+            if(ii <= scoreFloor){
+                jQuery(this).addClass('rating-100');
+            } else if(isLastParitalIcon){ 
+                // console.log("else if --- ii: " + ii);
+                var rating = (score - scoreFloor) * 100;
+                var rounded_rating = that.roundUpToAny(rating, 25);
+                jQuery(this).addClass('rating-' + rounded_rating);
+            }
+           
+            ii++;
+        });
+    },
+
+    roundUpToAny:function(number, rounding_factor)
+    {
+        return Math.round(number / rounding_factor) * rounding_factor;
+    },
+
+    removeRatingClasses(item){
+        item.find('.scr-icon').removeClass (function (index, className) {
+            return (className.match (/(^|\s)rating-\S+/g) || []).join(' ');
+        });
     },
 
     getStatWidth: function (elementWidth, props) {
