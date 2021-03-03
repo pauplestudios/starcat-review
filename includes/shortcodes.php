@@ -111,7 +111,6 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
 
             // 6. shown review form, if the user args have show_form attributes is true. Otherwise doesn't shown the review form.
             if ($user_args['show_form'] === true) {
-                error_log('*** Its Not Working ***');
                 $form_view = $form->get_form($args);
             }
 

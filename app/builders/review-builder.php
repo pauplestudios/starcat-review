@@ -13,7 +13,6 @@ if (!class_exists('\StarcatReview\App\Builders\Review_Builder')) {
     {
         public function __construct()
         {
-            $this->summary = new \StarcatReview\App\Widget_Makers\Summary();
             $this->user_review = new \StarcatReview\App\Widget_Makers\User_Review();
         }
 
@@ -22,9 +21,11 @@ if (!class_exists('\StarcatReview\App\Builders\Review_Builder')) {
             $html = '';
             $post_type = get_post_type();
             $enabled_post_types = SCR_Getter::get_review_enabled_post_types();
+            $ur_summary = new \StarcatReview\App\Widget_Makers\User_Review\Summary();
+            $settings_args = $ur_summary->get_settings_args();
 
             if (in_array($post_type, $enabled_post_types)) {
-                $html .= $this->summary->get_view();
+                $html .= $ur_summary->get_summary_view($settings_args);
                 $html .= $this->user_review->get_view();
             }
 
