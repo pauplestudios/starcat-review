@@ -44,7 +44,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review\Handler')) {
             }
 
             $components = ['comments', 'stats', 'prosandcons', 'votes', 'attachments'];
-            $args['items'] = scr_get_comments_args($components);
+            $args['items'] = scr_get_comments_args($components, $user_args);
             $commentsItems = (isset($args['items']['comments']) && !empty($args['items']['comments'])) ? $args['items']['comments'] : [];
             $args['capability'] = apply_filters('scr_capabilities_args', $commentsItems);
 
