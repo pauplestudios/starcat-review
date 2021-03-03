@@ -27,7 +27,12 @@ if (!class_exists('\StarcatReview\App\Services\Shortcodes\Builder')) {
                     'select_title' => 'Select a shortcode',
                     'insert_title' => 'Insert Shortcode',
                     'show_in_editor' => true,
-                    'gutenberg' => []
+                    'gutenberg' => [
+                        'title' => 'Starcat Reviews Shortcodes',
+                        'icon' => 'screenoptions',
+                        'category' => 'widgets',
+                        'keywords' => array('starcat', 'shortcode'),
+                    ],
                 ));
 
                 \CSF::createSection($prefix, array(
