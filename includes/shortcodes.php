@@ -45,20 +45,30 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
 
         public function user_review_form($atts)
         {
-            // required attributes - post_id
-            $form_controller = new \StarcatReview\App\Components\Form\Controller();
-            $ur_controller = new \StarcatReview\App\Widget_Makers\User_Review();
-            $defaults = $ur_controller->get_user_review_default_args();
-            $args = shortcode_atts($defaults, $atts);
-            return $form_controller->get_view($args);
+            $user_args = array(
+                'post_id' => 0,
+            );
+            $user_args = shortcode_atts($user_args, $atts);
+            $user_review_handler = new \StarcatReview\App\Widget_Makers\User_Review\Handler();
+            $form = new \StarcatReview\App\Widget_Makers\User_Review\Form();
+            $args = $user_review_handler->get_default_args($user_args);
+            return $form->get_form($args);
         }
 
         public function user_review_list($atts)
         {
             $ur_controller = new \StarcatReview\App\Widget_Makers\User_Review();
-            $defaults = $ur_controller->get_user_review_default_args();
-            $args = shortcode_atts($defaults, $atts);
-            $review_list_view = $ur_controller->get_user_review_list_view($args);
+            $post_id = isset($atts['post_id']) && !empty($atts['post_id']) ? $atts['post_id'] : get_the_ID();
+
+            $args = [
+                'post_id' => $post_id,
+            ];
+            error_log('[$atts] : ' . print_r($atts, true));
+            $list_args = $ur_controller->get_user_review_default_args($args);
+
+            // $args = shortcode_atts($defaults, $atts);
+            $review_list_view = $ur_controller->get_user_review_list_view($list_args);
+            // error_log('[$review_list_view] : ' . $review_list_view);
             return $review_list_view;
         }
 
@@ -81,37 +91,37 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
         public function user_review($atts)
         {
             // default attributes
-            $default_args = [
-                'show_pros_cons' => true,
-                'show_overall_only' => false,
-                'show_stats' => true,
-                'post_ids' => [],
-            ];
-            $args = shortcode_atts($default_args, $atts);
-            $widget_maker_summary = new \StarcatReview\App\Widget_Makers\Summary();
-            $defaults = $widget_maker_summary->get_default_args();
+            // $default_args = [
+            //     'show_pros_cons' => true,
+            //     'show_overall_only' => false,
+            //     'show_stats' => true,
+            //     'post_ids' => [],
+            // ];
+            // $args = shortcode_atts($default_args, $atts);
+            // $widget_maker_summary = new \StarcatReview\App\Widget_Makers\Summary();
+            // $defaults = $widget_maker_summary->get_default_args();
+            // // $args = shortcode_atts($defaults, $atts);
+            // $args = array_merge($args, array(
+            //     'enable-author-review' => SCR_Getter::get('enable-author-review'),
+            //     'enable_pros_cons' => SCR_Getter::is_enabled_pros_cons(),
+            //     'review_count' => scr_get_user_reviews_count(get_the_ID()),
+            // ));
+            // $args = array_merge($args, $widget_maker_summary->get_default_args());
+            // $summary = new \StarcatReview\App\Components\Summary\Controller();
+            // $summary_view = $summary->get_view($args);
+
+            // $ur_controller = new \StarcatReview\App\Widget_Makers\User_Review();
+            // $defaults = $ur_controller->get_user_review_default_args();
             // $args = shortcode_atts($defaults, $atts);
-            $args = array_merge($args, array(
-                'enable-author-review' => SCR_Getter::get('enable-author-review'),
-                'enable_pros_cons' => SCR_Getter::is_enabled_pros_cons(),
-                'review_count' => scr_get_user_reviews_count(get_the_ID()),
-            ));
-            $args = array_merge($args, $widget_maker_summary->get_default_args());
-            $summary = new \StarcatReview\App\Components\Summary\Controller();
-            $summary_view = $summary->get_view($args);
+            // $review_list_view = $ur_controller->get_user_review_list_view($args);
 
-            $ur_controller = new \StarcatReview\App\Widget_Makers\User_Review();
-            $defaults = $ur_controller->get_user_review_default_args();
-            $args = shortcode_atts($defaults, $atts);
-            $review_list_view = $ur_controller->get_user_review_list_view($args);
-
-            $form_controller = new \StarcatReview\App\Components\Form\Controller();
-            $ur_controller = new \StarcatReview\App\Widget_Makers\User_Review();
-            $form_defaults = $ur_controller->get_user_review_default_args();
-            $form_defaults_args = shortcode_atts($form_defaults, $args);
-            $form_view = $form_controller->get_view($form_defaults_args);
-            return;
-            return $summary_view . $form_view . $review_list_view;
+            // $form_controller = new \StarcatReview\App\Components\Form\Controller();
+            // $ur_controller = new \StarcatReview\App\Widget_Makers\User_Review();
+            // $form_defaults = $ur_controller->get_user_review_default_args();
+            // $form_defaults_args = shortcode_atts($form_defaults, $args);
+            // $form_view = $form_controller->get_view($form_defaults_args);
+            // return;
+            // return $summary_view . $form_view . $review_list_view;
         }
     } // END CLASS
 
