@@ -70,7 +70,7 @@ if (!class_exists('\Starcat_Review')) {
 
             $settings = new \StarcatReview\Includes\Settings();
 
-            $shortcode_builder = new \StarcatReview\App\Services\Shortcode_Builder();
+            $shortcode_builder = new \StarcatReview\App\Services\Shortcodes\Builder();
             $shortcode_builder->init();
 
             /* Upgrades */

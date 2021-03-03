@@ -1,13 +1,13 @@
 <?php
 
-namespace StarcatReview\App\Services;
+namespace StarcatReview\App\Services\Shortcodes;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\StarcatReview\App\Services\Shortcode_Builder')) {
-    class Shortcode_Builder
+if (!class_exists('\StarcatReview\App\Services\Shortcodes\Builder')) {
+    class Builder
     {
         public function init()
         {
