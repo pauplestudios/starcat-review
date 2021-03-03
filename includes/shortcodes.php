@@ -46,7 +46,7 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
         public function user_review_form($atts)
         {
             $user_args = array(
-                'post_id' => 0,
+                'post_id' => get_the_ID(),
             );
             $user_args = shortcode_atts($user_args, $atts);
             $user_review_handler = new \StarcatReview\App\Widget_Makers\User_Review\Handler();
@@ -57,19 +57,14 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
 
         public function user_review_list($atts)
         {
-            $ur_controller = new \StarcatReview\App\Widget_Makers\User_Review();
-            $post_id = isset($atts['post_id']) && !empty($atts['post_id']) ? $atts['post_id'] : get_the_ID();
-
-            $args = [
-                'post_id' => $post_id,
-            ];
-            error_log('[$atts] : ' . print_r($atts, true));
-            $list_args = $ur_controller->get_user_review_default_args($args);
-
-            // $args = shortcode_atts($defaults, $atts);
-            $review_list_view = $ur_controller->get_user_review_list_view($list_args);
-            // error_log('[$review_list_view] : ' . $review_list_view);
-            return $review_list_view;
+            $user_args = array(
+                'post_id' => get_the_ID(),
+            );
+            $user_args = shortcode_atts($user_args, $atts);
+            $user_review_handler = new \StarcatReview\App\Widget_Makers\User_Review\Handler();
+            $lists = new \StarcatReview\App\Widget_Makers\User_Review\Lists();
+            $args = $user_review_handler->get_default_args($user_args);
+            return $lists->get_lists_view($args);
         }
 
         public function review_summary($atts)
