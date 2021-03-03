@@ -15,6 +15,9 @@ if (!class_exists('\StarcatReview\App\Services\Shortcodes\Builder')) {
                 require_once SCR_PATH . 'includes/lib/codestar-framework/codestar-framework.php';
             }
 
+            $fields = new \StarcatReview\App\Services\Shortcodes\Builder_Fields();
+            $post_field = $fields->get_post_field();
+
             if (class_exists('\CSF')) {
 
                 $prefix = 'starcat-review-shortcode';
@@ -29,73 +32,41 @@ if (!class_exists('\StarcatReview\App\Services\Shortcodes\Builder')) {
 
                 \CSF::createSection($prefix, array(
                     'title' => 'Starcat Review Overall User Review',
-                    'view' => 'group',
+                    'view' => 'normal',
                     'shortcode' => 'starcat_review_overall_user_review',
                     'fields' => [
-                        [
-                            'id' => 'title',
-                            'type' => 'text',
-                            'title' => 'Title',
-                        ],
-                        [
-                            'id' => 'color',
-                            'type' => 'color',
-                            'title' => 'Color',
-                        ],
+                        0 => $fields->get_show_stats_field(),
+                        1 => $fields->get_show_form_field(),
+                        2 => $fields->get_show_lists_field(),
+                        3 => $fields->get_show_summary_field(),
+                        4 => $post_field,
                     ],
                 ));
 
                 \CSF::createSection($prefix, array(
                     'title' => 'Starcat Review Form',
-                    'view' => 'group',
+                    'view' => 'normal',
                     'shortcode' => 'starcat_review_user_review_form',
                     'fields' => [
-                        [
-                            'id' => 'title',
-                            'type' => 'text',
-                            'title' => 'Title',
-                        ],
-                        [
-                            'id' => 'color',
-                            'type' => 'color',
-                            'title' => 'Color',
-                        ],
+                        0 => $post_field,
                     ],
                 ));
 
                 \CSF::createSection($prefix, array(
                     'title' => 'Starcat Review Lists',
-                    'view' => 'group',
+                    'view' => 'normal',
                     'shortcode' => 'starcat_review_user_review_list',
                     'fields' => [
-                        [
-                            'id' => 'title',
-                            'type' => 'text',
-                            'title' => 'Title',
-                        ],
-                        [
-                            'id' => 'color',
-                            'type' => 'color',
-                            'title' => 'Color',
-                        ],
+                        0 => $post_field,
                     ],
                 ));
 
                 \CSF::createSection($prefix, array(
                     'title' => 'Starcat Review Summary',
-                    'view' => 'group',
+                    'view' => 'normal',
                     'shortcode' => 'starcat_review_summary',
                     'fields' => [
-                        [
-                            'id' => 'title',
-                            'type' => 'text',
-                            'title' => 'Title',
-                        ],
-                        [
-                            'id' => 'color',
-                            'type' => 'color',
-                            'title' => 'Color',
-                        ],
+                        0 => $post_field,
                     ],
                 ));
             }
