@@ -6,8 +6,6 @@ if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-use StarcatReview\Includes\Settings\SCR_Getter;
-
 if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
     class Shortcodes
     {
@@ -69,18 +67,16 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
 
         public function review_summary($atts)
         {
-            $widget_maker_summary = new \StarcatReview\App\Widget_Makers\Summary();
-            $defaults = $widget_maker_summary->get_default_args();
-            $args = shortcode_atts($defaults, $atts);
-            $args = array_merge($args, array(
-                'enable-author-review' => SCR_Getter::get('enable-author-review'),
-                'enable_pros_cons' => SCR_Getter::is_enabled_pros_cons(),
-                'review_count' => scr_get_user_reviews_count(get_the_ID()),
-            ));
-            $args = array_merge($args, $widget_maker_summary->get_default_args());
-            $summary = new \StarcatReview\App\Components\Summary\Controller();
-            $view = $summary->get_view($args);
-            return $view;
+            $user_args = array(
+                'post_id' => get_the_ID(),
+            );
+            $user_args = shortcode_atts($user_args, $atts);
+            $user_review_handler = new \StarcatReview\App\Widget_Makers\User_Review\Handler();
+            $summary = new \StarcatReview\App\Widget_Makers\User_Review\Summary();
+            $args = $user_review_handler->get_default_args($user_args);
+            $args = $summary->get_settings_args($args);
+            $summary_view = $summary->get_summary_view($args);
+            return $summary_view;
         }
 
         public function user_review($atts)
