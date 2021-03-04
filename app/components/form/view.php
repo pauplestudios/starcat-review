@@ -32,12 +32,9 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
 
             // User Already Reviewed or Not Logged in User
             $hide_form = !$this->capability['can_user_review'];
-
-            $display = '';
-            /** NOTE: don't hide the review form,if users using form shortcodes   */
-            // if ($hide_form) {
-            //     $display = 'style="display: none"';
-            // }
+            if ($hide_form) {
+                $display = 'style="display: none"';
+            }
 
             $html = '<form
             class="ui form scr-user-review ' . $class . '"
