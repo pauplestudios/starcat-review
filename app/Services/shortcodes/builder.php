@@ -40,11 +40,11 @@ if (!class_exists('\StarcatReview\App\Services\Shortcodes\Builder')) {
                     'view' => 'normal',
                     'shortcode' => 'starcat_review_overall_user_review',
                     'fields' => [
-                        0 => $fields->get_show_stats_field(),
-                        1 => $fields->get_show_form_field(),
-                        2 => $fields->get_show_lists_field(),
-                        3 => $fields->get_show_summary_field(),
-                        4 => $post_field,
+                        $fields->get_show_stats_field(),
+                        $fields->get_show_form_field(),
+                        $fields->get_show_lists_field(),
+                        $fields->get_show_summary_field(),
+                        $post_field,
                     ],
                 ));
 
@@ -53,7 +53,7 @@ if (!class_exists('\StarcatReview\App\Services\Shortcodes\Builder')) {
                     'view' => 'normal',
                     'shortcode' => 'starcat_review_user_review_form',
                     'fields' => [
-                        0 => $post_field,
+                        $post_field,
                     ],
                 ));
 
@@ -62,7 +62,7 @@ if (!class_exists('\StarcatReview\App\Services\Shortcodes\Builder')) {
                     'view' => 'normal',
                     'shortcode' => 'starcat_review_user_review_list',
                     'fields' => [
-                        0 => $post_field,
+                        $post_field,
                     ],
                 ));
 
@@ -71,9 +71,9 @@ if (!class_exists('\StarcatReview\App\Services\Shortcodes\Builder')) {
                     'view' => 'normal',
                     'shortcode' => 'starcat_review_summary',
                     'fields' => [
-                        0 => $post_field,
-                        1 => $fields->get_show_author_reviews_summary_field(),
-                        2 => $fields->get_show_user_reviews_summary_field(),
+                        $post_field,
+                        $fields->get_show_author_reviews_summary_field(),
+                        $fields->get_show_user_reviews_summary_field(),
                     ],
                 ));
             }
