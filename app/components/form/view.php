@@ -34,7 +34,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             $hide_form = !$this->capability['can_user_review'];
 
             $display = '';
-            /** NOTE: dont hide form, if found shortcode form shortcode  */
+            /** NOTE: don't hide the review form,if users using form shortcodes   */
             // if ($hide_form) {
             //     $display = 'style="display: none"';
             // }
