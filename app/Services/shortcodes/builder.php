@@ -40,7 +40,7 @@ if (!class_exists('\StarcatReview\App\Services\Shortcodes\Builder')) {
                     'view' => 'normal',
                     'shortcode' => 'starcat_review_overall_user_review',
                     'fields' => [
-                        $fields->get_show_stats_field(),
+                        // $fields->get_show_stats_field(),
                         $fields->get_show_form_field(),
                         $fields->get_show_lists_field(),
                         $fields->get_show_summary_field(),
