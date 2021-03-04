@@ -69,13 +69,15 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
         {
             $user_args = array(
                 'post_id' => get_the_ID(),
+                'show_author_reviews_summary' => 1,
+                'show_user_reviews_summary' => 1,
             );
             $user_args = shortcode_atts($user_args, $atts);
             $user_review_handler = new \StarcatReview\App\Widget_Makers\User_Review\Handler();
             $summary = new \StarcatReview\App\Widget_Makers\User_Review\Summary();
             $args = $user_review_handler->get_default_args($user_args);
             $args = $summary->get_settings_args($args);
-            $summary_view = $summary->get_summary_view($args);
+            $summary_view = $summary->get_summary_view($args, $user_args);
             return $summary_view;
         }
 

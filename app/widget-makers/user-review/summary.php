@@ -10,10 +10,10 @@ use StarcatReview\Includes\Settings\SCR_Getter;
 if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review\Summary')) {
     class Summary
     {
-        public function get_summary_view(array $args)
+        public function get_summary_view(array $args, array $user_args = array())
         {
             $summary = new \StarcatReview\App\Components\Summary\Controller();
-            return  $summary->get_view($args);
+            return $summary->get_view($args, $user_args);
         }
 
         public function get_settings_args(array $user_args = array())

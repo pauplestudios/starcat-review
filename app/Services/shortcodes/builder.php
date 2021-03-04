@@ -72,6 +72,8 @@ if (!class_exists('\StarcatReview\App\Services\Shortcodes\Builder')) {
                     'shortcode' => 'starcat_review_summary',
                     'fields' => [
                         0 => $post_field,
+                        1 => $fields->get_show_author_reviews_summary_field(),
+                        2 => $fields->get_show_user_reviews_summary_field(),
                     ],
                 ));
             }

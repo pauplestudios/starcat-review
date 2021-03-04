@@ -15,10 +15,10 @@ if (!class_exists('\StarcatReview\App\Components\Summary\Controller')) {
             $this->view = new \StarcatReview\App\Components\Summary\View();
         }
 
-        public function get_view($args)
+        public function get_view(array $args, array $user_args = array())
         {
             $props = $this->model->get_viewProps($args);
-            return $this->view->get($props);
+            return $this->view->get($props, $user_args);
         }
     }
 }

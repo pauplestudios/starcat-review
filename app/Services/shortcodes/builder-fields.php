@@ -59,5 +59,25 @@ if (!class_exists('\StarcatReview\App\Services\Shortcodes\Builder_Fields')) {
             ];
         }
 
+        public function get_show_author_reviews_summary_field()
+        {
+            return [
+                'id' => 'show_author_reviews_summary',
+                'type' => 'switcher',
+                'title' => 'Show Author Reviews Summary',
+                'default' => true,
+            ];
+        }
+
+        public function get_show_user_reviews_summary_field()
+        {
+            return [
+                'id' => 'show_user_reviews_summary',
+                'type' => 'switcher',
+                'title' => 'Show Users Reviews Summary',
+                'default' => true,
+            ];
+        }
+
     }
 }
