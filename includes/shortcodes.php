@@ -57,12 +57,16 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
         {
             $user_args = array(
                 'post_id' => get_the_ID(),
+                'show_review_form' => 1,
             );
             $user_args = shortcode_atts($user_args, $atts);
             $user_review_handler = new \StarcatReview\App\Widget_Makers\User_Review\Handler();
             $lists = new \StarcatReview\App\Widget_Makers\User_Review\Lists();
+            $form = new \StarcatReview\App\Widget_Makers\User_Review\Form();
             $args = $user_review_handler->get_default_args($user_args);
-            return $lists->get_lists_view($args);
+            $list_view = $lists->get_lists_view($args);
+            $form_view = $form->get_form($args, $user_args);
+            return $form_view . $list_view;
         }
 
         public function review_summary($atts)

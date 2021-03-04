@@ -14,10 +14,10 @@ if (!class_exists('\StarcatReview\App\Components\Form\Controller')) {
             $this->model = new \StarcatReview\App\Components\Form\Model();
         }
 
-        public function get_view($args)
+        public function get_view(array $args, array $user_args = array())
         {
             $viewProps = $this->model->get_viewProps($args);
-            $view = new \StarcatReview\App\Components\Form\View($viewProps);
+            $view = new \StarcatReview\App\Components\Form\View($viewProps, $user_args);
             return $view->get();
         }
 

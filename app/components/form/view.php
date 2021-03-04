@@ -12,9 +12,10 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReview\App\Components\Form\View')) {
     class View
     {
-        public function __construct($viewProps)
+        public function __construct(array $viewProps, array $user_args = array())
         {
             $this->props = $viewProps;
+            $this->user_args = $user_args;
             $this->capability = $viewProps['collection']['capability'];
         }
 
@@ -30,20 +31,21 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             $submit_btn_name = __('Submit', SCR_DOMAIN);
             $form_title = '<h2 class="ui header">' . __($this->props['collection']['form_title'], SCR_DOMAIN) . '</h2>';
 
-            // User Already Reviewed or Not Logged in User
-            $hide_form = !$this->capability['can_user_review'];
+            $hide_form = $this->verify_to_show_the_review_form();
             if ($hide_form) {
                 $display = 'style="display: none"';
             }
+            $post_id = $this->props['collection']['post_id'];
 
             $html = '<form
-            class="ui form scr-user-review ' . $class . '"
+            class="ui form scr-user-review ' . $class . ' scr-user-review-form-'.$post_id.'"
             action="scr_user_review_submission"
             method="post"
             enctype="multipart/form-data"
-            post_id ="' . $this->props['collection']['post_id'] . '"
+            post_id ="' . $post_id . '"
             ' . $display . '
             data-method="' . $method_type . '"
+            data-post-id="'.$post_id.'"
             >';
 
             if ($this->props['collection']['show_form_title']) {
@@ -195,6 +197,20 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
         protected function get_bar_rating($key)
         {
             return $this->bar_rating->get_review_stat($key, 5, 5);
+        }
+
+        protected function verify_to_show_the_review_form()
+        {
+            // User Already Reviewed or Not Logged in User
+            $hide_form = !$this->capability['can_user_review'];
+            /**
+             *  NOTE : need of review form, if users are using the review lists shortcode the form is needed it.
+             *  user want to edit our own review then that post review form should be available in the page.
+             */
+            $show_review_form = isset($this->user_args['show_review_form']) && $this->user_args['show_review_form'] == 1 ? 1 : 0;
+            $hide_form = ($hide_form || $show_review_form == 1) ? true : false;
+
+            return $hide_form;
         }
 
         //  Todo: Text Rating
