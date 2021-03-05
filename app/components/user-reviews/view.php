@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
     class View
     {
-        public function get($viewProps)
+        public function get(array $viewProps, array $user_args = array())
         {
             $html = '';
 
@@ -17,7 +17,9 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $this->collection = $viewProps['collection'];
             $this->capability = $viewProps['collection']['capability'];
 
-            if ($this->collection['show_list_title']) {
+            $show_review_list_header = $this->validate_to_show_review_list_header($user_args);
+
+            if ($show_review_list_header == true) {
                 $html .= '<h3 class="ui dividing header"> ' . $this->collection['list_title'] . '</h3>';
             }
             $post_id = $this->collection['post_id'];
@@ -278,6 +280,18 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $html .= '</form>';
 
             return $html;
+        }
+
+        private function validate_to_show_review_list_header(array $user_args = array())
+        {
+            $show_list_title = $this->collection['show_list_title'] ? true : false;
+            if (empty($user_args)) {
+                return $show_list_title;
+            }
+            if (isset($user_args['show_review_title'])) {
+                $show_list_title = ($show_list_title && $user_args['show_review_title'] == 1) ? true : false;
+            }
+            return $show_list_title;
         }
 
     } // END CLASS

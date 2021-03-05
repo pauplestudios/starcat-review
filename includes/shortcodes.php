@@ -106,12 +106,12 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
 
             // 6. shown review form, if the user args have show_form attributes is true. Otherwise doesn't shown the review form.
             if ($user_args['show_form'] == 1) {
-                $form_view = $form->get_form($args);
+                $form_view = $form->get_form($args, $user_args);
             }
 
             // 7. shown review lists, if the user args have show_lists attributes is true. Otherwise doesn't shown the review lists.
             if ($user_args['show_lists'] == 1) {
-                $review_list_view = $lists->get_lists_view($args);
+                $review_list_view = $lists->get_lists_view($args, $user_args);
             }
 
             return $summary_view . $form_view . $review_list_view;

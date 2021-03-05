@@ -15,15 +15,15 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Controller')) {
             $this->view = new \StarcatReview\App\Components\User_Reviews\View();
         }
 
-        public function get_view($args)
+        public function get_view(array $args, array $user_args = array())
         {
             $viewProps = $this->model->get_viewProps($args);
-            $view = $this->view->get($viewProps);
+            $view = $this->view->get($viewProps, $user_args);
 
             return $view;
         }
 
-        public function get_comment_view($comment_id, $type = 'review')
+        public function get_comment_view(int $comment_id, $type = 'review')
         {
             $comment = scr_get_comment($comment_id);
             $view = ($type == 'review') ? $this->view->get_item($comment) : $this->view->get_child_item($comment);

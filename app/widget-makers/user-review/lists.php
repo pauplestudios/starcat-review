@@ -12,7 +12,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review\Lists')) {
         public function get_lists_view(array $args, array $user_args = array())
         {
             $ur_controller = new \StarcatReview\App\Components\User_Reviews\Controller();
-            $reviews_list_view = $ur_controller->get_view($args);
+            $reviews_list_view = $ur_controller->get_view($args, $user_args);
 
             $wrapper_start_html = '<div id="scr-controlled-list" class="scr-user-controlled-list" data-collectionprops="{<pagination<:true,<page<:9,<type<:2}">';
             $controls_builder = new \StarcatReview\App\Builders\Controls_Builder('user_review');
