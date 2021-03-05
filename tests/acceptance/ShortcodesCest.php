@@ -15,8 +15,8 @@ class ShortcodeCest
     public function overallUserReviewShortcode(AcceptanceTester $I)
     {
         $post_name = 'user-review-overall';
-        $content = '[starcat_review_overall_user_review]';
         $review_post_id = $this->insert_post($I);
+        $content = '[starcat_review_overall_user_review post_id=' . $review_post_id . ']';
         $shortcode_post_id = $this->insert_shortcode_post($I, $content, $post_name);
 
         // 1. Insert single User Review
@@ -27,6 +27,14 @@ class ShortcodeCest
         // 2. Check Shortcode Page
         $I->amOnPage('/' . $post_name);
         $I->see('This Car is too expensive');
+
+        // 3. Check Major Components with Default Props
+        $I->seeElement('.scr-search');
+        $I->seeElement('.scr_user_reviews');
+        $I->seeElement('.scr-icons-row');
+        $I->seeElement('.prosandcons');
+
+        // 4. Check by changing different props
     }
 
     public function insert_user_review($I, $review_post_id)
