@@ -20,8 +20,8 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             if ($this->collection['show_list_title']) {
                 $html .= '<h3 class="ui dividing header"> ' . $this->collection['list_title'] . '</h3>';
             }
-
-            $html .= '<div class="ui scr_user_reviews list comments">';
+            $post_id = $this->collection['post_id'];
+            $html .= '<div class="ui scr_user_reviews list comments" data-post-id="' . $post_id . '">';
             if (isset($viewProps['items']) && !empty($viewProps['items'])) {
                 foreach ($viewProps['items'] as $comment) {
                     if ($this->can_view_comment($comment) && $comment['parent'] == 0) {
