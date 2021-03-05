@@ -23,6 +23,8 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
             /** shortcodes for overall component */
             add_shortcode('starcat_review_overall_user_review', array($this, 'user_review'));
 
+            $this->shortcode_defaults = new \StarcatReview\App\Services\Shortcodes\Default_Settings();
+
         }
 
         public function comparison_table($atts)
@@ -55,14 +57,8 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
 
         public function user_review_list($atts)
         {
-            $user_args = array(
-                'post_id' => get_the_ID(),
-                'show_review_form' => 1,
-                'show_review_search' => 1,
-                'show_review_title' => 1,
-                'show_review_sort' => 1,
-            );
-            $user_args = shortcode_atts($user_args, $atts);
+            $default_user_args = $this->shortcode_defaults->get_user_review_list_args();
+            $user_args = shortcode_atts($default_user_args, $atts);
             $user_review_handler = new \StarcatReview\App\Widget_Makers\User_Review\Handler();
             $lists = new \StarcatReview\App\Widget_Makers\User_Review\Lists();
             $form = new \StarcatReview\App\Widget_Makers\User_Review\Form();
@@ -74,13 +70,8 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
 
         public function review_summary($atts)
         {
-            $user_args = array(
-                'post_id' => get_the_ID(),
-                'show_author_reviews_summary' => 1,
-                'show_user_reviews_summary' => 1,
-                'show_pros_and_cons_summary' => 1,
-            );
-            $user_args = shortcode_atts($user_args, $atts);
+            $default_user_args = $this->shortcode_defaults->get_review_summary_args();
+            $user_args = shortcode_atts($default_user_args, $atts);
             $user_review_handler = new \StarcatReview\App\Widget_Makers\User_Review\Handler();
             $summary = new \StarcatReview\App\Widget_Makers\User_Review\Summary();
             $args = $user_review_handler->get_default_args($user_args);
@@ -91,14 +82,9 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
 
         public function user_review($atts)
         {
-            // 1. define as default user attributes
-            $default_user_args = [
-                'show_stats' => 1,
-                'show_form' => 1,
-                'show_lists' => 1,
-                'show_summary' => 1,
-                'post_id' => get_the_ID(),
-            ];
+            // 1. get default user review overall args
+            $default_user_args = $this->shortcode_defaults->get_user_review_args();
+
             // 2. merge user default attributes with shortcode atts
             $user_args = shortcode_atts($default_user_args, $atts);
             $user_review_handler = new \StarcatReview\App\Widget_Makers\User_Review\Handler();
