@@ -74,6 +74,7 @@ if (!class_exists('\StarcatReview\App\Services\Shortcodes\Builder')) {
                         $post_field,
                         $fields->get_show_author_reviews_summary_field(),
                         $fields->get_show_user_reviews_summary_field(),
+                        $fields->get_show_pros_and_cons_field(),
                     ],
                 ));
             }

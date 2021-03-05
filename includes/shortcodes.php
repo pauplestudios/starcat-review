@@ -75,6 +75,7 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
                 'post_id' => get_the_ID(),
                 'show_author_reviews_summary' => 1,
                 'show_user_reviews_summary' => 1,
+                'show_pros_and_cons_summary' => 1,
             );
             $user_args = shortcode_atts($user_args, $atts);
             $user_review_handler = new \StarcatReview\App\Widget_Makers\User_Review\Handler();

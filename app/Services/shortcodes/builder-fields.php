@@ -79,5 +79,15 @@ if (!class_exists('\StarcatReview\App\Services\Shortcodes\Builder_Fields')) {
             ];
         }
 
+        public function get_show_pros_and_cons_field()
+        {
+            return [
+                'id' => 'show_pros_and_cons_summary',
+                'type' => 'switcher',
+                'title' => 'Show Author Pros and Cons Summary',
+                'default' => true,
+            ];
+        }
+
     }
 }

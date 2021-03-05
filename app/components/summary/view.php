@@ -15,13 +15,15 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
         public function get(array $props, array $user_args = array())
         {
             error_log('[$user_args] : ' . print_r($user_args, true));
+
+            $show_author_review = $this->validate_to_show_the_author_review($user_args);
+            $show_user_review = $this->validate_to_show_the_user_review($user_args);
+            $show_pros_and_cons_summary = $this->validate_to_show_pros_cons_summary($props, $user_args);
+
             $html = '';
             $html .= $props['collection']['reviews_title'];
             $html .= '<div class="scr-summary">';
             $html .= '<div class="ui stackable ' . $props['collection']['no_of_column'] . ' column grid">';
-
-            $show_author_review = $this->validate_to_show_the_author_review($user_args);
-            $show_user_review = $this->validate_to_show_the_user_review($user_args);
 
             if ($props['collection']['is_enable_author'] && $show_author_review == true) {
                 $html .= $this->get_column($props['collection']['author_title'], $props['items']['author_stat']);
@@ -34,7 +36,7 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
                     $html .= $this->get_column($props['collection']['users_title'], $props['items']['comment_stat']);
                 }
 
-                if ($props['collection']['is_enable_author'] && $props['collection']['is_enable_prosandcons']) {
+                if ($show_pros_and_cons_summary == true) {
                     $prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller();
                     $html .= $prosandcons->get_view($props);
                 }
@@ -97,6 +99,18 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
             }
             $show_user_review = isset($user_args['show_user_reviews_summary']) && $user_args['show_user_reviews_summary'] == 1 ? true : false;
             return $show_user_review;
+        }
+
+        public function validate_to_show_pros_cons_summary(array $props, array $user_args = array())
+        {
+            $show_pros_and_cons = ($props['collection']['is_enable_author'] && $props['collection']['is_enable_prosandcons']) ? true : false;
+            if (empty($user_args)) {
+                return $show_pros_and_cons;
+            }
+            if (isset($user_args['show_pros_and_cons_summary'])) {
+                return ($show_pros_and_cons && $user_args['show_pros_and_cons_summary'] == 1) ? true : false;
+            }
+            return $show_pros_and_cons;
         }
 
     }
