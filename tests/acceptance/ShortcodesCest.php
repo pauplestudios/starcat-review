@@ -14,10 +14,10 @@ class ShortcodeCest
 
     public function overallUserReviewShortcode(AcceptanceTester $I)
     {
-        $post_name = 'user-review-overall';
+        $shortcode_post_name = 'user-review-overall';
         $review_post_id = $this->insert_post($I);
         $content = '[starcat_review_overall_user_review post_id=' . $review_post_id . ']';
-        $shortcode_post_id = $this->insert_shortcode_post($I, $content, $post_name);
+        $shortcode_post_id = $this->insert_shortcode_post($I, $content, $shortcode_post_name);
 
         // 1. Insert single User Review
         $this->insert_user_review($I, $review_post_id);
@@ -25,7 +25,7 @@ class ShortcodeCest
         $I->see('This Car is too expensive');
 
         // 2. Check Shortcode Page
-        $I->amOnPage('/' . $post_name);
+        $I->amOnPage('/' . $shortcode_post_name);
         $I->see('This Car is too expensive');
 
         // 3. Check Major Components with Default Props
@@ -33,8 +33,17 @@ class ShortcodeCest
         $I->seeElement('.scr_user_reviews');
         $I->seeElement('.scr-icons-row');
         $I->seeElement('.prosandcons');
+        $I->seeElement('.dropdown.sort');
+
 
         // 4. Check by changing different props
+        $content = '[starcat_review_overall_user_review post_id=' . $review_post_id . ' show_review_search=0 show_review_sort=0]';
+        $shortcode_post_id = $this->insert_shortcode_post($I, $content, $shortcode_post_name);
+
+        $I->amOnPage('/' . $shortcode_post_name);
+
+        $I->dontSeeElement('.scr-search');
+        $I->dontSeeElement('.dropdown.sort');
     }
 
     public function insert_user_review($I, $review_post_id)
