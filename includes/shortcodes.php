@@ -58,13 +58,16 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
             $user_args = array(
                 'post_id' => get_the_ID(),
                 'show_review_form' => 1,
+                'show_review_search' => 1,
+                'show_review_title' => 1,
+                'show_review_sort' => 1,
             );
             $user_args = shortcode_atts($user_args, $atts);
             $user_review_handler = new \StarcatReview\App\Widget_Makers\User_Review\Handler();
             $lists = new \StarcatReview\App\Widget_Makers\User_Review\Lists();
             $form = new \StarcatReview\App\Widget_Makers\User_Review\Form();
             $args = $user_review_handler->get_default_args($user_args);
-            $list_view = $lists->get_lists_view($args);
+            $list_view = $lists->get_lists_view($args, $user_args);
             $form_view = $form->get_form($args, $user_args);
             return $form_view . $list_view;
         }
@@ -112,7 +115,7 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
             // 5. shown summary, if the user args have show_summary attributes is true. Otherwise doesn't shown summary.
             if ($user_args['show_summary'] == 1) {
                 $summary_args = $summary->get_settings_args($args);
-                $summary_view = $summary->get_summary_view($summary_args);
+                $summary_view = $summary->get_summary_view($summary_args, $user_args);
             }
 
             // 6. shown review form, if the user args have show_form attributes is true. Otherwise doesn't shown the review form.

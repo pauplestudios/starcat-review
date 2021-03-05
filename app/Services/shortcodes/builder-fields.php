@@ -89,5 +89,35 @@ if (!class_exists('\StarcatReview\App\Services\Shortcodes\Builder_Fields')) {
             ];
         }
 
+        public function get_show_review_title_field()
+        {
+            return [
+                'id' => 'show_review_title',
+                'type' => 'switcher',
+                'title' => 'Show Title',
+                'default' => true,
+            ];
+        }
+
+        public function get_show_review_search_field()
+        {
+            return [
+                'id' => 'show_review_search',
+                'type' => 'switcher',
+                'title' => 'Show Search',
+                'default' => true,
+            ];
+        }
+
+        public function get_show_review_sort_field()
+        {
+            return [
+                'id' => 'show_review_sort',
+                'type' => 'switcher',
+                'title' => 'Show Sort',
+                'default' => true,
+            ];
+        }
+
     }
 }
