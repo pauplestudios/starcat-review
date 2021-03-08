@@ -36,7 +36,9 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
         }
         public function reviews_list($atts)
         {
-
+            if (!class_exists('\StarcatReviewCpt\Widgets\Review_Listing\Controller')) {
+                return;
+            }
             $review_listing_widget = new \StarcatReviewCpt\Widgets\Review_Listing\Controller();
             $defaults = $review_listing_widget->get_default_args();
             $widget_args = shortcode_atts($defaults, $atts);
