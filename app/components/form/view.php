@@ -38,14 +38,14 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             $post_id = $this->props['collection']['post_id'];
 
             $html = '<form
-            class="ui form scr-user-review ' . $class . ' scr-user-review-form-'.$post_id.'"
+            class="ui form scr-user-review ' . $class . '"
             action="scr_user_review_submission"
             method="post"
             enctype="multipart/form-data"
             post_id ="' . $post_id . '"
             ' . $display . '
             data-method="' . $method_type . '"
-            data-post-id="'.$post_id.'"
+            data-post-id="' . $post_id . '"
             >';
 
             if ($this->props['collection']['show_form_title']) {
