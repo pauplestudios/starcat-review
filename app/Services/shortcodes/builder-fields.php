@@ -15,7 +15,7 @@ if (!class_exists('\StarcatReview\App\Services\Shortcodes\Builder_Fields')) {
             return [
                 'id' => 'post_id',
                 'type' => 'text',
-                'title' => 'Enter the Post ID (or) Page ID',
+                'title' => __('Enter the Post ID (or) Page ID', 'starcat-review'),
             ];
         }
 
@@ -24,7 +24,7 @@ if (!class_exists('\StarcatReview\App\Services\Shortcodes\Builder_Fields')) {
             return [
                 'id' => 'show_stats',
                 'type' => 'switcher',
-                'title' => 'Show User Review Stats',
+                'title' => __('Show User Review Stats', 'starcat-review'),
                 'default' => true,
             ];
         }
@@ -34,7 +34,7 @@ if (!class_exists('\StarcatReview\App\Services\Shortcodes\Builder_Fields')) {
             return [
                 'id' => 'show_form',
                 'type' => 'switcher',
-                'title' => 'Show User Review Form',
+                'title' => __('Show User Review Form', 'starcat-review'),
                 'default' => true,
             ];
         }
@@ -44,7 +44,7 @@ if (!class_exists('\StarcatReview\App\Services\Shortcodes\Builder_Fields')) {
             return [
                 'id' => 'show_lists',
                 'type' => 'switcher',
-                'title' => 'Show User Review Lists',
+                'title' => __('Show User Review Lists', 'starcat-review'),
                 'default' => true,
             ];
         }
@@ -54,7 +54,7 @@ if (!class_exists('\StarcatReview\App\Services\Shortcodes\Builder_Fields')) {
             return [
                 'id' => 'show_summary',
                 'type' => 'switcher',
-                'title' => 'Show User Review Summary',
+                'title' => __('Show User Review Summary', 'starcat-review'),
                 'default' => true,
             ];
         }
@@ -64,7 +64,7 @@ if (!class_exists('\StarcatReview\App\Services\Shortcodes\Builder_Fields')) {
             $field = [
                 'id' => 'show_author_reviews_summary',
                 'type' => 'switcher',
-                'title' => 'Show Author Reviews Summary',
+                'title' => __('Show Author Reviews Summary', 'starcat-review'),
                 'default' => true,
             ];
 
@@ -77,7 +77,7 @@ if (!class_exists('\StarcatReview\App\Services\Shortcodes\Builder_Fields')) {
             $field = [
                 'id' => 'show_user_reviews_summary',
                 'type' => 'switcher',
-                'title' => 'Show Users Reviews Summary',
+                'title' => __('Show Users Reviews Summary', 'starcat-review'),
                 'default' => true,
             ];
             $field = $this->set_dependencies($field, $dependencies);
@@ -89,7 +89,7 @@ if (!class_exists('\StarcatReview\App\Services\Shortcodes\Builder_Fields')) {
             $field = [
                 'id' => 'show_pros_and_cons_summary',
                 'type' => 'switcher',
-                'title' => 'Show Author Pros and Cons Summary',
+                'title' => __('Show Author Pros and Cons Summary', 'starcat-review'),
                 'default' => true,
             ];
             $field = $this->set_dependencies($field, $dependencies);
@@ -101,7 +101,7 @@ if (!class_exists('\StarcatReview\App\Services\Shortcodes\Builder_Fields')) {
             $field = [
                 'id' => 'show_review_title',
                 'type' => 'switcher',
-                'title' => 'Show Title',
+                'title' => __('Show Title', 'starcat-review'),
                 'default' => true,
             ];
 
@@ -114,7 +114,7 @@ if (!class_exists('\StarcatReview\App\Services\Shortcodes\Builder_Fields')) {
             $field = [
                 'id' => 'show_review_search',
                 'type' => 'switcher',
-                'title' => 'Show Search',
+                'title' => __('Show Search', 'starcat-review'),
                 'default' => true,
             ];
 
@@ -127,7 +127,7 @@ if (!class_exists('\StarcatReview\App\Services\Shortcodes\Builder_Fields')) {
             $field = [
                 'id' => 'show_review_sort',
                 'type' => 'switcher',
-                'title' => 'Show Sort',
+                'title' => __('Show Sort', 'starcat-review'),
                 'default' => true,
             ];
             $field = $this->set_dependencies($field, $dependencies);
