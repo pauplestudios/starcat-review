@@ -16,8 +16,8 @@ if (!class_exists('\StarcatReview\App\Components\Form\Controller')) {
 
         public function get_view(array $args, array $user_args = array())
         {
-            $viewProps = $this->model->get_viewProps($args);
-            $view = new \StarcatReview\App\Components\Form\View($viewProps, $user_args);
+            $viewProps = $this->model->get_viewProps($args, $user_args);
+            $view = new \StarcatReview\App\Components\Form\View($viewProps);
             return $view->get();
         }
 

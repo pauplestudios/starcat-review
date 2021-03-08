@@ -12,10 +12,9 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReview\App\Components\Form\View')) {
     class View
     {
-        public function __construct(array $viewProps, array $user_args = array())
+        public function __construct(array $viewProps)
         {
             $this->props = $viewProps;
-            $this->user_args = $user_args;
             $this->capability = $viewProps['collection']['capability'];
         }
 
@@ -207,7 +206,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
              *  NOTE : Use of Review Form - Users using review-list shortcode.
              *  For users to edit their own reviews, the review form should be available on the page.
              */
-            $show_review_form = isset($this->user_args['show_review_form']) && $this->user_args['show_review_form'] == 1 ? 1 : 0;
+            $show_review_form = isset($this->props['collection']['show_review_form']) && $this->props['collection']['show_review_form'] == 1 ? 1 : 0;
 
             $show_form = ($user_can_see_the_form || $show_review_form == 1) ? true : false;
 

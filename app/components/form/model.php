@@ -9,9 +9,11 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
     class Model
     {
-        public function get_viewProps($args)
+        public function get_viewProps(array $args, array $user_args = array())
         {
-            $this->collection = $this->get_collectionProps($args);
+            $collection = $this->get_collectionProps($args);
+            $collection = $this->set_user_args_with_collection($collection, $user_args);
+            $this->collection = $collection;
             $this->items = $this->get_itemsProps($args);
 
             $view_props = [
@@ -94,6 +96,16 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
                 $collection['stats_args']['outline_icon'] = $collection['stats_args']['icons'] . ' outline icon';
             }
 
+            return $collection;
+        }
+
+        public function set_user_args_with_collection(array $collection, array $user_args = array())
+        {
+            if (empty($user_args)) {
+                return $collection;
+            }
+
+            $collection['show_review_form'] = $user_args['show_review_form'];
             return $collection;
         }
     } // END CLASS
