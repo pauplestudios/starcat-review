@@ -47,9 +47,11 @@ var Edit = {
             reviewContent.hide();
 
             // Forms attributes and show the form
-            // var form = jQuery(selectors.reviewForm);
-            var form = jQuery(".scr-user-review-form-" + postID);
+            var form = jQuery(selectors.reviewForm);
 
+            // set form post_id
+            form.attr("post_id", postID);
+            form.attr("data-post-id", postID);
             var commentProps = reviewContent.closest(".comment").data("props");
 
             form.attr(
