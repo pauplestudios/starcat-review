@@ -22,7 +22,6 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
 
             /** shortcodes for overall component */
             add_shortcode('starcat_review_overall_user_review', array($this, 'user_review'));
-
             $this->shortcode_defaults = new \StarcatReview\App\Services\Shortcodes\Default_Settings();
 
         }
@@ -60,6 +59,7 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
         public function user_review_list($atts)
         {
             $default_user_args = $this->shortcode_defaults->get_user_review_list_args();
+            $default_user_args['post_id'] = get_the_ID();
             $user_args = shortcode_atts($default_user_args, $atts);
             $user_review_handler = new \StarcatReview\App\Widget_Makers\User_Review\Handler();
             $lists = new \StarcatReview\App\Widget_Makers\User_Review\Lists();
@@ -73,6 +73,7 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
         public function review_summary($atts)
         {
             $default_user_args = $this->shortcode_defaults->get_review_summary_args();
+            $default_user_args['post_id'] = get_the_ID();
             $user_args = shortcode_atts($default_user_args, $atts);
             $user_review_handler = new \StarcatReview\App\Widget_Makers\User_Review\Handler();
             $summary = new \StarcatReview\App\Widget_Makers\User_Review\Summary();
@@ -86,7 +87,7 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
         {
             // 1. get default user review overall args
             $default_user_args = $this->shortcode_defaults->get_user_review_args();
-
+            $default_user_args['post_id'] = get_the_ID();
             // 2. merge user default attributes with shortcode atts
             $user_args = shortcode_atts($default_user_args, $atts);
             $user_review_handler = new \StarcatReview\App\Widget_Makers\User_Review\Handler();
@@ -113,7 +114,8 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
 
             // 7. shown review lists, if the user args have show_lists attributes is true. Otherwise doesn't shown the review lists.
             if ($user_args['show_lists'] == 1) {
-                $review_list_view = $lists->get_lists_view($args, $user_args);
+                $review_list_view .= $form->get_form($args, $user_args);
+                $review_list_view .= $lists->get_lists_view($args, $user_args);
             }
 
             return $summary_view . $form_view . $review_list_view;
