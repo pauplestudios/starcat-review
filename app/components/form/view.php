@@ -30,7 +30,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             $submit_btn_name = __('Submit', SCR_DOMAIN);
             $form_title = '<h2 class="ui header">' . __($this->props['collection']['form_title'], SCR_DOMAIN) . '</h2>';
 
-            $show_form = $this->verify_to_show_the_review_form();
+            $show_form = $this->can_show_review_form();
             if (!$show_form) {
                 $display = 'style="display: none"';
             }
@@ -198,7 +198,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             return $this->bar_rating->get_review_stat($key, 5, 5);
         }
 
-        protected function verify_to_show_the_review_form()
+        protected function can_show_review_form()
         {
             // User Already Reviewed or Not Logged in User
             $user_can_see_the_form = !$this->capability['can_user_review'];
