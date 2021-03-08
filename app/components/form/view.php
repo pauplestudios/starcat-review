@@ -31,8 +31,8 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             $submit_btn_name = __('Submit', SCR_DOMAIN);
             $form_title = '<h2 class="ui header">' . __($this->props['collection']['form_title'], SCR_DOMAIN) . '</h2>';
 
-            $hide_form = $this->verify_to_show_the_review_form();
-            if ($hide_form) {
+            $show_form = $this->verify_to_show_the_review_form();
+            if (!$show_form) {
                 $display = 'style="display: none"';
             }
             $post_id = $this->props['collection']['post_id'];
@@ -202,15 +202,16 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
         protected function verify_to_show_the_review_form()
         {
             // User Already Reviewed or Not Logged in User
-            $hide_form = !$this->capability['can_user_review'];
+            $user_can_see_the_form = !$this->capability['can_user_review'];
             /**
-             *  NOTE : need of review form, if users are using the review lists shortcode the form is needed it.
-             *  user want to edit our own review then that post review form should be available in the page.
+             *  NOTE : Use of Review Form - Users using review-list shortcode.
+             *  For users to edit their own reviews, the review form should be available on the page.
              */
             $show_review_form = isset($this->user_args['show_review_form']) && $this->user_args['show_review_form'] == 1 ? 1 : 0;
-            $hide_form = ($hide_form || $show_review_form == 1) ? true : false;
 
-            return $hide_form;
+            $show_form = ($user_can_see_the_form || $show_review_form == 1) ? true : false;
+
+            return $show_form;
         }
 
         //  Todo: Text Rating
