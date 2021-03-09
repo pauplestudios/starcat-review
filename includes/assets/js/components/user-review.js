@@ -7,7 +7,7 @@ var Voting = require("./user-review/voting.js");
 
 var UserReview = {
     init: function () {
-        this.removeDuplicateForms();
+        // this.removeDuplicateForms();
         Stats.init();
         Form.init();
         ProsAndCons.init();
