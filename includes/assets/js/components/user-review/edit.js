@@ -251,7 +251,7 @@ var Edit = {
         if (noOfForms == 0) {
             return false;
         }
-        if (noOfForms <= 1) {
+        if (noOfForms == 1) {
             return jQuery(selectors.reviewForm);
         }
         return jQuery(selectors.reviewForm).first();
