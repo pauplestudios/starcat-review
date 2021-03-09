@@ -54,7 +54,7 @@ if (!class_exists('\StarcatReview\Includes\Shortcodes')) {
             $user_review_handler = new \StarcatReview\App\Widget_Makers\User_Review\Handler();
             $form = new \StarcatReview\App\Widget_Makers\User_Review\Form();
             $args = $user_review_handler->get_default_args($user_args);
-            return $form->get_form($args);
+            return $form->get_form($args, $user_args);
         }
 
         public function user_review_list($atts)
