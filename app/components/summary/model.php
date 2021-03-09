@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
     class Model
     {
-        public function get_viewProps($args)
+        public function get_viewProps(array $args, array $user_args = array())
         {
             // $props = $args;
             $collection = $this->get_collectionProps($args);
@@ -26,7 +26,7 @@ if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
             return $viewProps;
         }
 
-        public function get_collectionProps($args)
+        public function get_collectionProps(array $args)
         {
 
             $collection = [
@@ -46,7 +46,7 @@ if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
             return $collection;
         }
 
-        public function get_items_props($args)
+        public function get_items_props(array $args)
         {
             $stat_args = $args;
             unset($stat_args['items']);
@@ -77,7 +77,7 @@ if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
 
         }
 
-        public function get_no_of_column($args)
+        public function get_no_of_column(array $args)
         {
             $no_of_column = 'one';
 
