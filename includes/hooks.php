@@ -100,9 +100,9 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             if (class_exists('\StarcatReviewCpt\Widgets\Review_Listing\Controller')) {
                 /*  Reviews Widget */
                 $this->load_widgets();
-                $shortcodes = new \StarcatReview\Includes\Shortcodes();
             }
-
+            // load Shortcodes
+            new \StarcatReview\Includes\Shortcodes();
             // Plugins Actions
             new \StarcatReview\Includes\Actions();
         }
