@@ -44,6 +44,9 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
                 'show_captcha' => $args['show_captcha'],
                 'stats_args' => $args['stats_args'],
                 'capability' => $args['capability'],
+
+                // In default show review form
+                'show_review_form' => 1,
             ];
 
             // $collection = array_merge($collection)
@@ -101,11 +104,18 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
 
         public function set_user_args_with_collection(array $collection, array $user_args = array())
         {
+            /**
+             * In default behaviour always show the review form, if post_type is enabled in reviews.
+             */
             if (empty($user_args)) {
                 return $collection;
             }
-
-            $collection['show_review_form'] = $user_args['show_review_form'];
+            /**
+             * In users using review form shortcodes, show the form if receive the $use_of_form value as 'add_review' else don't show.
+             */
+            $use_of_form = isset($user_args['use_of_form']) && $user_args['use_of_form'] == 'edit_review' ? 0 : 1;
+            $show_review_form = ($use_of_form && $user_args['show_review_form'] == 1) ? 1 : 0;
+            $collection['show_review_form'] = $show_review_form;
             return $collection;
         }
     } // END CLASS
