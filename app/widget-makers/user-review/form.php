@@ -15,9 +15,14 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review\Form')) {
         {
             $this->set_limit();
             $limit = $this->get_limit();
-            if ($limit > 1) {
-                return;
+            $use_of_form = isset($user_args['use_of_form']) ? $user_args['use_of_form'] : '';
+
+            if (!empty($use_of_form) && $use_of_form == 'edit_review') {
+                if ($limit > 1) {
+                    return;
+                }
             }
+
             $form_controller = new \StarcatReview\App\Components\Form\Controller();
             return $form_controller->get_view($args, $user_args);
         }

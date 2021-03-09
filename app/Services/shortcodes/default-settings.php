@@ -33,6 +33,7 @@ if (!class_exists('\StarcatReview\App\Services\Shortcodes\Default_Settings')) {
                 'show_review_search' => 1,
                 'show_review_title' => 1,
                 'show_review_sort' => 1,
+                'use_of_form' => 'edit_review',
             ];
             return $args;
         }
