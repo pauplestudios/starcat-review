@@ -143,6 +143,7 @@ var Edit = {
                     .css("width", stat + "%");
                 var score = Stats.getStatScore(stat, Stats.getProps());
                 item.find(".stars-result").width(stat + "%");
+                Stats.addStatClassesBasedOnScore(item, score);
                 item.find("input").val(stat);
                 item.find(".review-item-stars").attr("result", stat);
                 item.find(".review-item-label__score").text(score);
