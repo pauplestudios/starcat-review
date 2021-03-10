@@ -7,7 +7,6 @@ var Voting = require("./user-review/voting.js");
 
 var UserReview = {
     init: function () {
-        this.removeDuplicateForms();
         Stats.init();
         Form.init();
         ProsAndCons.init();
@@ -23,20 +22,6 @@ var UserReview = {
         jQuery("a.woocommerce-scr-review-link").click(function () {
             jQuery(".scr-reviews_tab a").click();
             return true;
-        });
-    },
-
-    removeDuplicateForms: function () {
-        var noOfForms = jQuery("form.scr-user-review").length;
-        if (noOfForms <= 1) {
-            return;
-        }
-        var increment = 0;
-        jQuery("form.scr-user-review").each(function () {
-            if (increment > 0) {
-                jQuery(this).remove();
-            }
-            increment++;
         });
     },
 };

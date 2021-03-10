@@ -20,19 +20,27 @@ var Edit = {
         var editlinks = jQuery(selectors.editLink);
         var links = jQuery(selectors.links);
 
-        editlinks.on("click", function () {
+        editlinks.on("click", function (e) {
             var link = jQuery(this);
+
+            // Forms attributes and show the form
+            // var form = jQuery(selectors.reviewForm);
+            var form = thisModule.getReviewForm();
+            if (form == false) {
+                e.preventDefault();
+                return false;
+            }
+
+            // pluck the current post scr_user_reviews element
+            var userReviews = jQuery(this).closest(".scr_user_reviews");
+            // Get post-ID
+            var postID = userReviews.attr("data-post-id");
 
             // Show all reviews list links
             links.show();
 
             // Hide clicked review link
             link.parent().parent().hide();
-
-            // pluck root element in review section
-            var userReviews = jQuery(this).closest(".scr_user_reviews");
-            // Get post-ID
-            var postID = userReviews.attr("data-post-id");
 
             jQuery(".comment .content .text").show();
 
@@ -45,9 +53,6 @@ var Edit = {
             var reviewContent = allReviewContent.first();
             // Hide clicked link of closest review content
             reviewContent.hide();
-
-            // Forms attributes and show the form
-            var form = jQuery(selectors.reviewForm);
 
             // set form post_id
             form.attr("post_id", postID);
@@ -241,6 +246,16 @@ var Edit = {
 
             jQuery(this).closest("form.form").hide();
         });
+    },
+    getReviewForm: function () {
+        var noOfForms = jQuery(selectors.reviewForm).length;
+        if (noOfForms == 0) {
+            return false;
+        }
+        if (noOfForms == 1) {
+            return jQuery(selectors.reviewForm);
+        }
+        return jQuery(selectors.reviewForm).first();
     },
 };
 
