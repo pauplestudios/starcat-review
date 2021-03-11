@@ -23,12 +23,16 @@ if (!class_exists('\StarcatReview\App\Builders\Review_Builder')) {
 
             $args = $ur_handler->get_default_args();
 
+            $enabled_user_reviews = (isset($args['enable_user_reviews']) && !empty($args['enable_user_reviews'])) ? true : false;
+
             $settings_args = $ur_summary->get_settings_args();
 
             if (in_array($post_type, $enabled_post_types)) {
                 $html .= $ur_summary->get_summary_view($settings_args);
-                $html .= $ur_form->get_form($args);
-                $html .= $ur_lists->get_lists_view($args);
+                if ($enabled_user_reviews) {
+                    $html .= $ur_form->get_form($args);
+                    $html .= $ur_lists->get_lists_view($args);
+                }
             }
 
             return $html;
