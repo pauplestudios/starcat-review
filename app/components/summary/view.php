@@ -14,7 +14,6 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
 
         public function get(array $props)
         {
-
             $html = '';
             $html .= $props['collection']['reviews_title'];
             $html .= '<div class="scr-summary">';
@@ -23,20 +22,9 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
             $html .= $this->get_author_summary($props);
             $html .= $this->get_users_summary($props);
             $html .= '</div>';
-
-            /*** Enable/Disable the pros and cons summary content */
-            if (isset($props['collection']['enable_user_reviews']) && $props['collection']['enable_user_reviews'] == true) {
-
-                if (isset($props['collection']['is_enable_prosandcons']) && $props['collection']['is_enable_prosandcons'] == true) {
-                    $prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller();
-                    $html .= $prosandcons->get_view($props);
-                }
-
-                $html .= $this->get_all_attachments($props);
-            }
-
+            $html .= $this->get_author_prosandcons_summary($props);
+            $html .= $this->get_users_attachments($props);
             $html .= '</div></div>';
-
             return $html;
 
         }
@@ -91,6 +79,25 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
                 if ($show_user_review == true) {
                     $html .= $this->get_column($props['collection']['users_title'], $props['items']['comment_stat']);
                 }
+            }
+            return $html;
+        }
+
+        public function get_author_prosandcons_summary(array $props)
+        {
+            $html = '';
+            if (isset($props['collection']['is_enable_prosandcons']) && $props['collection']['is_enable_prosandcons'] == true) {
+                $prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller();
+                $html = $prosandcons->get_view($props);
+            }
+            return $html;
+        }
+
+        public function get_users_attachments(array $props)
+        {
+            $html = '';
+            if (isset($props['collection']['enable_user_reviews']) && $props['collection']['enable_user_reviews'] == true) {
+                $html .= $this->get_all_attachments($props);
             }
             return $html;
         }
