@@ -1,8 +1,11 @@
 .scr-summary {
     margin: 2em 0;
     .scr-row{
-        padding-right: 1rem;
-        padding-left: 1rem;
+        padding-left: 1rem !important;
+        margin-right: 1rem !important;
+        .column{
+            padding: 1rem;
+        }
     }   
 }
 
