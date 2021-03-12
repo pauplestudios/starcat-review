@@ -1,8 +1,8 @@
 .scr-summary {
     margin: 2em 0;
-    .scr-row{
-        padding-left: 1rem !important;
-        margin-right: 1rem !important;
+    .ui.grid > .scr-row{
+        padding-left: 1rem;
+        margin-right: 1rem;
         .column{
             padding: 1rem;
         }
