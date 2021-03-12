@@ -75,30 +75,34 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
         {
             $html = '';
             $show_user_review = (isset($props['collection']['is_enable_user_review']) && $props['collection']['is_enable_user_review'] == true) ? true : false;
-            if (isset($props['collection']['enable_user_reviews']) && $props['collection']['enable_user_reviews'] == true) {
-                if ($show_user_review == true) {
-                    $html .= $this->get_column($props['collection']['users_title'], $props['items']['comment_stat']);
-                }
+            if ($show_user_review == false) {
+                return $html;
             }
+            $html = $this->get_column($props['collection']['users_title'], $props['items']['comment_stat']);
             return $html;
         }
 
         public function get_author_prosandcons_summary(array $props)
         {
             $html = '';
-            if (isset($props['collection']['is_enable_prosandcons']) && $props['collection']['is_enable_prosandcons'] == true) {
-                $prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller();
-                $html = $prosandcons->get_view($props);
+            $enable_pros_and_cons = (isset($props['collection']['is_enable_prosandcons']) && $props['collection']['is_enable_prosandcons'] == true) ? true : false;
+            if ($enable_pros_and_cons == false) {
+                return $html;
             }
+            $prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller();
+            $html = $prosandcons->get_view($props);
             return $html;
         }
 
         public function get_users_attachments(array $props)
         {
             $html = '';
-            if (isset($props['collection']['enable_user_reviews']) && $props['collection']['enable_user_reviews'] == true) {
-                $html .= $this->get_all_attachments($props);
+            $show_user_review = (isset($props['collection']['is_enable_user_review']) && $props['collection']['is_enable_user_review'] == true) ? true : false;
+            if ($show_user_review == false) {
+                return $html;
             }
+            $html = $this->get_all_attachments($props);
+
             return $html;
         }
     }
