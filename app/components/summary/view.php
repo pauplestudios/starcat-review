@@ -14,34 +14,17 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
 
         public function get(array $props)
         {
-            $show_user_review = (isset($props['is_enable_user_review']) && $props['is_enable_user_review'] == true) ? true : false;
-
             $html = '';
             $html .= $props['collection']['reviews_title'];
             $html .= '<div class="scr-summary">';
             $html .= '<div class="ui stackable ' . $props['collection']['no_of_column'] . ' column grid">';
-
-            if ($props['collection']['is_enable_author']) {
-                $html .= $this->get_column($props['collection']['author_title'], $props['items']['author_stat']);
-            }
-
-            /*** Enable/Disable the overall users ratings stats content */
-            if (isset($props['collection']['enable_user_reviews']) && $props['collection']['enable_user_reviews'] == true) {
-
-                if ($show_user_review == true) {
-                    $html .= $this->get_column($props['collection']['users_title'], $props['items']['comment_stat']);
-                }
-
-                if (isset($props['collection']['is_enable_prosandcons']) && $props['collection']['is_enable_prosandcons'] == true) {
-                    $prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller();
-                    $html .= $prosandcons->get_view($props);
-                }
-
-                $html .= $this->get_all_attachments($props);
-            }
-
+            $html .= '<div class="row scr-row">';
+            $html .= $this->get_author_summary($props);
+            $html .= $this->get_users_summary($props);
+            $html .= '</div>';
+            $html .= $this->get_author_prosandcons_summary($props);
+            $html .= $this->get_users_attachments($props);
             $html .= '</div></div>';
-
             return $html;
 
         }
@@ -76,6 +59,46 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
                 $html .= is_string($all_photos) ? $all_photos : '';
             }
 
+            return $html;
+        }
+
+        public function get_author_summary(array $props)
+        {
+            $html = '';
+            if ($props['collection']['is_enable_author']) {
+                $html = $this->get_column($props['collection']['author_title'], $props['items']['author_stat']);
+            }
+            return $html;
+        }
+
+        public function get_users_summary(array $props)
+        {
+            $html = '';
+            $show_user_review = (isset($props['collection']['is_enable_user_review']) && $props['collection']['is_enable_user_review'] == true) ? true : false;
+            if ($show_user_review == true) {
+                $html = $this->get_column($props['collection']['users_title'], $props['items']['comment_stat']);
+            }
+            return $html;
+        }
+
+        public function get_author_prosandcons_summary(array $props)
+        {
+            $html = '';
+            $enable_pros_and_cons = (isset($props['collection']['is_enable_prosandcons']) && $props['collection']['is_enable_prosandcons'] == true) ? true : false;
+            if ($enable_pros_and_cons == true) {
+                $prosandcons = new \StarcatReview\App\Components\ProsAndCons\Controller();
+                $html = $prosandcons->get_view($props);
+            }
+            return $html;
+        }
+
+        public function get_users_attachments(array $props)
+        {
+            $html = '';
+            $show_user_review = (isset($props['collection']['is_enable_user_review']) && $props['collection']['is_enable_user_review'] == true) ? true : false;
+            if ($show_user_review == true) {
+                $html = $this->get_all_attachments($props);
+            }
             return $html;
         }
     }

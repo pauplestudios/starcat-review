@@ -37,10 +37,7 @@ if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
                 // 'show' => 'both',
                 'is_enable_author' => $args['enable-author-review'],
                 'is_enable_prosandcons' => $args['enable_pros_cons'],
-                'enable_user_reviews' => $args['enable_user_reviews'],
-
-                // define default user_args
-                'is_enable_user_review' => true,
+                'is_enable_user_review' => $args['enable_user_reviews'],
             ];
 
             return $collection;
