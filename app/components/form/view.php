@@ -201,15 +201,14 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
         protected function can_show_review_form()
         {
             // User Already Reviewed or Not Logged in User
-            $user_can_see_the_form = !$this->capability['can_user_review'];
+            $user_can_see_the_form = $this->capability['can_user_review'] == 1 ? true : false;
+
             /**
-             *  NOTE : Use of Review Form - Users using review-list shortcode.
-             *  For users to edit their own reviews, the review form should be available on the page.
+             *  NOTE : Use of Review Form
+             *  For users want to edit their own reviews, the review form should be available on the page.
              */
             $show_review_form = isset($this->props['collection']['show_review_form']) && $this->props['collection']['show_review_form'] == 1 ? 1 : 0;
-
-            $show_form = ($user_can_see_the_form || $show_review_form == 1) ? true : false;
-
+            $show_form = ($user_can_see_the_form && $show_review_form == 1) ? true : false;
             return $show_form;
         }
 
