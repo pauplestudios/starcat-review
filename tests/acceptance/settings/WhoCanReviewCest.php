@@ -11,36 +11,47 @@ class WhoCanReviewCest
         $I->seePluginActivated('starcat-review');
     }
 
-    public function loggedInUsersCanSeeReviewForm(AcceptanceTester $I)
+    public function showReviewForLoggedInUsers(AcceptanceTester $I)
     {
+        // create review page
         $this->create_page($I);
         $this->review_settings($I, 'logged_in');
 
         $I->amOnPage('/car-reviews');
         $I->see('This car is great');
 
+        // loggedIn User can see the review form
         $I->see('Leave a Review');
-        $I->seeElement('form.scr-user-review');
+        $I->seeElement('.scr-user-review');
         $I->see('Submit');
+
+        // logout the current user session
         $I->logOut();
 
+        // Non Logged-in User Can't see the review form
         $I->amOnPage('/car-reviews');
+
+        // TODO Create new issue for validating same class names
         $I->dontSeeElement('.scr-user-review.active');
+
     }
 
-    public function nonLoggedInUsersCanSeeReviewForm(AcceptanceTester $I)
+    public function showReviewForEveryone(AcceptanceTester $I)
     {
+        // create review page
         $this->create_page($I);
         $this->review_settings($I, 'everyone');
 
         $I->amOnPage('/car-reviews');
         $I->see('This car is great');
 
+        // loggedIn User can see the review form
         $I->see('Leave a Review');
         $I->seeElement('form.scr-user-review');
         $I->see('Submit');
-
+        // logout the current user session
         $I->logOut();
+        // non-logged in user can see the review form
         $I->amOnPage('/car-reviews');
         $I->seeElement('form.scr-user-review');
 
