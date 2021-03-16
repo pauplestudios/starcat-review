@@ -54,7 +54,7 @@ if (!class_exists('\StarcatReview\App\Services\Shortcodes\Builder_Fields')) {
             return [
                 'id' => 'show_summary',
                 'type' => 'switcher',
-                'title' => __('Show User Review Summary', 'starcat-review'),
+                'title' => __('Show Review Summary', 'starcat-review'),
                 'default' => true,
             ];
         }
