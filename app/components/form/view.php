@@ -2,8 +2,8 @@
 
 namespace StarcatReview\App\Components\Form;
 
-use \StarcatReview\Services\Recaptcha as Recaptcha;
 use \StarcatReview\Includes\Settings\SCR_Getter;
+use \StarcatReview\Services\Recaptcha as Recaptcha;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReview\App\Components\Form\View')) {
     class View
     {
-        public function __construct($viewProps)
+        public function __construct(array $viewProps)
         {
             $this->props = $viewProps;
             $this->capability = $viewProps['collection']['capability'];
@@ -30,21 +30,21 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             $submit_btn_name = __('Submit', SCR_DOMAIN);
             $form_title = '<h2 class="ui header">' . __($this->props['collection']['form_title'], SCR_DOMAIN) . '</h2>';
 
-            // User Already Reviewed or Not Logged in User
-            $hide_form = !$this->capability['can_user_review'];
-
-            if ($hide_form) {
+            $show_form = $this->can_show_review_form();
+            if (!$show_form) {
                 $display = 'style="display: none"';
             }
+            $post_id = $this->props['collection']['post_id'];
 
             $html = '<form
             class="ui form scr-user-review ' . $class . '"
             action="scr_user_review_submission"
             method="post"
             enctype="multipart/form-data"
-            post_id ="' . $this->props['collection']['post_id'] . '"
+            post_id ="' . $post_id . '"
             ' . $display . '
             data-method="' . $method_type . '"
+            data-post-id="' . $post_id . '"
             >';
 
             if ($this->props['collection']['show_form_title']) {
@@ -147,7 +147,7 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
             $woo_stats_class = SCR_Getter::is_single_product_post() || SCR_Getter::is_admin_product_page() ? 'woo-stats' : '';
 
             $html = '';
-            $html .= '<ul class="review-list '.$woo_stats_class.'"
+            $html .= '<ul class="review-list ' . $woo_stats_class . '"
                 data-type="' . $this->props['collection']['stats_args']['type'] . '"
                 data-limit="' . $this->props['collection']['stats_args']['limit'] . '"
                 data-steps="' . $this->props['collection']['stats_args']['steps'] . '"
@@ -196,6 +196,20 @@ if (!class_exists('\StarcatReview\App\Components\Form\View')) {
         protected function get_bar_rating($key)
         {
             return $this->bar_rating->get_review_stat($key, 5, 5);
+        }
+
+        protected function can_show_review_form()
+        {
+            // User Already Reviewed or Not Logged in User
+            $user_can_see_the_form = $this->capability['can_user_review'] == 1 ? true : false;
+
+            /**
+             *  NOTE : Use of Review Form
+             *  For users want to edit their own reviews, the review form should be available on the page.
+             */
+            $show_review_form = isset($this->props['collection']['show_review_form']) && $this->props['collection']['show_review_form'] == 1 ? 1 : 0;
+            $show_form = ($user_can_see_the_form && $show_review_form == 1) ? true : false;
+            return $show_form;
         }
 
         //  Todo: Text Rating

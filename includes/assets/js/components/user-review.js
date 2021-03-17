@@ -6,7 +6,7 @@ var Edit = require("./user-review/edit.js");
 var Voting = require("./user-review/voting.js");
 
 var UserReview = {
-    init: function() {
+    init: function () {
         Stats.init();
         Form.init();
         ProsAndCons.init();
@@ -18,8 +18,8 @@ var UserReview = {
         console.log("User Review Form JS Loaded !!!");
     },
 
-    eventListener: function() {
-        jQuery("a.woocommerce-scr-review-link").click(function() {
+    eventListener: function () {
+        jQuery("a.woocommerce-scr-review-link").click(function () {
             jQuery(".scr-reviews_tab a").click();
             return true;
         });

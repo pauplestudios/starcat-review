@@ -9,11 +9,12 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
     class Model
     {
-        public function get_viewProps($args)
+        public function get_viewProps(array $args, array $user_args = array())
         {
             $this->args = $args;
 
             $collection = $this->get_collectionProps($args);
+            $collection = $this->set_user_args_with_collection($collection, $user_args);
             $items = $this->get_itemProps($args);
 
             // error_log('args["items"] : ' . print_r($items, true));
@@ -94,6 +95,16 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\Model')) {
             }
 
             return $item;
+        }
+
+        public function set_user_args_with_collection(array $collection, array $user_args = array())
+        {
+            if (empty($user_args)) {
+                return $collection;
+            }
+            $show_list_title = (isset($user_args['show_review_title']) && $user_args['show_review_title'] == 1) ? true : false;
+            $collection['show_list_title'] = $show_list_title;
+            return $collection;
         }
     }
 }

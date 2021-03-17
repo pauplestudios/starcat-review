@@ -9,9 +9,11 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
     class Model
     {
-        public function get_viewProps($args)
+        public function get_viewProps(array $args, array $user_args = array())
         {
-            $this->collection = $this->get_collectionProps($args);
+            $collection = $this->get_collectionProps($args);
+            $collection = $this->set_user_args_with_collection($collection, $user_args);
+            $this->collection = $collection;
             $this->items = $this->get_itemsProps($args);
 
             $view_props = [
@@ -42,6 +44,9 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
                 'show_captcha' => $args['show_captcha'],
                 'stats_args' => $args['stats_args'],
                 'capability' => $args['capability'],
+
+                // In default show review form
+                'show_review_form' => 1,
             ];
 
             // $collection = array_merge($collection)
@@ -94,6 +99,23 @@ if (!class_exists('\StarcatReview\App\Components\Form\Model')) {
                 $collection['stats_args']['outline_icon'] = $collection['stats_args']['icons'] . ' outline icon';
             }
 
+            return $collection;
+        }
+
+        public function set_user_args_with_collection(array $collection, array $user_args = array())
+        {
+            /**
+             * In default behaviour always show the review form, if post_type is enabled in reviews.
+             */
+            if (empty($user_args)) {
+                return $collection;
+            }
+            /**
+             * In users using review form shortcodes, show the form if receive the $use_of_form value as 'add_review' else don't show.
+             */
+            $use_of_form = isset($user_args['use_of_form']) && $user_args['use_of_form'] == 'edit_review' ? 0 : 1;
+            $show_review_form = ($use_of_form && $user_args['show_review_form'] == 1) ? 1 : 0;
+            $collection['show_review_form'] = $show_review_form;
             return $collection;
         }
     } // END CLASS

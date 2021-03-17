@@ -34,7 +34,9 @@ var Form = {
             inline: true,
             on: "blur",
             onSuccess: function (event, fields) {
-                var imageValidation = Form.imageValidation(SCRForm);
+                // get current review Form
+                var reviewForm = jQuery(event.target);
+                var imageValidation = Form.imageValidation(reviewForm);
                 if (imageValidation.status === "failed") {
                     alert(imageValidation.message);
                     return false;
@@ -44,7 +46,7 @@ var Form = {
                     return;
                 }
                 formSubmitted = true;
-                Form.submission(SCRForm, fields);
+                Form.submission(reviewForm, fields);
             },
             errors: {
                 method: "The method you called is not defined.",
@@ -59,6 +61,7 @@ var Form = {
 
     submission: function (SCRForm, fields) {
         var form_data = Form.getProps(SCRForm, fields);
+        // return false;
         SCRForm.find(".submit.button").addClass("loading");
         // Ajax Post Submiting
         jQuery
