@@ -9,12 +9,13 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
     class Model
     {
-        public function get_viewProps($args)
+        public function get_viewProps(array $args, array $user_args = array())
         {
             // $props = $args;
-
+            $collection = $this->get_collectionProps($args);
+            $collection = $this->set_user_args_with_collection($collection, $user_args);
             $viewProps = [
-                'collection' => $this->get_collectionProps($args),
+                'collection' => $collection,
                 'items' => $this->get_items_props($args),
             ];
 
@@ -25,9 +26,9 @@ if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
             return $viewProps;
         }
 
-        public function get_collectionProps($args)
+        public function get_collectionProps(array $args)
         {
-           
+
             $collection = [
                 'users_title' => sprintf(__('Users Rating (%d)', SCR_DOMAIN), $args['review_count']),
                 'author_title' => __('Author Rating', SCR_DOMAIN),
@@ -36,13 +37,13 @@ if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
                 // 'show' => 'both',
                 'is_enable_author' => $args['enable-author-review'],
                 'is_enable_prosandcons' => $args['enable_pros_cons'],
-                'enable_user_reviews' => $args['enable_user_reviews']
+                'is_enable_user_review' => $args['enable_user_reviews'],
             ];
 
             return $collection;
         }
 
-        public function get_items_props($args)
+        public function get_items_props(array $args)
         {
             $stat_args = $args;
             unset($stat_args['items']);
@@ -73,7 +74,7 @@ if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
 
         }
 
-        public function get_no_of_column($args)
+        public function get_no_of_column(array $args)
         {
             $no_of_column = 'one';
 
@@ -111,6 +112,21 @@ if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
                 }
             }
             return $attachments;
+        }
+
+        public function set_user_args_with_collection(array $collection, array $user_args = array())
+        {
+            if (empty($user_args)) {
+                return $collection;
+            }
+            $show_author_review = isset($user_args['show_author_reviews_summary']) && $user_args['show_author_reviews_summary'] == 1 ? true : false;
+            $show_user_review = isset($user_args['show_user_reviews_summary']) && $user_args['show_user_reviews_summary'] == 1 ? true : false;
+            $show_pros_and_cons_summary = isset($user_args['show_pros_and_cons_summary']) && $user_args['show_pros_and_cons_summary'] == 1 ? true : false;
+
+            $collection['is_enable_author'] = $show_author_review;
+            $collection['is_enable_user_review'] = $show_user_review;
+            $collection['is_enable_prosandcons'] = $show_pros_and_cons_summary;
+            return $collection;
         }
     }
 }

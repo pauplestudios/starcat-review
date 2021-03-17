@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
 if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
     class View
     {
-        public function get($viewProps)
+        public function get(array $viewProps)
         {
             $html = '';
 
@@ -17,11 +17,13 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
             $this->collection = $viewProps['collection'];
             $this->capability = $viewProps['collection']['capability'];
 
-            if ($this->collection['show_list_title']) {
+            $show_list_title = $this->collection['show_list_title'] ? true : false;
+
+            if ($show_list_title == true) {
                 $html .= '<h3 class="ui dividing header"> ' . $this->collection['list_title'] . '</h3>';
             }
-
-            $html .= '<div class="ui scr_user_reviews list comments">';
+            $post_id = $this->collection['post_id'];
+            $html .= '<div class="ui scr_user_reviews list comments" data-post-id="' . $post_id . '">';
             if (isset($viewProps['items']) && !empty($viewProps['items'])) {
                 foreach ($viewProps['items'] as $comment) {
                     if ($this->can_view_comment($comment) && $comment['parent'] == 0) {
@@ -279,6 +281,5 @@ if (!class_exists('\StarcatReview\App\Components\User_Reviews\View')) {
 
             return $html;
         }
-
     } // END CLASS
 }

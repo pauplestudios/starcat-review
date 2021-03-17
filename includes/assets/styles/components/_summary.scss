@@ -1,3 +1,11 @@
 .scr-summary {
     margin: 2em 0;
+    .ui.grid > .scr-row{
+        padding-left: 1rem;
+        margin-right: 1rem;
+        .column{
+            padding: 1rem;
+        }
+    }   
 }
+

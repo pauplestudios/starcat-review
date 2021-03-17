@@ -1,0 +1,103 @@
+.scr-icons-row {
+    position: relative;
+
+    .scr-icon {
+        display: inline-block !important;
+        position: relative !important;
+        color: #ddd;
+        font-size: 15px;
+        padding: 1px;
+    }
+}
+
+// Generates Partial Icons
+@mixin icon_selector($icon_code, $width, $icon_class, $width_number) {
+    .scr-icon.#{$icon_class}.rating-#{$width_number}:after {
+        font-family: Icons;
+        position: absolute;
+        left: 0;
+        top: 0;
+        overflow: hidden;
+        // color: #f80;
+        width: #{$width};
+        content: $icon_code;
+        padding: 1px;
+    }
+}
+
+.scr-icon:after {
+    color: #f80;
+}
+
+// Combinations
+$icons: (
+    "fa-star": "\f005", 
+    "fa-thumbs-up": "\f164", 
+    "fa-heart": "\f004",
+    "fa-square": "\f0c8",
+    "fa-circle": "\f111",
+    "fa-user": "\f007",
+    "fa-bookmark": "\f02e",
+    "fa-compass": "\f14e",
+    "fa-trash": "\f1f8",
+    "fa-bell": "\f0f3",
+    "fa-lightbulb": "\f0eb",
+    "fa-clock": "\f017",
+    "fa-hourglass": "\f254",
+    "fa-gem": "\f3a5",
+    "fa-map": "\f279",
+    "fa-sticky-note": "\f249",
+    "fa-sun": "\f185",
+    "fa-lemon": "\f094",
+    "fa-comment": "\f075",
+    "fa-comments": "\f086",
+    "fa-file": "\f15b",
+    "fa-folder": "\f07b",
+    "fa-envelope": "\f0e0",
+    "fa-hdd": "\f0a0",
+    "fa-paper-plane": "\f1d8",
+    "fa-handshake": "\f2b5",
+    "fa-thumbsup": "\f164",
+    "fa-thumbs-down": "\f165",
+    "fa-meh": "\f11a",
+    "fa-smile": "\f118",
+    "fa-frown": "\f119"
+);
+$stat_ratings: (25: 35%, 50: 50%,75: 70%, 100: 100%);
+
+@each $name, $unicode in $icons {
+    @each $stat_value, $stat_percentage in $stat_ratings {
+        @include icon_selector($unicode, $stat_percentage, $name, $stat_value);
+    }
+}
+
+// @mixin icon($icon_code, $width) {
+//     font-family: FontAwesome;
+//     position: absolute;
+//     left: 0;
+//     top: 0;
+//     overflow: hidden;
+//     color: #f80;
+//     width: $width;
+//     content: $icon_code;
+// }
+
+// .scr-icon:not(:last-child):after {
+//     @include icon("\f005", 100%);
+// }
+
+// .scr-icon[data-rating="25"]:after {
+//     @include icon("\f005", 35%);
+// }
+
+// .scr-icon[data-rating="50"]:after {
+//     @include icon("\f005", 50%);
+// }
+
+// .scr-icon[data-rating="75"]:after {
+//     @include icon("\f005", 70%);
+// }
+
+// .scr-icon[data-rating="100"]:after {
+//     @include icon("\f005", 100%);
+// }
