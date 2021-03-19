@@ -20,6 +20,10 @@
         },
         {
             "type": "git",
+            "url": "https://github.com/essekia/pluginator"
+        },
+        {
+            "type": "git",
             "url": "https://bitbucket.org/pauple/upgrader.git"
         },
         {
@@ -44,6 +48,7 @@
         }
     ],
     "require-dev": {
+        "pauple/pluginator": "dev-features/widgetry",
         "pauple/upgrader": "dev-develop",
         "pauple/widgetry": "dev-develop",
         "pauple/starcat-review-woo-notify": "dev-release/0.2.1",
