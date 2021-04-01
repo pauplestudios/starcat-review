@@ -237,6 +237,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
         public function user_review_settings($prefix)
         {
+            $post_types = $this->get_post_types(['product']);
             \CSF::createSection(
                 $prefix,
                 array(
@@ -294,6 +295,20 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         //     'title' => __('Enable Replies to Reviews', SCR_DOMAIN),
                         //     'default' => true,
                         // ),
+
+                        array(
+                            'id' => 'ur_enabled_post_types',
+                            'type' => 'select',
+                            'title' => __('Where to include user reviews?', SCR_DOMAIN),
+                            'chosen' => true,
+                            'placeholder' => 'Select post types',
+                            'options' => $post_types,
+                            'multiple' => true,
+                            'query_args' => array(
+                                'post_type' => 'post',
+                            ),
+                            'default' => ['post'],
+                        ),
 
                         array(
                             'id' => 'ur_who_can_review',
@@ -913,6 +928,20 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         ),
 
                         array(
+                            'id' => 'ar_enabled_post_types',
+                            'type' => 'select',
+                            'title' => __('Where to include Author Reviews?', SCR_DOMAIN),
+                            'chosen' => true,
+                            'placeholder' => 'Select post types',
+                            'options' => $post_types,
+                            'multiple' => true,
+                            'query_args' => array(
+                                'post_type' => 'post',
+                            ),
+                            'default' => ['post'],
+                        ),
+
+                        array(
                             'id' => 'enable-author-review',
                             'type' => 'switcher',
                             'title' => __('Enable author review', SCR_DOMAIN),
@@ -1135,21 +1164,26 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         /* Single Post - Meta Data Options */
         public function single_post_meta_fields()
         {
+            // TODO : remove it, later
             $locations = SCR_Getter::get_review_enabled_post_types();
+
+            $ar_enabled_post_types = SCR_Getter::get('ar_enabled_post_types');
             $prefix = SCR_POST_META;
+            // TODO : remove it, later - No Need to check author is enable/disable
+            $enabled_author_review = SCR_Getter::get('enable-author-review');
 
             \CSF::createMetabox($prefix, array(
                 'title' => __('Starcat Review', SCR_DOMAIN),
-                'post_type' => $locations,
+                'post_type' => $ar_enabled_post_types,
                 'show_restore' => true,
                 'theme' => 'light',
             ));
 
-            if (SCR_Getter::get('enable-author-review')) {
-                $this->single_post_features($prefix);
-                $this->single_post_pros($prefix);
-                $this->single_post_cons($prefix);
-            }
+            // if ($enabled_author_review) {
+            $this->single_post_features($prefix);
+            $this->single_post_pros($prefix);
+            $this->single_post_cons($prefix);
+            // }
 
             // $this->single_details($prefix);
             // $this->single_rich_snippets($prefix);

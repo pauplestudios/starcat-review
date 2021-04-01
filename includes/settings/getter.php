@@ -61,6 +61,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'enable_user_reviews' => true,
                 'enable-pros-cons' => true,
                 'review_enable_post-types' => ['post'],
+                'ar_enabled_post_types' => ['post'], // for author reviews
                 'global_stats' => ['stat_name' => 'Feature'],
                 'stat-singularity' => 'single',
                 'stats-type' => 'star',
@@ -149,6 +150,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
 
                 // User Review Start
                 // 'ur_enable_post-types' => ['post'],
+                'ur_enabled_post_types' => ['post'],
                 'ur_show_controls' => true,
                 'ur_controls_subheading' => true,
                 'ur_show_search' => true,
