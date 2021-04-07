@@ -12,10 +12,10 @@ if (!class_exists('\StarcatReview\App\Capabilities\Author_Reviews')) {
         public function can_show_author_review(array $args = array())
         {
             $post_type = get_post_type();
-            $post_author_review_caps = isset($args['post_author_review_caps']) ? $args['post_author_review_caps'] : [];
-            $can_show_ar_in_post = isset($post_author_review_caps) ? $post_author_review_caps['can_show_ar_in_post'] : 'apply_global_settings';
+            $author_review_caps = isset($args['post_author_review_caps']) ? $args['post_author_review_caps'] : [];
+            $can_show_ar_in_post = isset($author_review_caps) && $author_review_caps['can_show_ar_in_post'] != 'dont_show' ? true : false;
             $ar_enabled_post_types = isset($args['ar_enabled_post_types']) ? $args['ar_enabled_post_types'] : [];
-            $can_show = (in_array($post_type, $ar_enabled_post_types) && $can_show_ar_in_post != 'dont_show') ? true : false;
+            $can_show = (in_array($post_type, $ar_enabled_post_types) && $can_show_ar_in_post) ? true : false;
             return $can_show;
         }
     }
