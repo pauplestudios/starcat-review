@@ -32,15 +32,19 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review\Handler')) {
         {
             $post_id = $this->get_the_post_id_from_user_args($user_args);
             $post_meta = get_post_meta($post_id, SCR_POST_META, true);
-
             $args['pros-list'] = [];
             $args['cons-list'] = [];
+            $args['post_author_review_caps'] = [];
 
             if (isset($post_meta['pros-list']) && !empty($post_meta['pros-list'])) {
                 $args['pros-list'] = $post_meta['pros-list'];
             }
             if (isset($post_meta['cons-list']) && !empty($post_meta['cons-list'])) {
                 $args['cons-list'] = $post_meta['cons-list'];
+            }
+
+            if (isset($post_meta['post_author_review_caps']) && !empty($post_meta['post_author_review_caps'])) {
+                $args['post_author_review_caps'] = $post_meta['post_author_review_caps'];
             }
 
             $components = ['comments', 'stats', 'prosandcons', 'votes', 'attachments'];
@@ -69,6 +73,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review\Handler')) {
                 'show_description' => SCR_Getter::get('ur_show_description'),
                 'show_captcha' => SCR_Getter::get('ur_show_captcha'),
                 'current_user_id' => get_current_user_id(),
+                'ar_enabled_post_types' => SCR_Getter::get('ar_enabled_post_types'),
             ];
             return $args;
         }
