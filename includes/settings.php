@@ -913,19 +913,19 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         // ),
 
                         // Select with CPT (custom post type) pages
-                        array(
-                            'id' => 'review_enable_post-types',
-                            'type' => 'select',
-                            'title' => __('Where to include reviews?', SCR_DOMAIN),
-                            'chosen' => true,
-                            'placeholder' => 'Select post types',
-                            'options' => $post_types,
-                            'multiple' => true,
-                            'query_args' => array(
-                                'post_type' => 'post',
-                            ),
-                            'default' => ['post'],
-                        ),
+                        // array(
+                        //     'id' => 'review_enable_post-types',
+                        //     'type' => 'select',
+                        //     'title' => __('Where to include reviews?', SCR_DOMAIN),
+                        //     'chosen' => true,
+                        //     'placeholder' => 'Select post types',
+                        //     'options' => $post_types,
+                        //     'multiple' => true,
+                        //     'query_args' => array(
+                        //         'post_type' => 'post',
+                        //     ),
+                        //     'default' => ['post'],
+                        // ),
 
                         array(
                             'id' => 'ar_enabled_post_types',
@@ -941,12 +941,13 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'default' => ['post'],
                         ),
 
-                        array(
-                            'id' => 'enable-author-review',
-                            'type' => 'switcher',
-                            'title' => __('Enable author review', SCR_DOMAIN),
-                            'default' => true,
-                        ),
+                        /*** Note :- no need for this field. after adding the "ar_enabled_post_types" field */
+                        // array(
+                        //     'id' => 'enable-author-review',
+                        //     'type' => 'switcher',
+                        //     'title' => __('Enable author review', SCR_DOMAIN),
+                        //     'default' => true,
+                        // ),
                         array(
                             'id' => 'enable-pros-cons',
                             'type' => 'switcher',
@@ -1184,7 +1185,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             $this->single_post_pros($prefix);
             $this->single_post_cons($prefix);
             // }
-
+            $this->single_post_level_features($prefix);
             // $this->single_details($prefix);
             // $this->single_rich_snippets($prefix);
         }
@@ -1620,5 +1621,68 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
             return $options;
         }
+
+        public function single_post_level_features($prefix)
+        {
+            $post_level_fields = $this->get_post_level_fields();
+
+            \CSF::createSection($prefix, array(
+                'id' => 'post_level',
+                'title' => __('Author Review Settings', SCR_DOMAIN),
+                'icon' => 'fa fa-cogs',
+                'fields' => $post_level_fields,
+            ));
+        }
+
+        public function get_post_level_fields()
+        {
+            return array(
+                array(
+                    'id' => 'stats-list',
+                    'type' => 'fieldset',
+                    'fields' => array(
+                        array(
+                            'type' => 'submessage',
+                            'content' => __('Author Review Post Level Settings', SCR_DOMAIN),
+                        ),
+                        array(
+                            'id' => 'can_show_ar_in_post',
+                            'type' => 'select',
+                            'title' => __('Display Author Review', SCR_DOMAIN),
+                            'options' => array(
+                                'apply_global_settings' => __('Apply Global Settings', SCR_DOMAIN),
+                                'show' => __('Show', SCR_DOMAIN),
+                                'dont_show' => __("Don't Show", SCR_DOMAIN),
+                            ),
+                            'default' => 'apply_global_settings',
+                        ),
+                        array(
+                            'id' => 'enable_ar_custom_location',
+                            'type' => 'switcher',
+                            'title' => __('Enable Custom Location', SCR_DOMAIN),
+                            'default' => false,
+                            'dependency' => array(
+                                array('can_show_ar_in_post', 'any', 'apply_global_settings,show'),
+                            ),
+                        ),
+                        array(
+                            'id' => 'ar_post_location',
+                            'type' => 'select',
+                            'title' => __('Location', SCR_DOMAIN),
+                            'options' => array(
+                                'after' => __('After the content', SCR_DOMAIN),
+                                'before' => __('Before the content', SCR_DOMAIN),
+                                'shortcode' => __('Shortcode', SCR_DOMAIN),
+                            ),
+                            'dependency' => array(
+                                array('can_show_ar_in_post', 'any', 'apply_global_settings,show'),
+                                array('enable_ar_custom_location', '==', 'true'),
+                            ),
+                        ),
+                    ),
+                ),
+            );
+        }
+
     } // END CLASS
 }
