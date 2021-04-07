@@ -1627,7 +1627,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             $post_level_fields = $this->get_post_level_fields();
 
             \CSF::createSection($prefix, array(
-                'id' => 'post_level',
+                'id' => 'post_author_caps',
                 'title' => __('Author Review Settings', SCR_DOMAIN),
                 'icon' => 'fa fa-cogs',
                 'fields' => $post_level_fields,
@@ -1638,7 +1638,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         {
             return array(
                 array(
-                    'id' => 'stats-list',
+                    'id' => 'post_author_caps',
                     'type' => 'fieldset',
                     'fields' => array(
                         array(
