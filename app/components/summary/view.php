@@ -105,7 +105,7 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
             $show_user_review = (isset($props['collection']['is_enable_user_review']) && $props['collection']['is_enable_user_review'] == true) ? true : false;
             $show_attachments = (isset($props['collection']['is_enable_attachments']) && $props['collection']['is_enable_attachments'] == true) ? true : false;
 
-            if ($show_user_review == true && $show_user_review == true) {
+            if ($show_user_review == true && $show_attachments == true) {
                 $html = $this->get_all_attachments($props);
             }
             return $html;
