@@ -57,7 +57,7 @@ if (!class_exists('\StarcatReview\App\Capabilities\Post_Level_Caps')) {
             $ar_location = $author_reviews_caps->get_location();
             $ur_location = $user_reviews_caps_args['location'];
 
-            $both_are_same_location = (($ar_location == $ar_location) && ($ar_location != 'shorcode' && $ur_location != 'shortcode')) ? true : false;
+            $both_are_same_location = (($ar_location == $ur_location) && ($ar_location != 'shorcode' && $ur_location != 'shortcode')) ? true : false;
 
             $args['show'] = $can_show;
             $args['ar_location'] = $ar_location;
