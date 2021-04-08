@@ -224,8 +224,6 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
                 error_log('[$post_reviews_caps] : ' . print_r($post_reviews_caps, true));
 
-                $author_review_content = $this->get_author_review_content();
-                $user_review_content = $this->get_user_review_content();
                 $contents = $this->get_review_content();
                 error_log('[$contents] : ' . print_r($contents, true));
                 $location = 'before';
@@ -243,16 +241,6 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         }
 
         /* Non-Hooked */
-        public function get_author_review_content()
-        {
-            return true;
-        }
-
-        public function get_user_review_content()
-        {
-            return true;
-        }
-
         public function get_review_content()
         {
             $reviews_builder = new \StarcatReview\App\Builders\Review_Builder();
