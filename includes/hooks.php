@@ -105,6 +105,8 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             new \StarcatReview\Includes\Shortcodes();
             // Plugins Actions
             new \StarcatReview\Includes\Actions();
+
+            new \StarcatReview\Includes\Filters();
         }
 
         public function load_admin_hooks()
@@ -221,14 +223,15 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
                 $capability = new \StarcatReview\App\Capabilities\Post_Level_Caps();
                 $caps_args = $capability->get_author_and_user_reviews_caps();
                 $post_reviews_caps = $capability->get_caps($caps_args);
-                $post_reviews_caps['is_singular'] = true;
+                $summary_args = $capability->set_default_summary_args_by_capabilities($post_reviews_caps);
 
-                error_log('[$post_reviews_caps] : ' . print_r($post_reviews_caps, true));
-
-                $contents = $this->get_review_content($post_reviews_caps);
+                $args = array_merge($post_reviews_caps, $summary_args);
+                $args['is_singular'] = true;
+                error_log('[Content Filter $args] : ' . print_r($args, true));
+                $contents = $this->get_review_content($args);
                 error_log('[$contents] : ' . print_r($contents, true));
-                $location = 'before';
 
+                $location = 'before';
                 if ($location == 'before') {
                     $content = $contents['summary'] . $content;
                 } else if ($location == 'after') {
@@ -242,12 +245,12 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         }
 
         /* Non-Hooked */
-        public function get_review_content($post_reviews_caps)
+        public function get_review_content($args)
         {
             $reviews_builder = new \StarcatReview\App\Builders\Review_Builder();
             return [
                 'form_and_lists' => $reviews_builder->get_reviews(),
-                'summary' => $reviews_builder->get_summary_content($post_reviews_caps),
+                'summary' => $reviews_builder->get_summary_content($args),
             ];
         }
 

@@ -64,5 +64,26 @@ if (!class_exists('\StarcatReview\App\Capabilities\Post_Level_Caps')) {
             $args['same_location'] = $both_are_same_location;
             return $args;
         }
+
+        public function set_default_summary_args_by_capabilities($post_reviews_caps)
+        {
+            $defaults_summary_args = array(
+                'enable-author-review' => 0,
+                'enable_pros_cons' => 0,
+                'enable_user_reviews' => 0,
+                'enable_atthachments' => 0,
+            );
+
+            $show = $post_reviews_caps['show'];
+            if ($show == 'both') {
+                $defaults_summary_args['enable-author-review'] = 1;
+                $defaults_summary_args['enable_user_reviews'] = 1;
+            } else if ($show == 'author_reviews') {
+                $defaults_summary_args['enable-author-review'] = 1;
+            } else if ($show == 'user_reviews') {
+                $defaults_summary_args['enable_user_reviews'] = 1;
+            }
+            return $defaults_summary_args;
+        }
     }
 }
