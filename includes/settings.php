@@ -1169,6 +1169,10 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             $locations = SCR_Getter::get_review_enabled_post_types();
 
             $ar_enabled_post_types = SCR_Getter::get('ar_enabled_post_types');
+            // return, if users didn't like to show the author reviews in all post-types.
+            if (empty($ar_enabled_post_types)) {
+                return;
+            }
             $prefix = SCR_POST_META;
             // TODO : remove it, later - No Need to check author is enable/disable
             $enabled_author_review = SCR_Getter::get('enable-author-review');
@@ -1180,11 +1184,11 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 'theme' => 'light',
             ));
 
-            // if ($enabled_author_review) {
+            // if ($enabled_author_review) { }
+
             $this->single_post_features($prefix);
             $this->single_post_pros($prefix);
             $this->single_post_cons($prefix);
-            // }
             $this->single_post_level_features($prefix);
             // $this->single_details($prefix);
             // $this->single_rich_snippets($prefix);
