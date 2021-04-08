@@ -1651,7 +1651,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'content' => __('Author Review Post Level Settings', SCR_DOMAIN),
                         ),
                         array(
-                            'id' => 'can_show_ar_in_post',
+                            'id' => 'can_show_ar',
                             'type' => 'select',
                             'title' => __('Display Author Review', SCR_DOMAIN),
                             'options' => array(
@@ -1662,16 +1662,16 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'default' => 'apply_global_settings',
                         ),
                         array(
-                            'id' => 'enable_ar_custom_location',
+                            'id' => 'custom_location',
                             'type' => 'switcher',
                             'title' => __('Enable Custom Location', SCR_DOMAIN),
                             'default' => false,
                             'dependency' => array(
-                                array('can_show_ar_in_post', 'any', 'apply_global_settings,show'),
+                                array('can_show_ar', 'any', 'apply_global_settings,show'),
                             ),
                         ),
                         array(
-                            'id' => 'ar_post_location',
+                            'id' => 'location',
                             'type' => 'select',
                             'title' => __('Location', SCR_DOMAIN),
                             'options' => array(
@@ -1680,8 +1680,8 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                                 'shortcode' => __('Shortcode', SCR_DOMAIN),
                             ),
                             'dependency' => array(
-                                array('can_show_ar_in_post', 'any', 'apply_global_settings,show'),
-                                array('enable_ar_custom_location', '==', 'true'),
+                                array('can_show_ar', 'any', 'apply_global_settings,show'),
+                                array('custom_location', '==', 'true'),
                             ),
                         ),
                     ),
@@ -1714,7 +1714,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'content' => __('User Review Post Level Settings', SCR_DOMAIN),
                         ),
                         array(
-                            'id' => 'can_show_ur_in_post',
+                            'id' => 'can_show_ur',
                             'type' => 'select',
                             'title' => __('Display User Review', SCR_DOMAIN),
                             'options' => array(
@@ -1725,16 +1725,16 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'default' => 'apply_global_settings',
                         ),
                         array(
-                            'id' => 'enable_ur_custom_location',
+                            'id' => 'custom_location',
                             'type' => 'switcher',
                             'title' => __('Enable Custom Location', SCR_DOMAIN),
                             'default' => false,
                             'dependency' => array(
-                                array('can_show_ur_in_post', 'any', 'apply_global_settings,show'),
+                                array('can_show_ur', 'any', 'apply_global_settings,show'),
                             ),
                         ),
                         array(
-                            'id' => 'ur_post_location',
+                            'id' => 'location',
                             'type' => 'select',
                             'title' => __('Location', SCR_DOMAIN),
                             'options' => array(
@@ -1743,8 +1743,8 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                                 'shortcode' => __('Shortcode', SCR_DOMAIN),
                             ),
                             'dependency' => array(
-                                array('can_show_ur_in_post', 'any', 'apply_global_settings,show'),
-                                array('enable_ur_custom_location', '==', 'true'),
+                                array('can_show_ur', 'any', 'apply_global_settings,show'),
+                                array('custom_location', '==', 'true'),
                             ),
                         ),
                     ),
