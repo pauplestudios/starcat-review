@@ -6,14 +6,12 @@ if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 
-if (!class_exists('\StarcatReview\App\Capabilities\Author_Reviews')) {
-    class Author_Reviews
+if (!class_exists('\StarcatReview\App\Capabilities\Author_Reviews_Caps')) {
+    class Author_Reviews_Caps
     {
-        public function can_show_author_review(array $args = array())
+        public function can_show_author_review(array $author_review_caps)
         {
             $post_type = get_post_type();
-            // Get author reviews capabilities
-            $author_review_caps = isset($args['post_author_review_caps']) ? $args['post_author_review_caps'] : [];
 
             // check the author review as custom location or not.
             $custom_location = isset($author_review_caps['custom_location']) && $author_review_caps['custom_location'] == 1 ? true : false;
