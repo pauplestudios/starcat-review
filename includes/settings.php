@@ -1189,7 +1189,8 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             $this->single_post_features($prefix);
             $this->single_post_pros($prefix);
             $this->single_post_cons($prefix);
-            $this->single_post_level_features($prefix);
+            $this->single_post_level_author_review_features($prefix);
+            $this->single_post_level_user_review_features($prefix);
             // $this->single_details($prefix);
             // $this->single_rich_snippets($prefix);
         }
@@ -1626,19 +1627,19 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             return $options;
         }
 
-        public function single_post_level_features($prefix)
+        public function single_post_level_author_review_features($prefix)
         {
-            $post_level_fields = $this->get_post_level_fields();
+            $fields = $this->get_post_level_author_review_fields();
 
             \CSF::createSection($prefix, array(
                 'id' => 'post_author_review_caps',
                 'title' => __('Author Review Settings', SCR_DOMAIN),
                 'icon' => 'fa fa-cogs',
-                'fields' => $post_level_fields,
+                'fields' => $fields,
             ));
         }
 
-        public function get_post_level_fields()
+        public function get_post_level_author_review_fields()
         {
             return array(
                 array(
@@ -1681,6 +1682,69 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'dependency' => array(
                                 array('can_show_ar_in_post', 'any', 'apply_global_settings,show'),
                                 array('enable_ar_custom_location', '==', 'true'),
+                            ),
+                        ),
+                    ),
+                ),
+            );
+        }
+
+        public function single_post_level_user_review_features($prefix)
+        {
+
+            $fields = $this->get_post_level_user_review_fields();
+
+            \CSF::createSection($prefix, array(
+                'id' => 'post_user_review_caps',
+                'title' => __('User Review Settings', SCR_DOMAIN),
+                'icon' => 'fa fa-cogs',
+                'fields' => $fields,
+            ));
+        }
+
+        public function get_post_level_user_review_fields()
+        {
+            return array(
+                array(
+                    'id' => 'post_user_review_caps',
+                    'type' => 'fieldset',
+                    'fields' => array(
+                        array(
+                            'type' => 'submessage',
+                            'content' => __('User Review Post Level Settings', SCR_DOMAIN),
+                        ),
+                        array(
+                            'id' => 'can_show_ur_in_post',
+                            'type' => 'select',
+                            'title' => __('Display User Review', SCR_DOMAIN),
+                            'options' => array(
+                                'apply_global_settings' => __('Apply Global Settings', SCR_DOMAIN),
+                                'show' => __('Show', SCR_DOMAIN),
+                                'dont_show' => __("Don't Show", SCR_DOMAIN),
+                            ),
+                            'default' => 'apply_global_settings',
+                        ),
+                        array(
+                            'id' => 'enable_ur_custom_location',
+                            'type' => 'switcher',
+                            'title' => __('Enable Custom Location', SCR_DOMAIN),
+                            'default' => false,
+                            'dependency' => array(
+                                array('can_show_ur_in_post', 'any', 'apply_global_settings,show'),
+                            ),
+                        ),
+                        array(
+                            'id' => 'ur_post_location',
+                            'type' => 'select',
+                            'title' => __('Location', SCR_DOMAIN),
+                            'options' => array(
+                                'after' => __('After the content', SCR_DOMAIN),
+                                'before' => __('Before the content', SCR_DOMAIN),
+                                'shortcode' => __('Shortcode', SCR_DOMAIN),
+                            ),
+                            'dependency' => array(
+                                array('can_show_ur_in_post', 'any', 'apply_global_settings,show'),
+                                array('enable_ur_custom_location', '==', 'true'),
                             ),
                         ),
                     ),
