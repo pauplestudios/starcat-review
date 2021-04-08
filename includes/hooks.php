@@ -217,6 +217,13 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         {
             $post_type = get_post_type(get_the_ID());
             if (is_singular() && $post_type !== 'product') {
+
+                $capability = new \StarcatReview\App\Capabilities\Post_Level_Caps();
+                $caps_args = $capability->get_author_and_user_reviews_caps();
+                $post_reviews_caps = $capability->get_caps($caps_args);
+
+                error_log('[$post_reviews_caps] : ' . print_r($post_reviews_caps, true));
+
                 $author_review_content = $this->get_author_review_content();
                 $user_review_content = $this->get_user_review_content();
                 $contents = $this->get_review_content();
