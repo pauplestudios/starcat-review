@@ -105,8 +105,6 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             new \StarcatReview\Includes\Shortcodes();
             // Plugins Actions
             new \StarcatReview\Includes\Actions();
-
-            new \StarcatReview\Includes\Filters();
         }
 
         public function load_admin_hooks()
