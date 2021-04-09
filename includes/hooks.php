@@ -222,7 +222,8 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
                 $caps_args = $capability->get_author_and_user_reviews_caps();
 
                 $before_the_content = $after_the_content = '';
-                $summay_args = $capability->get_caps($caps_args, 'before');
+                $summay_args = $capability->get_summary_args_by_caps($caps_args);
+
                 $before_the_content = $reviews_builder->get_summary_content($summay_args['before']);
                 $after_the_content = $reviews_builder->get_summary_content($summay_args['after']);
                 $form_and_list_content = $reviews_builder->get_reviews();

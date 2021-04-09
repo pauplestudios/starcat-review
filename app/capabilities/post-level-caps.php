@@ -27,10 +27,9 @@ if (!class_exists('\StarcatReview\App\Capabilities\Post_Level_Caps')) {
             error_log('[$caps_args] : ' . print_r($caps_args, true));
             return $caps_args;
         }
-        // get_summary_args_by_caps
-        public function get_caps(array $caps_args, string $type_of_location = 'after')
+
+        public function get_summary_args_by_caps(array $caps_args)
         {
-            // $inverted_location = $type_of_location == 'after' ? 'before' : 'after';
             $args = array(
                 'before' => array(),
                 'after' => array(),
