@@ -5,6 +5,7 @@ namespace StarcatReview\App\Capabilities;
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
+use StarcatReview\Includes\Settings\SCR_Getter;
 
 if (!class_exists('\StarcatReview\App\Capabilities\Post_Level_Caps')) {
     class Post_Level_Caps
@@ -23,67 +24,100 @@ if (!class_exists('\StarcatReview\App\Capabilities\Post_Level_Caps')) {
                     $caps_args[$key] = $post_meta[$key];
                 }
             }
-
-            $this->post_author_and_user_review_caps = $caps_args;
+            error_log('[$caps_args] : ' . print_r($caps_args, true));
             return $caps_args;
         }
 
-        public function get_caps($caps_args)
+        public function get_caps(array $caps_args, string $type_of_location = 'after')
         {
+            $inverted_location = $type_of_location == 'after' ? 'before' : 'after';
+            $args = array(
+                'before' => array(),
+                'after' => array(),
+            );
 
             $author_reviews_caps_args = $caps_args['post_author_review_caps'];
             $user_reviews_caps_args = $caps_args['post_user_review_caps'];
 
-            $args = array(
-                'show' => 'both', // author_reviews, user_reviews, both, none
-                'same_location' => false,
-                'ar_location' => 'before',
-                'ur_location' => 'after',
-            );
-
-            $author_reviews_caps = new \StarcatReview\App\Capabilities\Author_Reviews_Caps();
-            $can_show_author_reviews = $author_reviews_caps->can_show_author_review($author_reviews_caps_args);
-            $can_show_users_reviews = true;
-
-            /** show both reviews */
-            $can_show = ($can_show_author_reviews && $can_show_users_reviews) ? 'both' : 'none';
-            if ($can_show == 'none') {
-                /** show author reviews only */
-                $can_show_author_review_only = (!$can_show_users_reviews && $can_show_author_reviews) ? 'auth_reviews' : 'none';
-                /** show users reviews only */
-                $can_show = ($can_show_users_reviews && !$can_show_author_reviews) ? 'user_reviews' : $can_show_author_review_only;
-            }
-
-            $ar_location = $author_reviews_caps->get_location();
+            $ar_location = $author_reviews_caps_args['location'];
             $ur_location = $user_reviews_caps_args['location'];
 
-            $both_are_same_location = (($ar_location == $ur_location) && ($ar_location != 'shorcode' && $ur_location != 'shortcode')) ? true : false;
+            /*** Get both setting custom locations values  */
+            $ar_custom_location = $author_reviews_caps_args['custom_location'] == 1 ? true : false;
+            $ur_custom_location = $user_reviews_caps_args['custom_location'] == 1 ? true : false;
+            $both_are_custom_location = ($ar_custom_location && $ur_custom_location) ? true : false;
+            $not_in_custom_location = (!$both_are_custom_location) ? true : false;
 
-            $args['show'] = $can_show;
-            $args['ar_location'] = $ar_location;
-            $args['same_location'] = $both_are_same_location;
+            $both_location_same_by_meta = (($ar_location == $ur_location) && ($ar_location != 'shorcode' && $ur_location != 'shortcode')) ? true : false;
+
+            $can_show_author_reviews = $this->can_show_the_review($author_reviews_caps_args, 'can_show_ar');
+            $can_show_users_reviews = $this->can_show_the_review($user_reviews_caps_args, 'can_show_ur');
+
+            /** show both reviews */
+            $can_show_the_review = ($can_show_author_reviews && $can_show_users_reviews) ? 'both' : 'none';
+            if ($can_show_the_review == 'none') {
+                /** show author reviews only */
+                $can_show_the_review = (!$can_show_users_reviews && $can_show_author_reviews) ? 'auth_reviews' : 'none';
+                /** show users reviews only */
+                $can_show_the_review = ($can_show_users_reviews && !$can_show_author_reviews) ? 'user_reviews' : $can_show_the_review;
+            }
+
+            $enable_author_review = ($can_show_the_review == 'both' || $can_show_the_review == 'auth_reviews') ? true : false;
+            $enable_user_reviews = ($can_show_the_review == 'both' || $can_show_the_review == 'user_reviews') ? true : false;
+
+            foreach ($args as $key => $value) {
+
+                $summary_args = $this->get_default_summary_args($key);
+                $author_review = false;
+                $user_review = false;
+
+                if ($key == 'after') {
+                    $author_review = ($enable_author_review) ? true : false;
+                    $user_review = ($enable_user_reviews && $ur_location == 'after') ? true : false;
+                } else {
+                    $user_review = ($enable_user_reviews && $ur_location == 'before') ? true : false;
+                }
+
+                $summary_args['enable-author-review'] = $author_review;
+                $summary_args['enable_pros_cons'] = $author_review;
+                $summary_args['enable_user_reviews'] = $user_review;
+
+                $args[$key] = $summary_args;
+            }
+
             return $args;
         }
 
-        public function set_default_summary_args_by_capabilities($post_reviews_caps)
+        public function can_show_the_review(array $review_caps, string $review_type)
         {
-            $defaults_summary_args = array(
+            $post_type = get_post_type();
+
+            $ar_enabled_post_types = SCR_Getter::get('ar_enabled_post_types');
+
+            // check the user (or) author review as custom location or not.
+            $custom_location = isset($review_caps['custom_location']) && $review_caps['custom_location'] == 1 ? true : false;
+
+            // don't show the user (or) author reviews if users choose the "location" option value as shortcode.
+            $use_shortcode = (isset($review_caps['location']) && $custom_location && $review_caps['location'] == 'shortcode') ? true : false;
+
+            // show the user (or) author reviews or not
+            $can_show_the_review = isset($review_caps) && $review_caps[$review_type] != 'dont_show' ? true : false;
+
+            $can_show_the_review = (in_array($post_type, $ar_enabled_post_types) && !$use_shortcode && $can_show_the_review) ? true : false;
+
+            return $can_show_the_review;
+        }
+
+        public function get_default_summary_args(string $type_of_location = 'after')
+        {
+            $args = array(
                 'enable-author-review' => 0,
                 'enable_pros_cons' => 0,
                 'enable_user_reviews' => 0,
-                'enable_atthachments' => 0,
+                'enable_atthachments' => ($type_of_location == 'after') ? 1 : 0,
             );
 
-            $show = $post_reviews_caps['show'];
-            if ($show == 'both') {
-                $defaults_summary_args['enable-author-review'] = 1;
-                $defaults_summary_args['enable_user_reviews'] = 1;
-            } else if ($show == 'author_reviews') {
-                $defaults_summary_args['enable-author-review'] = 1;
-            } else if ($show == 'user_reviews') {
-                $defaults_summary_args['enable_user_reviews'] = 1;
-            }
-            return $defaults_summary_args;
+            return $args;
         }
     }
 }
