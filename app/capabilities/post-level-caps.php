@@ -51,10 +51,13 @@ if (!class_exists('\StarcatReview\App\Capabilities\Post_Level_Caps')) {
 
             /** show both reviews */
             $can_show_the_review = ($can_show_author_reviews && $can_show_users_reviews) ? 'both' : 'none';
+
             if ($can_show_the_review == 'none') {
+
                 /** show author reviews only */
                 $can_show_the_review = (!$can_show_users_reviews && $can_show_author_reviews) ? 'auth_reviews' : 'none';
-                /** show users reviews only */
+
+                /** show users reviews only, else show the author review (or) none of both*/
                 $can_show_the_review = ($can_show_users_reviews && !$can_show_author_reviews) ? 'user_reviews' : $can_show_the_review;
             }
 
@@ -63,6 +66,7 @@ if (!class_exists('\StarcatReview\App\Capabilities\Post_Level_Caps')) {
 
             foreach ($args as $key => $value) {
 
+                /** Get the default summary args */
                 $summary_args = $this->get_default_summary_args($key);
                 $author_review = false;
                 $user_review = false;
