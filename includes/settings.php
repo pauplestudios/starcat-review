@@ -1191,6 +1191,8 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             $this->single_post_cons($prefix);
             $this->single_post_level_author_review_features($prefix);
             $this->single_post_level_user_review_features($prefix);
+            /** tabbed view */
+            // $this->single_review_settings($prefix);
             // $this->single_details($prefix);
             // $this->single_rich_snippets($prefix);
         }
@@ -1646,10 +1648,10 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                     'id' => 'post_author_review_caps',
                     'type' => 'fieldset',
                     'fields' => array(
-                        array(
-                            'type' => 'submessage',
-                            'content' => __('Author Review Post Level Settings', SCR_DOMAIN),
-                        ),
+                        // array(
+                        //     'type' => 'submessage',
+                        //     'content' => __('Author Review Post Level Settings', SCR_DOMAIN),
+                        // ),
                         array(
                             'id' => 'can_show_ar',
                             'type' => 'select',
@@ -1709,10 +1711,10 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                     'id' => 'post_user_review_caps',
                     'type' => 'fieldset',
                     'fields' => array(
-                        array(
-                            'type' => 'submessage',
-                            'content' => __('User Review Post Level Settings', SCR_DOMAIN),
-                        ),
+                        // array(
+                        //     'type' => 'submessage',
+                        //     'content' => __('User Review Post Level Settings', SCR_DOMAIN),
+                        // ),
                         array(
                             'id' => 'can_show_ur',
                             'type' => 'select',
@@ -1750,6 +1752,35 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                     ),
                 ),
             );
+        }
+
+        public function single_review_settings($prefix)
+        {
+            $author_reviews_fields = $this->get_post_level_author_review_fields();
+            $user_review_fields = $this->get_post_level_user_review_fields();
+
+            \CSF::createSection($prefix, array(
+                'title' => __('Review Settings', SCR_DOMAIN),
+                'icon' => 'fa fa-cogs',
+                'fields' => array(
+                    array(
+                        'id' => 'post_review_settings',
+                        'type' => 'tabbed',
+                        'tabs' => array(
+                            array(
+                                'title' => __('Author Review Settings', SCR_DOMAIN),
+                                'icon' => 'fa fa-star',
+                                'fields' => $author_reviews_fields,
+                            ),
+                            array(
+                                'title' => __('User Review Settings', SCR_DOMAIN),
+                                'icon' => 'fa fa-star',
+                                'fields' => $user_review_fields,
+                            ),
+                        ),
+                    ),
+                ),
+            ));
         }
 
     } // END CLASS
