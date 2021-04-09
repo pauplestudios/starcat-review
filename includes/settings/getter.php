@@ -302,6 +302,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
 
         public static function get_review_enabled_post_types()
         {
+            /** TODO: use - 'ur_enabled_post_types' since - v0.7.6  */
             // $post_types = self::get('review_enable_post-types');
             $post_types = self::get('ur_enabled_post_types');
             $enabled_post_types = is_string($post_types) ? [0 => $post_types] : $post_types;

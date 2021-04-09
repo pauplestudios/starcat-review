@@ -1,4 +1,3 @@
-
 <?php
 use \StarcatReview\Includes\Settings\SCR_Getter;
 
@@ -48,7 +47,9 @@ class FactoryTest extends \Codeception\TestCase\WPTestCase
         $data = $this->get_data();
 
         SCR_Getter::set('stat-singularity', 'single');
-        SCR_Getter::set('review_enable_post-types', ['post', 'product']);
+        /** TODO: use - 'ur_enabled_post_types' since - v0.7.6  */
+        // SCR_Getter::set('review_enable_post-types', ['post', 'product']);
+        SCR_Getter::set('ur_enabled_post_types', ['post', 'product']);
 
         /*
         Case 1: 'post Overall Single -- Singluarity'

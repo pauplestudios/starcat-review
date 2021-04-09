@@ -60,7 +60,10 @@ class WhoCanReviewCest
     private function review_settings($I, $who_can_review)
     {
         $options = [
-            'review_enable_post-types' => ['post', 'page'],
+            /** TODO: use - 'ur_enabled_post_types' since - v0.7.6  */
+            // 'review_enable_post-types' => ['post', 'page'],
+            'ur_enabled_post_types' => ['post', 'page'],
+
             'ur_who_can_review' => $who_can_review,
             'enable_user_reviews' => true,
         ];
