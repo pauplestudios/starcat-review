@@ -219,26 +219,17 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         {
             $post_type = get_post_type(get_the_ID());
             if (is_singular() && $post_type !== 'product') {
-
+                $reviews_builder = new \StarcatReview\App\Builders\Review_Builder();
                 $capability = new \StarcatReview\App\Capabilities\Post_Level_Caps();
                 $caps_args = $capability->get_author_and_user_reviews_caps();
-                $post_reviews_caps = $capability->get_caps($caps_args);
-                $summary_args = $capability->set_default_summary_args_by_capabilities($post_reviews_caps);
 
-                $args = array_merge($post_reviews_caps, $summary_args);
-                $args['is_singular'] = true;
-                error_log('[Content Filter $args] : ' . print_r($args, true));
-                $contents = $this->get_review_content($args);
-                error_log('[$contents] : ' . print_r($contents, true));
+                $before_the_content = $after_the_content = '';
+                $summay_args = $capability->get_caps($caps_args, 'before');
+                $before_the_content = $reviews_builder->get_summary_content($summay_args['before']);
+                $after_the_content = $reviews_builder->get_summary_content($summay_args['after']);
+                $form_and_list_content = $reviews_builder->get_reviews();
 
-                $location = 'before';
-                if ($location == 'before') {
-                    $content = $contents['summary'] . $content;
-                } else if ($location == 'after') {
-                    $content = $content . $contents['summary'];
-                }
-
-                $content = $content . $contents['form_and_lists'];
+                $content = $before_the_content . $content . $after_the_content . $form_and_list_content;
             }
 
             return $content;
