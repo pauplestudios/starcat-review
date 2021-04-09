@@ -15,8 +15,8 @@ if (!class_exists('\StarcatReview\App\Capabilities\Post_Level_Caps')) {
             $post_id = get_the_ID();
             $post_meta = get_post_meta($post_id, SCR_POST_META, true);
             $caps_args = array(
-                'post_author_review_caps' => array(),
-                'post_user_review_caps' => array(),
+                'post_author_review_caps' => array(), // need to change post_author_review_settings
+                'post_user_review_caps' => array(), // need to change post_user_review_settings
             );
 
             foreach ($caps_args as $key => $value) {
@@ -27,10 +27,10 @@ if (!class_exists('\StarcatReview\App\Capabilities\Post_Level_Caps')) {
             error_log('[$caps_args] : ' . print_r($caps_args, true));
             return $caps_args;
         }
-
+        // get_summary_args_by_caps
         public function get_caps(array $caps_args, string $type_of_location = 'after')
         {
-            $inverted_location = $type_of_location == 'after' ? 'before' : 'after';
+            // $inverted_location = $type_of_location == 'after' ? 'before' : 'after';
             $args = array(
                 'before' => array(),
                 'after' => array(),
@@ -42,13 +42,10 @@ if (!class_exists('\StarcatReview\App\Capabilities\Post_Level_Caps')) {
             $ar_location = $author_reviews_caps_args['location'];
             $ur_location = $user_reviews_caps_args['location'];
 
-            /*** Get both setting custom locations values  */
-            $ar_custom_location = $author_reviews_caps_args['custom_location'] == 1 ? true : false;
-            $ur_custom_location = $user_reviews_caps_args['custom_location'] == 1 ? true : false;
-            $both_are_custom_location = ($ar_custom_location && $ur_custom_location) ? true : false;
-            $not_in_custom_location = (!$both_are_custom_location) ? true : false;
+            // $both_are_custom_location = ($author_reviews_caps_args['custom_location'] && $user_reviews_caps_args['custom_location']) ? true : false;
+            // $not_in_custom_location = (!$both_are_custom_location) ? true : false;
 
-            $both_location_same_by_meta = (($ar_location == $ur_location) && ($ar_location != 'shorcode' && $ur_location != 'shortcode')) ? true : false;
+            // $both_location_same_by_meta = (($ar_location == $ur_location) && ($ar_location != 'shorcode' && $ur_location != 'shortcode')) ? true : false;
 
             $can_show_author_reviews = $this->can_show_the_review($author_reviews_caps_args, 'can_show_ar');
             $can_show_users_reviews = $this->can_show_the_review($user_reviews_caps_args, 'can_show_ur');
@@ -72,9 +69,10 @@ if (!class_exists('\StarcatReview\App\Capabilities\Post_Level_Caps')) {
                 $user_review = false;
 
                 if ($key == 'after') {
-                    $author_review = ($enable_author_review) ? true : false;
+                    $author_review = ($enable_author_review && $ar_location == 'after') ? true : false;
                     $user_review = ($enable_user_reviews && $ur_location == 'after') ? true : false;
                 } else {
+                    $author_review = ($enable_author_review && $ar_location == 'before') ? true : false;
                     $user_review = ($enable_user_reviews && $ur_location == 'before') ? true : false;
                 }
 
@@ -90,20 +88,30 @@ if (!class_exists('\StarcatReview\App\Capabilities\Post_Level_Caps')) {
 
         public function can_show_the_review(array $review_caps, string $review_type)
         {
-            $post_type = get_post_type();
-
-            $ar_enabled_post_types = SCR_Getter::get('ar_enabled_post_types');
-
-            // check the user (or) author review as custom location or not.
-            $custom_location = isset($review_caps['custom_location']) && $review_caps['custom_location'] == 1 ? true : false;
-
-            // don't show the user (or) author reviews if users choose the "location" option value as shortcode.
-            $use_shortcode = (isset($review_caps['location']) && $custom_location && $review_caps['location'] == 'shortcode') ? true : false;
+            $can_show = false;
 
             // show the user (or) author reviews or not
             $can_show_the_review = isset($review_caps) && $review_caps[$review_type] != 'dont_show' ? true : false;
 
-            $can_show_the_review = (in_array($post_type, $ar_enabled_post_types) && !$use_shortcode && $can_show_the_review) ? true : false;
+            if (!$can_show_the_review) {
+                return $can_show;
+            }
+
+            // check the user (or) author review as custom location or not.
+            $custom_location = ($review_caps['custom_location'] == 1) ? true : false;
+
+            // don't show the user (or) author reviews if users choose the "location" option value as shortcode.
+            $use_shortcode = ($custom_location && $review_caps['location'] == 'shortcode') ? true : false;
+
+            if ($use_shortcode) {
+                return $can_show;
+            }
+
+            $post_type = get_post_type();
+
+            $ar_enabled_post_types = SCR_Getter::get('ar_enabled_post_types');
+
+            $can_show_the_review = (in_array($post_type, $ar_enabled_post_types)) ? true : false;
 
             return $can_show_the_review;
         }
