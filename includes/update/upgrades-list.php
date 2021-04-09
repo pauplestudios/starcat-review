@@ -18,6 +18,7 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
                 '0.2' => 'upgrade_v02',
                 '0.6.1' => 'upgrade_v061',
                 '0.7' => 'upgrade_v07',
+                '0.7.6' => 'upgrade_v076',
             ];
 
             return $upgrades;
@@ -175,6 +176,49 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
             }
 
             return true;
+        }
+
+        public function upgrade_v076()
+        {
+            $option_name = 'scr_options';
+            $settings = get_option($option_name);
+            /* Set new version for verification later */
+            $settings['last_version'] = '0.7.6';
+
+            $review_enabled_post_types = isset($settings['review_enable_post-types']) && !empty($settings['review_enable_post-types']) ? $settings['review_enable_post-types'] : [];
+            $enable_author_review = isset($settings['enable-author-review']) ? $settings['enable-author-review'] : false;
+
+            $ur_enabled_post_types = array();
+            $ar_enabled_post_types = array();
+
+            /** copy the $review_enabled_post_types values to $ar_enabled_post_types if $enable_author_review is enable */
+            if ($enable_author_review) {
+                $ar_enabled_post_types = $review_enabled_post_types;
+            }
+
+            /** copy the $review_enabled_post_types values to $ur_enabled_post_types */
+            $ur_enabled_post_types = $review_enabled_post_types;
+
+            /** remove the 'enable-author-review' and 'review_enable_post-types' field  */
+            if (isset($settings['enable-author-review'])) {
+                unset($settings['enable-author-review']);
+            }
+
+            if (isset($settings['review_enable_post-types'])) {
+                unset($settings['enable-author-review']);
+            }
+
+            $settings['ur_enabled_post_types'] = $ur_enabled_post_types;
+            $settings['ar_enabled_post_types'] = $ar_enabled_post_types;
+
+            $result = update_option($option_name, $settings);
+            $updated_option = get_option($option_name);
+            if (isset($updated_option['last_version']) && $updated_option['last_version'] == '0.7.6') {
+                $result = true;
+            }
+
+            return $result;
+
         }
     } // END CLASS
 }
