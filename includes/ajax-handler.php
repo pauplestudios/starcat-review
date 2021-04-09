@@ -84,17 +84,17 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
 
         public function user_review_submission()
         {
-            $post_id  = isset($_POST['post_id']) && !empty($_POST['post_id']) ? $_POST['post_id'] : 0;
+            $post_id = isset($_POST['post_id']) && !empty($_POST['post_id']) ? $_POST['post_id'] : 0;
             $post = get_post($post_id);
             $is_enabled_captcha = SCR_Getter::get('ur_show_captcha');
-            if(isset($post) && $post->post_type == 'product'){
+            if (isset($post) && $post->post_type == 'product') {
                 $is_enabled_captcha = SCR_Getter::get('woo_show_captcha');
             }
 
             $is_reply_form = (isset($_POST['form_action_type']) && $_POST['form_action_type'] == 'reply') ? true : false;
             if ($is_enabled_captcha && !$is_reply_form) {
                 $captcha_success = Recaptcha::verify();
-                error_log('captcha_success : ' .$captcha_success );
+                error_log('captcha_success : ' . $captcha_success);
                 if ($captcha_success == false) {
                     error_log('*** captcha Failed ***');
                     echo json_encode("BOT!");
@@ -142,7 +142,8 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
 
         public function search_posts()
         {
-            $scr_enabled_post_types = SCR_Getter::get('review_enable_post-types');
+            //$scr_enabled_post_types = SCR_Getter::get('review_enable_post-types');
+            $scr_enabled_post_types = SCR_Getter::get_review_enabled_post_types();
             $args = array(
                 'post_type' => $scr_enabled_post_types,
                 'post_status' => array('publish'),
