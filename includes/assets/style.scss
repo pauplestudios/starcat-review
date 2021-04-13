@@ -29,13 +29,9 @@
 @import "styles/components/compare-table-custom.scss";
 
 /* Overrides for Dev Environment Only */
-// @import "styles/dev.scss";
 /* Vendors */
 // @import "vendors/comparison-table/scss/style.scss";
 
-html {
-    background: black;
-}
 
 .scr-container {
     margin: 40px 0 !important;
