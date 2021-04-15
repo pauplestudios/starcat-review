@@ -60,10 +60,10 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         {
             $this->woocommerce_settings($prefix);
             $this->general_settings($prefix);
+            $this->user_review_settings($prefix);
             $this->mainpage_settings($prefix);
             $this->category_page_settings($prefix);
             $this->single_page_settings($prefix);
-            $this->user_review_settings($prefix);
             $this->photo_reviews_settings($prefix);
             $this->notification_settings($prefix);
             $this->ct_settings($prefix);
