@@ -19,8 +19,10 @@ class reviews_template
 
     public function view()
     {
-        $list_controller = new \StarcatReview\App\Builders\Review_Builder();
-        return $list_controller->get_reviews();
+        $review_builder = new \StarcatReview\App\Builders\Review_Builder();
+        $review_summary_content = $review_builder->get_summary_content([]);
+        $form_and_list_content = $review_builder->get_reviews();
+        return $review_summary_content . $form_and_list_content;
     }
 }
 
