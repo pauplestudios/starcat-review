@@ -189,11 +189,11 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
             $enable_author_review = isset($settings['enable-author-review']) ? $settings['enable-author-review'] : false;
 
             $user_review_enabled_post_types = array();
-            $ar_enabled_post_types = array();
+            $author_review_enabled_post_types = array();
 
-            /** copy the $review_enabled_post_types values to $ar_enabled_post_types if $enable_author_review is enable */
+            /** copy the $review_enabled_post_types values to $author_review_enabled_post_types if $enable_author_review is enable */
             if ($enable_author_review) {
-                $ar_enabled_post_types = $review_enabled_post_types;
+                $author_review_enabled_post_types = $review_enabled_post_types;
             }
 
             /** copy the $review_enabled_post_types values to $user_review_enabled_post_types */
@@ -209,7 +209,7 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
             }
 
             $settings['ur_enabled_post_types'] = $user_review_enabled_post_types;
-            $settings['ar_enabled_post_types'] = $ar_enabled_post_types;
+            $settings['ar_enabled_post_types'] = $author_review_enabled_post_types;
 
             $result = update_option($option_name, $settings);
             $updated_option = get_option($option_name);

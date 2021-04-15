@@ -38,13 +38,13 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
             $author_reviews_caps_args = $caps_args['post_author_review_caps'];
             $user_reviews_caps_args = $caps_args['post_user_review_caps'];
 
-            $ar_location = $author_reviews_caps_args['location'];
+            $author_review_location = $author_reviews_caps_args['location'];
             $user_review_location = $user_reviews_caps_args['location'];
 
             // $both_are_custom_location = ($author_reviews_caps_args['custom_location'] && $user_reviews_caps_args['custom_location']) ? true : false;
             // $not_in_custom_location = (!$both_are_custom_location) ? true : false;
 
-            // $both_location_same_by_meta = (($ar_location == $user_review_location) && ($ar_location != 'shorcode' && $user_review_location != 'shortcode')) ? true : false;
+            // $both_location_same_by_meta = (($author_review_location == $user_review_location) && ($author_review_location != 'shorcode' && $user_review_location != 'shortcode')) ? true : false;
 
             $can_show_author_reviews = $this->can_show_the_review($author_reviews_caps_args, 'can_show_ar');
             $can_show_users_reviews = $this->can_show_the_review($user_reviews_caps_args, 'can_show_ur');
@@ -72,10 +72,10 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
                 $user_review = false;
 
                 if ($key == 'after') {
-                    $author_review = ($enable_author_review && $ar_location == 'after') ? true : false;
+                    $author_review = ($enable_author_review && $author_review_location == 'after') ? true : false;
                     $user_review = ($enable_user_reviews && $user_review_location == 'after') ? true : false;
                 } else {
-                    $author_review = ($enable_author_review && $ar_location == 'before') ? true : false;
+                    $author_review = ($enable_author_review && $author_review_location == 'before') ? true : false;
                     $user_review = ($enable_user_reviews && $user_review_location == 'before') ? true : false;
                 }
 
@@ -112,9 +112,9 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
 
             $post_type = get_post_type();
 
-            $ar_enabled_post_types = SCR_Getter::get('ar_enabled_post_types');
+            $author_review_enabled_post_types = SCR_Getter::get('ar_enabled_post_types');
 
-            $can_show_the_review = (in_array($post_type, $ar_enabled_post_types)) ? true : false;
+            $can_show_the_review = (in_array($post_type, $author_review_enabled_post_types)) ? true : false;
 
             return $can_show_the_review;
         }

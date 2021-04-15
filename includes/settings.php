@@ -1168,9 +1168,9 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             // TODO : remove it, later
             $locations = SCR_Getter::get_review_enabled_post_types();
 
-            $ar_enabled_post_types = SCR_Getter::get('ar_enabled_post_types');
+            $author_review_enabled_post_types = SCR_Getter::get('ar_enabled_post_types');
             // return, if users didn't like to show the author reviews in all post-types.
-            if (empty($ar_enabled_post_types)) {
+            if (empty($author_review_enabled_post_types)) {
                 return;
             }
             $prefix = SCR_POST_META;
@@ -1179,7 +1179,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
             \CSF::createMetabox($prefix, array(
                 'title' => __('Starcat Review', SCR_DOMAIN),
-                'post_type' => $ar_enabled_post_types,
+                'post_type' => $author_review_enabled_post_types,
                 'show_restore' => true,
                 'theme' => 'light',
             ));
