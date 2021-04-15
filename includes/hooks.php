@@ -235,15 +235,6 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         }
 
         /* Non-Hooked */
-        public function get_review_content($args)
-        {
-            $reviews_builder = new \StarcatReview\App\Builders\Review_Builder();
-            return [
-                'form_and_lists' => $reviews_builder->get_reviews(),
-                'summary' => $reviews_builder->get_summary_content($args),
-            ];
-        }
-
         public function enqueue_scripts()
         {
             /* Vendors */
