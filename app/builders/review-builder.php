@@ -23,10 +23,10 @@ if (!class_exists('\StarcatReview\App\Builders\Review_Builder')) {
             $args = $user_review_handler->get_default_args();
             $enabled_user_reviews = (isset($args['enable_user_reviews']) && !empty($args['enable_user_reviews'])) ? true : false;
 
-            /** can see the review form and review list-summary  */
-            $show_form_and_list_summary = (in_array($post_type, $enabled_post_types) && $enabled_user_reviews) ? true : false;
+            /** show the user review form and list  */
+            $show_user_review_form_and_list = (in_array($post_type, $enabled_post_types) && $enabled_user_reviews) ? true : false;
 
-            if ($show_form_and_list_summary) {
+            if ($show_user_review_form_and_list) {
                 $html .= $user_review_form->get_form($args);
                 $html .= $user_review_lists->get_lists_view($args);
             }
