@@ -221,12 +221,12 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
                     'pros-list' => array(),
                     'cons-list' => array(),
                     'post_author_review_settings' => array(
-                        'can_show_ar' => 'apply_global_settings',
+                        'can_show_author_review' => 'apply_global_settings',
                         'custom_location' => false,
                         'location' => 'after',
                     ),
                     'post_user_review_settings' => array(
-                        'can_show_ar' => 'apply_global_settings',
+                        'can_show_author_review' => 'apply_global_settings',
                         'custom_location' => false,
                         'location' => 'after',
                     ),
@@ -241,8 +241,8 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
                 }
 
                 if ($enable_author_review) {
-                    $post_meta_args['post_author_review_settings']['can_show_ar'] = 'dont_show';
-                    $post_meta_args['post_user_review_settings']['can_show_ar'] = 'dont_show';
+                    $post_meta_args['post_author_review_settings']['can_show_author_review'] = 'dont_show';
+                    $post_meta_args['post_user_review_settings']['can_show_author_review'] = 'dont_show';
                 }
 
                 update_post_meta($post_id, '_scr_post_options', $post_meta_args);

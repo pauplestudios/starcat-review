@@ -1644,7 +1644,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         //     'content' => __('Author Review Post Level Settings', SCR_DOMAIN),
                         // ),
                         array(
-                            'id' => 'can_show_ar',
+                            'id' => 'can_show_author_review',
                             'type' => 'select',
                             'title' => __('Display Author Review', SCR_DOMAIN),
                             'options' => array(
@@ -1660,7 +1660,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'title' => __('Enable Custom Location', SCR_DOMAIN),
                             'default' => false,
                             'dependency' => array(
-                                array('can_show_ar', 'any', 'apply_global_settings,show'),
+                                array('can_show_author_review', 'any', 'apply_global_settings,show'),
                             ),
                         ),
                         array(
@@ -1673,7 +1673,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                                 'shortcode' => __('Shortcode', SCR_DOMAIN),
                             ),
                             'dependency' => array(
-                                array('can_show_ar', 'any', 'apply_global_settings,show'),
+                                array('can_show_author_review', 'any', 'apply_global_settings,show'),
                                 array('custom_location', '==', 'true'),
                             ),
                         ),
@@ -1707,7 +1707,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         //     'content' => __('User Review Post Level Settings', SCR_DOMAIN),
                         // ),
                         array(
-                            'id' => 'can_show_ur',
+                            'id' => 'can_show_user_review',
                             'type' => 'select',
                             'title' => __('Display User Review', SCR_DOMAIN),
                             'options' => array(
@@ -1723,7 +1723,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'title' => __('Enable Custom Location', SCR_DOMAIN),
                             'default' => false,
                             'dependency' => array(
-                                array('can_show_ur', 'any', 'apply_global_settings,show'),
+                                array('can_show_user_review', 'any', 'apply_global_settings,show'),
                             ),
                         ),
                         array(
@@ -1736,7 +1736,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                                 'shortcode' => __('Shortcode', SCR_DOMAIN),
                             ),
                             'dependency' => array(
-                                array('can_show_ur', 'any', 'apply_global_settings,show'),
+                                array('can_show_user_review', 'any', 'apply_global_settings,show'),
                                 array('custom_location', '==', 'true'),
                             ),
                         ),

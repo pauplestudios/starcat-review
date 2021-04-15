@@ -46,12 +46,12 @@ class SinglePostCest
 
         $dont_show_args = array(
             'post_author_review_settings' => array(
-                'can_show_ur' => 'dont_show',
+                'can_show_user_review' => 'dont_show',
                 'custom_location' => 1,
                 'location' => 'shortcode',
             ),
             'post_user_review_settings' => array(
-                'can_show_ur' => 'dont_show',
+                'can_show_user_review' => 'dont_show',
                 'custom_location' => 1,
                 'location' => 'shortcode',
             ),
@@ -115,12 +115,12 @@ class SinglePostCest
                 ),
             ),
             'post_author_review_settings' => array(
-                'can_show_ur' => 'apply_global_settings',
+                'can_show_user_review' => 'apply_global_settings',
                 'custom_location' => 0,
                 'location' => 'after',
             ),
             'post_user_review_settings' => array(
-                'can_show_ur' => 'apply_global_settings',
+                'can_show_user_review' => 'apply_global_settings',
                 'custom_location' => 0,
                 'location' => 'after',
             ),

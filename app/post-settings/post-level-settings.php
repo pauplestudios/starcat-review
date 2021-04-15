@@ -41,8 +41,8 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
             $author_review_custom_location = isset($author_reviews_settings_args['custom_location']) && $author_reviews_settings_args['custom_location'] == 1 ? true : false;
             $user_review_custom_location = isset($user_reviews_settings_args['custom_location']) && $user_reviews_settings_args['custom_location'] == 1 ? true : false;
 
-            // $author_review_enabled_global_settings = ($author_review_custom_location && $author_reviews_settings_args['can_show_ar'] == 'apply_global_settings') ? true : false;
-            // $user_review_enabled_global_settings = ($user_review_custom_location && $user_reviews_settings_args['can_show_ur'] == 'apply_global_settings') ? true : false;
+            // $author_review_enabled_global_settings = ($author_review_custom_location && $author_reviews_settings_args['can_show_author_review'] == 'apply_global_settings') ? true : false;
+            // $user_review_enabled_global_settings = ($user_review_custom_location && $user_reviews_settings_args['can_show_user_review'] == 'apply_global_settings') ? true : false;
 
             $author_review_location = isset($author_reviews_settings_args['location']) ? $author_reviews_settings_args['location'] : 'after';
             $user_review_location = isset($user_reviews_settings_args['location']) ? $author_reviews_settings_args['location'] : 'after';
@@ -52,8 +52,8 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
 
             // $both_location_same_by_meta = (($author_review_location == $user_review_location) && ($author_review_location != 'shorcode' && $user_review_location != 'shortcode')) ? true : false;
 
-            $can_show_author_reviews = $this->can_show_the_review($author_reviews_settings_args, 'can_show_ar');
-            $can_show_users_reviews = $this->can_show_the_review($user_reviews_settings_args, 'can_show_ur');
+            $can_show_author_reviews = $this->can_show_the_review($author_reviews_settings_args, 'can_show_author_review');
+            $can_show_users_reviews = $this->can_show_the_review($user_reviews_settings_args, 'can_show_user_review');
             error_log('[$can_show_author_reviews] : ' . $can_show_author_reviews);
             /** show both reviews */
             $can_show_the_review = ($can_show_author_reviews && $can_show_users_reviews) ? 'both' : 'none';
