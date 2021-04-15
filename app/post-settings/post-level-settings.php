@@ -1,14 +1,14 @@
 <?php
 
-namespace StarcatReview\App\Capabilities;
+namespace StarcatReview\App\Post_Settings;
 
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
 use StarcatReview\Includes\Settings\SCR_Getter;
 
-if (!class_exists('\StarcatReview\App\Capabilities\Post_Level_Caps')) {
-    class Post_Level_Caps
+if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
+    class Post_Level_Settings
     {
         public function get_author_and_user_reviews_caps(array $params = array())
         {

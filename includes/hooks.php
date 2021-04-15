@@ -218,7 +218,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             $post_type = get_post_type(get_the_ID());
             if (is_singular() && $post_type !== 'product') {
                 $reviews_builder = new \StarcatReview\App\Builders\Review_Builder();
-                $capability = new \StarcatReview\App\Capabilities\Post_Level_Caps();
+                $capability = new \StarcatReview\App\Post_Settings\Post_Level_Settings();
                 $caps_args = $capability->get_author_and_user_reviews_caps();
 
                 $before_the_content = $after_the_content = '';
