@@ -1165,17 +1165,9 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         /* Single Post - Meta Data Options */
         public function single_post_meta_fields()
         {
-            // TODO : remove it, later
-            $locations = SCR_Getter::get_review_enabled_post_types();
-
             $author_review_enabled_post_types = SCR_Getter::get('author_review_enabled_post_types');
-            // return, if users didn't like to show the author reviews in all post-types.
-            if (empty($author_review_enabled_post_types)) {
-                return;
-            }
+
             $prefix = SCR_POST_META;
-            // TODO : remove it, later - No Need to check author is enable/disable
-            $enabled_author_review = SCR_Getter::get('enable-author-review');
 
             \CSF::createMetabox($prefix, array(
                 'title' => __('Starcat Review', SCR_DOMAIN),
@@ -1184,13 +1176,12 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 'theme' => 'light',
             ));
 
-            // if ($enabled_author_review) { }
-
             $this->single_post_features($prefix);
             $this->single_post_pros($prefix);
             $this->single_post_cons($prefix);
             $this->single_post_level_author_review_features($prefix);
             $this->single_post_level_user_review_features($prefix);
+
             /** tabbed view */
             // $this->single_review_settings($prefix);
             // $this->single_details($prefix);
