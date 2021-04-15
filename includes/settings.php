@@ -297,7 +297,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         // ),
 
                         array(
-                            'id' => 'ur_enabled_post_types',
+                            'id' => 'user_review_enabled_post_types',
                             'type' => 'select',
                             'title' => __('Where to include user reviews?', SCR_DOMAIN),
                             'chosen' => true,
@@ -928,7 +928,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         // ),
 
                         array(
-                            'id' => 'ar_enabled_post_types',
+                            'id' => 'author_review_enabled_post_types',
                             'type' => 'select',
                             'title' => __('Where to include Author Reviews?', SCR_DOMAIN),
                             'chosen' => true,
@@ -941,7 +941,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'default' => ['post'],
                         ),
 
-                        /*** Note :- no need for this field. after adding the "ar_enabled_post_types" field */
+                        /*** Note :- no need for this field. after adding the "author_review_enabled_post_types" field */
                         // array(
                         //     'id' => 'enable-author-review',
                         //     'type' => 'switcher',
@@ -1168,7 +1168,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             // TODO : remove it, later
             $locations = SCR_Getter::get_review_enabled_post_types();
 
-            $author_review_enabled_post_types = SCR_Getter::get('ar_enabled_post_types');
+            $author_review_enabled_post_types = SCR_Getter::get('author_review_enabled_post_types');
             // return, if users didn't like to show the author reviews in all post-types.
             if (empty($author_review_enabled_post_types)) {
                 return;

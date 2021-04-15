@@ -77,8 +77,8 @@ class SinglePostCest
     protected function enable_author_review_for_post($I)
     {
         $I->haveOptionInDatabase('scr_options', array(
-            'ar_enabled_post_types' => ['post', 'page'],
-            'ur_enabled_post_types' => ['post', 'page'],
+            'author_review_enabled_post_types' => ['post', 'page'],
+            'user_review_enabled_post_types' => ['post', 'page'],
             'enable-pros-cons' => 1,
             'enable_user_reviews' => 1,
         ));

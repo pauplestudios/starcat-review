@@ -40,9 +40,9 @@ class EnableOrDisableUserReviewsCest
     {
         $options = [
 
-            /** TODO: use - 'ur_enabled_post_types' since - v0.7.6  */
+            /** TODO: use - 'user_review_enabled_post_types' since - v0.7.6  */
             // 'review_enable_post-types' => ['post'],
-            'ur_enabled_post_types' => ['post'],
+            'user_review_enabled_post_types' => ['post'],
             'enable_user_reviews' => $enable_user_reviews,
             'is_enable_prosandcons' => true,
         ];

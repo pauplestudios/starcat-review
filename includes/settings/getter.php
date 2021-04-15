@@ -61,7 +61,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'enable_user_reviews' => true,
                 'enable-pros-cons' => true,
                 'review_enable_post-types' => ['post'],
-                'ar_enabled_post_types' => ['post'], // for author reviews
+                'author_review_enabled_post_types' => ['post'], // for author reviews
                 'global_stats' => ['stat_name' => 'Feature'],
                 'stat-singularity' => 'single',
                 'stats-type' => 'star',
@@ -150,7 +150,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
 
                 // User Review Start
                 // 'ur_enable_post-types' => ['post'],
-                'ur_enabled_post_types' => ['post'],
+                'user_review_enabled_post_types' => ['post'],
                 'ur_show_controls' => true,
                 'ur_controls_subheading' => true,
                 'ur_show_search' => true,
@@ -302,9 +302,9 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
 
         public static function get_review_enabled_post_types()
         {
-            /** TODO: use - 'ur_enabled_post_types' since - v0.7.6  */
+            /** TODO: use - 'user_review_enabled_post_types' since - v0.7.6  */
             // $post_types = self::get('review_enable_post-types');
-            $post_types = self::get('ur_enabled_post_types');
+            $post_types = self::get('user_review_enabled_post_types');
             $enabled_post_types = is_string($post_types) ? [0 => $post_types] : $post_types;
             if (self::is_woocommerce_plugin_active()) {
                 array_push($enabled_post_types, 'product');

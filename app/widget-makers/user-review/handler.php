@@ -73,7 +73,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review\Handler')) {
                 'show_description' => SCR_Getter::get('ur_show_description'),
                 'show_captcha' => SCR_Getter::get('ur_show_captcha'),
                 'current_user_id' => get_current_user_id(),
-                'ar_enabled_post_types' => SCR_Getter::get('ar_enabled_post_types'),
+                'author_review_enabled_post_types' => SCR_Getter::get('author_review_enabled_post_types'),
             ];
             return $args;
         }

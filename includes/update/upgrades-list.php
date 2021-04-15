@@ -208,8 +208,8 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
                 unset($settings['enable-author-review']);
             }
 
-            $settings['ur_enabled_post_types'] = $user_review_enabled_post_types;
-            $settings['ar_enabled_post_types'] = $author_review_enabled_post_types;
+            $settings['user_review_enabled_post_types'] = $user_review_enabled_post_types;
+            $settings['author_review_enabled_post_types'] = $author_review_enabled_post_types;
 
             $result = update_option($option_name, $settings);
             $updated_option = get_option($option_name);

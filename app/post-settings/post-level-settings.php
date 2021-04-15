@@ -112,7 +112,7 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
 
             $post_type = get_post_type();
 
-            $author_review_enabled_post_types = SCR_Getter::get('ar_enabled_post_types');
+            $author_review_enabled_post_types = SCR_Getter::get('author_review_enabled_post_types');
 
             $can_show_the_review = (in_array($post_type, $author_review_enabled_post_types)) ? true : false;
 
