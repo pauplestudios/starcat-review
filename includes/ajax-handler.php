@@ -120,11 +120,11 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
 
         public function vote_handler()
         {
-            $ur_repo = new \StarcatReview\App\Repositories\User_Reviews_Repo();
-            $props = $ur_repo->get_processed_voting_data();
+            $user_review_repo = new \StarcatReview\App\Repositories\User_Reviews_Repo();
+            $props = $user_review_repo->get_processed_voting_data();
             // error_log('props : ' . print_r($props, true));
-            $ur_repo->store_vote($props);
-            $props = $ur_repo->get($props['comment_id']);
+            $user_review_repo->store_vote($props);
+            $props = $user_review_repo->get($props['comment_id']);
 
             echo json_encode($props);
 

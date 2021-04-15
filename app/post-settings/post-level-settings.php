@@ -39,12 +39,12 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
             $user_reviews_caps_args = $caps_args['post_user_review_caps'];
 
             $ar_location = $author_reviews_caps_args['location'];
-            $ur_location = $user_reviews_caps_args['location'];
+            $user_review_location = $user_reviews_caps_args['location'];
 
             // $both_are_custom_location = ($author_reviews_caps_args['custom_location'] && $user_reviews_caps_args['custom_location']) ? true : false;
             // $not_in_custom_location = (!$both_are_custom_location) ? true : false;
 
-            // $both_location_same_by_meta = (($ar_location == $ur_location) && ($ar_location != 'shorcode' && $ur_location != 'shortcode')) ? true : false;
+            // $both_location_same_by_meta = (($ar_location == $user_review_location) && ($ar_location != 'shorcode' && $user_review_location != 'shortcode')) ? true : false;
 
             $can_show_author_reviews = $this->can_show_the_review($author_reviews_caps_args, 'can_show_ar');
             $can_show_users_reviews = $this->can_show_the_review($user_reviews_caps_args, 'can_show_ur');
@@ -73,10 +73,10 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
 
                 if ($key == 'after') {
                     $author_review = ($enable_author_review && $ar_location == 'after') ? true : false;
-                    $user_review = ($enable_user_reviews && $ur_location == 'after') ? true : false;
+                    $user_review = ($enable_user_reviews && $user_review_location == 'after') ? true : false;
                 } else {
                     $author_review = ($enable_author_review && $ar_location == 'before') ? true : false;
-                    $user_review = ($enable_user_reviews && $ur_location == 'before') ? true : false;
+                    $user_review = ($enable_user_reviews && $user_review_location == 'before') ? true : false;
                 }
 
                 $summary_args['enable-author-review'] = $author_review;

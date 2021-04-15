@@ -63,8 +63,8 @@ class VerifiedOwnersReviewTest extends \Codeception\TestCase\WPTestCase
             ],
         ];
 
-        $UR_Repo = new \StarcatReview\App\Repositories\User_Reviews_Repo();
-        $review_id = $UR_Repo->insert($props);
+        $user_review_repo = new \StarcatReview\App\Repositories\User_Reviews_Repo();
+        $review_id = $user_review_repo->insert($props);
 
         return $review_id;
     }

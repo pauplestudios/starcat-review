@@ -188,7 +188,7 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
             $review_enabled_post_types = isset($settings['review_enable_post-types']) && !empty($settings['review_enable_post-types']) ? $settings['review_enable_post-types'] : [];
             $enable_author_review = isset($settings['enable-author-review']) ? $settings['enable-author-review'] : false;
 
-            $ur_enabled_post_types = array();
+            $user_review_enabled_post_types = array();
             $ar_enabled_post_types = array();
 
             /** copy the $review_enabled_post_types values to $ar_enabled_post_types if $enable_author_review is enable */
@@ -196,8 +196,8 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
                 $ar_enabled_post_types = $review_enabled_post_types;
             }
 
-            /** copy the $review_enabled_post_types values to $ur_enabled_post_types */
-            $ur_enabled_post_types = $review_enabled_post_types;
+            /** copy the $review_enabled_post_types values to $user_review_enabled_post_types */
+            $user_review_enabled_post_types = $review_enabled_post_types;
 
             /** remove the 'enable-author-review' and 'review_enable_post-types' field  */
             if (isset($settings['enable-author-review'])) {
@@ -208,7 +208,7 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
                 unset($settings['enable-author-review']);
             }
 
-            $settings['ur_enabled_post_types'] = $ur_enabled_post_types;
+            $settings['ur_enabled_post_types'] = $user_review_enabled_post_types;
             $settings['ar_enabled_post_types'] = $ar_enabled_post_types;
 
             $result = update_option($option_name, $settings);
