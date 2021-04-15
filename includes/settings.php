@@ -1634,7 +1634,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             $fields = $this->get_post_level_author_review_fields();
 
             \CSF::createSection($prefix, array(
-                'id' => 'post_author_review_caps',
+                'id' => 'post_author_review_settings',
                 'title' => __('Author Review Settings', SCR_DOMAIN),
                 'icon' => 'fa fa-cogs',
                 'fields' => $fields,
@@ -1645,7 +1645,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         {
             return array(
                 array(
-                    'id' => 'post_author_review_caps',
+                    'id' => 'post_author_review_settings',
                     'type' => 'fieldset',
                     'fields' => array(
                         // array(
@@ -1697,7 +1697,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             $fields = $this->get_post_level_user_review_fields();
 
             \CSF::createSection($prefix, array(
-                'id' => 'post_user_review_caps',
+                'id' => 'post_user_review_settings',
                 'title' => __('User Review Settings', SCR_DOMAIN),
                 'icon' => 'fa fa-cogs',
                 'fields' => $fields,
@@ -1708,7 +1708,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         {
             return array(
                 array(
-                    'id' => 'post_user_review_caps',
+                    'id' => 'post_user_review_settings',
                     'type' => 'fieldset',
                     'fields' => array(
                         // array(

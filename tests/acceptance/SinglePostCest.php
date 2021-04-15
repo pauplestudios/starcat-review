@@ -45,12 +45,12 @@ class SinglePostCest
         $meta_data = $this->get_author_reviews_arg();
 
         $dont_show_args = array(
-            'post_author_review_caps' => array(
+            'post_author_review_settings' => array(
                 'can_show_ur' => 'dont_show',
                 'custom_location' => 1,
                 'location' => 'shortcode',
             ),
-            'post_user_review_caps' => array(
+            'post_user_review_settings' => array(
                 'can_show_ur' => 'dont_show',
                 'custom_location' => 1,
                 'location' => 'shortcode',
@@ -114,12 +114,12 @@ class SinglePostCest
                     'item' => 'cons3',
                 ),
             ),
-            'post_author_review_caps' => array(
+            'post_author_review_settings' => array(
                 'can_show_ur' => 'apply_global_settings',
                 'custom_location' => 0,
                 'location' => 'after',
             ),
-            'post_user_review_caps' => array(
+            'post_user_review_settings' => array(
                 'can_show_ur' => 'apply_global_settings',
                 'custom_location' => 0,
                 'location' => 'after',
