@@ -38,6 +38,9 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
             $author_reviews_settings_args = $post_settings_args['post_author_review_settings'];
             $user_reviews_settings_args = $post_settings_args['post_user_review_settings'];
 
+            $author_review_enabled_global_settings = $author_reviews_settings_args['can_show_ar'] == 'apply_global_settings' ? true : false;
+            $user_review_enabled_global_settings = $user_reviews_settings_args['can_show_ur'] == 'apply_global_settings' ? true : false;
+
             $author_review_location = $author_reviews_settings_args['location'];
             $user_review_location = $user_reviews_settings_args['location'];
 
@@ -62,7 +65,7 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
             }
 
             $enable_author_review = ($can_show_the_review == 'both' || $can_show_the_review == 'auth_reviews') ? true : false;
-            $enable_user_reviews = ($can_show_the_review == 'both' || $can_show_the_review == 'user_reviews') ? true : false;
+            $enable_user_review = ($can_show_the_review == 'both' || $can_show_the_review == 'user_reviews') ? true : false;
 
             foreach ($args as $key => $value) {
 
@@ -73,10 +76,10 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
 
                 if ($key == 'after') {
                     $author_review = ($enable_author_review && $author_review_location == 'after') ? true : false;
-                    $user_review = ($enable_user_reviews && $user_review_location == 'after') ? true : false;
+                    $user_review = ($enable_user_review && $user_review_location == 'after') ? true : false;
                 } else {
                     $author_review = ($enable_author_review && $author_review_location == 'before') ? true : false;
-                    $user_review = ($enable_user_reviews && $user_review_location == 'before') ? true : false;
+                    $user_review = ($enable_user_review && $user_review_location == 'before') ? true : false;
                 }
 
                 $summary_args['enable-author-review'] = $author_review;
@@ -85,7 +88,7 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
 
                 $args[$key] = $summary_args;
             }
-
+            error_log('[$args] : ' . print_r($args, true));
             return $args;
         }
 
