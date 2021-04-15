@@ -180,11 +180,78 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
 
         public function upgrade_v076()
         {
+            $result = false;
+
             $option_name = 'scr_options';
             $settings = get_option($option_name);
+
             /* Set new version for verification later */
             $settings['last_version'] = '0.7.6';
 
+            $this->upgrade_below_v076_part_1($settings);
+            $this->upgrade_below_v076_part_2($settings);
+
+            return $result;
+
+        }
+
+        public function upgrade_below_v076_part_1($settings)
+        {
+            $review_enabled_post_types = isset($settings['review_enable_post-types']) && !empty($settings['review_enable_post-types']) ? $settings['review_enable_post-types'] : [];
+            $enable_author_review = isset($settings['enable-author-review']) ? $settings['enable-author-review'] : false;
+
+            if (empty($review_enabled_post_types)) {
+                return true;
+            }
+
+            $posts = get_posts(array('post_type' => $review_enabled_post_types));
+
+            if (empty($posts)) {
+                return true;
+            }
+
+            foreach ($posts as $post) {
+                $post_id = isset($post) ? $post->ID : 0;
+                if (empty($post_id)) {
+                    continue;
+                }
+
+                $post_meta = get_post_meta($post_id, '_scr_post_options', true);
+                $post_meta_args = array(
+                    'pros-list' => array(),
+                    'cons-list' => array(),
+                    'post_author_review_settings' => array(
+                        'can_show_ar' => 'apply_global_settings',
+                        'custom_location' => false,
+                        'location' => 'after',
+                    ),
+                    'post_user_review_settings' => array(
+                        'can_show_ar' => 'apply_global_settings',
+                        'custom_location' => false,
+                        'location' => 'after',
+                    ),
+                );
+
+                if (isset($post_meta['pros-list']) && !empty($post_meta['pros-list'])) {
+                    $post_meta_args['pros-list'] = $post_meta['pros-list'];
+                }
+
+                if (isset($post_meta['cons-list']) && !empty($post_meta['cons-list'])) {
+                    $post_meta_args['cons-list'] = $post_meta['cons-list'];
+                }
+
+                if ($enable_author_review) {
+                    $post_meta_args['post_author_review_settings']['can_show_ar'] = 'dont_show';
+                    $post_meta_args['post_user_review_settings']['can_show_ar'] = 'dont_show';
+                }
+
+                update_post_meta($post_id, '_scr_post_options', $post_meta_args);
+            }
+            return true;
+        }
+
+        public function upgrade_below_v076_part_2($settings)
+        {
             $review_enabled_post_types = isset($settings['review_enable_post-types']) && !empty($settings['review_enable_post-types']) ? $settings['review_enable_post-types'] : [];
             $enable_author_review = isset($settings['enable-author-review']) ? $settings['enable-author-review'] : false;
 
@@ -216,9 +283,7 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
             if (isset($updated_option['last_version']) && $updated_option['last_version'] == '0.7.6') {
                 $result = true;
             }
-
             return $result;
-
         }
     } // END CLASS
 }
