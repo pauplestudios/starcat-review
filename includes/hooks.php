@@ -219,10 +219,10 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             if (is_singular() && $post_type !== 'product') {
                 $reviews_builder = new \StarcatReview\App\Builders\Review_Builder();
                 $post_level_settings = new \StarcatReview\App\Post_Settings\Post_Level_Settings();
-                $caps_args = $post_level_settings->get_author_and_user_reviews_settings();
+                $post_settings_args = $post_level_settings->get_author_and_user_reviews_settings();
 
                 $before_the_content = $after_the_content = '';
-                $summay_args = $post_level_settings->get_summary_args_by_post_settings($caps_args);
+                $summay_args = $post_level_settings->get_summary_args_by_post_settings($post_settings_args);
 
                 $before_the_content = $reviews_builder->get_summary_content($summay_args['before']);
                 $after_the_content = $reviews_builder->get_summary_content($summay_args['after']);
