@@ -60,7 +60,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'enable-author-review' => true,
                 'enable_user_reviews' => true,
                 'enable-pros-cons' => true,
-                'review_enable_post-types' => ['post'],
+                // 'review_enable_post-types' => ['post'], // not-used since 0.7.6
                 'author_review_enabled_post_types' => ['post'], // for author reviews
                 'global_stats' => ['stat_name' => 'Feature'],
                 'stat-singularity' => 'single',
