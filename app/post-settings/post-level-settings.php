@@ -24,7 +24,7 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
                     $post_settings_args[$key] = $post_meta[$key];
                 }
             }
-            error_log('[$post_settings_args] : ' . print_r($post_settings_args, true));
+            // error_log('[$post_settings_args] : ' . print_r($post_settings_args, true));
             return $post_settings_args;
         }
 
@@ -35,26 +35,19 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
                 'after' => array(),
             );
 
+            // get single post user and author settings
             $author_reviews_settings_args = $post_settings_args['post_author_review_settings'];
             $user_reviews_settings_args = $post_settings_args['post_user_review_settings'];
 
-            $author_review_custom_location = isset($author_reviews_settings_args['custom_location']) && $author_reviews_settings_args['custom_location'] == 1 ? true : false;
-            $user_review_custom_location = isset($user_reviews_settings_args['custom_location']) && $user_reviews_settings_args['custom_location'] == 1 ? true : false;
-
-            // $author_review_enabled_global_settings = ($author_review_custom_location && $author_reviews_settings_args['can_show_author_review'] == 'apply_global_settings') ? true : false;
-            // $user_review_enabled_global_settings = ($user_review_custom_location && $user_reviews_settings_args['can_show_user_review'] == 'apply_global_settings') ? true : false;
+            // apply the global settings for both reviews
+            $global_settings = $this->apply_global_settings($post_settings_args);
 
             $author_review_location = isset($author_reviews_settings_args['location']) ? $author_reviews_settings_args['location'] : 'after';
-            $user_review_location = isset($user_reviews_settings_args['location']) ? $author_reviews_settings_args['location'] : 'after';
-
-            // $both_are_custom_location = ($author_reviews_settings_args['custom_location'] && $user_reviews_settings_args['custom_location']) ? true : false;
-            // $not_in_custom_location = (!$both_are_custom_location) ? true : false;
-
-            // $both_location_same_by_meta = (($author_review_location == $user_review_location) && ($author_review_location != 'shorcode' && $user_review_location != 'shortcode')) ? true : false;
+            $user_review_location = isset($user_reviews_settings_args['location']) ? $user_reviews_settings_args['location'] : 'after';
 
             $can_show_author_reviews = $this->can_show_the_review($author_reviews_settings_args, 'can_show_author_review');
             $can_show_users_reviews = $this->can_show_the_review($user_reviews_settings_args, 'can_show_user_review');
-            error_log('[$can_show_author_reviews] : ' . $can_show_author_reviews);
+
             /** show both reviews */
             $can_show_the_review = ($can_show_author_reviews && $can_show_users_reviews) ? 'both' : 'none';
 
@@ -69,21 +62,22 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
 
             $enable_author_review = ($can_show_the_review == 'both' || $can_show_the_review == 'auth_reviews') ? true : false;
             $enable_user_review = ($can_show_the_review == 'both' || $can_show_the_review == 'user_reviews') ? true : false;
-            error_log('[$enable_author_review] : ' . $enable_author_review);
-            error_log('[$enable_user_review] : ' . $enable_user_review);
+            // error_log('[$enable_author_review] : ' . $enable_author_review);
+
             foreach ($args as $key => $value) {
 
                 /** Get the default summary args */
                 $summary_args = $this->get_default_summary_args($key);
-                $author_review = false;
-                $user_review = false;
+
+                $author_review = ($enable_author_review && $author_review_location == $key) ? true : false;
+                $user_review = ($enable_user_review && $user_review_location == $key) ? true : false;
 
                 if ($key == 'after') {
-                    $author_review = ($enable_author_review && $author_review_location == 'after') ? true : false;
-                    $user_review = ($enable_user_review && $user_review_location == 'after') ? true : false;
+                    $author_review = ($global_settings['author_review'] == 1) ? true : $author_review;
+                    $user_review = ($global_settings['user_review'] == 1) ? true : $user_review;
                 } else {
-                    $author_review = ($enable_author_review && $author_review_location == 'before') ? true : false;
-                    $user_review = ($enable_user_review && $user_review_location == 'before') ? true : false;
+                    $author_review = ($global_settings['author_review'] == 1) ? false : $author_review;
+                    $user_review = ($global_settings['user_review'] == 1) ? false : $user_review;
                 }
 
                 $summary_args['enable-author-review'] = $author_review;
@@ -92,7 +86,6 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
 
                 $args[$key] = $summary_args;
             }
-            error_log('[$args] : ' . print_r($args, true));
             return $args;
         }
 
@@ -108,7 +101,7 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
 
             // 1.2 Show + Shortcode
             // check the user (or) author review as custom location or not.
-            $custom_location = ($review_settings['custom_location'] == 1) ? true : false;
+            $custom_location = (isset($review_settings['custom_location']) && $review_settings['custom_location'] == 1) ? true : false;
 
             // don't show the user (or) author reviews if users choose the "location" option value as shortcode.
             $use_shortcode = ($custom_location && $review_settings['location'] == 'shortcode') ? true : false;
@@ -125,14 +118,36 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
             // 2. Apply Global Settings
             $post_type = get_post_type();
 
-            $author_review_enabled_post_types = SCR_Getter::get('author_review_enabled_post_types');
-
-            if (empty($author_review_enabled_post_types)) {
-                return false;
+            /** Current post_type has product, check with enable_reviews_on_woocommerce */
+            if ($post_type == 'product') {
+                $enable_reviews_on_woocommerce = SCR_Getter::get('enable_reviews_on_woocommerce');
+                return ($enable_reviews_on_woocommerce) ? true : false;
             }
 
-            // show the user (or) author reviews or not
-            $can_show_the_review = (in_array($post_type, $author_review_enabled_post_types)) ? true : false;
+            $can_show_the_review = false;
+            if ($review_type == 'author_reviews') {
+
+                // show the author reviews or not by global settings
+                $author_review_enabled_post_types = SCR_Getter::get('author_review_enabled_post_types');
+
+                if (empty($author_review_enabled_post_types)) {
+                    return false;
+                }
+
+                $can_show_the_review = (in_array($post_type, $author_review_enabled_post_types)) ? true : false;
+
+            } else {
+
+                // show the user reviews or not by global settings
+                $user_review_enabled_post_types = SCR_Getter::get('user_review_enabled_post_types');
+
+                if (empty($user_review_enabled_post_types)) {
+                    return false;
+                }
+
+                $can_show_the_review = (in_array($post_type, $user_review_enabled_post_types)) ? true : false;
+            }
+
             return $can_show_the_review;
         }
 
@@ -147,5 +162,29 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
 
             return $args;
         }
+
+        private function apply_global_settings($post_settings_args)
+        {
+
+            $args = array(
+                'author_review' => false,
+                'user_review' => false,
+            );
+
+            $author_reviews_settings_args = isset($post_settings_args['post_author_review_settings']) ? $post_settings_args['post_author_review_settings'] : [];
+            $user_reviews_settings_args = isset($post_settings_args['post_user_review_settings']) ? $post_settings_args['post_user_review_settings'] : [];
+
+            $can_show_author_review = isset($author_reviews_settings_args['can_show_author_review']) ? $author_reviews_settings_args['can_show_author_review'] : '';
+            $can_show_user_review = isset($user_reviews_settings_args['can_show_user_review']) ? $user_reviews_settings_args['can_show_user_review'] : '';
+
+            $author_review_custom_location = isset($author_reviews_settings_args['custom_location']) && $author_reviews_settings_args['custom_location'] == 1 ? true : false;
+            $user_review_custom_location = isset($user_reviews_settings_args['custom_location']) && $user_reviews_settings_args['custom_location'] == 1 ? true : false;
+
+            $args['author_review'] = ($can_show_author_review != 'dont_show' && !$author_review_custom_location) ? true : false;
+            $args['user_review'] = ($can_show_user_review != 'dont_show' && !$user_review_custom_location) ? true : false;
+
+            return $args;
+        }
+
     }
 }

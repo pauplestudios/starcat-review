@@ -14,7 +14,7 @@ if (!class_exists('\StarcatReview\App\Components\Summary\View')) {
 
         public function get(array $props)
         {
-            error_log('[$props] : ' . print_r($props, true));
+            // error_log('[$props] : ' . print_r($props, true));
             $author_summary = $this->get_author_summary($props);
             $users_summary = $this->get_users_summary($props);
 
