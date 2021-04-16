@@ -1634,6 +1634,10 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
         public function get_post_level_author_review_fields()
         {
+            // user reviews settings URL
+            $author_review_settings_page_url = admin_url("admin.php?page=scr-settings#tab=general-settings");
+            $url_content = sprintf(__("Check Global Author Review Settings %s", SCR_DOMAIN), '<a href="' . $author_review_settings_page_url . '" target="_blank">' . __('url', SCR_DOMAIN) . '</a>');
+
             return array(
                 array(
                     'id' => 'post_author_review_settings',
@@ -1653,6 +1657,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                                 'dont_show' => __("Don't Show", SCR_DOMAIN),
                             ),
                             'default' => 'apply_global_settings',
+                            'after' => $url_content,
                         ),
                         array(
                             'id' => 'custom_location',
@@ -1684,6 +1689,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'after' => __('Copy Clipboard', SCR_DOMAIN),
                             // 'desc' => __('Copy and Paste this shortcode in the content', SCR_DOMAIN),
                             'dependency' => array(
+                                array('can_show_author_review', 'any', 'apply_global_settings,show'),
                                 array('custom_location', '==', 'true'),
                                 array('location', '==', 'shortcode'),
                             ),
@@ -1710,6 +1716,16 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
         public function get_post_level_user_review_fields()
         {
+            // user reviews settings URL
+            $global_settings_page_url = admin_url("admin.php?page=scr-settings#tab=user-reviews");
+
+            // overrite the setting url, if current pags is product
+            if (SCR_Getter::is_admin_product_page()) {
+                $global_settings_page_url = admin_url("admin.php?page=scr-settings#tab=woocommerce-settings");
+            }
+
+            $url_content = sprintf(__("Check Global User Review Settings %s", SCR_DOMAIN), '<a href="' . $global_settings_page_url . '" target="_blank">' . __('url', SCR_DOMAIN) . '</a>');
+
             return array(
                 array(
                     'id' => 'post_user_review_settings',
@@ -1728,6 +1744,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                                 'show' => __('Show', SCR_DOMAIN),
                                 'dont_show' => __("Don't Show", SCR_DOMAIN),
                             ),
+                            'after' => $url_content,
                             'default' => 'apply_global_settings',
                         ),
                         array(
@@ -1767,6 +1784,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'after' => __('Copy Clipboard', SCR_DOMAIN),
                             // 'desc' => __('Copy and Paste this shortcode in the content', SCR_DOMAIN),
                             'dependency' => array(
+                                array('can_show_user_review', 'any', 'apply_global_settings,show'),
                                 array('custom_location', '==', 'true'),
                                 array('location', '==', 'shortcode'),
                             ),
