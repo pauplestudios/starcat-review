@@ -35,6 +35,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review\Handler')) {
             $args['pros-list'] = [];
             $args['cons-list'] = [];
             $args['post_author_review_settings'] = [];
+            $args['post_user_review_settings'] = [];
 
             if (isset($post_meta['pros-list']) && !empty($post_meta['pros-list'])) {
                 $args['pros-list'] = $post_meta['pros-list'];
@@ -45,6 +46,10 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review\Handler')) {
 
             if (isset($post_meta['post_author_review_settings']) && !empty($post_meta['post_author_review_settings'])) {
                 $args['post_author_review_settings'] = $post_meta['post_author_review_settings'];
+            }
+
+            if (isset($post_meta['post_user_review_settings']) && !empty($post_meta['post_user_review_settings'])) {
+                $args['post_user_review_settings'] = $post_meta['post_user_review_settings'];
             }
 
             $components = ['comments', 'stats', 'prosandcons', 'votes', 'attachments'];
