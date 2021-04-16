@@ -1684,6 +1684,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'after' => __('Copy Clipboard', SCR_DOMAIN),
                             // 'desc' => __('Copy and Paste this shortcode in the content', SCR_DOMAIN),
                             'dependency' => array(
+                                array('can_show_author_review', 'any', 'apply_global_settings,show'),
                                 array('location', '==', 'shortcode'),
                             ),
                             'attributes' => array(
@@ -1731,6 +1732,10 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'default' => 'apply_global_settings',
                         ),
                         array(
+                            'type' => 'subheading',
+                            'content' => __("User Review Summary", SCR_DOMAIN),
+                        ),
+                        array(
                             'id' => 'custom_location',
                             'type' => 'switcher',
                             'title' => __('Enable Custom Location', SCR_DOMAIN),
@@ -1760,6 +1765,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'after' => __('Copy Clipboard', SCR_DOMAIN),
                             // 'desc' => __('Copy and Paste this shortcode in the content', SCR_DOMAIN),
                             'dependency' => array(
+                                array('can_show_user_review', 'any', 'apply_global_settings,show'),
                                 array('location', '==', 'shortcode'),
                             ),
                             'attributes' => array(
