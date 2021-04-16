@@ -252,6 +252,7 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
 
         public function upgrade_below_v076_part_2($settings)
         {
+            $option_name = 'scr_options';
             $review_enabled_post_types = isset($settings['review_enable_post-types']) && !empty($settings['review_enable_post-types']) ? $settings['review_enable_post-types'] : [];
             $enable_author_review = isset($settings['enable-author-review']) ? $settings['enable-author-review'] : false;
 
