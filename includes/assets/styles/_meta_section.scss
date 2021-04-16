@@ -1,11 +1,11 @@
 .scr_clipboard{
     display: flex;
     align-items: center;
-
-    & input{
-        border-radius: 0px;
+    /** styles apply only for csf */
+    & input[type="text"]{
+        border-radius: 0px !important;
     }
-    /** styles apply for csf */
+    
     & .csf-after-text{
         text-align: center;
         background: #2271b1;
