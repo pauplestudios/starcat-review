@@ -1,0 +1,19 @@
+.scr_clipboard{
+    display: flex;
+    align-items: center;
+
+    & input{
+        border-radius: 0px;
+    }
+    /** styles apply for csf */
+    & .csf-after-text{
+        text-align: center;
+        background: #2271b1;
+        color: #fff;
+        margin: 0px;
+        min-height: 30px;
+        padding: 0px 7px;
+        line-height: 2;
+        cursor: pointer;
+    }
+}

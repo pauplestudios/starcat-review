@@ -1677,6 +1677,19 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                                 array('custom_location', '==', 'true'),
                             ),
                         ),
+                        array(
+                            'type' => 'text',
+                            'class' => 'scr_clipboard',
+                            'default' => '[starcat_review_summary show_author_reviews_summary="1" show_user_reviews_summary="0" show_pros_and_cons_summary="1"]',
+                            'after' => __('Copy Clipboard', SCR_DOMAIN),
+                            // 'desc' => __('Copy and Paste this shortcode in the content', SCR_DOMAIN),
+                            'dependency' => array(
+                                array('location', '==', 'shortcode'),
+                            ),
+                            'attributes' => array(
+                                'readonly' => 'readonly',
+                            ),
+                        ),
                     ),
                 ),
             );
@@ -1738,6 +1751,19 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'dependency' => array(
                                 array('can_show_user_review', 'any', 'apply_global_settings,show'),
                                 array('custom_location', '==', 'true'),
+                            ),
+                        ),
+                        array(
+                            'type' => 'text',
+                            'class' => 'scr_clipboard',
+                            'default' => '[starcat_review_summary show_author_reviews_summary="0" show_user_reviews_summary="1" show_pros_and_cons_summary="0"]',
+                            'after' => __('Copy Clipboard', SCR_DOMAIN),
+                            // 'desc' => __('Copy and Paste this shortcode in the content', SCR_DOMAIN),
+                            'dependency' => array(
+                                array('location', '==', 'shortcode'),
+                            ),
+                            'attributes' => array(
+                                'readonly' => 'readonly',
                             ),
                         ),
                     ),
