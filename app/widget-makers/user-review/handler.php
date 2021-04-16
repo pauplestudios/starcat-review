@@ -65,7 +65,8 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review\Handler')) {
 
             $args = [
                 'post_id' => $this->get_the_post_id_from_user_args($params),
-                'enable_user_reviews' => SCR_Getter::get('enable_user_reviews'),
+                // 'enable_user_reviews' => SCR_Getter::get('enable_user_reviews'),
+                'enable_user_reviews' => true,
                 'enable_pros_cons' => SCR_Getter::get('enable-pros-cons'),
                 'enable_photo_reviews' => SCR_Getter::get('pr_enable'),
                 'show_list_title' => SCR_Getter::get('ur_show_list_title'),
