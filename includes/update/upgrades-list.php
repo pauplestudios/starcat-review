@@ -217,6 +217,11 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
                 }
 
                 $post_meta = get_post_meta($post_id, '_scr_post_options', true);
+
+                if (empty($post_meta)) {
+                    continue;
+                }
+
                 $post_meta_args = array(
                     'pros-list' => array(),
                     'cons-list' => array(),
@@ -273,7 +278,7 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
             }
 
             if (isset($settings['review_enable_post-types'])) {
-                unset($settings['enable-author-review']);
+                unset($settings['review_enable_post-types']);
             }
 
             $settings['user_review_enabled_post_types'] = $user_review_enabled_post_types;
