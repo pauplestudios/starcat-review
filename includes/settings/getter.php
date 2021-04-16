@@ -307,7 +307,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
             // $post_types = self::get('review_enable_post-types');
             $post_types = self::get('user_review_enabled_post_types');
             $enabled_post_types = is_string($post_types) ? [0 => $post_types] : $post_types;
-            if (self::is_woocommerce_plugin_active()) {
+            if (self::is_woocommerce_plugin_active() && self::get('enable_reviews_on_woocommerce')) {
                 array_push($enabled_post_types, 'product');
             }
 
