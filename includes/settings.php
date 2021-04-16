@@ -321,12 +321,12 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             ),
                             'default' => 'logged_in',
                         ),
-                        array(
-                            'id' => 'enable_user_reviews',
-                            'type' => 'switcher',
-                            'title' => __('Enable Users Reviews', SCR_DOMAIN),
-                            'default' => true,
-                        ),
+                        // array(
+                        //     'id' => 'enable_user_reviews',
+                        //     'type' => 'switcher',
+                        //     'title' => __('Enable Users Reviews', SCR_DOMAIN),
+                        //     'default' => true,
+                        // ),
                         array(
                             'id' => 'ur_auto_approve',
                             'type' => 'switcher',
@@ -1684,7 +1684,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'after' => __('Copy Clipboard', SCR_DOMAIN),
                             // 'desc' => __('Copy and Paste this shortcode in the content', SCR_DOMAIN),
                             'dependency' => array(
-                                array('can_show_author_review', 'any', 'apply_global_settings,show'),
+                                array('custom_location', '==', 'true'),
                                 array('location', '==', 'shortcode'),
                             ),
                             'attributes' => array(
@@ -1698,7 +1698,6 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
         public function single_post_level_user_review_features($prefix)
         {
-
             $fields = $this->get_post_level_user_review_fields();
 
             \CSF::createSection($prefix, array(
@@ -1734,6 +1733,9 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         array(
                             'type' => 'subheading',
                             'content' => __("User Review Summary", SCR_DOMAIN),
+                            'dependency' => array(
+                                array('can_show_user_review', 'any', 'apply_global_settings,show'),
+                            ),
                         ),
                         array(
                             'id' => 'custom_location',
@@ -1765,7 +1767,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'after' => __('Copy Clipboard', SCR_DOMAIN),
                             // 'desc' => __('Copy and Paste this shortcode in the content', SCR_DOMAIN),
                             'dependency' => array(
-                                array('can_show_user_review', 'any', 'apply_global_settings,show'),
+                                array('custom_location', '==', 'true'),
                                 array('location', '==', 'shortcode'),
                             ),
                             'attributes' => array(

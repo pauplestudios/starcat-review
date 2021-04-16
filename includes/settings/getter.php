@@ -213,7 +213,8 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'limit' => $limit,
                 'animate' => SCR_Getter::get('stats-animate'),
                 'no_rated_message' => SCR_Getter::get('stats-no-rated-message'),
-                'enable_user_reviews' => SCR_Getter::get('enable_user_reviews'),
+                // 'enable_user_reviews' => SCR_Getter::get('enable_user_reviews'),
+                'enable_user_reviews' => true, // set default value as true
             ];
 
             /** Get the woocommerce default settings, if current post_type has a product.  */
@@ -329,7 +330,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
 
         public static function is_woocommerce_plugin_active()
         {
-            if (is_plugin_active('woocommerce/woocommerce.php') && self::get('enable_reviews_on_woocommerce')) {
+            if (is_plugin_active('woocommerce/woocommerce.php')) {
                 return true;
             }
             return false;
