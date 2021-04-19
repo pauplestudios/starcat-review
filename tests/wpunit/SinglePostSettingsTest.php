@@ -19,8 +19,9 @@ class SinglePostTest extends \Codeception\TestCase\WPTestCase
 
     public function test_single_post_review_settings()
     {
+        global $post;
         $post_id = $this->create_post();
-
+        $post = get_post($post_id);
         $post_level_settings = new \StarcatReview\App\Post_Settings\Post_Level_Settings();
 
         $patterns = $this->get_patterns();
