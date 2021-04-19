@@ -1636,7 +1636,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         {
             // user reviews settings URL
             $author_review_settings_page_url = admin_url("admin.php?page=scr-settings#tab=general-settings");
-            $url_content = sprintf(__("Check Global Author Review Settings %s", SCR_DOMAIN), '<a href="' . $author_review_settings_page_url . '" target="_blank">' . __('url', SCR_DOMAIN) . '</a>');
+            $url_content = sprintf(__("Check Global Author Review Settings %s", SCR_DOMAIN), '<a href="' . $author_review_settings_page_url . '" target="_blank">' . __('here', SCR_DOMAIN) . '</a>');
 
             return array(
                 array(
@@ -1724,7 +1724,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                 $global_settings_page_url = admin_url("admin.php?page=scr-settings#tab=woocommerce-settings");
             }
 
-            $url_content = sprintf(__("Check Global User Review Settings %s", SCR_DOMAIN), '<a href="' . $global_settings_page_url . '" target="_blank">' . __('url', SCR_DOMAIN) . '</a>');
+            $url_content = sprintf(__("Check Global User Review Settings %s", SCR_DOMAIN), '<a href="' . $global_settings_page_url . '" target="_blank">' . __('here', SCR_DOMAIN) . '</a>');
 
             return array(
                 array(
