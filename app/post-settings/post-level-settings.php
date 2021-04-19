@@ -42,27 +42,32 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
             // apply the global settings for both reviews
             $global_settings = $this->apply_global_settings($post_settings_args);
 
+            $allowed_locations = ['after', 'before'];
+            /** get author and user reviews custom locations from post settings  */
+            $author_review_custom_location = isset($author_reviews_settings_args['custom_location']) && $author_reviews_settings_args['custom_location'] == 1 ? true : false;
+            $user_review_custom_location = isset($user_reviews_settings_args['custom_location']) && $user_reviews_settings_args['custom_location'] == 1 ? true : false;
+
+            /** get author and user reviews locations from post settings  */
             $author_review_location = isset($author_reviews_settings_args['location']) ? $author_reviews_settings_args['location'] : 'after';
             $user_review_location = isset($user_reviews_settings_args['location']) ? $user_reviews_settings_args['location'] : 'after';
+
+            $author_review_location = ($author_review_custom_location == 1 && in_array($author_review_location, $allowed_locations)) ? $author_reviews_settings_args['location'] : 'after';
+            $user_review_location = ($user_review_custom_location == 1 && in_array($user_review_location, $allowed_locations)) ? $user_reviews_settings_args['location'] : 'after';
 
             $can_show_author_reviews = $this->can_show_the_review($author_reviews_settings_args, 'can_show_author_review');
             $can_show_users_reviews = $this->can_show_the_review($user_reviews_settings_args, 'can_show_user_review');
 
             /** show both reviews */
             $can_show_the_review = ($can_show_author_reviews && $can_show_users_reviews) ? 'both' : 'none';
-
             if ($can_show_the_review == 'none') {
-
                 /** show author reviews only */
                 $can_show_the_review = (!$can_show_users_reviews && $can_show_author_reviews) ? 'auth_reviews' : 'none';
-
                 /** show users reviews only, else show the author review (or) none of both*/
                 $can_show_the_review = ($can_show_users_reviews && !$can_show_author_reviews) ? 'user_reviews' : $can_show_the_review;
             }
 
             $enable_author_review = ($can_show_the_review == 'both' || $can_show_the_review == 'auth_reviews') ? true : false;
             $enable_user_review = ($can_show_the_review == 'both' || $can_show_the_review == 'user_reviews') ? true : false;
-            // error_log('[$enable_author_review] : ' . $enable_author_review);
 
             foreach ($args as $key => $value) {
 
@@ -71,14 +76,6 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
 
                 $author_review = ($enable_author_review && $author_review_location == $key) ? true : false;
                 $user_review = ($enable_user_review && $user_review_location == $key) ? true : false;
-
-                if ($key == 'after') {
-                    $author_review = ($global_settings['author_review'] == 1) ? true : $author_review;
-                    $user_review = ($global_settings['user_review'] == 1) ? true : $user_review;
-                } else {
-                    $author_review = ($global_settings['author_review'] == 1) ? false : $author_review;
-                    $user_review = ($global_settings['user_review'] == 1) ? false : $user_review;
-                }
 
                 $summary_args['enable-author-review'] = $author_review;
                 $summary_args['enable_pros_cons'] = $author_review;
@@ -125,7 +122,7 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
             }
 
             $can_show_the_review = false;
-            if ($review_type == 'author_reviews') {
+            if ($review_type == 'can_show_author_review') {
 
                 // show the author reviews or not by global settings
                 $author_review_enabled_post_types = SCR_Getter::get('author_review_enabled_post_types');
@@ -136,11 +133,13 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
 
                 $can_show_the_review = (in_array($post_type, $author_review_enabled_post_types)) ? true : false;
 
-            } else {
+            }
+
+            if ($review_type == 'can_show_user_review') {
 
                 // show the user reviews or not by global settings
                 $user_review_enabled_post_types = SCR_Getter::get('user_review_enabled_post_types');
-
+                error_log('[$user_review_enabled_post_types] : ' . print_r($user_review_enabled_post_types, true));
                 if (empty($user_review_enabled_post_types)) {
                     return false;
                 }
