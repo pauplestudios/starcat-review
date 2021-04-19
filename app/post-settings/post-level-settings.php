@@ -39,9 +39,6 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
             $author_reviews_settings_args = $post_settings_args['post_author_review_settings'];
             $user_reviews_settings_args = $post_settings_args['post_user_review_settings'];
 
-            // apply the global settings for both reviews
-            $global_settings = $this->apply_global_settings($post_settings_args);
-
             $allowed_locations = ['after', 'before'];
             /** get author and user reviews custom locations from post settings  */
             $author_review_custom_location = isset($author_reviews_settings_args['custom_location']) && $author_reviews_settings_args['custom_location'] == 1 ? true : false;
@@ -161,29 +158,5 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
 
             return $args;
         }
-
-        private function apply_global_settings($post_settings_args)
-        {
-
-            $args = array(
-                'author_review' => false,
-                'user_review' => false,
-            );
-
-            $author_reviews_settings_args = isset($post_settings_args['post_author_review_settings']) ? $post_settings_args['post_author_review_settings'] : [];
-            $user_reviews_settings_args = isset($post_settings_args['post_user_review_settings']) ? $post_settings_args['post_user_review_settings'] : [];
-
-            $can_show_author_review = isset($author_reviews_settings_args['can_show_author_review']) ? $author_reviews_settings_args['can_show_author_review'] : '';
-            $can_show_user_review = isset($user_reviews_settings_args['can_show_user_review']) ? $user_reviews_settings_args['can_show_user_review'] : '';
-
-            $author_review_custom_location = isset($author_reviews_settings_args['custom_location']) && $author_reviews_settings_args['custom_location'] == 1 ? true : false;
-            $user_review_custom_location = isset($user_reviews_settings_args['custom_location']) && $user_reviews_settings_args['custom_location'] == 1 ? true : false;
-
-            $args['author_review'] = ($can_show_author_review != 'dont_show' && !$author_review_custom_location) ? true : false;
-            $args['user_review'] = ($can_show_user_review != 'dont_show' && !$user_review_custom_location) ? true : false;
-
-            return $args;
-        }
-
     }
 }
