@@ -23,11 +23,12 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         public function init_settings()
         {
 
-            if (!function_exists('\CSF') && !class_exists('\CSF')) {
+            /** Note - Needs to loads CSF_Fields classes for CSF custom fields. If already exists CSF class or not. */
+            if (!function_exists('\CSF') && !class_exists('\CSF') && !class_exists('\CSF_Fields')) {
                 require_once SCR_PATH . 'includes/lib/codestar-framework/codestar-framework.php';
+                include_once SCR_PATH . 'includes/settings/helper.php';
             }
 
-            include_once SCR_PATH . 'includes/settings/helper.php';
             // require_once 'settings-config.php';
 
             if (class_exists('\CSF')) {
