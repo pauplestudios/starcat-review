@@ -188,11 +188,10 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
             /* Set new version for verification later */
             $settings['last_version'] = '0.7.6';
 
-            $this->upgrade_below_v076_part_1($settings);
-            $this->upgrade_below_v076_part_2($settings);
+            $result = $this->upgrade_below_v076_part_1($settings);
+            $result = $this->upgrade_below_v076_part_2($settings);
 
             return $result;
-
         }
 
         public function upgrade_below_v076_part_1($settings)
@@ -257,6 +256,7 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
 
         public function upgrade_below_v076_part_2($settings)
         {
+            $result = false;
             $option_name = 'scr_options';
             $review_enabled_post_types = isset($settings['review_enable_post-types']) && !empty($settings['review_enable_post-types']) ? $settings['review_enable_post-types'] : [];
             $enable_author_review = isset($settings['enable-author-review']) ? $settings['enable-author-review'] : false;

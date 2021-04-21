@@ -35,12 +35,24 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
                 'after' => array(),
             );
 
-            // enable/disable pros and cons
-            $enable_pros_cons = SCR_Getter::get('enable-pros-cons');
-
             // get single post user and author settings
             $author_reviews_settings_args = $post_settings_args['post_author_review_settings'];
             $user_reviews_settings_args = $post_settings_args['post_user_review_settings'];
+
+            $can_show_author_review = isset($author_reviews_settings_args['can_show_author_review']) ? $author_reviews_settings_args['can_show_author_review'] : 'apply_global_settings';
+
+            /***
+             *
+             * enable/disable pros and cons
+             * Its only applied for overall user summary.
+             *
+             *  */
+
+            $enable_pros_cons = false;
+            if ($can_show_author_review != 'dont_show') {
+                $enable_pros_cons = SCR_Getter::get('enable-pros-cons');
+                $enable_pros_cons = ($can_show_author_review == 'show' || ($can_show_author_review == 'apply_global_settings' && $enable_pros_cons)) ? true : false;
+            }
 
             $allowed_locations = ['after', 'before'];
             /** get author and user reviews custom locations from post settings  */
@@ -76,9 +88,10 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
 
                 $author_review = ($enable_author_review && $author_review_location == $key) ? true : false;
                 $user_review = ($enable_user_review && $user_review_location == $key) ? true : false;
+                $show_pros_and_cons = ($enable_pros_cons && $author_review) ? true : false;
 
                 $summary_args['enable-author-review'] = $author_review;
-                $summary_args['enable_pros_cons'] = $enable_pros_cons;
+                $summary_args['enable_pros_cons'] = $show_pros_and_cons;
                 $summary_args['enable_user_reviews'] = $user_review;
 
                 $args[$key] = $summary_args;
