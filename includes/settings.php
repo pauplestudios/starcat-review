@@ -1166,13 +1166,16 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         /* Single Post - Meta Data Options */
         public function single_post_meta_fields()
         {
-            $author_review_enabled_post_types = SCR_Getter::get('author_review_enabled_post_types');
+            $post_types = $this->get_post_types([]);
+            if (SCR_Getter::is_woocommerce_plugin_active()) {
+                $post_types = array_merge($post_types, ['product' => 'Products']);
+            }
 
             $prefix = SCR_POST_META;
 
             \CSF::createMetabox($prefix, array(
                 'title' => __('Starcat Review', SCR_DOMAIN),
-                'post_type' => $author_review_enabled_post_types,
+                'post_type' => array_keys($post_types),
                 'show_restore' => true,
                 'theme' => 'light',
             ));
@@ -1611,7 +1614,6 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             if (empty($post_types)) {
                 return $options;
             }
-
             foreach ($post_types as $post_type) {
                 if (!in_array($post_type->name, $excluded_post_types)) {
                     $options[$post_type->name] = $post_type->labels->name;
