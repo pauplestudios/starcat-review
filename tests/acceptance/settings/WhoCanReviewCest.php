@@ -81,6 +81,23 @@ class WhoCanReviewCest
             'post_content' => 'This car is great!',
 
         ]);
+        $this->set_post_level_settings($I, $post_id);
         return $post_id;
+    }
+
+    protected function set_post_level_settings($I, $post_id)
+    {
+        $I->havePostMetaInDatabase($post_id, '_scr_post_options', array(
+            'post_author_review_settings' => array(
+                'can_show_author_review' => 'apply_global_settings',
+                'custom_location' => 0,
+                'location' => 'after',
+            ),
+            'post_user_review_settings' => array(
+                'can_show_user_review' => 'apply_global_settings',
+                'custom_location' => 0,
+                'location' => 'after',
+            ),
+        ));
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-class SinglePostTest extends \Codeception\TestCase\WPTestCase
+class SinglePostSettingsTest extends \Codeception\TestCase\WPTestCase
 {
 
     /**
@@ -22,6 +22,7 @@ class SinglePostTest extends \Codeception\TestCase\WPTestCase
         global $post;
         $post_id = $this->create_post();
         $post = get_post($post_id);
+
         $post_level_settings = new \StarcatReview\App\Post_Settings\Post_Level_Settings();
 
         $patterns = $this->get_patterns();

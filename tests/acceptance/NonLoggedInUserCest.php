@@ -5,26 +5,29 @@ class NonLoggedInUserCest
     {
         // will be executed at the beginning of each test
         $I->loginAsAdmin();
-        $I->am('administrator');
         $I->amOnPluginsPage();
-        $I->activatePlugin(['woocommerce']);
-        $I->seePluginActivated('woocommerce');
-        // $I->activatePlugin(['hello-dolly','woocommerce']);
+        $I->activatePlugin('starcat-review');
+        $I->amOnPagesPage();
+        $I->amOnPluginsPage();
+        $I->seePluginActivated('starcat-review');
 
     }
 
     public function non_logged_in_user(AcceptanceTester $I)
     {
-        $this->dont_see_non_logged_user_fields($I);
-        $I->see('Log Out');
-        $I->click('Log Out');
-
         $this->settings_non_loggedin($I);
 
-        $I->amOnPage('/product/album/');
-        $I->see('Reviews (0)');
-        $I->click('#tab-reviews');
+        $this->create_post($I);
+        $I->amOnPage('/car-reviews');
+        $I->see('Reviews');
         $I->see('Leave a Review');
+
+        $this->dont_see_non_logged_user_fields($I);
+        $I->logOut();
+
+        $I->amOnPage('/car-reviews');
+
+        $this->can_see_non_logged_in_fields($I);
 
         $props = [
             'IP' => '192.2.2.2',
@@ -35,13 +38,6 @@ class NonLoggedInUserCest
         ];
 
         $this->insert_review($I, $props);
-
-        $I->amOnPage('/product/album/');
-        $I->see('Reviews');
-        $I->click('#tab-reviews');
-        $I->see('Leave a Review');
-
-        $this->can_see_non_logged_in_fields($I);
 
         $I->submitForm('form.form.scr-user-review',
             [
@@ -85,7 +81,7 @@ class NonLoggedInUserCest
             /** TODO: use - 'user_review_enabled_post_types' since - v0.7.6  */
             // 'review_enable_post-types' => ['post', 'starcat_review', 'product'],
             'user_review_enabled_post_types' => ['post', 'starcat_review', 'product'],
-            'ur_who_can_review' => 'everyone',
+            'ur_who_can_review' => 'every_one',
         ];
 
         $I->haveOptionInDatabase('scr_options', $options);
@@ -120,5 +116,36 @@ class NonLoggedInUserCest
         $postId = $comment_data['comment_post_ID'];
         $I->haveCommentInDatabase($postId, $comment_data);
         // wp_update_comment($comment_modifier);
+    }
+
+    private function create_post($I)
+    {
+        $post_id = $I->havePostInDatabase([
+            'post_type' => 'post',
+            'post_title' => 'Car Reviews',
+            'post_name' => 'car-reviews',
+            'post_status' => 'publish',
+            'post_content' => 'This car is great!',
+        ]);
+
+        $this->set_post_level_settings($I, $post_id);
+
+        return $post_id;
+    }
+
+    protected function set_post_level_settings($I, $post_id)
+    {
+        $I->havePostMetaInDatabase($post_id, '_scr_post_options', array(
+            'post_author_review_settings' => array(
+                'can_show_author_review' => 'apply_global_settings',
+                'custom_location' => 0,
+                'location' => 'after',
+            ),
+            'post_user_review_settings' => array(
+                'can_show_user_review' => 'apply_global_settings',
+                'custom_location' => 0,
+                'location' => 'after',
+            ),
+        ));
     }
 }
