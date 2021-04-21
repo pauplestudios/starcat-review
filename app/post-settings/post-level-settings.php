@@ -35,6 +35,9 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
                 'after' => array(),
             );
 
+            // enable/disable pros and cons
+            $enable_pros_cons = SCR_Getter::get('enable-pros-cons');
+
             // get single post user and author settings
             $author_reviews_settings_args = $post_settings_args['post_author_review_settings'];
             $user_reviews_settings_args = $post_settings_args['post_user_review_settings'];
@@ -75,7 +78,7 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
                 $user_review = ($enable_user_review && $user_review_location == $key) ? true : false;
 
                 $summary_args['enable-author-review'] = $author_review;
-                $summary_args['enable_pros_cons'] = $author_review;
+                $summary_args['enable_pros_cons'] = $enable_pros_cons;
                 $summary_args['enable_user_reviews'] = $user_review;
 
                 $args[$key] = $summary_args;
