@@ -120,9 +120,6 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             wp_register_script('starcat-review', SCR_URL . 'includes/assets/bundle/admin.bundle.js', array('jquery'), SCR_VERSION, true);
             wp_enqueue_script('starcat-review');
 
-
-
-
             // You Can Access these object from javascript
             wp_localize_script('starcat-review', 'SCROptions', ['enable_prosandcons' => SCR_Getter::get('enable-pros-cons')]);
 
@@ -143,12 +140,11 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         {
 
             $vendor_url = SCR_URL . 'includes/assets/vendors/';
-            wp_register_style('semantic',  $vendor_url .  "semantic/bundle/semantic.min.css", [], SCR_VERSION);
+            wp_register_style('semantic', $vendor_url . "semantic/bundle/semantic.min.css", [], SCR_VERSION);
             wp_enqueue_style('semantic');
 
             wp_register_script('semantic', $vendor_url . 'semantic/bundle/semantic.min.js', array('jquery'), SCR_VERSION, true);
             wp_enqueue_script('semantic');
-
 
             wp_enqueue_style('fa5', $vendor_url . 'fontawesome/js/all.min.css', array(), '5.13.0', 'all');
             // wp_enqueue_style('fa5-v4-shims', 'fontawesome/v4-shims.min.css', array(), '5.13.0', 'shim');
@@ -169,7 +165,7 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         {
 
             switch ($column) {
-                    // Todo: 'scr_product_price'
+                // Todo: 'scr_product_price'
                 case 'scr_rating':
                     // Todo: save the rating as a temporary post meta which can be used in pre_get_posts
                     $rating = scr_get_overall_rating($id);
@@ -220,23 +216,25 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         public function content_filter($content)
         {
             $post_type = get_post_type(get_the_ID());
-
             if (is_singular() && $post_type !== 'product') {
-                $review_content = $this->get_review_content();
-                $content = $content . $review_content;
+                $reviews_builder = new \StarcatReview\App\Builders\Review_Builder();
+                $post_level_settings = new \StarcatReview\App\Post_Settings\Post_Level_Settings();
+                $post_settings_args = $post_level_settings->get_author_and_user_reviews_settings();
+
+                $before_the_content = $after_the_content = '';
+                $summay_args = $post_level_settings->get_summary_args_by_post_settings($post_settings_args);
+
+                $before_the_content = $reviews_builder->get_summary_content($summay_args['before']);
+                $after_the_content = $reviews_builder->get_summary_content($summay_args['after']);
+                $form_and_list_content = $reviews_builder->get_reviews();
+
+                $content = $before_the_content . $content . $after_the_content . $form_and_list_content;
             }
 
             return $content;
         }
 
         /* Non-Hooked */
-
-        public function get_review_content()
-        {
-            $reviews_builder = new \StarcatReview\App\Builders\Review_Builder();
-            return $reviews_builder->get_reviews();
-        }
-
         public function enqueue_scripts()
         {
             /* Vendors */
@@ -252,7 +250,6 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
             wp_register_script('starcat-review', SCR_URL . 'includes/assets/bundle/main.bundle.js', array('jquery'), SCR_VERSION, true);
             wp_enqueue_script('starcat-review');
 
-
             // You Can Access these object from javascript
             wp_localize_script('starcat-review', 'SCROptions', [
                 'global_stats' => SCR_Getter::get_global_stats(),
@@ -265,8 +262,6 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
                 'ajax_nonce' => wp_create_nonce('starcat-review-ajax-nonce'),
             ));
         }
-
-
 
         public function get_scr_required_options()
         {

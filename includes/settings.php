@@ -61,10 +61,10 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         {
             $this->woocommerce_settings($prefix);
             $this->general_settings($prefix);
+            $this->user_review_settings($prefix);
             $this->mainpage_settings($prefix);
             $this->category_page_settings($prefix);
             $this->single_page_settings($prefix);
-            $this->user_review_settings($prefix);
             $this->photo_reviews_settings($prefix);
             $this->notification_settings($prefix);
             $this->ct_settings($prefix);
@@ -238,6 +238,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
         public function user_review_settings($prefix)
         {
+            $post_types = $this->get_post_types(['product']);
             \CSF::createSection(
                 $prefix,
                 array(
@@ -297,6 +298,20 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         // ),
 
                         array(
+                            'id' => 'user_review_enabled_post_types',
+                            'type' => 'select',
+                            'title' => __('Where to include user reviews?', SCR_DOMAIN),
+                            'chosen' => true,
+                            'placeholder' => 'Select post types',
+                            'options' => $post_types,
+                            'multiple' => true,
+                            'query_args' => array(
+                                'post_type' => 'post',
+                            ),
+                            'default' => ['post'],
+                        ),
+
+                        array(
                             'id' => 'ur_who_can_review',
                             'type' => 'select',
                             'title' => __('Who Can Review', SCR_DOMAIN),
@@ -307,12 +322,12 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             ),
                             'default' => 'logged_in',
                         ),
-                        array(
-                            'id' => 'enable_user_reviews',
-                            'type' => 'switcher',
-                            'title' => __('Enable Users Reviews', SCR_DOMAIN),
-                            'default' => true,
-                        ),
+                        // array(
+                        //     'id' => 'enable_user_reviews',
+                        //     'type' => 'switcher',
+                        //     'title' => __('Enable Users Reviews', SCR_DOMAIN),
+                        //     'default' => true,
+                        // ),
                         array(
                             'id' => 'ur_auto_approve',
                             'type' => 'switcher',
@@ -899,10 +914,24 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         // ),
 
                         // Select with CPT (custom post type) pages
+                        // array(
+                        //     'id' => 'review_enable_post-types', // removed @since v0.7.6
+                        //     'type' => 'select',
+                        //     'title' => __('Where to include reviews?', SCR_DOMAIN),
+                        //     'chosen' => true,
+                        //     'placeholder' => 'Select post types',
+                        //     'options' => $post_types,
+                        //     'multiple' => true,
+                        //     'query_args' => array(
+                        //         'post_type' => 'post',
+                        //     ),
+                        //     'default' => ['post'],
+                        // ),
+
                         array(
-                            'id' => 'review_enable_post-types',
+                            'id' => 'author_review_enabled_post_types', // @since v0.7.6
                             'type' => 'select',
-                            'title' => __('Where to include reviews?', SCR_DOMAIN),
+                            'title' => __('Where to include Author Reviews?', SCR_DOMAIN),
                             'chosen' => true,
                             'placeholder' => 'Select post types',
                             'options' => $post_types,
@@ -913,12 +942,13 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                             'default' => ['post'],
                         ),
 
-                        array(
-                            'id' => 'enable-author-review',
-                            'type' => 'switcher',
-                            'title' => __('Enable author review', SCR_DOMAIN),
-                            'default' => true,
-                        ),
+                        /*** Note :- no need for this field. after adding the "author_review_enabled_post_types" field */
+                        // array(
+                        //     'id' => 'enable-author-review', // removed @since v0.7.6
+                        //     'type' => 'switcher',
+                        //     'title' => __('Enable author review', SCR_DOMAIN),
+                        //     'default' => true,
+                        // ),
                         array(
                             'id' => 'enable-pros-cons',
                             'type' => 'switcher',
@@ -1136,22 +1166,28 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
         /* Single Post - Meta Data Options */
         public function single_post_meta_fields()
         {
-            $locations = SCR_Getter::get_review_enabled_post_types();
+            $post_types = $this->get_post_types([]);
+            if (SCR_Getter::is_woocommerce_plugin_active()) {
+                $post_types = array_merge($post_types, ['product' => 'Products']);
+            }
+
             $prefix = SCR_POST_META;
 
             \CSF::createMetabox($prefix, array(
                 'title' => __('Starcat Review', SCR_DOMAIN),
-                'post_type' => $locations,
+                'post_type' => array_keys($post_types),
                 'show_restore' => true,
                 'theme' => 'light',
             ));
 
-            if (SCR_Getter::get('enable-author-review')) {
-                $this->single_post_features($prefix);
-                $this->single_post_pros($prefix);
-                $this->single_post_cons($prefix);
-            }
+            $this->single_post_features($prefix);
+            $this->single_post_pros($prefix);
+            $this->single_post_cons($prefix);
+            $this->single_post_level_author_review_features($prefix); // @since v0.7.6
+            $this->single_post_level_user_review_features($prefix); // @since v0.7.6
 
+            /** tabbed view */
+            // $this->single_review_settings($prefix);
             // $this->single_details($prefix);
             // $this->single_rich_snippets($prefix);
         }
@@ -1578,7 +1614,6 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             if (empty($post_types)) {
                 return $options;
             }
-
             foreach ($post_types as $post_type) {
                 if (!in_array($post_type->name, $excluded_post_types)) {
                     $options[$post_type->name] = $post_type->labels->name;
@@ -1587,5 +1622,212 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
             return $options;
         }
+
+        public function single_post_level_author_review_features($prefix)
+        {
+            $fields = $this->get_post_level_author_review_fields();
+
+            \CSF::createSection($prefix, array(
+                'id' => 'post_author_review_settings',
+                'title' => __('Author Review Settings', SCR_DOMAIN),
+                'icon' => 'fa fa-cogs',
+                'fields' => $fields,
+            ));
+        }
+
+        public function get_post_level_author_review_fields()
+        {
+            // user reviews settings URL
+            $author_review_settings_page_url = admin_url("admin.php?page=scr-settings#tab=general-settings");
+            $url_content = sprintf(__("Check Author Review Global Settings %s", SCR_DOMAIN), '<a href="' . $author_review_settings_page_url . '" target="_blank">' . __('here', SCR_DOMAIN) . '</a>');
+
+            return array(
+                array(
+                    'id' => 'post_author_review_settings',
+                    'type' => 'fieldset',
+                    'fields' => array(
+                        // array(
+                        //     'type' => 'submessage',
+                        //     'content' => __('Author Review Post Level Settings', SCR_DOMAIN),
+                        // ),
+                        array(
+                            'id' => 'can_show_author_review',
+                            'type' => 'select',
+                            'title' => __('Display Author Review', SCR_DOMAIN),
+                            'options' => array(
+                                'apply_global_settings' => __('Apply Global Settings', SCR_DOMAIN),
+                                'show' => __('Show', SCR_DOMAIN),
+                                'dont_show' => __("Don't Show", SCR_DOMAIN),
+                            ),
+                            'default' => 'apply_global_settings',
+                            'after' => $url_content,
+                        ),
+                        array(
+                            'id' => 'custom_location',
+                            'type' => 'switcher',
+                            'title' => __('Enable Custom Location', SCR_DOMAIN),
+                            'default' => false,
+                            'dependency' => array(
+                                array('can_show_author_review', 'any', 'apply_global_settings,show'),
+                            ),
+                        ),
+                        array(
+                            'id' => 'location',
+                            'type' => 'select',
+                            'title' => __('Location', SCR_DOMAIN),
+                            'options' => array(
+                                'after' => __('After the content', SCR_DOMAIN),
+                                'before' => __('Before the content', SCR_DOMAIN),
+                                'shortcode' => __('Shortcode', SCR_DOMAIN),
+                            ),
+                            'dependency' => array(
+                                array('can_show_author_review', 'any', 'apply_global_settings,show'),
+                                array('custom_location', '==', 'true'),
+                            ),
+                        ),
+                        array(
+                            'type' => 'text',
+                            'class' => 'scr_clipboard',
+                            'default' => '[starcat_review_summary show_author_reviews_summary="1" show_user_reviews_summary="0" show_pros_and_cons_summary="1"]',
+                            'after' => __('Copy Clipboard', SCR_DOMAIN),
+                            // 'desc' => __('Copy and Paste this shortcode in the content', SCR_DOMAIN),
+                            'dependency' => array(
+                                array('can_show_author_review', 'any', 'apply_global_settings,show'),
+                                array('custom_location', '==', 'true'),
+                                array('location', '==', 'shortcode'),
+                            ),
+                            'attributes' => array(
+                                'readonly' => 'readonly',
+                            ),
+                        ),
+                    ),
+                ),
+            );
+        }
+
+        public function single_post_level_user_review_features($prefix)
+        {
+            $fields = $this->get_post_level_user_review_fields();
+
+            \CSF::createSection($prefix, array(
+                'id' => 'post_user_review_settings',
+                'title' => __('User Review Settings', SCR_DOMAIN),
+                'icon' => 'fa fa-cogs',
+                'fields' => $fields,
+            ));
+        }
+
+        public function get_post_level_user_review_fields()
+        {
+            // user reviews settings URL
+            $global_settings_page_url = admin_url("admin.php?page=scr-settings#tab=user-reviews");
+
+            // overrite the setting url, if current pags is product
+            if (SCR_Getter::is_admin_product_page()) {
+                $global_settings_page_url = admin_url("admin.php?page=scr-settings#tab=woocommerce-settings");
+            }
+
+            $url_content = sprintf(__("Check User Review Global Settings %s", SCR_DOMAIN), '<a href="' . $global_settings_page_url . '" target="_blank">' . __('here', SCR_DOMAIN) . '</a>');
+
+            return array(
+                array(
+                    'id' => 'post_user_review_settings',
+                    'type' => 'fieldset',
+                    'fields' => array(
+                        // array(
+                        //     'type' => 'submessage',
+                        //     'content' => __('User Review Post Level Settings', SCR_DOMAIN),
+                        // ),
+                        array(
+                            'id' => 'can_show_user_review',
+                            'type' => 'select',
+                            'title' => __('Display User Review', SCR_DOMAIN),
+                            'options' => array(
+                                'apply_global_settings' => __('Apply Global Settings', SCR_DOMAIN),
+                                'show' => __('Show', SCR_DOMAIN),
+                                'dont_show' => __("Don't Show", SCR_DOMAIN),
+                            ),
+                            'after' => $url_content,
+                            'default' => 'apply_global_settings',
+                        ),
+                        array(
+                            'type' => 'subheading',
+                            'content' => __("User Review Summary", SCR_DOMAIN),
+                            'dependency' => array(
+                                array('can_show_user_review', 'any', 'apply_global_settings,show'),
+                            ),
+                        ),
+                        array(
+                            'id' => 'custom_location',
+                            'type' => 'switcher',
+                            'title' => __('Enable Custom Location', SCR_DOMAIN),
+                            'default' => false,
+                            'dependency' => array(
+                                array('can_show_user_review', 'any', 'apply_global_settings,show'),
+                            ),
+                        ),
+                        array(
+                            'id' => 'location',
+                            'type' => 'select',
+                            'title' => __('Location', SCR_DOMAIN),
+                            'options' => array(
+                                'after' => __('After the content', SCR_DOMAIN),
+                                'before' => __('Before the content', SCR_DOMAIN),
+                                'shortcode' => __('Shortcode', SCR_DOMAIN),
+                            ),
+                            'dependency' => array(
+                                array('can_show_user_review', 'any', 'apply_global_settings,show'),
+                                array('custom_location', '==', 'true'),
+                            ),
+                        ),
+                        array(
+                            'type' => 'text',
+                            'class' => 'scr_clipboard',
+                            'default' => '[starcat_review_summary show_author_reviews_summary="0" show_user_reviews_summary="1" show_pros_and_cons_summary="0"]',
+                            'after' => __('Copy Clipboard', SCR_DOMAIN),
+                            // 'desc' => __('Copy and Paste this shortcode in the content', SCR_DOMAIN),
+                            'dependency' => array(
+                                array('can_show_user_review', 'any', 'apply_global_settings,show'),
+                                array('custom_location', '==', 'true'),
+                                array('location', '==', 'shortcode'),
+                            ),
+                            'attributes' => array(
+                                'readonly' => 'readonly',
+                            ),
+                        ),
+                    ),
+                ),
+            );
+        }
+
+        public function single_review_settings($prefix)
+        {
+            $author_reviews_fields = $this->get_post_level_author_review_fields();
+            $user_review_fields = $this->get_post_level_user_review_fields();
+
+            \CSF::createSection($prefix, array(
+                'title' => __('Review Settings', SCR_DOMAIN),
+                'icon' => 'fa fa-cogs',
+                'fields' => array(
+                    array(
+                        'id' => 'post_review_settings',
+                        'type' => 'tabbed',
+                        'tabs' => array(
+                            array(
+                                'title' => __('Author Review Settings', SCR_DOMAIN),
+                                'icon' => 'fa fa-star',
+                                'fields' => $author_reviews_fields,
+                            ),
+                            array(
+                                'title' => __('User Review Settings', SCR_DOMAIN),
+                                'icon' => 'fa fa-star',
+                                'fields' => $user_review_fields,
+                            ),
+                        ),
+                    ),
+                ),
+            ));
+        }
+
     } // END CLASS
 }
