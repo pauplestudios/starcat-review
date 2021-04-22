@@ -41,18 +41,8 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
 
             $can_show_author_review = isset($author_reviews_settings_args['can_show_author_review']) ? $author_reviews_settings_args['can_show_author_review'] : 'apply_global_settings';
 
-            /***
-             *
-             * enable/disable pros and cons
-             * Its only applied for overall user summary.
-             *
-             *  */
-
-            $enable_pros_cons = false;
-            if ($can_show_author_review != 'dont_show') {
-                $enable_pros_cons = SCR_Getter::get('enable-pros-cons');
-                $enable_pros_cons = ($can_show_author_review == 'show' || ($can_show_author_review == 'apply_global_settings' && $enable_pros_cons)) ? true : false;
-            }
+            /** enable/disable the pros and cons summary.  */
+            $enable_pros_cons = $this->check_enabled_pros_and_cons($can_show_author_review);
 
             $allowed_locations = ['after', 'before'];
             /** get author and user reviews custom locations from post settings  */
@@ -125,17 +115,18 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
                 return true;
             }
 
-            // 2. Apply Global Settings
+            // 2. Applying Global Settings
             $post_type = get_post_type();
 
-            /** Current post_type has product, check with enable_reviews_on_woocommerce */
-            if ($post_type == 'product') {
-                $enable_reviews_on_woocommerce = SCR_Getter::get('enable_reviews_on_woocommerce');
-                return ($enable_reviews_on_woocommerce) ? true : false;
-            }
+            /** should check "enable_reviews_on_woocommerce" option is enabled/disabled if current post_type is product  */
+            $reviews_enabled_in_product = ($post_type == 'product' && SCR_Getter::get('enable_reviews_on_woocommerce') == true) ? true : false;
 
             $can_show_the_review = false;
             if ($review_type == 'can_show_author_review') {
+
+                if ($reviews_enabled_in_product) {
+                    return true;
+                }
 
                 // show the author reviews or not by global settings
                 $author_review_enabled_post_types = SCR_Getter::get('author_review_enabled_post_types');
@@ -150,9 +141,13 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
 
             if ($review_type == 'can_show_user_review') {
 
+                if ($reviews_enabled_in_product) {
+                    return true;
+                }
+
                 // show the user reviews or not by global settings
                 $user_review_enabled_post_types = SCR_Getter::get('user_review_enabled_post_types');
-                error_log('[$user_review_enabled_post_types] : ' . print_r($user_review_enabled_post_types, true));
+
                 if (empty($user_review_enabled_post_types)) {
                     return false;
                 }
@@ -173,6 +168,20 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
             );
 
             return $args;
+        }
+
+        private function check_enabled_pros_and_cons($can_show_author_review)
+        {
+            if ($can_show_author_review == 'dont_show') {
+                return false;
+            }
+            $post_type = get_post_type();
+            $enable_pros_cons = SCR_Getter::get('enable-pros-cons');
+            if ($post_type == 'product') {
+                $enable_pros_cons = SCR_Getter::get('woo_enable_pros_cons');
+            }
+
+            return ($can_show_author_review == 'show' || ($can_show_author_review == 'apply_global_settings' && $enable_pros_cons)) ? true : false;
         }
     }
 }
