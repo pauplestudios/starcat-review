@@ -86,6 +86,7 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
 
                 $args[$key] = $summary_args;
             }
+
             return $args;
         }
 
@@ -175,13 +176,27 @@ if (!class_exists('\StarcatReview\App\Post_Settings\Post_Level_Settings')) {
             if ($can_show_author_review == 'dont_show') {
                 return false;
             }
-            $post_type = get_post_type();
-            $enable_pros_cons = SCR_Getter::get('enable-pros-cons');
-            if ($post_type == 'product') {
-                $enable_pros_cons = SCR_Getter::get('woo_enable_pros_cons');
+
+            if ($can_show_author_review == 'show') {
+                return true;
             }
 
-            return ($can_show_author_review == 'show' || ($can_show_author_review == 'apply_global_settings' && $enable_pros_cons)) ? true : false;
+            $post_type = get_post_type();
+            $enable_pros_cons = SCR_Getter::get('enable-pros-cons');
+
+            if ($post_type != 'product') {
+                $author_review_enabled_post_types = SCR_Getter::get('author_review_enabled_post_types');
+                if (empty($author_review_enabled_post_types)) {
+                    return false;
+                }
+                return (in_array($post_type, $author_review_enabled_post_types)) && $enable_pros_cons ? true : false;
+            }
+
+            if ($post_type == 'product') {
+                $enable_pros_cons = SCR_Getter::get('woo_enable_pros_cons');
+                return (SCR_Getter::get('enable_reviews_on_woocommerce') == true && $enable_pros_cons) ? true : false;
+            }
+            return false;
         }
     }
 }
