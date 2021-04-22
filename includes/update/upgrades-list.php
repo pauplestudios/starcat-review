@@ -244,9 +244,8 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
                     $post_meta_args['cons-list'] = $post_meta['cons-list'];
                 }
 
-                if ($enable_author_review) {
+                if (!$enable_author_review) {
                     $post_meta_args['post_author_review_settings']['can_show_author_review'] = 'dont_show';
-                    $post_meta_args['post_user_review_settings']['can_show_author_review'] = 'dont_show';
                 }
 
                 update_post_meta($post_id, '_scr_post_options', $post_meta_args);

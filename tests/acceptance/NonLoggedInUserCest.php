@@ -78,7 +78,7 @@ class NonLoggedInUserCest
     private function settings_non_loggedin($I)
     {
         $options = [
-            /** TODO: use - 'user_review_enabled_post_types' since - v0.7.6  */
+            /** TODO: @since v0.7.6 use - 'user_review_enabled_post_types' instead of 'review_enable_post-types'  */
             // 'review_enable_post-types' => ['post', 'starcat_review', 'product'],
             'user_review_enabled_post_types' => ['post', 'starcat_review', 'product'],
             'ur_who_can_review' => 'every_one',

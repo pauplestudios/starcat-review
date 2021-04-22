@@ -8,7 +8,7 @@ class VerifiedOwnersReviewTest extends \Codeception\TestCase\WPTestCase
         wp_set_current_user(1);
         /** TODO: Remove it Later  */
         // SCR_Getter::set('review_enable_post-types', ['post', 'product']);
-        /** use - 'user_review_enabled_post_types' since - v0.7.6  */
+        /** TODO: @since - v0.7.6 - use - 'user_review_enabled_post_types' instead of "review_enable_post-types" */
         SCR_Getter::set('user_review_enabled_post_types', ['post', 'product']);
         update_option('woocommerce_review_rating_verification_label', "yes");
     }

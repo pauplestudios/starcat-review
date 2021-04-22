@@ -60,8 +60,8 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
                 'enable-author-review' => true,
                 'enable_user_reviews' => true,
                 'enable-pros-cons' => true,
-                // 'review_enable_post-types' => ['post'], // not-used since 0.7.6
-                'author_review_enabled_post_types' => ['post'], // for author reviews
+                // 'review_enable_post-types' => ['post'], // not-used @since 0.7.6
+                'author_review_enabled_post_types' => ['post'], // @since 0.7.6 - new option for reviewing author
                 'global_stats' => ['stat_name' => 'Feature'],
                 'stat-singularity' => 'single',
                 'stats-type' => 'star',
@@ -303,7 +303,7 @@ if (!class_exists('\StarcatReview\Includes\Settings\SCR_Getter')) {
 
         public static function get_review_enabled_post_types()
         {
-            /** TODO: use - 'user_review_enabled_post_types' since - v0.7.6  */
+            /** TODO: @since - v0.7.6 - use - 'user_review_enabled_post_types' instead of "review_enable_post-types"  */
             // $post_types = self::get('review_enable_post-types');
             $post_types = self::get('user_review_enabled_post_types');
             $enabled_post_types = is_string($post_types) ? [0 => $post_types] : $post_types;

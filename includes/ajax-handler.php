@@ -142,7 +142,7 @@ if (!class_exists('\StarcatReview\Includes\Ajax_Handler')) {
 
         public function search_posts()
         {
-            /** TODO: use - 'user_review_enabled_post_types' since - v0.7.6  */
+            /** TODO: since - v0.7.6 - use 'user_review_enabled_post_types' instead of "review_enable_post-types" */
             //$scr_enabled_post_types = SCR_Getter::get('review_enable_post-types');
             $scr_enabled_post_types = SCR_Getter::get_review_enabled_post_types();
             $args = array(

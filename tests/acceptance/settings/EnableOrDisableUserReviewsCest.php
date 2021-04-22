@@ -15,8 +15,9 @@ class EnableOrDisableUserReviewsCest
     {
 
         /**
-         * Note : since v0.7.6 "enable_user_reviews" option not-used.
-         * If would like to enable/disable the user-reviews need overwrite the post_meta option.
+         *
+         * Note : @since v0.7.6 "enable_user_reviews" option not-used.
+         * If would like to enable/disable the user-reviews need to overwrite the post_meta option.
          */
 
         // create new post
@@ -56,9 +57,9 @@ class EnableOrDisableUserReviewsCest
     private function user_review_settings($I, $enable_user_reviews)
     {
         $options = [
-
-            /** TODO: use - 'user_review_enabled_post_types' since - v0.7.6  */
-            // 'review_enable_post-types' => ['post'],
+            /** TODO: @since - v0.7.6 - use - 'user_review_enabled_post_types' instead of "review_enable_post-types"
+             * 'review_enable_post-types' => ['post'],
+             */
             'user_review_enabled_post_types' => ['post'],
             'enable_user_reviews' => $enable_user_reviews,
             'is_enable_prosandcons' => true,

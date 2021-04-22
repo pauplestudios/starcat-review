@@ -915,7 +915,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
                         // Select with CPT (custom post type) pages
                         // array(
-                        //     'id' => 'review_enable_post-types',
+                        //     'id' => 'review_enable_post-types', // removed @since v0.7.6
                         //     'type' => 'select',
                         //     'title' => __('Where to include reviews?', SCR_DOMAIN),
                         //     'chosen' => true,
@@ -929,7 +929,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
                         // ),
 
                         array(
-                            'id' => 'author_review_enabled_post_types',
+                            'id' => 'author_review_enabled_post_types', // @since v0.7.6
                             'type' => 'select',
                             'title' => __('Where to include Author Reviews?', SCR_DOMAIN),
                             'chosen' => true,
@@ -944,7 +944,7 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
 
                         /*** Note :- no need for this field. after adding the "author_review_enabled_post_types" field */
                         // array(
-                        //     'id' => 'enable-author-review',
+                        //     'id' => 'enable-author-review', // removed @since v0.7.6
                         //     'type' => 'switcher',
                         //     'title' => __('Enable author review', SCR_DOMAIN),
                         //     'default' => true,
@@ -1183,8 +1183,8 @@ if (!class_exists('\StarcatReview\Includes\Settings')) {
             $this->single_post_features($prefix);
             $this->single_post_pros($prefix);
             $this->single_post_cons($prefix);
-            $this->single_post_level_author_review_features($prefix);
-            $this->single_post_level_user_review_features($prefix);
+            $this->single_post_level_author_review_features($prefix); // @since v0.7.6
+            $this->single_post_level_user_review_features($prefix); // @since v0.7.6
 
             /** tabbed view */
             // $this->single_review_settings($prefix);
