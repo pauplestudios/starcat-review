@@ -181,13 +181,11 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
         public function upgrade_v076()
         {
             $result = false;
-
             $option_name = 'scr_options';
             $settings = get_option($option_name);
 
             /* Set new version for verification later */
             $settings['last_version'] = '0.7.6';
-
             $result = $this->upgrade_below_v076_part_1($settings);
             $result = $this->upgrade_below_v076_part_2($settings);
 
@@ -214,43 +212,31 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
                 if (empty($post_id)) {
                     continue;
                 }
-                $post_meta = get_post_meta($post_id, '_scr_post_options', true);
 
-                $not_in_review_enabled_post_type = (in_array($post->post_type, $review_enabled_post_types)) ? true : false;
+                $post_meta_args = get_post_meta($post_id, '_scr_post_options', true);
+
+                $post_enabled_for_reviews = (in_array($post->post_type, $review_enabled_post_types)) ? true : false;
 
                 /** check the current post is a product or not */
-                $is_product = ($post->post_type == 'product') ? true : false;
-
-                if ($is_product == true) {
+                if ($post->post_type == 'product') {
                     $can_show_author_review = ($enable_reviews_on_woocommerce) ? 'apply_global_settings' : 'dont_show';
                     $can_show_user_review = ($enable_reviews_on_woocommerce) ? 'apply_global_settings' : 'dont_show';
                 } else {
-                    $can_show_author_review = (!$enable_author_review) ? 'apply_global_settings' : 'dont_show';
-                    $can_show_user_review = (!$not_in_review_enabled_post_type) ? 'apply_global_settings' : 'dont_show';
+                    $can_show_author_review = ($enable_author_review) ? 'apply_global_settings' : 'dont_show';
+                    $can_show_user_review = ($post_enabled_for_reviews) ? 'apply_global_settings' : 'dont_show';
                 }
 
-                $post_meta_args = array(
-                    'pros-list' => array(),
-                    'cons-list' => array(),
-                    'post_author_review_settings' => array(
-                        'can_show_author_review' => $can_show_author_review,
-                        'custom_location' => false,
-                        'location' => 'after',
-                    ),
-                    'post_user_review_settings' => array(
-                        'can_show_user_review' => $can_show_user_review,
-                        'custom_location' => false,
-                        'location' => 'after',
-                    ),
+                $post_meta_args['post_author_review_settings'] = array(
+                    'can_show_author_review' => $can_show_author_review,
+                    'custom_location' => false,
+                    'location' => 'after',
                 );
 
-                if (isset($post_meta['pros-list']) && !empty($post_meta['pros-list'])) {
-                    $post_meta_args['pros-list'] = $post_meta['pros-list'];
-                }
-
-                if (isset($post_meta['cons-list']) && !empty($post_meta['cons-list'])) {
-                    $post_meta_args['cons-list'] = $post_meta['cons-list'];
-                }
+                $post_meta_args['post_user_review_settings'] = array(
+                    'can_show_user_review' => $can_show_user_review,
+                    'custom_location' => false,
+                    'location' => 'after',
+                );
 
                 update_post_meta($post_id, '_scr_post_options', $post_meta_args);
             }
@@ -262,15 +248,14 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
             $result = false;
             $option_name = 'scr_options';
             $review_enabled_post_types = isset($settings['review_enable_post-types']) && !empty($settings['review_enable_post-types']) ? $settings['review_enable_post-types'] : [];
-            $enable_author_review = isset($settings['enable-author-review']) ? $settings['enable-author-review'] : false;
 
             $user_review_enabled_post_types = array();
             $author_review_enabled_post_types = array();
 
             /** copy the $review_enabled_post_types values to $author_review_enabled_post_types if $enable_author_review is enable */
-            if ($enable_author_review) {
-                $author_review_enabled_post_types = $review_enabled_post_types;
-            }
+            // if ($enable_author_review) {
+            $author_review_enabled_post_types = $review_enabled_post_types;
+            // }
 
             /** copy the $review_enabled_post_types values to $user_review_enabled_post_types */
             $user_review_enabled_post_types = $review_enabled_post_types;
