@@ -214,6 +214,8 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
                 }
 
                 $post_meta_args = get_post_meta($post_id, '_scr_post_options', true);
+                $post_meta_args['post_author_review_settings'] = array();
+                $post_meta_args['post_user_review_settings'] = array();
 
                 $post_enabled_for_reviews = (in_array($post->post_type, $review_enabled_post_types)) ? true : false;
 
