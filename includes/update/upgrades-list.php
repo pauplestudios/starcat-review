@@ -198,10 +198,10 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
         {
             $review_enabled_post_types = isset($settings['review_enable_post-types']) && !empty($settings['review_enable_post-types']) ? $settings['review_enable_post-types'] : [];
             $enable_author_review = isset($settings['enable-author-review']) ? $settings['enable-author-review'] : false;
+            $enable_reviews_on_woocommerce = isset($settings['enable_reviews_on_woocommerce']) ? $settings['enable_reviews_on_woocommerce'] : false;
 
-            if (empty($review_enabled_post_types)) {
-                return true;
-            }
+            /** In default add the 'product' post types */
+            $review_enabled_post_types[] = 'product';
 
             $posts = get_posts(array('post_type' => $review_enabled_post_types));
 
@@ -214,23 +214,31 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
                 if (empty($post_id)) {
                     continue;
                 }
-
                 $post_meta = get_post_meta($post_id, '_scr_post_options', true);
 
-                if (empty($post_meta)) {
-                    continue;
+                $not_in_review_enabled_post_type = (in_array($post->post_type, $review_enabled_post_types)) ? true : false;
+
+                /** check the current post is a product or not */
+                $is_product = ($post->post_type == 'product') ? true : false;
+
+                if ($is_product == true) {
+                    $can_show_author_review = ($enable_reviews_on_woocommerce) ? 'apply_global_settings' : 'dont_show';
+                    $can_show_user_review = ($enable_reviews_on_woocommerce) ? 'apply_global_settings' : 'dont_show';
+                } else {
+                    $can_show_author_review = (!$enable_author_review) ? 'apply_global_settings' : 'dont_show';
+                    $can_show_user_review = (!$not_in_review_enabled_post_type) ? 'apply_global_settings' : 'dont_show';
                 }
 
                 $post_meta_args = array(
                     'pros-list' => array(),
                     'cons-list' => array(),
                     'post_author_review_settings' => array(
-                        'can_show_author_review' => 'apply_global_settings',
+                        'can_show_author_review' => $can_show_author_review,
                         'custom_location' => false,
                         'location' => 'after',
                     ),
                     'post_user_review_settings' => array(
-                        'can_show_author_review' => 'apply_global_settings',
+                        'can_show_user_review' => $can_show_user_review,
                         'custom_location' => false,
                         'location' => 'after',
                     ),
@@ -242,10 +250,6 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
 
                 if (isset($post_meta['cons-list']) && !empty($post_meta['cons-list'])) {
                     $post_meta_args['cons-list'] = $post_meta['cons-list'];
-                }
-
-                if (!$enable_author_review) {
-                    $post_meta_args['post_author_review_settings']['can_show_author_review'] = 'dont_show';
                 }
 
                 update_post_meta($post_id, '_scr_post_options', $post_meta_args);
@@ -290,5 +294,6 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades_List')) {
             }
             return $result;
         }
+
     } // END CLASS
 }
