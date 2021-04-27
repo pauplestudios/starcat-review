@@ -30,11 +30,11 @@ class UpgradeTest extends \Codeception\TestCase\WPTestCase
         $option_name = 'scr_options';
         $options = get_option($option_name);
         $options['enable-author-review'] = 1;
-        $options['review_enable_post-types'] = ['post', 'page'];
+        $options['review_enable_post-types'] = array('post', 'page', 'product');
         update_option($option_name, $options);
+
         $upgrade_list = new \StarcatReview\Includes\Update\Upgrades_List();
         $upgraded = $upgrade_list->upgrade_v076();
-
         $this->assertTrue($upgraded);
     }
 
