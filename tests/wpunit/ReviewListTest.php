@@ -14,8 +14,8 @@ class ReviewListTest extends \Codeception\TestCase\WPTestCase
         $is_product_exist = post_type_exists('product');
         $this->assertTrue($is_product_exist);
         $this->create_factory_comment_with_review_meta();
-        // $UR_controller = new \StarcatReview\App\Components\User_Reviews\Controller();
-        // $UR_controller->get_view($args);
+        // $user_review_controller = new \StarcatReview\App\Components\User_Reviews\Controller();
+        // $user_review_controller->get_view($args);
     }
 
     public function create_factory_comment_with_review_meta()

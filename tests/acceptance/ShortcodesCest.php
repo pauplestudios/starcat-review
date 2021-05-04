@@ -14,18 +14,24 @@ class ShortcodesCest
 
     public function overallUserReview(AcceptanceTester $I)
     {
-        $shortcode_post_name = 'user-review-overall';
+        $shortcode_page_name = 'user-review-overall';
         $review_post_id = $this->insert_post($I);
         $content = '[starcat_review_overall_user_review post_id=' . $review_post_id . ']';
-        $shortcode_post_id = $this->insert_shortcode_post($I, $content, $shortcode_post_name);
+
+        /** create a page and add the shortcode content */
+        $this->insert_shortcode_post($I, $content, $shortcode_page_name);
 
         // 1. Insert single User Review
         $this->insert_user_review($I, $review_post_id);
+
+        // Set post level settings
+        $this->set_post_level_settings($I, $review_post_id);
+
         $I->amOnPage('/car-reviews');
         $I->see('This Car is too expensive');
 
         // 2. Check Shortcode Page
-        $I->amOnPage('/' . $shortcode_post_name);
+        $I->amOnPage('/' . $shortcode_page_name);
         $I->see('This Car is too expensive');
 
         // 3. Check Major Components with Default Props
@@ -54,6 +60,10 @@ class ShortcodesCest
 
         // 1. Insert single User Review
         $this->insert_user_review($I, $review_post_id);
+
+        // Set post level settings
+        $this->set_post_level_settings($I, $review_post_id);
+
         $I->amOnPage('/car-reviews');
         $I->see('This Car is too expensive');
 
@@ -85,6 +95,9 @@ class ShortcodesCest
 
         // Insert single User Review
         $this->insert_user_review($I, $review_post_id);
+        // Set post level settings
+        $this->set_post_level_settings($I, $review_post_id);
+
         $I->amOnPage('/car-reviews');
         $I->see('This Car is too expensive');
 
@@ -103,6 +116,10 @@ class ShortcodesCest
 
         // Insert single User Review
         $this->insert_user_review($I, $review_post_id);
+
+        // Set post level settings
+        $this->set_post_level_settings($I, $review_post_id);
+
         $I->amOnPage('/car-reviews');
         $I->see('This Car is too expensive');
 
@@ -149,7 +166,6 @@ class ShortcodesCest
         );
 
         $comment_id = $I->haveCommentInDatabase($review_post_id, ['comment_content' => $reviewProp['description'], 'comment_type' => 'review']);
-
         $I->haveCommentMetaInDatabase($comment_id, 'scr_user_review_props', $reviewProp);
     }
 
@@ -182,6 +198,22 @@ class ShortcodesCest
         ]);
 
         return $post_id;
+    }
+
+    protected function set_post_level_settings($I, $review_post_id)
+    {
+        $I->havePostMetaInDatabase($review_post_id, '_scr_post_options', array(
+            'post_author_review_settings' => array(
+                'can_show_author_review' => 'apply_global_settings',
+                'custom_location' => 0,
+                'location' => 'after',
+            ),
+            'post_user_review_settings' => array(
+                'can_show_user_review' => 'apply_global_settings',
+                'custom_location' => 0,
+                'location' => 'after',
+            ),
+        ));
     }
 
 }

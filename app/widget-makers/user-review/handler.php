@@ -32,15 +32,24 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review\Handler')) {
         {
             $post_id = $this->get_the_post_id_from_user_args($user_args);
             $post_meta = get_post_meta($post_id, SCR_POST_META, true);
-
             $args['pros-list'] = [];
             $args['cons-list'] = [];
+            $args['post_author_review_settings'] = [];
+            $args['post_user_review_settings'] = [];
 
             if (isset($post_meta['pros-list']) && !empty($post_meta['pros-list'])) {
                 $args['pros-list'] = $post_meta['pros-list'];
             }
             if (isset($post_meta['cons-list']) && !empty($post_meta['cons-list'])) {
                 $args['cons-list'] = $post_meta['cons-list'];
+            }
+
+            if (isset($post_meta['post_author_review_settings']) && !empty($post_meta['post_author_review_settings'])) {
+                $args['post_author_review_settings'] = $post_meta['post_author_review_settings'];
+            }
+
+            if (isset($post_meta['post_user_review_settings']) && !empty($post_meta['post_user_review_settings'])) {
+                $args['post_user_review_settings'] = $post_meta['post_user_review_settings'];
             }
 
             $components = ['comments', 'stats', 'prosandcons', 'votes', 'attachments'];
@@ -56,7 +65,8 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review\Handler')) {
 
             $args = [
                 'post_id' => $this->get_the_post_id_from_user_args($params),
-                'enable_user_reviews' => SCR_Getter::get('enable_user_reviews'),
+                // 'enable_user_reviews' => SCR_Getter::get('enable_user_reviews'),
+                'enable_user_reviews' => true,
                 'enable_pros_cons' => SCR_Getter::get('enable-pros-cons'),
                 'enable_photo_reviews' => SCR_Getter::get('pr_enable'),
                 'show_list_title' => SCR_Getter::get('ur_show_list_title'),
@@ -69,6 +79,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\User_Review\Handler')) {
                 'show_description' => SCR_Getter::get('ur_show_description'),
                 'show_captcha' => SCR_Getter::get('ur_show_captcha'),
                 'current_user_id' => get_current_user_id(),
+                'author_review_enabled_post_types' => SCR_Getter::get('author_review_enabled_post_types'),
             ];
             return $args;
         }
