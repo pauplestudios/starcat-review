@@ -34,10 +34,12 @@ if (!class_exists('\StarcatReview\App\Components\Summary\Model')) {
                 'author_title' => __('Author Rating', SCR_DOMAIN),
                 'no_of_column' => $this->get_no_of_column($args),
                 'reviews_title' => $this->get_product_reviews_title(),
-                // 'show' => 'both',
+                'show' => isset($args['show']) ? $args['show'] : 'both', // user-review, author-review,none
                 'is_enable_author' => $args['enable-author-review'],
                 'is_enable_prosandcons' => $args['enable_pros_cons'],
                 'is_enable_user_review' => $args['enable_user_reviews'],
+                // TODO: In default, the "enable_atthachments" option value is true until that option value updating dynamically.
+                'is_enable_attachments' => isset($args['enable_atthachments']) ? $args['enable_atthachments'] : true,
             ];
 
             return $collection;

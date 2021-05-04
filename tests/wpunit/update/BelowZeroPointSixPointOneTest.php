@@ -1,4 +1,3 @@
-
 <?php
 
 class BelowZeroPointSixPointOneTest extends \Codeception\TestCase\WPTestCase
@@ -44,7 +43,7 @@ class BelowZeroPointSixPointOneTest extends \Codeception\TestCase\WPTestCase
 
     protected function setup_reviews_and_replies_data()
     {
-        $UR_Repo = new \StarcatReview\App\Repositories\User_Reviews_Repo();
+        $user_review_repo = new \StarcatReview\App\Repositories\User_Reviews_Repo();
         $product_id = $this->factory()->post->create(['post_type' => 'product']);
 
         $general = [
@@ -84,14 +83,14 @@ class BelowZeroPointSixPointOneTest extends \Codeception\TestCase\WPTestCase
             $data = array_merge($data, $general);
 
             // reviews
-            $comment_id = $UR_Repo->insert($data);
+            $comment_id = $user_review_repo->insert($data);
             $review[] = $comment_id;
             $this->update_scr_comment_props($comment_id);
             $this->update_comment_type($comment_id, $version);
 
             // replies
             $data['parent'] = $comment_id;
-            $comment_id = $UR_Repo->insert($data);
+            $comment_id = $user_review_repo->insert($data);
             $replies[] = $comment_id;
             $this->update_comment_type($comment_id, $version);
         }

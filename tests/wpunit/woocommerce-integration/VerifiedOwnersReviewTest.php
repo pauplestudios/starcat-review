@@ -6,7 +6,10 @@ class VerifiedOwnersReviewTest extends \Codeception\TestCase\WPTestCase
     public function _before()
     {
         wp_set_current_user(1);
-        SCR_Getter::set('review_enable_post-types', ['post', 'product']);
+        /** TODO: Remove it Later  */
+        // SCR_Getter::set('review_enable_post-types', ['post', 'product']);
+        /** TODO: @since - v0.7.6 - use - 'user_review_enabled_post_types' instead of "review_enable_post-types" */
+        SCR_Getter::set('user_review_enabled_post_types', ['post', 'product']);
         update_option('woocommerce_review_rating_verification_label', "yes");
     }
 
@@ -60,8 +63,8 @@ class VerifiedOwnersReviewTest extends \Codeception\TestCase\WPTestCase
             ],
         ];
 
-        $UR_Repo = new \StarcatReview\App\Repositories\User_Reviews_Repo();
-        $review_id = $UR_Repo->insert($props);
+        $user_review_repo = new \StarcatReview\App\Repositories\User_Reviews_Repo();
+        $review_id = $user_review_repo->insert($props);
 
         return $review_id;
     }

@@ -1,3 +1,4 @@
+var SCRClipboard = require("./components/clipboard");
 
 var Admin = {
     init: function () {
@@ -8,6 +9,7 @@ var Admin = {
         this.iconsOptins();
         this.enableProsandCons();
         this.animateStats();
+        SCRClipboard.init();
     },
 
     iconsOptins: function () {
