@@ -26,22 +26,6 @@ if (function_exists('scr_fs')) {
 
     if (!class_exists('SCR_Plugin')) {
 
-        define('SCR_VERSION', '0.7.6');
-        define('SCR_DOMAIN', 'starcat-review');
-        define('SCR_COMMENT_TYPE', 'review');
-        define('SCR__FILE__', __FILE__);
-        define('SCR_PLUGIN_BASE', plugin_basename(SCR__FILE__));
-        define('SCR_PATH', plugin_dir_path(SCR__FILE__));
-        define('SCR_URL', plugins_url('/', SCR__FILE__));
-
-        /** Storing Settings Options in Database tables feilds using CS_Framework **/
-        define('SCR_OPTIONS', 'scr_options');
-        define('SCR_POST_META', '_scr_post_options');
-        define('SCR_COMMENT_META', 'scr_user_review_props');
-        define('SCR_CUSTOMIZE_OPTIONS', 'scr_customize_options');
-
-        require_once plugin_dir_path(__FILE__) . "/includes/lib/freemius-integrator.php";
-
         class SCR_Plugin
         {
             private static $instance;
@@ -49,25 +33,60 @@ if (function_exists('scr_fs')) {
             {
                 if (!isset(self::$instance) && !self::$instance instanceof SCR_Plugin) {
                     self::$instance = new SCR_Plugin();
+                    self::$instance->init();
                 }
                 return self::$instance;
             }
 
-            private function __construct()
+            public static function init()
             {
-                $this->starcat_review_run();
+                self::$instance->setup_constants();
+                self::$instance->scr_activation();
+                add_action('plugins_loaded', array(self::$instance, 'scr_load_textdomain'));
+                require_once plugin_dir_path(__FILE__) . "/includes/lib/freemius-integrator.php";
+            }
+
+            public static function setup_constants()
+            {
+                $constants = [
+                    'SCR_VERSION' => '0.7.6',
+                    'SCR_DOMAIN' => 'starcat-review',
+                    'SCR_COMMENT_TYPE' => 'review',
+                    'SCR__FILE__' => __FILE__,
+                    'SCR_PLUGIN_BASE' => plugin_basename(__FILE__),
+                    'SCR_PATH' => plugin_dir_path(__FILE__),
+                    'SCR_URL' => plugins_url('/', __FILE__),
+
+                    /** Storing Settings Options in Database tables feilds using CS_Framework **/
+                    'SCR_OPTIONS' => 'scr_options',
+                    'SCR_POST_META' => '_scr_post_options',
+                    'SCR_COMMENT_META' => 'scr_user_review_props',
+                    'SCR_CUSTOMIZE_OPTIONS' => 'scr_customize_options',
+                ];
+
+                foreach ($constants as $constant => $value) {
+                    if (!defined($constant)) {
+                        define($constant, $value);
+                    }
+                }
             }
 
             /* Initialize the plugin and activation */
-            public function starcat_review_run()
+            public static function scr_activation()
             {
                 if (!version_compare(PHP_VERSION, '5.4', '>=')) {
-                    add_action('admin_notices', [$this, 'starcat_review_fail_php_version']);
+                    add_action('admin_notices', [self::$instance, 'starcat_review_fail_php_version']);
                 } elseif (!version_compare(get_bloginfo('version'), '4.5', '>=')) {
-                    add_action('admin_notices', [$this, 'starcat_review_fail_wp_version']);
+                    add_action('admin_notices', [self::$instance, 'starcat_review_fail_wp_version']);
                 } else {
                     require SCR_PATH . 'includes/plugin.php';
                 }
+            }
+
+            /* Translation */
+            public function scr_load_textdomain()
+            {
+                load_plugin_textdomain(SCR_DOMAIN, false, basename(dirname(__FILE__)) . '/languages');
             }
 
             /**
