@@ -96,9 +96,9 @@ if (!class_exists('\Starcat_Review')) {
 
         protected function setup_autoload()
         {
-            // require_once SCR_PATH . '/vendor/autoload.php';
-            require_once SCR_PATH . '/includes/autoloader.php';
-            \StarcatReview\Autoloader::run();
+            require_once SCR_PATH . '/vendor/autoload.php';
+            // require_once SCR_PATH . '/includes/autoloader.php';
+            // \StarcatReview\Autoloader::run();
         }
 
     } // END CLASS
