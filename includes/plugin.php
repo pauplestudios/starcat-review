@@ -74,8 +74,8 @@ if (!class_exists('\Starcat_Review')) {
             $shortcode_builder->init();
 
             /* Upgrades */
-            $upgrades = new \StarcatReview\Includes\Update\Upgrades();
-            $upgrades::init();
+            // $upgrades = new \StarcatReview\Includes\Update\Upgrades();
+            // $upgrades::init();
 
             // Dashboard User review Table
             require_once SCR_PATH . '/app/components/user-reviews/table.php';
@@ -96,6 +96,7 @@ if (!class_exists('\Starcat_Review')) {
 
         protected function setup_autoload()
         {
+            // require_once SCR_PATH . '/vendor/autoload.php';
             require_once SCR_PATH . '/includes/autoloader.php';
             \StarcatReview\Autoloader::run();
         }
