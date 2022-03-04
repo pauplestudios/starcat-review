@@ -1,15 +1,19 @@
 {
     "require": {
-        "ext-gd": "*",
-        "phpmailer/phpmailer": "^6.1"
+        "pauple/pluginator": "dev-main"
+    },
+    "autoload": {
+        "classmap": [
+            "app",
+            "features",
+            "services/",
+            "includes/"
+        ]
     },
     "extra": {
         "installer-paths": {
             "artifacts/plugins/{$name}/": [
                 "type:wordpress-plugin"
-            ],
-            "includes/lib/{$name}/": [
-                "vendor/pauple/package"
             ]
         }
     },
@@ -20,47 +24,40 @@
         },
         {
             "type": "git",
-            "url": "https://bitbucket.org/pauple/upgrader.git"
+            "url": "https://github.com/essekia/pluginator.git"
         },
         {
             "type": "git",
-            "url": "https://bitbucket.org/pauple/widgetry.git"
+            "url": "https://github.com/essekia/starcat-review-cpt.git"
         },
         {
             "type": "git",
-            "url": "https://bitbucket.org/pauple/starcat-review-cpt.git"
+            "url": "https://github.com/essekia/starcat-review-comparison-table.git"
         },
         {
             "type": "git",
-            "url": "https://bitbucket.org/pauple/starcat-review-comparison-table.git"
+            "url": "https://github.com/essekia/starcat-review-woo-notification.git"
         },
         {
             "type": "git",
-            "url": "https://bitbucket.org/pauple/starcat-review-woo-notification.git"
-        },
-        {
-            "type": "git",
-            "url": "https://bitbucket.org/pauple/starcat-reviews-photo-reviews.git"
+            "url": "https://github.com/essekia/starcat-reviews-photo-reviews.git"
         }
     ],
     "require-dev": {
-        "pauple/upgrader": "dev-develop",
-        "pauple/widgetry": "dev-develop",
         "pauple/starcat-review-woo-notify": "dev-release/0.2.1",
         "pauple/starcat-review-cpt": "dev-release/0.3.2",
         "pauple/starcat-review-ct": "dev-release/0.2.1",
         "pauple/starcat-review-photo-reviews": "dev-release/0.1.4",
-        "lucatume/wp-browser": "^2.1.5",
-        "bmitch/churn-php": "^1.0",
-        "sebastian/phpcpd": "^4.1",
         "wpackagist-plugin/woocommerce": "4.4.1",
         "wpackagist-plugin/wp-migrate-db": "1.0.15",
+        "lucatume/wp-browser": ">=3.0.19",
         "codeception/module-asserts": "^1.0",
         "codeception/module-phpbrowser": "^1.0",
         "codeception/module-webdriver": "^1.0",
         "codeception/module-db": "^1.0",
         "codeception/module-filesystem": "^1.0",
         "codeception/module-cli": "^1.0",
-        "codeception/util-universalframework": "^1.0"
+        "codeception/util-universalframework": "^1.0",
+        "phpunit/phpunit": "^8.5"
     }
 }
