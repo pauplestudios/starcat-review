@@ -11,9 +11,6 @@ if (!function_exists('scr_fs')) {
                 define('WP_FS__PRODUCT_3980_MULTISITE', true);
             }
 
-            // Include Freemius SDK.
-            require_once dirname(__FILE__) . '/freemius/start.php';
-
             $scr_fs = fs_dynamic_init(array(
                 'id' => '3980',
                 'slug' => 'starcat-review',
