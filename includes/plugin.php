@@ -10,6 +10,7 @@ if (!class_exists('\Starcat_Review')) {
         public function __construct()
         {
             $this->setup_autoload();
+            $this->load_library();
             /* Require functions.php */
             require_once SCR_PATH . 'includes/functions.php';
 
@@ -18,6 +19,16 @@ if (!class_exists('\Starcat_Review')) {
 
             // These components will handle the hooks internally, no need to call this in a hook
             $this->load_components();
+        }
+
+        protected function load_library()
+        {
+            if (!class_exists("\Pauple\Pluginator\Library")) {
+                wp_die("\"freemius/wordpress-sdk\" and \"Codestar Framework\" library was not installed, \"Tablesome\" is depend on it. Do run \"composer update\".");
+            }
+
+            $library = new \Pauple\Pluginator\Library();
+            $library::register_libraries(['codestar', 'freemius']);
         }
 
         public function load_hooks()
