@@ -8,6 +8,7 @@ use \StarcatReview\Includes\Settings\SCR_Getter;
 
 if (!class_exists('CSF_Field_icon_dropdown')) {
     class CSF_Field_icon_dropdown extends \CSF_Fields
+
     {
         public function __construct($field, $value = '', $unique = '', $where = '', $parent = '')
         {
@@ -193,7 +194,7 @@ if (!class_exists('CSF_Field_icon_dropdown')) {
 
 if (!function_exists('csf_validate_stat_limit')) {
 
-    function csf_validate_stat_numeric($value)
+    function csf_validate_stat_limit($value)
     {
         if (!is_numeric($value)) {
             return esc_html__('Please giva a numeric limit !', 'csf');

@@ -11,10 +11,6 @@ if (!class_exists('\StarcatReview\App\Services\Shortcodes\Builder')) {
     {
         public function init()
         {
-            if (!function_exists('\CSF') && !class_exists('\CSF')) {
-                require_once SCR_PATH . 'includes/lib/codestar-framework/codestar-framework.php';
-            }
-
             $fields = new \StarcatReview\App\Services\Shortcodes\Builder_Fields();
             $post_field = $fields->get_post_field();
 
