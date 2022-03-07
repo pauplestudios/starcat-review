@@ -94,9 +94,6 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
 
         public function plugins_loaded_action()
         {
-            /*  Starcat Review Internalization Translation  */
-            load_plugin_textdomain(SCR_DOMAIN, false, basename(dirname(SCR__FILE__)) . '/languages');
-
             if (class_exists('\StarcatReviewCpt\Widgets\Review_Listing\Controller')) {
                 /*  Reviews Widget */
                 $this->load_widgets();
