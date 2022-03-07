@@ -149,7 +149,12 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
 
                 {
                     from: path.resolve(__dirname, "languages") + "/**",
-                    to: buildFolder
+                    to: buildFolder,
+                },
+
+                {
+                    from: path.resolve(__dirname, "vendor") + "/**",
+                    to: buildFolder,
                 },
 
                 {
@@ -173,7 +178,7 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
     webpackConfig.plugins.push(
         new FileManagerPlugin({
             onEnd: {
-                // copy addons via composer private packages 
+                // copy addons via composer private packages
                 copy: [
                     {
                         source: "./vendor/pauple/starcat-review-cpt",
@@ -185,27 +190,29 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
                     },
                     {
                         source: "./vendor/pauple/starcat-review-woo-notify",
-                        destination: "./artifacts/addons/starcat-review-woo-notify/",
+                        destination:
+                            "./artifacts/addons/starcat-review-woo-notify/",
                     },
                     {
                         source: "./vendor/pauple/starcat-review-photo-reviews",
-                        destination: "./artifacts/addons/starcat-review-photo-reviews/",
-                    }
+                        destination:
+                            "./artifacts/addons/starcat-review-photo-reviews/",
+                    },
                 ],
                 delete: [
                     // Delete files
-                    './artifacts/addons/*/package.json',
-                    './artifacts/addons/*/package-lock.json',
-                    './artifacts/addons/*/composer.json',
+                    "./artifacts/addons/*/package.json",
+                    "./artifacts/addons/*/package-lock.json",
+                    "./artifacts/addons/*/composer.json",
                     // Delete file types
-                    './artifacts/addons/*/*.zip',
-                    './artifacts/addons/*/*.md',
-                    './artifacts/addons/*/*.log',
-                    './artifacts/addons/*/*.lock',
+                    "./artifacts/addons/*/*.zip",
+                    "./artifacts/addons/*/*.md",
+                    "./artifacts/addons/*/*.log",
+                    "./artifacts/addons/*/*.lock",
                     // Delete folder
-                    './artifacts/addons/**/dist',
-                    './artifacts/addons/**/vendor',
-                    './artifacts/addons/**/node_modules',
+                    "./artifacts/addons/**/dist",
+                    "./artifacts/addons/**/vendor",
+                    "./artifacts/addons/**/node_modules",
                 ],
                 archive: [
                     {
@@ -227,7 +234,7 @@ if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
                     {
                         source: "./artifacts/addons/starcat-review-photo-reviews/",
                         destination: "./starcat-review-photo-reviews.zip",
-                    }
+                    },
                 ],
             },
         })
