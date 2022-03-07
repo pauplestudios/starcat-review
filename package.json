@@ -1,6 +1,6 @@
 {
     "name": "starcat-review",
-    "version": "0.7.5",
+    "version": "0.8",
     "main": "index.js",
     "license": "MIT",
     "scripts": {
@@ -9,6 +9,7 @@
         "build_addons": "chmod +x bin/addons.sh && bash bin/addons.sh",
         "docker-destroy": "chmod +x bin/docker-destroy.sh && bash bin/docker-destroy.sh && docker volume prune",
         "build": "cross-env NODE_ENV=production ./node_modules/.bin/webpack --mode=production",
+        "build_prod": "rm -rf vendor && composer install --no-dev --ignore-platform-reqs && cross-env NODE_ENV=production ./node_modules/.bin/webpack --mode=production",
         "start": "./node_modules/.bin/webpack --mode=development --watch",
         "build_test": "cross-env NODE_ENV=test ./node_modules/.bin/webpack",
         "lint": "esw webpack.config.* src tools --color",

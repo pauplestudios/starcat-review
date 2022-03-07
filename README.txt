@@ -2,8 +2,8 @@
 Donate link: https://starcatwp.com
 Tags: review, woocommerce reviews, user rating, product review, star ratings, customer reviews, review blogging, schema, reviews, ratings
 Requires at least: 5.2
-Tested up to: 5.7
-Stable tag: 0.7.6
+Tested up to: 5.9.1
+Stable tag: 0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Contributors: essekia, pauple
@@ -138,6 +138,15 @@ You can get the premium add-ons in bundled pricing.
 10. Comparison Table (PRO)
 
 == Change Log ==
+
+= 0.8 =
+* Security Fixes
+* General Fixes
+
+= 0.7.6 =
+* Feature: Review Location Customization 
+* Fix: WP-ULike plugin conflicts
+* Fix: Remove page background color
 
 = 0.7.6 =
 * Feature: Review Location Customization 
