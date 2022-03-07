@@ -203,11 +203,37 @@ if (!class_exists('\StarcatReview\Includes\Hooks')) {
         public function load_widgets()
         {
 
-            $widgets = new \StarcatReview\Includes\Widgets\Register_Widgets();
-            $widgets->load();
+            if (!class_exists('\Pauple\Pluginator\Widgetry')) {
+                return;
+            }
 
-            $elementor_widgets = new \StarcatReview\Includes\Widgets\Register_Elementor_Widgets();
-            $elementor_widgets->load();
+            $widgetry = new \Pauple\Pluginator\Widgetry();
+            $widgetry->init();
+
+            $review_listing_widget_args = array(
+                'id' => 'scr-listing',
+                'title' => 'Review Listing',
+                'name' => 'Review Listing',
+                'description' => 'Review Listing Widget',
+                'icon' => 'fa fa-th-list',
+                'categories' => ['general-elements'],
+                'model' => new \StarcatReviewCpt\Widgets\Review_Listing\Controller(),
+                'view' => new \StarcatReviewCpt\Widgets\Review_Listing\Controller(),
+            );
+
+            $comparison_table_widget_args = array(
+                'id' => 'scr-comparison-table',
+                'title' => 'Comparison Table',
+                'name' => 'Comparison Table',
+                'icon' => 'fa fa-th-list',
+                'description' => 'Comparison Table Widget',
+                'categories' => ['general-elements'],
+                'model' => new \StarcatReview\App\Widget_Makers\Comparison\Widget(),
+                'view' => new \StarcatReview\App\Widget_Makers\Comparison\Widget(),
+            );
+
+            $widgetry->register_widget($review_listing_widget_args);
+            $widgetry->register_widget($comparison_table_widget_args);
         }
 
         public function content_filter($content)
