@@ -23,41 +23,37 @@ if (!class_exists('\StarcatReview\Includes\Update\Upgrades')) {
             self::removed_old_upgrader_slug();
 
             $args = [
-                'db_version' => get_option('starcat_review_version'), 
+                'db_version' => get_option('starcat_review_version'),
                 'file_version' => SCR_VERSION,
-                'version_option' => 'starcat_review_version', 
+                'version_option' => 'starcat_review_version',
                 'slug' => 'starcat_review',
             ];
 
             $upgrades_list = new \StarcatReview\Includes\Update\Upgrades_List();
-            include_once SCR_PATH . 'includes/lib/upgrader/upgrader.php';
-            if (class_exists('\Upgrader\Upgrader')) {
-                $upgrader = new \Upgrader\Upgrader($args, $upgrades_list);
-                $upgrader::add_actions();
-            } else {
-                error_log('Upgrader Does not Exist');
-            }
+
+            $upgrader = new \Pauple\Pluginator\Upgrader($args, $upgrades_list);
+            $upgrader::add_actions();
 
         }
 
-        public static function removed_old_upgrader_slug(){
-            
+        public static function removed_old_upgrader_slug()
+        {
+
             $old_upgrades = get_option('slug_upgrades');
             $old_version = get_option('SCR_VERSION');
-        
-            if(!empty($old_upgrades)){
-                update_option('starcat_review_upgrades',$old_upgrades);
+
+            if (!empty($old_upgrades)) {
+                update_option('starcat_review_upgrades', $old_upgrades);
                 delete_option('slug_upgrades');
             }
 
-            if(!empty($old_version)){
-                update_option('starcat_review_version',$old_version);
+            if (!empty($old_version)) {
+                update_option('starcat_review_version', $old_version);
                 delete_option('SCR_VERSION');
             }
 
             return;
         }
 
-        
     } // END CLASS
 }

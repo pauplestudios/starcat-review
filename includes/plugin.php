@@ -11,17 +11,20 @@ if (!class_exists('\Starcat_Review')) {
         {
             $this->setup_autoload();
             $this->load_library();
-            /* Require functions.php */
-            require_once SCR_PATH . 'includes/functions.php';
-
-            // Load Hooks
+            $this->load_scr_functions();
             $this->load_hooks();
-
+            $this->load_update_handler();
             // These components will handle the hooks internally, no need to call this in a hook
             $this->load_components();
+
         }
 
-        protected function load_library()
+        public function setup_autoload()
+        {
+            require_once SCR_PATH . '/vendor/autoload.php';
+        }
+
+        public function load_library()
         {
             if (!class_exists("\Pauple\Pluginator\Library")) {
                 wp_die("\"freemius/wordpress-sdk\" and \"Codestar Framework\" library was not installed, \"Tablesome\" is depend on it. Do run \"composer update\".");
@@ -31,11 +34,52 @@ if (!class_exists('\Starcat_Review')) {
             $library::register_libraries(['codestar', 'freemius']);
         }
 
+        public function load_scr_functions()
+        {
+            /* Require functions.php */
+            require_once SCR_PATH . 'includes/functions.php';
+        }
+
         public function load_hooks()
         {
             new \StarcatReview\Includes\Hooks();
             register_activation_hook(SCR__FILE__, [$this, 'activate_plugin_name']);
             register_deactivation_hook(SCR__FILE__, [$this, 'deactivate_plugin_name']);
+        }
+
+        public function load_update_handler()
+        {
+            /* Upgrades */
+            $upgrades = new \StarcatReview\Includes\Update\Upgrades();
+            $upgrades::init();
+        }
+
+        public function load_components()
+        {
+            /* settings getter */
+            require_once SCR_PATH . 'includes/settings/getter.php';
+
+            $settings = new \StarcatReview\Includes\Settings();
+
+            $shortcode_builder = new \StarcatReview\App\Services\Shortcodes\Builder();
+            $shortcode_builder->init();
+
+            // Dashboard User review Table
+            require_once SCR_PATH . '/app/components/user-reviews/table.php';
+
+            /* New Features */
+            $Non_Logged_In_User = new \StarcatReview\Features\Non_Logged_In_User();
+
+            /* Recaptcha */
+            $recaptcha = new \StarcatReview\Services\Recaptcha();
+
+            // Developement Purpose Only to add add-ons without activate and install
+            // require_once SCR_PATH . 'includes/lib/cpt-addon/starcat-review-cpt.php';
+            // require_once SCR_PATH . 'includes/lib/photo-reviews-addon/starcat-review-photo-reviews.php';
+            // require_once SCR_PATH . 'includes/lib/ct-addon/starcat-review-ct.php';
+
+            // require_once SCR_PATH . 'includes/lib/starcat-review-woo-notify/starcat-review-woo-notify.php';
+
         }
 
         public static function activate_plugin_name($network_wide)
@@ -72,44 +116,6 @@ if (!class_exists('\Starcat_Review')) {
 
             // error_log('!!! Single Site Plugin Deactivation Done !!!');
             delete_option(SCR_PLUGIN_BASE);
-        }
-
-        public function load_components()
-        {
-            /* settings getter */
-            require_once SCR_PATH . 'includes/settings/getter.php';
-
-            $settings = new \StarcatReview\Includes\Settings();
-
-            $shortcode_builder = new \StarcatReview\App\Services\Shortcodes\Builder();
-            $shortcode_builder->init();
-
-            /* Upgrades */
-            // $upgrades = new \StarcatReview\Includes\Update\Upgrades();
-            // $upgrades::init();
-
-            // Dashboard User review Table
-            require_once SCR_PATH . '/app/components/user-reviews/table.php';
-
-            /* New Features */
-            $Non_Logged_In_User = new \StarcatReview\Features\Non_Logged_In_User();
-
-            /* Recaptcha */
-            $recaptcha = new \StarcatReview\Services\Recaptcha();
-
-            // Developement Purpose Only to add add-ons without activate and install
-            // require_once SCR_PATH . 'includes/lib/cpt-addon/starcat-review-cpt.php';
-            // require_once SCR_PATH . 'includes/lib/photo-reviews-addon/starcat-review-photo-reviews.php';
-            // require_once SCR_PATH . 'includes/lib/ct-addon/starcat-review-ct.php';
-            // require_once SCR_PATH . 'includes/lib/starcat-review-woo-notify/starcat-review-woo-notify.php';
-
-        }
-
-        protected function setup_autoload()
-        {
-            require_once SCR_PATH . '/vendor/autoload.php';
-            // require_once SCR_PATH . '/includes/autoloader.php';
-            // \StarcatReview\Autoloader::run();
         }
 
     } // END CLASS
