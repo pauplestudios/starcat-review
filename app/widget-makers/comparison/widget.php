@@ -2,7 +2,6 @@
 
 namespace StarcatReview\App\Widget_Makers\Comparison;
 
-
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -22,8 +21,6 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Comparison\Widget')) {
             // Elementor Widget
             add_action('elementor/widgets/widgets_registered', [$this, 'register_elementor_widget']);
         }
-
-
 
         public function get_view($args)
         {
@@ -71,6 +68,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Comparison\Widget')) {
         {
             // error_log('defaultposts' . print_r($args, true));
             $posts = [];
+            $num_of_columns = isset($args['num_of_cols']) ? $args['num_of_cols'] : 3;
 
             $get_posts = explode(',', $args['posts']);
 
@@ -82,7 +80,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Comparison\Widget')) {
                     'nopaging' => true,
                     'order' => 'ASC',
                     'orderby' => 'menu_order',
-                    'posts_per_page' => $args['num_of_cols']
+                    'posts_per_page' => $num_of_columns,
                 );
                 $results = new \WP_Query($post_args);
 
@@ -96,7 +94,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Comparison\Widget')) {
                 $post_args = array(
                     'post__in' => $get_posts,
                     'post_type' => array(SCR_POST_TYPE),
-                    'posts_per_page' => $args['num_of_cols']
+                    'posts_per_page' => $num_of_columns,
                 );
 
                 $posts = get_posts($post_args);
@@ -116,12 +114,12 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Comparison\Widget')) {
                     $post_infos['title'] = $post->post_title;
                     $post_featured_image = get_the_post_thumbnail_url($post->ID);
                     $post_infos['featured_image_url'] = $post_featured_image != "" ? $post_featured_image : SCR_URL . 'includes/assets/img/dummy-review.jpg';
-                    $post_infos['url']   = get_post_permalink($post->ID);
+                    $post_infos['url'] = get_post_permalink($post->ID);
                     // get review ratings from function.php
                     $get_scr_get_user_reviews = scr_get_user_reviews($post->ID);
 
-                    // get post stat list 
-                    $get_stat_list  = $this->get_default_stat_list($get_scr_get_user_reviews);
+                    // get post stat list
+                    $get_stat_list = $this->get_default_stat_list($get_scr_get_user_reviews);
 
                     // get post overall reatings
                     $get_overall_stats = scr_get_overall_rating($post->ID);
@@ -138,7 +136,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Comparison\Widget')) {
         {
             $stats = array();
             if (count($args) > 0) {
-                foreach ($args  as $post_review) {
+                foreach ($args as $post_review) {
                     $reviews = isset($post_review->reviews) ? $post_review->reviews : [];
                     if (isset($reviews) && count($reviews) > 0) {
                         $stats = $reviews['stats'];
@@ -148,9 +146,8 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Comparison\Widget')) {
             return $stats;
         }
 
-
         protected function get_collection_props($args)
-        { }
+        {}
 
         protected function execute_methods_with_queries($args)
         {
@@ -214,7 +211,7 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Comparison\Widget')) {
                     'default' => 'static',
                     'options' => array(
                         'static' => __('Static', 'starcat-review'),
-                        'dynamic' => __('Dynamic', 'starcat-review')
+                        'dynamic' => __('Dynamic', 'starcat-review'),
                     ),
                     'type' => 'select',
                 ],
@@ -226,7 +223,6 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Comparison\Widget')) {
                     'type' => 'multi-select',
                 ],
             );
-
 
             return $fields;
         }
@@ -255,6 +251,6 @@ if (!class_exists('\StarcatReview\App\Widget_Makers\Comparison\Widget')) {
         }
 
         public function get_style_config()
-        { }
+        {}
     } // END CLASS
 }
